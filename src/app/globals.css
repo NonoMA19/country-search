@@ -1,16 +1,62 @@
 @import "tailwindcss";
 
-/* Palette Ardoise et bleu (provisoire) */
+/* Palette Ardoise et bleu (provisoire), avec un mode sombre. */
+:root {
+  --fond: #f8fafc;
+  --encre: #0f172a;
+  --carte: #ffffff;
+  --bord: #e2e8f0;
+  --gris: #64748b;
+  --lien: #2563eb;
+  --bleu-doux: #dbeafe;
+  --creux: #f1f5f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #0f172a;
+    --encre: #f8fafc;
+    --carte: #1e293b;
+    --bord: #334155;
+    --gris: #94a3b8;
+    --lien: #93c5fd;
+    --bleu-doux: #1e3a8a;
+    --creux: #0b1220;
+  }
+}
+
 @theme inline {
   --color-ardoise: #0f172a;
   --color-bleu: #2563eb;
-  --color-gris: #64748b;
-  --color-fond: #f8fafc;
+  --color-fond: var(--fond);
+  --color-encre: var(--encre);
+  --color-carte: var(--carte);
+  --color-bord: var(--bord);
+  --color-gris: var(--gris);
+  --color-lien: var(--lien);
+  --color-bleu-doux: var(--bleu-doux);
+  --color-creux: var(--creux);
   --font-sans: var(--font-geist-sans);
 }
 
 body {
-  background: var(--color-fond);
-  color: var(--color-ardoise);
+  background: var(--fond);
+  color: var(--encre);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+dialog::backdrop {
+  background: rgb(15 23 42 / 0.6);
+}
+
+/* Curseurs « Et si… ? » */
+input[type="range"] {
+  accent-color: #2563eb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

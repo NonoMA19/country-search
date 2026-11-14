@@ -1,0 +1,587 @@
+{
+ "_vie": {
+  "type": "vie",
+  "nom": "VIE (volontariat international en entreprise)",
+  "ageMaxCandidature": 27,
+  "dureeMoisMin": 6,
+  "dureeMoisMax": 24,
+  "texte": "Il faut avoir plus de 18 ans et moins de 28 ans à la date de candidature, et partir au plus tard le jour de ses 29 ans. Une mission dure entre 6 et 24 mois. Il faut d'abord décrocher une mission auprès d'une entreprise.",
+  "source": "service-public-vie",
+  "lien": "https://www.service-public.gouv.fr/particuliers/vosdroits/F10040",
+  "verifieLe": "2026-11-14",
+  "statut": "verifie",
+  "presenceParPays": "a-verifier"
+ },
+ "belgique": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "suisse": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse. Pour la Suisse, la page européenne précise que la plupart des citoyens de l'Union n'ont pas besoin de permis pour y travailler.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "allemagne": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "irlande": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "luxembourg": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "espagne": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "italie": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "pays-bas": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "portugal": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "norvege": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "suede": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "danemark": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l'Union, l'Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "canada": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 35,
+   "quota": 7000,
+   "fonds": {
+    "texte": "2 500 dollars canadiens, soit environ 1 700 €",
+    "euros": 1700
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 7 000 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 dollars canadiens, soit environ 1 700 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "invitation": true,
+   "invitationTexte": "Il faut créer un profil puis attendre de recevoir une invitation à présenter une demande : rien n'est garanti.",
+   "invitationSource": {
+    "source": "canada-eic",
+    "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/invitations-presenter-demande.html",
+    "verifieLe": "2026-11-14"
+   }
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Un permis de travail est requis pour exercer une activité professionnelle, stage compris.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/canada/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "australie": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 35,
+   "quota": null,
+   "fonds": {
+    "texte": "5 000 dollars australiens, soit environ 3 000 €",
+    "euros": 3000
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. Il n'y a pas de quota. Séjour d'un an maximum. Ressources demandées : 5 000 dollars australiens, soit environ 3 000 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "japon": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 1800,
+   "fonds": {
+    "texte": "3 100 €",
+    "euros": 3100
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 1 800 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 3 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "nouvelle-zelande": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": null,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. Il n'y a pas de quota. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "coree-du-sud": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 2000,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 2 000 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "taiwan": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 500,
+   "fonds": {
+    "texte": "2 100 €",
+    "euros": 2100
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "hong-kong": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 750,
+   "fonds": {
+    "texte": "25 000 dollars de Hong Kong, soit environ 2 900 €",
+    "euros": 2900
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 750 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 25 000 dollars de Hong Kong, soit environ 2 900 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "argentine": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 35,
+   "quota": 1500,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 1 500 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "chili": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 400,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "colombie": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 400,
+   "fonds": {
+    "texte": "des revenus bancaires moyens d'environ 750 € par mois sur les 3 derniers mois (ce n'est pas un montant d'épargne)",
+    "euros": null
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : des revenus bancaires moyens d'environ 750 € par mois sur les 3 derniers mois (ce n'est pas un montant d'épargne). Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "mexique": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 300,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 300 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "bresil": [
+  {
+   "type": "pvt",
+   "nom": "PVT (programme vacances-travail)",
+   "ageMax": 30,
+   "quota": 500,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d'un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "royaume-uni": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Il faut un visa de long séjour pour travailler. Le visa « Skilled Worker » demande un employeur britannique agréé par le Home Office, qui te remet un certificat de parrainage.",
+   "conditions": [
+    "Ton métier doit figurer sur la liste officielle des métiers éligibles.",
+    "Un salaire minimum est exigé, variable selon le métier.",
+    "Tu dois prouver ton niveau d'anglais (parler, lire, écrire, comprendre)."
+   ],
+   "source": "gov-uk-visa",
+   "lien": "https://www.gov.uk/skilled-worker-visa",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "etats-unis": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Tout Français qui veut travailler doit avoir, au départ de France, un visa l'autorisant à occuper un emploi défini. Les quotas et le tirage au sort de certains visas ne sont pas encore vérifiés ici.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/etats-unis/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "singapour": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Le permis « Employment Pass » se demande pour un emploi précis à Singapour.",
+   "conditions": [
+    "Il faut gagner au moins le salaire minimum fixé pour ce permis, qui augmente avec l'âge.",
+    "Il faut aussi réussir une grille à points appelée COMPASS (salaire, diplômes, profil de l'entreprise)."
+   ],
+   "source": "mom-singapour",
+   "lien": "https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "emirats-arabes-unis": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les Français arrivent sans visa, puis disposent de 30 jours pour obtenir leur visa de résidence par l'intermédiaire de leur employeur.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/emirats-arabes-unis/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie"
+  }
+ ],
+ "chine": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ],
+ "maroc": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "conditions": [],
+   "source": null,
+   "lien": null,
+   "verifieLe": null,
+   "statut": "a-verifier"
+  }
+ ]
+}

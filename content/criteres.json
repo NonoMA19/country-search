@@ -1,0 +1,920 @@
+[
+  {
+    "numero": 1,
+    "id": "visa",
+    "famille": "partir",
+    "nom": "Accès au visa",
+    "definition": "La meilleure porte d'entrée ouverte à ton âge : libre circulation en Europe, PVT, VIE ou visa de travail.",
+    "type": "officiel",
+    "role": "badge",
+    "echelle": [
+      "Libre circulation : aucun visa",
+      "PVT ouvert à ton âge",
+      "VIE : il faut décrocher une mission",
+      "Visa de travail : il faut un employeur",
+      "Quota serré ou invitation à obtenir"
+    ],
+    "sources": [
+      "europa-travail",
+      "europa-permis",
+      "diplomatie-pvt",
+      "service-public-vie"
+    ],
+    "mesures": []
+  },
+  {
+    "numero": 2,
+    "id": "age-conditions",
+    "famille": "partir",
+    "nom": "Âge et conditions",
+    "definition": "Les limites d'âge du PVT (30 ou 35 ans) et du VIE (moins de 28 ans à la candidature), les quotas annuels et la durée maximale.",
+    "type": "officiel",
+    "role": "badge",
+    "echelle": [
+      "Aucune limite d'âge ni quota",
+      "Limite d'âge",
+      "Quota annuel",
+      "Quota de 500 places ou moins, ou invitation à obtenir",
+      "Fermé à ton âge"
+    ],
+    "sources": [
+      "diplomatie-pvt",
+      "service-public-vie",
+      "canada-eic"
+    ],
+    "mesures": []
+  },
+  {
+    "numero": 3,
+    "id": "argent",
+    "famille": "partir",
+    "nom": "Argent minimum à prévoir",
+    "definition": "Le montant officiel exigé pour obtenir le visa, par exemple pour un PVT. Il n'est jamais bloquant : on t'affiche seulement ce qu'il te manquerait.",
+    "type": "officiel",
+    "role": "badge",
+    "echelle": [
+      "Aucun montant exigé",
+      "Moins de 2 000 €",
+      "De 2 000 à 2 999 €",
+      "De 3 000 à 3 999 €",
+      "4 000 € ou plus"
+    ],
+    "sources": [
+      "diplomatie-pvt"
+    ],
+    "mesures": []
+  },
+  {
+    "numero": 4,
+    "id": "chomage-jeunes",
+    "famille": "travailler",
+    "nom": "Chômage des jeunes",
+    "definition": "Part des 15-24 ans qui cherchent un emploi sans en trouver. Limite : ce chiffre ne dit rien de la qualité des emplois.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "bm-wdi"
+    ],
+    "mesures": [
+      {
+        "id": "emploi",
+        "nom": "Chômage des jeunes",
+        "sens": "haut",
+        "unite": "%",
+        "bornes": [
+          7,
+          10,
+          15,
+          20
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 20 %",
+          "de 15 à 20 %",
+          "de 10 à 15 %",
+          "de 7 à 10 %",
+          "moins de 7 %"
+        ],
+        "mots": [
+          "très élevé",
+          "élevé",
+          "moyen",
+          "faible",
+          "très faible"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 5,
+    "id": "salaire",
+    "famille": "travailler",
+    "nom": "Salaire par rapport au coût de la vie",
+    "definition": "Salaire mensuel moyen des salariés, converti en pouvoir d'achat (dollars à parité de pouvoir d'achat). Limites : c'est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. À prendre comme un ordre de grandeur. Une donnée de plus de six ans n'est pas comptée.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "oit-ilostat"
+    ],
+    "mesures": [
+      {
+        "id": "salaire",
+        "nom": "Salaire moyen en pouvoir d'achat",
+        "sens": "haut",
+        "unite": "$ PPA par mois",
+        "bornes": [
+          2000,
+          3500,
+          5000,
+          6500
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de 2 000 $",
+          "de 2 000 à 3 500 $",
+          "de 3 500 à 5 000 $",
+          "de 5 000 à 6 500 $",
+          "plus de 6 500 $"
+        ],
+        "mots": [
+          "très bas",
+          "bas",
+          "moyen",
+          "élevé",
+          "très élevé"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 6,
+    "id": "langue-travail",
+    "famille": "travailler",
+    "nom": "Langue de travail",
+    "definition": "L'anglais suffit-il au bureau ? Notre avis, justifié pays par pays.",
+    "type": "notre-avis",
+    "sources": [
+      "notre-avis"
+    ],
+    "mesures": [
+      {
+        "id": "anglais",
+        "nom": "Travailler en anglais",
+        "sens": "haut",
+        "echelle": [
+          "impossible sans la langue locale",
+          "langue locale nécessaire presque partout",
+          "possible dans les grandes entreprises",
+          "très courant en entreprise",
+          "l'anglais est la langue du bureau"
+        ],
+        "mots": [
+          "impossible sans la langue locale",
+          "langue locale presque toujours nécessaire",
+          "possible dans les grandes entreprises",
+          "très courant en entreprise",
+          "langue du bureau"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 7,
+    "id": "reseau-francais",
+    "famille": "travailler",
+    "nom": "Réseau français sur place",
+    "definition": "Nombre de Français inscrits au registre consulaire. Limite : l'inscription n'est pas obligatoire, le vrai nombre est plus élevé.",
+    "type": "officiel",
+    "sources": [
+      "meae-registre"
+    ],
+    "mesures": [
+      {
+        "id": "francais",
+        "nom": "Français inscrits au consulat",
+        "sens": "haut",
+        "unite": "inscrits",
+        "bornes": [
+          5000,
+          20000,
+          50000,
+          100000
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de 5 000",
+          "de 5 000 à 20 000",
+          "de 20 000 à 50 000",
+          "de 50 000 à 100 000",
+          "plus de 100 000"
+        ],
+        "mots": [
+          "très petite communauté",
+          "petite communauté",
+          "communauté moyenne",
+          "grande communauté",
+          "très grande communauté"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 8,
+    "id": "equilibre",
+    "famille": "travailler",
+    "nom": "Équilibre vie pro et vie perso",
+    "definition": "Heures réellement travaillées par semaine et congés payés légaux. Les congés légaux ne sont pas encore vérifiés pays par pays : seules les heures comptent pour l'instant.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "oit-ilostat"
+    ],
+    "mesures": [
+      {
+        "id": "heures",
+        "nom": "Heures travaillées par semaine",
+        "sens": "haut",
+        "unite": "h par semaine",
+        "bornes": [
+          34,
+          37,
+          40,
+          44
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 44 h",
+          "de 40 à 44 h",
+          "de 37 à 40 h",
+          "de 34 à 37 h",
+          "moins de 34 h"
+        ],
+        "mots": [
+          "semaines très longues",
+          "semaines longues",
+          "semaines moyennes",
+          "semaines plutôt courtes",
+          "semaines courtes"
+        ]
+      },
+      {
+        "id": "conges",
+        "nom": "Congés payés légaux",
+        "sens": "haut",
+        "unite": "jours par an",
+        "bornes": [
+          10,
+          15,
+          20,
+          25
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de 10 jours",
+          "de 10 à 14 jours",
+          "de 15 à 19 jours",
+          "de 20 à 24 jours",
+          "25 jours ou plus"
+        ],
+        "mots": [
+          "très peu de congés",
+          "peu de congés",
+          "congés moyens",
+          "beaucoup de congés",
+          "énormément de congés"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 9,
+    "id": "style-travail",
+    "famille": "travailler",
+    "nom": "Style de travail",
+    "definition": "Trois positions, ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer et la ponctualité. Notre avis, justifié pays par pays.",
+    "type": "notre-avis",
+    "sources": [
+      "notre-avis"
+    ],
+    "mesures": [
+      {
+        "id": "hierarchie",
+        "nom": "Hiérarchie",
+        "sens": "position",
+        "echelle": [
+          "très plate",
+          "plutôt plate",
+          "intermédiaire",
+          "marquée",
+          "très marquée"
+        ],
+        "mots": [
+          "très plate",
+          "plutôt plate",
+          "intermédiaire",
+          "marquée",
+          "très marquée"
+        ]
+      },
+      {
+        "id": "communication",
+        "nom": "Communication",
+        "sens": "position",
+        "echelle": [
+          "très directe",
+          "plutôt directe",
+          "nuancée",
+          "plutôt indirecte",
+          "très indirecte"
+        ],
+        "mots": [
+          "très directe",
+          "plutôt directe",
+          "nuancée",
+          "plutôt indirecte",
+          "très indirecte"
+        ]
+      },
+      {
+        "id": "ponctualite",
+        "nom": "Ponctualité",
+        "sens": "position",
+        "echelle": [
+          "très souple",
+          "souple",
+          "intermédiaire",
+          "attendue",
+          "stricte"
+        ],
+        "mots": [
+          "très souple",
+          "souple",
+          "intermédiaire",
+          "attendue",
+          "stricte"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 10,
+    "id": "cout-vie",
+    "famille": "vivre",
+    "nom": "Coût de la vie",
+    "definition": "Niveau général des prix à la consommation, comparé à la France (France = 100). Limite : c'est une moyenne nationale, les loyers des grandes villes pèsent plus lourd.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "bm-wdi"
+    ],
+    "mesures": [
+      {
+        "id": "prix",
+        "nom": "Niveau des prix (France = 100)",
+        "sens": "haut",
+        "unite": "France = 100",
+        "bornes": [
+          60,
+          85,
+          110,
+          130
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 130",
+          "de 110 à 130",
+          "de 85 à 110",
+          "de 60 à 85",
+          "moins de 60"
+        ],
+        "mots": [
+          "beaucoup plus cher que la France",
+          "plus cher que la France",
+          "proche de la France",
+          "moins cher que la France",
+          "beaucoup moins cher que la France"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 11,
+    "id": "climat",
+    "famille": "vivre",
+    "nom": "Climat",
+    "definition": "Température moyenne du mois le plus froid et du mois le plus chaud, sur 30 ans (1991-2020), dans la plus grande ville du pays. Deux positions, ni bonnes ni mauvaises.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "open-meteo"
+    ],
+    "mesures": [
+      {
+        "id": "hiver",
+        "nom": "Hiver",
+        "sens": "position",
+        "unite": "°C",
+        "bornes": [
+          -5,
+          2,
+          8,
+          15
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de -5 °C",
+          "de -5 à 2 °C",
+          "de 2 à 8 °C",
+          "de 8 à 15 °C",
+          "plus de 15 °C"
+        ],
+        "mots": [
+          "très froid",
+          "froid",
+          "frais",
+          "doux",
+          "chaud"
+        ]
+      },
+      {
+        "id": "ete",
+        "nom": "Été",
+        "sens": "position",
+        "unite": "°C",
+        "bornes": [
+          17,
+          21,
+          25,
+          29
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de 17 °C",
+          "de 17 à 21 °C",
+          "de 21 à 25 °C",
+          "de 25 à 29 °C",
+          "plus de 29 °C"
+        ],
+        "mots": [
+          "frais",
+          "tempéré",
+          "chaud",
+          "très chaud",
+          "étouffant"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 12,
+    "id": "distance",
+    "famille": "vivre",
+    "nom": "Distance et décalage horaire avec la France",
+    "definition": "Temps de vol estimé depuis Paris (distance à vol d'oiseau divisée par 800 km/h, plus 30 minutes) et décalage horaire avec Paris en janvier.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "geonames"
+    ],
+    "mesures": [
+      {
+        "id": "vol",
+        "nom": "Temps de vol estimé depuis Paris",
+        "sens": "haut",
+        "unite": "h",
+        "bornes": [
+          3,
+          6,
+          10,
+          14
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 14 h",
+          "de 10 à 14 h",
+          "de 6 à 10 h",
+          "de 3 à 6 h",
+          "moins de 3 h"
+        ],
+        "mots": [
+          "très loin",
+          "loin",
+          "assez loin",
+          "proche",
+          "très proche"
+        ]
+      },
+      {
+        "id": "decalage",
+        "nom": "Décalage horaire avec Paris",
+        "sens": "haut",
+        "unite": "h",
+        "bornes": [
+          1.5,
+          3.5,
+          6.5,
+          8.5
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "9 h ou plus",
+          "7 à 8 h",
+          "4 à 6 h",
+          "2 à 3 h",
+          "0 à 1 h"
+        ],
+        "mots": [
+          "décalage très fort",
+          "décalage fort",
+          "décalage moyen",
+          "petit décalage",
+          "presque la même heure"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 13,
+    "id": "langue-quotidien",
+    "famille": "vivre",
+    "nom": "Langue du quotidien",
+    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays.",
+    "type": "notre-avis",
+    "sources": [
+      "notre-avis"
+    ],
+    "mesures": [
+      {
+        "id": "langue",
+        "nom": "Langue du quotidien",
+        "sens": "haut",
+        "echelle": [
+          "autre écriture",
+          "autre langue à alphabet latin",
+          "anglais",
+          "langue latine, proche du français",
+          "français officiel ou courant"
+        ],
+        "mots": [
+          "langue et écriture très éloignées",
+          "autre langue à alphabet latin",
+          "anglais au quotidien",
+          "langue proche du français",
+          "on parle français"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 14,
+    "id": "securite",
+    "famille": "vivre",
+    "nom": "Sécurité",
+    "definition": "Homicides volontaires pour 100 000 habitants. Limite : c'est un seul aspect de la sécurité, et une moyenne nationale.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "bm-wdi"
+    ],
+    "mesures": [
+      {
+        "id": "securite",
+        "nom": "Homicides pour 100 000 habitants",
+        "sens": "haut",
+        "unite": "pour 100 000 habitants",
+        "bornes": [
+          1,
+          2,
+          5,
+          10
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 10",
+          "de 5 à 10",
+          "de 2 à 5",
+          "de 1 à 2",
+          "moins de 1"
+        ],
+        "mots": [
+          "très élevé",
+          "élevé",
+          "moyen",
+          "faible",
+          "très faible"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 15,
+    "id": "sante",
+    "famille": "vivre",
+    "nom": "Santé : couverture d'un jeune étranger",
+    "definition": "Es-tu couvert en arrivant, et à quel prix ? On applique une grille fixe à des faits officiels. Rien n'est demandé sur ta santé.",
+    "type": "officiel",
+    "sources": [
+      "service-public-soins",
+      "cleiss-accords",
+      "diplomatie-cav",
+      "diplomatie-pvt",
+      "gov-uk-sante"
+    ],
+    "mesures": [
+      {
+        "id": "sante",
+        "nom": "Couverture santé à l'arrivée",
+        "sens": "haut",
+        "echelle": [
+          "soins signalés comme très chers par France Diplomatie",
+          "pas d'accord de sécurité sociale avec la France : assurance privée à prévoir",
+          "accord de sécurité sociale avec la France",
+          "système public ouvert aux travailleurs étrangers",
+          "carte européenne d'assurance maladie valable"
+        ],
+        "mots": [
+          "soins très chers",
+          "assurance privée à prévoir",
+          "accord avec la France",
+          "système public accessible",
+          "carte européenne valable"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 16,
+    "id": "valeurs",
+    "famille": "valeurs",
+    "nom": "Valeurs (en option)",
+    "definition": "Quatre indices ouverts, affichés sans adjectif. Ils ne comptent que si tu choisis de les ajouter.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "bm-wgi",
+      "bm-wdi"
+    ],
+    "mesures": [
+      {
+        "id": "stabilite",
+        "nom": "Stabilité politique (indice de la Banque mondiale, sur 100)",
+        "sens": "haut",
+        "unite": "sur 100",
+        "bornes": [
+          20,
+          40,
+          60,
+          80
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "0 à 20",
+          "20 à 40",
+          "40 à 60",
+          "60 à 80",
+          "80 à 100"
+        ],
+        "mots": [
+          "0 à 20 sur 100",
+          "20 à 40 sur 100",
+          "40 à 60 sur 100",
+          "60 à 80 sur 100",
+          "80 à 100 sur 100"
+        ]
+      },
+      {
+        "id": "libertes",
+        "nom": "Libertés d'expression et de la presse (indice de la Banque mondiale, sur 100)",
+        "sens": "haut",
+        "unite": "sur 100",
+        "bornes": [
+          20,
+          40,
+          60,
+          80
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "0 à 20",
+          "20 à 40",
+          "40 à 60",
+          "60 à 80",
+          "80 à 100"
+        ],
+        "mots": [
+          "0 à 20 sur 100",
+          "20 à 40 sur 100",
+          "40 à 60 sur 100",
+          "60 à 80 sur 100",
+          "80 à 100 sur 100"
+        ]
+      },
+      {
+        "id": "egalite",
+        "nom": "Égalité femmes-hommes dans la loi (indice de la Banque mondiale, sur 100)",
+        "sens": "haut",
+        "unite": "sur 100",
+        "bornes": [
+          20,
+          40,
+          60,
+          80
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "0 à 20",
+          "20 à 40",
+          "40 à 60",
+          "60 à 80",
+          "80 à 100"
+        ],
+        "mots": [
+          "0 à 20 sur 100",
+          "20 à 40 sur 100",
+          "40 à 60 sur 100",
+          "60 à 80 sur 100",
+          "80 à 100 sur 100"
+        ]
+      },
+      {
+        "id": "air",
+        "nom": "Qualité de l'air (particules fines PM2,5)",
+        "sens": "haut",
+        "unite": "µg/m³",
+        "bornes": [
+          7.5,
+          10,
+          15,
+          25
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "plus de 25 µg/m³",
+          "de 15 à 25",
+          "de 10 à 15",
+          "de 7,5 à 10",
+          "moins de 7,5"
+        ],
+        "mots": [
+          "plus de 25 µg/m³",
+          "15 à 25 µg/m³",
+          "10 à 15 µg/m³",
+          "7,5 à 10 µg/m³",
+          "moins de 7,5 µg/m³"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 17,
+    "id": "taille-ville",
+    "famille": "vivre",
+    "nom": "Taille de ville (facultatif)",
+    "definition": "Le pays offre-t-il de très grandes villes, des villes moyennes actives, de la nature près des lieux d'emploi ? Notre avis, justifié pays par pays.",
+    "type": "notre-avis",
+    "sources": [
+      "notre-avis"
+    ],
+    "mesures": [
+      {
+        "id": "grande-ville",
+        "nom": "Grandes villes animées",
+        "sens": "haut",
+        "echelle": [
+          "aucune",
+          "peu",
+          "quelques-unes",
+          "plusieurs",
+          "de très grandes métropoles"
+        ],
+        "mots": [
+          "pas de grande ville",
+          "peu de grandes villes",
+          "une grande ville à taille humaine",
+          "plusieurs grandes villes",
+          "de très grandes métropoles"
+        ]
+      },
+      {
+        "id": "ville-moyenne",
+        "nom": "Villes moyennes actives",
+        "sens": "haut",
+        "echelle": [
+          "aucune",
+          "peu",
+          "quelques-unes",
+          "beaucoup",
+          "un vrai réseau"
+        ],
+        "mots": [
+          "pas de ville moyenne",
+          "peu de villes moyennes",
+          "quelques villes moyennes",
+          "beaucoup de villes moyennes",
+          "un vrai réseau de villes moyennes"
+        ]
+      },
+      {
+        "id": "nature",
+        "nom": "Nature à proximité",
+        "sens": "haut",
+        "echelle": [
+          "très loin",
+          "limitée",
+          "accessible",
+          "proche",
+          "aux portes des villes"
+        ],
+        "mots": [
+          "nature très loin",
+          "nature limitée",
+          "nature accessible",
+          "nature proche",
+          "nature aux portes des villes"
+        ]
+      }
+    ]
+  }
+]

@@ -3,180 +3,330 @@
     "nom": "Belgique",
     "id": "belgique",
     "famille": "Europe sans visa",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "BE",
+    "iso3": "BEL",
+    "zone": "europe",
+    "ville": "Bruxelles",
+    "villeRecherche": "Brussels"
   },
   {
     "nom": "Suisse",
     "id": "suisse",
     "famille": "Europe sans visa",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "CH",
+    "iso3": "CHE",
+    "zone": "europe",
+    "ville": "Zurich",
+    "villeRecherche": "Zurich"
   },
   {
     "nom": "Allemagne",
     "id": "allemagne",
     "famille": "Europe sans visa",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "DE",
+    "iso3": "DEU",
+    "zone": "europe",
+    "ville": "Berlin",
+    "villeRecherche": "Berlin"
   },
   {
     "nom": "Irlande",
     "id": "irlande",
     "famille": "Europe sans visa",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "IE",
+    "iso3": "IRL",
+    "zone": "europe",
+    "ville": "Dublin",
+    "villeRecherche": "Dublin"
   },
   {
     "nom": "Luxembourg",
     "id": "luxembourg",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "LU",
+    "iso3": "LUX",
+    "zone": "europe",
+    "ville": "Luxembourg",
+    "villeRecherche": "Luxembourg"
   },
   {
     "nom": "Espagne",
     "id": "espagne",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "ES",
+    "iso3": "ESP",
+    "zone": "europe",
+    "ville": "Madrid",
+    "villeRecherche": "Madrid"
   },
   {
     "nom": "Italie",
     "id": "italie",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "IT",
+    "iso3": "ITA",
+    "zone": "europe",
+    "ville": "Rome",
+    "villeRecherche": "Rome"
   },
   {
     "nom": "Pays-Bas",
     "id": "pays-bas",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "NL",
+    "iso3": "NLD",
+    "zone": "europe",
+    "ville": "Amsterdam",
+    "villeRecherche": "Amsterdam"
   },
   {
     "nom": "Portugal",
     "id": "portugal",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "PT",
+    "iso3": "PRT",
+    "zone": "europe",
+    "ville": "Lisbonne",
+    "villeRecherche": "Lisbon"
   },
   {
     "nom": "Norvège",
     "id": "norvege",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "NO",
+    "iso3": "NOR",
+    "zone": "europe",
+    "ville": "Oslo",
+    "villeRecherche": "Oslo"
   },
   {
     "nom": "Suède",
     "id": "suede",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "SE",
+    "iso3": "SWE",
+    "zone": "europe",
+    "ville": "Stockholm",
+    "villeRecherche": "Stockholm"
   },
   {
     "nom": "Danemark",
     "id": "danemark",
     "famille": "Europe sans visa",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "DK",
+    "iso3": "DNK",
+    "zone": "europe",
+    "ville": "Copenhague",
+    "villeRecherche": "Copenhagen"
   },
   {
     "nom": "Canada",
     "id": "canada",
     "famille": "PVT",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "CA",
+    "iso3": "CAN",
+    "zone": "hors-europe",
+    "ville": "Toronto",
+    "villeRecherche": "Toronto"
   },
   {
     "nom": "Australie",
     "id": "australie",
     "famille": "PVT",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "AU",
+    "iso3": "AUS",
+    "zone": "hors-europe",
+    "ville": "Sydney",
+    "villeRecherche": "Sydney"
   },
   {
     "nom": "Japon",
     "id": "japon",
     "famille": "PVT",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "JP",
+    "iso3": "JPN",
+    "zone": "hors-europe",
+    "ville": "Tokyo",
+    "villeRecherche": "Tokyo"
   },
   {
     "nom": "Nouvelle-Zélande",
     "id": "nouvelle-zelande",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "NZ",
+    "iso3": "NZL",
+    "zone": "hors-europe",
+    "ville": "Auckland",
+    "villeRecherche": "Auckland"
   },
   {
     "nom": "Corée du Sud",
     "id": "coree-du-sud",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "KR",
+    "iso3": "KOR",
+    "zone": "hors-europe",
+    "ville": "Séoul",
+    "villeRecherche": "Seoul"
   },
   {
     "nom": "Taïwan",
     "id": "taiwan",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "TW",
+    "iso3": "TWN",
+    "zone": "hors-europe",
+    "ville": "Taipei",
+    "villeRecherche": "Taipei"
   },
   {
     "nom": "Hong Kong",
     "id": "hong-kong",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "HK",
+    "iso3": "HKG",
+    "zone": "hors-europe",
+    "ville": "Hong Kong",
+    "villeRecherche": "Hong Kong"
   },
   {
     "nom": "Argentine",
     "id": "argentine",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "AR",
+    "iso3": "ARG",
+    "zone": "hors-europe",
+    "ville": "Buenos Aires",
+    "villeRecherche": "Buenos Aires"
   },
   {
     "nom": "Chili",
     "id": "chili",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "CL",
+    "iso3": "CHL",
+    "zone": "hors-europe",
+    "ville": "Santiago",
+    "villeRecherche": "Santiago"
   },
   {
     "nom": "Colombie",
     "id": "colombie",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "CO",
+    "iso3": "COL",
+    "zone": "hors-europe",
+    "ville": "Bogotá",
+    "villeRecherche": "Bogota"
   },
   {
     "nom": "Mexique",
     "id": "mexique",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "MX",
+    "iso3": "MEX",
+    "zone": "hors-europe",
+    "ville": "Mexico",
+    "villeRecherche": "Mexico City"
   },
   {
     "nom": "Brésil",
     "id": "bresil",
     "famille": "PVT",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "BR",
+    "iso3": "BRA",
+    "zone": "hors-europe",
+    "ville": "São Paulo",
+    "villeRecherche": "Sao Paulo"
   },
   {
     "nom": "Royaume-Uni",
     "id": "royaume-uni",
     "famille": "Visa de travail",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "GB",
+    "iso3": "GBR",
+    "zone": "europe",
+    "ville": "Londres",
+    "villeRecherche": "London"
   },
   {
     "nom": "États-Unis",
     "id": "etats-unis",
     "famille": "Visa de travail",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "US",
+    "iso3": "USA",
+    "zone": "hors-europe",
+    "ville": "New York",
+    "villeRecherche": "New York"
   },
   {
     "nom": "Singapour",
     "id": "singapour",
     "famille": "Visa de travail",
-    "ficheComplete": true
+    "ficheComplete": true,
+    "iso2": "SG",
+    "iso3": "SGP",
+    "zone": "hors-europe",
+    "ville": "Singapour",
+    "villeRecherche": "Singapore"
   },
   {
     "nom": "Émirats arabes unis",
     "id": "emirats-arabes-unis",
     "famille": "Visa de travail",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "AE",
+    "iso3": "ARE",
+    "zone": "hors-europe",
+    "ville": "Dubaï",
+    "villeRecherche": "Dubai"
   },
   {
     "nom": "Chine",
     "id": "chine",
     "famille": "Visa de travail",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "CN",
+    "iso3": "CHN",
+    "zone": "hors-europe",
+    "ville": "Shanghai",
+    "villeRecherche": "Shanghai"
   },
   {
     "nom": "Maroc",
     "id": "maroc",
     "famille": "Visa de travail",
-    "ficheComplete": false
+    "ficheComplete": false,
+    "iso2": "MA",
+    "iso3": "MAR",
+    "zone": "hors-europe",
+    "ville": "Casablanca",
+    "villeRecherche": "Casablanca"
   }
 ]

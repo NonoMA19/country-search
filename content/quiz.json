@@ -1,0 +1,309 @@
+{
+  "profil": [
+    {
+      "id": "objectif",
+      "question": "Quel est ton projet ?",
+      "pourquoi": "Ton projet change la porte d'entrée qu'on te propose : PVT, VIE ou visa de travail.",
+      "influence": ["visa", "age-conditions"],
+      "options": [
+        { "id": "stage-vie", "label": "Stage ou VIE" },
+        { "id": "aventure", "label": "Une année d'aventure" },
+        { "id": "premier-poste", "label": "Un premier poste" },
+        { "id": "carriere", "label": "Une carrière longue" }
+      ]
+    },
+    {
+      "id": "age",
+      "question": "Quel âge as-tu ?",
+      "pourquoi": "Le PVT s'arrête à 30 ou 35 ans selon le pays, et le VIE à 28 ans.",
+      "influence": ["visa", "age-conditions"],
+      "options": [
+        { "id": "18-25", "label": "18 à 25 ans", "ageMax": 25 },
+        { "id": "26-27", "label": "26 ou 27 ans", "ageMax": 27 },
+        { "id": "28-30", "label": "28 à 30 ans", "ageMax": 30 },
+        { "id": "31-35", "label": "31 à 35 ans", "ageMax": 35 },
+        { "id": "36-plus", "label": "36 ans ou plus", "ageMax": 99 }
+      ]
+    },
+    {
+      "id": "budget",
+      "question": "Combien peux-tu mettre de côté pour partir ?",
+      "pourquoi": "Certains visas demandent une somme minimale. Ce n'est jamais bloquant : on te dit seulement ce qu'il te manquerait.",
+      "influence": ["argent"],
+      "options": [
+        { "id": "1000", "label": "Environ 1 000 €", "euros": 1000 },
+        { "id": "2000", "label": "Environ 2 000 €", "euros": 2000 },
+        { "id": "3000", "label": "Environ 3 000 €", "euros": 3000 },
+        { "id": "5000", "label": "5 000 € ou plus", "euros": 5000 }
+      ]
+    },
+    {
+      "id": "duree",
+      "question": "Tu pars pour combien de temps ?",
+      "pourquoi": "Un PVT dure un an maximum, un VIE de 6 à 24 mois.",
+      "influence": ["age-conditions"],
+      "options": [
+        { "id": "moins-6", "label": "Moins de 6 mois", "mois": 5 },
+        { "id": "6-12", "label": "6 à 12 mois", "mois": 12 },
+        { "id": "1-2", "label": "1 à 2 ans", "mois": 24 },
+        { "id": "plus-2", "label": "Plus de 2 ans", "mois": 36 }
+      ]
+    },
+    {
+      "id": "anglais",
+      "question": "Ton niveau d'anglais ?",
+      "pourquoi": "Pour savoir si on peut te proposer des pays où le bureau parle anglais.",
+      "influence": ["langue-travail"],
+      "options": [
+        { "id": "debutant", "label": "Débutant" },
+        { "id": "moyen", "label": "Je me débrouille" },
+        { "id": "courant", "label": "Courant" }
+      ]
+    },
+    {
+      "id": "langues",
+      "question": "Tu parles d'autres langues ?",
+      "pourquoi": "Un pays dont tu parles déjà la langue devient plus simple au quotidien.",
+      "influence": ["langue-quotidien", "langue-travail"],
+      "multiple": true,
+      "options": [
+        { "id": "es", "label": "Espagnol", "codes": ["es"] },
+        { "id": "de", "label": "Allemand", "codes": ["de"] },
+        { "id": "it", "label": "Italien", "codes": ["it"] },
+        { "id": "pt", "label": "Portugais", "codes": ["pt"] },
+        { "id": "nl", "label": "Néerlandais", "codes": ["nl"] },
+        { "id": "scandinave", "label": "Suédois, danois ou norvégien", "codes": ["sv", "da", "no"] },
+        { "id": "ja", "label": "Japonais", "codes": ["ja"] },
+        { "id": "ko", "label": "Coréen", "codes": ["ko"] },
+        { "id": "zh", "label": "Chinois", "codes": ["zh"] },
+        { "id": "ar", "label": "Arabe", "codes": ["ar"] }
+      ],
+      "aucun": "Aucune autre"
+    },
+    {
+      "id": "pret-anglais",
+      "question": "Es-tu prêt à travailler en anglais ?",
+      "pourquoi": "Si ce n'est pas le cas, on met en avant les pays où l'on peut travailler en français.",
+      "influence": ["langue-travail"],
+      "afficheSi": "anglais-debutant-sans-autre-langue",
+      "regleAffichage": "Seulement si ton anglais est débutant et que tu ne parles aucune autre langue.",
+      "options": [
+        { "id": "oui", "label": "Oui" },
+        { "id": "non", "label": "Non" }
+      ]
+    },
+    {
+      "id": "nationalite",
+      "question": "As-tu une autre nationalité ?",
+      "pourquoi": "Certaines nationalités donnent des avantages ou des obligations. On te les signale à la fin.",
+      "influence": [],
+      "options": [
+        { "id": "non", "label": "Non" },
+        { "id": "oui", "label": "Oui" }
+      ]
+    },
+    {
+      "id": "nationalite-laquelle",
+      "question": "Laquelle ?",
+      "pourquoi": "Pour l'instant, nous n'avons vérifié que trois cas.",
+      "influence": [],
+      "afficheSi": "autre-nationalite",
+      "regleAffichage": "Seulement si tu as répondu oui à la question précédente.",
+      "options": [
+        { "id": "irlandaise", "label": "Irlandaise" },
+        { "id": "canadienne", "label": "Canadienne" },
+        { "id": "americaine", "label": "Américaine" },
+        { "id": "autre", "label": "Une autre" }
+      ]
+    },
+    {
+      "id": "zone",
+      "question": "Où veux-tu partir ?",
+      "pourquoi": "Les pays de l'autre zone restent visibles, plus bas dans ta liste.",
+      "influence": ["distance"],
+      "options": [
+        { "id": "europe", "label": "En Europe" },
+        { "id": "hors-europe", "label": "Hors d'Europe" },
+        { "id": "peu-importe", "label": "Peu importe" }
+      ]
+    }
+  ],
+  "priorites": [
+    { "id": "travail", "label": "Travail facile à trouver", "icone": "briefcase", "famille": "travailler", "mesures": ["emploi"], "sens": "haut" },
+    { "id": "salaire", "label": "Bon salaire", "icone": "banknote", "famille": "travailler", "mesures": ["salaire"], "sens": "haut" },
+    { "id": "prix", "label": "Vie pas chère", "icone": "piggy-bank", "famille": "vivre", "mesures": ["prix"], "sens": "haut" },
+    { "id": "equilibre", "label": "Équilibre vie pro et perso", "icone": "clock", "famille": "travailler", "mesures": ["heures", "conges"], "sens": "haut" },
+    { "id": "climat", "label": "Climat doux", "icone": "sun", "famille": "vivre", "mesures": ["hiver"], "sens": "haut" },
+    { "id": "proche", "label": "Proche de la France", "icone": "plane", "famille": "vivre", "mesures": ["vol", "decalage"], "sens": "haut" },
+    { "id": "securite", "label": "Sécurité", "icone": "shield", "famille": "vivre", "mesures": ["securite"], "sens": "haut" },
+    { "id": "francais", "label": "Français sur place", "icone": "users", "famille": "travailler", "mesures": ["francais"], "sens": "haut" }
+  ],
+  "sujets": [
+    { "id": "stabilite", "label": "Stabilité politique", "mesure": "stabilite" },
+    { "id": "libertes", "label": "Libertés d'expression et de la presse", "mesure": "libertes" },
+    { "id": "egalite", "label": "Égalité femmes-hommes dans la loi", "mesure": "egalite" },
+    { "id": "air", "label": "Qualité de l'air", "mesure": "air" }
+  ],
+  "phrases": [
+    {
+      "id": "emploi", "famille": "travailler", "type": "oui-non",
+      "texte": "Je veux un pays où les jeunes trouvent facilement du travail.",
+      "pourquoi": "Si oui, on donne plus de place aux pays où le chômage des jeunes est bas.",
+      "oui": [{ "mesures": ["emploi"], "sens": "haut" }], "non": [],
+      "saufPriorites": ["travail"]
+    },
+    {
+      "id": "salaire-temps", "famille": "travailler", "type": "oui-non",
+      "texte": "Je préfère un bon salaire à beaucoup de temps libre.",
+      "pourquoi": "Oui favorise les pays où le salaire achète le plus. Non favorise ceux où l'on travaille moins d'heures.",
+      "oui": [{ "mesures": ["salaire"], "sens": "haut" }], "non": [{ "mesures": ["heures", "conges"], "sens": "haut" }],
+      "saufPriorites": ["salaire", "equilibre"]
+    },
+    {
+      "id": "pays-cher", "famille": "vivre", "type": "oui-non",
+      "texte": "Un pays cher ne me fait pas peur si les salaires suivent.",
+      "pourquoi": "Oui favorise les pays aux bons salaires. Non favorise les pays où la vie coûte moins cher.",
+      "oui": [{ "mesures": ["salaire"], "sens": "haut", "famille": "travailler" }], "non": [{ "mesures": ["prix"], "sens": "haut" }],
+      "saufPriorites": ["salaire", "prix"]
+    },
+    {
+      "id": "vie-moins-chere", "famille": "vivre", "type": "oui-non",
+      "texte": "Je veux un pays où la vie coûte moins cher qu'en France.",
+      "pourquoi": "Si oui, on donne plus de place aux pays où les prix sont bas.",
+      "oui": [{ "mesures": ["prix"], "sens": "haut" }], "non": [],
+      "saufPriorites": ["prix"]
+    },
+    {
+      "id": "finir-tard", "famille": "travailler", "type": "oui-non",
+      "texte": "Finir tard ne me dérange pas si le travail me plaît.",
+      "pourquoi": "Si non, on donne plus de place aux pays où les semaines de travail sont courtes.",
+      "oui": [], "non": [{ "mesures": ["heures", "conges"], "sens": "haut" }],
+      "saufPriorites": ["equilibre"]
+    },
+    {
+      "id": "anglais", "famille": "travailler", "type": "oui-non",
+      "texte": "Je veux pouvoir travailler en anglais.",
+      "pourquoi": "Si oui, on donne plus de place aux pays où l'anglais suffit au bureau.",
+      "oui": [{ "mesures": ["anglais"], "sens": "haut" }], "non": [],
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas affichée si tu as dit ne pas vouloir travailler en anglais."
+    },
+    {
+      "id": "francais", "famille": "travailler", "type": "oui-non",
+      "texte": "Je préfère être entouré de Français sur place.",
+      "pourquoi": "Oui favorise les pays où beaucoup de Français vivent déjà. Non favorise ceux où ils sont peu nombreux.",
+      "oui": [{ "mesures": ["francais"], "sens": "haut" }], "non": [{ "mesures": ["francais"], "sens": "bas" }],
+      "saufPriorites": ["francais"]
+    },
+    {
+      "id": "chef", "famille": "travailler", "type": "oui-non",
+      "texte": "Je préfère un chef qui décide seul.",
+      "pourquoi": "Pour rapprocher ton style de celui des entreprises du pays : hiérarchie marquée ou plate.",
+      "oui": [{ "mesures": ["hierarchie"], "sens": "haut" }], "non": [{ "mesures": ["hierarchie"], "sens": "bas" }]
+    },
+    {
+      "id": "franchise", "famille": "travailler", "type": "oui-non",
+      "texte": "J'aime qu'on me dise les choses franchement.",
+      "pourquoi": "Dans certains pays on dit tout sans détour, dans d'autres il faut lire entre les lignes.",
+      "oui": [{ "mesures": ["communication"], "sens": "bas" }], "non": [{ "mesures": ["communication"], "sens": "haut" }]
+    },
+    {
+      "id": "retard", "famille": "travailler", "type": "oui-non",
+      "texte": "Dix minutes de retard à une réunion, ce n'est pas grave.",
+      "pourquoi": "La ponctualité est stricte dans certains pays, souple dans d'autres.",
+      "oui": [{ "mesures": ["ponctualite"], "sens": "bas" }], "non": [{ "mesures": ["ponctualite"], "sens": "haut" }]
+    },
+    {
+      "id": "climat-egal", "famille": "vivre", "type": "filtre",
+      "texte": "Le climat m'est égal.",
+      "pourquoi": "Si oui, on ne te pose aucune autre question sur le climat.",
+      "ouvre": ["hiver", "ete"],
+      "saufPriorites": ["climat"]
+    },
+    {
+      "id": "hiver", "famille": "vivre", "type": "oui-non",
+      "texte": "Un hiver très froid ne me fait pas peur.",
+      "pourquoi": "Si non, on donne plus de place aux pays où l'hiver est doux.",
+      "oui": [], "non": [{ "mesures": ["hiver"], "sens": "haut" }],
+      "apresFiltre": "climat-egal", "saufPriorites": ["climat"],
+      "regleAffichage": "Seulement si tu as dit que le climat compte pour toi."
+    },
+    {
+      "id": "ete", "famille": "vivre", "type": "oui-non",
+      "texte": "J'aime les étés très chauds.",
+      "pourquoi": "Oui favorise les pays aux étés chauds. Non favorise ceux aux étés frais.",
+      "oui": [{ "mesures": ["ete"], "sens": "haut" }], "non": [{ "mesures": ["ete"], "sens": "bas" }],
+      "apresFiltre": "climat-egal", "saufPriorites": ["climat"],
+      "regleAffichage": "Seulement si tu as dit que le climat compte pour toi."
+    },
+    {
+      "id": "trois-heures", "famille": "vivre", "type": "ecart",
+      "texte": "Je veux rester à moins de 3 heures d'avion de la France.",
+      "pourquoi": "Si oui, les pays plus lointains descendent dans « Moins adaptés pour toi ». Tu peux les remonter.",
+      "ecarteSi": "oui", "regle": "vol-plus-de-3h",
+      "raison": "Tu veux rester à moins de 3 heures d'avion.",
+      "saufPriorites": ["proche"], "saufZone": "hors-europe",
+      "regleAffichage": "Pas affichée si tu as choisi de partir hors d'Europe."
+    },
+    {
+      "id": "loin", "famille": "vivre", "type": "oui-non",
+      "texte": "Partir loin fait partie du projet.",
+      "pourquoi": "Oui favorise les pays lointains. Non favorise les pays proches de la France.",
+      "oui": [{ "mesures": ["vol", "decalage"], "sens": "bas" }], "non": [{ "mesures": ["vol", "decalage"], "sens": "haut" }],
+      "saufPriorites": ["proche"], "saufReponse": { "trois-heures": "oui" },
+      "regleAffichage": "Pas affichée si tu veux rester à moins de 3 heures d'avion."
+    },
+    {
+      "id": "langue-nouvelle", "famille": "vivre", "type": "oui-non",
+      "texte": "Je suis prêt à apprendre une nouvelle langue.",
+      "pourquoi": "Si non, on donne plus de place aux pays où l'on parle français, ou une langue proche.",
+      "oui": [], "non": [{ "mesures": ["langue"], "sens": "haut" }]
+    },
+    {
+      "id": "autre-ecriture", "famille": "vivre", "type": "ecart",
+      "texte": "Apprendre une langue avec une autre écriture, ça me va aussi.",
+      "pourquoi": "Si non, le Japon, la Corée du Sud, Taïwan et la Chine descendent dans « Moins adaptés pour toi ».",
+      "ecarteSi": "non", "regle": "autre-ecriture",
+      "raison": "Tu ne veux pas apprendre une langue avec une autre écriture.",
+      "siReponse": { "langue-nouvelle": "oui" },
+      "regleAffichage": "Seulement si tu es prêt à apprendre une nouvelle langue."
+    },
+    {
+      "id": "vigilance", "famille": "vivre", "type": "oui-non",
+      "texte": "Je suis prêt à vivre dans une ville où il faut rester vigilant.",
+      "pourquoi": "Si non, on donne plus de place aux pays où il y a le moins de violences graves.",
+      "oui": [], "non": [{ "mesures": ["securite"], "sens": "haut" }],
+      "saufPriorites": ["securite"]
+    },
+    {
+      "id": "assurance", "famille": "vivre", "type": "oui-non",
+      "texte": "Payer une assurance santé privée chaque mois, ça me va.",
+      "pourquoi": "Si non, on donne plus de place aux pays où un jeune étranger est couvert sans assurance privée. On ne te demande rien sur ta santé.",
+      "oui": [], "non": [{ "mesures": ["sante"], "sens": "haut" }]
+    },
+    {
+      "id": "employeur", "famille": "partir", "type": "ecart",
+      "texte": "Je ne veux pas dépendre d'un employeur pour mon visa.",
+      "pourquoi": "Si oui, les pays où il faut un employeur ou une mission pour entrer descendent dans « Moins adaptés pour toi ».",
+      "ecarteSi": "oui", "regle": "employeur-requis",
+      "raison": "Tu ne veux pas dépendre d'un employeur pour ton visa."
+    },
+    {
+      "id": "francais-ou-anglais", "famille": "travailler", "type": "ecart",
+      "texte": "Je ne partirai que si je peux travailler en français ou en anglais.",
+      "pourquoi": "Si oui, les pays où la langue locale est presque toujours nécessaire au travail descendent dans « Moins adaptés pour toi ».",
+      "ecarteSi": "oui", "regle": "langue-locale-necessaire",
+      "raison": "Tu veux travailler en français ou en anglais."
+    },
+    {
+      "id": "ville", "famille": "vivre", "type": "choix",
+      "texte": "Capitale animée, ville moyenne ou nature à proximité ?",
+      "pourquoi": "Pour donner plus de place aux pays qui offrent le cadre de vie que tu préfères.",
+      "options": [
+        { "id": "capitale", "label": "Capitale animée", "effets": [{ "mesures": ["grande-ville"], "sens": "haut" }] },
+        { "id": "moyenne", "label": "Ville moyenne", "effets": [{ "mesures": ["ville-moyenne"], "sens": "haut" }] },
+        { "id": "nature", "label": "Nature à proximité", "effets": [{ "mesures": ["nature"], "sens": "haut" }] }
+      ]
+    }
+  ]
+}

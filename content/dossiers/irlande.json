@@ -1,0 +1,66 @@
+{
+  "pays": "irlande",
+  "complet": true,
+  "verifieLe": "2026-11-14",
+  "liens": [
+    {
+      "id": "visa",
+      "titre": "Page officielle du visa",
+      "nom": "Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)",
+      "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+      "statut": "verifie"
+    },
+    {
+      "id": "conseils",
+      "titre": "Conseils aux voyageurs",
+      "nom": "Conseils aux voyageurs (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/irlande/dernieres-minutes-et-alertes",
+      "statut": "verifie"
+    },
+    {
+      "id": "consulat",
+      "titre": "Ambassade ou consulat de France",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/irlande/conseils-aux-voyageurs-contacts-utiles",
+      "statut": "verifie"
+    },
+    {
+      "id": "registre",
+      "titre": "Inscription au registre des Français établis hors de France",
+      "nom": "S'inscrire au registre (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
+      "statut": "verifie"
+    }
+  ],
+  "associations": [
+    {
+      "id": "cci",
+      "titre": "Chambre de commerce française",
+      "nom": "CCI France Irlande",
+      "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/europe/exporter-s-implanter-irlande.html",
+      "statut": "verifie"
+    },
+    {
+      "id": "alliance",
+      "titre": "Alliance française",
+      "nom": "Fondation des Alliances Françaises (réseau mondial)",
+      "url": "https://www.fondation-alliancefr.org/",
+      "statut": "verifie"
+    },
+    {
+      "id": "ufe",
+      "titre": "Association de Français de l'étranger",
+      "nom": "Union des Français de l'étranger (UFE)",
+      "url": null,
+      "statut": "a-completer"
+    },
+    {
+      "id": "adfe",
+      "titre": "Association de Français de l'étranger",
+      "nom": "Français du monde - ADFE",
+      "url": null,
+      "statut": "a-completer"
+    }
+  ],
+  "checklist": "Bientôt"
+}

@@ -1,0 +1,110 @@
+{
+  "bm-wdi": {
+    "nom": "Banque mondiale, Indicateurs du développement dans le monde",
+    "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte"
+  },
+  "bm-wgi": {
+    "nom": "Banque mondiale, Indicateurs mondiaux de gouvernance",
+    "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte"
+  },
+  "oit-ilostat": {
+    "nom": "Organisation internationale du travail, ILOSTAT",
+    "url": "https://www.ilo.org/node/9321",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte"
+  },
+  "meae-registre": {
+    "nom": "Ministère de l'Europe et des Affaires étrangères, registre des Français établis hors de France (data.gouv.fr)",
+    "url": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
+    "licence": "Licence Ouverte",
+    "type": "officiel"
+  },
+  "open-meteo": {
+    "nom": "Open-Meteo (réanalyse ERA5 de Copernicus)",
+    "url": "https://open-meteo.com/en/licence",
+    "licence": "CC BY 4.0, API gratuite pour un usage non commercial",
+    "type": "donnee-ouverte"
+  },
+  "geonames": {
+    "nom": "GeoNames, via le géocodage Open-Meteo, et base de fuseaux horaires IANA",
+    "url": "https://open-meteo.com/en/licence",
+    "licence": "CC BY 4.0 (GeoNames), domaine public (IANA)",
+    "type": "donnee-ouverte"
+  },
+  "diplomatie-pvt": {
+    "nom": "France Diplomatie, Programme Vacances-Travail",
+    "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+    "licence": "Licence Ouverte 2.0",
+    "type": "officiel"
+  },
+  "diplomatie-cav": {
+    "nom": "France Diplomatie, Conseils aux voyageurs",
+    "url": "https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs",
+    "licence": "Licence Ouverte 2.0",
+    "type": "officiel"
+  },
+  "service-public-vie": {
+    "nom": "Service-Public, Volontariat international en entreprise (VIE)",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F10040",
+    "licence": "Licence Ouverte 2.0",
+    "type": "officiel"
+  },
+  "service-public-soins": {
+    "nom": "Service-Public, Remboursement des soins à l'étranger",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F213",
+    "licence": "Licence Ouverte 2.0",
+    "type": "officiel"
+  },
+  "europa-travail": {
+    "nom": "L'Europe est à vous (Union européenne), Travailler à l'étranger",
+    "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+    "licence": "Lien seulement, aucun contenu copié (voir l'avis juridique du site)",
+    "type": "officiel"
+  },
+  "europa-permis": {
+    "nom": "L'Europe est à vous (Union européenne), Permis de travail",
+    "url": "https://europa.eu/youreurope/citizens/work/work-abroad/work-permits/index_fr.htm",
+    "licence": "Lien seulement, aucun contenu copié (voir l'avis juridique du site)",
+    "type": "officiel"
+  },
+  "cleiss-accords": {
+    "nom": "Cleiss, Conventions bilatérales de sécurité sociale",
+    "url": "https://www.cleiss.fr/docs/textes/index.html",
+    "licence": "Pas de licence ouverte : lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "gov-uk-visa": {
+    "nom": "GOV.UK, Skilled Worker visa",
+    "url": "https://www.gov.uk/skilled-worker-visa",
+    "licence": "Open Government Licence v3.0",
+    "type": "officiel"
+  },
+  "gov-uk-sante": {
+    "nom": "GOV.UK, Pay for UK healthcare as part of your immigration application",
+    "url": "https://www.gov.uk/healthcare-immigration-application",
+    "licence": "Open Government Licence v3.0",
+    "type": "officiel"
+  },
+  "mom-singapour": {
+    "nom": "Ministry of Manpower (Singapour), Employment Pass",
+    "url": "https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "canada-eic": {
+    "nom": "Gouvernement du Canada, Expérience internationale Canada",
+    "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/invitations-presenter-demande.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "notre-avis": {
+    "nom": "Country Search, avis de la rédaction",
+    "url": "/methode",
+    "licence": "CC BY-SA 4.0",
+    "type": "notre-avis"
+  }
+}
