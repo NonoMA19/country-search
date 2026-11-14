@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type ReactNode } from "react";
 import { Check, ChevronLeft, CircleHelp } from "lucide-react";
+import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import { quiz, type Phrase } from "@/lib/donnees";
@@ -59,18 +60,25 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
   const [dx, setDx] = useState(0);
   const SEUIL = 90;
   const glisse = phrase.type !== "choix";
+  const annuler = () => { depart.current = null; setDx(0); };
   return (
     <>
       <div
-        onPointerDown={(e) => { if (glisse) depart.current = e.clientX; }}
-        onPointerMove={(e) => { if (depart.current !== null) setDx(e.clientX - depart.current); }}
-        onPointerUp={() => {
-          if (depart.current === null) return;
-          depart.current = null;
-          if (dx > SEUIL) repond("oui"); else if (dx < -SEUIL) repond("non");
-          setDx(0);
+        onPointerDown={(e) => {
+          if (!glisse || (e.pointerType === "mouse" && e.button !== 0)) return;
+          depart.current = e.clientX;
+          // La carte garde le pointeur même si on relâche en dehors.
+          e.currentTarget.setPointerCapture(e.pointerId);
         }}
-        onPointerCancel={() => { depart.current = null; setDx(0); }}
+        onPointerMove={(e) => { if (depart.current !== null) setDx(e.clientX - depart.current); }}
+        onPointerUp={(e) => {
+          if (depart.current === null) return;
+          const ecart = e.clientX - depart.current;
+          annuler();
+          if (ecart > SEUIL) repond("oui"); else if (ecart < -SEUIL) repond("non");
+        }}
+        onPointerCancel={annuler}
+        onLostPointerCapture={annuler}
         style={{ transform: `translateX(${dx}px) rotate(${dx / 40}deg)`, touchAction: "pan-y" }}
         className={`relative flex min-h-48 flex-col justify-center rounded-3xl border-2 bg-carte p-6 shadow-sm select-none ${dx > SEUIL ? "border-bleu" : dx < -SEUIL ? "border-gris" : "border-bord"}`}
       >
@@ -103,14 +111,26 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
   );
 }
 
+// Après un changement d'écran, les clics arrivés trop vite sont ignorés :
+// un double clic ne doit pas répondre aussi à la question suivante.
+const DELAI_CLIC = 400;
+let dernierChangement = -Infinity;
+const clicLibre = () => performance.now() - dernierChangement >= DELAI_CLIC;
+const marquerChangement = () => { dernierChangement = performance.now(); };
+
 export default function Quiz() {
   const session = useSession();
   const router = useRouter();
-  if (!session) return <main className="mx-auto w-full max-w-xl flex-1 px-5 py-10 text-gris">Chargement…</main>;
+  if (!session) return <Chargement />;
 
   const { etat, etape } = session;
-  const maj = (s: Partial<Session>) => ecrire({ ...session, ...s });
-  const aller = (e: Etape, autres: Partial<Session> = {}) => maj({ etape: e, ...autres });
+  const maj = (s: Partial<Session>) => { if (clicLibre()) ecrire({ ...session, ...s }); };
+  const aller = (e: Etape, autres: Partial<Session> = {}) => {
+    if (!clicLibre()) return;
+    marquerChangement();
+    ecrire({ ...session, etape: e, ...autres });
+  };
+  const voirResultat = () => { if (clicLibre()) { marquerChangement(); router.push("/resultat"); } };
   const questions = visibles(etat.profil);
 
   // ----- Profil -----
@@ -249,7 +269,7 @@ export default function Quiz() {
           ))}
         </ul>
         <div className="mt-auto space-y-3 pt-6">
-          <button type="button" onClick={() => router.push("/resultat")} className={BOUTON_PLEIN}>Voir mon résultat</button>
+          <button type="button" onClick={voirResultat} className={BOUTON_PLEIN}>Voir mon résultat</button>
           {phrase && (
             <button type="button" onClick={() => aller({ t: "phrases" }, { proposeA: etat.ordre.length })} className={`${BOUTON} border-bord bg-carte text-center hover:border-bleu`}>Continuer pour affiner</button>
           )}
@@ -276,7 +296,7 @@ export default function Quiz() {
             </li>
           ))}
         </ul>
-        <button type="button" onClick={() => router.push("/resultat")} className="mt-3 min-h-11 text-sm font-medium text-lien underline">
+        <button type="button" onClick={voirResultat} className="mt-3 min-h-11 text-sm font-medium text-lien underline">
           M’arrêter là et voir mon résultat
         </button>
       </div>

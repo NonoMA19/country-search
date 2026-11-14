@@ -6,11 +6,13 @@ import { useState } from "react";
 import { ArrowUp, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
+import { ErreurPdf } from "@/components/BoutonDossier";
+import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import { doubleNationalite, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, coince, exAequo, paysSurprise, profilTravail, raisons, verdict,
+  LIBELLE_BADGE, budgetProfil, calculer, coince, exAequo, paysSurprise, prochainePhrase, profilTravail, raisons, verdict,
   type Badge, type Etat, type Ligne,
 } from "@/lib/moteur";
 import { telechargerDossier } from "@/lib/pdf";
@@ -74,6 +76,7 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
 
 function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; surprise?: boolean }) {
   const [enCours, setEnCours] = useState(false);
+  const [erreur, setErreur] = useState(false);
   const pour = raisons(ligne, etat.profil);
   const contre = coince(ligne, etat.profil);
   const score = Math.round(ligne.score);
@@ -82,8 +85,11 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
 
   const pdf = async () => {
     setEnCours(true);
+    setErreur(false);
     try {
       await telechargerDossier({ pays: p, ligne, raisons: pour, coince: contre });
+    } catch {
+      setErreur(true);
     } finally {
       setEnCours(false);
     }
@@ -159,6 +165,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
           <Download aria-hidden="true" className="h-5 w-5" /> {enCours ? "Préparation…" : "Télécharger mon dossier (PDF)"}
         </button>
       </div>
+      <ErreurPdf visible={erreur} />
     </article>
   );
 }
@@ -186,7 +193,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
 export default function Resultat() {
   const session = useSession();
   const router = useRouter();
-  if (!session) return <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10 text-gris">Chargement…</main>;
+  if (!session) return <Chargement />;
 
   const { etat, reglages } = session;
   if (etat.priorites.length !== 3) {
@@ -215,6 +222,8 @@ export default function Resultat() {
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const famillesActives = FAMILLES.filter((f) => lignes.some((l) => l.familles[f.id] !== null));
   const egalites = principaux.map((_, i) => exAequo(principaux, i));
+  const encoreDesPhrases = etat.historique.length > 0 && prochainePhrase(etat) !== null;
+  const affiner = () => { ecrire({ ...session, etape: { t: "phrases" }, proposeA: etat.ordre.length }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
 
   return (
@@ -365,7 +374,11 @@ export default function Resultat() {
       </section>
 
       <div className="mt-10 grid gap-3 sm:grid-cols-2">
-        <Link href="/quiz" className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">Continuer pour affiner</Link>
+        {encoreDesPhrases ? (
+          <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">Continuer pour affiner</button>
+        ) : (
+          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à toutes les phrases utiles : ton classement ne peut plus s’affiner.</p>
+        )}
         <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">
           <RotateCcw aria-hidden="true" className="h-5 w-5" /> Recommencer
         </button>

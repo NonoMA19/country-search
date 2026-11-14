@@ -60,3 +60,14 @@ input[type="range"] {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Message affiché seulement si la page reste bloquée sur « Chargement… ». */
+.apparait-tard {
+  opacity: 0;
+  animation: apparait 0.3s ease 5s forwards;
+}
+@keyframes apparait {
+  to {
+    opacity: 1;
+  }
+}

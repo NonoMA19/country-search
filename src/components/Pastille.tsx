@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ExternalLink, X } from "lucide-react";
 import { CONTACT_EMAIL } from "@/config";
 import { LIBELLE_TYPE, dateFr, type Preuve } from "@/lib/donnees";
@@ -15,11 +16,35 @@ const STYLE: Record<Preuve["type"], string> = {
 const MOTIFS = ["Lien cassé", "Information fausse", "Information dépassée", "Autre"];
 
 // Une pastille (Officiel, Donnée ouverte, Notre avis). Un tap ouvre la preuve.
+// La fenêtre est placée à la fin de la page (portail) : une pastille vit souvent
+// dans un paragraphe, et un paragraphe ne peut pas contenir de bloc.
 export default function Pastille({ preuve, pays }: { preuve: Preuve; pays?: string }) {
+  const [ouvert, setOuvert] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOuvert(true)}
+        className={`ml-1 inline-flex min-h-6 items-center rounded-full px-2 align-middle text-xs font-medium whitespace-nowrap ${STYLE[preuve.type]}`}
+        aria-label={`${LIBELLE_TYPE[preuve.type]} : voir la preuve`}
+        aria-haspopup="dialog"
+      >
+        {LIBELLE_TYPE[preuve.type]}
+      </button>
+      {ouvert && createPortal(<Fenetre preuve={preuve} pays={pays} fermer={() => setOuvert(false)} />, document.body)}
+    </>
+  );
+}
+
+function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; fermer: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [signale, setSignale] = useState(false);
   const [motif, setMotif] = useState<string | null>(null);
   const [details, setDetails] = useState("");
+  useEffect(() => {
+    const d = ref.current;
+    if (d && !d.open) d.showModal();
+  }, []);
 
   const courriel = () => {
     const sujet = `Signalement : ${motif}${pays ? ` (${pays})` : ""}`;
@@ -28,18 +53,9 @@ export default function Pastille({ preuve, pays }: { preuve: Preuve; pays?: stri
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => ref.current?.showModal()}
-        className={`ml-1 inline-flex min-h-6 items-center rounded-full px-2 align-middle text-xs font-medium whitespace-nowrap ${STYLE[preuve.type]}`}
-        aria-label={`${LIBELLE_TYPE[preuve.type]} : voir la preuve`}
-      >
-        {LIBELLE_TYPE[preuve.type]}
-      </button>
       <dialog
         ref={ref}
-        onClose={() => { setSignale(false); setMotif(null); setDetails(""); }}
+        onClose={fermer}
         onClick={(e) => { if (e.target === ref.current) ref.current?.close(); }}
         className="m-auto w-[calc(100%-2rem)] max-w-md rounded-3xl bg-carte p-0 text-encre shadow-xl"
       >
@@ -54,7 +70,7 @@ export default function Pastille({ preuve, pays }: { preuve: Preuve; pays?: stri
           <p className="mt-2">{preuve.texte}</p>
           <dl className="mt-4 space-y-2 text-sm">
             {preuve.type === "a-verifier" ? (
-              <p className="text-gris">Cette information n’est pas encore vérifiée. Elle ne compte pas dans ton résultat.</p>
+              <div><dd className="text-gris">Cette information n’est pas encore vérifiée. Elle ne compte pas dans ton résultat.</dd></div>
             ) : (
               <>
                 <div>
@@ -114,6 +130,5 @@ export default function Pastille({ preuve, pays }: { preuve: Preuve; pays?: stri
           </div>
         </div>
       </dialog>
-    </>
   );
 }
