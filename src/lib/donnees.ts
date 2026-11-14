@@ -11,7 +11,7 @@ export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis";
 export type FamilleScore = "travailler" | "vivre" | "valeurs";
 export type Sens = "haut" | "bas";
 
-export type Source = { nom: string; url: string; licence: string; type: TypeSource };
+export type Source = { nom: string; url: string; licence: string; type: TypeSource; page?: string };
 
 export type DefMesure = {
   id: string;
@@ -102,6 +102,7 @@ export type PorteBrute = {
   dureeMois?: number;
   employeur?: boolean;
   conditions?: string[];
+  detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
   source: string | null;
   lien: string | null;
   verifieLe: string | null;
@@ -191,6 +192,8 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     texte: n.texte,
     source: s.nom,
     lien: n.lien ?? (s.url.startsWith("http") ? s.url : null),
+    // Les liens de données ouvertes sont des fichiers bruts : on donne aussi la page de présentation.
+    page: n.lien && s.page && n.lien !== s.page ? s.page : null,
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
   };

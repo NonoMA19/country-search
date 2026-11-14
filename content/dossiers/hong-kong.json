@@ -19,9 +19,9 @@
     {
       "id": "consulat",
       "titre": "Ambassade ou consulat de France",
-      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
-      "url": null,
-      "statut": "a-verifier"
+      "nom": "Contacts utiles en Chine, dont le consulat général de France à Hong Kong et Macao (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chine/conseils-aux-voyageurs-contacts-utiles",
+      "statut": "verifie"
     },
     {
       "id": "registre",

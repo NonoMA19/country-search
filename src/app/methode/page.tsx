@@ -108,7 +108,11 @@ export default function Methode() {
                     <p className="font-medium">{m.nom}{m.sens === "position" ? " (une position, ni bonne ni mauvaise)" : ""}</p>
                     <p className="text-gris">Les 5 niveaux, du plus bas au plus haut : {m.echelle.join(" · ")}.</p>
                     {m.regle && <p className="text-gris">Règle : {m.regle}</p>}
-                    <p className="text-gris">Pays couverts : {paysCouverts(m.id)} sur {pays.length}.</p>
+                    <p className="text-gris">
+                      {paysCouverts(m.id) > 0
+                        ? `Pays couverts : ${paysCouverts(m.id)} sur ${pays.length}.`
+                        : "Pas encore de donnée vérifiée : cette mesure ne compte pas pour l’instant."}
+                    </p>
                   </div>
                 ))}
                 <p className="mt-3 text-sm">

@@ -201,12 +201,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Il faut toujours une autorisation de voyage électronique (eVisitor) ou un visa, demandés en ligne : aucune vignette n'est collée dans le passeport. Pour les visas autres que le PVT, France Diplomatie renvoie au site du ministère australien de l'Immigration.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/australie/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "japon": [
@@ -230,12 +231,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, un séjour est limité à 90 jours. Au-delà, un visa est obligatoire : il se demande avant le départ, auprès de l'ambassade du Japon en France.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/japon/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "nouvelle-zelande": [
@@ -259,12 +261,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, une visite est limitée à 90 jours, avec une autorisation de voyage électronique (NZeTA).",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/nouvelle-zelande/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "coree-du-sud": [
@@ -288,12 +291,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "La dispense de visa ne couvre que le tourisme et les visites de moins de 90 jours. Un visa de long séjour se demande au centre coréen des visas à Paris (KVAC). Travailler sans le bon visa expose à de lourdes sanctions.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/coree-du-sud/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "taiwan": [
@@ -317,12 +321,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, un séjour est limité à 90 jours. Pour un séjour plus long, le visa se demande au Bureau de représentation de Taipei en France.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/taiwan/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "hong-kong": [
@@ -375,12 +380,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, un séjour est limité à trois mois. Au-delà, il faut un visa qui correspond au vrai motif du séjour : les contrôles se sont durcis en 2026.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/argentine/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "chili": [
@@ -404,12 +410,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, un séjour est limité à trois mois. Les démarches de long séjour sont expliquées par le consulat général du Chili à Paris.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chili/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "colombie": [
@@ -433,12 +440,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Sans visa, un séjour est limité à 90 jours. Travailler avec un visa de tourisme est sanctionné par de lourdes amendes.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/colombie/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "mexique": [
@@ -462,12 +470,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Un visa est nécessaire pour toute activité rémunérée, y compris un VIE. Il se demande à la section consulaire de l'ambassade du Mexique en France.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/mexique/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "bresil": [
@@ -563,12 +572,13 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Pour travailler ou faire un stage, il faut le visa qui autorise cette activité : le visa de tourisme (visa L) ne le permet pas. L'exemption de visa de 30 jours ne couvre pas le travail.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier"
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chine/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "detailsAVerifier": true
   }
  ],
  "maroc": [

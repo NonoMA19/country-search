@@ -173,7 +173,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   const visa = liste.find((x) => x.type === "visa-travail");
   if (pvt && pvt.ageMax !== undefined) {
     if (age !== null && age > pvt.ageMax) {
-      if (visa && visa.statut !== "verifie") alertes.push({ texte: "Les conditions du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
+      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
       return {
         badge: "fermee", nom: pvt.nom, type: "pvt",
         phrase: `Le PVT (Programme Vacances-Travail) s'arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
@@ -210,7 +210,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
   let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
-  if (base.statut !== "verifie") phrase += " Les conditions exactes ne sont pas encore vérifiées.";
+  if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
   for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
   if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n'est pas encore vérifiée.");
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres };

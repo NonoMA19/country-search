@@ -1,6 +1,6 @@
 {
   "bm-wdi": {
-    "nom": "Banque mondiale, Indicateurs du développement dans le monde",
+    "nom": "Banque mondiale, Indicateurs du développement dans le monde (données reprises de l'OIT, de l'OMS et d'autres organismes)",
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
     "type": "donnee-ouverte"
@@ -9,13 +9,15 @@
     "nom": "Banque mondiale, Indicateurs mondiaux de gouvernance",
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
-    "type": "donnee-ouverte"
+    "type": "donnee-ouverte",
+    "page": "https://www.worldbank.org/en/publication/worldwide-governance-indicators"
   },
   "oit-ilostat": {
     "nom": "Organisation internationale du travail, ILOSTAT",
     "url": "https://www.ilo.org/node/9321",
     "licence": "CC BY 4.0",
-    "type": "donnee-ouverte"
+    "type": "donnee-ouverte",
+    "page": "https://www.ilo.org/fr/donnees-et-statistiques"
   },
   "meae-registre": {
     "nom": "Ministère de l'Europe et des Affaires étrangères, registre des Français établis hors de France (data.gouv.fr)",
@@ -27,13 +29,15 @@
     "nom": "Open-Meteo (réanalyse ERA5 de Copernicus)",
     "url": "https://open-meteo.com/en/licence",
     "licence": "CC BY 4.0, API gratuite pour un usage non commercial",
-    "type": "donnee-ouverte"
+    "type": "donnee-ouverte",
+    "page": "https://open-meteo.com/en/docs/historical-weather-api"
   },
   "geonames": {
     "nom": "GeoNames, via le géocodage Open-Meteo, et base de fuseaux horaires IANA",
     "url": "https://open-meteo.com/en/licence",
     "licence": "CC BY 4.0 (GeoNames), domaine public (IANA)",
-    "type": "donnee-ouverte"
+    "type": "donnee-ouverte",
+    "page": "https://open-meteo.com/en/docs/geocoding-api"
   },
   "diplomatie-pvt": {
     "nom": "France Diplomatie, Programme Vacances-Travail",
@@ -106,5 +110,11 @@
     "url": "/methode",
     "licence": "CC BY-SA 4.0",
     "type": "notre-avis"
+  },
+  "bm-wbl": {
+    "nom": "Banque mondiale, Les femmes, l'entreprise et le droit (cadre juridique)",
+    "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte"
   }
 }

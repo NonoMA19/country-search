@@ -7,6 +7,7 @@ import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
+import { paysCouverts } from "@/lib/moteur";
 import { criteres, dateFr, notes, portes, preuveMesure, preuveSource, vie, type Critere } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
@@ -63,14 +64,16 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
 // Une carte par critère. Si plusieurs mesures partagent le même texte (taille de ville),
 // le texte n'apparaît qu'une fois : jamais deux fois le même paragraphe sur une page.
 function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
-  const lignes = c.mesures.map((m) => {
+  // Une mesure sans aucune donnée pour aucun pays n'est pas affichée (elle ne compte pas).
+  const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0).map((m) => {
     const n = notes[paysId]?.[m.id];
     const ok = n?.statut === "verifie" && n.note !== null;
     return { m, n, ok, mot: ok ? m.mots[(n.note as number) - 1] : null, explication: ok ? m.explications?.[(n.note as number) - 1] : undefined };
   });
   const textes = [...new Set(lignes.map((l) => l.n?.texte ?? "").filter(Boolean))];
   // Une seule carte si les mesures partagent le même texte (taille de ville) ou décrivent un même style (style de travail).
-  const regrouper = c.mesures.length > 1 && lignes.every((l) => l.ok) && (textes.length <= 1 || c.id === "style-travail");
+  if (lignes.length === 0) return null;
+  const regrouper = lignes.length > 1 && lignes.every((l) => l.ok) && (textes.length <= 1 || c.id === "style-travail");
   if (regrouper) {
     return (
       <li className="rounded-2xl border border-bord bg-carte p-4">
@@ -85,7 +88,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
         </ul>
         <p className="mt-2">
           {textes.join(" ")}
-          <Pastille preuve={preuveMesure(paysId, c.mesures[0].id)} pays={nomPays} contexte={c.nom} />
+          <Pastille preuve={preuveMesure(paysId, lignes[0].m.id)} pays={nomPays} contexte={c.nom} />
         </p>
       </li>
     );
@@ -148,6 +151,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                   <Pastille preuve={preuveSource("Invitation à présenter une demande", b.invitationTexte, b.invitationSource.source, b.invitationSource.lien, b.invitationSource.verifieLe)} pays={p.nom} contexte="l’invitation" />
                 </p>
               )}
+              {b.detailsAVerifier && <p className="mt-2 text-sm text-gris">Les conditions détaillées du visa de travail (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.</p>}
               {(b.conditions ?? []).length > 0 && (
                 <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
                   {b.conditions?.map((c) => <li key={c}>{c}</li>)}
