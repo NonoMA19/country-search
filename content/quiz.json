@@ -133,7 +133,7 @@
     { "id": "salaire", "label": "Bon salaire", "icone": "banknote", "famille": "travailler", "mesures": ["salaire"], "sens": "haut" },
     { "id": "prix", "label": "Vie pas chère", "icone": "piggy-bank", "famille": "vivre", "mesures": ["prix"], "sens": "haut" },
     { "id": "equilibre", "label": "Équilibre vie pro et perso", "icone": "clock", "famille": "travailler", "mesures": ["heures"], "sens": "haut" },
-    { "id": "climat", "label": "Climat doux", "icone": "sun", "famille": "vivre", "mesures": ["hiver"], "sens": "haut" },
+    { "id": "climat", "label": "Climat doux", "icone": "sun", "famille": "vivre", "mesures": ["doux"], "sens": "haut" },
     { "id": "proche", "label": "Proche de la France", "icone": "plane", "famille": "vivre", "mesures": ["vol", "decalage"], "sens": "haut" },
     { "id": "securite", "label": "Sécurité", "icone": "shield", "famille": "vivre", "mesures": ["securite"], "sens": "haut" },
     { "id": "francais", "label": "Français sur place", "icone": "users", "famille": "travailler", "mesures": ["francais"], "sens": "haut" }

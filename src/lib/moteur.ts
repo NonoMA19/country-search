@@ -3,8 +3,8 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource,
-  type Effet, type FamilleScore, type Phrase, type PorteBrute, type Preuve, type Sens,
+  avis, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource,
+  type CasDouble, type Effet, type FamilleScore, type Phrase, type PorteBrute, type Preuve, type Sens,
 } from "./donnees";
 
 export type Profil = Record<string, string | string[] | undefined>;
@@ -78,7 +78,20 @@ function effetsDe(ph: Phrase, reponse: string | undefined): Effet[] {
   return [];
 }
 
+// Toutes les réponses qui comptent, puis regroupées : si plusieurs réponses visent la même chose
+// (par exemple « Un pays cher ne me fait pas peur : non » et « La vie coûte moins cher : oui »),
+// on garde la plus grande importance, on ne les additionne pas. Seules les 3 priorités comptent double.
 export function effetsActifs(etat: Etat): EffetActif[] {
+  const groupes = new Map<string, EffetActif>();
+  for (const e of effetsBruts(etat)) {
+    const cle = `${[...e.mesures].sort().join("+")}:${e.sens}`;
+    const deja = groupes.get(cle);
+    if (!deja || e.poids > deja.poids) groupes.set(cle, e);
+  }
+  return [...groupes.values()];
+}
+
+export function effetsBruts(etat: Etat): EffetActif[] {
   const res: EffetActif[] = [];
   for (const id of etat.priorites) {
     const pr = quiz.priorites.find((x) => x.id === id);
@@ -99,8 +112,9 @@ export function effetsActifs(etat: Etat): EffetActif[] {
 }
 
 // ---------- Porte d'entrée et badge ----------
-export type Badge = "ouverte" | "conditions" | "difficile" | "fermee";
+export type Badge = "nationalite" | "ouverte" | "conditions" | "difficile" | "fermee";
 export const LIBELLE_BADGE: Record<Badge, string> = {
+  nationalite: "Porte ouverte grâce à ta nationalité",
   ouverte: "Porte ouverte",
   conditions: "Faisable avec conditions",
   difficile: "Difficile",
@@ -110,7 +124,7 @@ export type Alerte = { texte: string; preuve: Preuve | null };
 export type Porte = {
   badge: Badge;
   nom: string;
-  type: PorteBrute["type"];
+  type: PorteBrute["type"] | "nationalite";
   phrase: string;
   fonds: number | null;
   manque: number | null;
@@ -123,7 +137,21 @@ const euros = (n: number) => `${Math.round(n / 50) * 50}`.replace(/\B(?=(\d{3})+
 const preuvePorte = (b: PorteBrute) => preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe);
 const preuveVie = () => preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe);
 
+// Le cas de double nationalité déclaré, s'il ouvre ce pays (seulement les cas décrits et sourcés).
+export function casNationalite(profil: Profil): CasDouble | null {
+  if (profil.nationalite !== "oui") return null;
+  return doubleNationalite.cas.find((c) => c.id === profil["nationalite-laquelle"]) ?? null;
+}
+
 export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Porte {
+  const cas = casNationalite(profil);
+  if (cas?.pays === p.id && cas.acces) {
+    const preuve: Preuve = { type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence };
+    return {
+      badge: "nationalite", nom: `Nationalité ${cas.nationalite.toLowerCase()}`, type: "nationalite", phrase: cas.acces,
+      fonds: null, manque: null, alertes: cas.genre === "piege" ? [{ texte: cas.texte, preuve }] : [], preuve, autres: [],
+    };
+  }
   const liste = portes(p.id);
   const age = ageMax(profil);
   const vieOuvert = age !== null && age <= vie.ageMaxCandidature;
@@ -225,65 +253,82 @@ export function raisonsEcart(etat: Etat): Record<string, string> {
 }
 
 // ---------- Score ----------
-export type Detail = { mesure: string; sens: Sens; poids: number; accord: number; famille: FamilleScore; origine: string };
+export type Detail = {
+  mesure: string; sens: Sens; poids: number; accord: number; famille: FamilleScore; origine: string;
+  neutre: boolean; // donnée manquante sur une priorité : comptée à 50 %
+};
 export type Ligne = {
   pays: Pays;
   score: number;
+  sansDonnees: boolean; // aucune donnée vérifiée sur tes critères : pas de pourcentage
   familles: Record<FamilleScore, number | null>;
   details: Detail[];
-  manquantes: string[];
+  manquantes: string[]; // données « à vérifier » sur tes critères (hors priorités)
+  neutres: string[]; // données « à vérifier » sur tes priorités, comptées à 50 %
   ecart: string | null;
   porte: Porte;
-  couverture: number; // part de tes critères pour lesquels ce pays a une donnée vérifiée
+  couverture: number; // part de tes critères (en nombre) pour lesquels ce pays a une donnée vérifiée
   peuDeDonnees: boolean;
 };
 
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
 export const COUVERTURE_MIN = 0.6;
+// Une donnée manquante sur une priorité compte comme une note neutre.
+export const ACCORD_NEUTRE = 0.5;
+
+const estPriorite = (e: EffetActif) => e.origine.startsWith("priorite:");
 
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
   const effets = effetsActifs(etat);
   const ecarts = raisonsEcart(etat);
   const budget = reglages.budget ?? budgetProfil(etat.profil);
+  // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
+  const tesCriteres = [...new Set(effets.flatMap((e) => e.mesures.filter(mesureDisponible)))];
   const lignes = pays.map((p) => {
     const details: Detail[] = [];
     const manquantes = new Set<string>();
+    const neutres = new Set<string>();
     const total = { points: 0, max: 0 };
-    const couvre = { possible: 0, note: 0 };
     const parFamille: Record<FamilleScore, { points: number; max: number }> = {
       travailler: { points: 0, max: 0 }, vivre: { points: 0, max: 0 }, valeurs: { points: 0, max: 0 },
     };
     for (const e of effets) {
-      const dispo = e.mesures.filter((m) => noteEffective(p.id, m, etat.profil) !== null);
-      e.mesures.filter((m) => !dispo.includes(m) && mesureDisponible(m)).forEach((m) => manquantes.add(m));
       const existantes = e.mesures.filter(mesureDisponible);
-      if (existantes.length) {
-        couvre.possible += e.poids;
-        couvre.note += (e.poids * existantes.filter((m) => dispo.includes(m)).length) / existantes.length;
-      }
-      for (const m of dispo) {
-        const note = noteEffective(p.id, m, etat.profil) as number;
-        const accord = e.sens === "haut" ? (note - 1) / 4 : (5 - note) / 4;
-        const base = e.poids / dispo.length;
+      const dispo = existantes.filter((m) => noteEffective(p.id, m, etat.profil) !== null);
+      const priorite = estPriorite(e);
+      // Priorité : chaque mesure compte, notée ou neutre. Sinon : seules les mesures notées comptent.
+      const cibles = priorite ? existantes : dispo;
+      for (const m of existantes) if (!dispo.includes(m)) (priorite ? neutres : manquantes).add(m);
+      for (const m of cibles) {
+        const note = noteEffective(p.id, m, etat.profil);
+        const neutre = note === null;
+        const accord = neutre ? ACCORD_NEUTRE : e.sens === "haut" ? (note - 1) / 4 : (5 - note) / 4;
+        const base = e.poids / cibles.length;
         const poids = base * reglages.poids[e.famille];
-        details.push({ mesure: m, sens: e.sens, poids: base, accord, famille: e.famille, origine: e.origine });
+        details.push({ mesure: m, sens: e.sens, poids: base, accord, famille: e.famille, origine: e.origine, neutre });
         total.points += poids * accord; total.max += poids;
         // La jauge d'une famille ne dépend pas des curseurs « Et si… ? ».
         parFamille[e.famille].points += base * accord; parFamille[e.famille].max += base;
       }
     }
     const pct = (x: { points: number; max: number }) => (x.max > 0 ? (x.points / x.max) * 100 : null);
-    const couverture = couvre.possible > 0 ? couvre.note / couvre.possible : 1;
+    const notes = tesCriteres.filter((m) => noteEffective(p.id, m, etat.profil) !== null).length;
+    const couverture = tesCriteres.length > 0 ? notes / tesCriteres.length : 1;
+    const reelles = details.filter((d) => !d.neutre).length;
+    const porte = evaluerPorte(p, etat.profil, budget);
+    const fermeAge = porte.badge === "fermee" && !etat.remontes.includes(p.id) ? `Fermé à ton âge. ${porte.phrase}` : null;
     return {
       couverture,
-      peuDeDonnees: couverture < COUVERTURE_MIN,
+      peuDeDonnees: couverture < COUVERTURE_MIN || reelles === 0,
+      sansDonnees: reelles === 0,
       pays: p,
       score: pct(total) ?? 0,
       familles: { travailler: pct(parFamille.travailler), vivre: pct(parFamille.vivre), valeurs: pct(parFamille.valeurs) },
       details,
       manquantes: [...manquantes],
-      ecart: ecarts[p.id] ?? null,
-      porte: evaluerPorte(p, etat.profil, budget),
+      neutres: [...neutres],
+      ecart: ecarts[p.id] ?? fermeAge,
+      porte,
     };
   });
   return lignes.sort((a, b) => Number(!!a.ecart) - Number(!!b.ecart) || Number(a.peuDeDonnees) - Number(b.peuDeDonnees) || b.score - a.score || a.pays.nom.localeCompare(b.pays.nom, "fr"));
@@ -297,10 +342,17 @@ export function verdict(score: number): string {
   return "Piste possible";
 }
 
-// Deux pays voisins dans le classement, à moins de 5 points d'écart, sont ex aequo.
-export function exAequo(lignes: Ligne[], i: number): boolean {
-  const s = Math.round(lignes[i].score);
-  return [lignes[i - 1], lignes[i + 1]].some((v) => v && !v.ecart === !lignes[i].ecart && v.peuDeDonnees === lignes[i].peuDeDonnees && Math.abs(Math.round(v.score) - s) < ECART_EX_AEQUO);
+// Égalités : dans chaque groupe (même liste, même fiabilité), on compare chaque pays au premier
+// du groupe, sur les scores non arrondis. À 5 points ou moins du premier, il est à égalité avec lui.
+export function egalites(lignes: Ligne[]): boolean[] {
+  const res = lignes.map(() => false);
+  let chef = -1;
+  lignes.forEach((l, i) => {
+    const c = chef >= 0 ? lignes[chef] : null;
+    const memeGroupe = c && !c.ecart === !l.ecart && c.peuDeDonnees === l.peuDeDonnees && !l.peuDeDonnees && c.score - l.score <= ECART_EX_AEQUO;
+    if (memeGroupe) { res[i] = true; res[chef] = true; } else chef = i;
+  });
+  return res;
 }
 
 export function paysSurprise(lignes: Ligne[]): Ligne | null {
@@ -367,10 +419,24 @@ export function prochainePhrase(etat: Etat): Phrase | null {
   return meilleure;
 }
 
+// « Passer » ne compte ni pour le minimum de phrases, ni pour la stabilité du top 3.
+export const repondues = (etat: Etat) => etat.ordre.filter((id) => etat.reponses[id] !== "passer").length;
+
+// Le top 3 après chaque vraie réponse (le premier : avant les phrases).
+function historiqueReel(etat: Etat): string[] {
+  return etat.historique.filter((_, i) => i === 0 || etat.reponses[etat.ordre[i - 1]] !== "passer");
+}
+
+// Nombre de vraies réponses d'affilée sans que le top 3 bouge.
+export function reponsesStables(etat: Etat): number {
+  const h = historiqueReel(etat);
+  let n = 0;
+  for (let i = h.length - 1; i > 0 && h[i] === h[i - 1]; i--) n++;
+  return n;
+}
+
 export function resultatPret(etat: Etat): boolean {
-  if (etat.ordre.length < MIN_PHRASES) return false;
-  const h = etat.historique.slice(-(REPONSES_STABLES + 1));
-  return h.length === REPONSES_STABLES + 1 && h.every((x) => x === h[0]);
+  return repondues(etat) >= MIN_PHRASES && reponsesStables(etat) >= REPONSES_STABLES;
 }
 
 export function repondre(etat: Etat, phraseId: string, reponse: string): Etat {
@@ -404,14 +470,18 @@ function uniques(details: Detail[]): Detail[] {
   return details.filter((d) => (vus.has(d.mesure) ? false : (vus.add(d.mesure), true)));
 }
 
+// « Pourquoi ce pays » : seulement les points notés 4 ou 5 sur 5 dans le sens de tes réponses.
+export const ACCORD_ARGUMENT = 0.75;
+
 export function raisons(l: Ligne, profil: Profil, n = 3): Argument[] {
-  const tries = [...l.details].sort((a, b) => b.poids * b.accord - a.poids * a.accord || b.accord - a.accord);
-  return uniques(tries.filter((d) => d.accord >= 0.5)).slice(0, n).map((d) => argument(l, d, profil));
+  const tries = [...l.details].filter((d) => !d.neutre && d.accord >= ACCORD_ARGUMENT).sort((a, b) => b.poids * b.accord - a.poids * a.accord || b.accord - a.accord);
+  return uniques(tries).slice(0, n).map((d) => argument(l, d, profil));
 }
 
+// « Ce qui peut coincer » : le point le plus défavorable (noté 1 ou 2 sur 5 dans le sens de tes réponses).
 export function coince(l: Ligne, profil: Profil): { arguments: Argument[]; alertes: Alerte[] } {
-  const tries = [...l.details].sort((a, b) => a.accord - b.accord || b.poids - a.poids);
-  return { arguments: uniques(tries.filter((d) => d.accord < 0.5)).slice(0, 1).map((d) => argument(l, d, profil)), alertes: l.porte.alertes };
+  const tries = [...l.details].filter((d) => !d.neutre && d.accord <= 0.25).sort((a, b) => a.accord - b.accord || b.poids - a.poids);
+  return { arguments: uniques(tries).slice(0, 1).map((d) => argument(l, d, profil)), alertes: l.porte.alertes };
 }
 
 const STYLE: Record<string, { axe: string; mesure: string; oui: string; non: string }> = {
@@ -429,7 +499,7 @@ export function profilTravail(etat: Etat, top: Ligne[]) {
     const communs: string[] = [];
     const differents: string[] = [];
     for (const [, s] of reponses) {
-      const d = l.details.find((x) => x.mesure === s.mesure);
+      const d = l.details.find((x) => x.mesure === s.mesure && !x.neutre);
       if (!d) continue;
       (d.accord >= 0.5 ? communs : differents).push(s.axe);
     }

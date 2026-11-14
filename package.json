@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:moteur": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/test-moteur.ts"
   },
   "dependencies": {
     "country-flag-icons": "^1.6.20",

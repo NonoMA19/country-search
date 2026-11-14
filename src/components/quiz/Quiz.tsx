@@ -11,7 +11,7 @@ import { quiz, type Phrase } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import {
   MIN_PHRASES, REPONSES_STABLES, annulerDerniere, calculer, demarrerPhrases, mesureDisponible,
-  prochainePhrase, questionProfilVisible, repondre, resultatPret, type Profil,
+  prochainePhrase, questionProfilVisible, repondre, repondues, reponsesStables, resultatPret, type Profil,
 } from "@/lib/moteur";
 
 const BOUTON = "min-h-14 w-full rounded-2xl border px-5 py-3 text-left text-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
@@ -246,13 +246,9 @@ export default function Quiz() {
   // ----- Phrases, une par une -----
   const phrase = prochainePhrase(etat);
   const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
-  const stables = (() => {
-    const h = etat.historique;
-    let n = 0;
-    for (let i = h.length - 1; i > 0 && h[i] === h[i - 1]; i--) n++;
-    return n;
-  })();
-  const progression = 50 + 50 * Math.min(1, (Math.min(etat.ordre.length, MIN_PHRASES) / MIN_PHRASES) * 0.6 + (Math.min(stables, REPONSES_STABLES) / REPONSES_STABLES) * 0.4);
+  // « Passer » ne fait pas avancer : seules les vraies réponses comptent.
+  const stables = reponsesStables(etat);
+  const progression = 50 + 50 * Math.min(1, (Math.min(repondues(etat), MIN_PHRASES) / MIN_PHRASES) * 0.6 + (Math.min(stables, REPONSES_STABLES) / REPONSES_STABLES) * 0.4);
   const retourPhrase = () => (etat.ordre.length > 0 ? aller({ t: "phrases" }, { etat: annulerDerniere(etat) }) : aller({ t: "sujets" }));
 
   if (etape.t === "pret" || !phrase) {
@@ -272,7 +268,7 @@ export default function Quiz() {
         <div className="mt-auto space-y-3 pt-6">
           <button type="button" onClick={voirResultat} className={BOUTON_PLEIN}>Voir mon résultat</button>
           {phrase && (
-            <button type="button" onClick={() => aller({ t: "phrases" }, { proposeA: etat.ordre.length })} className={`${BOUTON} border-bord bg-carte text-center hover:border-bleu`}>Continuer pour affiner</button>
+            <button type="button" onClick={() => aller({ t: "phrases" }, { proposeA: repondues(etat) })} className={`${BOUTON} border-bord bg-carte text-center hover:border-bleu`}>Continuer pour affiner</button>
           )}
         </div>
       </Cadre>
@@ -281,7 +277,7 @@ export default function Quiz() {
 
   const repond = (r: string) => {
     const suivant = repondre(etat, phrase.id, r);
-    const proposer = resultatPret(suivant) && suivant.ordre.length >= session.proposeA + REPONSES_STABLES;
+    const proposer = resultatPret(suivant) && repondues(suivant) >= session.proposeA + REPONSES_STABLES;
     aller(proposer ? { t: "pret" } : { t: "phrases" }, { etat: suivant });
   };
 

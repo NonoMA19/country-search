@@ -35,15 +35,21 @@ export default function Methode() {
       <p className="mt-3 text-lg text-gris">Un simple calcul classe les pays. Aucune intelligence artificielle ne décide, et rien n’est inventé.</p>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Le calcul en 5 points</h2>
+        <h2 className="text-xl font-semibold">Le calcul en 6 points</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
           <li>Seules tes réponses comptent. Une phrase à laquelle tu réponds « Passer » ne change rien.</li>
-          <li>Tes 3 priorités comptent double (importance 2). Chaque autre réponse compte simple (importance 1).</li>
+          <li>Tes 3 priorités comptent double (importance 2). Chaque autre réponse compte simple (importance 1). Si plusieurs réponses visent la même chose, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
           <li>Ton pourcentage = les points gagnés par le pays, divisés par les points possibles. Il mesure « ça te ressemble » avec les familles Travailler, Vivre et, si tu l’as choisi, Valeurs.</li>
-          <li>Une donnée « À vérifier » est sautée pour ce pays : elle ne donne ni ne retire de points. Si un pays n’a de données vérifiées que pour moins de 60 % de ce qui compte pour toi, il ne peut pas entrer dans ton top 3 : il reste dans la liste, avec la mention « Pas assez de données vérifiées ».</li>
+          <li>Une donnée « À vérifier » sur une de tes 3 priorités compte pour une note neutre, 50 %, et la carte du pays le dit : un trou dans les données ne peut pas faire gagner un pays. Sur une autre réponse, elle est sautée : elle ne donne ni ne retire de points.</li>
+          <li>Si un pays a une donnée vérifiée pour moins de 60 % de ce qui compte pour toi (on compte les mesures, une par une), il ne peut pas entrer dans ton top 3 : il reste dans la liste, sans pourcentage, avec la mention « pas assez de données ».</li>
         </ol>
-        <p className="mt-3">La famille Partir (visa, âge, argent) n’entre pas dans le pourcentage. Elle donne un badge : Porte ouverte, Faisable avec conditions, Difficile ou Fermé à ton âge. Un badge ne cache jamais un pays.</p>
+        <p className="mt-3">La famille Partir (visa, âge, argent) n’entre pas dans le pourcentage. Elle donne un badge : Porte ouverte, Faisable avec conditions, Difficile ou Fermé à ton âge.</p>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Un pays « Fermé à ton âge » ne peut pas entrer dans ton top 3 : il passe dans « Moins adaptés pour toi », avec la raison et son pourcentage inchangé. Un bouton permet de le remonter.</li>
+          <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait.</li>
+          <li>Si tu déclares une autre nationalité, le badge devient « Porte ouverte grâce à ta nationalité » seulement dans les cas que nous avons vérifiés : la nationalité du pays lui-même (canadienne pour le Canada, américaine pour les États-Unis) et la nationalité irlandaise pour le Royaume-Uni. Le pourcentage ne change pas.</li>
+        </ul>
         <p className="mt-3 text-sm text-gris">PVT : Programme Vacances-Travail, un visa d’un an pour voyager et travailler. VIE : Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l’étranger.</p>
       </section>
 
@@ -70,7 +76,8 @@ export default function Methode() {
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Après tes 3 priorités, on regarde les 5 premiers pays de ton classement.</li>
           <li>On te pose la phrase pour laquelle ces 5 pays sont les plus différents. C’est un calcul, pas une IA.</li>
-          <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 phrases. Tu peux t’arrêter avant, ou continuer.</li>
+          <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
+          <li>Sous chaque pays, « Pourquoi ce pays » ne cite que des points notés 4 ou 5 sur 5 dans le sens de tes réponses. « Ce qui peut coincer » cite un point noté 1 ou 2 sur 5.</li>
           <li>Certaines réponses font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
         </ul>
       </section>
@@ -100,6 +107,7 @@ export default function Methode() {
                   <div key={m.id} className="mt-3 text-sm">
                     <p className="font-medium">{m.nom}{m.sens === "position" ? " (une position, ni bonne ni mauvaise)" : ""}</p>
                     <p className="text-gris">Les 5 niveaux, du plus bas au plus haut : {m.echelle.join(" · ")}.</p>
+                    {m.regle && <p className="text-gris">Règle : {m.regle}</p>}
                     <p className="text-gris">Pays couverts : {paysCouverts(m.id)} sur {pays.length}.</p>
                   </div>
                 ))}

@@ -11,7 +11,8 @@
       "lien": "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
       "licence": "Open Government Licence v3.0",
       "type": "officiel",
-      "verifieLe": "2026-11-14"
+      "verifieLe": "2026-11-14",
+      "acces": "Avec ta nationalité irlandaise, tu peux vivre et travailler au Royaume-Uni sans visa (Zone commune de voyage)."
     },
     {
       "id": "canadienne",
@@ -24,7 +25,8 @@
       "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/visiter-canada/citoyens-canadiens-ont-double-nationalite-visiter-canada.html",
       "licence": "Lien seulement, aucun contenu copié",
       "type": "officiel",
-      "verifieLe": "2026-11-14"
+      "verifieLe": "2026-11-14",
+      "acces": "Tu as la nationalité canadienne : tu entres au Canada en citoyen, sans PVT ni permis de travail."
     },
     {
       "id": "americaine",
@@ -37,9 +39,11 @@
       "lien": "https://www.irs.gov/individuals/international-taxpayers/us-citizens-and-resident-aliens-abroad",
       "licence": "Domaine public (administration fédérale américaine)",
       "type": "officiel",
-      "verifieLe": "2026-11-14"
+      "verifieLe": "2026-11-14",
+      "acces": "Tu as la nationalité américaine : tu entres aux États-Unis en citoyen, sans visa de travail."
     }
   ],
   "autre": "Nous n'avons pas encore vérifié ton cas.",
-  "avertissement": "Ces informations sur les visas et les impôts ne sont pas un conseil juridique."
+  "avertissement": "Ces informations sur les visas et les impôts ne sont pas un conseil juridique.",
+  "regle": "Le badge d'un pays devient « Porte ouverte grâce à ta nationalité » seulement pour les cas listés ici : la nationalité du pays lui-même, ou un accord décrit et sourcé (Irlande et Royaume-Uni)."
 }

@@ -1,0 +1,223 @@
+// Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
+// et vérifie les règles publiées sur /methode.
+// Usage : npm run test:moteur
+import { mesures, quiz } from "@/lib/donnees";
+import { validerSession, SESSION_VIDE } from "@/lib/memoire";
+import {
+  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_PHRASES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerPhrases, effetsActifs,
+  egalites, evaluerPorte, prochainePhrase, questionProfilVisible, raisons, repondre, resultatPret,
+  type Etat, type Profil,
+} from "@/lib/moteur";
+import { ECART_EX_AEQUO } from "@/config";
+import { pays, trouverPays } from "@/lib/pays";
+
+// ---------- Hasard reproductible ----------
+function hasard(graine: number) {
+  let a = graine >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+type Alea = () => number;
+const choisir = <T,>(r: Alea, l: T[]): T => l[Math.floor(r() * l.length)];
+
+// ---------- Compteur d'échecs ----------
+const echecs: string[] = [];
+let verifs = 0;
+function verifier(ok: boolean, message: string) {
+  verifs++;
+  if (!ok && echecs.length < 50) echecs.push(message);
+  else if (!ok) echecs.push("…");
+}
+
+// ---------- Un quiz au hasard ----------
+function profilAuHasard(r: Alea): Profil {
+  const p: Profil = {};
+  for (const q of quiz.profil) {
+    if (!questionProfilVisible(q.id, p)) continue;
+    if (r() < 0.1) continue; // « Passer »
+    if (q.multiple) p[q.id] = q.options.filter(() => r() < 0.2).map((o) => o.id);
+    else p[q.id] = choisir(r, q.options).id;
+  }
+  return p;
+}
+
+function quizAuHasard(r: Alea, passerTout = false): Etat {
+  const dispo = quiz.priorites.map((x) => x.id);
+  const priorites: string[] = [];
+  while (priorites.length < 3) {
+    const id = choisir(r, dispo);
+    if (!priorites.includes(id)) priorites.push(id);
+  }
+  const sujets = quiz.sujets.filter(() => r() < 0.3).map((s) => s.id);
+  let etat = demarrerPhrases({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets });
+  for (let n = 0; n < 30; n++) {
+    const ph = prochainePhrase(etat);
+    if (!ph) break;
+    const choix = passerTout ? ["passer"] : ph.type === "choix" ? [...(ph.options ?? []).map((o) => o.id), "passer"] : ["oui", "non", "oui", "non", "passer"];
+    etat = repondre(etat, ph.id, choisir(r, choix));
+    if (!passerTout && resultatPret(etat) && r() < 0.5) break;
+  }
+  return etat;
+}
+
+const scores = (etat: Etat) => Object.fromEntries(calculer(etat).map((l) => [l.pays.id, l.score]));
+const memesScores = (a: Record<string, number>, b: Record<string, number>) => Object.keys(a).every((k) => Math.abs(a[k] - b[k]) < 1e-9);
+
+// ---------- 1. Quiz au hasard : invariants ----------
+const NB = 400;
+const r = hasard(20261114);
+for (let i = 0; i < NB; i++) {
+  const etat = quizAuHasard(r);
+  const lignes = calculer(etat);
+  const base = scores(etat);
+
+  // Pas de NaN, tout entre 0 et 100.
+  for (const l of lignes) {
+    verifier(Number.isFinite(l.score) && l.score >= 0 && l.score <= 100, `quiz ${i} : score hors limites pour ${l.pays.nom} (${l.score})`);
+    for (const v of Object.values(l.familles)) verifier(v === null || (Number.isFinite(v) && v >= 0 && v <= 100), `quiz ${i} : jauge hors limites pour ${l.pays.nom}`);
+  }
+
+  // Le score ne dépend ni de l'âge, ni du budget, ni de la durée, ni de l'objectif, ni de la nationalité.
+  for (const champ of ["age", "budget", "duree", "objectif", "nationalite-laquelle"]) {
+    const q = quiz.profil.find((x) => x.id === champ);
+    for (const o of q?.options ?? []) {
+      const profil = { ...etat.profil, [champ]: o.id, ...(champ === "nationalite-laquelle" ? { nationalite: "oui" } : {}) };
+      verifier(memesScores(base, scores({ ...etat, profil })), `quiz ${i} : le score change avec ${champ} = ${o.id}`);
+    }
+  }
+  // Le budget des curseurs ne change pas les scores non plus.
+  verifier(memesScores(base, Object.fromEntries(calculer(etat, { ...REGLAGES_DEFAUT, budget: 0 }).map((l) => [l.pays.id, l.score]))), `quiz ${i} : le score change avec le budget du curseur`);
+
+  // Top 3 déterministe.
+  verifier(cleTop3(lignes) === cleTop3(calculer(etat)), `quiz ${i} : top 3 différent d'un calcul à l'autre`);
+
+  const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+  for (const l of top) {
+    verifier(l.couverture >= COUVERTURE_MIN, `quiz ${i} : ${l.pays.nom} dans le top 3 avec ${Math.round(l.couverture * 100)} % de couverture`);
+    verifier(l.porte.badge !== "fermee", `quiz ${i} : ${l.pays.nom} « Fermé à ton âge » dans le top 3`);
+    verifier(!l.sansDonnees, `quiz ${i} : ${l.pays.nom} sans donnée dans le top 3`);
+  }
+
+  // Une donnée manquante sur une priorité compte exactement 50 %, jamais plus.
+  for (const l of lignes) for (const d of l.details) if (d.neutre) verifier(d.accord === ACCORD_NEUTRE && d.origine.startsWith("priorite:"), `quiz ${i} : donnée manquante mal comptée pour ${l.pays.nom} (${d.mesure})`);
+
+  // Importance : maximum 2 par mesure (jamais la somme de plusieurs réponses).
+  for (const e of effetsActifs(etat)) verifier(e.poids <= 2, `quiz ${i} : importance ${e.poids} pour ${e.mesures.join("+")}`);
+  const cles = effetsActifs(etat).map((e) => `${[...e.mesures].sort().join("+")}:${e.sens}`);
+  verifier(new Set(cles).size === cles.length, `quiz ${i} : la même mesure compte deux fois`);
+
+  // « Pourquoi ce pays » : seulement des points notés 4 ou 5 sur 5 dans le sens des réponses.
+  for (const l of top) {
+    for (const a of raisons(l, etat.profil)) {
+      const d = l.details.find((x) => mesures[x.mesure]?.nom === a.preuve.titre && !x.neutre && x.accord >= 0.75);
+      verifier(!!d, `quiz ${i} : ${l.pays.nom} a un argument moyen ou défavorable (${a.titre})`);
+    }
+  }
+
+  // Égalités : dans chaque groupe à égalité, au plus 5 points entre le premier et le dernier.
+  const principaux = lignes.filter((l) => !l.ecart);
+  const eg = egalites(principaux);
+  let debut = -1;
+  for (let k = 0; k <= principaux.length; k++) {
+    const dansGroupe = k < principaux.length && eg[k] && (debut === -1 || principaux[debut].score - principaux[k].score <= ECART_EX_AEQUO);
+    if (dansGroupe && debut === -1) debut = k;
+    if (!dansGroupe && debut !== -1) {
+      verifier(principaux[debut].score - principaux[k - 1].score <= ECART_EX_AEQUO + 1e-9, `quiz ${i} : égalité sur plus de 5 points`);
+      debut = k < principaux.length && eg[k] ? k : -1;
+    }
+  }
+  for (let k = 0; k < principaux.length; k++) if (eg[k]) verifier(!principaux[k].peuDeDonnees, `quiz ${i} : égalité affichée pour un pays sans assez de données`);
+}
+
+// ---------- 2. Cas précis ----------
+// 2.1 L'ancien biais : aventure, 18-25 ans, priorité Salaire. Les pays sans salaire vérifié ne peuvent plus finir à 100 %.
+{
+  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: { objectif: "aventure", age: "18-25" }, priorites: ["salaire", "travail", "securite"] });
+  for (const l of calculer(etat)) {
+    if (l.neutres.includes("salaire")) verifier(l.score < 100, `donnée manquante : ${l.pays.nom} à 100 % sans salaire vérifié`);
+  }
+  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3).map((l) => l.pays.id);
+  console.log("Aventure 18-25, priorités salaire, travail, sécurité : top 3 =", top.join(", "));
+}
+
+// 2.2 « Passer » ne compte pas : tout passer ne propose jamais le résultat.
+{
+  const r2 = hasard(42);
+  for (let i = 0; i < 20; i++) {
+    const etat = quizAuHasard(r2, true);
+    verifier(!resultatPret(etat), `passer : résultat proposé après ${etat.ordre.length} phrases toutes passées`);
+  }
+  verifier(MIN_PHRASES === 6, "le minimum de phrases n'est plus 6");
+}
+
+// 2.3 Fermé à ton âge : jamais dans le top 3, score inchangé, et remontable.
+{
+  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: { age: "31-35" }, priorites: ["climat", "proche", "francais"] });
+  const lignes = calculer(etat);
+  const fermes = lignes.filter((l) => l.porte.badge === "fermee");
+  verifier(fermes.length > 0, "31-35 ans : aucun pays fermé, le test ne prouve rien");
+  for (const l of fermes) verifier(!!l.ecart, `${l.pays.nom} fermé mais pas dans « Moins adaptés »`);
+  const jeune = calculer({ ...etat, profil: { age: "18-25" } });
+  for (const l of fermes) verifier(Math.abs(jeune.find((x) => x.pays.id === l.pays.id)!.score - l.score) < 1e-9, `${l.pays.nom} : score changé par la fermeture`);
+  const remonte = calculer({ ...etat, remontes: [fermes[0].pays.id] }).find((l) => l.pays.id === fermes[0].pays.id)!;
+  verifier(!remonte.ecart, "un pays fermé remonté reste dans « Moins adaptés »");
+}
+
+// 2.4 Nationalité : le badge change, seulement pour les cas listés.
+{
+  const cas: [string, string][] = [["canadienne", "canada"], ["irlandaise", "royaume-uni"], ["americaine", "etats-unis"]];
+  for (const [nat, id] of cas) {
+    const p = trouverPays(id)!;
+    verifier(evaluerPorte(p, { nationalite: "oui", "nationalite-laquelle": nat }, null).badge === "nationalite", `nationalité ${nat} : le badge de ${p.nom} ne change pas`);
+    verifier(evaluerPorte(p, { nationalite: "non", "nationalite-laquelle": nat }, null).badge !== "nationalite", `nationalité ${nat} : badge changé alors que la personne a répondu non`);
+  }
+  for (const p of pays) {
+    if (["canada", "royaume-uni", "etats-unis"].includes(p.id)) continue;
+    for (const nat of ["canadienne", "irlandaise", "americaine", "autre"]) {
+      verifier(evaluerPorte(p, { nationalite: "oui", "nationalite-laquelle": nat }, null).badge !== "nationalite", `nationalité ${nat} : badge changé à tort pour ${p.nom}`);
+    }
+  }
+}
+
+// 2.5 Climat doux : un pays très chaud en été n'a pas la note maximale.
+{
+  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: {}, priorites: ["climat", "travail", "securite"] });
+  const lignes = calculer(etat);
+  for (const id of ["emirats-arabes-unis", "singapour"]) {
+    const d = lignes.find((l) => l.pays.id === id)!.details.find((x) => x.mesure === "doux");
+    verifier(!!d && d.accord <= 0.25, `climat doux : ${id} trop bien noté`);
+  }
+}
+
+// 2.6 Deux réponses sur les prix : importance 1, pas 2.
+{
+  const etat: Etat = { ...ETAT_VIDE, priorites: ["travail", "securite", "climat"], reponses: { "pays-cher": "non", "vie-moins-chere": "oui" }, ordre: ["pays-cher", "vie-moins-chere"] };
+  const prix = effetsActifs(etat).filter((e) => e.mesures.includes("prix"));
+  verifier(prix.length === 1 && prix[0].poids === 1, `prix : importance ${prix.map((e) => e.poids).join("+")} au lieu de 1`);
+}
+
+// 2.7 Session abîmée : toujours refusée, jamais d'erreur.
+{
+  const mauvaises: unknown[] = [null, {}, [], "texte", 3, { ...SESSION_VIDE, v: 1 }, { ...SESSION_VIDE, etat: null }, { ...SESSION_VIDE, etape: { t: "profil", i: -1 } },
+    { ...SESSION_VIDE, etape: { t: "profil", i: "2" } }, { ...SESSION_VIDE, reglages: null }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, sujets: undefined } },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, priorites: ["a", "b", "c", "d"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { emploi: "peut-être" }, ordre: ["emploi"] } }];
+  for (const m of mauvaises) {
+    let res: unknown = "erreur";
+    try { res = validerSession(m); } catch { res = "erreur"; }
+    verifier(res === null, `session abîmée acceptée : ${JSON.stringify(m)?.slice(0, 80)}`);
+  }
+  verifier(validerSession(JSON.parse(JSON.stringify(SESSION_VIDE))) !== null, "la session vide est refusée");
+}
+
+// ---------- Bilan ----------
+if (echecs.length) {
+  console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
+  for (const e of echecs) console.error("  - " + e);
+  process.exit(1);
+}
+console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 7 cas précis.`);

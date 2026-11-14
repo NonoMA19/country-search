@@ -429,6 +429,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Bruxelles, le mois le plus froid tourne autour de 3,7 °C et le mois le plus chaud autour de 18,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=50.85045&longitude=4.34878&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "suisse": {
@@ -646,6 +655,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Zurich, le mois le plus froid tourne autour de 1 °C et le mois le plus chaud autour de 18,9 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=47.36667&longitude=8.55&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -865,6 +883,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Berlin, le mois le plus froid tourne autour de 0,7 °C et le mois le plus chaud autour de 19,6 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=52.52437&longitude=13.41053&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "irlande": {
@@ -1082,6 +1109,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "À Dublin, le mois le plus froid tourne autour de 5,9 °C et le mois le plus chaud autour de 15,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=53.33306&longitude=-6.24889&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -1301,6 +1337,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Luxembourg, le mois le plus froid tourne autour de 0,9 °C et le mois le plus chaud autour de 17,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=49.75&longitude=6.16667&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "espagne": {
@@ -1518,6 +1563,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Madrid, le mois le plus froid tourne autour de 4,8 °C et le mois le plus chaud autour de 25,9 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=40.4165&longitude=-3.70256&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -1737,6 +1791,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Rome, le mois le plus froid tourne autour de 7,3 °C et le mois le plus chaud autour de 25,3 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=41.89193&longitude=12.51133&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "pays-bas": {
@@ -1954,6 +2017,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Amsterdam, le mois le plus froid tourne autour de 3,7 °C et le mois le plus chaud autour de 17,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=52.37403&longitude=4.88969&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -2173,6 +2245,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Lisbonne, le mois le plus froid tourne autour de 11,3 °C et le mois le plus chaud autour de 22,1 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=38.72509&longitude=-9.1498&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "norvege": {
@@ -2390,6 +2471,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Oslo, le mois le plus froid tourne autour de -4,2 °C et le mois le plus chaud autour de 17,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=59.91273&longitude=10.74609&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -2609,6 +2699,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Stockholm, le mois le plus froid tourne autour de -1,6 °C et le mois le plus chaud autour de 17,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=59.32938&longitude=18.06871&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "danemark": {
@@ -2826,6 +2925,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Copenhague, le mois le plus froid tourne autour de 1,3 °C et le mois le plus chaud autour de 17,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=55.67594&longitude=12.56553&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -3045,6 +3153,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Toronto, le mois le plus froid tourne autour de -4,7 °C et le mois le plus chaud autour de 21,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=43.70643&longitude=-79.39864&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "australie": {
@@ -3257,6 +3374,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Sydney, le mois le plus froid tourne autour de 12,2 °C et le mois le plus chaud autour de 22,4 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-33.86785&longitude=151.20732&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -3471,6 +3597,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Tokyo, le mois le plus froid tourne autour de 3,5 °C et le mois le plus chaud autour de 26,2 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=35.6895&longitude=139.69171&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "nouvelle-zelande": {
@@ -3683,6 +3818,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Auckland, le mois le plus froid tourne autour de 11,4 °C et le mois le plus chaud autour de 19,8 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-36.84853&longitude=174.76349&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -3902,6 +4046,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Séoul, le mois le plus froid tourne autour de -3 °C et le mois le plus chaud autour de 25 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=37.566&longitude=126.9784&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "taiwan": {
@@ -4079,6 +4232,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Taipei, le mois le plus froid tourne autour de 15,5 °C et le mois le plus chaud autour de 28,4 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=25.05306&longitude=121.52639&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -4277,6 +4439,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Hong Kong, le mois le plus froid tourne autour de 15,6 °C et le mois le plus chaud autour de 27,6 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=22.25&longitude=114.16667&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -4496,6 +4667,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "À Buenos Aires, le mois le plus froid tourne autour de 10,3 °C et le mois le plus chaud autour de 23,9 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-34.61315&longitude=-58.37723&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "chili": {
@@ -4713,6 +4893,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "À Santiago, le mois le plus froid tourne autour de 7,8 °C et le mois le plus chaud autour de 21,9 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-33.45694&longitude=-70.64827&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -4932,6 +5121,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Bogotá, le mois le plus froid tourne autour de 13,8 °C et le mois le plus chaud autour de 14,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=4.60971&longitude=-74.08175&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "mexique": {
@@ -5149,6 +5347,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Mexico, le mois le plus froid tourne autour de 13,1 °C et le mois le plus chaud autour de 18,4 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=19.42847&longitude=-99.12766&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -5368,6 +5575,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À São Paulo, le mois le plus froid tourne autour de 16,4 °C et le mois le plus chaud autour de 22,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-23.5475&longitude=-46.63611&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "royaume-uni": {
@@ -5585,6 +5801,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Londres, le mois le plus froid tourne autour de 4,8 °C et le mois le plus chaud autour de 17,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=51.50853&longitude=-0.12574&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -5804,6 +6029,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À New York, le mois le plus froid tourne autour de -0,8 °C et le mois le plus chaud autour de 24,1 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=40.71427&longitude=-74.00597&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "singapour": {
@@ -6016,6 +6250,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Singapour, le mois le plus froid tourne autour de 25,9 °C et le mois le plus chaud autour de 27,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=1.28967&longitude=103.85007&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   },
@@ -6230,6 +6473,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 1,
+    "texte": "À Dubaï, le mois le plus froid tourne autour de 18,8 °C et le mois le plus chaud autour de 35,6 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=25.07725&longitude=55.30927&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "chine": {
@@ -6443,6 +6695,15 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Shanghai, le mois le plus froid tourne autour de 4,8 °C et le mois le plus chaud autour de 27,8 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=31.22222&longitude=121.45806&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-14"
    }
   },
   "maroc": {
@@ -6650,6 +6911,15 @@
     "annee": null,
     "source": "notre-avis",
     "lien": null,
+    "verifieLe": "2026-11-14"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "À Casablanca, le mois le plus froid tourne autour de 12,7 °C et le mois le plus chaud autour de 23,7 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=33.58831&longitude=-7.61138&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
    }
   }

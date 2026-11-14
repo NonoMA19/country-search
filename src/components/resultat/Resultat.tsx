@@ -3,19 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowUp, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowUp, BadgeCheck, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import { ErreurPdf } from "@/components/BoutonDossier";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
-import { doubleNationalite, type FamilleScore, type Preuve } from "@/lib/donnees";
+import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, coince, exAequo, paysSurprise, prochainePhrase, profilTravail, raisons, verdict,
+  LIBELLE_BADGE, budgetProfil, calculer, coince, egalites as calculerEgalites, paysSurprise, prochainePhrase, profilTravail, raisons, repondues, verdict,
   type Badge, type Etat, type Ligne,
 } from "@/lib/moteur";
+import { trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
 
 const FAMILLES: { id: FamilleScore; nom: string; couleur: string }[] = [
@@ -27,12 +28,13 @@ const CRANS = [0, 0.5, 1, 1.5, 2];
 const MOTS_CRANS = ["ne compte plus", "compte moins", "comme tu l’as dit", "compte plus", "compte double"];
 
 const STYLE_BADGE: Record<Badge, string> = {
+  nationalite: "bg-bleu text-white",
   ouverte: "bg-bleu text-white",
   conditions: "bg-bleu-doux text-encre",
   difficile: "bg-slate-700 text-white",
   fermee: "border border-bord bg-creux text-gris",
 };
-const ICONE_BADGE = { ouverte: DoorOpen, conditions: FileCheck, difficile: Hourglass, fermee: Lock };
+const ICONE_BADGE = { nationalite: BadgeCheck, ouverte: DoorOpen, conditions: FileCheck, difficile: Hourglass, fermee: Lock };
 
 export function BadgePorte({ badge, petit = false }: { badge: Badge; petit?: boolean }) {
   const I = ICONE_BADGE[badge];
@@ -142,8 +144,15 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
             {contre.alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
           </ul>
         )}
+        {ligne.neutres.length > 0 && (
+          <p className="mt-2 text-sm text-gris">
+            Compté à 50 % faute de donnée vérifiée : {ligne.neutres.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+          </p>
+        )}
         {ligne.manquantes.length > 0 && (
-          <p className="mt-2 text-sm text-gris">Certaines données ne sont pas encore vérifiées pour ce pays : elles ne comptent pas dans son pourcentage.</p>
+          <p className="mt-2 text-sm text-gris">
+            À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+          </p>
         )}
       </section>
 
@@ -177,14 +186,18 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
         {rang !== undefined && <span className="w-6 text-sm font-semibold text-gris tabular-nums">{rang}</span>}
         <Drapeau iso2={ligne.pays.iso2} className="h-5 w-7.5" />
         <Link href={`/pays/${ligne.pays.id}`} className="min-w-0 flex-1 truncate font-medium underline-offset-2 hover:underline">{ligne.pays.nom}</Link>
-        <span className="font-semibold tabular-nums">{Math.round(ligne.score)} %</span>
+        {ligne.peuDeDonnees ? (
+          <span className="text-right text-sm text-gris">pas assez de données</span>
+        ) : (
+          <span className="font-semibold whitespace-nowrap tabular-nums">{Math.round(ligne.score)} %</span>
+        )}
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2 pl-9">
         <BadgePorte badge={ligne.porte.badge} petit />
         {egalite && <span className="text-xs text-gris">à égalité</span>}
       </div>
       {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
-      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Pas assez de données vérifiées pour ce pays sur tes critères : son pourcentage n’est pas fiable.</p>}
+      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
   );
@@ -221,10 +234,13 @@ export default function Resultat() {
   const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const famillesActives = FAMILLES.filter((f) => lignes.some((l) => l.familles[f.id] !== null));
-  const egalites = principaux.map((_, i) => exAequo(principaux, i));
+  const egalites = calculerEgalites(principaux);
   const encoreDesPhrases = etat.historique.length > 0 && prochainePhrase(etat) !== null;
-  const affiner = () => { ecrire({ ...session, etape: { t: "phrases" }, proposeA: etat.ordre.length }); router.push("/quiz"); };
+  const affiner = () => { ecrire({ ...session, etape: { t: "phrases" }, proposeA: repondues(etat) }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
+  const paysCas = cas ? trouverPays(cas.pays) : undefined;
+  // Si tous les curseurs sont à « ne compte plus », il n'y a plus rien à classer.
+  const toutAZero = famillesActives.length > 0 && famillesActives.every((f) => reglages.poids[f.id] === 0);
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
@@ -241,12 +257,16 @@ export default function Resultat() {
 
       <section aria-labelledby="titre-top" className="mt-6">
         <h2 id="titre-top" className="text-xl font-semibold">Ton top 3</h2>
-        {egalites.slice(0, 3).some(Boolean) && (
+        {!toutAZero && egalites.slice(0, 3).some(Boolean) && (
           <p className="mt-1 text-sm text-gris">Des pays à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
         <div className="mt-4 space-y-5">
-          {top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)}
-          {top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
+          {toutAZero ? (
+            <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
+          ) : (
+            top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)
+          )}
+          {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </div>
       </section>
 
@@ -254,7 +274,7 @@ export default function Resultat() {
         <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
         <p className="mt-1 text-sm text-gris">Le mieux placé hors de ton top 3, parmi les pays où peu de Français vivent, s’il atteint au moins 70 %.</p>
         <div className="mt-4">
-          {surprise ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
+          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
         </div>
       </section>
 
@@ -283,7 +303,9 @@ export default function Resultat() {
             <span className="mt-1 block text-sm text-gris">
               {sansArgent.length === 0
                 ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
-                : `Il te manquerait de l’argent pour ${sansArgent.length} pays : ${sansArgent.map((l) => l.pays.nom).join(", ")}. Ils restent classés.`}
+                : sansArgent.length === 1
+                  ? `Il te manquerait de l’argent pour 1 pays : ${sansArgent[0].pays.nom}. Il reste classé.`
+                  : `Il te manquerait de l’argent pour ${sansArgent.length} pays : ${sansArgent.map((l) => l.pays.nom).join(", ")}. Ils restent classés.`}
             </span>
           </label>
         </div>
@@ -323,7 +345,10 @@ export default function Resultat() {
                   {cas.texte}
                   <Pastille preuve={{ type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence }} />
                 </p>
-                <p className="mt-2 text-sm text-gris">Ton classement ne change pas pour l’instant. {doubleNationalite.avertissement}</p>
+                <p className="mt-2 text-sm text-gris">
+                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {doubleNationalite.avertissement}
+                </p>
               </>
             ) : (
               <p>{doubleNationalite.autre}</p>
@@ -334,12 +359,12 @@ export default function Resultat() {
 
       <section aria-labelledby="titre-tous" className="mt-10">
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
-        <details className="mt-3">
+        {!toutAZero && <details className="mt-3">
           <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
           <ol className="mt-3 space-y-2">
             {suite.map((l, i) => <LignePays key={l.pays.id} ligne={l} rang={i + 4} egalite={!l.peuDeDonnees && egalites[principaux.indexOf(l)]} />)}
           </ol>
-        </details>
+        </details>}
         {ecartes.length > 0 && (
           <div className="mt-6">
             <h3 className="font-semibold">Moins adaptés pour toi</h3>

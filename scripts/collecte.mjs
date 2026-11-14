@@ -74,8 +74,20 @@ const TEXTE = {
   stabilite: (v, an) => `Note de la Banque mondiale pour la stabilité politique et l'absence de violence : ${fr(v, 0)} sur 100 (${an}). Plus la note est haute, plus le pays est stable.`,
   libertes: (v, an) => `Note de la Banque mondiale pour les libertés d'expression, d'association et de la presse : ${fr(v, 0)} sur 100 (${an}). Plus la note est haute, plus ces libertés sont respectées.`,
   egalite: (v, an) => `Note de la Banque mondiale pour l'égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : ${fr(v, 0)} sur 100 (${an}). Plus la note est haute, plus la loi est égale.`,
+  doux: (h, an, p, e) => `À ${p.ville}, le mois le plus froid tourne autour de ${fr(h)} °C et le mois le plus chaud autour de ${fr(e)} °C (moyennes ${an}).`,
   air: (v, an) => `Particules fines dans l'air (PM2,5, des poussières assez petites pour entrer dans les poumons) : ${fr(v)} µg/m³ en moyenne sur l'année (${an}). Plus c'est bas, mieux c'est.`,
 };
+
+// Climat doux : la plus basse des deux notes, hiver et été (règle expliquée sur /methode).
+function noteDoux(hiver, ete) {
+  const h = hiver < -5 ? 1 : hiver < 2 ? 2 : hiver < 5 ? 3 : hiver < 8 ? 4 : 5;
+  const e = ete >= 29 ? 1 : ete >= 27 ? 2 : ete >= 25 ? 3 : ete >= 23 ? 4 : 5;
+  return Math.min(h, e);
+}
+const doux = (hiver, ete, p) => ({
+  statut: "verifie", note: noteDoux(hiver.valeur, ete.valeur), texte: TEXTE.doux(hiver.valeur, hiver.annee, p, ete.valeur),
+  annee: hiver.annee, source: hiver.source, lien: hiver.lien, verifieLe: hiver.verifieLe,
+});
 
 // ---------- Banque mondiale ----------
 const ISO3 = pays.map((p) => p.iso3).join(";");
@@ -235,6 +247,7 @@ if (TEXTES_SEUL) {
       if (id === "vol" && !km) continue;
       m.texte = TEXTE[id](m.valeur, m.annee, p, km);
     }
+    if (s.hiver?.statut === "verifie" && s.ete?.statut === "verifie") s.doux = doux(s.hiver, s.ete, p);
     s.sante = sante(p, s.sante?.verifieLe ?? AUJOURDHUI);
     const dateAvis = s.anglais?.verifieLe ?? AUJOURDHUI;
     Object.assign(s, notesAvis(p, dateAvis));
@@ -299,6 +312,7 @@ for (const p of pays) {
   s.decalage ??= aVerifier("Décalage horaire : ville non trouvée.");
   s.hiver ??= aVerifier("Climat : pas de donnée.");
   s.ete ??= aVerifier("Climat : pas de donnée.");
+  s.doux = s.hiver.statut === "verifie" && s.ete.statut === "verifie" ? doux(s.hiver, s.ete, p) : aVerifier("Climat : pas de donnée.");
 
   s.sante = sante(p);
 

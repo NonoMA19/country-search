@@ -413,7 +413,7 @@
         "mots": [
           "beaucoup plus cher que la France",
           "plus cher que la France",
-          "proche de la France",
+          "prix proches de ceux de la France",
           "moins cher que la France",
           "beaucoup moins cher que la France"
         ]
@@ -425,7 +425,7 @@
     "id": "climat",
     "famille": "vivre",
     "nom": "Climat",
-    "definition": "Température moyenne du mois le plus froid et du mois le plus chaud, sur 30 ans (1991-2020), dans la plus grande ville du pays. Deux positions, ni bonnes ni mauvaises.",
+    "definition": "Température moyenne du mois le plus froid et du mois le plus chaud, sur 30 ans (1991-2020), dans la plus grande ville du pays. L'hiver et l'été sont deux positions, ni bonnes ni mauvaises. Le « climat doux » combine les deux : il récompense un hiver qui ne gèle pas et un été qui ne brûle pas.",
     "type": "donnee-ouverte",
     "sources": [
       "open-meteo"
@@ -495,6 +495,26 @@
           "chaud",
           "très chaud",
           "étouffant"
+        ]
+      },
+      {
+        "id": "doux",
+        "nom": "Climat doux (hiver et été modérés)",
+        "sens": "haut",
+        "regle": "On note l'hiver (moins de −5 °C : 1 ; de −5 à 2 °C : 2 ; de 2 à 5 °C : 3 ; de 5 à 8 °C : 4 ; 8 °C ou plus : 5) et l'été (29 °C ou plus : 1 ; de 27 à 29 °C : 2 ; de 25 à 27 °C : 3 ; de 23 à 25 °C : 4 ; moins de 23 °C : 5). Le climat doux prend la plus basse des deux notes : un pays très chaud en été n'est pas « doux », même si son hiver est chaud.",
+        "echelle": [
+          "hiver sous −5 °C ou été à 29 °C ou plus",
+          "hiver de −5 à 2 °C ou été de 27 à 29 °C",
+          "hiver de 2 à 5 °C ou été de 25 à 27 °C",
+          "hiver de 5 à 8 °C ou été de 23 à 25 °C",
+          "hiver à 8 °C ou plus et été sous 23 °C"
+        ],
+        "mots": [
+          "pas doux du tout",
+          "peu doux",
+          "assez doux",
+          "doux",
+          "très doux"
         ]
       }
     ]

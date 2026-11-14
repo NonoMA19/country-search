@@ -23,6 +23,7 @@ export type DefMesure = {
   echelle: string[];
   mots: string[];
   explications?: string[];
+  regle?: string;
 };
 
 export type Critere = {
@@ -121,6 +122,7 @@ export type CasDouble = {
   licence: string;
   type: TypeSource;
   verifieLe: string;
+  acces?: string; // si ce cas t'ouvre le pays : la phrase affichée avec le badge
 };
 
 export const criteres = criteresData as Critere[];
