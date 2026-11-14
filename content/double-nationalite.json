@@ -1,0 +1,45 @@
+{
+  "cas": [
+    {
+      "id": "irlandaise",
+      "nationalite": "Irlandaise",
+      "pays": "royaume-uni",
+      "genre": "avantage",
+      "titre": "Avantage : le Royaume-Uni t'est ouvert",
+      "texte": "Avec la nationalité irlandaise, tu peux vivre et travailler au Royaume-Uni sans visa ni autorisation, grâce à la Zone commune de voyage (Common Travel Area).",
+      "source": "GOV.UK, Common Travel Area guidance",
+      "lien": "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
+      "licence": "Open Government Licence v3.0",
+      "type": "officiel",
+      "verifieLe": "2026-11-14"
+    },
+    {
+      "id": "canadienne",
+      "nationalite": "Canadienne",
+      "pays": "canada",
+      "genre": "piege",
+      "titre": "Piège : prends ton passeport canadien",
+      "texte": "Un citoyen canadien qui a une autre nationalité doit présenter un passeport canadien valide pour prendre un avion vers le Canada. Ton passeport français ne suffit pas.",
+      "source": "Gouvernement du Canada",
+      "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/visiter-canada/citoyens-canadiens-ont-double-nationalite-visiter-canada.html",
+      "licence": "Lien seulement, aucun contenu copié",
+      "type": "officiel",
+      "verifieLe": "2026-11-14"
+    },
+    {
+      "id": "americaine",
+      "nationalite": "Américaine",
+      "pays": "etats-unis",
+      "genre": "piege",
+      "titre": "Piège : les impôts américains te suivent",
+      "texte": "Un citoyen américain est imposé sur ses revenus du monde entier, même s'il vit à l'étranger, et doit les déclarer chaque année aux États-Unis.",
+      "source": "IRS, U.S. citizens and resident aliens abroad",
+      "lien": "https://www.irs.gov/individuals/international-taxpayers/us-citizens-and-resident-aliens-abroad",
+      "licence": "Domaine public (administration fédérale américaine)",
+      "type": "officiel",
+      "verifieLe": "2026-11-14"
+    }
+  ],
+  "autre": "Nous n'avons pas encore vérifié ton cas.",
+  "avertissement": "Ces informations sur les visas et les impôts ne sont pas un conseil juridique."
+}

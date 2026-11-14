@@ -1,3 +1,4 @@
+import Link from "next/link";
 import BoutonCommencer from "@/components/BoutonCommencer";
 import { FAMILLES, paysParFamille } from "@/lib/pays";
 
@@ -32,17 +33,19 @@ export default function Accueil() {
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2">
               {paysParFamille(famille).map((p) => (
-                <li
-                  key={p.id}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm"
-                >
+                <li key={p.id}>
+                  <Link
+                    href={`/pays/${p.id}`}
+                    className="inline-block rounded-full border border-bord bg-carte px-3 py-1.5 text-sm hover:border-bleu"
+                  >
                   {p.nom}
                   {p.ficheComplete && (
-                    <span className="ml-1 text-bleu" title="Fiche complète">
+                    <span className="ml-1 text-lien" title="Fiche complète">
                       <span aria-hidden="true">★</span>
                       <span className="sr-only"> (fiche complète)</span>
                     </span>
                   )}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -51,12 +54,17 @@ export default function Accueil() {
         <p className="mt-4 text-sm text-gris">★ = fiche complète</p>
       </section>
 
-      <footer className="mt-14 border-t border-slate-200 pt-5 text-sm text-gris">
+      <footer className="mt-14 border-t border-bord pt-5 text-sm text-gris">
         <p>
           Les informations sur les visas et les impôts ne constituent pas un
           conseil juridique. Vérifie toujours auprès des sources officielles.
         </p>
-        <p className="mt-2">Projet gratuit et open source, en construction.</p>
+        <p className="mt-2">
+          Projet gratuit et open source, en construction.{" "}
+          <Link href="/methode" className="text-lien underline">
+            Comment on calcule
+          </Link>
+        </p>
       </footer>
     </main>
   );
