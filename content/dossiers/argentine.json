@@ -1,11 +1,10 @@
 {
   "pays": "argentine",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
+      "titre": "Informations générales sur le PVT",
       "nom": "Programme Vacances-Travail (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
       "statut": "verifie"
@@ -22,7 +21,7 @@
       "titre": "Ambassade ou consulat de France",
       "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
       "url": null,
-      "statut": "a-completer"
+      "statut": "a-verifier"
     },
     {
       "id": "registre",
@@ -40,6 +39,5 @@
       "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/amerique-du-sud/exporter-s-implanter-argentine.html",
       "statut": "verifie"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

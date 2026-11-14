@@ -62,13 +62,13 @@
   "europa-travail": {
     "nom": "L'Europe est à vous (Union européenne), Travailler à l'étranger",
     "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
-    "licence": "Lien seulement, aucun contenu copié (voir l'avis juridique du site)",
+    "licence": "Lien seulement, aucun contenu copié (selon l'avis juridique du site europa.eu)",
     "type": "officiel"
   },
   "europa-permis": {
     "nom": "L'Europe est à vous (Union européenne), Permis de travail",
     "url": "https://europa.eu/youreurope/citizens/work/work-abroad/work-permits/index_fr.htm",
-    "licence": "Lien seulement, aucun contenu copié (voir l'avis juridique du site)",
+    "licence": "Lien seulement, aucun contenu copié (selon l'avis juridique du site europa.eu)",
     "type": "officiel"
   },
   "cleiss-accords": {

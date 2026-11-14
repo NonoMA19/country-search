@@ -1,11 +1,10 @@
 {
   "pays": "emirats-arabes-unis",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
+      "titre": "Entrée et séjour : informations générales",
       "nom": "Entrée et séjour (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/emirats-arabes-unis/conseils-aux-voyageurs-entree-sejour",
       "statut": "verifie"
@@ -40,6 +39,5 @@
       "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/moyen-orient/exporter-simplanter-aux-emirats-arabes-unis.html",
       "statut": "verifie"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

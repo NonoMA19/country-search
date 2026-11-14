@@ -18,7 +18,10 @@
       "europa-travail",
       "europa-permis",
       "diplomatie-pvt",
-      "service-public-vie"
+      "service-public-vie",
+      "gov-uk-visa",
+      "mom-singapour",
+      "canada-eic"
     ],
     "mesures": []
   },
@@ -239,7 +242,7 @@
     "id": "equilibre",
     "famille": "travailler",
     "nom": "Équilibre vie pro et vie perso",
-    "definition": "Heures réellement travaillées par semaine et congés payés légaux. Les congés légaux ne sont pas encore vérifiés pays par pays : seules les heures comptent pour l'instant.",
+    "definition": "Heures réellement travaillées par semaine, en moyenne. Les congés payés légaux ne sont pas comptés : on n'a pas encore pu les vérifier pays par pays dans les textes de loi.",
     "type": "donnee-ouverte",
     "sources": [
       "oit-ilostat"
@@ -277,39 +280,6 @@
           "semaines plutôt courtes",
           "semaines courtes"
         ]
-      },
-      {
-        "id": "conges",
-        "nom": "Congés payés légaux",
-        "sens": "haut",
-        "unite": "jours par an",
-        "bornes": [
-          10,
-          15,
-          20,
-          25
-        ],
-        "notes": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "echelle": [
-          "moins de 10 jours",
-          "de 10 à 14 jours",
-          "de 15 à 19 jours",
-          "de 20 à 24 jours",
-          "25 jours ou plus"
-        ],
-        "mots": [
-          "très peu de congés",
-          "peu de congés",
-          "congés moyens",
-          "beaucoup de congés",
-          "énormément de congés"
-        ]
       }
     ]
   },
@@ -341,6 +311,13 @@
           "intermédiaire",
           "marquée",
           "très marquée"
+        ],
+        "explications": [
+          "On parle à son chef comme à un collègue, et on peut le contredire en réunion.",
+          "Le chef reste accessible et on attend de toi des initiatives.",
+          "Le chef décide, souvent après avoir consulté l'équipe.",
+          "Les décisions viennent d'en haut, et on contredit rarement son chef en public.",
+          "Le rang et l'ancienneté comptent beaucoup, et les décisions suivent la voie hiérarchique."
         ]
       },
       {
@@ -360,6 +337,13 @@
           "nuancée",
           "plutôt indirecte",
           "très indirecte"
+        ],
+        "explications": [
+          "On dit ses désaccords franchement, sans détour.",
+          "On va droit au but, en restant courtois.",
+          "On dit les choses, mais avec des formes.",
+          "Un refus est souvent suggéré plutôt que dit.",
+          "Il faut lire entre les lignes : un « non » frontal est rare."
         ]
       },
       {
@@ -379,6 +363,13 @@
           "intermédiaire",
           "attendue",
           "stricte"
+        ],
+        "explications": [
+          "Arriver avec un bon retard en réunion n'étonne personne.",
+          "Quelques minutes de retard en réunion sont courantes.",
+          "On arrive à l'heure, sans rigidité.",
+          "Arriver en retard en réunion est mal vu.",
+          "Être à l'heure, c'est arriver un peu en avance."
         ]
       }
     ]
@@ -702,7 +693,7 @@
     ]
   },
   {
-    "numero": 16,
+    "numero": 17,
     "id": "valeurs",
     "famille": "valeurs",
     "nom": "Valeurs (en option)",
@@ -715,7 +706,7 @@
     "mesures": [
       {
         "id": "stabilite",
-        "nom": "Stabilité politique (indice de la Banque mondiale, sur 100)",
+        "nom": "Stabilité politique (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -748,7 +739,7 @@
       },
       {
         "id": "libertes",
-        "nom": "Libertés d'expression et de la presse (indice de la Banque mondiale, sur 100)",
+        "nom": "Libertés d'expression et de la presse (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -781,7 +772,7 @@
       },
       {
         "id": "egalite",
-        "nom": "Égalité femmes-hommes dans la loi (indice de la Banque mondiale, sur 100)",
+        "nom": "Égalité femmes-hommes dans la loi (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -848,7 +839,7 @@
     ]
   },
   {
-    "numero": 17,
+    "numero": 16,
     "id": "taille-ville",
     "famille": "vivre",
     "nom": "Taille de ville (facultatif)",

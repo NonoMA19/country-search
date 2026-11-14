@@ -6,9 +6,10 @@ import BoutonDossier from "@/components/BoutonDossier";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Pastille from "@/components/Pastille";
-import { criteres, dateFr, notes, portes, preuveMesure, preuveSource, vie } from "@/lib/donnees";
-import { chargerDossier, type LienDossier } from "@/lib/dossiers";
-import { pays, trouverPays } from "@/lib/pays";
+import PiedDePage from "@/components/PiedDePage";
+import { criteres, dateFr, notes, portes, preuveMesure, preuveSource, vie, type Critere } from "@/lib/donnees";
+import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
+import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
 export function generateStaticParams() {
   return pays.map((p) => ({ id: p.id }));
@@ -16,7 +17,29 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const p = trouverPays((await params).id);
-  return { title: p ? `${p.nom} | Country Search` : "Pays introuvable | Country Search" };
+  if (!p) return { title: "Pays introuvable | Country Search" };
+  return {
+    title: `${p.nom} | Country Search`,
+    description: `Travailler ${p.en} : porte d’entrée (${p.famille}), emploi, salaires, coût de la vie, climat et liens officiels, chaque donnée avec sa source.`,
+  };
+}
+
+// Le VIE : les règles sont officielles, mais la présence de missions dans ce pays n'est pas vérifiée.
+function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
+  const presence = vie.presence?.[paysId];
+  return (
+    <li className="rounded-2xl border border-bord bg-carte p-4">
+      <p className="font-semibold">{vie.nom}</p>
+      <p className="mt-1">
+        {vie.texte}
+        <Pastille preuve={preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe)} pays={nomPays} contexte="les règles du VIE" />
+      </p>
+      <p className="mt-2 text-sm">
+        {presence ? presence.texte : "Y a-t-il des missions VIE dans ce pays ? Ce n’est pas encore vérifié."}
+        <Pastille preuve={presence ? preuveSource("Missions VIE dans ce pays", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE dans ce pays", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={nomPays} contexte="les missions VIE" />
+      </p>
+    </li>
+  );
 }
 
 const FAMILLES = [
@@ -29,17 +52,58 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
   return (
     <li className="rounded-2xl border border-bord bg-carte p-4">
       <p className="text-sm font-medium text-gris">{lien.titre}</p>
-      {lien.url ? (
-        <>
-          <a href={lien.url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1.5 font-medium text-lien underline">
-            {lien.nom ?? lien.url} <ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
-          </a>
-          <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(date)}</p>
-        </>
-      ) : (
-        <p className="mt-1 text-gris">{lien.nom ? `${lien.nom} : à compléter` : "À compléter"}</p>
-      )}
+      <a href={lien.url as string} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-medium break-words text-lien underline">
+        {lien.nom ?? lien.url} <ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
+      </a>
+      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(date)}</p>
     </li>
+  );
+}
+
+// Une carte par critère. Si plusieurs mesures partagent le même texte (taille de ville),
+// le texte n'apparaît qu'une fois : jamais deux fois le même paragraphe sur une page.
+function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
+  const lignes = c.mesures.map((m) => {
+    const n = notes[paysId]?.[m.id];
+    const ok = n?.statut === "verifie" && n.note !== null;
+    return { m, n, ok, mot: ok ? m.mots[(n.note as number) - 1] : null, explication: ok ? m.explications?.[(n.note as number) - 1] : undefined };
+  });
+  const textes = [...new Set(lignes.map((l) => l.n?.texte ?? "").filter(Boolean))];
+  // Une seule carte si les mesures partagent le même texte (taille de ville) ou décrivent un même style (style de travail).
+  const regrouper = c.mesures.length > 1 && lignes.every((l) => l.ok) && (textes.length <= 1 || c.id === "style-travail");
+  if (regrouper) {
+    return (
+      <li className="rounded-2xl border border-bord bg-carte p-4">
+        <p className="text-sm font-medium text-gris">{c.nom}</p>
+        <ul className="mt-1 space-y-1.5">
+          {lignes.map((l) => (
+            <li key={l.m.id}>
+              <span className="font-semibold">{l.m.nom} : </span>{l.mot}
+              {l.explication && <span className="block text-sm text-gris">{l.explication}</span>}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-2">
+          {textes.join(" ")}
+          <Pastille preuve={preuveMesure(paysId, c.mesures[0].id)} pays={nomPays} contexte={c.nom} />
+        </p>
+      </li>
+    );
+  }
+  return (
+    <>
+      {lignes.map(({ m, n, ok, mot, explication }) => (
+        <li key={m.id} className="rounded-2xl border border-bord bg-carte p-4">
+          <p className="text-sm font-medium text-gris">{m.nom}</p>
+          {ok && <p className="mt-0.5 font-semibold first-letter:uppercase">{mot}</p>}
+          {explication && <p className="mt-0.5 text-sm text-gris">{explication}</p>}
+          <p className={`mt-1 ${ok ? "" : "text-gris"}`}>
+            {n?.texte || (ok ? "" : "À vérifier.")}
+            <Pastille preuve={preuveMesure(paysId, m.id)} pays={nomPays} contexte={m.nom} />
+          </p>
+        </li>
+      ))}
+    </>
   );
 }
 
@@ -49,18 +113,24 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
   if (!p) notFound();
   const dossier = await chargerDossier(p.id);
   const lesPortes = portes(p.id);
+  const liens = dossier ? liensVerifies(dossier.liens) : [];
+  const associations = dossier ? liensVerifies(dossier.associations) : [];
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
-      <Link href="/" className="text-sm font-medium text-lien underline">Accueil</Link>
-      <header className="mt-4 flex items-center gap-4">
+      <Link href="/" className="-ml-2 inline-flex min-h-11 items-center px-2 text-sm font-medium text-lien underline">Accueil</Link>
+      <header className="mt-2 flex flex-wrap items-center gap-4">
         <Drapeau iso2={p.iso2} className="h-12 w-18" />
-        <div>
-          <p className="text-sm font-medium text-gris">Famille : {p.famille}</p>
-          <h1 className="text-4xl font-bold tracking-tight">{p.nom}</h1>
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-gris">Famille : {NOM_FAMILLE[p.famille]}</p>
+          <h1 className="text-3xl font-bold tracking-tight break-words sm:text-4xl">{p.nom}</h1>
         </div>
       </header>
-      <p className="mt-4 rounded-2xl border border-dashed border-bord p-4 text-gris">Fiche complète en préparation. En attendant, voici les données vérifiées et ton dossier.</p>
+      <p className="mt-4 rounded-2xl border border-dashed border-bord p-4 text-gris">
+        {p.ficheComplete
+          ? "★ Ce pays aura en priorité une fiche détaillée. Pour l’instant, cette page réunit les données vérifiées et les liens officiels utiles."
+          : "Pour l’instant, cette page réunit les données vérifiées et les liens officiels utiles."}
+      </p>
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Les portes d’entrée</h2>
@@ -70,12 +140,12 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
               <p className="font-semibold">{b.nom}</p>
               <p className="mt-1">
                 {b.texte}
-                <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} />
+                <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} contexte={b.nom} />
               </p>
               {b.invitationTexte && b.invitationSource && (
                 <p className="mt-2">
                   {b.invitationTexte}
-                  <Pastille preuve={preuveSource("Invitation à présenter une demande", b.invitationTexte, b.invitationSource.source, b.invitationSource.lien, b.invitationSource.verifieLe)} pays={p.nom} />
+                  <Pastille preuve={preuveSource("Invitation à présenter une demande", b.invitationTexte, b.invitationSource.source, b.invitationSource.lien, b.invitationSource.verifieLe)} pays={p.nom} contexte="l’invitation" />
                 </p>
               )}
               {(b.conditions ?? []).length > 0 && (
@@ -85,14 +155,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
               )}
             </li>
           ))}
-          <li className="rounded-2xl border border-bord bg-carte p-4">
-            <p className="font-semibold">{vie.nom}</p>
-            <p className="mt-1">
-              {vie.texte}
-              <Pastille preuve={preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe)} pays={p.nom} />
-            </p>
-            <p className="mt-2 text-sm text-gris">La présence de missions dans ce pays n’est pas encore vérifiée.</p>
-          </li>
+          <CarteVie paysId={p.id} nomPays={p.nom} />
         </ul>
       </section>
 
@@ -100,48 +163,32 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
         <section key={f.id} className="mt-8">
           <h2 className="flex items-center gap-2 text-xl font-semibold"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</h2>
           <ul className="mt-3 space-y-3">
-            {criteres.filter((c) => c.famille === f.id).flatMap((c) => c.mesures).map((m) => {
-              const n = notes[p.id]?.[m.id];
-              const ok = n?.statut === "verifie" && n.note !== null;
-              return (
-                <li key={m.id} className="rounded-2xl border border-bord bg-carte p-4">
-                  <p className="text-sm font-medium text-gris">{m.nom}</p>
-                  {ok && <p className="mt-0.5 font-semibold first-letter:uppercase">{m.mots[(n.note as number) - 1]}</p>}
-                  <p className={`mt-1 ${ok ? "" : "text-gris"}`}>
-                    {n?.texte ?? "Pas encore vérifié."}
-                    <Pastille preuve={preuveMesure(p.id, m.id)} pays={p.nom} />
-                  </p>
-                </li>
-              );
-            })}
+            {criteres.filter((c) => c.famille === f.id).map((c) => <CarteCritere key={c.id} c={c} paysId={p.id} nomPays={p.nom} />)}
           </ul>
         </section>
       ))}
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Ton dossier</h2>
-        {dossier && !dossier.complet && <p className="mt-1 text-sm text-gris">Dossier minimal pour ce pays : il sera complété.</p>}
+        <h2 className="text-xl font-semibold">Liens officiels</h2>
         <ul className="mt-3 space-y-3">
-          {dossier?.liens.map((l) => <Lien key={l.id} lien={l} date={dossier.verifieLe} />)}
+          {liens.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} />)}
         </ul>
-        <h3 className="mt-6 font-semibold">Associations et réseaux</h3>
-        <p className="mt-1 text-sm text-gris">Seulement des organismes publics ou des associations à but non lucratif.</p>
-        <ul className="mt-3 space-y-3">
-          {dossier?.associations.map((l) => <Lien key={l.id} lien={l} date={dossier.verifieLe} />)}
-          {(!dossier || dossier.associations.length === 0) && <li className="rounded-2xl border border-dashed border-bord p-4 text-gris">À compléter</li>}
-        </ul>
-        <h3 className="mt-6 font-semibold">Checklist jour J</h3>
-        <p className="mt-1 text-gris">Bientôt.</p>
+        {associations.length > 0 && (
+          <>
+            <h3 className="mt-6 font-semibold">Associations et réseaux</h3>
+            <p className="mt-1 text-sm text-gris">Seulement des organismes publics ou des associations à but non lucratif.</p>
+            <ul className="mt-3 space-y-3">
+              {associations.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} />)}
+            </ul>
+          </>
+        )}
         <div className="mt-6">
           <BoutonDossier paysId={p.id} />
           <p className="mt-2 text-sm text-gris">Le fichier est créé sur ton appareil : rien n’est envoyé.</p>
         </div>
       </section>
 
-      <footer className="mt-10 border-t border-bord pt-5 text-sm text-gris">
-        <p>Les informations sur les visas et les impôts ne constituent pas un conseil juridique. Vérifie toujours auprès des sources officielles.</p>
-        <p className="mt-2"><Link href="/methode" className="text-lien underline">Comment on calcule</Link> · <Link href="/quiz" className="text-lien underline">Faire le quiz</Link></p>
-      </footer>
+      <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }, { href: "/quiz", texte: "Faire le quiz" }]} />
     </main>
   );
 }

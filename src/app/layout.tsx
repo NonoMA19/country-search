@@ -10,7 +10,7 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   title: "Country Search",
   description:
-    "Choisis le pays où partir travailler, puis arrive prêt le jour J : visa, banque, SIM, santé, logement, CV local.",
+    "Un quiz gratuit, sans compte, pour choisir le pays où partir travailler. Chaque score est expliqué, chaque information a sa source.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

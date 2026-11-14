@@ -22,6 +22,7 @@ export type DefMesure = {
   notes?: number[];
   echelle: string[];
   mots: string[];
+  explications?: string[];
 };
 
 export type Critere = {
@@ -139,7 +140,8 @@ export const dateDonnees = scores.genereLe;
 export const notes = scores.pays;
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
-export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number };
+export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
+export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
 export const avis = avisData as unknown as Record<string, Avis>;
 export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; avertissement: string };
 
@@ -151,7 +153,15 @@ export const LIBELLE_TYPE: Record<TypeSource | "a-verifier", string> = {
   officiel: "Officiel",
   "donnee-ouverte": "Donnée ouverte",
   "notre-avis": "Notre avis",
-  "a-verifier": "Pas encore vérifié",
+  "a-verifier": "À vérifier",
+};
+
+// Une phrase courte pour expliquer chaque étiquette, la première fois qu'on la rencontre.
+export const EXPLICATION_TYPE: Record<TypeSource | "a-verifier", string> = {
+  officiel: "Information lue sur le site d’un État ou d’un organisme public.",
+  "donnee-ouverte": "Chiffre tiré d’une base de données publique, libre de réutilisation (donnée ouverte).",
+  "notre-avis": "Jugement de la rédaction, justifié par écrit. C’est un avis, pas un fait.",
+  "a-verifier": "Information pas encore vérifiée sur une source officielle.",
 };
 
 // Une preuve : ce qu'on affiche quand la personne touche une pastille.
@@ -161,6 +171,7 @@ export type Preuve = {
   texte: string;
   source: string | null;
   lien: string | null;
+  page?: string | null; // page de présentation lisible de la source, si le lien est un fichier brut
   verifieLe: string | null;
   licence: string | null;
 };
@@ -169,7 +180,7 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   const n = notes[paysId]?.[mesureId];
   const m = mesures[mesureId];
   if (!n || n.statut !== "verifie" || !n.source) {
-    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "Pas encore vérifié.", source: null, lien: null, verifieLe: null, licence: null };
+    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "À vérifier.", source: null, lien: null, verifieLe: null, licence: null };
   }
   const s = sources[n.source];
   return {

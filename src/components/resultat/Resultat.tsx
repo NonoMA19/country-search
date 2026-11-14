@@ -9,6 +9,7 @@ import Icone from "@/components/Icone";
 import { ErreurPdf } from "@/components/BoutonDossier";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
+import PiedDePage from "@/components/PiedDePage";
 import { doubleNationalite, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
@@ -24,7 +25,6 @@ const FAMILLES: { id: FamilleScore; nom: string; couleur: string }[] = [
 ];
 const CRANS = [0, 0.5, 1, 1.5, 2];
 const MOTS_CRANS = ["ne compte plus", "compte moins", "comme tu l’as dit", "compte plus", "compte double"];
-const SECTEURS = ["Tech et numérique", "Finance", "Ingénierie et industrie", "Santé", "Hôtellerie et tourisme", "Commerce et marketing", "Enseignement et recherche", "Art et culture", "Je ne sais pas encore"];
 
 const STYLE_BADGE: Record<Badge, string> = {
   ouverte: "bg-bleu text-white",
@@ -102,7 +102,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-gris">
             {surprise ? "Pays surprise" : `N° ${rang}`}
-            {egalite && " · ex aequo"}
+            {egalite && " · à égalité"}
           </p>
           <h3 className="text-3xl leading-tight font-bold">{p.nom}</h3>
         </div>
@@ -181,7 +181,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2 pl-9">
         <BadgePorte badge={ligne.porte.badge} petit />
-        {egalite && <span className="text-xs text-gris">ex aequo</span>}
+        {egalite && <span className="text-xs text-gris">à égalité</span>}
       </div>
       {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
       {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Pas assez de données vérifiées pour ce pays sur tes critères : son pourcentage n’est pas fiable.</p>}
@@ -242,7 +242,7 @@ export default function Resultat() {
       <section aria-labelledby="titre-top" className="mt-6">
         <h2 id="titre-top" className="text-xl font-semibold">Ton top 3</h2>
         {egalites.slice(0, 3).some(Boolean) && (
-          <p className="mt-1 text-sm text-gris">Deux pays à moins de 5 points d’écart sont ex aequo. C’est un indicateur, pas une vérité.</p>
+          <p className="mt-1 text-sm text-gris">Des pays à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
         <div className="mt-4 space-y-5">
           {top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)}
@@ -357,22 +357,6 @@ export default function Resultat() {
         )}
       </section>
 
-      <section aria-labelledby="titre-secteur" className="mt-10">
-        <h2 id="titre-secteur" className="text-xl font-semibold">Quel secteur t’intéresse ?</h2>
-        <p className="mt-1 text-sm text-gris">On prépare cette partie : bientôt, les opportunités par secteur. Ta réponse reste dans ton navigateur et ne change pas ton résultat.</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {SECTEURS.map((s) => {
-            const actif = session.secteurs.includes(s);
-            return (
-              <button key={s} type="button" aria-pressed={actif} onClick={() => maj({ secteurs: actif ? session.secteurs.filter((x) => x !== s) : [...session.secteurs, s] })}
-                className={`min-h-11 rounded-full border px-4 text-sm font-medium ${actif ? "border-bleu bg-bleu text-white" : "border-bord bg-carte hover:border-bleu"}`}>
-                {s}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
       <div className="mt-10 grid gap-3 sm:grid-cols-2">
         {encoreDesPhrases ? (
           <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">Continuer pour affiner</button>
@@ -384,10 +368,8 @@ export default function Resultat() {
         </button>
       </div>
 
-      <footer className="mt-10 border-t border-bord pt-5 text-sm text-gris">
-        <p>Les informations sur les visas et les impôts ne constituent pas un conseil juridique. Vérifie toujours auprès des sources officielles.</p>
-        <p className="mt-2">Tes réponses restent dans ton navigateur : rien n’est envoyé, pas de compte, pas de cookie.</p>
-      </footer>
+      <p className="mt-10 text-sm text-gris">Tes réponses restent dans ton navigateur : rien n’est envoyé, pas de compte, pas de cookie.</p>
+      <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }]} />
     </main>
   );
 }

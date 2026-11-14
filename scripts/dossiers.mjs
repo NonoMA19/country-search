@@ -1,6 +1,6 @@
 // Construit content/dossiers/<pays>.json.
 // Règle absolue : aucune adresse devinée. Chaque lien vient d'une page officielle
-// et il est ouvert ici, un par un. S'il ne répond pas, le champ reste vide (« à compléter »).
+// et il est ouvert ici, un par un. S'il ne répond pas, le lien reste « à vérifier » et n'est pas affiché.
 // Usage : node scripts/dossiers.mjs
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -28,7 +28,7 @@ function ouvre(url) {
   console.log(ok ? "  ok " : "  ✗  ", url);
   return ok;
 }
-const lien = (id, titre, nom, url) => (ouvre(url) ? { id, titre, nom, url, statut: "verifie" } : { id, titre, nom, url: null, statut: "a-completer" });
+const lien = (id, titre, nom, url) => (ouvre(url) ? { id, titre, nom, url, statut: "verifie" } : { id, titre, nom, url: null, statut: "a-verifier" });
 
 const DIPLO = "https://www.diplomatie.gouv.fr/fr";
 const PVT = `${DIPLO}/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt`;
@@ -79,12 +79,13 @@ function cci(p) {
 for (const p of pays) {
   console.log(p.nom);
   const europe = p.famille === "Europe sans visa";
-  const [nomVisa, urlVisa] = VISA[p.id] ?? (europe
-    ? ["Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)", EUROPE]
+  // Le titre dit honnêtement ce qu'est la page : celle du pays, ou une page générale.
+  const [titreVisa, nomVisa, urlVisa] = VISA[p.id] ? ["Page officielle du visa", ...VISA[p.id]] : europe
+    ? ["Travailler dans un autre pays d'Europe", "Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)", EUROPE]
     : p.famille === "PVT"
-      ? ["Programme Vacances-Travail (France Diplomatie)", PVT]
-      : ["Entrée et séjour (France Diplomatie)", infoPays(p.id, "conseils-aux-voyageurs-entree-sejour")]);
-  const liens = [lien("visa", "Page officielle du visa", nomVisa, urlVisa)];
+      ? ["Informations générales sur le PVT", "Programme Vacances-Travail (France Diplomatie)", PVT]
+      : ["Entrée et séjour : informations générales", "Entrée et séjour (France Diplomatie)", infoPays(p.id, "conseils-aux-voyageurs-entree-sejour")];
+  const liens = [lien("visa", titreVisa, nomVisa, urlVisa)];
   if (p.famille === "PVT" && VISA[p.id]) liens.push(lien("pvt", "Programme Vacances-Travail", "Programme Vacances-Travail (France Diplomatie)", PVT));
   liens.push(lien("conseils", "Conseils aux voyageurs", "Conseils aux voyageurs (France Diplomatie)", infoPays(p.id, "dernieres-minutes-et-alertes")));
   // Si le site de l'ambassade ne s'ouvre pas, on donne la page « Contacts utiles » de France Diplomatie.
@@ -97,12 +98,13 @@ for (const p of pays) {
   const chambre = cci(p);
   if (chambre) associations.push(chambre);
   if (p.ficheComplete) {
-    associations.push(lien("alliance", "Alliance française", "Fondation des Alliances Françaises (réseau mondial)", "https://www.fondation-alliancefr.org/"));
-    // Ces deux associations sont citées par France Diplomatie, mais leur site n'a pas pu être ouvert : à compléter.
-    associations.push({ id: "ufe", titre: "Association de Français de l'étranger", nom: "Union des Français de l'étranger (UFE)", url: null, statut: "a-completer" });
-    associations.push({ id: "adfe", titre: "Association de Français de l'étranger", nom: "Français du monde - ADFE", url: null, statut: "a-completer" });
+    // Ces deux associations sont citées par France Diplomatie, mais leur site n'a pas pu être ouvert
+    // depuis la session de collecte : elles restent « à vérifier » et ne sont pas affichées.
+    // (Le lien Alliance française a été retiré : c'était le même lien général pour tous les pays.)
+    associations.push({ id: "ufe", titre: "Association de Français de l'étranger", nom: "Union des Français de l'étranger (UFE)", url: null, statut: "a-verifier" });
+    associations.push({ id: "adfe", titre: "Association de Français de l'étranger", nom: "Français du monde-ADFE", url: null, statut: "a-verifier" });
   }
-  const dossier = { pays: p.id, complet: p.ficheComplete, verifieLe: AUJOURDHUI, liens, associations, checklist: "Bientôt" };
+  const dossier = { pays: p.id, verifieLe: AUJOURDHUI, liens, associations };
   fs.writeFileSync(path.join(RACINE, "content", "dossiers", `${p.id}.json`), JSON.stringify(dossier, null, 2) + "\n");
 }
 const total = [...dejaVus.values()];

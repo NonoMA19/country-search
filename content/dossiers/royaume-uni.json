@@ -1,6 +1,5 @@
 {
   "pays": "royaume-uni",
-  "complet": true,
   "verifieLe": "2026-11-14",
   "liens": [
     {
@@ -41,26 +40,18 @@
       "statut": "verifie"
     },
     {
-      "id": "alliance",
-      "titre": "Alliance française",
-      "nom": "Fondation des Alliances Françaises (réseau mondial)",
-      "url": "https://www.fondation-alliancefr.org/",
-      "statut": "verifie"
-    },
-    {
       "id": "ufe",
       "titre": "Association de Français de l'étranger",
       "nom": "Union des Français de l'étranger (UFE)",
       "url": null,
-      "statut": "a-completer"
+      "statut": "a-verifier"
     },
     {
       "id": "adfe",
       "titre": "Association de Français de l'étranger",
-      "nom": "Français du monde - ADFE",
+      "nom": "Français du monde-ADFE",
       "url": null,
-      "statut": "a-completer"
+      "statut": "a-verifier"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

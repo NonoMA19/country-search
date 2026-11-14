@@ -8,19 +8,18 @@ import { pays } from "./pays";
 export type Etape = { t: "profil"; i: number } | { t: "priorites" } | { t: "sujets" } | { t: "phrases" } | { t: "pret" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 2;
+export const VERSION_SESSION = 3;
 
 export type Session = {
   v: number;
   etat: Etat;
   etape: Etape;
   reglages: Reglages;
-  secteurs: string[];
   proposeA: number; // nombre de phrases vues quand le résultat a été proposé pour la dernière fois
   ouvertes: boolean; // « Montrer seulement les portes ouvertes »
 };
 
-export const SESSION_VIDE: Session = { v: VERSION_SESSION, etat: ETAT_VIDE, etape: { t: "profil", i: 0 }, reglages: REGLAGES_DEFAUT, secteurs: [], proposeA: -1, ouvertes: false };
+export const SESSION_VIDE: Session = { v: VERSION_SESSION, etat: ETAT_VIDE, etape: { t: "profil", i: 0 }, reglages: REGLAGES_DEFAUT, proposeA: -1, ouvertes: false };
 
 const CLE = "country-search:quiz";
 let courant: Session | null = null;
@@ -81,7 +80,7 @@ function reglagesValides(x: unknown): boolean {
 export function validerSession(x: unknown): Session | null {
   if (!estObjet(x) || x.v !== VERSION_SESSION) return null;
   if (!etatValide(x.etat) || !etapeValide(x.etape) || !reglagesValides(x.reglages)) return null;
-  if (!listeDe(x.secteurs, () => true) || !(x.proposeA === -1 || entier(x.proposeA, 0)) || typeof x.ouvertes !== "boolean") return null;
+  if (!(x.proposeA === -1 || entier(x.proposeA, 0)) || typeof x.ouvertes !== "boolean") return null;
   return x as unknown as Session;
 }
 

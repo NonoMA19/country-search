@@ -504,7 +504,7 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Il faut un visa de long séjour pour travailler. Le visa « Skilled Worker » demande un employeur britannique agréé par le Home Office, qui te remet un certificat de parrainage.",
+   "texte": "Il faut un visa de long séjour pour travailler. Le visa « Skilled Worker » demande un employeur agréé par le ministère de l’Intérieur britannique (Home Office), qui te remet un certificat de parrainage.",
    "conditions": [
     "Ton métier doit figurer sur la liste officielle des métiers éligibles.",
     "Un salaire minimum est exigé, variable selon le métier.",

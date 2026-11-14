@@ -8,7 +8,9 @@
     "iso3": "BEL",
     "zone": "europe",
     "ville": "Bruxelles",
-    "villeRecherche": "Brussels"
+    "villeRecherche": "Brussels",
+    "en": "en Belgique",
+    "le": "la Belgique"
   },
   {
     "nom": "Suisse",
@@ -19,7 +21,9 @@
     "iso3": "CHE",
     "zone": "europe",
     "ville": "Zurich",
-    "villeRecherche": "Zurich"
+    "villeRecherche": "Zurich",
+    "en": "en Suisse",
+    "le": "la Suisse"
   },
   {
     "nom": "Allemagne",
@@ -30,7 +34,9 @@
     "iso3": "DEU",
     "zone": "europe",
     "ville": "Berlin",
-    "villeRecherche": "Berlin"
+    "villeRecherche": "Berlin",
+    "en": "en Allemagne",
+    "le": "l’Allemagne"
   },
   {
     "nom": "Irlande",
@@ -41,7 +47,9 @@
     "iso3": "IRL",
     "zone": "europe",
     "ville": "Dublin",
-    "villeRecherche": "Dublin"
+    "villeRecherche": "Dublin",
+    "en": "en Irlande",
+    "le": "l’Irlande"
   },
   {
     "nom": "Luxembourg",
@@ -52,7 +60,9 @@
     "iso3": "LUX",
     "zone": "europe",
     "ville": "Luxembourg",
-    "villeRecherche": "Luxembourg"
+    "villeRecherche": "Luxembourg",
+    "en": "au Luxembourg",
+    "le": "le Luxembourg"
   },
   {
     "nom": "Espagne",
@@ -63,7 +73,9 @@
     "iso3": "ESP",
     "zone": "europe",
     "ville": "Madrid",
-    "villeRecherche": "Madrid"
+    "villeRecherche": "Madrid",
+    "en": "en Espagne",
+    "le": "l’Espagne"
   },
   {
     "nom": "Italie",
@@ -74,7 +86,9 @@
     "iso3": "ITA",
     "zone": "europe",
     "ville": "Rome",
-    "villeRecherche": "Rome"
+    "villeRecherche": "Rome",
+    "en": "en Italie",
+    "le": "l’Italie"
   },
   {
     "nom": "Pays-Bas",
@@ -85,7 +99,9 @@
     "iso3": "NLD",
     "zone": "europe",
     "ville": "Amsterdam",
-    "villeRecherche": "Amsterdam"
+    "villeRecherche": "Amsterdam",
+    "en": "aux Pays-Bas",
+    "le": "les Pays-Bas"
   },
   {
     "nom": "Portugal",
@@ -96,7 +112,9 @@
     "iso3": "PRT",
     "zone": "europe",
     "ville": "Lisbonne",
-    "villeRecherche": "Lisbon"
+    "villeRecherche": "Lisbon",
+    "en": "au Portugal",
+    "le": "le Portugal"
   },
   {
     "nom": "Norvège",
@@ -107,7 +125,9 @@
     "iso3": "NOR",
     "zone": "europe",
     "ville": "Oslo",
-    "villeRecherche": "Oslo"
+    "villeRecherche": "Oslo",
+    "en": "en Norvège",
+    "le": "la Norvège"
   },
   {
     "nom": "Suède",
@@ -118,7 +138,9 @@
     "iso3": "SWE",
     "zone": "europe",
     "ville": "Stockholm",
-    "villeRecherche": "Stockholm"
+    "villeRecherche": "Stockholm",
+    "en": "en Suède",
+    "le": "la Suède"
   },
   {
     "nom": "Danemark",
@@ -129,7 +151,9 @@
     "iso3": "DNK",
     "zone": "europe",
     "ville": "Copenhague",
-    "villeRecherche": "Copenhagen"
+    "villeRecherche": "Copenhagen",
+    "en": "au Danemark",
+    "le": "le Danemark"
   },
   {
     "nom": "Canada",
@@ -140,7 +164,9 @@
     "iso3": "CAN",
     "zone": "hors-europe",
     "ville": "Toronto",
-    "villeRecherche": "Toronto"
+    "villeRecherche": "Toronto",
+    "en": "au Canada",
+    "le": "le Canada"
   },
   {
     "nom": "Australie",
@@ -151,7 +177,9 @@
     "iso3": "AUS",
     "zone": "hors-europe",
     "ville": "Sydney",
-    "villeRecherche": "Sydney"
+    "villeRecherche": "Sydney",
+    "en": "en Australie",
+    "le": "l’Australie"
   },
   {
     "nom": "Japon",
@@ -162,7 +190,9 @@
     "iso3": "JPN",
     "zone": "hors-europe",
     "ville": "Tokyo",
-    "villeRecherche": "Tokyo"
+    "villeRecherche": "Tokyo",
+    "en": "au Japon",
+    "le": "le Japon"
   },
   {
     "nom": "Nouvelle-Zélande",
@@ -173,7 +203,9 @@
     "iso3": "NZL",
     "zone": "hors-europe",
     "ville": "Auckland",
-    "villeRecherche": "Auckland"
+    "villeRecherche": "Auckland",
+    "en": "en Nouvelle-Zélande",
+    "le": "la Nouvelle-Zélande"
   },
   {
     "nom": "Corée du Sud",
@@ -184,7 +216,9 @@
     "iso3": "KOR",
     "zone": "hors-europe",
     "ville": "Séoul",
-    "villeRecherche": "Seoul"
+    "villeRecherche": "Seoul",
+    "en": "en Corée du Sud",
+    "le": "la Corée du Sud"
   },
   {
     "nom": "Taïwan",
@@ -195,7 +229,9 @@
     "iso3": "TWN",
     "zone": "hors-europe",
     "ville": "Taipei",
-    "villeRecherche": "Taipei"
+    "villeRecherche": "Taipei",
+    "en": "à Taïwan",
+    "le": "Taïwan"
   },
   {
     "nom": "Hong Kong",
@@ -206,7 +242,9 @@
     "iso3": "HKG",
     "zone": "hors-europe",
     "ville": "Hong Kong",
-    "villeRecherche": "Hong Kong"
+    "villeRecherche": "Hong Kong",
+    "en": "à Hong Kong",
+    "le": "Hong Kong"
   },
   {
     "nom": "Argentine",
@@ -217,7 +255,9 @@
     "iso3": "ARG",
     "zone": "hors-europe",
     "ville": "Buenos Aires",
-    "villeRecherche": "Buenos Aires"
+    "villeRecherche": "Buenos Aires",
+    "en": "en Argentine",
+    "le": "l’Argentine"
   },
   {
     "nom": "Chili",
@@ -228,7 +268,9 @@
     "iso3": "CHL",
     "zone": "hors-europe",
     "ville": "Santiago",
-    "villeRecherche": "Santiago"
+    "villeRecherche": "Santiago",
+    "en": "au Chili",
+    "le": "le Chili"
   },
   {
     "nom": "Colombie",
@@ -239,7 +281,9 @@
     "iso3": "COL",
     "zone": "hors-europe",
     "ville": "Bogotá",
-    "villeRecherche": "Bogota"
+    "villeRecherche": "Bogota",
+    "en": "en Colombie",
+    "le": "la Colombie"
   },
   {
     "nom": "Mexique",
@@ -250,7 +294,9 @@
     "iso3": "MEX",
     "zone": "hors-europe",
     "ville": "Mexico",
-    "villeRecherche": "Mexico City"
+    "villeRecherche": "Mexico City",
+    "en": "au Mexique",
+    "le": "le Mexique"
   },
   {
     "nom": "Brésil",
@@ -261,7 +307,9 @@
     "iso3": "BRA",
     "zone": "hors-europe",
     "ville": "São Paulo",
-    "villeRecherche": "Sao Paulo"
+    "villeRecherche": "Sao Paulo",
+    "en": "au Brésil",
+    "le": "le Brésil"
   },
   {
     "nom": "Royaume-Uni",
@@ -272,7 +320,9 @@
     "iso3": "GBR",
     "zone": "europe",
     "ville": "Londres",
-    "villeRecherche": "London"
+    "villeRecherche": "London",
+    "en": "au Royaume-Uni",
+    "le": "le Royaume-Uni"
   },
   {
     "nom": "États-Unis",
@@ -283,7 +333,9 @@
     "iso3": "USA",
     "zone": "hors-europe",
     "ville": "New York",
-    "villeRecherche": "New York"
+    "villeRecherche": "New York",
+    "en": "aux États-Unis",
+    "le": "les États-Unis"
   },
   {
     "nom": "Singapour",
@@ -294,7 +346,9 @@
     "iso3": "SGP",
     "zone": "hors-europe",
     "ville": "Singapour",
-    "villeRecherche": "Singapore"
+    "villeRecherche": "Singapore",
+    "en": "à Singapour",
+    "le": "Singapour"
   },
   {
     "nom": "Émirats arabes unis",
@@ -305,7 +359,9 @@
     "iso3": "ARE",
     "zone": "hors-europe",
     "ville": "Dubaï",
-    "villeRecherche": "Dubai"
+    "villeRecherche": "Dubai",
+    "en": "aux Émirats arabes unis",
+    "le": "les Émirats arabes unis"
   },
   {
     "nom": "Chine",
@@ -316,7 +372,9 @@
     "iso3": "CHN",
     "zone": "hors-europe",
     "ville": "Shanghai",
-    "villeRecherche": "Shanghai"
+    "villeRecherche": "Shanghai",
+    "en": "en Chine",
+    "le": "la Chine"
   },
   {
     "nom": "Maroc",
@@ -327,6 +385,8 @@
     "iso3": "MAR",
     "zone": "hors-europe",
     "ville": "Casablanca",
-    "villeRecherche": "Casablanca"
+    "villeRecherche": "Casablanca",
+    "en": "au Maroc",
+    "le": "le Maroc"
   }
 ]

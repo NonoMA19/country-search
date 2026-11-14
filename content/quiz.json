@@ -3,10 +3,10 @@
     {
       "id": "objectif",
       "question": "Quel est ton projet ?",
-      "pourquoi": "Ton projet change la porte d'entrée qu'on te propose : PVT, VIE ou visa de travail.",
+      "pourquoi": "Ton projet change la porte d'entrée qu'on te propose : PVT (Programme Vacances-Travail, un visa d'un an pour voyager et travailler), VIE (Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l'étranger, à demander avant 28 ans) ou visa de travail.",
       "influence": ["visa", "age-conditions"],
       "options": [
-        { "id": "stage-vie", "label": "Stage ou VIE" },
+        { "id": "stage-vie", "label": "Un stage ou un VIE (volontariat en entreprise)" },
         { "id": "aventure", "label": "Une année d'aventure" },
         { "id": "premier-poste", "label": "Un premier poste" },
         { "id": "carriere", "label": "Une carrière longue" }
@@ -132,7 +132,7 @@
     { "id": "travail", "label": "Travail facile à trouver", "icone": "briefcase", "famille": "travailler", "mesures": ["emploi"], "sens": "haut" },
     { "id": "salaire", "label": "Bon salaire", "icone": "banknote", "famille": "travailler", "mesures": ["salaire"], "sens": "haut" },
     { "id": "prix", "label": "Vie pas chère", "icone": "piggy-bank", "famille": "vivre", "mesures": ["prix"], "sens": "haut" },
-    { "id": "equilibre", "label": "Équilibre vie pro et perso", "icone": "clock", "famille": "travailler", "mesures": ["heures", "conges"], "sens": "haut" },
+    { "id": "equilibre", "label": "Équilibre vie pro et perso", "icone": "clock", "famille": "travailler", "mesures": ["heures"], "sens": "haut" },
     { "id": "climat", "label": "Climat doux", "icone": "sun", "famille": "vivre", "mesures": ["hiver"], "sens": "haut" },
     { "id": "proche", "label": "Proche de la France", "icone": "plane", "famille": "vivre", "mesures": ["vol", "decalage"], "sens": "haut" },
     { "id": "securite", "label": "Sécurité", "icone": "shield", "famille": "vivre", "mesures": ["securite"], "sens": "haut" },
@@ -156,7 +156,7 @@
       "id": "salaire-temps", "famille": "travailler", "type": "oui-non",
       "texte": "Je préfère un bon salaire à beaucoup de temps libre.",
       "pourquoi": "Oui favorise les pays où le salaire achète le plus. Non favorise ceux où l'on travaille moins d'heures.",
-      "oui": [{ "mesures": ["salaire"], "sens": "haut" }], "non": [{ "mesures": ["heures", "conges"], "sens": "haut" }],
+      "oui": [{ "mesures": ["salaire"], "sens": "haut" }], "non": [{ "mesures": ["heures"], "sens": "haut" }],
       "saufPriorites": ["salaire", "equilibre"]
     },
     {
@@ -177,7 +177,7 @@
       "id": "finir-tard", "famille": "travailler", "type": "oui-non",
       "texte": "Finir tard ne me dérange pas si le travail me plaît.",
       "pourquoi": "Si non, on donne plus de place aux pays où les semaines de travail sont courtes.",
-      "oui": [], "non": [{ "mesures": ["heures", "conges"], "sens": "haut" }],
+      "oui": [], "non": [{ "mesures": ["heures"], "sens": "haut" }],
       "saufPriorites": ["equilibre"]
     },
     {

@@ -1,6 +1,5 @@
 {
   "pays": "nouvelle-zelande",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
@@ -39,6 +38,5 @@
       "statut": "verifie"
     }
   ],
-  "associations": [],
-  "checklist": "Bientôt"
+  "associations": []
 }

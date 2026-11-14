@@ -1,11 +1,10 @@
 {
   "pays": "suede",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
+      "titre": "Travailler dans un autre pays d'Europe",
       "nom": "Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)",
       "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
       "statut": "verifie"
@@ -40,6 +39,5 @@
       "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/europe/exporter-s-implanter-suede.html",
       "statut": "verifie"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

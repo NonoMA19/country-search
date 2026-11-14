@@ -1,11 +1,10 @@
 {
   "pays": "coree-du-sud",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
+      "titre": "Informations générales sur le PVT",
       "nom": "Programme Vacances-Travail (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
       "statut": "verifie"
@@ -40,6 +39,5 @@
       "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/asie-oceanie/exporter-s-implanter-coreesud.html",
       "statut": "verifie"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

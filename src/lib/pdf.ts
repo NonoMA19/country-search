@@ -1,7 +1,7 @@
 // Fabrique le dossier PDF dans le navigateur (bibliothèque libre jsPDF, licence MIT).
 // Aucun serveur, aucun compte : le fichier est créé sur l'appareil de la personne.
 import { LIBELLE_TYPE, dateFr, type Preuve } from "./donnees";
-import { chargerDossier } from "./dossiers";
+import { chargerDossier, liensVerifies } from "./dossiers";
 import { LIBELLE_BADGE, verdict, type Alerte, type Argument, type Ligne, type Porte } from "./moteur";
 import type { Pays } from "./pays";
 
@@ -38,7 +38,7 @@ export async function telechargerDossier({ pays, ligne, porte, raisons, coince }
   const titre = (t: string) => { y += 8; ecrire(t, { taille: 14, gras: true, apres: 4 }); };
   const preuve = (p: Preuve | null) => {
     if (!p) return;
-    if (p.type === "a-verifier") { ecrire("Pas encore vérifié.", { taille: 9, gris: true, retrait: 12 }); return; }
+    if (p.type === "a-verifier") { ecrire("À vérifier.", { taille: 9, gris: true, retrait: 12 }); return; }
     ecrire(`${LIBELLE_TYPE[p.type]} - ${p.source} - vérifié le ${dateFr(p.verifieLe)}`, { taille: 9, gris: true, retrait: 12 });
     if (p.source) sources.set(p.source, p);
   };
@@ -69,22 +69,23 @@ export async function telechargerDossier({ pays, ligne, porte, raisons, coince }
     for (const a of coince.alertes) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
 
-  titre("Liens officiels");
-  if (dossier) {
-    for (const l of dossier.liens) {
+  // Seuls les liens réellement vérifiés sont imprimés.
+  const liens = dossier ? liensVerifies(dossier.liens) : [];
+  const associations = dossier ? liensVerifies(dossier.associations) : [];
+  if (liens.length) {
+    titre("Liens officiels");
+    for (const l of liens) {
       ecrire(`${l.titre}${l.nom ? ` : ${l.nom}` : ""}`, { gras: true, apres: 1 });
-      ecrire(l.url ? `${l.url} (vérifié le ${dateFr(dossier.verifieLe)})` : "À compléter : ce lien n'a pas encore pu être vérifié.", { taille: 10, gris: !l.url });
+      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
     }
+  }
+  if (associations.length) {
     titre("Associations et réseaux");
-    if (dossier.associations.length === 0) ecrire("À compléter.", { gris: true });
-    for (const l of dossier.associations) {
+    for (const l of associations) {
       ecrire(l.nom ?? l.titre, { gras: true, apres: 1 });
-      ecrire(l.url ? `${l.url} (vérifié le ${dateFr(dossier.verifieLe)})` : "À compléter.", { taille: 10, gris: !l.url });
+      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
     }
-  } else ecrire("À compléter.", { gris: true });
-
-  titre("Checklist jour J");
-  ecrire("Bientôt.", { gris: true });
+  }
 
   if (sources.size) {
     titre("Sources");

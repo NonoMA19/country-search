@@ -50,6 +50,10 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
         </div>
       </div>
       <div className="flex flex-1 flex-col pt-6">{children}</div>
+      <p className="mt-8 text-xs text-gris">
+        Les informations sur les visas et les impôts ne constituent pas un conseil juridique. Vérifie toujours auprès des sources officielles.{" "}
+        <Link href="/mentions-legales" className="text-lien underline">Mentions légales</Link>
+      </p>
     </main>
   );
 }
@@ -191,15 +195,13 @@ export default function Quiz() {
         <h1 className="text-2xl font-semibold">Tes 3 priorités</h1>
         <p className="mt-2 text-gris">Choisis-en exactement 3. Elles compteront double dans ton résultat.</p>
         <div className="mt-5 grid grid-cols-2 gap-3">
-          {quiz.priorites.map((p) => {
+          {quiz.priorites.filter((p) => p.mesures.some(mesureDisponible)).map((p) => {
             const actif = etat.priorites.includes(p.id);
-            const dispo = p.mesures.some(mesureDisponible);
             return (
-              <button key={p.id} type="button" disabled={!dispo} aria-pressed={actif} onClick={() => basculer(p.id)}
-                className={`relative flex min-h-28 flex-col items-center justify-center gap-2 rounded-3xl border-2 p-3 text-center text-base leading-tight font-medium disabled:opacity-40 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
+              <button key={p.id} type="button" aria-pressed={actif} onClick={() => basculer(p.id)}
+                className={`relative flex min-h-28 flex-col items-center justify-center gap-2 rounded-3xl border-2 p-3 text-center text-base leading-tight font-medium ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
                 <Icone nom={p.icone} className={`h-8 w-8 ${actif ? "text-lien" : "text-gris"}`} />
                 <span>{p.label}</span>
-                {!dispo && <span className="text-xs text-gris">Bientôt</span>}
                 {actif && <Check aria-hidden="true" className="absolute top-2 right-2 h-5 w-5 text-lien" />}
               </button>
             );
@@ -222,15 +224,14 @@ export default function Quiz() {
         <h1 className="text-2xl font-semibold">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <div className="mt-5 space-y-3">
-          {quiz.sujets.map((s) => {
+          {quiz.sujets.filter((s) => mesureDisponible(s.mesure)).map((s) => {
             const actif = etat.sujets.includes(s.id);
-            const dispo = mesureDisponible(s.mesure);
             return (
-              <button key={s.id} type="button" disabled={!dispo} aria-pressed={actif}
+              <button key={s.id} type="button" aria-pressed={actif}
                 onClick={() => maj({ etat: { ...etat, sujets: actif ? etat.sujets.filter((x) => x !== s.id) : [...etat.sujets, s.id] } })}
-                className={`${BOUTON} flex items-center justify-between disabled:opacity-40 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
+                className={`${BOUTON} flex items-center justify-between ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
                 <span>{s.label}</span>
-                {actif ? <Check aria-hidden="true" className="h-5 w-5 text-lien" /> : !dispo ? <span className="text-xs text-gris">Bientôt</span> : null}
+                {actif && <Check aria-hidden="true" className="h-5 w-5 text-lien" />}
               </button>
             );
           })}

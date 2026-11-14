@@ -148,20 +148,21 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
       if (visa && visa.statut !== "verifie") alertes.push({ texte: "Les conditions du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
       return {
         badge: "fermee", nom: pvt.nom, type: "pvt",
-        phrase: `Le PVT s'arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
+        phrase: `Le PVT (Programme Vacances-Travail) s'arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
         fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres,
       };
     }
     const quand = age !== null ? "à ton âge" : `jusqu'à ${pvt.ageMax} ans`;
+    const PVT = "PVT (Programme Vacances-Travail)";
     let badge: Badge = "ouverte";
-    let phrase = pvt.quota ? `PVT ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an.` : `PVT ouvert ${quand}, sans quota.`;
+    let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an.` : `${PVT} ouvert ${quand}, sans quota.`;
     if (pvt.invitation) {
       badge = "difficile";
-      phrase = `PVT ouvert ${quand}, mais il faut recevoir une invitation : rien n'est garanti.`;
+      phrase = `${PVT} ouvert ${quand}, mais il faut recevoir une invitation : rien n'est garanti.`;
       if (pvt.invitationSource) alertes.push({ texte: pvt.invitationTexte ?? "", preuve: preuveSource("Invitation à présenter une demande", pvt.invitationTexte ?? "", pvt.invitationSource.source, pvt.invitationSource.lien, pvt.invitationSource.verifieLe) });
     } else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) {
       badge = "difficile";
-      phrase = `PVT ouvert ${quand}, mais seulement ${pvt.quota} places par an.`;
+      phrase = `${PVT} ouvert ${quand}, mais seulement ${pvt.quota} places par an.`;
     }
     const fonds = pvt.fonds?.euros ?? null;
     let manque: number | null = null;
@@ -180,7 +181,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
-  let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE." : "Il faut un employeur qui te fait venir.";
+  let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
   if (base.statut !== "verifie") phrase += " Les conditions exactes ne sont pas encore vérifiées.";
   for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
   if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n'est pas encore vérifiée.");

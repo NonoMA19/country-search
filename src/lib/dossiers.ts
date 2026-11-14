@@ -1,13 +1,14 @@
 // Le dossier d'un pays : liens officiels vérifiés un par un (voir scripts/dossiers.mjs).
-export type LienDossier = { id: string; titre: string; nom: string | null; url: string | null; statut: "verifie" | "a-completer" };
+export type LienDossier = { id: string; titre: string; nom: string | null; url: string | null; statut: "verifie" | "a-verifier" };
 export type Dossier = {
   pays: string;
-  complet: boolean;
   verifieLe: string;
   liens: LienDossier[];
   associations: LienDossier[];
-  checklist: string;
 };
+
+// Seuls les liens réellement ouverts et vérifiés sont montrés.
+export const liensVerifies = (liste: LienDossier[]) => liste.filter((l) => l.statut === "verifie" && l.url);
 
 import { trouverPays } from "./pays";
 
