@@ -40,7 +40,7 @@ export default function Methode() {
           <li>Seules tes réponses comptent. Une phrase à laquelle tu réponds « Passer » ne change rien.</li>
           <li>Tes 3 priorités comptent double (poids 2). Chaque autre réponse compte simple (poids 1).</li>
           <li>Ton pourcentage = les points gagnés par le pays, divisés par les points possibles. Il mesure « ça te ressemble » avec les familles Travailler, Vivre et, si tu l’as choisi, Valeurs.</li>
-          <li>Une donnée « Pas encore vérifié » est sautée pour ce pays : elle ne donne ni ne retire de points.</li>
+          <li>Une donnée « Pas encore vérifié » est sautée pour ce pays : elle ne donne ni ne retire de points. Si un pays n’a de données vérifiées que pour moins de 60 % de tes critères, il ne peut pas entrer dans ton top 3 : il reste dans la liste, avec la mention « Pas assez de données vérifiées ».</li>
         </ol>
         <p className="mt-3">La famille Partir (visa, âge, argent) n’entre pas dans le pourcentage. Elle donne un badge : Porte ouverte, Faisable avec conditions, Difficile ou Fermé à ton âge. Un badge ne cache jamais un pays.</p>
       </section>

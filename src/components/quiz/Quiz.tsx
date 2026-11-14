@@ -224,7 +224,7 @@ export default function Quiz() {
 
   // ----- Phrases, une par une -----
   const phrase = prochainePhrase(etat);
-  const top = calculer(etat).filter((l) => !l.ecart).slice(0, 3);
+  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
   const stables = (() => {
     const h = etat.historique;
     let n = 0;

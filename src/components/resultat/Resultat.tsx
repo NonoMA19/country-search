@@ -177,6 +177,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
         {egalite && <span className="text-xs text-gris">ex aequo</span>}
       </div>
       {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
+      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Pas assez de données vérifiées pour ce pays sur tes critères : son pourcentage n’est pas fiable.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
   );
@@ -206,7 +207,8 @@ export default function Resultat() {
   const tous = lignes.filter((l) => !l.ecart);
   const principaux = seulementOuvertes ? tous.filter((l) => l.porte.badge === "ouverte") : tous;
   const ecartes = lignes.filter((l) => l.ecart);
-  const top = principaux.slice(0, 3);
+  const top = principaux.filter((l) => !l.peuDeDonnees).slice(0, 3);
+  const suite = principaux.filter((l) => !top.includes(l));
   const surprise = paysSurprise(principaux);
   const style = profilTravail(etat, top);
   const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
@@ -324,9 +326,9 @@ export default function Resultat() {
       <section aria-labelledby="titre-tous" className="mt-10">
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
         <details className="mt-3">
-          <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({Math.max(0, principaux.length - 3)} pays)</summary>
+          <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
           <ol className="mt-3 space-y-2">
-            {principaux.slice(3).map((l, i) => <LignePays key={l.pays.id} ligne={l} rang={i + 4} egalite={egalites[i + 3]} />)}
+            {suite.map((l, i) => <LignePays key={l.pays.id} ligne={l} rang={i + 4} egalite={!l.peuDeDonnees && egalites[principaux.indexOf(l)]} />)}
           </ol>
         </details>
         {ecartes.length > 0 && (

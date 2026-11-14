@@ -233,7 +233,12 @@ export type Ligne = {
   manquantes: string[];
   ecart: string | null;
   porte: Porte;
+  couverture: number; // part de tes critères pour lesquels ce pays a une donnée vérifiée
+  peuDeDonnees: boolean;
 };
+
+// En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
+export const COUVERTURE_MIN = 0.6;
 
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
   const effets = effetsActifs(etat);
@@ -243,12 +248,18 @@ export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Lign
     const details: Detail[] = [];
     const manquantes = new Set<string>();
     const total = { points: 0, max: 0 };
+    const couvre = { possible: 0, note: 0 };
     const parFamille: Record<FamilleScore, { points: number; max: number }> = {
       travailler: { points: 0, max: 0 }, vivre: { points: 0, max: 0 }, valeurs: { points: 0, max: 0 },
     };
     for (const e of effets) {
       const dispo = e.mesures.filter((m) => noteEffective(p.id, m, etat.profil) !== null);
       e.mesures.filter((m) => !dispo.includes(m) && mesureDisponible(m)).forEach((m) => manquantes.add(m));
+      const existantes = e.mesures.filter(mesureDisponible);
+      if (existantes.length) {
+        couvre.possible += e.poids;
+        couvre.note += (e.poids * existantes.filter((m) => dispo.includes(m)).length) / existantes.length;
+      }
       for (const m of dispo) {
         const note = noteEffective(p.id, m, etat.profil) as number;
         const accord = e.sens === "haut" ? (note - 1) / 4 : (5 - note) / 4;
@@ -261,7 +272,10 @@ export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Lign
       }
     }
     const pct = (x: { points: number; max: number }) => (x.max > 0 ? (x.points / x.max) * 100 : null);
+    const couverture = couvre.possible > 0 ? couvre.note / couvre.possible : 1;
     return {
+      couverture,
+      peuDeDonnees: couverture < COUVERTURE_MIN,
       pays: p,
       score: pct(total) ?? 0,
       familles: { travailler: pct(parFamille.travailler), vivre: pct(parFamille.vivre), valeurs: pct(parFamille.valeurs) },
@@ -271,10 +285,10 @@ export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Lign
       porte: evaluerPorte(p, etat.profil, budget),
     };
   });
-  return lignes.sort((a, b) => Number(!!a.ecart) - Number(!!b.ecart) || b.score - a.score || a.pays.nom.localeCompare(b.pays.nom, "fr"));
+  return lignes.sort((a, b) => Number(!!a.ecart) - Number(!!b.ecart) || Number(a.peuDeDonnees) - Number(b.peuDeDonnees) || b.score - a.score || a.pays.nom.localeCompare(b.pays.nom, "fr"));
 }
 
-export const cleTop3 = (lignes: Ligne[]) => lignes.filter((l) => !l.ecart).slice(0, 3).map((l) => l.pays.id).join(",");
+export const cleTop3 = (lignes: Ligne[]) => lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3).map((l) => l.pays.id).join(",");
 
 export function verdict(score: number): string {
   if (score >= 75) return "Très bonne piste";
@@ -285,12 +299,12 @@ export function verdict(score: number): string {
 // Deux pays voisins dans le classement, à moins de 5 points d'écart, sont ex aequo.
 export function exAequo(lignes: Ligne[], i: number): boolean {
   const s = Math.round(lignes[i].score);
-  return [lignes[i - 1], lignes[i + 1]].some((v) => v && !v.ecart === !lignes[i].ecart && Math.abs(Math.round(v.score) - s) < ECART_EX_AEQUO);
+  return [lignes[i - 1], lignes[i + 1]].some((v) => v && !v.ecart === !lignes[i].ecart && v.peuDeDonnees === lignes[i].peuDeDonnees && Math.abs(Math.round(v.score) - s) < ECART_EX_AEQUO);
 }
 
 export function paysSurprise(lignes: Ligne[]): Ligne | null {
   return (
-    lignes.filter((l) => !l.ecart).slice(3).find((l) => {
+    lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(3).find((l) => {
       const n = notes[l.pays.id]?.francais;
       return n?.statut === "verifie" && (n.note ?? 5) <= 2 && l.score >= SEUIL_SURPRISE;
     }) ?? null
@@ -341,7 +355,7 @@ function utilite(ph: Phrase, etat: Etat, top: Ligne[]): number {
 }
 
 export function prochainePhrase(etat: Etat): Phrase | null {
-  const top = calculer(etat).filter((l) => !l.ecart).slice(0, 5);
+  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
   let meilleure: Phrase | null = null;
   let max = 0;
   for (const ph of quiz.phrases) {
