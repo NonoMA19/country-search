@@ -32,7 +32,7 @@ const STYLE_BADGE: Record<Badge, string> = {
   ouverte: "bg-bleu text-white",
   conditions: "bg-bleu-doux text-encre",
   difficile: "bg-slate-700 text-white",
-  fermee: "border border-bord bg-creux text-gris",
+  fermee: "border border-bord bg-creux text-encre",
 };
 const ICONE_BADGE = { nationalite: BadgeCheck, ouverte: DoorOpen, conditions: FileCheck, difficile: Hourglass, fermee: Lock };
 
@@ -55,10 +55,10 @@ function Jauges({ ligne }: { ligne: Ligne }) {
           <div key={f.id} className="flex items-center gap-3">
             <Icone nom={f.id} className="h-5 w-5 shrink-0 text-gris" />
             <span className="w-20 shrink-0 text-sm font-medium">{f.nom}</span>
-            <div className="h-3 flex-1 overflow-hidden rounded-full bg-creux" role="img" aria-label={`${f.nom} : ${v} %`}>
+            <div className="jauge h-3 flex-1 overflow-hidden rounded-full bg-creux" aria-hidden="true">
               <div className={`h-full rounded-full ${f.couleur}`} style={{ width: `${v}%` }} />
             </div>
-            <span className="w-10 shrink-0 text-right text-sm text-gris tabular-nums">{v} %</span>
+            <span className="w-12 shrink-0 text-right text-sm whitespace-nowrap text-gris tabular-nums">{v} %</span>
           </div>
         );
       })}
@@ -71,7 +71,7 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
     <li className="leading-snug">
       {titre && <span className="font-medium">{titre}. </span>}
       <span className={titre ? "text-gris" : ""}>{texte}</span>
-      {preuve && <Pastille preuve={preuve} pays={pays} />}
+      {preuve && <Pastille preuve={preuve} pays={pays} contexte={preuve.titre} />}
     </li>
   );
 }
@@ -119,7 +119,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         <BadgePorte badge={porte.badge} />
         <p className="mt-2 font-medium">
           {porte.phrase}
-          <Pastille preuve={porte.preuve} pays={p.nom} />
+          <Pastille preuve={porte.preuve} pays={p.nom} contexte={`la porte d’entrée (${porte.nom})`} />
         </p>
       </div>
 
@@ -161,7 +161,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         <p className="mt-2">
           <span className="font-medium">{porte.nom}. </span>
           <span className="text-gris">{porte.preuve.texte}</span>
-          <Pastille preuve={porte.preuve} pays={p.nom} />
+          <Pastille preuve={porte.preuve} pays={p.nom} contexte={porte.nom} />
         </p>
         {porte.autres.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t}</p>)}
       </section>
@@ -281,6 +281,9 @@ export default function Resultat() {
       <section aria-labelledby="titre-etsi" className="mt-10">
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
         <p className="mt-1 text-sm text-gris">Bouge les curseurs : le classement se met à jour tout de suite.</p>
+        <p className="sr-only" aria-live="polite">
+          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
+        </p>
         <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
           {famillesActives.map((f) => {
             const cran = Math.max(0, CRANS.indexOf(reglages.poids[f.id]));
@@ -290,7 +293,7 @@ export default function Resultat() {
                   <span className="flex items-center gap-2 font-medium"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</span>
                   <span className="text-sm text-gris">{MOTS_CRANS[cran]}</span>
                 </span>
-                <input type="range" min={0} max={4} step={1} value={cran} onChange={(e) => maj({ reglages: { ...reglages, poids: { ...reglages.poids, [f.id]: CRANS[Number(e.target.value)] } } })} className="mt-2 h-8 w-full" />
+                <input type="range" min={0} max={4} step={1} value={cran} aria-label={f.nom} aria-valuetext={`${f.nom} : ${MOTS_CRANS[cran]}`} onChange={(e) => maj({ reglages: { ...reglages, poids: { ...reglages.poids, [f.id]: CRANS[Number(e.target.value)] } } })} className="mt-2 h-8 w-full" />
               </label>
             );
           })}
@@ -299,7 +302,7 @@ export default function Resultat() {
               <span className="font-medium">Et si mon budget était de…</span>
               <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
             </span>
-            <input type="range" min={0} max={8000} step={250} value={budget} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
+            <input type="range" min={0} max={8000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
             <span className="mt-1 block text-sm text-gris">
               {sansArgent.length === 0
                 ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
@@ -324,7 +327,7 @@ export default function Resultat() {
                     {c.communs.length ? `proche de toi sur ${c.communs.join(", ")}` : "peu de points communs"}
                     {c.differents.length ? `, différent sur ${c.differents.join(", ")}` : ""}.
                   </span>
-                  <Pastille preuve={c.preuve} pays={c.pays.nom} />
+                  <Pastille preuve={c.preuve} pays={c.pays.nom} contexte="le style de travail" />
                 </li>
               ))}
             </ul>
