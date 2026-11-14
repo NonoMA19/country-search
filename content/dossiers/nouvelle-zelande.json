@@ -1,1 +1,44 @@
-{"pays":"nouvelle-zelande","complet":false,"verifieLe":"2026-11-14","liens":[],"associations":[],"checklist":"Bientôt"}
+{
+  "pays": "nouvelle-zelande",
+  "complet": false,
+  "verifieLe": "2026-11-14",
+  "liens": [
+    {
+      "id": "visa",
+      "titre": "Page officielle du visa",
+      "nom": "Visa vacances-travail pour les Français (Immigration New Zealand, en anglais)",
+      "url": "https://www.immigration.govt.nz/visas/france-working-holiday-visa/",
+      "statut": "verifie"
+    },
+    {
+      "id": "pvt",
+      "titre": "Programme Vacances-Travail",
+      "nom": "Programme Vacances-Travail (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+      "statut": "verifie"
+    },
+    {
+      "id": "conseils",
+      "titre": "Conseils aux voyageurs",
+      "nom": "Conseils aux voyageurs (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/nouvelle-zelande/dernieres-minutes-et-alertes",
+      "statut": "verifie"
+    },
+    {
+      "id": "consulat",
+      "titre": "Ambassade ou consulat de France",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/nouvelle-zelande/conseils-aux-voyageurs-contacts-utiles",
+      "statut": "verifie"
+    },
+    {
+      "id": "registre",
+      "titre": "Inscription au registre des Français établis hors de France",
+      "nom": "S'inscrire au registre (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
+      "statut": "verifie"
+    }
+  ],
+  "associations": [],
+  "checklist": "Bientôt"
+}

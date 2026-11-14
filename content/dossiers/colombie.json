@@ -1,1 +1,45 @@
-{"pays":"colombie","complet":false,"verifieLe":"2026-11-14","liens":[],"associations":[],"checklist":"Bientôt"}
+{
+  "pays": "colombie",
+  "complet": false,
+  "verifieLe": "2026-11-14",
+  "liens": [
+    {
+      "id": "visa",
+      "titre": "Page officielle du visa",
+      "nom": "Programme Vacances-Travail (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+      "statut": "verifie"
+    },
+    {
+      "id": "conseils",
+      "titre": "Conseils aux voyageurs",
+      "nom": "Conseils aux voyageurs (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/colombie/dernieres-minutes-et-alertes",
+      "statut": "verifie"
+    },
+    {
+      "id": "consulat",
+      "titre": "Ambassade ou consulat de France",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/colombie/conseils-aux-voyageurs-contacts-utiles",
+      "statut": "verifie"
+    },
+    {
+      "id": "registre",
+      "titre": "Inscription au registre des Français établis hors de France",
+      "nom": "S'inscrire au registre (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
+      "statut": "verifie"
+    }
+  ],
+  "associations": [
+    {
+      "id": "cci",
+      "titre": "Chambre de commerce française",
+      "nom": "CCI France Colombie",
+      "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/amerique-du-sud/exporter-s-implanter-colombie.html",
+      "statut": "verifie"
+    }
+  ],
+  "checklist": "Bientôt"
+}
