@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* Palette Ardoise et bleu (provisoire) */
+@theme inline {
+  --color-ardoise: #0f172a;
+  --color-bleu: #2563eb;
+  --color-gris: #64748b;
+  --color-fond: #f8fafc;
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--color-fond);
+  color: var(--color-ardoise);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
