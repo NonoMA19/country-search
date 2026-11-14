@@ -1,0 +1,182 @@
+[
+  {
+    "nom": "Belgique",
+    "id": "belgique",
+    "famille": "Europe sans visa",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Suisse",
+    "id": "suisse",
+    "famille": "Europe sans visa",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Allemagne",
+    "id": "allemagne",
+    "famille": "Europe sans visa",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Irlande",
+    "id": "irlande",
+    "famille": "Europe sans visa",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Luxembourg",
+    "id": "luxembourg",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Espagne",
+    "id": "espagne",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Italie",
+    "id": "italie",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Pays-Bas",
+    "id": "pays-bas",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Portugal",
+    "id": "portugal",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Norvège",
+    "id": "norvege",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Suède",
+    "id": "suede",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Danemark",
+    "id": "danemark",
+    "famille": "Europe sans visa",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Canada",
+    "id": "canada",
+    "famille": "PVT",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Australie",
+    "id": "australie",
+    "famille": "PVT",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Japon",
+    "id": "japon",
+    "famille": "PVT",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Nouvelle-Zélande",
+    "id": "nouvelle-zelande",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Corée du Sud",
+    "id": "coree-du-sud",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Taïwan",
+    "id": "taiwan",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Hong Kong",
+    "id": "hong-kong",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Argentine",
+    "id": "argentine",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Chili",
+    "id": "chili",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Colombie",
+    "id": "colombie",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Mexique",
+    "id": "mexique",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Brésil",
+    "id": "bresil",
+    "famille": "PVT",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Royaume-Uni",
+    "id": "royaume-uni",
+    "famille": "Visa de travail",
+    "ficheComplete": true
+  },
+  {
+    "nom": "États-Unis",
+    "id": "etats-unis",
+    "famille": "Visa de travail",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Singapour",
+    "id": "singapour",
+    "famille": "Visa de travail",
+    "ficheComplete": true
+  },
+  {
+    "nom": "Émirats arabes unis",
+    "id": "emirats-arabes-unis",
+    "famille": "Visa de travail",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Chine",
+    "id": "chine",
+    "famille": "Visa de travail",
+    "ficheComplete": false
+  },
+  {
+    "nom": "Maroc",
+    "id": "maroc",
+    "famille": "Visa de travail",
+    "ficheComplete": false
+  }
+]
