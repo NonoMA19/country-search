@@ -438,6 +438,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=50.85045&longitude=4.34878&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "suisse": {
@@ -665,6 +675,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=47.36667&longitude=8.55&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "allemagne": {
@@ -892,6 +912,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=52.52437&longitude=13.41053&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "irlande": {
@@ -1119,6 +1149,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=53.33306&longitude=-6.24889&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "luxembourg": {
@@ -1346,6 +1386,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=49.75&longitude=6.16667&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "espagne": {
@@ -1573,6 +1623,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=40.4165&longitude=-3.70256&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "italie": {
@@ -1800,6 +1860,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=41.89193&longitude=12.51133&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "pays-bas": {
@@ -2027,6 +2097,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=52.37403&longitude=4.88969&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "portugal": {
@@ -2254,6 +2334,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=38.72509&longitude=-9.1498&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "norvege": {
@@ -2481,6 +2571,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=59.91273&longitude=10.74609&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "suede": {
@@ -2708,6 +2808,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=59.32938&longitude=18.06871&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "danemark": {
@@ -2935,6 +3045,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=55.67594&longitude=12.56553&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "canada": {
@@ -3162,6 +3282,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=43.70643&longitude=-79.39864&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "australie": {
@@ -3384,6 +3514,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-33.86785&longitude=151.20732&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "japon": {
@@ -3606,6 +3746,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=35.6895&longitude=139.69171&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "nouvelle-zelande": {
@@ -3828,6 +3978,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-36.84853&longitude=174.76349&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "coree-du-sud": {
@@ -4055,6 +4215,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=37.566&longitude=126.9784&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "taiwan": {
@@ -4242,6 +4412,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=25.05306&longitude=121.52639&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "hong-kong": {
@@ -4449,6 +4629,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=22.25&longitude=114.16667&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "argentine": {
@@ -4676,6 +4866,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-34.61315&longitude=-58.37723&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "chili": {
@@ -4903,6 +5103,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-33.45694&longitude=-70.64827&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "colombie": {
@@ -5130,6 +5340,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=4.60971&longitude=-74.08175&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "mexique": {
@@ -5357,6 +5577,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=19.42847&longitude=-99.12766&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "bresil": {
@@ -5584,6 +5814,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-23.5475&longitude=-46.63611&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "royaume-uni": {
@@ -5811,6 +6051,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=51.50853&longitude=-0.12574&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "etats-unis": {
@@ -6038,6 +6288,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=40.71427&longitude=-74.00597&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "singapour": {
@@ -6260,6 +6520,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=1.28967&longitude=103.85007&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "emirats-arabes-unis": {
@@ -6482,6 +6752,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=25.07725&longitude=55.30927&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "chine": {
@@ -6704,6 +6984,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=31.22222&longitude=121.45806&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   },
   "maroc": {
@@ -6921,6 +7211,16 @@
     "source": "open-meteo",
     "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=33.58831&longitude=-7.61138&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
     "verifieLe": "2026-11-14"
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
    }
   }
  }

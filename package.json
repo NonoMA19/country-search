@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:moteur": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/test-moteur.ts"
+    "test:moteur": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/test-moteur.ts",
+    "simulation": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/simulation.ts"
   },
   "dependencies": {
     "country-flag-icons": "^1.6.20",

@@ -4,8 +4,8 @@
 import { mesures, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
-  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_PHRASES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerPhrases, effetsActifs,
-  egalites, evaluerPorte, prochainePhrase, questionProfilVisible, raisons, repondre, resultatPret,
+  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
+  egalites, evaluerPorte, prochainDilemme, questionProfilVisible, raisons, repondre, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -54,12 +54,14 @@ function quizAuHasard(r: Alea, passerTout = false): Etat {
     if (!priorites.includes(id)) priorites.push(id);
   }
   const sujets = quiz.sujets.filter(() => r() < 0.3).map((s) => s.id);
-  let etat = demarrerPhrases({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets });
+  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets });
   for (let n = 0; n < 30; n++) {
-    const ph = prochainePhrase(etat);
-    if (!ph) break;
-    const choix = passerTout ? ["passer"] : ph.type === "choix" ? [...(ph.options ?? []).map((o) => o.id), "passer"] : ["oui", "non", "oui", "non", "passer"];
-    etat = repondre(etat, ph.id, choisir(r, choix));
+    const d = prochainDilemme(etat);
+    if (!d) break;
+    // Un dilemme inactif (mesure notée pour moins de 60 % des pays) n'est jamais proposé.
+    verifier(dilemmeActif(d), `dilemme inactif proposé : ${d.id}`);
+    const choix = passerTout ? ["passer"] : [...d.options.map((o) => o.id), "passer"];
+    etat = repondre(etat, d.id, choisir(r, choix));
     if (!passerTout && resultatPret(etat) && r() < 0.5) break;
   }
   return etat;
@@ -107,8 +109,8 @@ for (let i = 0; i < NB; i++) {
   for (const l of lignes) for (const d of l.details) if (d.neutre) verifier(d.accord === ACCORD_NEUTRE && d.origine.startsWith("priorite:"), `quiz ${i} : donnée manquante mal comptée pour ${l.pays.nom} (${d.mesure})`);
 
   // Importance : maximum 2 par mesure (jamais la somme de plusieurs réponses).
-  for (const e of effetsActifs(etat)) verifier(e.poids <= 2, `quiz ${i} : importance ${e.poids} pour ${e.mesures.join("+")}`);
-  const cles = effetsActifs(etat).map((e) => `${[...e.mesures].sort().join("+")}:${e.sens}`);
+  for (const e of effetsActifs(etat)) verifier(e.poids <= 2, `quiz ${i} : importance ${e.poids} pour ${e.mesure}`);
+  const cles = effetsActifs(etat).map((e) => e.mesure);
   verifier(new Set(cles).size === cles.length, `quiz ${i} : la même mesure compte deux fois`);
 
   // « Pourquoi ce pays » : seulement des points notés 4 ou 5 sur 5 dans le sens des réponses.
@@ -137,7 +139,7 @@ for (let i = 0; i < NB; i++) {
 // ---------- 2. Cas précis ----------
 // 2.1 L'ancien biais : aventure, 18-25 ans, priorité Salaire. Les pays sans salaire vérifié ne peuvent plus finir à 100 %.
 {
-  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: { objectif: "aventure", age: "18-25" }, priorites: ["salaire", "travail", "securite"] });
+  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: { objectif: "aventure", age: "18-25" }, priorites: ["salaire", "travail", "securite"] });
   for (const l of calculer(etat)) {
     if (l.neutres.includes("salaire")) verifier(l.score < 100, `donnée manquante : ${l.pays.nom} à 100 % sans salaire vérifié`);
   }
@@ -150,14 +152,14 @@ for (let i = 0; i < NB; i++) {
   const r2 = hasard(42);
   for (let i = 0; i < 20; i++) {
     const etat = quizAuHasard(r2, true);
-    verifier(!resultatPret(etat), `passer : résultat proposé après ${etat.ordre.length} phrases toutes passées`);
+    verifier(!resultatPret(etat), `passer : résultat proposé après ${etat.ordre.length} dilemmes tous passés`);
   }
-  verifier(MIN_PHRASES === 6, "le minimum de phrases n'est plus 6");
+  verifier(MIN_DILEMMES === 6, "le minimum de dilemmes n'est plus 6");
 }
 
 // 2.3 Fermé à ton âge : jamais dans le top 3, score inchangé, et remontable.
 {
-  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: { age: "31-35" }, priorites: ["climat", "proche", "francais"] });
+  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: { age: "31-35" }, priorites: ["climat", "proche", "francais"] });
   const lignes = calculer(etat);
   const fermes = lignes.filter((l) => l.porte.badge === "fermee");
   verifier(fermes.length > 0, "31-35 ans : aucun pays fermé, le test ne prouve rien");
@@ -186,7 +188,7 @@ for (let i = 0; i < NB; i++) {
 
 // 2.5 Climat doux : un pays très chaud en été n'a pas la note maximale.
 {
-  const etat = demarrerPhrases({ ...ETAT_VIDE, profil: {}, priorites: ["climat", "travail", "securite"] });
+  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: {}, priorites: ["climat", "travail", "securite"] });
   const lignes = calculer(etat);
   for (const id of ["emirats-arabes-unis", "singapour"]) {
     const d = lignes.find((l) => l.pays.id === id)!.details.find((x) => x.mesure === "doux");
@@ -194,18 +196,19 @@ for (let i = 0; i < NB; i++) {
   }
 }
 
-// 2.6 Deux réponses sur les prix : importance 1, pas 2.
+// 2.6 Deux réponses sur le salaire : importance 1, pas 2.
 {
-  const etat: Etat = { ...ETAT_VIDE, priorites: ["travail", "securite", "climat"], reponses: { "pays-cher": "non", "vie-moins-chere": "oui" }, ordre: ["pays-cher", "vie-moins-chere"] };
-  const prix = effetsActifs(etat).filter((e) => e.mesures.includes("prix"));
-  verifier(prix.length === 1 && prix[0].poids === 1, `prix : importance ${prix.map((e) => e.poids).join("+")} au lieu de 1`);
+  const etat: Etat = { ...ETAT_VIDE, priorites: ["travail", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a" }, ordre: ["deux-offres", "promotion"] };
+  const salaire = effetsActifs(etat).filter((e) => e.mesure === "salaire");
+  verifier(salaire.length === 1 && salaire[0].poids === 1, `salaire : importance ${salaire.map((e) => e.poids).join("+")} au lieu de 1`);
+  verifier(!!trouverDilemme("deux-offres") && !!trouverDilemme("promotion"), "dilemmes du test introuvables");
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
 {
   const mauvaises: unknown[] = [null, {}, [], "texte", 3, { ...SESSION_VIDE, v: 1 }, { ...SESSION_VIDE, etat: null }, { ...SESSION_VIDE, etape: { t: "profil", i: -1 } },
     { ...SESSION_VIDE, etape: { t: "profil", i: "2" } }, { ...SESSION_VIDE, reglages: null }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, sujets: undefined } },
-    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, priorites: ["a", "b", "c", "d"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { emploi: "peut-être" }, ordre: ["emploi"] } }];
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, priorites: ["a", "b", "c", "d"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { noel: "d" }, ordre: ["noel"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { emploi: "oui" }, ordre: ["emploi"] } }];
   for (const m of mauvaises) {
     let res: unknown = "erreur";
     try { res = validerSession(m); } catch { res = "erreur"; }

@@ -13,7 +13,7 @@ import PiedDePage from "@/components/PiedDePage";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, coince, egalites as calculerEgalites, paysSurprise, prochainePhrase, profilTravail, raisons, repondues, verdict,
+  LIBELLE_BADGE, budgetProfil, calculer, coince, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, raisons, repondues, verdict,
   type Badge, type Etat, type Ligne,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -152,12 +152,12 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         )}
         {ligne.neutres.length > 0 && (
           <p className="mt-2 text-sm text-gris">
-            Compté à 50 % faute de donnée vérifiée : {ligne.neutres.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+            Compté à 50 % faute de donnée vérifiée : {ligne.neutres.map((m) => mesures[m]?.nom ?? m).join(", ")}.
           </p>
         )}
         {ligne.manquantes.length > 0 && (
           <p className="mt-2 text-sm text-gris">
-            À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+            À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.nom ?? m).join(", ")}.
           </p>
         )}
       </section>
@@ -244,8 +244,8 @@ export default function Resultat() {
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const famillesActives = FAMILLES.filter((f) => lignes.some((l) => l.familles[f.id] !== null));
   const egalites = calculerEgalites(principaux);
-  const encoreDesPhrases = etat.historique.length > 0 && prochainePhrase(etat) !== null;
-  const affiner = () => { ecrire({ ...session, etape: { t: "phrases" }, proposeA: repondues(etat) }); router.push("/quiz"); };
+  const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
+  const affiner = () => { ecrire({ ...session, etape: { t: "dilemmes" }, proposeA: repondues(etat) }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
   // Si tous les curseurs sont à « ne compte plus », il n'y a plus rien à classer.
@@ -283,7 +283,7 @@ export default function Resultat() {
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
         <p className="mt-1 text-sm text-gris">Bouge les curseurs : le classement se met à jour tout de suite.</p>
         <p className="sr-only" aria-live="polite">
-          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
+          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
         </p>
         <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
           {famillesActives.map((f) => {
@@ -342,7 +342,7 @@ export default function Resultat() {
             </ul>
           </div>
         ) : (
-          <p className="mt-2 text-gris">Tu n’as pas encore répondu aux phrases sur le style de travail. Continue le quiz pour le découvrir.</p>
+          <p className="mt-2 text-gris">Tu n’as pas encore répondu aux dilemmes sur la culture au travail. Continue le quiz pour le découvrir.</p>
         )}
       </section>
 
@@ -395,10 +395,10 @@ export default function Resultat() {
       </section>
 
       <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
-        {encoreDesPhrases ? (
+        {encoreDesDilemmes ? (
           <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu"><span className="min-w-0 hyphens-auto">Continuer pour affiner</span></button>
         ) : (
-          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à toutes les phrases utiles : ton classement ne peut plus s’affiner.</p>
+          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à tous les dilemmes utiles : ton classement ne peut plus s’affiner.</p>
         )}
         <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu">
           <RotateCcw aria-hidden="true" className="hidden h-5 w-5 shrink-0 min-[240px]:block" /> <span className="min-w-0 hyphens-auto">Recommencer</span>

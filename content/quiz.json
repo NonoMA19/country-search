@@ -4,79 +4,229 @@
       "id": "objectif",
       "question": "Quel est ton projet ?",
       "pourquoi": "Ton projet change la porte d’entrée qu’on te propose : PVT (Programme Vacances-Travail, un visa d’un an pour voyager et travailler), VIE (Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l’étranger, à demander avant 28 ans) ou visa de travail.",
-      "influence": ["visa", "age-conditions"],
+      "influence": [
+        "visa",
+        "age-conditions"
+      ],
       "options": [
-        { "id": "stage-vie", "label": "Un stage ou un VIE (volontariat en entreprise)" },
-        { "id": "aventure", "label": "Une année d’aventure" },
-        { "id": "premier-poste", "label": "Un premier poste" },
-        { "id": "carriere", "label": "Une carrière longue" }
+        {
+          "id": "stage-vie",
+          "label": "Un stage ou un VIE (volontariat en entreprise)"
+        },
+        {
+          "id": "aventure",
+          "label": "Une année d’aventure"
+        },
+        {
+          "id": "premier-poste",
+          "label": "Un premier poste"
+        },
+        {
+          "id": "carriere",
+          "label": "Une carrière longue"
+        }
       ]
     },
     {
       "id": "age",
       "question": "Quel âge as-tu ?",
       "pourquoi": "Le PVT s’arrête à 30 ou 35 ans selon le pays, et le VIE à 28 ans.",
-      "influence": ["visa", "age-conditions"],
+      "influence": [
+        "visa",
+        "age-conditions"
+      ],
       "options": [
-        { "id": "18-25", "label": "18 à 25 ans", "ageMax": 25 },
-        { "id": "26-27", "label": "26 ou 27 ans", "ageMax": 27 },
-        { "id": "28-30", "label": "28 à 30 ans", "ageMax": 30 },
-        { "id": "31-35", "label": "31 à 35 ans", "ageMax": 35 },
-        { "id": "36-plus", "label": "36 ans ou plus", "ageMax": 99 }
+        {
+          "id": "18-25",
+          "label": "18 à 25 ans",
+          "ageMax": 25
+        },
+        {
+          "id": "26-27",
+          "label": "26 ou 27 ans",
+          "ageMax": 27
+        },
+        {
+          "id": "28-30",
+          "label": "28 à 30 ans",
+          "ageMax": 30
+        },
+        {
+          "id": "31-35",
+          "label": "31 à 35 ans",
+          "ageMax": 35
+        },
+        {
+          "id": "36-plus",
+          "label": "36 ans ou plus",
+          "ageMax": 99
+        }
       ]
     },
     {
       "id": "budget",
       "question": "Combien peux-tu mettre de côté pour partir ?",
       "pourquoi": "Certains visas demandent une somme minimale. Ce n’est jamais bloquant : on te dit seulement ce qu’il te manquerait.",
-      "influence": ["argent"],
+      "influence": [
+        "argent"
+      ],
       "options": [
-        { "id": "1000", "label": "Environ 1 000 €", "euros": 1000 },
-        { "id": "2000", "label": "Environ 2 000 €", "euros": 2000 },
-        { "id": "3000", "label": "Environ 3 000 €", "euros": 3000 },
-        { "id": "5000", "label": "5 000 € ou plus", "euros": 5000 }
+        {
+          "id": "1000",
+          "label": "Environ 1 000 €",
+          "euros": 1000
+        },
+        {
+          "id": "2000",
+          "label": "Environ 2 000 €",
+          "euros": 2000
+        },
+        {
+          "id": "3000",
+          "label": "Environ 3 000 €",
+          "euros": 3000
+        },
+        {
+          "id": "5000",
+          "label": "5 000 € ou plus",
+          "euros": 5000
+        }
       ]
     },
     {
       "id": "duree",
       "question": "Tu pars pour combien de temps ?",
       "pourquoi": "Un PVT dure un an maximum, un VIE de 6 à 24 mois.",
-      "influence": ["age-conditions"],
+      "influence": [
+        "age-conditions"
+      ],
       "options": [
-        { "id": "moins-6", "label": "Moins de 6 mois", "mois": 5 },
-        { "id": "6-12", "label": "6 à 12 mois", "mois": 12 },
-        { "id": "1-2", "label": "1 à 2 ans", "mois": 24 },
-        { "id": "plus-2", "label": "Plus de 2 ans", "mois": 36 }
+        {
+          "id": "moins-6",
+          "label": "Moins de 6 mois",
+          "mois": 5
+        },
+        {
+          "id": "6-12",
+          "label": "6 à 12 mois",
+          "mois": 12
+        },
+        {
+          "id": "1-2",
+          "label": "1 à 2 ans",
+          "mois": 24
+        },
+        {
+          "id": "plus-2",
+          "label": "Plus de 2 ans",
+          "mois": 36
+        }
       ]
     },
     {
       "id": "anglais",
       "question": "Ton niveau d’anglais ?",
       "pourquoi": "Pour savoir si on peut te proposer des pays où le bureau parle anglais.",
-      "influence": ["langue-travail"],
+      "influence": [
+        "langue-travail"
+      ],
       "options": [
-        { "id": "debutant", "label": "Débutant" },
-        { "id": "moyen", "label": "Je me débrouille" },
-        { "id": "courant", "label": "Courant" }
+        {
+          "id": "debutant",
+          "label": "Débutant"
+        },
+        {
+          "id": "moyen",
+          "label": "Je me débrouille"
+        },
+        {
+          "id": "courant",
+          "label": "Courant"
+        }
       ]
     },
     {
       "id": "langues",
       "question": "Tu parles d’autres langues ?",
       "pourquoi": "Un pays dont tu parles déjà la langue devient plus simple au quotidien.",
-      "influence": ["langue-quotidien", "langue-travail"],
+      "influence": [
+        "langue-quotidien",
+        "langue-travail"
+      ],
       "multiple": true,
       "options": [
-        { "id": "es", "label": "Espagnol", "codes": ["es"] },
-        { "id": "de", "label": "Allemand", "codes": ["de"] },
-        { "id": "it", "label": "Italien", "codes": ["it"] },
-        { "id": "pt", "label": "Portugais", "codes": ["pt"] },
-        { "id": "nl", "label": "Néerlandais", "codes": ["nl"] },
-        { "id": "scandinave", "label": "Suédois, danois ou norvégien", "codes": ["sv", "da", "no"] },
-        { "id": "ja", "label": "Japonais", "codes": ["ja"] },
-        { "id": "ko", "label": "Coréen", "codes": ["ko"] },
-        { "id": "zh", "label": "Chinois", "codes": ["zh"] },
-        { "id": "ar", "label": "Arabe", "codes": ["ar"] }
+        {
+          "id": "es",
+          "label": "Espagnol",
+          "codes": [
+            "es"
+          ]
+        },
+        {
+          "id": "de",
+          "label": "Allemand",
+          "codes": [
+            "de"
+          ]
+        },
+        {
+          "id": "it",
+          "label": "Italien",
+          "codes": [
+            "it"
+          ]
+        },
+        {
+          "id": "pt",
+          "label": "Portugais",
+          "codes": [
+            "pt"
+          ]
+        },
+        {
+          "id": "nl",
+          "label": "Néerlandais",
+          "codes": [
+            "nl"
+          ]
+        },
+        {
+          "id": "scandinave",
+          "label": "Suédois, danois ou norvégien",
+          "codes": [
+            "sv",
+            "da",
+            "no"
+          ]
+        },
+        {
+          "id": "ja",
+          "label": "Japonais",
+          "codes": [
+            "ja"
+          ]
+        },
+        {
+          "id": "ko",
+          "label": "Coréen",
+          "codes": [
+            "ko"
+          ]
+        },
+        {
+          "id": "zh",
+          "label": "Chinois",
+          "codes": [
+            "zh"
+          ]
+        },
+        {
+          "id": "ar",
+          "label": "Arabe",
+          "codes": [
+            "ar"
+          ]
+        }
       ],
       "aucun": "Aucune autre"
     },
@@ -84,12 +234,20 @@
       "id": "pret-anglais",
       "question": "Es-tu prêt à travailler en anglais ?",
       "pourquoi": "Si ce n’est pas le cas, on met en avant les pays où l’on peut travailler en français.",
-      "influence": ["langue-travail"],
+      "influence": [
+        "langue-travail"
+      ],
       "afficheSi": "anglais-debutant-sans-autre-langue",
       "regleAffichage": "Seulement si ton anglais est débutant et que tu ne parles aucune autre langue.",
       "options": [
-        { "id": "oui", "label": "Oui" },
-        { "id": "non", "label": "Non" }
+        {
+          "id": "oui",
+          "label": "Oui"
+        },
+        {
+          "id": "non",
+          "label": "Non"
+        }
       ]
     },
     {
@@ -98,8 +256,14 @@
       "pourquoi": "Certaines nationalités donnent des avantages ou des obligations. On te les signale à la fin.",
       "influence": [],
       "options": [
-        { "id": "non", "label": "Non" },
-        { "id": "oui", "label": "Oui" }
+        {
+          "id": "non",
+          "label": "Non"
+        },
+        {
+          "id": "oui",
+          "label": "Oui"
+        }
       ]
     },
     {
@@ -110,199 +274,829 @@
       "afficheSi": "autre-nationalite",
       "regleAffichage": "Seulement si tu as répondu oui à la question précédente.",
       "options": [
-        { "id": "irlandaise", "label": "Irlandaise" },
-        { "id": "canadienne", "label": "Canadienne" },
-        { "id": "americaine", "label": "Américaine" },
-        { "id": "autre", "label": "Une autre" }
+        {
+          "id": "irlandaise",
+          "label": "Irlandaise"
+        },
+        {
+          "id": "canadienne",
+          "label": "Canadienne"
+        },
+        {
+          "id": "americaine",
+          "label": "Américaine"
+        },
+        {
+          "id": "autre",
+          "label": "Une autre"
+        }
       ]
     },
     {
       "id": "zone",
       "question": "Où veux-tu partir ?",
       "pourquoi": "Les pays de l’autre zone restent visibles, plus bas dans ta liste.",
-      "influence": ["distance"],
+      "influence": [
+        "distance"
+      ],
       "options": [
-        { "id": "europe", "label": "En Europe" },
-        { "id": "hors-europe", "label": "Hors d’Europe" },
-        { "id": "peu-importe", "label": "Peu importe" }
+        {
+          "id": "europe",
+          "label": "En Europe"
+        },
+        {
+          "id": "hors-europe",
+          "label": "Hors d’Europe"
+        },
+        {
+          "id": "peu-importe",
+          "label": "Peu importe"
+        }
       ]
     }
   ],
   "priorites": [
-    { "id": "travail", "label": "Travail facile à trouver", "icone": "briefcase", "famille": "travailler", "mesures": ["emploi"], "sens": "haut" },
-    { "id": "salaire", "label": "Bon salaire", "icone": "banknote", "famille": "travailler", "mesures": ["salaire"], "sens": "haut" },
-    { "id": "prix", "label": "Vie pas chère", "icone": "piggy-bank", "famille": "vivre", "mesures": ["prix"], "sens": "haut" },
-    { "id": "equilibre", "label": "Équilibre vie pro et perso", "icone": "clock", "famille": "travailler", "mesures": ["heures"], "sens": "haut" },
-    { "id": "climat", "label": "Climat doux", "icone": "sun", "famille": "vivre", "mesures": ["doux"], "sens": "haut" },
-    { "id": "proche", "label": "Proche de la France", "icone": "plane", "famille": "vivre", "mesures": ["vol", "decalage"], "sens": "haut" },
-    { "id": "securite", "label": "Sécurité", "icone": "shield", "famille": "vivre", "mesures": ["securite"], "sens": "haut" },
-    { "id": "francais", "label": "Français sur place", "icone": "users", "famille": "travailler", "mesures": ["francais"], "sens": "haut" }
+    {
+      "id": "travail",
+      "label": "Travail facile à trouver",
+      "icone": "briefcase",
+      "famille": "travailler",
+      "mesures": [
+        "emploi"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "salaire",
+      "label": "Bon salaire",
+      "icone": "banknote",
+      "famille": "travailler",
+      "mesures": [
+        "salaire"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "prix",
+      "label": "Vie pas chère",
+      "icone": "piggy-bank",
+      "famille": "vivre",
+      "mesures": [
+        "prix"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "equilibre",
+      "label": "Équilibre vie pro et perso",
+      "icone": "clock",
+      "famille": "travailler",
+      "mesures": [
+        "heures"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "climat",
+      "label": "Climat doux",
+      "icone": "sun",
+      "famille": "vivre",
+      "mesures": [
+        "doux"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "proche",
+      "label": "Proche de la France",
+      "icone": "plane",
+      "famille": "vivre",
+      "mesures": [
+        "vol",
+        "decalage"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "securite",
+      "label": "Sécurité",
+      "icone": "shield",
+      "famille": "vivre",
+      "mesures": [
+        "securite"
+      ],
+      "sens": "haut"
+    },
+    {
+      "id": "francais",
+      "label": "Français sur place",
+      "icone": "users",
+      "famille": "travailler",
+      "mesures": [
+        "francais"
+      ],
+      "sens": "haut"
+    }
   ],
   "sujets": [
-    { "id": "stabilite", "label": "Stabilité politique", "mesure": "stabilite" },
-    { "id": "libertes", "label": "Libertés d’expression et de la presse", "mesure": "libertes" },
-    { "id": "egalite", "label": "Égalité femmes-hommes dans la loi", "mesure": "egalite" },
-    { "id": "air", "label": "Qualité de l’air", "mesure": "air" }
+    {
+      "id": "stabilite",
+      "label": "Stabilité politique",
+      "mesure": "stabilite"
+    },
+    {
+      "id": "libertes",
+      "label": "Libertés d’expression et de la presse",
+      "mesure": "libertes"
+    },
+    {
+      "id": "egalite",
+      "label": "Égalité femmes-hommes dans la loi",
+      "mesure": "egalite"
+    },
+    {
+      "id": "air",
+      "label": "Qualité de l’air",
+      "mesure": "air"
+    }
   ],
-  "phrases": [
+  "dilemmes": [
     {
-      "id": "emploi", "famille": "travailler", "type": "oui-non",
-      "texte": "Je veux un pays où les jeunes trouvent facilement du travail.",
-      "pourquoi": "Si oui, on donne plus de place aux pays où le chômage des jeunes est bas.",
-      "oui": [{ "mesures": ["emploi"], "sens": "haut" }], "non": [],
-      "saufPriorites": ["travail"]
-    },
-    {
-      "id": "salaire-temps", "famille": "travailler", "type": "oui-non",
-      "texte": "Je préfère un bon salaire à beaucoup de temps libre.",
-      "pourquoi": "Oui favorise les pays où le salaire achète le plus. Non favorise ceux où l’on travaille moins d’heures.",
-      "oui": [{ "mesures": ["salaire"], "sens": "haut" }], "non": [{ "mesures": ["heures"], "sens": "haut" }],
-      "saufPriorites": ["salaire", "equilibre"]
-    },
-    {
-      "id": "pays-cher", "famille": "vivre", "type": "oui-non",
-      "texte": "Un pays cher ne me fait pas peur si les salaires suivent.",
-      "pourquoi": "Oui favorise les pays aux bons salaires. Non favorise les pays où la vie coûte moins cher.",
-      "oui": [{ "mesures": ["salaire"], "sens": "haut", "famille": "travailler" }], "non": [{ "mesures": ["prix"], "sens": "haut" }],
-      "saufPriorites": ["salaire", "prix"]
-    },
-    {
-      "id": "vie-moins-chere", "famille": "vivre", "type": "oui-non",
-      "texte": "Je veux un pays où la vie coûte moins cher qu’en France.",
-      "pourquoi": "Si oui, on donne plus de place aux pays où les prix sont bas.",
-      "oui": [{ "mesures": ["prix"], "sens": "haut" }], "non": [],
-      "saufPriorites": ["prix"]
-    },
-    {
-      "id": "finir-tard", "famille": "travailler", "type": "oui-non",
-      "texte": "Finir tard ne me dérange pas si le travail me plaît.",
-      "pourquoi": "Si non, on donne plus de place aux pays où les semaines de travail sont courtes.",
-      "oui": [], "non": [{ "mesures": ["heures"], "sens": "haut" }],
-      "saufPriorites": ["equilibre"]
-    },
-    {
-      "id": "anglais", "famille": "travailler", "type": "oui-non",
-      "texte": "Je veux pouvoir travailler en anglais.",
-      "pourquoi": "Si oui, on donne plus de place aux pays où l’anglais suffit au bureau.",
-      "oui": [{ "mesures": ["anglais"], "sens": "haut" }], "non": [],
-      "afficheSi": "peut-travailler-en-anglais",
-      "regleAffichage": "Pas affichée si tu as dit ne pas vouloir travailler en anglais."
-    },
-    {
-      "id": "francais", "famille": "travailler", "type": "oui-non",
-      "texte": "Je préfère être entouré de Français sur place.",
-      "pourquoi": "Oui favorise les pays où beaucoup de Français vivent déjà. Non favorise ceux où ils sont peu nombreux.",
-      "oui": [{ "mesures": ["francais"], "sens": "haut" }], "non": [{ "mesures": ["francais"], "sens": "bas" }],
-      "saufPriorites": ["francais"]
-    },
-    {
-      "id": "chef", "famille": "travailler", "type": "oui-non",
-      "texte": "Je préfère un chef qui décide seul.",
-      "pourquoi": "Pour rapprocher ton style de celui des entreprises du pays : hiérarchie marquée ou plate.",
-      "oui": [{ "mesures": ["hierarchie"], "sens": "haut" }], "non": [{ "mesures": ["hierarchie"], "sens": "bas" }]
-    },
-    {
-      "id": "franchise", "famille": "travailler", "type": "oui-non",
-      "texte": "J’aime qu’on me dise les choses franchement.",
-      "pourquoi": "Dans certains pays on dit tout sans détour, dans d’autres il faut lire entre les lignes.",
-      "oui": [{ "mesures": ["communication"], "sens": "bas" }], "non": [{ "mesures": ["communication"], "sens": "haut" }]
-    },
-    {
-      "id": "retard", "famille": "travailler", "type": "oui-non",
-      "texte": "Dix minutes de retard à une réunion, ce n’est pas grave.",
-      "pourquoi": "La ponctualité est stricte dans certains pays, souple dans d’autres.",
-      "oui": [{ "mesures": ["ponctualite"], "sens": "bas" }], "non": [{ "mesures": ["ponctualite"], "sens": "haut" }]
-    },
-    {
-      "id": "climat-egal", "famille": "vivre", "type": "filtre",
-      "texte": "Le climat m’est égal.",
-      "pourquoi": "Si oui, on ne te pose aucune autre question sur le climat.",
-      "ouvre": ["hiver", "ete"],
-      "saufPriorites": ["climat"]
-    },
-    {
-      "id": "hiver", "famille": "vivre", "type": "oui-non",
-      "texte": "Un hiver très froid ne me fait pas peur.",
-      "pourquoi": "Si non, on donne plus de place aux pays où l’hiver est doux.",
-      "oui": [], "non": [{ "mesures": ["hiver"], "sens": "haut" }],
-      "apresFiltre": "climat-egal", "saufPriorites": ["climat"],
-      "regleAffichage": "Seulement si tu as dit que le climat compte pour toi."
-    },
-    {
-      "id": "ete", "famille": "vivre", "type": "oui-non",
-      "texte": "J’aime les étés très chauds.",
-      "pourquoi": "Oui favorise les pays aux étés chauds. Non favorise ceux aux étés frais.",
-      "oui": [{ "mesures": ["ete"], "sens": "haut" }], "non": [{ "mesures": ["ete"], "sens": "bas" }],
-      "apresFiltre": "climat-egal", "saufPriorites": ["climat"],
-      "regleAffichage": "Seulement si tu as dit que le climat compte pour toi."
-    },
-    {
-      "id": "trois-heures", "famille": "vivre", "type": "ecart",
-      "texte": "Je veux rester à moins de 3 heures d’avion de la France.",
-      "pourquoi": "Si oui, les pays plus lointains descendent dans « Moins adaptés pour toi ». Tu peux les remonter.",
-      "ecarteSi": "oui", "regle": "vol-plus-de-3h",
-      "raison": "Tu veux rester à moins de 3 heures d’avion.",
-      "saufPriorites": ["proche"], "saufZone": "hors-europe",
-      "regleAffichage": "Pas affichée si tu as choisi de partir hors d’Europe."
-    },
-    {
-      "id": "loin", "famille": "vivre", "type": "oui-non",
-      "texte": "Partir loin fait partie du projet.",
-      "pourquoi": "Oui favorise les pays lointains. Non favorise les pays proches de la France.",
-      "oui": [{ "mesures": ["vol", "decalage"], "sens": "bas" }], "non": [{ "mesures": ["vol", "decalage"], "sens": "haut" }],
-      "saufPriorites": ["proche"], "saufReponse": { "trois-heures": "oui" },
-      "regleAffichage": "Pas affichée si tu veux rester à moins de 3 heures d’avion."
-    },
-    {
-      "id": "langue-nouvelle", "famille": "vivre", "type": "oui-non",
-      "texte": "Je suis prêt à apprendre une nouvelle langue.",
-      "pourquoi": "Si non, on donne plus de place aux pays où l’on parle français, ou une langue proche.",
-      "oui": [], "non": [{ "mesures": ["langue"], "sens": "haut" }]
-    },
-    {
-      "id": "autre-ecriture", "famille": "vivre", "type": "ecart",
-      "texte": "Apprendre une langue avec une autre écriture, ça me va aussi.",
-      "pourquoi": "Si non, le Japon, la Corée du Sud, Taïwan et la Chine descendent dans « Moins adaptés pour toi ».",
-      "ecarteSi": "non", "regle": "autre-ecriture",
-      "raison": "Tu ne veux pas apprendre une langue avec une autre écriture.",
-      "siReponse": { "langue-nouvelle": "oui" },
-      "regleAffichage": "Seulement si tu es prêt à apprendre une nouvelle langue."
-    },
-    {
-      "id": "vigilance", "famille": "vivre", "type": "oui-non",
-      "texte": "Je suis prêt à vivre dans une ville où il faut rester vigilant.",
-      "pourquoi": "Si non, on donne plus de place aux pays où il y a le moins de violences graves.",
-      "oui": [], "non": [{ "mesures": ["securite"], "sens": "haut" }],
-      "saufPriorites": ["securite"]
-    },
-    {
-      "id": "assurance", "famille": "vivre", "type": "oui-non",
-      "texte": "Payer une assurance santé privée chaque mois, ça me va.",
-      "pourquoi": "Si non, on donne plus de place aux pays où un jeune étranger est couvert sans assurance privée. On ne te demande rien sur ta santé.",
-      "oui": [], "non": [{ "mesures": ["sante"], "sens": "haut" }]
-    },
-    {
-      "id": "employeur", "famille": "partir", "type": "ecart",
-      "texte": "Je ne veux pas dépendre d’un employeur pour mon visa.",
-      "pourquoi": "Si oui, les pays où il faut un employeur ou une mission pour entrer descendent dans « Moins adaptés pour toi ».",
-      "ecarteSi": "oui", "regle": "employeur-requis",
-      "raison": "Tu ne veux pas dépendre d’un employeur pour ton visa."
-    },
-    {
-      "id": "francais-ou-anglais", "famille": "travailler", "type": "ecart",
-      "texte": "Je ne partirai que si je peux travailler en français ou en anglais.",
-      "pourquoi": "Si oui, les pays où la langue locale est presque toujours nécessaire au travail descendent dans « Moins adaptés pour toi ».",
-      "ecarteSi": "oui", "regle": "langue-locale-necessaire",
-      "raison": "Tu veux travailler en français ou en anglais."
-    },
-    {
-      "id": "ville", "famille": "vivre", "type": "choix",
-      "texte": "Capitale animée, ville moyenne ou nature à proximité ?",
-      "pourquoi": "Pour donner plus de place aux pays qui offrent le cadre de vie que tu préfères.",
+      "id": "deux-offres",
+      "theme": "Argent et travail",
+      "titre": "Deux offres",
+      "exemple": true,
+      "scene": "Pour le même poste, on te propose deux contrats.",
+      "pourquoi": "A donne plus de place aux pays où le salaire achète le plus, une fois les prix pris en compte. B donne plus de place aux pays où la vie coûte moins cher.",
       "options": [
-        { "id": "capitale", "label": "Capitale animée", "effets": [{ "mesures": ["grande-ville"], "sens": "haut" }] },
-        { "id": "moyenne", "label": "Ville moyenne", "effets": [{ "mesures": ["ville-moyenne"], "sens": "haut" }] },
-        { "id": "nature", "label": "Nature à proximité", "effets": [{ "mesures": ["nature"], "sens": "haut" }] }
+        {
+          "id": "a",
+          "texte": "3 200 € par mois",
+          "detail": "Mais 1 600 € de loyer.",
+          "effets": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu regardes d’abord le salaire.",
+          "preference": "un salaire élevé"
+        },
+        {
+          "id": "b",
+          "texte": "2 400 € par mois",
+          "detail": "Loyer 700 €.",
+          "effets": [
+            {
+              "mesures": [
+                "prix"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu regardes ce qu’il te reste à la fin du mois.",
+          "preference": "une vie moins chère"
+        }
+      ]
+    },
+    {
+      "id": "promotion",
+      "theme": "Argent et travail",
+      "titre": "La promotion",
+      "scene": "On te propose une promotion bien payée, mais tu finiras à 20 h tous les soirs.",
+      "pourquoi": "A donne plus de place aux pays où le salaire achète le plus. B donne plus de place aux pays où l’on travaille moins d’heures par semaine.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "J’accepte",
+          "effets": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu privilégies le salaire au temps libre.",
+          "preference": "un salaire élevé"
+        },
+        {
+          "id": "b",
+          "texte": "Je refuse",
+          "detail": "Mes soirées comptent.",
+          "effets": [
+            {
+              "mesures": [
+                "heures"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu privilégies ton temps libre au salaire.",
+          "preference": "des semaines de travail courtes"
+        }
+      ]
+    },
+    {
+      "id": "sortie-ecole",
+      "theme": "Argent et travail",
+      "titre": "La sortie d’école",
+      "exemple": true,
+      "scene": "Tu viens de finir tes études et tu cherches ton premier poste.",
+      "pourquoi": "A donne plus de place aux pays où le chômage des jeunes est bas. B donne plus de place aux pays où le salaire achète le plus.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Tu signes en trois semaines",
+          "detail": "Salaire correct, sans plus.",
+          "effets": [
+            {
+              "mesures": [
+                "emploi"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux trouver du travail vite.",
+          "preference": "trouver du travail vite"
+        },
+        {
+          "id": "b",
+          "texte": "Six mois de candidatures en moyenne",
+          "detail": "Mais un salaire bien plus haut à l’arrivée.",
+          "effets": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu es prêt à chercher longtemps pour mieux gagner ta vie.",
+          "preference": "un salaire élevé"
+        }
+      ]
+    },
+    {
+      "id": "premier-dossier",
+      "theme": "Culture au travail",
+      "titre": "Ton premier dossier rendu",
+      "axe": "communication",
+      "scene": "Tu rends ton premier dossier. Ta manager te répond.",
+      "pourquoi": "Dans certains pays on dit tout sans détour, dans d’autres il faut lire entre les lignes. A rapproche des pays où la communication est directe, B des pays où elle est indirecte.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "« Trois erreurs page 2, corrige avant midi. »",
+          "detail": "Clair, mais sec.",
+          "effets": [
+            {
+              "mesures": [
+                "communication"
+              ],
+              "position": 1
+            }
+          ],
+          "portrait": "Tu préfères qu’on te parle franchement.",
+          "preference": "une communication directe",
+          "style": "qu’on te parle franchement"
+        },
+        {
+          "id": "b",
+          "texte": "« Très bon travail ! Peut-être revoir un ou deux points. »",
+          "detail": "Agréable, mais il faut lire entre les lignes.",
+          "effets": [
+            {
+              "mesures": [
+                "communication"
+              ],
+              "position": 5
+            }
+          ],
+          "portrait": "Tu préfères qu’on y mette les formes.",
+          "preference": "une communication qui ménage les gens",
+          "style": "qu’on y mette les formes"
+        }
+      ]
+    },
+    {
+      "id": "reunion-directeur",
+      "theme": "Culture au travail",
+      "titre": "La réunion avec le directeur",
+      "axe": "hiérarchie",
+      "scene": "Le directeur propose une idée que tu trouves fragile.",
+      "pourquoi": "A rapproche des pays où la hiérarchie est plate, B des pays où elle est marquée.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Ici, tout le monde le contredit",
+          "detail": "Même les stagiaires.",
+          "effets": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1
+            }
+          ],
+          "portrait": "Tu veux pouvoir contredire ton chef.",
+          "preference": "une hiérarchie plate",
+          "style": "pouvoir contredire ton chef"
+        },
+        {
+          "id": "b",
+          "texte": "Personne ne le contredit en réunion",
+          "detail": "On lui en parle après, en privé.",
+          "effets": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 5
+            }
+          ],
+          "portrait": "Tu es à l’aise avec une hiérarchie marquée.",
+          "preference": "une hiérarchie marquée",
+          "style": "une hiérarchie marquée"
+        }
+      ]
+    },
+    {
+      "id": "reunion-9h",
+      "theme": "Culture au travail",
+      "titre": "Réunion à 9 h",
+      "axe": "ponctualité",
+      "scene": "Ton équipe a une réunion à 9 h.",
+      "pourquoi": "La ponctualité est stricte dans certains pays, souple dans d’autres. A rapproche des pays où elle est stricte, B des pays où elle est souple.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "À 9 h pile, la porte est fermée",
+          "detail": "On commence sans toi.",
+          "effets": [
+            {
+              "mesures": [
+                "ponctualite"
+              ],
+              "position": 5
+            }
+          ],
+          "portrait": "Tu aimes que l’heure soit l’heure.",
+          "preference": "une ponctualité stricte",
+          "style": "une ponctualité stricte"
+        },
+        {
+          "id": "b",
+          "texte": "On démarre vers 9 h 15, après le café",
+          "detail": "Personne ne regarde l’heure.",
+          "effets": [
+            {
+              "mesures": [
+                "ponctualite"
+              ],
+              "position": 1
+            }
+          ],
+          "portrait": "Tu préfères des horaires souples.",
+          "preference": "des horaires souples",
+          "style": "des horaires souples"
+        }
+      ]
+    },
+    {
+      "id": "nouvel-outil",
+      "theme": "Culture au travail",
+      "titre": "Le nouvel outil",
+      "axe": "décision",
+      "scene": "Ton équipe doit choisir un nouvel outil.",
+      "pourquoi": "A rapproche des pays où le chef tranche, B des pays où l’on décide par consensus.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Le chef tranche lundi, on applique mardi",
+          "detail": "Même si tu n’étais pas d’accord.",
+          "effets": [
+            {
+              "mesures": [
+                "decision"
+              ],
+              "position": 1
+            }
+          ],
+          "portrait": "Tu préfères un chef qui tranche vite.",
+          "preference": "un chef qui tranche",
+          "style": "un chef qui tranche"
+        },
+        {
+          "id": "b",
+          "texte": "Trois réunions pour que tout le monde soit d’accord",
+          "detail": "Mais ensuite, personne ne revient dessus.",
+          "effets": [
+            {
+              "mesures": [
+                "decision"
+              ],
+              "position": 5
+            }
+          ],
+          "portrait": "Tu préfères des décisions prises ensemble.",
+          "preference": "des décisions prises ensemble",
+          "style": "des décisions prises ensemble"
+        }
+      ]
+    },
+    {
+      "id": "vendredi-18h",
+      "theme": "Culture au travail",
+      "titre": "Vendredi 18 h",
+      "axe": "vie pro et vie perso",
+      "scene": "La semaine de travail est finie.",
+      "pourquoi": "A rapproche des pays où vie pro et vie perso sont séparées, B des pays où elles se mêlent.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Chacun rentre chez soi",
+          "detail": "On ne voit jamais ses collègues en dehors du bureau.",
+          "effets": [
+            {
+              "mesures": [
+                "pro-perso"
+              ],
+              "position": 1
+            }
+          ],
+          "portrait": "Tu sépares vie pro et vie perso.",
+          "preference": "séparer vie pro et vie perso",
+          "style": "séparer vie pro et vie perso"
+        },
+        {
+          "id": "b",
+          "texte": "L’afterwork est presque obligatoire",
+          "detail": "C’est là que se créent les liens et les promotions.",
+          "effets": [
+            {
+              "mesures": [
+                "pro-perso"
+              ],
+              "position": 5
+            }
+          ],
+          "portrait": "Tu aimes voir tes collègues en dehors du bureau.",
+          "preference": "voir tes collègues en dehors du bureau",
+          "style": "voir tes collègues en dehors du bureau"
+        }
+      ]
+    },
+    {
+      "id": "deux-langues",
+      "theme": "Langue et intégration",
+      "titre": "Ta vie en deux langues",
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
+      "scene": "Au bureau, tout se passe en anglais. Mais chez le médecin ou pour signer ton bail, c’est la langue locale, que tu ne parles pas.",
+      "pourquoi": "B donne plus de place aux pays où l’on vit en français, ou dans une langue que tu parles déjà. A ne change rien.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Je me débrouille avec une appli",
+          "detail": "Ça fait partie de l’aventure.",
+          "effets": [],
+          "portrait": "Une langue inconnue au quotidien ne te fait pas peur."
+        },
+        {
+          "id": "b",
+          "texte": "Je veux gérer mon quotidien sans aide",
+          "effets": [
+            {
+              "mesures": [
+                "langue"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux pouvoir gérer ton quotidien sans aide.",
+          "preference": "gérer ton quotidien sans aide"
+        }
+      ]
+    },
+    {
+      "id": "cours-offerts",
+      "theme": "Langue et intégration",
+      "titre": "Les cours offerts",
+      "exemple": true,
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
+      "scene": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
+      "pourquoi": "B donne plus de place aux pays où il n’y a pas de nouvelle langue à apprendre, et fait descendre dans « Moins adaptés pour toi » les pays où la langue s’écrit avec un autre alphabet (sauf si tu la parles déjà). A ne change rien.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "J’y vais",
+          "detail": "C’est un vrai plus.",
+          "effets": [],
+          "portrait": "Tu es prêt à apprendre une langue, même avec un autre alphabet."
+        },
+        {
+          "id": "b",
+          "texte": "Je garde ces soirées pour moi",
+          "detail": "L’anglais me suffit.",
+          "effets": [
+            {
+              "mesures": [
+                "langue"
+              ],
+              "poids": 1
+            }
+          ],
+          "ecart": {
+            "regle": "autre-ecriture",
+            "raison": "Tu ne veux pas apprendre une langue avec une autre écriture."
+          },
+          "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
+          "preference": "ne pas avoir de langue à apprendre"
+        }
+      ]
+    },
+    {
+      "id": "premier-mois",
+      "theme": "Langue et intégration",
+      "titre": "Ton premier mois",
+      "scene": "Tu viens d’arriver dans ta nouvelle ville.",
+      "pourquoi": "A donne plus de place aux pays où beaucoup de Français vivent déjà. B ne change rien.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Un groupe de Français t’accueille",
+          "detail": "Apéros, conseils pour le logement et la banque : tout est plus simple.",
+          "effets": [
+            {
+              "mesures": [
+                "francais"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu aimerais trouver des Français sur place.",
+          "preference": "trouver des Français sur place"
+        },
+        {
+          "id": "b",
+          "texte": "Tu n’as aucun contact français",
+          "detail": "Tu te fais des amis par le travail et le sport, plus lentement.",
+          "effets": [],
+          "portrait": "Tu n’as pas besoin de Français autour de toi."
+        }
+      ]
+    },
+    {
+      "id": "noel",
+      "theme": "Distance",
+      "titre": "Noël approche",
+      "exemple": true,
+      "scene": "Tu veux voir ta famille pour les fêtes.",
+      "pourquoi": "A donne plus de place aux pays proches de la France (temps de vol et décalage horaire). B aussi, mais deux fois moins. C ne change rien : les pays lointains ne gagnent pas de points.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "2 h de vol",
+          "detail": "Tu rentres pour le réveillon et tu repars le 26.",
+          "effets": [
+            {
+              "mesures": [
+                "vol",
+                "decalage"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux pouvoir rentrer vite en France.",
+          "preference": "rentrer vite en France"
+        },
+        {
+          "id": "b",
+          "texte": "6 h de vol",
+          "detail": "Tu rentres deux ou trois fois par an.",
+          "effets": [
+            {
+              "mesures": [
+                "vol",
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portrait": "Tu veux pouvoir rentrer en France plusieurs fois par an.",
+          "preference": "rester à quelques heures de la France"
+        },
+        {
+          "id": "c",
+          "texte": "12 h de vol ou plus",
+          "detail": "Tu rentres une fois par an, c’est le jeu.",
+          "effets": [],
+          "portrait": "La distance avec la France ne te fait pas peur."
+        }
+      ]
+    },
+    {
+      "id": "janvier",
+      "theme": "Climat et ville",
+      "titre": "Janvier",
+      "exemple": true,
+      "scene": "C’est l’hiver dans ta nouvelle ville.",
+      "pourquoi": "B rapproche des pays où l’hiver est doux (mois le plus froid entre 8 et 15 °C). A ne change rien : le froid ne fait perdre aucun point.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "−10 °C et de la neige",
+          "detail": "Des pistes de ski à une heure.",
+          "effets": [],
+          "portrait": "Le froid ne te gêne pas."
+        },
+        {
+          "id": "b",
+          "texte": "12 °C, gris et pluie",
+          "effets": [
+            {
+              "mesures": [
+                "hiver"
+              ],
+              "position": 4
+            }
+          ],
+          "portrait": "Tu préfères un hiver doux.",
+          "preference": "un hiver doux"
+        }
+      ]
+    },
+    {
+      "id": "aout",
+      "theme": "Climat et ville",
+      "titre": "Août",
+      "exemple": true,
+      "scene": "C’est l’été dans ta nouvelle ville.",
+      "pourquoi": "A rapproche des pays aux étés très chauds (mois le plus chaud entre 25 et 29 °C en moyenne). B rapproche des pays aux étés tempérés (entre 17 et 21 °C en moyenne).",
+      "options": [
+        {
+          "id": "a",
+          "texte": "35 °C",
+          "detail": "Et la plage le soir.",
+          "effets": [
+            {
+              "mesures": [
+                "ete"
+              ],
+              "position": 4
+            }
+          ],
+          "portrait": "Tu aimes les étés chauds.",
+          "preference": "un été chaud"
+        },
+        {
+          "id": "b",
+          "texte": "22 °C",
+          "detail": "Et un pull le soir.",
+          "effets": [
+            {
+              "mesures": [
+                "ete"
+              ],
+              "position": 2
+            }
+          ],
+          "portrait": "Tu préfères un été tempéré.",
+          "preference": "un été tempéré"
+        }
+      ]
+    },
+    {
+      "id": "appartement",
+      "theme": "Climat et ville",
+      "titre": "Ton appartement",
+      "exemple": true,
+      "scene": "Pour le même loyer, on te propose deux appartements.",
+      "pourquoi": "A donne plus de place aux pays qui ont de grandes villes. B donne plus de place aux pays qui ont des villes moyennes et une nature proche.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "25 m² en plein centre d’une capitale",
+          "effets": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux vivre au cœur d’une grande ville.",
+          "preference": "une grande ville"
+        },
+        {
+          "id": "b",
+          "texte": "60 m² dans une ville moyenne",
+          "detail": "À 15 minutes de la nature.",
+          "effets": [
+            {
+              "mesures": [
+                "ville-moyenne",
+                "nature"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu préfères une ville moyenne, près de la nature.",
+          "preference": "une ville moyenne près de la nature"
+        }
+      ]
+    },
+    {
+      "id": "nuit",
+      "theme": "Sécurité, santé, visa",
+      "titre": "1 h du matin",
+      "scene": "Tu rentres seul à pied d’une soirée.",
+      "pourquoi": "A donne plus de place aux pays où il y a le moins de violences graves. B ne change rien.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Je veux pouvoir le faire sans y penser",
+          "effets": [
+            {
+              "mesures": [
+                "securite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux te sentir en sécurité partout.",
+          "preference": "pouvoir rentrer à pied sans y penser"
+        },
+        {
+          "id": "b",
+          "texte": "Je prendrai un taxi",
+          "detail": "Ça ne m’empêchera pas de choisir un pays.",
+          "effets": [],
+          "portrait": "La sécurité ne décidera pas de ton choix."
+        }
+      ]
+    },
+    {
+      "id": "poignet",
+      "theme": "Sécurité, santé, visa",
+      "titre": "Le poignet cassé",
+      "exemple": true,
+      "scene": "Tu te casses le poignet le deuxième mois.",
+      "pourquoi": "A donne plus de place aux pays où un jeune étranger est couvert sans assurance privée. B ne change rien. On ne te demande rien sur ta santé.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Tout est remboursé",
+          "detail": "Mais 4 h d’attente aux urgences.",
+          "effets": [
+            {
+              "mesures": [
+                "sante"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux être couvert pour ta santé dès l’arrivée.",
+          "preference": "être couvert dès l’arrivée"
+        },
+        {
+          "id": "b",
+          "texte": "Soigné en 30 minutes",
+          "detail": "Mais tu paies une assurance privée de 120 € par mois depuis ton arrivée.",
+          "effets": [],
+          "portrait": "Payer une assurance santé privée ne te gêne pas."
+        }
+      ]
+    },
+    {
+      "id": "job-de-reve",
+      "theme": "Sécurité, santé, visa",
+      "titre": "Le job de rêve",
+      "exemple": true,
+      "scene": "On t’offre le poste de tes rêves. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir.",
+      "pourquoi": "B fait descendre dans « Moins adaptés pour toi » les pays où il faut un employeur ou une mission pour entrer. Tu peux les remonter. A ne change rien.",
+      "options": [
+        {
+          "id": "a",
+          "texte": "Je prends le risque",
+          "effets": [],
+          "portrait": "Dépendre d’un employeur pour ton visa ne te fait pas peur."
+        },
+        {
+          "id": "b",
+          "texte": "Je préfère pouvoir changer d’employeur librement",
+          "detail": "Quitte à viser moins haut.",
+          "effets": [],
+          "ecart": {
+            "regle": "employeur-requis",
+            "raison": "Tu ne veux pas dépendre d’un employeur pour ton visa."
+          },
+          "portrait": "Tu veux pouvoir changer d’employeur librement."
+        }
       ]
     }
   ]

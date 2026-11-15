@@ -232,7 +232,7 @@ function notesAvis(p, verifieLe = AUJOURDHUI) {
   const av = avis[p.id];
   const res = {};
   const note = (n, texte) => ({ statut: "verifie", note: n, texte, annee: null, source: "notre-avis", lien: null, verifieLe });
-  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite"]) {
+  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite", "decision", "pro-perso"]) {
     res[id] = av?.[id] ? note(av[id].note, av[id].texte) : aVerifier("Pas encore d'avis rédigé.");
   }
   // Un seul paragraphe pour les trois mesures de la taille de ville.

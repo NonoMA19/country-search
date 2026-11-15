@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, mesures, quiz, sources, type Effet, type TypeSource } from "@/lib/donnees";
+import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, mesures, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
 import PiedDePage from "@/components/PiedDePage";
-import { paysCouverts } from "@/lib/moteur";
+import { SEUIL_DILEMME, dilemmeActif, paysCouverts } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
 
 export const metadata: Metadata = {
@@ -21,9 +21,20 @@ function Type({ type }: { type: TypeSource }) {
   return <span className={`inline-flex min-h-6 items-center rounded-full px-2 text-xs font-medium whitespace-nowrap ${STYLE_TYPE[type]}`}>{LIBELLE_TYPE[type]}</span>;
 }
 
-function effet(e: Effet[] | undefined): string {
-  if (!e || e.length === 0) return "rien ne change";
-  return e.map((x) => `${x.mesures.map((m) => mesures[m]?.nom ?? m).join(" et ")} : ${x.sens === "haut" ? "le haut de l’échelle gagne" : "le bas de l’échelle gagne"}`).join(" ; ");
+const nombre = (n: number) => n.toLocaleString("fr-FR");
+
+// L'effet d'une option, en mots simples.
+function effet(o: OptionDilemme): string {
+  const morceaux = o.effets.map((e) => {
+    const noms = e.mesures.map((m) => mesures[m]?.nom ?? m).join(" et ");
+    if (e.position !== undefined) {
+      const m = mesures[e.mesures[0]];
+      return `${noms} : la position « ${m?.echelle[e.position - 1] ?? e.position} » gagne`;
+    }
+    return `${noms} : importance ${nombre(e.poids ?? 1)}`;
+  });
+  if (o.ecart) morceaux.push("certains pays descendent dans « Moins adaptés pour toi »");
+  return morceaux.length ? morceaux.join(" ; ") : "rien ne change";
 }
 
 export default function Methode() {
@@ -35,11 +46,12 @@ export default function Methode() {
       <p className="mt-3 text-lg text-gris">Un simple calcul classe les pays. Aucune intelligence artificielle ne décide, et rien n’est inventé.</p>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Le calcul en 6 points</h2>
+        <h2 className="text-xl font-semibold">Le calcul en 7 points</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
-          <li>Seules tes réponses comptent. Une phrase à laquelle tu réponds « Passer » ne change rien.</li>
-          <li>Tes 3 priorités comptent double (importance 2). Chaque autre réponse compte simple (importance 1). Si plusieurs réponses visent la même chose, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
+          <li>Seules tes réponses comptent. Un dilemme auquel tu réponds « Passer » ne change rien.</li>
+          <li>Tes 3 priorités comptent double (importance 2). Une option de dilemme compte simple (importance 1), à moitié (importance 0,5), ou ne change rien. Si plusieurs réponses visent la même mesure, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
+          <li>Certaines mesures ne sont ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, l’hiver, l’été. Pour elles, ton option fixe une position préférée. Un pays à cette position gagne 100 %, un niveau plus loin 75 %, deux niveaux 50 %, et ainsi de suite.</li>
           <li>Ton pourcentage = les points gagnés par le pays, divisés par les points possibles. Il mesure « ça te ressemble » avec les familles Travailler, Vivre et, si tu l’as choisi, Valeurs.</li>
           <li>Une donnée « À vérifier » sur une de tes 3 priorités compte pour une note neutre, 50 %, et la carte du pays le dit : un trou dans les données ne peut pas faire gagner un pays. Sur une autre réponse, elle est sautée : elle ne donne ni ne retire de points.</li>
           <li>Si un pays a une donnée vérifiée pour moins de 60 % de ce qui compte pour toi (on compte les mesures, une par une), il ne peut pas entrer dans ton top 3 : il reste dans la liste, sans pourcentage, avec la mention « pas assez de données ».</li>
@@ -55,7 +67,7 @@ export default function Methode() {
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Un exemple chiffré</h2>
-        <p className="mt-3">Tes priorités : le travail facile à trouver et un climat doux (importance 2 chacune). Tu réponds « Non » à « Je suis prêt à apprendre une nouvelle langue » (importance 1).</p>
+        <p className="mt-3">Tes priorités : le travail facile à trouver et un climat doux (importance 2 chacune). Au dilemme « Ta vie en deux langues », tu choisis « Je veux gérer mon quotidien sans aide » (importance 1).</p>
         <p className="mt-3 text-sm text-gris sm:hidden" aria-hidden="true">Fais glisser le tableau sur le côté pour tout voir.</p>
         <div className="mt-2 overflow-x-auto rounded-2xl border border-bord focus-visible:outline-2 focus-visible:outline-bleu" tabIndex={0} role="region" aria-label="Exemple chiffré, tableau défilant">
           <table className="w-full min-w-[34rem] text-left text-sm">
@@ -72,13 +84,15 @@ export default function Methode() {
       </section>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Comment les phrases sont choisies</h2>
+        <h2 className="text-xl font-semibold">Comment les dilemmes sont choisis</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Un dilemme est une petite scène avec 2 ou 3 options. Chaque option a un avantage et un prix : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
           <li>Après tes 3 priorités, on regarde les 5 premiers pays de ton classement.</li>
-          <li>On te pose la phrase pour laquelle ces 5 pays sont les plus différents. C’est un calcul, pas une IA.</li>
+          <li>On te pose le dilemme pour lequel ces 5 pays sont les plus différents. Une option qui ne ferait que redonner une importance déjà acquise (par une de tes priorités, par exemple) ne compte pas : elle ne départagerait rien. C’est un calcul, pas une IA.</li>
+          <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays, « Pourquoi ce pays » ne cite que des points notés 4 ou 5 sur 5 dans le sens de tes réponses. « Ce qui peut coincer » cite un point noté 1 ou 2 sur 5.</li>
-          <li>Certaines réponses font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
+          <li>Certaines options font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
         </ul>
       </section>
 
@@ -89,7 +103,7 @@ export default function Methode() {
           <li><Type type="donnee-ouverte" /> Une base de données publique, libre de réutilisation : Banque mondiale, Organisation internationale du travail (OIT), Open-Meteo.</li>
           <li><Type type="notre-avis" /> Un jugement de la rédaction, justifié par écrit. Il reste discutable : la justification est affichée pour que tu puisses juger par toi-même.</li>
         </ul>
-        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité.</p>
+        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité.</p>
       </section>
 
       {familles.map((f) => (
@@ -101,13 +115,13 @@ export default function Methode() {
                 <h3 className="font-semibold">{c.numero}. {c.nom} <Type type={c.type} /></h3>
                 <p className="mt-1 text-gris">{c.definition}</p>
                 {c.role === "badge" && c.echelle && (
-                  <p className="mt-2 text-sm"><span className="font-medium">Ce qu’on regarde : </span>{c.echelle.join(" · ")}. Importance : aucune dans le pourcentage, cela donne le badge.</p>
+                  <p className="mt-2 text-sm"><span className="font-medium">Ce qu’on regarde : </span>{c.echelle.join(" · ")}. Importance : aucune dans le pourcentage, cela donne le badge.</p>
                 )}
                 {c.mesures.map((m) => (
                   <div key={m.id} className="mt-3 text-sm">
                     <p className="font-medium">{m.nom}{m.sens === "position" ? " (une position, ni bonne ni mauvaise)" : ""}</p>
                     <p className="text-gris">Les 5 niveaux, du plus bas au plus haut : {m.echelle.join(" · ")}.</p>
-                    {m.regle && <p className="text-gris">Règle : {m.regle}</p>}
+                    {m.regle && <p className="text-gris">Règle : {m.regle}</p>}
                     <p className="text-gris">
                       {paysCouverts(m.id) > 0
                         ? `Pays couverts : ${paysCouverts(m.id)} sur ${pays.length}.`
@@ -141,18 +155,18 @@ export default function Methode() {
       </section>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Toutes les phrases et leur effet</h2>
-        <p className="mt-2 text-sm text-gris">Chaque phrase compte avec une importance de 1.</p>
+        <h2 className="text-xl font-semibold">Tous les dilemmes et leur effet</h2>
         <ul className="mt-3 space-y-3">
-          {quiz.phrases.map((ph) => (
-            <li key={ph.id} className="rounded-2xl border border-bord bg-carte p-4 text-sm">
-              <p className="text-base font-medium">« {ph.texte} »</p>
-              {ph.type === "oui-non" && <p className="mt-1 text-gris">Oui : {effet(ph.oui)}. Non : {effet(ph.non)}.</p>}
-              {ph.type === "choix" && <p className="mt-1 text-gris">{ph.options?.map((o) => `${o.label} : ${effet(o.effets)}`).join(". ")}.</p>}
-              {ph.type === "ecart" && <p className="mt-1 text-gris">Si tu réponds {ph.ecarteSi}, les pays concernés descendent dans « Moins adaptés pour toi ».</p>}
-              {ph.type === "filtre" && <p className="mt-1 text-gris">Si oui, les autres phrases sur ce sujet ne sont pas posées.</p>}
-              {ph.regleAffichage && <p className="mt-1 text-gris">Règle d’affichage : {ph.regleAffichage}</p>}
-              {ph.saufPriorites && <p className="mt-1 text-gris">Pas posée si tu as déjà choisi la priorité liée.</p>}
+          {quiz.dilemmes.map((d) => (
+            <li key={d.id} className="rounded-2xl border border-bord bg-carte p-4 text-sm">
+              <p className="text-xs font-medium tracking-wide text-gris uppercase">{d.theme}</p>
+              <p className="text-base font-medium">{d.titre}</p>
+              <p className="mt-1">{d.scene}</p>
+              <ul className="mt-2 space-y-1 text-gris">
+                {d.options.map((o, i) => <li key={o.id}>{["A", "B", "C"][i]}. {o.texte} : {effet(o)}.</li>)}
+              </ul>
+              {d.regleAffichage && <p className="mt-1 text-gris">Règle d’affichage : {d.regleAffichage}</p>}
+              {!dilemmeActif(d) && <p className="mt-1 font-medium">Pas encore posé : sa mesure n’est pas assez renseignée (moins de {Math.round(SEUIL_DILEMME * 100)} % des pays).</p>}
             </li>
           ))}
         </ul>
