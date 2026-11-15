@@ -71,3 +71,28 @@ input[type="range"] {
     opacity: 1;
   }
 }
+
+/* Mode contraste forcé (Windows) : les états et les jauges restent visibles. */
+@media (forced-colors: active) {
+  button[aria-pressed="true"],
+  [aria-checked="true"] {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+  [role="progressbar"],
+  .jauge {
+    border: 1px solid CanvasText;
+  }
+  [role="progressbar"] > div,
+  .jauge > div {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+  button:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+  dialog {
+    border: 2px solid CanvasText;
+  }
+}

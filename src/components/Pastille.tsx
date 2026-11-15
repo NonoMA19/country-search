@@ -26,7 +26,7 @@ export default function Pastille({ preuve, pays, contexte }: { preuve: Preuve; p
       <button
         type="button"
         onClick={() => setOuvert(true)}
-        className={`ml-1 inline-flex min-h-6 items-center rounded-full px-2 align-middle text-xs font-medium whitespace-nowrap ${STYLE[preuve.type]}`}
+        className={`relative ml-1 inline-flex min-h-7 items-center rounded-full max-w-full px-2.5 text-left align-middle text-[13px] font-medium after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] ${STYLE[preuve.type]}`}
         aria-label={`${LIBELLE_TYPE[preuve.type]} : voir la preuve pour ${contexte ?? preuve.titre}${pays ? `, ${pays}` : ""}`}
         aria-haspopup="dialog"
       >
@@ -122,7 +122,7 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
               </button>
             ) : (
               <div>
-                <p className="text-sm font-medium">Quel est le problème ?</p>
+                <p className="text-sm font-medium">Quel est le problème ?</p>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   {MOTIFS.map((m) => (
                     <button key={m} type="button" aria-pressed={motif === m} onClick={() => setMotif(m)} className={`min-h-11 rounded-xl border px-2 text-sm ${motif === m ? "border-bleu bg-bleu-doux font-medium" : "border-bord"}`}>
@@ -139,7 +139,7 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
                     Envoyer par e-mail
                   </a>
                 )}
-                <p className="mt-2 text-xs text-gris">Le site n’envoie et ne garde rien : ce bouton ouvre ton application de courriel.</p>
+                <p className="mt-2 text-xs text-gris">Le site n’envoie et ne garde rien : ce bouton ouvre ton application de courriel.</p>
               </div>
             )}
           </div>

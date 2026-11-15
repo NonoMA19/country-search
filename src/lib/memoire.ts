@@ -27,7 +27,7 @@ const ecouteurs = new Set<() => void>();
 
 // ---------- Lecture prudente ----------
 // Une session abîmée (modifiée à la main, ancienne version, autre site) ne doit jamais
-// faire planter la page : au moindre doute, on repart d'une session vide.
+// faire planter la page : au moindre doute, on repart d’une session vide.
 type Objet = Record<string, unknown>;
 const estObjet = (x: unknown): x is Objet => typeof x === "object" && x !== null && !Array.isArray(x);
 const estTexte = (x: unknown): x is string => typeof x === "string";

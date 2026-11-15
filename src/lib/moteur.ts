@@ -160,12 +160,12 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   const alertes: Alerte[] = [];
   const autres: string[] = [];
   if (veutVie && age !== null && !vieOuvert) {
-    alertes.push({ texte: "Le VIE est fermé à ton âge : il faut avoir moins de 28 ans à la candidature.", preuve: preuveVie() });
+    alertes.push({ texte: "Le VIE est fermé à ton âge : il faut avoir moins de 28 ans à la candidature.", preuve: preuveVie() });
   }
 
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
-    if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d'une entreprise.");
+    if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
     return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres };
   }
 
@@ -173,20 +173,20 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   const visa = liste.find((x) => x.type === "visa-travail");
   if (pvt && pvt.ageMax !== undefined) {
     if (age !== null && age > pvt.ageMax) {
-      if (visa && visa.statut !== "verifie") alertes.push({ texte: "Les conditions du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
+      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
       return {
         badge: "fermee", nom: pvt.nom, type: "pvt",
-        phrase: `Le PVT (Programme Vacances-Travail) s'arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
+        phrase: `Le PVT (Programme Vacances-Travail) s’arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
         fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres,
       };
     }
-    const quand = age !== null ? "à ton âge" : `jusqu'à ${pvt.ageMax} ans`;
+    const quand = age !== null ? "à ton âge" : `jusqu’à ${pvt.ageMax} ans`;
     const PVT = "PVT (Programme Vacances-Travail)";
     let badge: Badge = "ouverte";
     let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an.` : `${PVT} ouvert ${quand}, sans quota.`;
     if (pvt.invitation) {
       badge = "difficile";
-      phrase = `${PVT} ouvert ${quand}, mais il faut recevoir une invitation : rien n'est garanti.`;
+      phrase = `${PVT} ouvert ${quand}, mais il faut recevoir une invitation : rien n’est garanti.`;
       if (pvt.invitationSource) alertes.push({ texte: pvt.invitationTexte ?? "", preuve: preuveSource("Invitation à présenter une demande", pvt.invitationTexte ?? "", pvt.invitationSource.source, pvt.invitationSource.lien, pvt.invitationSource.verifieLe) });
     } else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) {
       badge = "difficile";
@@ -201,18 +201,18 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
       alertes.push({ texte: `Ce PVT demande ${pvt.fonds.texte}.`, preuve: preuvePorte(pvt) });
     }
     if ((duree !== null && duree > 12) || profil.objectif === "carriere") {
-      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
+      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
-    if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d'une entreprise.");
+    if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
     return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres };
   }
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
   let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
-  if (base.statut !== "verifie") phrase += " Les conditions exactes ne sont pas encore vérifiées.";
+  if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
   for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
-  if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n'est pas encore vérifiée.");
+  if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n’est pas encore vérifiée.");
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres };
 }
 
@@ -242,7 +242,7 @@ export function raisonsEcart(etat: Etat): Record<string, string> {
   };
   for (const p of pays) {
     if (etat.profil.zone === "europe" && p.zone !== "europe") ajouter(p.id, "Tu as choisi de partir en Europe.");
-    if (etat.profil.zone === "hors-europe" && p.zone === "europe") ajouter(p.id, "Tu as choisi de partir hors d'Europe.");
+    if (etat.profil.zone === "hors-europe" && p.zone === "europe") ajouter(p.id, "Tu as choisi de partir hors d’Europe.");
     if (etat.profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) ajouter(p.id, "Tu veux travailler en français.");
     for (const id of etat.ordre) {
       const ph = trouverPhrase(id);
@@ -486,7 +486,7 @@ export function coince(l: Ligne, profil: Profil): { arguments: Argument[]; alert
 
 const STYLE: Record<string, { axe: string; mesure: string; oui: string; non: string }> = {
   chef: { axe: "hiérarchie", mesure: "hierarchie", oui: "un chef qui tranche", non: "un chef qui consulte son équipe" },
-  franchise: { axe: "communication", mesure: "communication", oui: "qu'on te parle franchement", non: "qu'on y mette les formes" },
+  franchise: { axe: "communication", mesure: "communication", oui: "qu’on te parle franchement", non: "qu’on y mette les formes" },
   retard: { axe: "ponctualité", mesure: "ponctualite", oui: "des horaires souples", non: "une ponctualité stricte" },
 };
 

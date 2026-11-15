@@ -4,8 +4,8 @@
   "liens": [
     {
       "id": "visa",
-      "titre": "Travailler dans un autre pays d'Europe",
-      "nom": "Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)",
+      "titre": "Travailler dans un autre pays d’Europe",
+      "nom": "Travailler dans un autre pays d’Europe (L’Europe est à vous, Union européenne)",
       "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
       "statut": "verifie"
     },
@@ -19,14 +19,14 @@
     {
       "id": "consulat",
       "titre": "Ambassade ou consulat de France",
-      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/allemagne/conseils-aux-voyageurs-contacts-utiles",
       "statut": "verifie"
     },
     {
       "id": "registre",
       "titre": "Inscription au registre des Français établis hors de France",
-      "nom": "S'inscrire au registre (France Diplomatie)",
+      "nom": "S’inscrire au registre (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
       "statut": "verifie"
     }
@@ -41,14 +41,14 @@
     },
     {
       "id": "ufe",
-      "titre": "Association de Français de l'étranger",
-      "nom": "Union des Français de l'étranger (UFE)",
+      "titre": "Association de Français de l’étranger",
+      "nom": "Union des Français de l’étranger (UFE)",
       "url": null,
       "statut": "a-verifier"
     },
     {
       "id": "adfe",
-      "titre": "Association de Français de l'étranger",
+      "titre": "Association de Français de l’étranger",
       "nom": "Français du monde-ADFE",
       "url": null,
       "statut": "a-verifier"

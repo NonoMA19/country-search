@@ -18,7 +18,7 @@ export default function MentionsLegales() {
         <h2 className="text-xl font-semibold">Ce n’est pas un conseil juridique</h2>
         <p className="mt-3">
           Country Search n’est pas un site officiel. Les informations sur les visas, les impôts et la protection sociale
-          sont données à titre indicatif et ne constituent pas un conseil juridique. Les règles changent souvent :
+          sont données à titre indicatif et ne constituent pas un conseil juridique. Les règles changent souvent :
           vérifie toujours sur les sites officiels avant de décider ou de faire une démarche.
         </p>
         <p className="mt-3">
@@ -31,10 +31,10 @@ export default function MentionsLegales() {
         <h2 className="text-xl font-semibold">Éditeur</h2>
         <p className="mt-3">
           Site édité par NonoMA19, à titre personnel et non commercial. Projet gratuit, sans publicité et sans affiliation.
-          Hébergement : Vercel.
+          Hébergement : Vercel.
         </p>
         <p className="mt-3 text-gris">
-          Il n’y a pas encore d’adresse de contact : elle sera ajoutée ici dès qu’elle existera.
+          Il n’y a pas encore d’adresse de contact : elle sera ajoutée ici dès qu’elle existera.
         </p>
       </section>
 
@@ -42,7 +42,7 @@ export default function MentionsLegales() {
         <h2 className="text-xl font-semibold">Aucune donnée personnelle collectée</h2>
         <p className="mt-3">
           Pas de compte, pas de cookie, pas de mesure d’audience. Tes réponses au quiz restent dans ton navigateur
-          (stockage de session) et s’effacent quand tu fermes l’onglet. Le dossier PDF est créé sur ton appareil :
+          (stockage de session) et s’effacent quand tu fermes l’onglet. Le dossier PDF est créé sur ton appareil :
           rien n’est envoyé.
         </p>
         <p className="mt-3">On ne te demande jamais tes opinions politiques, ta religion ni ta santé.</p>
@@ -51,9 +51,9 @@ export default function MentionsLegales() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Licences</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5">
-          <li>Code du site : licence MIT.</li>
-          <li>Textes de la rédaction (« Notre avis ») : licence CC BY-SA 4.0.</li>
-          <li>Drapeaux : paquet country-flag-icons (licence MIT). Icônes : Lucide (licence ISC).</li>
+          <li>Code du site : licence MIT.</li>
+          <li>Textes de la rédaction (« Notre avis ») : licence CC BY-SA 4.0.</li>
+          <li>Drapeaux : paquet country-flag-icons (licence MIT). Icônes : Lucide (licence ISC).</li>
         </ul>
       </section>
 

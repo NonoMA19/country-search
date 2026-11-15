@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowUp, BadgeCheck, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowUp, BadgeCheck, ChevronDown, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import { ErreurPdf } from "@/components/BoutonDossier";
@@ -32,16 +32,16 @@ const STYLE_BADGE: Record<Badge, string> = {
   ouverte: "bg-bleu text-white",
   conditions: "bg-bleu-doux text-encre",
   difficile: "bg-slate-700 text-white",
-  fermee: "border border-bord bg-creux text-gris",
+  fermee: "border border-bord bg-creux text-encre",
 };
 const ICONE_BADGE = { nationalite: BadgeCheck, ouverte: DoorOpen, conditions: FileCheck, difficile: Hourglass, fermee: Lock };
 
 export function BadgePorte({ badge, petit = false }: { badge: Badge; petit?: boolean }) {
   const I = ICONE_BADGE[badge];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full font-semibold ${petit ? "px-2 py-0.5 text-xs" : "px-3 py-1.5 text-sm"} ${STYLE_BADGE[badge]}`}>
+    <span className={`inline-flex max-w-full items-center gap-1.5 rounded-full font-semibold ${petit ? "px-2 py-0.5 text-xs" : "px-3 py-1.5 text-sm"} ${STYLE_BADGE[badge]}`}>
       <I aria-hidden="true" className={petit ? "h-3.5 w-3.5" : "h-4 w-4"} />
-      {LIBELLE_BADGE[badge]}
+      <span className="min-w-0">{LIBELLE_BADGE[badge]}</span>
     </span>
   );
 }
@@ -52,13 +52,13 @@ function Jauges({ ligne }: { ligne: Ligne }) {
       {FAMILLES.filter((f) => ligne.familles[f.id] !== null).map((f) => {
         const v = Math.round(ligne.familles[f.id] as number);
         return (
-          <div key={f.id} className="flex items-center gap-3">
+          <div key={f.id} className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <Icone nom={f.id} className="h-5 w-5 shrink-0 text-gris" />
             <span className="w-20 shrink-0 text-sm font-medium">{f.nom}</span>
-            <div className="h-3 flex-1 overflow-hidden rounded-full bg-creux" role="img" aria-label={`${f.nom} : ${v} %`}>
+            <div className="jauge h-3 min-w-12 flex-1 overflow-hidden rounded-full bg-creux" aria-hidden="true">
               <div className={`h-full rounded-full ${f.couleur}`} style={{ width: `${v}%` }} />
             </div>
-            <span className="w-10 shrink-0 text-right text-sm text-gris tabular-nums">{v} %</span>
+            <span className="w-12 shrink-0 text-right text-sm whitespace-nowrap text-gris tabular-nums">{v} %</span>
           </div>
         );
       })}
@@ -71,7 +71,7 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
     <li className="leading-snug">
       {titre && <span className="font-medium">{titre}. </span>}
       <span className={titre ? "text-gris" : ""}>{texte}</span>
-      {preuve && <Pastille preuve={preuve} pays={pays} />}
+      {preuve && <Pastille preuve={preuve} pays={pays} contexte={preuve.titre} />}
     </li>
   );
 }
@@ -98,7 +98,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
   };
 
   return (
-    <article className={`rounded-3xl border bg-carte p-5 shadow-sm sm:p-6 ${surprise ? "border-dashed border-bleu" : "border-bord"}`}>
+    <article className={`rounded-3xl border bg-carte p-4 shadow-sm sm:p-6 ${surprise ? "border-dashed border-bleu" : "border-bord"}`}>
       <div className="flex items-start gap-4">
         <Drapeau iso2={p.iso2} className="mt-1 h-10 w-15" />
         <div className="min-w-0 flex-1">
@@ -106,11 +106,11 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
             {surprise ? "Pays surprise" : `N° ${rang}`}
             {egalite && " · à égalité"}
           </p>
-          <h3 className="text-3xl leading-tight font-bold">{p.nom}</h3>
+          <h3 className="text-2xl leading-tight font-bold break-words sm:text-3xl">{p.nom}</h3>
         </div>
       </div>
-      <div className="mt-4 flex items-end gap-3">
-        <span className="text-6xl leading-none font-bold tracking-tight tabular-nums">{score}<span className="text-3xl"> %</span></span>
+      <div className="mt-4 flex flex-wrap items-end gap-x-3 gap-y-1">
+        <span className="text-5xl leading-none font-bold tracking-tight whitespace-nowrap tabular-nums sm:text-6xl">{score}<span className="text-3xl">{"\u00a0"}%</span></span>
         <span className="pb-1 text-lg font-semibold text-lien">{verdict(score)}</span>
       </div>
       <Jauges ligne={ligne} />
@@ -119,18 +119,24 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         <BadgePorte badge={porte.badge} />
         <p className="mt-2 font-medium">
           {porte.phrase}
-          <Pastille preuve={porte.preuve} pays={p.nom} />
+          <Pastille preuve={porte.preuve} pays={p.nom} contexte={`la porte d’entrée (${porte.nom})`} />
         </p>
       </div>
 
-      <section className="mt-5">
+      <details className="group mt-5 rounded-2xl border border-bord">
+        <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
+          <span>Voir le détail</span>
+          <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="px-4 pb-4">
+      <section className="mt-3">
         <h4 className="font-semibold">Pourquoi ce pays</h4>
         {pour.length ? (
           <ul className="mt-2 space-y-2">
             {pour.map((a) => <Affirmation key={a.titre} {...a} pays={p.nom} />)}
           </ul>
         ) : (
-          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
+          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
         )}
       </section>
 
@@ -161,17 +167,20 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         <p className="mt-2">
           <span className="font-medium">{porte.nom}. </span>
           <span className="text-gris">{porte.preuve.texte}</span>
-          <Pastille preuve={porte.preuve} pays={p.nom} />
+          <Pastille preuve={porte.preuve} pays={p.nom} contexte={porte.nom} />
         </p>
         {porte.autres.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t}</p>)}
       </section>
 
+        </div>
+      </details>
+
       <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <Link href={`/pays/${p.id}`} className="inline-flex min-h-13 items-center justify-center gap-2 rounded-2xl bg-bleu px-4 font-semibold text-white hover:bg-blue-700">
+        <Link href={`/pays/${p.id}`} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl bg-bleu px-3 text-center font-semibold break-words text-white hover:bg-blue-700">
           <FolderOpen aria-hidden="true" className="h-5 w-5" /> Ouvrir le dossier
         </Link>
-        <button type="button" onClick={pdf} disabled={enCours} className="inline-flex min-h-13 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-4 font-semibold hover:border-bleu disabled:opacity-50">
-          <Download aria-hidden="true" className="h-5 w-5" /> {enCours ? "Préparation…" : "Télécharger mon dossier (PDF)"}
+        <button type="button" onClick={pdf} disabled={enCours} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold break-words hover:border-bleu disabled:opacity-50">
+          <Download aria-hidden="true" className="h-5 w-5" /> {enCours ? "Préparation…" : "Télécharger le PDF"}
         </button>
       </div>
       <ErreurPdf visible={erreur} />
@@ -185,9 +194,9 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
       <div className="flex items-center gap-3">
         {rang !== undefined && <span className="w-6 text-sm font-semibold text-gris tabular-nums">{rang}</span>}
         <Drapeau iso2={ligne.pays.iso2} className="h-5 w-7.5" />
-        <Link href={`/pays/${ligne.pays.id}`} className="min-w-0 flex-1 truncate font-medium underline-offset-2 hover:underline">{ligne.pays.nom}</Link>
+        <Link href={`/pays/${ligne.pays.id}`} className="inline-flex min-h-11 min-w-0 flex-1 items-center font-medium break-words underline-offset-2 hover:underline">{ligne.pays.nom}</Link>
         {ligne.peuDeDonnees ? (
-          <span className="text-right text-sm text-gris">pas assez de données</span>
+          <span className="min-w-0 text-right text-sm text-gris">pas assez de données</span>
         ) : (
           <span className="font-semibold whitespace-nowrap tabular-nums">{Math.round(ligne.score)} %</span>
         )}
@@ -197,7 +206,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
         {egalite && <span className="text-xs text-gris">à égalité</span>}
       </div>
       {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
-      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
+      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
   );
@@ -213,7 +222,7 @@ export default function Resultat() {
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10">
         <h1 className="text-2xl font-semibold">Pas encore de résultat</h1>
-        <p className="mt-2 text-gris">Fais d’abord le quiz : il ne prend que quelques minutes.</p>
+        <p className="mt-2 text-gris">Fais d’abord le quiz : il ne prend que quelques minutes.</p>
         <Link href="/quiz" className="mt-6 inline-flex min-h-14 items-center justify-center rounded-2xl bg-bleu px-8 text-lg font-semibold text-white">Commencer le quiz</Link>
       </main>
     );
@@ -243,15 +252,15 @@ export default function Resultat() {
   const toutAZero = famillesActives.length > 0 && famillesActives.every((f) => reglages.poids[f.id] === 0);
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
+    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5">
       <h1 className="text-3xl font-bold tracking-tight">Ton résultat</h1>
       <p className="mt-2 text-gris">
         Le pourcentage dit à quel point un pays te ressemble, d’après tes réponses. C’est un indicateur, pas une vérité.{" "}
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
       </p>
 
-      <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4">
-        <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 accent-bleu" />
+      <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4 py-2">
+        <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 shrink-0 accent-bleu" />
         <span className="font-medium">Montrer seulement les portes ouvertes</span>
       </label>
 
@@ -262,11 +271,47 @@ export default function Resultat() {
         )}
         <div className="mt-4 space-y-5">
           {toutAZero ? (
-            <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
+            <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
           ) : (
             top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
+        </div>
+      </section>
+
+      <section aria-labelledby="titre-etsi" className="mt-10">
+        <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
+        <p className="mt-1 text-sm text-gris">Bouge les curseurs : le classement se met à jour tout de suite.</p>
+        <p className="sr-only" aria-live="polite">
+          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
+        </p>
+        <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
+          {famillesActives.map((f) => {
+            const cran = Math.max(0, CRANS.indexOf(reglages.poids[f.id]));
+            return (
+              <label key={f.id} className="block">
+                <span className="flex flex-wrap items-center justify-between gap-x-2">
+                  <span className="flex items-center gap-2 font-medium"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</span>
+                  <span className="text-sm text-gris">{MOTS_CRANS[cran]}</span>
+                </span>
+                <input type="range" min={0} max={4} step={1} value={cran} aria-label={f.nom} aria-valuetext={`${f.nom} : ${MOTS_CRANS[cran]}`} onChange={(e) => maj({ reglages: { ...reglages, poids: { ...reglages.poids, [f.id]: CRANS[Number(e.target.value)] } } })} className="mt-2 h-8 w-full" />
+              </label>
+            );
+          })}
+          <label className="block border-t border-bord pt-4">
+            <span className="flex flex-wrap items-center justify-between gap-x-2">
+              <span className="font-medium">Et si mon budget était de…</span>
+              <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
+            </span>
+            <input type="range" min={0} max={8000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
+            <span className="mt-1 block text-sm text-gris">
+              {sansArgent.length === 0
+                ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
+                : sansArgent.length === 1
+                  ? `Il te manquerait de l’argent pour 1 pays : ${sansArgent[0].pays.nom}. Il reste classé.`
+                  : `Il te manquerait de l’argent pour ${sansArgent.length} pays : ${sansArgent.map((l) => l.pays.nom).join(", ")}. Ils restent classés.`}
+            </span>
+          </label>
         </div>
       </section>
 
@@ -275,39 +320,6 @@ export default function Resultat() {
         <p className="mt-1 text-sm text-gris">Le mieux placé hors de ton top 3, parmi les pays où peu de Français vivent, s’il atteint au moins 70 %.</p>
         <div className="mt-4">
           {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
-        </div>
-      </section>
-
-      <section aria-labelledby="titre-etsi" className="mt-10">
-        <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
-        <p className="mt-1 text-sm text-gris">Bouge les curseurs : le classement se met à jour tout de suite.</p>
-        <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
-          {famillesActives.map((f) => {
-            const cran = Math.max(0, CRANS.indexOf(reglages.poids[f.id]));
-            return (
-              <label key={f.id} className="block">
-                <span className="flex items-center justify-between gap-2">
-                  <span className="flex items-center gap-2 font-medium"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</span>
-                  <span className="text-sm text-gris">{MOTS_CRANS[cran]}</span>
-                </span>
-                <input type="range" min={0} max={4} step={1} value={cran} onChange={(e) => maj({ reglages: { ...reglages, poids: { ...reglages.poids, [f.id]: CRANS[Number(e.target.value)] } } })} className="mt-2 h-8 w-full" />
-              </label>
-            );
-          })}
-          <label className="block border-t border-bord pt-4">
-            <span className="flex items-center justify-between gap-2">
-              <span className="font-medium">Et si mon budget était de…</span>
-              <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
-            </span>
-            <input type="range" min={0} max={8000} step={250} value={budget} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
-            <span className="mt-1 block text-sm text-gris">
-              {sansArgent.length === 0
-                ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
-                : sansArgent.length === 1
-                  ? `Il te manquerait de l’argent pour 1 pays : ${sansArgent[0].pays.nom}. Il reste classé.`
-                  : `Il te manquerait de l’argent pour ${sansArgent.length} pays : ${sansArgent.map((l) => l.pays.nom).join(", ")}. Ils restent classés.`}
-            </span>
-          </label>
         </div>
       </section>
 
@@ -324,7 +336,7 @@ export default function Resultat() {
                     {c.communs.length ? `proche de toi sur ${c.communs.join(", ")}` : "peu de points communs"}
                     {c.differents.length ? `, différent sur ${c.differents.join(", ")}` : ""}.
                   </span>
-                  <Pastille preuve={c.preuve} pays={c.pays.nom} />
+                  <Pastille preuve={c.preuve} pays={c.pays.nom} contexte="le style de travail" />
                 </li>
               ))}
             </ul>
@@ -346,7 +358,7 @@ export default function Resultat() {
                   <Pastille preuve={{ type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence }} />
                 </p>
                 <p className="mt-2 text-sm text-gris">
-                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
                   {doubleNationalite.avertissement}
                 </p>
               </>
@@ -382,18 +394,18 @@ export default function Resultat() {
         )}
       </section>
 
-      <div className="mt-10 grid gap-3 sm:grid-cols-2">
+      <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
         {encoreDesPhrases ? (
-          <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">Continuer pour affiner</button>
+          <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu"><span className="min-w-0 hyphens-auto">Continuer pour affiner</span></button>
         ) : (
-          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à toutes les phrases utiles : ton classement ne peut plus s’affiner.</p>
+          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à toutes les phrases utiles : ton classement ne peut plus s’affiner.</p>
         )}
-        <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-5 font-semibold hover:border-bleu">
-          <RotateCcw aria-hidden="true" className="h-5 w-5" /> Recommencer
+        <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu">
+          <RotateCcw aria-hidden="true" className="hidden h-5 w-5 shrink-0 min-[240px]:block" /> <span className="min-w-0 hyphens-auto">Recommencer</span>
         </button>
       </div>
 
-      <p className="mt-10 text-sm text-gris">Tes réponses restent dans ton navigateur : rien n’est envoyé, pas de compte, pas de cookie.</p>
+      <p className="mt-10 text-sm text-gris">Tes réponses restent dans ton navigateur : rien n’est envoyé, pas de compte, pas de cookie.</p>
       <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }]} />
     </main>
   );

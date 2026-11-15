@@ -89,7 +89,10 @@ for (const p of pays) {
   if (p.famille === "PVT" && VISA[p.id]) liens.push(lien("pvt", "Programme Vacances-Travail", "Programme Vacances-Travail (France Diplomatie)", PVT));
   liens.push(lien("conseils", "Conseils aux voyageurs", "Conseils aux voyageurs (France Diplomatie)", infoPays(p.id, "dernieres-minutes-et-alertes")));
   // Si le site de l'ambassade ne s'ouvre pas, on donne la page « Contacts utiles » de France Diplomatie.
-  const contacts = ["Contacts utiles : ambassade et consulats (France Diplomatie)", infoPays(p.id, "conseils-aux-voyageurs-contacts-utiles")];
+  // Hong Kong n'a pas sa propre page « Contacts utiles » : son consulat figure sur celle de la Chine.
+  const contacts = p.id === "hong-kong"
+    ? ["Contacts utiles en Chine, dont le consulat général de France à Hong Kong et Macao (France Diplomatie)", infoPays("chine", "conseils-aux-voyageurs-contacts-utiles")]
+    : ["Contacts utiles : ambassade et consulats (France Diplomatie)", infoPays(p.id, "conseils-aux-voyageurs-contacts-utiles")];
   const [nomConsulat, urlConsulat] = CONSULAT[p.id] && ouvre(CONSULAT[p.id][1]) ? CONSULAT[p.id] : contacts;
   liens.push(lien("consulat", "Ambassade ou consulat de France", nomConsulat, urlConsulat));
   liens.push(lien("registre", "Inscription au registre des Français établis hors de France", "S'inscrire au registre (France Diplomatie)", REGISTRE));

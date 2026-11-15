@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, ChevronLeft, CircleHelp } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
@@ -15,7 +15,7 @@ import {
 } from "@/lib/moteur";
 
 const BOUTON = "min-h-14 w-full rounded-2xl border px-5 py-3 text-left text-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
-const BOUTON_PLEIN = "min-h-14 w-full rounded-2xl bg-bleu px-5 py-3 text-lg font-semibold text-white hover:bg-blue-700 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
+const BOUTON_PLEIN = "min-h-14 w-full rounded-2xl bg-bleu px-5 py-3 text-lg font-semibold text-white hover:bg-blue-700 disabled:bg-bord disabled:text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
 
 const visibles = (p: Profil) => quiz.profil.filter((q) => questionProfilVisible(q.id, p));
 
@@ -86,13 +86,13 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
         style={{ transform: `translateX(${dx}px) rotate(${dx / 40}deg)`, touchAction: "pan-y" }}
         className={`relative flex min-h-48 flex-col justify-center rounded-3xl border-2 bg-carte p-6 shadow-sm select-none ${dx > SEUIL ? "border-bleu" : dx < -SEUIL ? "border-gris" : "border-bord"}`}
       >
-        <p className="text-2xl leading-snug font-semibold">{phrase.texte}</p>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl leading-snug font-semibold break-words outline-none">{phrase.texte}</h1>
         {glisse && Math.abs(dx) > 20 && (
-          <span className={`absolute top-3 rounded-full px-3 py-1 text-sm font-semibold ${dx > 0 ? "right-3 bg-bleu text-white" : "left-3 bg-gris text-white"}`}>{dx > 0 ? "Oui" : "Non"}</span>
+          <span className={`absolute top-3 rounded-full px-3 py-1 text-sm font-semibold ${dx > 0 ? "right-3 bg-bleu text-white" : "left-3 bg-slate-600 text-white"}`}>{dx > 0 ? "Oui" : "Non"}</span>
         )}
       </div>
       <Pourquoi key={phrase.id} texte={phrase.pourquoi} />
-      <div className="mt-auto pt-6">
+      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
         {phrase.type === "choix" ? (
           <div className="space-y-3">
             {phrase.options?.map((o) => (
@@ -107,7 +107,7 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
               <button type="button" onClick={() => repond("passer")} className="min-h-16 rounded-2xl px-4 text-base font-medium text-gris hover:text-encre">Passer</button>
               <button type="button" onClick={() => repond("oui")} className="min-h-16 rounded-2xl bg-bleu text-xl font-semibold text-white hover:bg-blue-700">Oui</button>
             </div>
-            <p className="mt-3 text-center text-xs text-gris">Tu peux aussi faire glisser la carte : à droite pour oui, à gauche pour non.</p>
+            <p className="mt-3 text-center text-xs text-gris">Tu peux aussi faire glisser la carte : à droite pour oui, à gauche pour non.</p>
           </>
         )}
       </div>
@@ -125,6 +125,14 @@ const marquerChangement = () => { dernierChangement = performance.now(); };
 export default function Quiz() {
   const session = useSession();
   const router = useRouter();
+  // À chaque nouvel écran, le focus va sur le titre : un lecteur d'écran lit la nouvelle question.
+  const ecran = session ? `${JSON.stringify(session.etape)}:${session.etat.ordre.length}` : "";
+  const premier = useRef(true);
+  useEffect(() => {
+    if (!ecran) return;
+    if (premier.current) { premier.current = false; return; }
+    document.getElementById("titre-ecran")?.focus({ preventScroll: false });
+  }, [ecran]);
   if (!session) return <Chargement />;
 
   const { etat, etape } = session;
@@ -151,7 +159,7 @@ export default function Quiz() {
     const choisies = Array.isArray(etat.profil[q.id]) ? (etat.profil[q.id] as string[]) : [];
     return (
       <Cadre progression={((rang + 1) / (questions.length + 3)) * 50} retour={rang > 0 ? () => aller({ t: "profil", i: rang - 1 }) : null}>
-        <h1 className="text-2xl font-semibold">{q.question}</h1>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">{q.question}</h1>
         <Pourquoi key={q.id} texte={q.pourquoi} />
         <div className="mt-5 space-y-3">
           {q.multiple ? (
@@ -161,20 +169,27 @@ export default function Quiz() {
                   const actif = choisies.includes(o.id);
                   return (
                     <button key={o.id} type="button" aria-pressed={actif} onClick={() => maj({ etat: { ...etat, profil: { ...etat.profil, [q.id]: actif ? choisies.filter((x) => x !== o.id) : [...choisies, o.id] } } })}
-                      className={`min-h-12 rounded-full border px-4 text-base font-medium ${actif ? "border-bleu bg-bleu text-white" : "border-bord bg-carte hover:border-bleu"}`}>
+                      className={`inline-flex min-h-12 items-center gap-1.5 rounded-full border px-4 text-base font-medium ${actif ? "border-bleu bg-bleu text-white" : "border-bord bg-carte hover:border-bleu"}`}>
+                      {actif && <Check aria-hidden="true" className="h-4 w-4" />}
                       {o.label}
                     </button>
                   );
                 })}
               </div>
-              <button type="button" onClick={() => suivant(choisies)} className={`${BOUTON_PLEIN} mt-4`}>{choisies.length ? "Continuer" : q.aucun}</button>
+              <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+                <button type="button" onClick={() => suivant(choisies)} className={BOUTON_PLEIN}>{choisies.length ? "Continuer" : q.aucun}</button>
+              </div>
             </>
           ) : (
-            q.options.map((o) => (
-              <button key={o.id} type="button" onClick={() => suivant(o.id)} className={`${BOUTON} ${etat.profil[q.id] === o.id ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
-                {o.label}
-              </button>
-            ))
+            q.options.map((o) => {
+              const choisi = etat.profil[q.id] === o.id;
+              return (
+                <button key={o.id} type="button" aria-pressed={choisi} onClick={() => suivant(o.id)} className={`${BOUTON} flex items-center justify-between gap-3 ${choisi ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"}`}>
+                  <span>{o.label}</span>
+                  {choisi && <Check aria-hidden="true" className="h-5 w-5 shrink-0 text-lien" />}
+                </button>
+              );
+            })
           )}
         </div>
         {!q.multiple && (
@@ -192,7 +207,7 @@ export default function Quiz() {
     };
     return (
       <Cadre progression={((questions.length + 1) / (questions.length + 3)) * 50} retour={() => aller({ t: "profil", i: questions.length - 1 })}>
-        <h1 className="text-2xl font-semibold">Tes 3 priorités</h1>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Tes 3 priorités</h1>
         <p className="mt-2 text-gris">Choisis-en exactement 3. Elles compteront double dans ton résultat.</p>
         <div className="mt-5 grid grid-cols-2 gap-3">
           {quiz.priorites.filter((p) => p.mesures.some(mesureDisponible)).map((p) => {
@@ -207,7 +222,8 @@ export default function Quiz() {
             );
           })}
         </div>
-        <div className="mt-auto pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+          <p className="sr-only" aria-live="polite">{etat.priorites.length === 3 ? "3 priorités choisies." : `Encore ${3 - etat.priorites.length} à choisir.`}</p>
           <button type="button" disabled={etat.priorites.length !== 3} onClick={() => aller({ t: "sujets" })} className={BOUTON_PLEIN}>
             {etat.priorites.length === 3 ? "Continuer" : `Encore ${3 - etat.priorites.length} à choisir`}
           </button>
@@ -221,7 +237,7 @@ export default function Quiz() {
     const lancer = (sujets: string[]) => aller({ t: "phrases" }, { etat: demarrerPhrases({ ...etat, sujets }), proposeA: -1 });
     return (
       <Cadre progression={((questions.length + 2) / (questions.length + 3)) * 50} retour={() => aller({ t: "priorites" })}>
-        <h1 className="text-2xl font-semibold">Veux-tu aussi tenir compte de ces sujets ?</h1>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <div className="mt-5 space-y-3">
           {quiz.sujets.filter((s) => mesureDisponible(s.mesure)).map((s) => {
@@ -236,7 +252,7 @@ export default function Quiz() {
             );
           })}
         </div>
-        <div className="mt-auto space-y-2 pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur space-y-2">
           <button type="button" onClick={() => lancer(etat.sujets)} className={BOUTON_PLEIN}>{etat.sujets.length ? "Continuer" : "Passer"}</button>
         </div>
       </Cadre>
@@ -254,7 +270,7 @@ export default function Quiz() {
   if (etape.t === "pret" || !phrase) {
     return (
       <Cadre progression={100} retour={retourPhrase}>
-        <h1 className="text-2xl font-semibold">{phrase ? "Ton top 3 ne bouge plus" : "On a fait le tour des questions utiles"}</h1>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">{phrase ? "Ton top 3 ne bouge plus" : "On a fait le tour des questions utiles"}</h1>
         <p className="mt-2 text-gris">Ton résultat est prêt.{phrase ? " Tu peux aussi continuer pour l’affiner." : ""}</p>
         <ul className="mt-6 space-y-3">
           {top.map((l, i) => (
@@ -265,7 +281,7 @@ export default function Quiz() {
             </li>
           ))}
         </ul>
-        <div className="mt-auto space-y-3 pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur space-y-3">
           <button type="button" onClick={voirResultat} className={BOUTON_PLEIN}>Voir mon résultat</button>
           {phrase && (
             <button type="button" onClick={() => aller({ t: "phrases" }, { proposeA: repondues(etat) })} className={`${BOUTON} border-bord bg-carte text-center hover:border-bleu`}>Continuer pour affiner</button>
@@ -286,6 +302,7 @@ export default function Quiz() {
       <CartePhrase key={phrase.id} phrase={phrase} repond={repond} />
       <div className="mt-6 border-t border-bord pt-4">
         <p className="text-xs font-medium tracking-wide text-gris uppercase">Ton top 3 pour l’instant</p>
+        <p className="sr-only" aria-live="polite">Ton top 3 pour l’instant : {top.map((l) => l.pays.nom).join(", ")}.</p>
         <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
           {top.map((l) => (
             <li key={l.pays.id} className="flex items-center gap-2 text-sm font-medium">
