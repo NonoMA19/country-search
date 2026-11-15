@@ -5,7 +5,7 @@ import { notes as notesPays, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  bilanDepartage, egalites, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
+  bilanDepartage, egalites, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -74,10 +74,23 @@ const memesScores = (a: Record<string, number>, b: Record<string, number>) => Ob
 // ---------- 1. Quiz au hasard : invariants ----------
 const NB = 400;
 const r = hasard(20261114);
+let changeAvecObjectif = 0;
+const objectifs = Object.keys(quiz.objectifs);
 for (let i = 0; i < NB; i++) {
   const etat = quizAuHasard(r);
   const lignes = calculer(etat);
   const base = scores(etat);
+
+  // Le projet compte : on mesure dans combien de profils il change le top 3 (vérifié après la boucle).
+  if (new Set(objectifs.map((o) => cleTop3(calculer({ ...etat, profil: { ...etat.profil, objectif: o } })))).size > 1) changeAvecObjectif++;
+
+  // « Passer » ne compte pas : ni comme réponse, ni dans le calcul.
+  const suivant = prochainDilemme(etat);
+  if (suivant) {
+    const passe = repondre(etat, suivant.id, "passer");
+    verifier(repondues(passe) === repondues(etat), `quiz ${i} : « Passer » compte comme une réponse`);
+    verifier(memesScores(base, scores(passe)), `quiz ${i} : « Passer » change les scores`);
+  }
 
   // Pas de NaN, tout entre 0 et 100.
   for (const l of lignes) {
@@ -161,6 +174,9 @@ for (let i = 0; i < NB; i++) {
   for (let k = 0; k < principaux.length; k++) if (eg[k]) verifier(!principaux[k].peuDeDonnees, `quiz ${i} : égalité affichée pour un pays sans assez de données`);
 }
 
+verifier(changeAvecObjectif > 0, "le projet ne change le top 3 dans aucun profil");
+console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${NB} (mêmes réponses, objectif différent).`);
+
 // ---------- 2. Cas précis ----------
 // 2.1 L'ancien biais : aventure, 18-25 ans, priorité Salaire. Les pays sans salaire vérifié ne peuvent plus finir à 100 %.
 {
@@ -227,12 +243,21 @@ for (let i = 0; i < NB; i++) {
   verifier(notesPays.colombie.doux.note !== 5, "climat doux : Bogotá a encore la note maximale");
 }
 
-// 2.6 Deux réponses sur le salaire : importance 1, pas 2.
+// 2.6 Poids = maximum, jamais la somme. Deux réponses sur le salaire : importance 1, pas 2.
 {
   const etat: Etat = { ...ETAT_VIDE, priorites: ["travail", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a" }, ordre: ["deux-offres", "promotion"] };
   const salaire = effetsActifs(etat).filter((e) => e.mesure === "salaire");
   verifier(salaire.length === 1 && salaire[0].poids === 1, `salaire : importance ${salaire.map((e) => e.poids).join("+")} au lieu de 1`);
   verifier(!!trouverDilemme("deux-offres") && !!trouverDilemme("promotion"), "dilemmes du test introuvables");
+  // Priorité Bon salaire (2) + réponse salaire (1) + projet carrière (0,5) : importance 2.
+  const cumul: Etat = { ...ETAT_VIDE, profil: { objectif: "carriere" }, priorites: ["salaire", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a", "sortie-ecole": "b" }, ordre: ["deux-offres", "promotion", "sortie-ecole"] };
+  const s2 = effetsActifs(cumul).filter((e) => e.mesure === "salaire");
+  verifier(s2.length === 1 && s2[0].poids === 2, `salaire : importance ${s2.map((e) => e.poids).join("+")} au lieu de 2`);
+}
+
+// 2.6 bis Les dilemmes inactifs (décision, vie pro et vie perso : pas encore de données) ne sont jamais proposés.
+{
+  for (const id of ["nouvel-outil", "vendredi-18h"]) verifier(!dilemmeActif(trouverDilemme(id)!), `${id} est actif sans données`);
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
