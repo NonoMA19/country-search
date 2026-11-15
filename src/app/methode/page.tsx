@@ -108,10 +108,44 @@ export default function Methode() {
           <li>On te pose le dilemme pour lequel ces 5 pays sont les plus différents. Une option qui ne ferait que redonner une importance déjà acquise (par une de tes priorités, par exemple) ne compte pas : elle ne départagerait rien. C’est un calcul, pas une IA.</li>
           <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
-          <li>Sous chaque pays de ton top 3, « Pour toi » cite 2 ou 3 points notés 4 ou 5 sur 5 dans le sens de tes réponses, et seulement s’ils viennent d’une de tes priorités, de ton projet ou d’un dilemme. Un point moyen ou défavorable n’y apparaît jamais. « À savoir » cite le point le plus défavorable parmi ceux qui comptent pour toi (2,5 sur 5 ou moins). Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde, l’autre passe au point suivant, ou n’affiche rien.</li>
-          <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager : au plus 3 dilemmes encore sans réponse, choisis parce que leurs options font le plus varier l’écart entre ces deux pays. S’il n’en reste aucun, on te montre les deux pays côte à côte sur tes critères, sans nouveau calcul. Tes réponses comptent comme les autres, et une phrase dit laquelle a fait la différence.</li>
+          <li>Sous chaque pays de ton top 3, les points sont rangés en trois catégories : Travailler, Vivre, Culture au travail. Par catégorie, au plus 2 points forts (notés 4 ou 5 sur 5 dans le sens de tes réponses) et 1 point faible (2,5 sur 5 ou moins). Seulement des points liés à tes réponses : une priorité, ton projet, un dilemme, un sujet de l’écran Valeurs ou un curseur « Et si… ? ». Une catégorie sans rien à dire n’est pas affichée. Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde.</li>
+          <li>Dans « Voir le détail », chaque critère est donné avec sa vraie valeur et un mot (« 1,6 h de vol · Très proche »), jamais avec un pourcentage. Les pourcentages restent pour le score global du pays.</li>
+          <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager : au plus 3 dilemmes encore sans réponse, choisis parce que leurs options font le plus varier l’écart entre ces deux pays. Tes réponses comptent comme les autres, et une phrase dit laquelle a fait la différence. Tu peux aussi les comparer côte à côte, sans nouveau calcul : une ligne par critère qui compte pour toi (tes priorités d’abord), la vraie valeur de chaque pays, et une barre qui va vers le pays qui gagne, plus longue si l’écart de note est grand. Une phrase dit qui gagne sur quoi, en tenant compte de l’importance de chaque critère.</li>
           <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais, ni une réponse qui répète une de tes priorités (« Tu regardes d’abord le salaire » quand « bon salaire » est déjà cité). « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
-          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays.</li>
+          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays. Un pays remonté à la main ne subit plus ni l’écart, ni la pénalité de langue à apprendre.</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl font-semibold">Les curseurs « Et si… ? »</h2>
+        <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Chaque curseur va de « Ne compte pas » (importance 0) à « Compte beaucoup » (importance 2, comme une priorité), en passant par « Compte un peu » (0,5) et « Compte » (1).</li>
+          <li>Il part de la valeur déduite de tes réponses : la plus forte importance qu’une seule de tes réponses donne à ce groupe. Exemple : la priorité « Proche de la France » donne 2, l’option « 6 h de vol » donne 0,5.</li>
+          <li>Quand tu le bouges, toutes les mesures du groupe sont multipliées par le même nombre (niveau choisi divisé par niveau déduit) : leurs importances relatives ne changent pas.</li>
+          <li>Si aucune réponse ne visait le groupe, le curseur ajoute ses mesures « plus c’est haut, mieux c’est » : temps de vol et décalage, climat doux, salaire et niveau des prix. La culture au travail n’a pas de sens « meilleur » : sans réponse à un de ses dilemmes, son curseur reste bloqué.</li>
+          <li>Le budget a son propre curseur. Il ne change jamais le classement : il dit seulement ce qu’il te manquerait.</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl font-semibold">Faisabilité et fiabilité</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Sous chaque pays de ton top 3, et dans le dossier du pays si tu as fait le quiz, trois listes courtes : les conditions remplies, celles à remplir (ou non remplies), et ce qui reste à vérifier, puis la prochaine étape avec le lien officiel. Elles viennent seulement de tes réponses (âge, budget, nationalité, projet) et des données sourcées des visas. On n’écrit jamais qu’un pays est « juridiquement accessible ».</li>
+          <li>Si ton projet est « Stage ou VIE », un bloc « Le VIE pour toi » reprend les conditions officielles déjà vérifiées (âge à la candidature, âge au départ, durée), les confronte à ton âge et donne le lien vers les offres de Business France. La présence de missions dans chaque pays de ton top 3 reste « à vérifier » tant qu’elle n’est pas sourcée. La condition de nationalité n’est pas encore vérifiée, elle n’est donc pas affichée.</li>
+          <li>Le badge de fiabilité compte la part de tes critères qui ont, pour ce pays, une donnée vérifiée par une source Officiel, Donnée ouverte ou Témoignages. 90 % ou plus : « Données complètes ». De 60 à 89 % : « Données partielles ». Moins de 60 % : « Peu de données vérifiées ».</li>
+          <li>« Notre avis » ne compte pas dans ce badge : c’est un jugement de la rédaction, pas une donnée vérifiée. Il compte en revanche dans la règle des 60 % du calcul (point 7 plus haut) : un pays peut donc être dans ton top 3 avec « Peu de données vérifiées » si beaucoup de tes critères reposent sur notre avis (culture au travail, langue, taille des villes).</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl font-semibold">Le pays surprise</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>On cherche un pays qui te correspond très bien, mais qu’une seule de tes préférences a écarté : la zone choisie (Europe ou hors d’Europe), ou le visa lié à un employeur (« Je préfère pouvoir changer d’employeur librement »). Son pourcentage reste celui calculé sur tes réponses.</li>
+          <li>La langue à apprendre (« Je garde ces soirées pour moi ») n’écarte aucun pays : c’est une pénalité. Un pays compte comme écarté par elle seulement si, sans cette réponse, il atteindrait au moins le score de ton n° 3.</li>
+          <li>On garde le meilleur, s’il atteint au moins le score de ton n° 3, ou 75 %.</li>
+          <li>Jamais pour une règle légale (ton âge, ta nationalité), ni pour le budget, ni pour un pays déjà dans ton top 3. S’il n’y en a aucun, la section n’apparaît pas.</li>
+          <li>« Le remonter » le fait revenir dans ton classement, sans l’écart ni la pénalité.</li>
         </ul>
       </section>
 

@@ -29,6 +29,12 @@ export type DefMesure = {
   explications?: string[];
   regle?: string;
   interne?: boolean; // mesure de calcul seulement (pénalité d'un dilemme) : pas de carte dans la fiche pays
+  court?: string; // libellé court et compréhensible (« Sécurité », pas « Homicides pour 100 000 habitants »)
+  affichage?: string; // la vraie valeur avec son unité : « {v} h de vol »
+  affichageSingulier?: string; // sous 2 : « 0,6 homicide »
+  decimales?: number;
+  theme?: string; // pour les phrases de synthèse : « la distance », « le climat »
+  etiquettes?: string[]; // un mot par niveau, à côté de la valeur : « Très sûr », « Hiver doux »
 };
 
 export type Critere = {
@@ -180,7 +186,10 @@ export const notes = scores.pays;
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
-export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
+export const vie = portesToutes._vie as unknown as PorteBrute & {
+  ageMaxCandidature: number; dureeMoisMin: number; dureeMoisMax: number; presence?: Record<string, PresenceVie>;
+  resume: string[]; offres: { url: string; nom: string; source: string; verifieLe: string };
+};
 export const avis = avisData as unknown as Record<string, Avis>;
 // « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
 export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };

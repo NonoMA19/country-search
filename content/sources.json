@@ -57,6 +57,12 @@
     "licence": "Licence Ouverte 2.0",
     "type": "officiel"
   },
+  "businessfrance-vie": {
+    "nom": "Business France, Mon Volontariat International (offres de VIE)",
+    "url": "https://mon-vie-via.businessfrance.fr/offres/recherche",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
   "service-public-soins": {
     "nom": "Service-Public, Remboursement des soins à l’étranger",
     "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F213",
