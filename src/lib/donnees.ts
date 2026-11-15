@@ -56,6 +56,10 @@ export type Note = {
   confiance?: Confiance;
 };
 
+// « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
+// 60 mots au maximum en tout (vérifié par npm run test:moteur).
+export type Aide = { enjeu: string; cartes: { pastille: string; texte: string }[] };
+
 // Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
 // « poids » pour une mesure « haut » (1 = normal, 0,5 = léger) ; « position » pour une mesure « position ».
 export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
@@ -74,7 +78,7 @@ export type Dilemme = {
   theme: string;
   titre: string;
   scene: string;
-  pourquoi: string;
+  aide: Aide;
   exemple?: boolean; // les montants et durées sont des exemples fictifs
   axe?: string; // axe du style de travail
   afficheSi?: string;
@@ -86,8 +90,7 @@ export type OptionProfil = { id: string; label: string; ageMax?: number; euros?:
 export type QuestionProfil = {
   id: string;
   question: string;
-  pourquoi: string;
-  influence: string[];
+  aide: Aide;
   multiple?: boolean;
   aucun?: string;
   afficheSi?: string;
@@ -163,6 +166,7 @@ export const quiz = quizData as unknown as {
   objectifs: Record<string, Objectif>;
   priorites: Priorite[];
   sujets: Sujet[];
+  aides: { priorites: Aide; sujets: Aide };
   dilemmes: Dilemme[];
 };
 const scores = scoresData as unknown as {
