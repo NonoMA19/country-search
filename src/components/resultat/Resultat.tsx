@@ -8,6 +8,7 @@ import { ArrowUp, BadgeCheck, ChevronDown, DoorOpen, Download, FileCheck, Folder
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import { ErreurPdf } from "@/components/BoutonDossier";
+import CarteVisa from "@/components/CarteVisa";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
@@ -17,7 +18,7 @@ import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, listeFr, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
+  LIBELLE_BADGE, avecQui, budgetProfil, calculer, listeFr, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
   type Badge, type Etat, type Ligne, type LigneResultat,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -82,7 +83,7 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
 
 type LignesPays = { pour: LigneResultat[]; savoir: LigneResultat | null };
 
-function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; lignes: LignesPays; surprise?: boolean }) {
+function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { ligne: Ligne; rang: number | null; egalite: string | null; etat: Etat; lignes: LignesPays; surprise?: boolean }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
   const { pour, savoir } = lignes;
@@ -109,7 +110,7 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-gris">
             {surprise ? "Pays surprise" : `N° ${rang}`}
-            {egalite && " · à égalité"}
+            {egalite && ` · ${egalite}`}
           </p>
           <h3 className="text-2xl leading-tight font-bold break-words sm:text-3xl">{p.nom}</h3>
         </div>
@@ -126,6 +127,12 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
           {porte.phrase}
           <Pastille preuve={porte.preuve} pays={p.nom} contexte={`la porte d’entrée (${porte.nom})`} />
         </p>
+        {porte.mention && (
+          <p className="mt-2 text-sm font-medium">
+            {porte.mention.texte}
+            {porte.mention.preuve && <Pastille preuve={porte.mention.preuve} pays={p.nom} contexte="la saison du PVT" />}
+          </p>
+        )}
       </div>
 
       <section className="mt-5">
@@ -180,6 +187,7 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
           <Pastille preuve={porte.preuve} pays={p.nom} contexte={porte.nom} />
         </p>
         {porte.autres.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t}</p>)}
+        {porte.visa && <CarteVisa visa={porte.visa} pays={p.nom} titre={porte.type === "pvt" ? "Après le PVT, ou sans PVT : le visa de travail" : "Le visa de travail"} />}
       </section>
 
         </div>
@@ -327,7 +335,7 @@ export default function Resultat() {
           ) : (
             top.map((l, i) => (
               <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
-                <CartePays ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, principaux.indexOf(l))} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />
               </div>
             ))
           )}
@@ -379,7 +387,7 @@ export default function Resultat() {
         <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
         <p className="mt-1 text-sm text-gris">Le mieux placé hors de ton top 3, parmi les pays où peu de Français vivent, s’il atteint au moins 70 %.</p>
         <div className="mt-4">
-          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} lignes={phrases.get(surprise.pays.id) ?? { pour: [], savoir: null }} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
+          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={null} etat={etat} lignes={phrases.get(surprise.pays.id) ?? { pour: [], savoir: null }} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
         </div>
       </section>
 

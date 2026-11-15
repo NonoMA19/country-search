@@ -1,8 +1,8 @@
 // Fabrique le dossier PDF dans le navigateur (bibliothèque libre jsPDF, licence MIT).
 // Aucun serveur, aucun compte : le fichier est créé sur l'appareil de la personne.
-import { LIBELLE_TYPE, dateFr, type Preuve } from "./donnees";
+import { LIBELLE_TYPE, dateFr, preuveVisa, type Preuve } from "./donnees";
 import { chargerDossier, liensVerifies } from "./dossiers";
-import { LIBELLE_BADGE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
+import { LIBELLE_BADGE, LIBELLE_LIE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
 import type { Pays } from "./pays";
 
 // Les polices de base du PDF ne connaissent que l'alphabet latin simple.
@@ -61,9 +61,21 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Ta porte d’entrée");
     ecrire(`${LIBELLE_BADGE[laPorte.badge]} - ${laPorte.nom}`, { gras: true, apres: 2 });
     ecrire(laPorte.phrase, { apres: 2 });
+    if (laPorte.mention) { ecrire(laPorte.mention.texte, { gras: true, apres: 2 }); preuve(laPorte.mention.preuve); }
     ecrire(laPorte.preuve.texte, { apres: 2 });
     preuve(laPorte.preuve);
     laPorte.autres.forEach((a) => ecrire(a, { gris: true }));
+    const v = laPorte.visa;
+    if (v) {
+      ecrire(`${laPorte.type === "pvt" ? "Après le PVT, ou sans PVT" : "Le visa de travail"}\u00a0: ${v.nom}`, { gras: true, apres: 2 });
+      const lie = LIBELLE_LIE[v.lieEmployeur];
+      if (lie) ecrire(`${lie}.`, { apres: 2 });
+      if (v.experience) ecrire(`${v.experience} ${v.jeuneDiplome ?? ""}`.trim(), { apres: 2 });
+      if (v.conditions.length) v.conditions.forEach((c) => ecrire(`- ${c}`, { apres: 1 }));
+      else ecrire("Conditions à vérifier sur le site officiel.", { apres: 2 });
+      v.liens.forEach((l) => ecrire(`${l.libelle}\u00a0: ${l.url}`, { taille: 10, apres: 1 }));
+      preuve(preuveVisa(v));
+    }
   }
   if (pour?.length) {
     titre("Pour toi");
@@ -86,14 +98,14 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Liens officiels");
     for (const l of liens) {
       ecrire(`${l.titre}${l.nom ? ` : ${l.nom}` : ""}`, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
+      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
     }
   }
   if (associations.length) {
     titre("Associations et réseaux");
     for (const l of associations) {
       ecrire(l.nom ?? l.titre, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
+      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
     }
   }
 

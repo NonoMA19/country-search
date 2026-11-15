@@ -15,6 +15,7 @@ const STYLE_TYPE: Record<TypeSource, string> = {
   officiel: "bg-bleu text-white",
   "donnee-ouverte": "bg-bleu-doux text-encre",
   "notre-avis": "border border-bord bg-carte text-encre",
+  temoignages: "border border-bleu bg-carte text-lien",
 };
 
 function Type({ type }: { type: TypeSource }) {
@@ -51,7 +52,7 @@ export default function Methode() {
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
           <li>Seules tes réponses comptent. Un dilemme auquel tu réponds « Passer » ne change rien.</li>
           <li>Tes 3 priorités comptent double (importance 2). Une option de dilemme compte simple (importance 1), à moitié (importance 0,5), ou ne change rien. Ton projet donne des poids de départ, plus légers (importance 0,5). Si plusieurs réponses visent la même mesure, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
-          <li>Certaines mesures ne sont ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, l’hiver, l’été. Pour elles, ton option fixe une position préférée. Un pays à cette position gagne 100 %, un niveau plus loin 75 %, deux niveaux 50 %, et ainsi de suite.</li>
+          <li>Certaines mesures ne sont ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, la prise de décision, le lien entre vie pro et vie perso, l’hiver, l’été. Pour elles, ton option fixe une position préférée. Un pays à cette position gagne 100 %, un niveau plus loin 75 %, deux niveaux 50 %, et ainsi de suite.</li>
           <li>Ton pourcentage = les points gagnés par le pays, divisés par les points possibles. Il mesure « ça te ressemble » avec les familles Travailler, Vivre et, si tu l’as choisi, Valeurs.</li>
           <li>Une donnée « À vérifier » sur une de tes 3 priorités compte pour une note neutre, 50 %, et la carte du pays le dit : un trou dans les données ne peut pas faire gagner un pays. Sur une autre réponse, elle est sautée : elle ne donne ni ne retire de points.</li>
           <li>Si un pays a une donnée vérifiée pour moins de 60 % de ce qui compte pour toi (on compte les mesures, une par une), il ne peut pas entrer dans ton top 3 : il reste dans la liste, sans pourcentage, avec la mention « pas assez de données ».</li>
@@ -103,19 +104,36 @@ export default function Methode() {
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays de ton top 3, « Pour toi » cite 2 ou 3 points notés 4 ou 5 sur 5 dans le sens de tes réponses, et seulement s’ils viennent d’une de tes priorités, de ton projet ou d’un dilemme. Un point moyen ou défavorable n’y apparaît jamais. « À savoir » cite le point le plus défavorable parmi ceux qui comptent pour toi (2,5 sur 5 ou moins). Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde, l’autre passe au point suivant, ou n’affiche rien.</li>
           <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager : au plus 3 dilemmes encore sans réponse, choisis parce que leurs options font le plus varier l’écart entre ces deux pays. S’il n’en reste aucun, on te montre les deux pays côte à côte sur tes critères, sans nouveau calcul. Tes réponses comptent comme les autres, et une phrase dit laquelle a fait la différence.</li>
-          <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais. « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
-          <li>Certaines options font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
+          <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais, ni une réponse qui répète une de tes priorités (« Tu regardes d’abord le salaire » quand « bon salaire » est déjà cité). « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
+          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays.</li>
         </ul>
       </section>
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Trois sortes de sources</h2>
+        <h2 className="text-xl font-semibold">Quatre sortes de sources</h2>
         <ul className="mt-3 space-y-3">
           <li><Type type="officiel" /> Un site d’État ou d’organisme public (France Diplomatie, Service-Public, GOV.UK…).</li>
           <li><Type type="donnee-ouverte" /> Une base de données publique, libre de réutilisation : Banque mondiale, Organisation internationale du travail (OIT), Open-Meteo.</li>
           <li><Type type="notre-avis" /> Un jugement de la rédaction, justifié par écrit. Il reste discutable : la justification est affichée pour que tu puisses juger par toi-même.</li>
+          <li><Type type="temoignages" /> Une tendance tirée de guides d’expatriation et de témoignages. Elle sert pour deux mesures de la culture au travail : la prise de décision, et le lien entre vie pro et vie perso.</li>
         </ul>
-        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité.</p>
+        <div id="temoignages" className="mt-4 scroll-mt-4 rounded-2xl border border-bord bg-carte p-4">
+          <h3 className="font-semibold">Comment on a établi les notes « Témoignages »</h3>
+          <ul className="mt-2 list-disc space-y-2 pl-5">
+            <li>Chaque note s’appuie sur au moins deux sources qui disent la même chose : guides d’expatriation, articles de presse, récits de Français qui travaillent sur place, forums.</li>
+            <li>Pas de clichés : une idée reçue que personne ne décrit concrètement ne compte pas. Quand les sources se contredisent, la note est au milieu de l’échelle et le résumé le dit.</li>
+            <li>Toutes les sources sont listées dans la pastille, avec un lien. Le résumé est reformulé : aucun texte n’est copié.</li>
+            <li>Chaque note a une confiance. « Bonne » : les sources sont nombreuses et vont dans le même sens. « Moyenne » : peu de sources, des avis partagés, ou des sources anciennes. Une note de confiance moyenne compte comme les autres dans le calcul, mais sa pastille l’indique.</li>
+            <li>Sans assez de sources concordantes, la note reste « À vérifier » et ne compte pas.</li>
+          </ul>
+          <p className="mt-3 font-medium">Les limites</p>
+          <ul className="mt-2 list-disc space-y-2 pl-5">
+            <li>Ce sont des tendances générales, à l’échelle d’un pays. Une start-up et une grande banque du même pays peuvent fonctionner tout à fait autrement : ton entreprise peut être très différente.</li>
+            <li>Les témoignages viennent surtout d’expatriés, souvent dans de grandes villes et dans des entreprises internationales.</li>
+            <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans les 30 pays.</li>
+          </ul>
+        </div>
+        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité, avec le nom de l’autre pays (et son rang s’il est hors de ton top 3).</p>
       </section>
 
       {familles.map((f) => (

@@ -57,6 +57,15 @@ const CONSULAT = {
   singapour: ["Ambassade de France à Singapour", "https://sg.ambafrance.org/"],
 };
 
+// Liens vérifiés hors de la session de collecte (sites bloqués depuis la session), le 15 novembre 2026 (prompt 3c).
+// Ils sont repris tels quels, avec leur propre date : on ne les rouvre pas.
+const HORS_SESSION = "2026-11-15";
+const fixe = (id, titre, nom, url) => ({ id, titre, nom, url, statut: "verifie", verifieLe: HORS_SESSION });
+const CONSULAT_FIXE = { argentine: ["Consulat général de France à Buenos Aires", "https://ar.diplomatie.gouv.fr/fr/presence-francaise/consulat-general-de-france-en-argentine-et-au-paraguay"] };
+const UFE = { allemagne: ["UFE Berlin", "https://ufe-berlin.com/"], japon: ["UFE Japon", "https://ufe-japon.org/"] };
+// Français du monde-ADFE : aucune page par pays vérifiable, un seul lien vers la liste des sections.
+const ADFE = ["Trouver une section Français du monde", "https://francais-du-monde.org/sections/"];
+
 // Chambres de commerce françaises : pages lues dans l'annuaire officiel de CCI France International.
 const ANNUAIRE_CCI = "https://www.ccifrance-international.org/notre-reseau/les-cci-fi.html";
 const NOMS_CCI = { "royaume-uni": ["Grande-Bretagne", "Royaume-Uni"], "etats-unis": ["USA | New York"], canada: ["Canada | Montréal"], "coree-du-sud": ["Corée"], "emirats-arabes-unis": ["Emirats", "Émirats"], "hong-kong": ["Hong Kong", "Hong-Kong"], taiwan: ["Taiwan", "Taïwan"], bresil: ["Brésil"], "nouvelle-zelande": ["Nouvelle-Zélande"], "pays-bas": ["Pays-Bas"], belgique: ["Belgique"] };
@@ -94,18 +103,19 @@ for (const p of pays) {
     ? ["Contacts utiles en Chine, dont le consulat général de France à Hong Kong et Macao (France Diplomatie)", infoPays("chine", "conseils-aux-voyageurs-contacts-utiles")]
     : ["Contacts utiles : ambassade et consulats (France Diplomatie)", infoPays(p.id, "conseils-aux-voyageurs-contacts-utiles")];
   const [nomConsulat, urlConsulat] = CONSULAT[p.id] && ouvre(CONSULAT[p.id][1]) ? CONSULAT[p.id] : contacts;
-  liens.push(lien("consulat", "Ambassade ou consulat de France", nomConsulat, urlConsulat));
+  liens.push(CONSULAT_FIXE[p.id] ? fixe("consulat", "Ambassade ou consulat de France", ...CONSULAT_FIXE[p.id]) : lien("consulat", "Ambassade ou consulat de France", nomConsulat, urlConsulat));
   liens.push(lien("registre", "Inscription au registre des Français établis hors de France", "S'inscrire au registre (France Diplomatie)", REGISTRE));
 
   const associations = [];
   const chambre = cci(p);
   if (chambre) associations.push(chambre);
   if (p.ficheComplete) {
-    // Ces deux associations sont citées par France Diplomatie, mais leur site n'a pas pu être ouvert
-    // depuis la session de collecte : elles restent « à vérifier » et ne sont pas affichées.
+    // UFE : seules les sections vérifiées sont affichées (Berlin, Japon) ; ailleurs, le lien reste masqué.
     // (Le lien Alliance française a été retiré : c'était le même lien général pour tous les pays.)
-    associations.push({ id: "ufe", titre: "Association de Français de l'étranger", nom: "Union des Français de l'étranger (UFE)", url: null, statut: "a-verifier" });
-    associations.push({ id: "adfe", titre: "Association de Français de l'étranger", nom: "Français du monde-ADFE", url: null, statut: "a-verifier" });
+    associations.push(UFE[p.id]
+      ? fixe("ufe", "Association de Français de l'étranger", ...UFE[p.id])
+      : { id: "ufe", titre: "Association de Français de l'étranger", nom: "Union des Français de l'étranger (UFE)", url: null, statut: "a-verifier" });
+    associations.push(fixe("adfe", "Association de Français de l'étranger", ...ADFE));
   }
   const dossier = { pays: p.id, verifieLe: AUJOURDHUI, liens, associations };
   fs.writeFileSync(path.join(RACINE, "content", "dossiers", `${p.id}.json`), JSON.stringify(dossier, null, 2) + "\n");

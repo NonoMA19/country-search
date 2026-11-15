@@ -19,9 +19,10 @@
     {
       "id": "consulat",
       "titre": "Ambassade ou consulat de France",
-      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
-      "url": null,
-      "statut": "a-verifier"
+      "nom": "Consulat général de France à Buenos Aires",
+      "url": "https://ar.diplomatie.gouv.fr/fr/presence-francaise/consulat-general-de-france-en-argentine-et-au-paraguay",
+      "statut": "verifie",
+      "verifieLe": "2026-11-15"
     },
     {
       "id": "registre",

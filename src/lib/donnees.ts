@@ -7,7 +7,9 @@ import portesData from "../../content/portes.json";
 import avisData from "../../content/saisie/avis.json";
 import doubleData from "../../content/double-nationalite.json";
 
-export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis";
+export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis" | "temoignages";
+// Confiance d'une note tirée de témoignages : « bonne » (sources nombreuses et concordantes) ou « moyenne ».
+export type Confiance = "bonne" | "moyenne";
 export type FamilleScore = "travailler" | "vivre" | "valeurs";
 export type Sens = "haut" | "bas";
 
@@ -25,6 +27,7 @@ export type DefMesure = {
   mots: string[];
   explications?: string[];
   regle?: string;
+  interne?: boolean; // mesure de calcul seulement (pénalité d'un dilemme) : pas de carte dans la fiche pays
 };
 
 export type Critere = {
@@ -49,6 +52,8 @@ export type Note = {
   source?: string | null;
   lien?: string | null;
   verifieLe?: string | null;
+  liens?: string[]; // témoignages : toutes les sources, au moins deux
+  confiance?: Confiance;
 };
 
 // Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
@@ -94,6 +99,24 @@ export type Objectif = { nom: string; explication: string; effets: { mesures: st
 export type Priorite = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; sens: Sens };
 export type Sujet = { id: string; label: string; mesure: string };
 
+// Le visa de travail, lu sur la page officielle du pays (prompt 3c).
+// « statut » : « verifie » (pastille Officiel) ou « a-verifier » (lu sur une page officielle, pas encore vérifié en détail).
+export type LieEmployeur = "oui" | "partiellement" | "non" | "a-verifier";
+export type DetailVisa = {
+  nom: string;
+  employeurRequis: boolean;
+  lieEmployeur: LieEmployeur;
+  experience?: string; // diplôme ou expérience exigés, mis en avant pour un jeune diplômé
+  jeuneDiplome?: string;
+  conditions: string[];
+  liens: { url: string; libelle: string }[];
+  source: string;
+  statut: "verifie" | "a-verifier";
+  verifieLe: string;
+};
+// Le statut du moment d'une porte (exemple : saison du PVT fermée), avec sa source.
+export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string };
+
 export type PorteBrute = {
   type: "ue" | "pvt" | "vie" | "visa-travail";
   nom: string;
@@ -108,6 +131,8 @@ export type PorteBrute = {
   employeur?: boolean;
   conditions?: string[];
   detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
+  detail?: DetailVisa;
+  saison?: StatutPorte;
   source: string | null;
   lien: string | null;
   verifieLe: string | null;
@@ -162,6 +187,7 @@ export const LIBELLE_TYPE: Record<TypeSource | "a-verifier", string> = {
   officiel: "Officiel",
   "donnee-ouverte": "Donnée ouverte",
   "notre-avis": "Notre avis",
+  temoignages: "Témoignages",
   "a-verifier": "À vérifier",
 };
 
@@ -170,6 +196,7 @@ export const EXPLICATION_TYPE: Record<TypeSource | "a-verifier", string> = {
   officiel: "Information lue sur le site d’un État ou d’un organisme public.",
   "donnee-ouverte": "Chiffre tiré d’une base de données publique, libre de réutilisation (donnée ouverte).",
   "notre-avis": "Jugement de la rédaction, justifié par écrit. C’est un avis, pas un fait.",
+  temoignages: "Tendance tirée de guides d’expatriation et de témoignages, recoupée par au moins deux sources concordantes. Ce n’est pas une donnée officielle.",
   "a-verifier": "Information pas encore vérifiée sur une source officielle.",
 };
 
@@ -183,6 +210,8 @@ export type Preuve = {
   page?: string | null; // page de présentation lisible de la source, si le lien est un fichier brut
   verifieLe: string | null;
   licence: string | null;
+  liens?: string[]; // témoignages : la liste des sources
+  confiance?: Confiance;
 };
 
 export function preuveMesure(paysId: string, mesureId: string): Preuve {
@@ -195,13 +224,15 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   return {
     type: s.type,
     titre: m.nom,
-    texte: n.texte,
+    // Un avis sans phrase rédigée : on affiche l'explication du niveau, jamais une fenêtre vide.
+    texte: n.texte || (n.note !== null ? (m.explications?.[n.note - 1] ?? m.mots[n.note - 1]) : ""),
     source: s.nom,
     lien: n.lien ?? (s.url.startsWith("http") ? s.url : null),
     // Les liens de données ouvertes sont des fichiers bruts : on donne aussi la page de présentation.
     page: n.lien && s.page && n.lien !== s.page ? s.page : null,
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
+    ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }
 
@@ -209,6 +240,14 @@ export function preuveSource(titre: string, texte: string, sourceId: string | nu
   const s = sourceId ? sources[sourceId] : null;
   if (!s) return { type: "a-verifier", titre, texte, source: null, lien: null, verifieLe: null, licence: null };
   return { type: s.type, titre, texte, source: s.nom, lien: lien ?? s.url, verifieLe, licence: s.licence };
+}
+
+// La preuve d'un visa de travail. « À vérifier » garde le lien de la page officielle lue.
+export function preuveVisa(d: DetailVisa): Preuve {
+  const s = sources[d.source];
+  const texte = d.conditions.length ? d.conditions.join(" ") : "Conditions à vérifier sur le site officiel.";
+  if (d.statut === "verifie") return { type: s.type, titre: d.nom, texte, source: s.nom, lien: d.liens[0]?.url ?? s.url, verifieLe: d.verifieLe, licence: s.licence };
+  return { type: "a-verifier", titre: d.nom, texte, source: s?.nom ?? null, lien: d.liens[0]?.url ?? null, verifieLe: d.verifieLe, licence: s?.licence ?? null };
 }
 
 export const dateFr = (iso: string | null | undefined) =>

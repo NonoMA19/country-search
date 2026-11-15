@@ -1,11 +1,11 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { notes as notesPays, quiz } from "@/lib/donnees";
+import { notes as notesPays, portes, quiz, sources } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  bilanDepartage, egalites, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
+  avecQui, bilanDepartage, concerne, egalites, paysCouverts, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -158,6 +158,13 @@ for (let i = 0; i < NB; i++) {
   verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
   verifier(new Set(lignesPortrait.map((l) => l.texte)).size === lignesPortrait.length, `quiz ${i} : phrase répétée dans le portrait`);
   for (const l of lignesPortrait) if (l.revoir.t === "dilemme") verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un dilemme passé (${l.revoir.id})`);
+  // Portrait : jamais une phrase de dilemme qui répète une priorité déjà citée.
+  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
+  for (const l of lignesPortrait) if (l.revoir.t === "dilemme") {
+    const o = trouverDilemme(l.revoir.id)!.options.find((x) => x.id === etat.reponses[(l.revoir as { id: string }).id])!;
+    const ms = o.effets.flatMap((e) => e.mesures);
+    verifier(!(ms.length > 0 && o.effets.every((e) => e.position === undefined) && ms.every((m) => mesuresPrio.has(m))), `quiz ${i} : le portrait répète une priorité (${l.texte})`);
+  }
 
   // Égalités : dans chaque groupe à égalité, au plus 5 points entre le premier et le dernier.
   const principaux = lignes.filter((l) => !l.ecart);
@@ -172,6 +179,16 @@ for (let i = 0; i < NB; i++) {
     }
   }
   for (let k = 0; k < principaux.length; k++) if (eg[k]) verifier(!principaux[k].peuDeDonnees, `quiz ${i} : égalité affichée pour un pays sans assez de données`);
+  // « À égalité avec… » : toujours dit avec qui, et le partenaire est bien à 5 points ou moins.
+  for (let k = 0; k < Math.min(3, principaux.length); k++) {
+    const t = avecQui(principaux, k);
+    verifier(eg[k] === (t !== null), `quiz ${i} : libellé d'égalité incohérent pour ${principaux[k].pays.nom}`);
+    if (t) {
+      const autre = principaux.find((x, j) => j !== k && t.includes(x.pays.le));
+      verifier(!!autre && Math.abs(autre.score - principaux[k].score) <= 2 * ECART_EX_AEQUO + 1e-9, `quiz ${i} : « ${t} » ne nomme pas un pays proche`);
+      if (!/\(n°/.test(t)) verifier(principaux.slice(0, 3).some((x, j) => j !== k && t.includes(x.pays.le)), `quiz ${i} : « ${t} » sans pays du top 3`);
+    }
+  }
 }
 
 verifier(changeAvecObjectif > 0, "le projet ne change le top 3 dans aucun profil");
@@ -255,9 +272,64 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(s2.length === 1 && s2[0].poids === 2, `salaire : importance ${s2.map((e) => e.poids).join("+")} au lieu de 2`);
 }
 
-// 2.6 bis Les dilemmes inactifs (décision, vie pro et vie perso : pas encore de données) ne sont jamais proposés.
+// 2.6 bis Décision et vie pro et vie perso (témoignages) : notées pour au moins 60 % des pays, leurs dilemmes sont actifs.
 {
-  for (const id of ["nouvel-outil", "vendredi-18h"]) verifier(!dilemmeActif(trouverDilemme(id)!), `${id} est actif sans données`);
+  for (const [id, mesure] of [["idee-reunion", "decision"], ["vendredi-18h", "pro-perso"]]) {
+    verifier(paysCouverts(mesure) >= 0.6 * pays.length, `${mesure} : notée pour ${paysCouverts(mesure)} pays seulement`);
+    verifier(dilemmeActif(trouverDilemme(id)!), `${id} n'est pas actif`);
+  }
+  // Une note « à vérifier » (Hong Kong pour la décision) ne compte pas.
+  verifier(notesPays["hong-kong"].decision.statut === "a-verifier", "Hong Kong : la décision devrait rester à vérifier");
+  // Chaque note de témoignages a au moins deux sources et une confiance.
+  for (const p of pays) for (const m of ["decision", "pro-perso"]) {
+    const n = notesPays[p.id][m];
+    if (n.statut === "verifie") verifier(n.source === "temoignages" && (n.liens?.length ?? 0) >= 2 && !!n.confiance, `${p.nom} : ${m} sans deux sources ni confiance`);
+  }
+}
+
+// 2.6 ter Visas de travail (prompt 3c).
+{
+  // « Page officielle du visa » seulement pour une page du gouvernement du pays (jamais France Diplomatie).
+  for (const p of pays) for (const b of portes(p.id)) {
+    const d = b.detail;
+    if (!d) continue;
+    verifier(d.liens.length > 0 && sources[d.source]?.type === "officiel", `${p.nom} : visa sans lien ou sans source officielle`);
+    for (const l of d.liens) if (l.libelle.startsWith("Page officielle")) verifier(!new URL(l.url).hostname.endsWith("diplomatie.gouv.fr"), `${p.nom} : « Page officielle du visa » sur un site français`);
+    verifier(d.conditions.length <= 6, `${p.nom} : plus de 6 conditions`);
+  }
+  // Taïwan : le montant du salaire minimum vient d'une page non datée, il n'est pas affiché.
+  verifier(!portes("taiwan").some((b) => (b.detail?.conditions ?? []).some((c) => /\d{2}\s?\d{3}/.test(c))), "Taïwan : un montant de salaire est affiché");
+  // Diplôme ou expérience exigés : dits clairement quand le PVT est fermé (36 ans et plus).
+  const fermeAustralie = evaluerPorte(trouverPays("australie")!, { age: "36-plus" }, null);
+  verifier(fermeAustralie.alertes.some((a) => a.texte.includes("Sans expérience")), "Australie : l'exigence d'expérience n'est pas dite");
+  verifier(fermeAustralie.visa?.lieEmployeur === "oui", "Australie : visa non relié à l'employeur");
+  // D18 « Je préfère pouvoir changer d'employeur » : seul un visa lié à l'employeur (ou inconnu) écarte le pays.
+  const etat: Etat = { ...ETAT_VIDE, profil: { age: "36-plus" }, reponses: { "job-de-reve": "b" }, ordre: ["job-de-reve"] };
+  const ecarte = (id: string) => concerne("employeur-requis", trouverPays(id)!, etat);
+  verifier(!ecarte("chili"), "D18 : le Chili (visa non lié) est écarté");
+  verifier(!ecarte("japon") && !ecarte("argentine"), "D18 : un visa en partie lié écarte le pays");
+  verifier(ecarte("australie") && ecarte("nouvelle-zelande"), "D18 : un visa lié à l'employeur n'écarte pas le pays");
+  verifier(ecarte("etats-unis") && ecarte("mexique"), "D18 : sans donnée (ou « à vérifier »), la règle d'avant ne s'applique plus");
+  verifier(!concerne("employeur-requis", trouverPays("australie")!, { ...etat, profil: { age: "18-25" } }), "D18 : un PVT ouvert est écarté");
+}
+
+// 2.6 quater Canada : saison 2026 du PVT fermée. Mention affichée, badge et score inchangés.
+{
+  const porte = evaluerPorte(trouverPays("canada")!, { age: "18-25" }, null);
+  verifier(porte.badge === "difficile" && !!porte.mention?.texte.includes("Saison 2026 fermée"), "Canada : la saison fermée n'est pas dite, ou le badge a changé");
+  verifier(porte.mention?.preuve?.type === "officiel", "Canada : la saison fermée n'a pas de preuve officielle");
+}
+
+// 2.6 quinquies « Je garde ces soirées pour moi » : une pénalité, plus un filtre.
+{
+  const etat: Etat = { ...ETAT_VIDE, profil: { anglais: "courant" }, priorites: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" }, ordre: ["cours-offerts"] };
+  const lignes = calculer(etat);
+  for (const id of ["japon", "coree-du-sud", "taiwan", "chine"]) verifier(!lignes.find((l) => l.pays.id === id)!.ecart, `cours-offerts B : ${id} est encore écarté`);
+  const accord = (id: string) => lignes.find((l) => l.pays.id === id)!.details.find((d) => d.mesure === "apprendre-langue")?.accord;
+  verifier(accord("japon") === 0 && accord("espagne") === 0.5 && accord("irlande") === 1, "cours-offerts B : pénalité mal graduée (1 pour une autre écriture, 0,5 pour une autre langue)");
+  // Qui parle japonais n'a rien à apprendre au Japon.
+  const nippo = calculer({ ...etat, profil: { anglais: "courant", langues: ["ja"] } }).find((l) => l.pays.id === "japon")!;
+  verifier(nippo.details.find((d) => d.mesure === "apprendre-langue")?.accord === 1, "cours-offerts B : pénalité alors que tu parles la langue");
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
@@ -323,4 +395,4 @@ if (echecs.length) {
   for (const e of echecs) console.error("  - " + e);
   process.exit(1);
 }
-console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 10 cas précis.`);
+console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et des cas précis.`);

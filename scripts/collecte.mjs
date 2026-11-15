@@ -1,5 +1,6 @@
 // Télécharge les données ouvertes et écrit content/scores.json.
 // Usage : node scripts/collecte.mjs
+//         node scripts/collecte.mjs --population   (télécharge seulement la population et recalcule le réseau français)
 //         node scripts/collecte.mjs --textes   (réécrit seulement les phrases, sans rien télécharger :
 //                                              les valeurs et les dates « vérifié le » restent celles du fichier)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
@@ -13,16 +14,19 @@ fs.mkdirSync(CACHE, { recursive: true });
 const AUJOURDHUI = new Date().toISOString().slice(0, 10);
 const UA = "country-search-bot/0.1 (projet open source non commercial)";
 const TEXTES_SEUL = process.argv.includes("--textes");
+const POPULATION_SEULE = process.argv.includes("--population");
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
 const criteres = lire("criteres.json");
 const avis = lire("saisie/avis.json");
+// Culture au travail (prise de décision, vie pro et vie perso) : témoignages recoupés, saisis à la main.
+const culture = lire("saisie/culture.json");
 const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => [m.id, m])));
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL) return null;
+  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -67,7 +71,7 @@ const TEXTE = {
   emploi: (v, an) => `Parmi les 15-24 ans qui travaillent ou cherchent un emploi, ${fr(v)} % sont au chômage (${an}, estimation de l'Organisation internationale du travail).`,
   salaire: (v, an) => `Salaire moyen des salariés : ${fr(v, 0)} $ par mois, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (${an}).`,
   heures: (v, an) => `${fr(v)} heures réellement travaillées par semaine en moyenne (${an}).`,
-  francais: (v) => `${fr(v, 0)} Français inscrits au registre consulaire fin 2020. C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
+  francais: (v, an, p, inscrits) => `${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020, soit ${fr(v, v < 10 ? 1 : 0)} pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
   prix: (v, an) => {
     const ecart = Math.round(v - 100);
     const phrase = Math.abs(ecart) <= 3 ? "à peu près comme en France" : `environ ${Math.abs(ecart)} % ${ecart > 0 ? "plus cher" : "moins cher"} qu'en France`;
@@ -153,6 +157,23 @@ function oit(indicateur, iso3, filtre) {
   return meilleur;
 }
 
+// ---------- Population (Banque mondiale, SP.POP.TOTL), pays par pays : la requête groupée est trop lente ----------
+// Même année que le registre des Français (2020). Taïwan n'est pas dans la base : réseau français « à vérifier ».
+const ANNEE_REGISTRE = "2020";
+function population(iso3) {
+  const d = json(`bm_pop_${iso3}_${ANNEE_REGISTRE}.json`, `https://api.worldbank.org/v2/country/${iso3}/indicator/SP.POP.TOTL?format=json&date=${ANNEE_REGISTRE}`);
+  const v = Array.isArray(d?.[1]) ? d[1][0]?.value : null;
+  return typeof v === "number" && v > 0 ? v : null;
+}
+const LIEN_REGISTRE = "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/";
+function reseauFrancais(p, inscrits, verifieLe) {
+  if (inscrits === undefined || inscrits === null) return aVerifier("Français inscrits : pas de donnée dans cette source.");
+  const pop = population(p.iso3);
+  if (!pop) return { ...aVerifier(`${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020. La population du pays n'est pas dans la base de la Banque mondiale : la part pour 100 000 habitants reste à vérifier.`), inscrits };
+  const ratio = (inscrits / pop) * 100000;
+  return { ...verifie("francais", ratio, TEXTE.francais(ratio, ANNEE_REGISTRE, p, inscrits), "meae-registre", LIEN_REGISTRE, ANNEE_REGISTRE), inscrits, population: pop, verifieLe };
+}
+
 // ---------- Registre des Français (data.gouv.fr, fichier xlsx 2020) ----------
 function registre() {
   const f = telecharger("registre-2020.xlsx", "https://static.data.gouv.fr/resources/francais-de-letranger-inscriptions-au-registre-des-francais-etablis-hors-de-france/20210203-132410/communaute-francaise-2020.xlsx");
@@ -233,14 +254,46 @@ function notesAvis(p, verifieLe = AUJOURDHUI) {
   const av = avis[p.id];
   const res = {};
   const note = (n, texte) => ({ statut: "verifie", note: n, texte, annee: null, source: "notre-avis", lien: null, verifieLe });
-  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite", "decision", "pro-perso"]) {
+  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite"]) {
     res[id] = av?.[id] ? note(av[id].note, av[id].texte) : aVerifier("Pas encore d'avis rédigé.");
   }
+  // Témoignages : au moins deux sources concordantes, avec une confiance « bonne » ou « moyenne ».
+  for (const id of ["decision", "pro-perso"]) {
+    const t = culture[p.id]?.[id];
+    res[id] = t?.note
+      ? { statut: "verifie", note: t.note, texte: t.texte, annee: null, source: "temoignages", lien: null, liens: t.sources, confiance: t.confiance, verifieLe: culture.verifieLe }
+      : aVerifier("Pas encore assez de témoignages concordants pour donner une note.");
+  }
+  // Langue à apprendre : tirée de la langue du quotidien (pénalité du dilemme « Les cours offerts »).
+  // Autre écriture = 1 ; autre langue à alphabet latin ou langue proche du français = 3 ; anglais ou français = 5.
+  const APPRENDRE = { 1: 1, 2: 3, 3: 5, 4: 3, 5: 5 };
+  const PHRASE_APPRENDRE = {
+    1: "Pour vivre ici sans aide, il faut apprendre une langue qui s'écrit avec un autre alphabet.",
+    3: "Pour vivre ici sans aide, il faut apprendre une autre langue, avec le même alphabet.",
+    5: "Le français ou l'anglais suffisent au quotidien : pas de nouvelle langue à apprendre.",
+  };
+  const l = res.langue;
+  res["apprendre-langue"] = l?.statut === "verifie" ? note(APPRENDRE[l.note], PHRASE_APPRENDRE[APPRENDRE[l.note]]) : aVerifier("Pas encore d'avis rédigé.");
   // Un seul paragraphe pour les trois mesures de la taille de ville.
   for (const id of ["grande-ville", "ville-moyenne", "nature"]) {
     res[id] = av?.villes?.[id] ? note(av.villes[id], av.villes.texte) : aVerifier("Pas encore d'avis rédigé.");
   }
   return res;
+}
+
+// ---------- Mode --population : télécharger la population et recalculer le réseau français ----------
+if (POPULATION_SEULE) {
+  const actuel = lire("scores.json");
+  for (const p of pays) {
+    const f = actuel.pays[p.id].francais;
+    // Avant le prompt 3c, « valeur » était le nombre d'inscrits ; ensuite, il est gardé dans « inscrits ».
+    const n = f.inscrits ?? (f.statut === "verifie" ? f.valeur : null);
+    actuel.pays[p.id].francais = reseauFrancais(p, n, AUJOURDHUI);
+    console.log(p.nom, actuel.pays[p.id].francais.note ?? "à vérifier");
+  }
+  typoTextes(actuel.pays);
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  process.exit(0);
 }
 
 // ---------- Mode --textes : réécrire les phrases sans rien télécharger ----------
@@ -250,6 +303,7 @@ if (TEXTES_SEUL) {
     const s = actuel.pays[p.id];
     for (const [id, m] of Object.entries(s)) {
       if (m.statut !== "verifie" || m.valeur === undefined || !TEXTE[id]) continue;
+      if (id === "francais") { m.texte = TEXTE.francais(m.valeur, m.annee, p, m.inscrits); continue; }
       const km = id === "vol" ? Number((m.texte.match(/environ ([\d\s]+) km/)?.[1] ?? "").replace(/\s/g, "")) : null;
       if (id === "vol" && !km) continue;
       m.texte = TEXTE[id](m.valeur, m.annee, p, km);
@@ -286,8 +340,7 @@ for (const p of pays) {
   const h = oit("HOW_TEMP_SEX_NB_A", p.iso3, () => true);
   s.heures = h ? verifie("heures", h.valeur, TEXTE.heures(h.valeur, h.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=${p.iso3}&format=.csv`, h.annee) : aVerifier("Heures travaillées : pas de donnée dans cette source.");
 
-  const n = inscrits[p.iso2];
-  s.francais = n !== undefined ? verifie("francais", n, TEXTE.francais(n), "meae-registre", "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/", "2020") : aVerifier("Français inscrits : pas de donnée dans cette source.");
+  s.francais = reseauFrancais(p, inscrits[p.iso2], AUJOURDHUI);
 
   const px = niveauPrix(p.iso3);
   if (px && prixFrance) {

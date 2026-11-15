@@ -116,5 +116,95 @@
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
     "type": "donnee-ouverte"
+  },
+  "temoignages": {
+    "nom": "Guides d’expatriation et témoignages recoupés (au moins deux sources concordantes)",
+    "url": "/methode#temoignages",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "temoignages"
+  },
+  "au-homeaffairs": {
+    "nom": "Department of Home Affairs (gouvernement australien), Skills in Demand visa",
+    "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "ar-migraciones": {
+    "nom": "Gouvernement argentin (argentina.gob.ar), Direction nationale des migrations",
+    "url": "https://www.argentina.gob.ar/servicio/obtener-una-residencia-temporaria-como-trabajador-migrante",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "jp-isa": {
+    "nom": "Immigration Services Agency of Japan (ministère de la Justice du Japon)",
+    "url": "https://www.moj.go.jp/isa/applications/status/gijinkoku.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "nz-immigration": {
+    "nom": "Immigration New Zealand (gouvernement néo-zélandais)",
+    "url": "https://immigration.govt.nz/visas/accredited-employer-work-visa",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "tw-wda": {
+    "nom": "EZ Work Taiwan, Workforce Development Agency (ministère du Travail de Taïwan)",
+    "url": "https://ezworktaiwan.wda.gov.tw/en/cp.aspx?n=0A9701A70ADA2E8C",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "hk-immd": {
+    "nom": "Immigration Department (gouvernement de Hong Kong)",
+    "url": "https://www.immd.gov.hk/eng/services/visas/GEP.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "cl-migraciones": {
+    "nom": "Servicio Nacional de Migraciones (gouvernement chilien)",
+    "url": "https://serviciomigraciones.cl/en/residencia-temporal-permit/subcategories/remunerated-activities/",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "mx-sre": {
+    "nom": "Secretaría de Relaciones Exteriores (gouvernement mexicain), visas mexicaines",
+    "url": "https://www.miconsulado.sre.gob.mx/visasmexicanas/visa/visa-de-residencia-temporal-por-oferta-de-empleo/",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "kr-mofa": {
+    "nom": "Ministère des Affaires étrangères de Corée du Sud, ambassade en Finlande",
+    "url": "https://overseas.mofa.go.kr/fi-en/brd/m_20979/view.do?seq=5",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "co-cancilleria": {
+    "nom": "Cancillería (ministère des Affaires étrangères de Colombie)",
+    "url": "https://www.cancilleria.gov.co/en/temporary-workers-visa",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "br-mj": {
+    "nom": "Ministère de la Justice et de la Sécurité publique du Brésil (gov.br), immigration de travail",
+    "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/navegacao-guiada-1/possui-autorizacao-de-residencia/o-que-deseja/qual-a-finalidade-desejada-1/trabalho-com-contrato-de-trabalho-no-brasil",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "cn-mfa": {
+    "nom": "Ministère des Affaires étrangères de Chine, service consulaire",
+    "url": "https://cs.mfa.gov.cn/lh/lhqz_149493/qzxz/202608/t20260806_11999100.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "diplomatie-expatriation": {
+    "nom": "France Diplomatie, Dossiers pays de l’expatriation",
+    "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francais/preparer-son-expatriation/dossiers-pays-de-l-expatriation/maroc/emploi-stage/article/reglementation-du-travail",
+    "licence": "Licence Ouverte 2.0",
+    "type": "officiel"
+  },
+  "canada-eic-candidat": {
+    "nom": "Gouvernement du Canada, Expérience internationale Canada : devenir candidat",
+    "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/devenir-candidat.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
   }
 }

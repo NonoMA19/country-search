@@ -3,8 +3,8 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource,
-  type CasDouble, type Dilemme, type FamilleScore, type OptionDilemme, type PorteBrute, type Preuve,
+  avis, dateFr, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource, preuveVisa,
+  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
 } from "./donnees";
 
 export type Profil = Record<string, string | string[] | undefined>;
@@ -55,8 +55,8 @@ export function questionProfilVisible(id: string, p: Profil): boolean {
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   const n = notes[paysId]?.[mesureId];
   if (!n || n.statut !== "verifie" || n.note === null) return null;
-  // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français.
-  if (mesureId === "langue" && parleLangueDe(paysId, p)) return 5;
+  // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français, et rien n'est à apprendre.
+  if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, p)) return 5;
   return n.note;
 }
 
@@ -182,7 +182,27 @@ export type Porte = {
   alertes: Alerte[];
   preuve: Preuve;
   autres: string[];
+  visa: DetailVisa | null; // le visa de travail lu sur la page officielle du pays, s'il est connu
+  mention: Alerte | null; // le statut du moment (saison du PVT fermée…) : ne change ni le score ni le badge
 };
+
+// Le visa de travail reste-t-il lié à l'employeur ? « à vérifier » ne dit rien.
+export const LIBELLE_LIE: Record<LieEmployeur, string | null> = {
+  oui: "Visa lié à ton employeur",
+  partiellement: "Visa en partie lié à ton employeur",
+  non: "Visa non lié à un seul employeur",
+  "a-verifier": null,
+};
+const PHRASE_LIE: Record<LieEmployeur, string> = {
+  oui: " Le visa reste lié à cet employeur.",
+  partiellement: " Le visa reste en partie lié à cet employeur.",
+  non: " Le visa n’est pas lié à un seul employeur.",
+  "a-verifier": "",
+};
+export const visaTravail = (id: string) => portes(id).find((x) => x.type === "visa-travail");
+// Diplôme ou expérience exigés : dit clairement, avec une phrase pour un jeune diplômé.
+const alerteExperience = (d: DetailVisa | undefined): Alerte[] =>
+  d?.experience ? [{ texte: `${d.experience} ${d.jeuneDiplome ?? ""}`.trim(), preuve: preuveVisa(d) }] : [];
 
 const euros = (n: number) => `${Math.round(n / 50) * 50}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " €";
 const preuvePorte = (b: PorteBrute) => preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe);
@@ -200,7 +220,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     const preuve: Preuve = { type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence };
     return {
       badge: "nationalite", nom: `Nationalité ${cas.nationalite.toLowerCase()}`, type: "nationalite", phrase: cas.acces,
-      fonds: null, manque: null, alertes: cas.genre === "piege" ? [{ texte: cas.texte, preuve }] : [], preuve, autres: [],
+      fonds: null, manque: null, alertes: cas.genre === "piege" ? [{ texte: cas.texte, preuve }] : [], preuve, autres: [], visa: null, mention: null,
     };
   }
   const liste = portes(p.id);
@@ -217,18 +237,19 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
     if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
-    return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres };
+    return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres, visa: null, mention: null };
   }
 
   const pvt = liste.find((x) => x.type === "pvt");
   const visa = liste.find((x) => x.type === "visa-travail");
   if (pvt && pvt.ageMax !== undefined) {
     if (age !== null && age > pvt.ageMax) {
-      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
+      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: visa.detail ? preuveVisa(visa.detail) : preuvePorte(visa) });
+      alertes.push(...alerteExperience(visa?.detail));
       return {
         badge: "fermee", nom: pvt.nom, type: "pvt",
         phrase: `Le PVT (Programme Vacances-Travail) s’arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
-        fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres,
+        fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention: null,
       };
     }
     const quand = age !== null ? "à ton âge" : `jusqu’à ${pvt.ageMax} ans`;
@@ -255,25 +276,35 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
       alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
     if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
-    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres };
+    // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
+    const sa = pvt.saison;
+    const mention = sa ? { texte: sa.texte, preuve: preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
+    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
   }
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
   let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
+  const d = base.detail;
+  if (d) phrase += PHRASE_LIE[d.lieEmployeur];
   if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
-  for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
+  // Avec le détail du visa, les conditions sont dans la carte du visa ; seule l'exigence de diplôme ou d'expérience est une alerte.
+  if (d) alertes.push(...alerteExperience(d));
+  else for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
   if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n’est pas encore vérifiée.");
-  return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres };
+  return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null, mention: null };
 }
 
 // ---------- Pays qui descendent dans « Moins adaptés pour toi » ----------
 export function concerne(regle: string | undefined, p: Pays, etat: Etat): boolean {
-  const a = avis[p.id];
-  if (regle === "autre-ecriture") return !!a?.autreEcriture && !parleLangueDe(p.id, etat.profil);
+  // (« Je garde ces soirées pour moi » n'écarte plus aucun pays : c'est une pénalité, voir la mesure « apprendre-langue ».)
   if (regle === "employeur-requis") {
     const b = evaluerPorte(p, etat.profil, null).badge;
-    return b === "conditions" || b === "fermee";
+    if (b !== "conditions" && b !== "fermee") return false;
+    // Quand on sait si le visa de travail est lié à l'employeur, on s'en sert : seul « oui » écarte le pays.
+    // « à vérifier » ne compte pas : la règle d'avant s'applique (un employeur est exigé).
+    const lie = visaTravail(p.id)?.detail?.lieEmployeur;
+    return lie !== "non" && lie !== "partiellement";
   }
   return false;
 }
@@ -385,15 +416,28 @@ export function verdict(score: number): string {
 
 // Égalités : dans chaque groupe (même liste, même fiabilité), on compare chaque pays au premier
 // du groupe, sur les scores non arrondis. À 5 points ou moins du premier, il est à égalité avec lui.
-export function egalites(lignes: Ligne[]): boolean[] {
-  const res = lignes.map(() => false);
+// Pour chaque pays : l'indice du premier de son groupe d'égalité, ou -1 s'il n'est à égalité avec personne.
+export function groupesEgalite(lignes: Ligne[]): number[] {
+  const res = lignes.map(() => -1);
   let chef = -1;
   lignes.forEach((l, i) => {
     const c = chef >= 0 ? lignes[chef] : null;
     const memeGroupe = c && !c.ecart === !l.ecart && c.peuDeDonnees === l.peuDeDonnees && !l.peuDeDonnees && c.score - l.score <= ECART_EX_AEQUO;
-    if (memeGroupe) { res[i] = true; res[chef] = true; } else chef = i;
+    if (memeGroupe) { res[i] = chef; res[chef] = chef; } else chef = i;
   });
   return res;
+}
+export const egalites = (lignes: Ligne[]): boolean[] => groupesEgalite(lignes).map((g) => g >= 0);
+
+// « À égalité avec les Pays-Bas » : les pays du top 3 de son groupe. S'il n'est à égalité
+// qu'avec des pays hors du top 3 : « À égalité avec la Suède (n° 4) ».
+export function avecQui(lignes: Ligne[], i: number, top = 3): string | null {
+  const g = groupesEgalite(lignes);
+  if (g[i] < 0) return null;
+  const autres = g.map((x, k) => (x === g[i] && k !== i ? k : -1)).filter((k) => k >= 0);
+  const dedans = autres.filter((k) => k < top);
+  if (dedans.length) return `À égalité avec ${listeFr(dedans.map((k) => lignes[k].pays.le))}`;
+  return `À égalité avec ${lignes[autres[0]].pays.le} (n°\u00a0${autres[0] + 1})`;
 }
 
 export function paysSurprise(lignes: Ligne[]): Ligne | null {
@@ -535,9 +579,19 @@ export function portrait(etat: Etat): LignePortrait[] {
     .filter((x): x is { id: string; rang: number; o: OptionDilemme } => !!x.o?.portrait)
     .sort((a, b) => poids(b.o) - poids(a.o) || a.rang - b.rang);
   const vus = new Set(res.map((r) => r.texte));
+  // Une réponse qui ne vise que des mesures déjà dans tes priorités répète la phrase des priorités :
+  // on ne l'affiche pas (« Tu regardes d'abord le salaire » quand « bon salaire » est déjà cité).
+  // Deux réponses sur exactement les mêmes mesures : seule la première (la plus forte) est gardée.
+  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
+  const cibles = (o: OptionDilemme) => o.effets.flatMap((e) => e.mesures);
+  const repetePriorite = (o: OptionDilemme) => cibles(o).length > 0 && o.effets.every((e) => e.position === undefined) && cibles(o).every((m) => mesuresPrio.has(m));
+  const mesuresVues = new Set<string>();
   for (const { id, o } of dilemmes) {
     if (res.length >= MAX_PORTRAIT) break;
-    if (vus.has(o.portrait)) continue;
+    if (vus.has(o.portrait) || repetePriorite(o)) continue;
+    const cle = [...new Set(cibles(o))].sort().join("+");
+    if (cle && !o.ecart && mesuresVues.has(cle)) continue;
+    if (cle) mesuresVues.add(cle);
     vus.add(o.portrait);
     res.push({ cle: `dilemme:${id}`, texte: o.portrait, revoir: { t: "dilemme", id } });
   }
@@ -614,7 +668,7 @@ export function faitMesure(paysId: string, mesureId: string, profil: Profil): st
   const m = mesures[mesureId];
   const note = noteEffective(paysId, mesureId, profil);
   if (!m || note === null) return null;
-  if (mesureId === "langue" && parleLangueDe(paysId, profil)) return "Tu parles déjà la langue du pays";
+  if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, profil)) return "Tu parles déjà la langue du pays";
   if (Array.isArray(m.fait)) return m.fait[note - 1] ?? null;
   if (m.fait) return m.fait.replace("{mot}", m.mots[note - 1]);
   return `${m.nom}\u00a0: ${m.mots[note - 1]}`;
@@ -661,7 +715,8 @@ export function pourToi(l: Ligne, etat: Etat, interdites: Set<string> = new Set(
     const fait = faitMesure(l.pays.id, d.mesure, etat.profil);
     if (!fait) continue;
     const texte = phrasePour(d, fait);
-    if (interdites.has(texte)) continue;
+    // Jamais deux fois la même phrase, ni sous deux pays, ni sous le même (langue et langue à apprendre).
+    if (interdites.has(texte) || res.some((x) => x.texte === texte)) continue;
     res.push({ texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) });
   }
   return res;

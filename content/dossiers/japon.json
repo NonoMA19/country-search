@@ -42,16 +42,18 @@
     {
       "id": "ufe",
       "titre": "Association de Français de l’étranger",
-      "nom": "Union des Français de l’étranger (UFE)",
-      "url": null,
-      "statut": "a-verifier"
+      "nom": "UFE Japon",
+      "url": "https://ufe-japon.org/",
+      "statut": "verifie",
+      "verifieLe": "2026-11-15"
     },
     {
       "id": "adfe",
       "titre": "Association de Français de l’étranger",
-      "nom": "Français du monde-ADFE",
-      "url": null,
-      "statut": "a-verifier"
+      "nom": "Trouver une section Français du monde",
+      "url": "https://francais-du-monde.org/sections/",
+      "statut": "verifie",
+      "verifieLe": "2026-11-15"
     }
   ]
 }

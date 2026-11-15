@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import BoutonDossier from "@/components/BoutonDossier";
+import CarteVisa from "@/components/CarteVisa";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Pastille from "@/components/Pastille";
@@ -56,7 +57,7 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
       <a href={lien.url as string} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-medium break-words text-lien underline">
         {lien.nom ?? lien.url} <ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
       </a>
-      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(date)}</p>
+      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
     </li>
   );
 }
@@ -65,7 +66,7 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
 // le texte n'apparaît qu'une fois : jamais deux fois le même paragraphe sur une page.
 function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
   // Une mesure sans aucune donnée pour aucun pays n'est pas affichée (elle ne compte pas).
-  const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0).map((m) => {
+  const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0 && !m.interne).map((m) => {
     const n = notes[paysId]?.[m.id];
     const ok = n?.statut === "verifie" && n.note !== null;
     return { m, n, ok, mot: ok ? m.mots[(n.note as number) - 1] : null, explication: ok ? m.explications?.[(n.note as number) - 1] : undefined };
@@ -74,7 +75,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
   // Une seule carte si les mesures partagent le même texte (taille de ville) ou décrivent un même style (style de travail).
   if (lignes.length === 0) return null;
   const regrouper = lignes.length > 1 && lignes.every((l) => l.ok) && (textes.length <= 1 || c.id === "style-travail");
-  if (regrouper) {
+  if (regrouper && c.id !== "style-travail") {
     return (
       <li className="rounded-2xl border border-bord bg-carte p-4">
         <p className="text-sm font-medium text-gris">{c.nom}</p>
@@ -90,6 +91,27 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
           {textes.join(" ")}
           <Pastille preuve={preuveMesure(paysId, lignes[0].m.id)} pays={nomPays} contexte={c.nom} />
         </p>
+      </li>
+    );
+  }
+  // Style de travail : une seule carte, mais chaque mesure garde sa preuve
+  // (l'avis de la rédaction et les témoignages ne sont pas la même source).
+  if (regrouper) {
+    return (
+      <li className="rounded-2xl border border-bord bg-carte p-4">
+        <p className="text-sm font-medium text-gris">{c.nom}</p>
+        <ul className="mt-1 space-y-3">
+          {lignes.map((l) => (
+            <li key={l.m.id}>
+              <span className="font-semibold">{l.m.nom} : </span>{l.mot}
+              {l.explication && <span className="block text-sm text-gris">{l.explication}</span>}
+              <span className="mt-0.5 block">
+                {l.n?.texte}
+                <Pastille preuve={preuveMesure(paysId, l.m.id)} pays={nomPays} contexte={l.m.nom} />
+              </span>
+            </li>
+          ))}
+        </ul>
       </li>
     );
   }
@@ -145,6 +167,12 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                 {b.texte}
                 <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} contexte={b.nom} />
               </p>
+              {b.saison && (
+                <p className="mt-2 font-medium">
+                  {b.saison.texte}
+                  <Pastille preuve={preuveSource("Saison du PVT", `Phrase officielle : « ${b.saison.citation} » (page mise à jour le ${dateFr(b.saison.datePage)}).`, b.saison.source, b.saison.lien, b.saison.verifieLe)} pays={p.nom} contexte="la saison du PVT" />
+                </p>
+              )}
               {b.invitationTexte && b.invitationSource && (
                 <p className="mt-2">
                   {b.invitationTexte}
@@ -157,6 +185,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                   {b.conditions?.map((c) => <li key={c}>{c}</li>)}
                 </ul>
               )}
+              {b.detail && <CarteVisa visa={b.detail} pays={p.nom} />}
             </li>
           ))}
           <CarteVie paysId={p.id} nomPays={p.nom} />

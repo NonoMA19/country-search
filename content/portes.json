@@ -166,6 +166,14 @@
     "source": "canada-eic",
     "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/invitations-presenter-demande.html",
     "verifieLe": "2026-11-14"
+   },
+   "saison": {
+    "texte": "Saison 2026 fermée. La prochaine ouverture est annoncée sur canada.ca.",
+    "citation": "Les bassins de la saison 2026 sont fermés.",
+    "source": "canada-eic-candidat",
+    "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/devenir-candidat.html",
+    "datePage": "2026-10-19",
+    "verifieLe": "2026-11-15"
    }
   },
   {
@@ -207,7 +215,29 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/australie/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Skills in Demand visa (sous-classe 482), volet Core Skills",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "experience": "Il faut au moins 1 an d’expérience dans le métier ou dans un domaine proche.",
+    "jeuneDiplome": "Sans expérience, cette porte est souvent fermée.",
+    "conditions": [
+     "Un employeur te parraine et te nomme sur le poste.",
+     "Ton métier figure sur la liste officielle des métiers recherchés (Core Skills Occupation List).",
+     "Ton salaire atteint au moins le seuil officiel (Core Skills Income Threshold), revu chaque 1er juillet.",
+     "Tu ne peux travailler que pour l’employeur qui te parraine.",
+     "Un niveau d’anglais minimum est demandé, sauf dispense."
+    ],
+    "liens": [
+     {
+      "url": "https://immi.homeaffairs.gov.au/visas/getting-a-visa/visa-listing/skills-in-demand-visa-subclass-482/core-skills-stream",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "au-homeaffairs",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "japon": [
@@ -237,7 +267,27 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/japon/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Statut de résident « Engineer/Specialist in Humanities/International Services » (ingénieur, spécialiste en sciences humaines, services internationaux)",
+    "employeurRequis": true,
+    "lieEmployeur": "partiellement",
+    "experience": "Il faut un diplôme universitaire ou équivalent. Pour un travail lié à une culture étrangère, il faut 3 ans d’expérience, sauf avec un diplôme universitaire en traduction, interprétation ou enseignement des langues.",
+    "jeuneDiplome": "Sans diplôme universitaire ni expérience, cette porte est souvent fermée.",
+    "conditions": [
+     "Un contrat avec une organisation japonaise, pour un travail qui demande des connaissances en sciences ou en sciences humaines (ingénieur, interprète, designer, marketing…).",
+     "Un certificat d’éligibilité (COE), délivré au Japon avant la demande de visa. Il ne garantit pas la délivrance du visa.",
+     "Salaire minimum : aucun montant n’est publié sur la page officielle."
+    ],
+    "liens": [
+     {
+      "url": "https://www.moj.go.jp/isa/applications/status/gijinkoku.html",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "jp-isa",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "nouvelle-zelande": [
@@ -267,7 +317,28 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/nouvelle-zelande/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Accredited Employer Work Visa (AEWV), le visa de travail avec un employeur accrédité",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "experience": "Il faut 2 ans d’expérience dans le domaine, ou un diplôme. Une licence ou plus, dans n’importe quel domaine, suffit.",
+    "jeuneDiplome": "Sans expérience ni licence, cette porte est souvent fermée.",
+    "conditions": [
+     "Une offre d’emploi à temps plein (au moins 30 heures par semaine) d’un employeur accrédité, après validation de l’offre par l’immigration (job check).",
+     "Un salaire au moins égal à celui fixé pour le poste.",
+     "Anglais, santé et casier judiciaire sont contrôlés.",
+     "Ton conjoint et tes enfants ne sont pas inclus dans ce visa."
+    ],
+    "liens": [
+     {
+      "url": "https://immigration.govt.nz/visas/accredited-employer-work-visa",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "nz-immigration",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "coree-du-sud": [
@@ -297,7 +368,26 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/coree-du-sud/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detailsAVerifier": true,
+   "detail": {
+    "nom": "Visa E-7 (activités désignées)",
+    "employeurRequis": true,
+    "lieEmployeur": "a-verifier",
+    "conditions": [
+     "Un organisme coréen, public ou privé, t’invite pour un métier fixé par le ministère de la Justice.",
+     "L’employeur dépose le dossier au ministère de la Justice. Une fois le dossier accepté, tu reçois un numéro et tu demandes le visa à l’ambassade ou au consulat.",
+     "Un contrat de travail signé, et des justificatifs de diplôme ou d’expérience."
+    ],
+    "liens": [
+     {
+      "url": "https://overseas.mofa.go.kr/fi-en/brd/m_20979/view.do?seq=5",
+      "libelle": "Page officielle du visa (ambassade de Corée en Finlande)"
+     }
+    ],
+    "source": "kr-mofa",
+    "statut": "a-verifier",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "taiwan": [
@@ -327,7 +417,28 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/taiwan/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Permis de travail pour un emploi qualifié, demandé par l’employeur au ministère du Travail",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "experience": "Il faut un master, ou une licence avec plus de 2 ans d’expérience dans le domaine. Autres voies : au moins 1 an dans une multinationale, ou plus de 5 ans d’expertise reconnue.",
+    "jeuneDiplome": "Avec une licence et sans expérience, cette porte est souvent fermée.",
+    "conditions": [
+     "C’est l’employeur qui demande le permis.",
+     "Un salaire mensuel moyen au moins égal au minimum fixé par le ministère du Travail (montant à revérifier).",
+     "L’employeur doit avoir un capital ou un chiffre d’affaires minimum.",
+     "Autre voie, sans employeur : la carte « Employment Gold Card », un permis ouvert de 1 à 3 ans, accordé après examen de tes compétences par un ministère."
+    ],
+    "liens": [
+     {
+      "url": "https://ezworktaiwan.wda.gov.tw/en/cp.aspx?n=0A9701A70ADA2E8C",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "tw-wda",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "hong-kong": [
@@ -356,7 +467,27 @@
    "source": null,
    "lien": null,
    "verifieLe": null,
-   "statut": "a-verifier"
+   "statut": "a-verifier",
+   "detail": {
+    "nom": "General Employment Policy (GEP), le visa de travail général",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "conditions": [
+     "Une offre d’emploi confirmée, dans un poste lié à ta formation ou à ton expérience, difficile à pourvoir sur place.",
+     "En principe, un premier diplôme universitaire dans le domaine. Une qualification technique ou une expérience prouvée suffit dans certains cas.",
+     "Une rémunération proche du niveau du marché pour ce métier à Hong Kong, sans montant fixe.",
+     "Un vrai poste vacant, aucune objection de sécurité, pas de casier judiciaire grave."
+    ],
+    "liens": [
+     {
+      "url": "https://www.immd.gov.hk/eng/services/visas/GEP.html",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "hk-immd",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "argentine": [
@@ -386,7 +517,29 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/argentine/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Résidence temporaire de travailleur migrant (residencia temporaria como trabajador migrante)",
+    "employeurRequis": true,
+    "lieEmployeur": "partiellement",
+    "conditions": [
+     "Un pré-contrat de travail signé, avec un salaire conforme à la convention collective du secteur.",
+     "Ton employeur est inscrit au registre des employeurs d’étrangers de la Direction nationale des migrations.",
+     "La résidence dure 1 an et se renouvelle : il faut alors garder ce contrat, ou en présenter un nouveau."
+    ],
+    "liens": [
+     {
+      "url": "https://www.argentina.gob.ar/servicio/obtener-una-residencia-temporaria-como-trabajador-migrante",
+      "libelle": "Page officielle du visa"
+     },
+     {
+      "url": "https://www.argentina.gob.ar/servicio/obtener-una-prorroga-de-residencia-temporaria-como-trabajador-migrante",
+      "libelle": "Page officielle du renouvellement"
+     }
+    ],
+    "source": "ar-migraciones",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "chili": [
@@ -416,7 +569,26 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chili/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Permis de résidence temporaire pour activités rémunérées",
+    "employeurRequis": true,
+    "lieEmployeur": "non",
+    "conditions": [
+     "Un travail salarié pour un employeur qui a un domicile ou une succursale au Chili.",
+     "Un contrat signé par l’employeur devant un notaire chilien, et par toi au consulat. Sa copie et la preuve de son enregistrement sont à fournir dans les 45 jours après ton arrivée.",
+     "Un passeport valable au moins un an et un extrait de casier judiciaire de moins de 60 jours.",
+     "Valable jusqu’à 2 ans, renouvelable par périodes de 2 ans."
+    ],
+    "liens": [
+     {
+      "url": "https://serviciomigraciones.cl/en/residencia-temporal-permit/subcategories/remunerated-activities/",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "cl-migraciones",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "colombie": [
@@ -446,7 +618,27 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/colombie/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detailsAVerifier": true,
+   "detail": {
+    "nom": "Visa M de travailleur (Temporary Worker’s Visa)",
+    "employeurRequis": true,
+    "lieEmployeur": "a-verifier",
+    "conditions": [
+     "Un emploi dans une entreprise ou une institution colombienne, ou une mutation vers un poste précis en Colombie.",
+     "Un résumé du contrat signé et authentifié devant notaire ou consul, et un certificat d’existence de l’employeur de moins de 3 mois.",
+     "Pour un métier réglementé, une licence. Sinon, un diplôme légalisé et validé par le ministère de l’Éducation, ou une lettre de l’employeur sur ton expérience.",
+     "50 dollars américains pour l’étude du dossier, 205 pour le visa. La première demande se fait dans un consulat colombien à l’étranger."
+    ],
+    "liens": [
+     {
+      "url": "https://www.cancilleria.gov.co/en/temporary-workers-visa",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "co-cancilleria",
+    "statut": "a-verifier",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "mexique": [
@@ -476,7 +668,26 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/mexique/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detail": {
+    "nom": "Visa de résident temporaire pour une offre d’emploi",
+    "employeurRequis": true,
+    "lieEmployeur": "a-verifier",
+    "conditions": [
+     "Une offre d’emploi d’une personne ou d’une entreprise établie au Mexique, qui obtient d’abord l’autorisation de l’Institut national des migrations (INM).",
+     "L’offre précise, sur papier à en-tête, le métier, la durée, le lieu de travail et le salaire.",
+     "Le séjour suit l’offre d’emploi, pour 4 ans au plus.",
+     "Frais consulaires : 56 dollars américains. Dans les 30 jours après ton arrivée, tu échanges ton visa contre un titre de séjour auprès de l’INM."
+    ],
+    "liens": [
+     {
+      "url": "https://www.miconsulado.sre.gob.mx/visasmexicanas/visa/visa-de-residencia-temporal-por-oferta-de-empleo/",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "mx-sre",
+    "statut": "verifie",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "bresil": [
@@ -505,7 +716,27 @@
    "source": null,
    "lien": null,
    "verifieLe": null,
-   "statut": "a-verifier"
+   "statut": "a-verifier",
+   "detail": {
+    "nom": "Autorisation de résidence pour travailler avec un contrat de travail",
+    "employeurRequis": true,
+    "lieEmployeur": "a-verifier",
+    "conditions": [
+     "Un contrat de travail de droit brésilien. C’est l’entreprise brésilienne qui fait la demande.",
+     "La demande se fait en ligne (MigranteWeb) et elle est examinée par le ministère de la Justice.",
+     "Durée : jusqu’à 2 ans."
+    ],
+    "liens": [
+     {
+      "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/navegacao-guiada-1/possui-autorizacao-de-residencia/o-que-deseja/qual-a-finalidade-desejada-1/trabalho-com-contrato-de-trabalho-no-brasil",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "br-mj",
+    "statut": "a-verifier",
+    "verifieLe": "2026-11-15"
+   },
+   "detailsAVerifier": true
   }
  ],
  "royaume-uni": [
@@ -578,7 +809,26 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chine/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true
+   "detailsAVerifier": true,
+   "detail": {
+    "nom": "Visa Z (travail)",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "conditions": [
+     "Il faut la notification de permis de travail pour étrangers, délivrée par l’administration chinoise du travail, ou un autre document de la liste officielle.",
+     "Dans les 30 jours après ton arrivée, tu demandes un titre de séjour à la police des étrangers.",
+     "D’après une ancienne version du règlement (avant 2017, à revérifier) : avoir 18 ans ou plus, être en bonne santé, avoir les compétences et l’expérience du poste, ne pas avoir de casier judiciaire, et un employeur bien identifié."
+    ],
+    "liens": [
+     {
+      "url": "https://cs.mfa.gov.cn/lh/lhqz_149493/qzxz/202608/t20260806_11999100.html",
+      "libelle": "Page officielle du visa"
+     }
+    ],
+    "source": "cn-mfa",
+    "statut": "a-verifier",
+    "verifieLe": "2026-11-15"
+   }
   }
  ],
  "maroc": [
@@ -591,7 +841,23 @@
    "source": null,
    "lien": null,
    "verifieLe": null,
-   "statut": "a-verifier"
+   "statut": "a-verifier",
+   "detail": {
+    "nom": "Contrat de travail pour étranger, visé par le ministère chargé de l’emploi, puis titre de séjour",
+    "employeurRequis": true,
+    "lieEmployeur": "a-verifier",
+    "conditions": [],
+    "liens": [
+     {
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francais/preparer-son-expatriation/dossiers-pays-de-l-expatriation/maroc/emploi-stage/article/reglementation-du-travail",
+      "libelle": "Fiche Maroc de France Diplomatie (réglementation du travail)"
+     }
+    ],
+    "source": "diplomatie-expatriation",
+    "statut": "a-verifier",
+    "verifieLe": "2026-11-15"
+   },
+   "detailsAVerifier": true
   }
  ]
 }
