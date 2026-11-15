@@ -18,6 +18,8 @@ const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), 
 const pays = lire("pays.json");
 const criteres = lire("criteres.json");
 const avis = lire("saisie/avis.json");
+// Culture au travail (prise de décision, vie pro et vie perso) : témoignages recoupés, saisis à la main.
+const culture = lire("saisie/culture.json");
 const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => [m.id, m])));
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
@@ -233,8 +235,15 @@ function notesAvis(p, verifieLe = AUJOURDHUI) {
   const av = avis[p.id];
   const res = {};
   const note = (n, texte) => ({ statut: "verifie", note: n, texte, annee: null, source: "notre-avis", lien: null, verifieLe });
-  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite", "decision", "pro-perso"]) {
+  for (const id of ["anglais", "langue", "hierarchie", "communication", "ponctualite"]) {
     res[id] = av?.[id] ? note(av[id].note, av[id].texte) : aVerifier("Pas encore d'avis rédigé.");
+  }
+  // Témoignages : au moins deux sources concordantes, avec une confiance « bonne » ou « moyenne ».
+  for (const id of ["decision", "pro-perso"]) {
+    const t = culture[p.id]?.[id];
+    res[id] = t?.note
+      ? { statut: "verifie", note: t.note, texte: t.texte, annee: null, source: "temoignages", lien: null, liens: t.sources, confiance: t.confiance, verifieLe: culture.verifieLe }
+      : aVerifier("Pas encore assez de témoignages concordants pour donner une note.");
   }
   // Un seul paragraphe pour les trois mesures de la taille de ville.
   for (const id of ["grande-ville", "ville-moyenne", "nature"]) {

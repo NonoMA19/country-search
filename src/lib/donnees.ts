@@ -7,7 +7,9 @@ import portesData from "../../content/portes.json";
 import avisData from "../../content/saisie/avis.json";
 import doubleData from "../../content/double-nationalite.json";
 
-export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis";
+export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis" | "temoignages";
+// Confiance d'une note tirée de témoignages : « bonne » (sources nombreuses et concordantes) ou « moyenne ».
+export type Confiance = "bonne" | "moyenne";
 export type FamilleScore = "travailler" | "vivre" | "valeurs";
 export type Sens = "haut" | "bas";
 
@@ -49,6 +51,8 @@ export type Note = {
   source?: string | null;
   lien?: string | null;
   verifieLe?: string | null;
+  liens?: string[]; // témoignages : toutes les sources, au moins deux
+  confiance?: Confiance;
 };
 
 // Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
@@ -162,6 +166,7 @@ export const LIBELLE_TYPE: Record<TypeSource | "a-verifier", string> = {
   officiel: "Officiel",
   "donnee-ouverte": "Donnée ouverte",
   "notre-avis": "Notre avis",
+  temoignages: "Témoignages",
   "a-verifier": "À vérifier",
 };
 
@@ -170,6 +175,7 @@ export const EXPLICATION_TYPE: Record<TypeSource | "a-verifier", string> = {
   officiel: "Information lue sur le site d’un État ou d’un organisme public.",
   "donnee-ouverte": "Chiffre tiré d’une base de données publique, libre de réutilisation (donnée ouverte).",
   "notre-avis": "Jugement de la rédaction, justifié par écrit. C’est un avis, pas un fait.",
+  temoignages: "Tendance tirée de guides d’expatriation et de témoignages, recoupée par au moins deux sources concordantes. Ce n’est pas une donnée officielle.",
   "a-verifier": "Information pas encore vérifiée sur une source officielle.",
 };
 
@@ -183,6 +189,8 @@ export type Preuve = {
   page?: string | null; // page de présentation lisible de la source, si le lien est un fichier brut
   verifieLe: string | null;
   licence: string | null;
+  liens?: string[]; // témoignages : la liste des sources
+  confiance?: Confiance;
 };
 
 export function preuveMesure(paysId: string, mesureId: string): Preuve {
@@ -195,13 +203,15 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   return {
     type: s.type,
     titre: m.nom,
-    texte: n.texte,
+    // Un avis sans phrase rédigée : on affiche l'explication du niveau, jamais une fenêtre vide.
+    texte: n.texte || (n.note !== null ? (m.explications?.[n.note - 1] ?? m.mots[n.note - 1]) : ""),
     source: s.nom,
     lien: n.lien ?? (s.url.startsWith("http") ? s.url : null),
     // Les liens de données ouvertes sont des fichiers bruts : on donne aussi la page de présentation.
     page: n.lien && s.page && n.lien !== s.page ? s.page : null,
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
+    ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }
 

@@ -5,7 +5,7 @@ import { notes as notesPays, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  bilanDepartage, egalites, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
+  bilanDepartage, egalites, paysCouverts, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -255,9 +255,19 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(s2.length === 1 && s2[0].poids === 2, `salaire : importance ${s2.map((e) => e.poids).join("+")} au lieu de 2`);
 }
 
-// 2.6 bis Les dilemmes inactifs (décision, vie pro et vie perso : pas encore de données) ne sont jamais proposés.
+// 2.6 bis Décision et vie pro et vie perso (témoignages) : notées pour au moins 60 % des pays, leurs dilemmes sont actifs.
 {
-  for (const id of ["nouvel-outil", "vendredi-18h"]) verifier(!dilemmeActif(trouverDilemme(id)!), `${id} est actif sans données`);
+  for (const [id, mesure] of [["idee-reunion", "decision"], ["vendredi-18h", "pro-perso"]]) {
+    verifier(paysCouverts(mesure) >= 0.6 * pays.length, `${mesure} : notée pour ${paysCouverts(mesure)} pays seulement`);
+    verifier(dilemmeActif(trouverDilemme(id)!), `${id} n'est pas actif`);
+  }
+  // Une note « à vérifier » (Hong Kong pour la décision) ne compte pas.
+  verifier(notesPays["hong-kong"].decision.statut === "a-verifier", "Hong Kong : la décision devrait rester à vérifier");
+  // Chaque note de témoignages a au moins deux sources et une confiance.
+  for (const p of pays) for (const m of ["decision", "pro-perso"]) {
+    const n = notesPays[p.id][m];
+    if (n.statut === "verifie") verifier(n.source === "temoignages" && (n.liens?.length ?? 0) >= 2 && !!n.confiance, `${p.nom} : ${m} sans deux sources ni confiance`);
+  }
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.

@@ -116,5 +116,11 @@
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
     "type": "donnee-ouverte"
+  },
+  "temoignages": {
+    "nom": "Guides d’expatriation et témoignages recoupés (au moins deux sources concordantes)",
+    "url": "/methode#temoignages",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "temoignages"
   }
 }

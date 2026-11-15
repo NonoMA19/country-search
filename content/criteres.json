@@ -311,10 +311,11 @@
     "id": "style-travail",
     "famille": "travailler",
     "nom": "Style de travail",
-    "definition": "Des positions, ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, la façon de prendre les décisions et le lien entre vie pro et vie perso. Notre avis, justifié pays par pays.",
+    "definition": "Des positions, ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, la façon de prendre les décisions et le lien entre vie pro et vie perso. Notre avis, justifié pays par pays, pour les trois premières ; des témoignages recoupés pour les deux dernières.",
     "type": "notre-avis",
     "sources": [
-      "notre-avis"
+      "notre-avis",
+      "temoignages"
     ],
     "mesures": [
       {

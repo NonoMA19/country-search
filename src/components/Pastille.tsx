@@ -10,10 +10,25 @@ const STYLE: Record<Preuve["type"], string> = {
   officiel: "bg-bleu text-white",
   "donnee-ouverte": "bg-bleu-doux text-encre",
   "notre-avis": "border border-bord bg-carte text-encre",
+  temoignages: "border border-bleu bg-carte text-lien",
   "a-verifier": "border border-dashed border-gris text-gris",
 };
 
 const MOTIFS = ["Lien cassé", "Information fausse", "Information dépassée", "Autre"];
+
+// Le nom affiché sur la pastille : une confiance « moyenne » est dite dès la pastille.
+const libelle = (p: Preuve) => (p.type === "temoignages" && p.confiance === "moyenne" ? `${LIBELLE_TYPE.temoignages} · confiance moyenne` : LIBELLE_TYPE[p.type]);
+// « www.expat.com/… » devient « expat.com » : assez pour reconnaître la source.
+const site = (url: string) => {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return url; }
+};
+// Deux articles du même site : « expat.com (1) », « expat.com (2) ».
+const nommer = (urls: string[]) =>
+  urls.map((url) => {
+    const nom = site(url);
+    const memes = urls.filter((u) => site(u) === nom);
+    return { url, nom: memes.length > 1 ? `${nom} (${memes.indexOf(url) + 1})` : nom };
+  });
 
 // Une pastille (Officiel, Donnée ouverte, Notre avis). Un tap ouvre la preuve.
 // La fenêtre est placée à la fin de la page (portail) : une pastille vit souvent
@@ -27,10 +42,10 @@ export default function Pastille({ preuve, pays, contexte }: { preuve: Preuve; p
         type="button"
         onClick={() => setOuvert(true)}
         className={`relative ml-1 inline-flex min-h-7 items-center rounded-full max-w-full px-2.5 text-left align-middle text-[13px] font-medium after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] ${STYLE[preuve.type]}`}
-        aria-label={`${LIBELLE_TYPE[preuve.type]} : voir la preuve pour ${contexte ?? preuve.titre}${pays ? `, ${pays}` : ""}`}
+        aria-label={`${libelle(preuve)} : voir la preuve pour ${contexte ?? preuve.titre}${pays ? `, ${pays}` : ""}`}
         aria-haspopup="dialog"
       >
-        {LIBELLE_TYPE[preuve.type]}
+        {libelle(preuve)}
       </button>
       {ouvert && createPortal(<Fenetre preuve={preuve} pays={pays} fermer={() => setOuvert(false)} />, document.body)}
     </>
@@ -64,7 +79,7 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
       >
         <div className="p-5 text-left text-base font-normal">
           <div className="flex items-start justify-between gap-3">
-            <span className={`inline-flex min-h-6 items-center rounded-full px-2 text-xs font-medium ${STYLE[preuve.type]}`}>{LIBELLE_TYPE[preuve.type]}</span>
+            <span className={`inline-flex min-h-6 items-center rounded-full px-2 text-xs font-medium ${STYLE[preuve.type]}`}>{libelle(preuve)}</span>
             <span className="sr-only"> : </span>
             <button type="button" onClick={() => ref.current?.close()} className="-m-2 rounded-full p-2 text-gris hover:text-encre" aria-label="Fermer">
               <X aria-hidden="true" className="h-5 w-5" />
@@ -73,8 +88,37 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
           <p className="mt-2 text-sm text-gris">{EXPLICATION_TYPE[preuve.type]}</p>
           <h2 id={idTitre} className="mt-3 text-lg font-semibold">{preuve.titre}</h2>
           <p className="mt-2">{preuve.texte}</p>
+          {preuve.type === "temoignages" && (
+            <p className="mt-3 text-sm font-medium">{preuve.confiance === "bonne" ? "Confiance bonne" : "Confiance moyenne"}</p>
+          )}
           <dl className="mt-4 space-y-2 text-sm">
-            {preuve.type === "a-verifier" ? (
+            {preuve.type === "temoignages" ? (
+              <>
+                <div>
+                  <dt className="font-medium text-gris">Sources ({preuve.liens?.length ?? 0})</dt>
+                  <dd>
+                    <ul>
+                      {nommer(preuve.liens ?? []).map(({ url, nom }) => (
+                        <li key={url}>
+                          <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`${nom} (s’ouvre dans un nouvel onglet)`} className="inline-flex min-h-11 items-center gap-1 break-all text-lien underline">
+                            {nom} <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-gris">Vérifié le</dt>
+                  <dd>{dateFr(preuve.verifieLe)}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-gris">Licence</dt>
+                  <dd>{preuve.licence}</dd>
+                </div>
+                <p className="rounded-xl bg-creux p-3">Ce sont des tendances générales tirées de témoignages. Ton entreprise peut être très différente.</p>
+              </>
+            ) : preuve.type === "a-verifier" ? (
               <div><dd className="text-gris">On n’a pas encore trouvé de source officielle ou de donnée ouverte pour cette information.</dd></div>
             ) : (
               <>

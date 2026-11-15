@@ -1,0 +1,616 @@
+{
+ "_info": "Culture au travail (prise de décision, vie pro et vie perso). Notes tirées de guides d’expatriation et de témoignages recoupés (au moins deux sources concordantes), collectées hors session et vérifiées le 15 novembre 2026. Résumés reformulés. Une note absente (null) reste « à vérifier ».",
+ "verifieLe": "2026-11-15",
+ "belgique": {
+  "decision": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Côté flamand, on consulte et on décide plutôt ensemble. Côté wallon, la direction tranche davantage. D’où une note au milieu.",
+   "sources": [
+    "https://www.expat.com/en/guide/europe/belgium/brussels/20054-the-work-environment-in-brussels.html",
+    "https://belgien.net/wp-content/uploads/Texte-La-culture-du-travail-a-Bruxelles.pdf",
+    "https://expatica.com/be/working/employment-basics/belgian-business-etiquette-102487"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les guides décrivent un travail et une vie privée bien séparés : peu d’afterworks, et personne n’attend de nouvelles le soir ou le week-end. Aucun témoignage vécu ne le confirme encore.",
+   "sources": [
+    "https://expatica.com/be/working/employment-basics/belgian-business-etiquette-102487",
+    "https://housinganywhere.com/Belgium/belgium-business-etiquette"
+   ]
+  }
+ },
+ "suisse": {
+  "decision": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "On discute longtemps et on teste ses idées auprès des personnes concernées avant la réunion. Le chef garde souvent le dernier mot, surtout en Suisse alémanique, plus hiérarchique.",
+   "sources": [
+    "https://www.swissinfo.ch/eng/society/integration_how-to-fit-in-at-a-swiss-workplace/45172026",
+    "https://upreer.ch/en/guides/workplace-culture-switzerland/"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Déjeuner et café se partagent au bureau, mais les afterworks comptent moins qu’en France. Une Française raconte que les liens avec ses collègues se sont vite arrêtés hors du travail.",
+   "sources": [
+    "https://www.expat.com/fr/forum/europe/suisse/932004-integration-tres-difficile-mythe-ou-realite.html",
+    "https://upreer.ch/en/guides/workplace-culture-switzerland/",
+    "https://www.swissinfo.ch/eng/society/integration_how-to-fit-in-at-a-swiss-workplace/45172026"
+   ]
+  }
+ },
+ "allemagne": {
+  "decision": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Les sources se contredisent : un témoignage décrit des équipes qui discutent avant de décider, deux guides insistent sur une hiérarchie claire et des règles strictes. D’où une note au milieu.",
+   "sources": [
+    "https://www.expat.com/fr/forum/europe/allemagne/440048-expatries-en-allemagne-gare-au-choc-culturel.html",
+    "https://www.expat.com/en/guide/europe/germany/frankfurt/21402-the-work-culture-in-frankfurt.html",
+    "https://smartergerman.com/blog/working-in-germany-isnt-what-you-think/"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Trois sources concordent : on voit rarement ses collègues hors du bureau. Amis et collègues forment deux cercles séparés, et la bière après le travail crée peu de liens durables.",
+   "sources": [
+    "https://www.expat.com/fr/forum/europe/allemagne/440048-expatries-en-allemagne-gare-au-choc-culturel.html",
+    "https://smartergerman.com/blog/working-in-germany-isnt-what-you-think/",
+    "https://www.expat.com/en/guide/europe/germany/frankfurt/21402-the-work-culture-in-frankfurt.html"
+   ]
+  }
+ },
+ "irlande": {
+  "decision": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "La hiérarchie est assez détendue, mais les décisions se prennent en haut, et lentement. Rien ne montre un vrai fonctionnement par consensus.",
+   "sources": [
+    "https://expatarrivals.com/europe/ireland/doing-business-ireland",
+    "https://dublin.ie/work/why-work-in-dublin/work-culture",
+    "https://www.expat.com/en/guide/europe/ireland/dublin/20738-the-work-culture-in-dublin.html"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Boire un verre entre collègues est courant à Dublin, souvent le jeudi. Selon une enquête européenne de 2015, 46 % des Irlandais voient leurs collègues hors du travail, contre 18 % en moyenne.",
+   "sources": [
+    "https://thejournal.ie/irish-people-work-socialising-2188103-Jun2015",
+    "https://www.expat.com/en/guide/europe/ireland/dublin/20738-the-work-culture-in-dublin.html",
+    "https://dublin.ie/work/why-work-in-dublin/work-culture"
+   ]
+  }
+ },
+ "luxembourg": {
+  "decision": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Les guides en anglais décrivent des décisions prises en privé, au sommet, que la réunion valide ensuite. Un article de recrutement parle au contraire de concertation. D’où une note au milieu.",
+   "sources": [
+    "https://www.expatica.com/lu/employment/employment-basics/business-culture-in-luxembourg-103625",
+    "https://www.expatarrivals.com/europe/luxembourg/doing-business-luxembourg",
+    "https://media.alleyesonme.jobs/article-titles/culture-dentreprise-au-luxembourg-les-codes-pour-bien-sintegrer"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les deux guides décrivent des relations plutôt réservées et une vie privée tenue à l’écart du bureau, même si l’un cite des sorties entre collègues.",
+   "sources": [
+    "https://www.expatica.com/lu/employment/employment-basics/business-culture-in-luxembourg-103625",
+    "https://www.expatarrivals.com/europe/luxembourg/doing-business-luxembourg"
+   ]
+  }
+ },
+ "espagne": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Le ton est détendu, mais c’est le directeur qui tranche, après des échanges informels. Les réunions servent surtout à annoncer les décisions.",
+   "sources": [
+    "https://lepetitjournal.com/madrid/emploi/les-differences-culturelles-quand-travaille-en-espagne-en-tant-que-francais-444762",
+    "https://www.expat.com/fr/guide/europe/espagne/madrid/20404-environnement-de-travail-a-madrid.html",
+    "https://www.equinoxmagazine.fr/2025/01/21/bien-etre-travail-espagnol/"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "Repas d’affaires, questions sur ta vie ou ta famille en réunion : travail et vie perso se mêlent. Aucune source ne décrit précisément les afterworks.",
+   "sources": [
+    "https://lepetitjournal.com/madrid/emploi/les-differences-culturelles-quand-travaille-en-espagne-en-tant-que-francais-444762",
+    "https://www.expat.com/fr/guide/europe/espagne/madrid/20404-environnement-de-travail-a-madrid.html"
+   ]
+  }
+ },
+ "italie": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Le pouvoir est concentré au sommet. Un chef fort décide, souvent avant même la réunion.",
+   "sources": [
+    "https://www.expatarrivals.com/italy/doing-business-in-italy",
+    "https://www.worldbusinessculture.com/?p=216",
+    "https://www.thinkinitalian.com/italian-work-culture"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Apéritif après le travail, longs déjeuners, intérêt pour la vie des collègues : c’est la norme. Les relations personnelles comptent beaucoup au travail.",
+   "sources": [
+    "https://www.expat.com/en/guide/europe/italy/20313-the-work-culture-in-milan.html",
+    "https://www.thinkinitalian.com/italian-work-culture",
+    "https://www.worldbusinessculture.com/?p=216"
+   ]
+  }
+ },
+ "pays-bas": {
+  "decision": {
+   "note": 5,
+   "confiance": "bonne",
+   "texte": "On décide par la consultation (le « poldermodel ») : en réunion, chacun donne son avis avant d’avancer. La hiérarchie est très plate.",
+   "sources": [
+    "https://www.iamexpat.nl/career/employment-news/decoding-dutch-workplace-4-rules-every-expat-needs-know",
+    "https://dutchreview.com/expat/weird-things-french-working-in-netherlands/",
+    "https://www.welcometothejungle.com/fr/articles/travail-pays-bas-culture"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Le verre du vendredi (la « borrel ») existe, mais on part à l’heure. Les collègues sont cordiaux, on devient rarement amis : un profil entre les deux.",
+   "sources": [
+    "https://dutchreview.com/expat/weird-things-french-working-in-netherlands/",
+    "https://www.welcometothejungle.com/fr/articles/travail-pays-bas-culture",
+    "https://www.hollandtimes.nl/2026-edition-4-june/the-dutch-office-efficiency-boundaries-and-surprisingly-good-gossip/"
+   ]
+  }
+ },
+ "portugal": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "La hiérarchie est marquée : le chef est d’abord celui qui décide. Selon des managers français sur place, demander l’avis de l’équipe surprend.",
+   "sources": [
+    "https://www.edenred.fr/magazine/votre-quotidien/avantages-salaries/un-manager-francais-au-portugal",
+    "https://lepetitjournal.com/lisbonne/comprendre-portugal/travailler-au-portugal-guide-pratique-pour-les-francophones-444429",
+    "https://www.expat.com/en/guide/europe/portugal/19954-understanding-the-work-environment-in-lisbon.html"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les guides parlent de déjeuners partagés mais d’afterworks rares : le soir, c’est pour la famille. D’autres textes décrivent pourtant des sorties d’équipe.",
+   "sources": [
+    "https://www.expat.com/en/guide/europe/portugal/20936-the-work-culture-in-porto.html",
+    "https://www.expat.com/en/guide/europe/portugal/19954-understanding-the-work-environment-in-lisbon.html",
+    "https://www.welcometothejungle.com/fr/articles/partir-travailler-lisbonne"
+   ]
+  }
+ },
+ "norvege": {
+  "decision": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Le management est très plat : on cherche l’adhésion de tous et on décide au plus près du terrain, parfois après de longues discussions.",
+   "sources": [
+    "https://www.welcometothejungle.com/fr/articles/pratiques-innovantes-management-norvege",
+    "https://nlsnorwegian.no/?p=67989",
+    "https://www.oslo.kommune.no/english/welcome-to-oslo/work-business/work-culture/"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "La vie privée passe avant le travail : on part une fois le travail fait. Les liens informels au bureau sont moins forts qu’en France.",
+   "sources": [
+    "https://www.welcometothejungle.com/fr/articles/pratiques-innovantes-management-norvege",
+    "https://www.tekna.no/en/career/a-career-in-norway/things-i-wish-i-knew-before-i-started-working-in-norway/",
+    "https://www.oslo.kommune.no/english/welcome-to-oslo/work-business/voices-from-oslo-i-ve-worked-in-oslo-for-15-years/"
+   ]
+  }
+ },
+ "suede": {
+  "decision": {
+   "note": 5,
+   "confiance": "bonne",
+   "texte": "On cherche l’accord de tous et le compromis avant de trancher. C’est plus lent, mais toute l’équipe adhère.",
+   "sources": [
+    "https://relocatetosweden.com/swedish-business-etiquette-10-essential-tips-for-your-international-colleagues/",
+    "https://www.howtoliveindenmark.com/?p=14861",
+    "https://www.thelocal.se/20190829/how-to-play-office-politics-in-swedenand-survive"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Travail et vie privée restent séparés. Le vrai moment social, c’est la « fika », la pause café. Les afterworks existent, mais il faut les organiser et ils aident peu à s’intégrer.",
+   "sources": [
+    "https://relocatetosweden.com/swedish-business-etiquette-10-essential-tips-for-your-international-colleagues/",
+    "https://www.thelocal.se/20191021/ways-your-socializing-habits-change-after-a-move-to-sweden/",
+    "https://www.expat.com/en/forum/europe/sweden/1081621-the-afterwork-culture-in-sweden.html"
+   ]
+  }
+ },
+ "danemark": {
+  "decision": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "L’organisation est plate : chacun donne son avis et on discute jusqu’à l’accord. Un article note que le plan convenu est ensuite suivi moins strictement qu’en Suède.",
+   "sources": [
+    "https://ida.dk/en/career-and-legal-advice/working-in-denmark/danish-workplace-culture",
+    "https://workindenmark.dk/working-in-denmark/workplace-culture-in-denmark",
+    "https://www.howtoliveindenmark.com/?p=14861"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Beaucoup rentrent directement après le travail. Mais déjeuner ensemble, bar du vendredi, repas d’équipe et journées de cohésion sont fréquents.",
+   "sources": [
+    "https://ida.dk/en/career-and-legal-advice/working-in-denmark/danish-workplace-culture",
+    "https://www.frenchweb.fr/management-danois-un-style-unique-base-sur-le-bien-etre-et-la-prise-dinitiative/277961",
+    "https://www.welcometothejungle.com/fr/articles/qualite-vie-travail-danemark"
+   ]
+  }
+ },
+ "canada": {
+  "decision": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Les sources québécoises décrivent des réunions où chacun participe et un consensus trouvé par compromis. Le manager dirige peu, mais garde le dernier mot.",
+   "sources": [
+    "https://immigrantquebec.com/fr/?p=4553",
+    "https://sdp.ulaval.ca/blogue/2016/02/12/integrer-efficacement-le-marche-du-travail-quebecois/?print=pdf",
+    "https://www.worldbusinessculture.com/?p=82"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Les sources divergent : l’une décrit une vie privée à part et des amitiés lentes, une autre fait du « 5 à 7 » un rendez-vous clé pour le réseau.",
+   "sources": [
+    "https://immigrantquebec.com/fr/?p=4553",
+    "https://www.berlitz.com/en-ca/blog/french-canadian-culture-guide-professionals-quebec-new-brunswick",
+    "https://www.wisemove.ca/post/canadian-workplace-culture-for-newcomers"
+   ]
+  }
+ },
+ "australie": {
+  "decision": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "La hiérarchie est plate, on s’appelle par son prénom et on demande l’avis de l’équipe. Mais aucune source ne dit clairement qui tranche à la fin.",
+   "sources": [
+    "https://lepetitjournal.com/interculturalite-le-monde-du-travail-en-australie-207680",
+    "https://www.intercultural.org.au/wp-content/pgs/navigating_australian_work_culture__a_guide_for_new_migrants.html",
+    "https://www.settleau.com.au/blog/workplace-culture-guide"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "bonne",
+   "texte": "Le verre du vendredi et les pauses en équipe sont courants et appréciés, sans être obligatoires. Les soirées et les week-ends restent protégés.",
+   "sources": [
+    "https://lepetitjournal.com/interculturalite-le-monde-du-travail-en-australie-207680",
+    "https://www.intercultural.org.au/wp-content/pgs/navigating_australian_work_culture__a_guide_for_new_migrants.html",
+    "https://www.settleau.com.au/blog/workplace-culture-guide"
+   ]
+  }
+ },
+ "royaume-uni": {
+  "decision": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "On cherche le consensus et on règle les désaccords avant la réunion, raconte une manager française à Londres. Un guide le confirme : les consignes se donnent sur le ton de la suggestion.",
+   "sources": [
+    "https://www.edenred.fr/magazine/votre-quotidien/ressources-humaines/un-manager-francais-en-grande-bretagne",
+    "https://theculturalatlas.org/british-culture/british-culture-business-culture"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Le pub du jeudi ou du vendredi est un rituel d’équipe très ancré. De retour au bureau, on reste plus réservé et on évite les questions personnelles.",
+   "sources": [
+    "https://www.edenred.fr/magazine/votre-quotidien/ressources-humaines/un-manager-francais-en-grande-bretagne",
+    "https://www.expat.com/fr/guide/europe/angleterre/londres/35932-la-culture-professionnelle-a-londres.html",
+    "https://theculturalatlas.org/british-culture/british-culture-business-culture"
+   ]
+  }
+ },
+ "japon": {
+  "decision": {
+   "note": 5,
+   "confiance": "bonne",
+   "texte": "Les décisions se préparent en amont, en tête à tête (« nemawashi »), puis circulent par écrit d’un niveau à l’autre (« ringi »). C’est long mais collectif : la réunion ne fait que valider.",
+   "sources": [
+    "https://modernlivingjapan.com/en/blog/understanding-japanese-work-culture-an-expats-honest-guide",
+    "https://e-housing.jp/post/the-truth-about-corporate-life-in-japan",
+    "https://hellopebl.com/resources/blog/guide-to-japanese-work-culture/"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Les soirées entre collègues (« nomikai ») restent un moment clé pour créer des liens, souvent presque obligatoires. De plus en plus d’entreprises les rendent facultatives.",
+   "sources": [
+    "https://modernlivingjapan.com/en/blog/understanding-japanese-work-culture-an-expats-honest-guide",
+    "https://e-housing.jp/post/the-truth-about-corporate-life-in-japan",
+    "https://hellopebl.com/resources/blog/guide-to-japanese-work-culture/"
+   ]
+  }
+ },
+ "nouvelle-zelande": {
+  "decision": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "La structure est plutôt plate : l’avis du manager ne l’emporte pas d’office et l’équipe est consultée, mais quelqu’un reste responsable du choix final. Un expatrié décrit des bureaux plus hiérarchiques.",
+   "sources": [
+    "https://goingnz.com/?p=1868",
+    "https://theculturalatlas.org/new-zealand-culture/new-zealand-culture-business-culture",
+    "https://www.nothandco.com/news/the-unspoken-rules-of-kiwi-workplaces"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Verre du vendredi et barbecues existent, mais beaucoup partent à 17 h pour la famille ou le sport. La séparation reste assez nette.",
+   "sources": [
+    "https://www.expat.com/en/guide/oceania/new-zealand/auckland/21455-the-work-culture-in-auckland.html",
+    "https://goingnz.com/?p=1868",
+    "https://expatarrivals.com/asia-pacific/new-zealand/working-new-zealand"
+   ]
+  }
+ },
+ "coree-du-sud": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Les décisions descendent la hiérarchie, selon l’ancienneté, avec peu de vraie consultation. Un accord du groupe est parfois recherché avant que la direction tranche.",
+   "sources": [
+    "https://www.visaskorea.com/korea-work-culture-foreigners-guide-en/",
+    "https://theculturalatlas.org/south-korean-culture/south-korean-culture-business-culture",
+    "https://koreaexpose.com/inside-one-of-south-koreas-so-called-global-firms"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "bonne",
+   "texte": "Les dîners d’équipe (« hoesik ») prolongent le travail. Les refuser souvent peut peser sur ton évaluation, même si la pression baisse, surtout dans les jeunes entreprises.",
+   "sources": [
+    "https://theculturalatlas.org/south-korean-culture/south-korean-culture-business-culture",
+    "https://www.visaskorea.com/korea-work-culture-foreigners-guide-en/",
+    "https://koreaexpose.com/inside-one-of-south-koreas-so-called-global-firms"
+   ]
+  }
+ },
+ "taiwan": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Les entreprises sont hiérarchiques : les plus anciens tranchent, les plus jeunes appliquent les consignes, avec peu d’initiative.",
+   "sources": [
+    "https://www.expatarrivals.com/asia-pacific/taiwan/working-taiwan",
+    "https://talenttaiwan.substack.com/p/what-taiwanese-employers-need-to",
+    "https://goldcard.nat.gov.tw/en/why-taiwan/taiwanese-work-culture-four-key-cultural-differences-to-look-out-for/"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "Déjeuners tous les jours, événements d’équipe payés par l’entreprise, invitations qu’on accepte : le groupe de travail compte beaucoup. Seuls deux témoignages de forum le décrivent concrètement.",
+   "sources": [
+    "https://tw.forumosa.com/t/work-culture-in-taiwan-office/195552?page=2",
+    "https://expatarrivals.com/asia-pacific/taiwan/doing-business-taiwan",
+    "https://goldcard.nat.gov.tw/en/why-taiwan/taiwanese-work-culture-four-key-cultural-differences-to-look-out-for/"
+   ]
+  }
+ },
+ "hong-kong": {
+  "decision": {
+   "note": null,
+   "confiance": "a-verifier"
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Un stagiaire raconte des repas et des sorties avec ses collègues. Un guide conseille de ne pas se forcer à suivre les soirées, et note plus d’équilibre dans les entreprises internationales.",
+   "sources": [
+    "https://fundforeducationabroad.org/journal/work-culture-locals/",
+    "https://sydney-sighter.pages.dev/Work-Culture",
+    "https://expatfocus.com/?p=10731"
+   ]
+  }
+ },
+ "argentine": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Les décisions se prennent au sommet et passent par plusieurs niveaux de validation, ce qui ralentit tout.",
+   "sources": [
+    "https://expatarrivals.com/americas/argentina/doing-business-argentina",
+    "https://www.expat.com/en/guide/south-america/argentina/21529-the-work-culture-in-buenos-aires.html",
+    "https://landingpadba.com/laburando-con-argentinos-crosscultural-misunderstandings-workplace/"
+   ]
+  },
+  "pro-perso": {
+   "note": null,
+   "confiance": "a-verifier"
+  }
+ },
+ "chili": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "La hiérarchie est verticale : les décisions importantes reviennent aux cadres supérieurs.",
+   "sources": [
+    "https://lepetitjournal.com/santiago/emploi/travailler-chili-guide-complet-358214",
+    "https://expatarrivals.com/americas/chile/doing-business-chile",
+    "https://www.expat.com/fr/guide/amerique-du-sud/chili/37484-reseautage-professionnel-et-social-au-chili.html"
+   ]
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "Déjeuner d’équipe tous les jours, sorties après le travail, frontière floue entre vie pro et vie perso. Un témoignage ancien (de 2013 à 2015 environ) parle même d’invitations à la maison.",
+   "sources": [
+    "https://www.expat.com/fr/guide/amerique-du-sud/chili/37484-reseautage-professionnel-et-social-au-chili.html",
+    "https://www.expat.com/en/forum/south-america/chile/575017-business-etiquette-in-chile.html"
+   ]
+  }
+ },
+ "colombie": {
+  "decision": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les décisions descendent la hiérarchie et contredire un supérieur en public est mal vu. Une seule source décrit vraiment comment on décide.",
+   "sources": [
+    "https://www.talaera.com/culture/colombian-business-culture/",
+    "https://www.expat.com/en/guide/south-america/colombia/bogota/37793-working-in-bogota.html"
+   ]
+  },
+  "pro-perso": {
+   "note": null,
+   "confiance": "a-verifier"
+  }
+ },
+ "mexique": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Le management est paternaliste, souvent autoritaire : quelques dirigeants décident. Contredire son chef peut nuire à ta carrière.",
+   "sources": [
+    "https://lepetitjournal.com/mexico/actualites/interculturel-le-management-la-mexicaine-21541",
+    "https://www.worldbusinessculture.com/?p=246"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Les relations sont détendues et la frontière entre vie pro et vie perso plus floue qu’en France. Mais les verres après le travail sont plutôt pour les fêtes : le reste du temps, on rentre en famille.",
+   "sources": [
+    "https://lepetitjournal.com/mexico/actualites/interculturel-le-management-la-mexicaine-21541",
+    "https://www.expat.com/en/guide/north-america/mexico/21678-the-work-culture-in-mexico-city.html"
+   ]
+  }
+ },
+ "bresil": {
+  "decision": {
+   "note": null,
+   "confiance": "a-verifier"
+  },
+  "pro-perso": {
+   "note": 4,
+   "confiance": "moyenne",
+   "texte": "Café, bière ou dîner : les échanges informels font partie du travail. Une manager française à São Paulo mise sur les fêtes et les activités d’équipe pour souder le groupe.",
+   "sources": [
+    "https://www.welcometothejungle.com/fr/articles/partir-travailler-rio-de-janeiro",
+    "https://www.edenred.fr/magazine/votre-quotidien/avantages-salaries/un-manager-francais-au-bresil",
+    "https://expatarrivals.com/americas/brazil/doing-business-brazil"
+   ]
+  }
+ },
+ "etats-unis": {
+  "decision": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Des Français décrivent des décisions rapides, appuyées sur les chiffres, sans longs débats. Les réunions servent plutôt à agir qu’à réfléchir ensemble.",
+   "sources": [
+    "https://www.frenchweb.fr/des-differences-fondamentales-entre-americains-et-francais/293311",
+    "https://www.expat.com/en/expat-mag/2433-gilbert-croze-talks-about-cultural-relations-in-the-global-workforce.html"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les collègues sont chaleureux, mais vie privée et travail restent séparés et on se voit peu après le bureau. Certaines entreprises organisent des activités d’équipe. Une partie des sources date de 2008.",
+   "sources": [
+    "https://csmonitor.com/Business/2008/0317/p13s01-wmgn.html",
+    "https://www.expat.com/en/expat-mag/2433-gilbert-croze-talks-about-cultural-relations-in-the-global-workforce.html",
+    "https://www.expat.com/en/guide/north-america/usa/20279-the-work-culture-in-new-york.html"
+   ]
+  }
+ },
+ "singapour": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Les équipes attendent des consignes claires et les appliquent. Une manager française raconte l’échec de son management participatif.",
+   "sources": [
+    "https://www.edenred.fr/magazine/votre-quotidien/ressources-humaines/un-manager-francais-singapour",
+    "https://www.pilotoasia.com/guide/singapore-work-culture",
+    "https://absoluteinternship.com/blog/what-international-interns-need-to-know-about-singapores-workplace-culture/"
+   ]
+  },
+  "pro-perso": {
+   "note": 3,
+   "confiance": "moyenne",
+   "texte": "Deux guides décrivent une séparation habituelle, avec un verre ou un dîner de temps en temps. Un article français parle au contraire de sorties entre collègues, utiles pour le réseau.",
+   "sources": [
+    "https://sg.jobstreet.com/career-advice/article/building-healthy-lasting-friendships-work",
+    "https://absoluteinternship.com/blog/what-international-interns-need-to-know-about-singapores-workplace-culture/",
+    "https://lepetitjournal.com/singapour/travailler-singapour-les-notions-culturelles-connaitre-242408"
+   ]
+  }
+ },
+ "emirats-arabes-unis": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Le chef a un rôle directif et protecteur : les cadres décident, les plus jeunes suivent. Les démarches peuvent quand même être longues.",
+   "sources": [
+    "https://www.worldbusinessculture.com/?p=423",
+    "https://expatica.com/ae/working/employment-basics/business-culture-in-the-united-arab-emirates-72283",
+    "https://startoopsandupsofdubai.substack.com/p/cultural-differences-dubai"
+   ]
+  },
+  "pro-perso": {
+   "note": null,
+   "confiance": "a-verifier"
+  }
+ },
+ "chine": {
+  "decision": {
+   "note": 2,
+   "confiance": "bonne",
+   "texte": "Les objectifs viennent d’en haut et le management horizontal n’est pas la norme. Les désaccords se règlent en privé, et la recherche d’harmonie allonge parfois les choses.",
+   "sources": [
+    "https://www.mckinsey.com/featured-insights/china/what-you-need-to-know-about-working-for-a-chinese-company",
+    "https://www.jobteaser.com/fr/advices/travailler-chine-conseils-temoignages-expats",
+    "https://www.safeguardglobal.com/fr/country/china/culture/"
+   ]
+  },
+  "pro-perso": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Des expatriés à Shanghai et à Hong Kong décrivent peu de sorties entre collègues, avec un grand dîner par an. Mais WeChat fait déborder le travail sur la vie perso.",
+   "sources": [
+    "https://www.jobteaser.com/fr/advices/travailler-chine-conseils-temoignages-expats",
+    "https://lepetitjournal.com/shanghai/emploi/travailler-en-chine-douze-differences-culturelles-au-bureau-43942"
+   ]
+  }
+ },
+ "maroc": {
+  "decision": {
+   "note": 2,
+   "confiance": "moyenne",
+   "texte": "Les décisions viennent surtout d’en haut, avec peu de participation. Elles restent lentes : certains managers hésitent à trancher pour ne froisser personne.",
+   "sources": [
+    "https://www.expat.com/en/guide/africa/morocco/marrakech/21150-the-work-culture-in-marrakesh.html",
+    "https://research.lcieducation.com/fr/print/content/freins-culturels-au-leadership-dans-l%E2%80%99entreprise-marocaine"
+   ]
+  },
+  "pro-perso": {
+   "note": null,
+   "confiance": "a-verifier"
+  }
+ }
+}

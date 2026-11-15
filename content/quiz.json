@@ -748,17 +748,17 @@
       ]
     },
     {
-      "id": "nouvel-outil",
+      "id": "idee-reunion",
       "theme": "Culture au travail",
-      "titre": "Le nouvel outil",
+      "titre": "Ton idée en réunion",
       "axe": "décision",
-      "scene": "Ton équipe doit choisir un nouvel outil.",
+      "scene": "Tu proposes une amélioration.",
       "pourquoi": "A rapproche des pays où le chef tranche, B des pays où l’on décide par consensus.",
       "options": [
         {
           "id": "a",
-          "texte": "Le chef tranche lundi, on applique mardi",
-          "detail": "Même si tu n’étais pas d’accord.",
+          "texte": "Ton chef répond « OK, on teste lundi »",
+          "detail": "C’est décidé en cinq minutes, mais si ça rate, c’est pour toi.",
           "effets": [
             {
               "mesures": [
@@ -773,8 +773,8 @@
         },
         {
           "id": "b",
-          "texte": "Trois réunions pour que tout le monde soit d’accord",
-          "detail": "Mais ensuite, personne ne revient dessus.",
+          "texte": "« Bonne idée, on en reparle avec toute l’équipe. »",
+          "detail": "Trois semaines de discussions, mais ensuite toute l’équipe porte le projet avec toi.",
           "effets": [
             {
               "mesures": [
