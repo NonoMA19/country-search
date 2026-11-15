@@ -315,6 +315,88 @@
       ]
     }
   ],
+  "objectifs": {
+    "premier-poste": {
+      "nom": "un premier poste",
+      "effets": [
+        {
+          "mesures": [
+            "emploi"
+          ]
+        },
+        {
+          "mesures": [
+            "salaire"
+          ]
+        },
+        {
+          "mesures": [
+            "anglais"
+          ],
+          "afficheSi": "peut-travailler-en-anglais"
+        }
+      ],
+      "explication": "Un premier poste : le chômage des jeunes, le salaire et le travail en anglais (si tu es prêt à travailler en anglais)."
+    },
+    "stage-vie": {
+      "nom": "un stage ou un VIE",
+      "effets": [
+        {
+          "mesures": [
+            "emploi"
+          ]
+        },
+        {
+          "mesures": [
+            "francais"
+          ]
+        }
+      ],
+      "explication": "Un stage ou un VIE : le chômage des jeunes et le réseau français sur place."
+    },
+    "aventure": {
+      "nom": "une année d’aventure",
+      "effets": [
+        {
+          "mesures": [
+            "prix"
+          ]
+        },
+        {
+          "mesures": [
+            "nature"
+          ]
+        },
+        {
+          "mesures": [
+            "doux"
+          ]
+        }
+      ],
+      "explication": "Une année d’aventure : la vie pas chère, la nature proche et le climat doux. Le salaire ne reçoit aucun poids de départ."
+    },
+    "carriere": {
+      "nom": "une carrière longue",
+      "effets": [
+        {
+          "mesures": [
+            "salaire"
+          ]
+        },
+        {
+          "mesures": [
+            "stabilite"
+          ]
+        },
+        {
+          "mesures": [
+            "sante"
+          ]
+        }
+      ],
+      "explication": "Une carrière longue : le salaire, la stabilité politique et la couverture santé. Aucune pénalité de départ pour une langue à apprendre : tu as le temps de l’apprendre."
+    }
+  },
   "priorites": [
     {
       "id": "travail",

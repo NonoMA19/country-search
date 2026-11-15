@@ -110,7 +110,38 @@ export function effetsBruts(etat: Etat): EffetActif[] {
     const o = optionChoisie(etat, id);
     if (o) res.push(...effetsOption(o, `dilemme:${id}`));
   }
+  res.push(...effetsObjectif(etat));
   return res;
+}
+
+// ---------- Ton projet ----------
+// Chaque objectif donne des poids de départ (0,5), plus légers qu'une réponse de dilemme (1).
+// Si tu as choisi, dans un dilemme, une autre option que celle qui visait cette mesure,
+// ta réponse l'emporte : le poids de départ disparaît.
+export const POIDS_OBJECTIF = 0.5;
+const peutTravaillerEnAnglais = (p: Profil) => !(p.anglais === "debutant" && p["pret-anglais"] !== "oui");
+
+export function mesuresEcartees(etat: Etat): Set<string> {
+  const res = new Set<string>();
+  for (const id of etat.ordre) {
+    const d = trouverDilemme(id);
+    const choisie = optionChoisie(etat, id);
+    if (!d || !choisie) continue;
+    const gardees = new Set(choisie.effets.flatMap((e) => e.mesures));
+    for (const o of d.options) if (o !== choisie) for (const e of o.effets) for (const m of e.mesures) if (!gardees.has(m)) res.add(m);
+  }
+  return res;
+}
+
+export function effetsObjectif(etat: Etat): EffetActif[] {
+  const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
+  if (!obj) return [];
+  const ecartees = mesuresEcartees(etat);
+  return obj.effets
+    .filter((e) => e.afficheSi !== "peut-travailler-en-anglais" || peutTravaillerEnAnglais(etat.profil))
+    .flatMap((e) => e.mesures)
+    .filter((m) => mesureDisponible(m) && !ecartees.has(m))
+    .map((m) => ({ mesure: m, sens: "haut" as const, poids: POIDS_OBJECTIF, famille: familleDe(m), origine: `objectif:${etat.profil.objectif}` }));
 }
 
 // Toutes les réponses qui comptent, regroupées mesure par mesure : si plusieurs réponses visent
@@ -378,7 +409,7 @@ export function paysSurprise(lignes: Ligne[]): Ligne | null {
 export function dilemmeVisible(d: Dilemme, etat: Etat): boolean {
   if (etat.reponses[d.id] !== undefined) return false;
   if (!dilemmeActif(d)) return false;
-  if (d.afficheSi === "peut-travailler-en-anglais" && etat.profil.anglais === "debutant" && etat.profil["pret-anglais"] !== "oui") return false;
+  if (d.afficheSi === "peut-travailler-en-anglais" && !peutTravaillerEnAnglais(etat.profil)) return false;
   return true;
 }
 

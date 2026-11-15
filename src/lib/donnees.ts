@@ -89,6 +89,8 @@ export type QuestionProfil = {
   regleAffichage?: string;
   options: OptionProfil[];
 };
+// Ton projet donne des poids de départ, plus légers qu'une réponse de dilemme.
+export type Objectif = { nom: string; explication: string; effets: { mesures: string[]; afficheSi?: string }[] };
 export type Priorite = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; sens: Sens };
 export type Sujet = { id: string; label: string; mesure: string };
 
@@ -133,6 +135,7 @@ export const criteres = criteresData as Critere[];
 export const sources = sourcesData as Record<string, Source>;
 export const quiz = quizData as unknown as {
   profil: QuestionProfil[];
+  objectifs: Record<string, Objectif>;
   priorites: Priorite[];
   sujets: Sujet[];
   dilemmes: Dilemme[];

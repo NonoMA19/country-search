@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, mesures, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
 import PiedDePage from "@/components/PiedDePage";
-import { SEUIL_DILEMME, dilemmeActif, paysCouverts } from "@/lib/moteur";
+import { POIDS_OBJECTIF, SEUIL_DILEMME, dilemmeActif, paysCouverts } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
 
 export const metadata: Metadata = {
@@ -50,7 +50,7 @@ export default function Methode() {
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
           <li>Seules tes réponses comptent. Un dilemme auquel tu réponds « Passer » ne change rien.</li>
-          <li>Tes 3 priorités comptent double (importance 2). Une option de dilemme compte simple (importance 1), à moitié (importance 0,5), ou ne change rien. Si plusieurs réponses visent la même mesure, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
+          <li>Tes 3 priorités comptent double (importance 2). Une option de dilemme compte simple (importance 1), à moitié (importance 0,5), ou ne change rien. Ton projet donne des poids de départ, plus légers (importance 0,5). Si plusieurs réponses visent la même mesure, on garde la plus grande importance, sans les additionner : seules tes 3 priorités comptent double.</li>
           <li>Certaines mesures ne sont ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, l’hiver, l’été. Pour elles, ton option fixe une position préférée. Un pays à cette position gagne 100 %, un niveau plus loin 75 %, deux niveaux 50 %, et ainsi de suite.</li>
           <li>Ton pourcentage = les points gagnés par le pays, divisés par les points possibles. Il mesure « ça te ressemble » avec les familles Travailler, Vivre et, si tu l’as choisi, Valeurs.</li>
           <li>Une donnée « À vérifier » sur une de tes 3 priorités compte pour une note neutre, 50 %, et la carte du pays le dit : un trou dans les données ne peut pas faire gagner un pays. Sur une autre réponse, elle est sautée : elle ne donne ni ne retire de points.</li>
@@ -63,6 +63,16 @@ export default function Methode() {
           <li>Si tu déclares une autre nationalité, le badge devient « Porte ouverte grâce à ta nationalité » seulement dans les cas que nous avons vérifiés : la nationalité du pays lui-même (canadienne pour le Canada, américaine pour les États-Unis) et la nationalité irlandaise pour le Royaume-Uni. Le pourcentage ne change pas.</li>
         </ul>
         <p className="mt-3 text-sm text-gris">PVT : Programme Vacances-Travail, un visa d’un an pour voyager et travailler. VIE : Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l’étranger.</p>
+      </section>
+
+      <section className="mt-8">
+        <h2 className="text-xl font-semibold">Ton projet fixe les règles de départ</h2>
+        <p className="mt-3">Le projet que tu choisis au début donne des poids de départ, avant même le premier dilemme. Ils sont légers : importance {nombre(POIDS_OBJECTIF)}, moins qu’une réponse de dilemme (importance 1).</p>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          {Object.entries(quiz.objectifs).map(([id, o]) => <li key={id}>{o.explication}</li>)}
+        </ul>
+        <p className="mt-3">Tes réponses l’emportent. Si, dans un dilemme, tu choisis une autre option que celle qui visait une de ces mesures, son poids de départ disparaît. Exemple : tu pars pour une année d’aventure, mais au dilemme « Deux offres » tu choisis le meilleur salaire : la vie pas chère perd son poids de départ.</p>
+        <p className="mt-3">Le badge de visa ne dépend pas de ce calcul : ton projet change seulement la porte d’entrée proposée (PVT, VIE ou visa de travail), comme avant.</p>
       </section>
 
       <section className="mt-8">

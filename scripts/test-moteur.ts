@@ -84,8 +84,8 @@ for (let i = 0; i < NB; i++) {
     for (const v of Object.values(l.familles)) verifier(v === null || (Number.isFinite(v) && v >= 0 && v <= 100), `quiz ${i} : jauge hors limites pour ${l.pays.nom}`);
   }
 
-  // Le score ne dépend ni de l'âge, ni du budget, ni de la durée, ni de l'objectif, ni de la nationalité.
-  for (const champ of ["age", "budget", "duree", "objectif", "nationalite-laquelle"]) {
+  // Le score ne dépend ni de l'âge, ni du budget, ni de la durée, ni de la nationalité (l'objectif, lui, compte : lot 2).
+  for (const champ of ["age", "budget", "duree", "nationalite-laquelle"]) {
     const q = quiz.profil.find((x) => x.id === champ);
     for (const o of q?.options ?? []) {
       const profil = { ...etat.profil, [champ]: o.id, ...(champ === "nationalite-laquelle" ? { nationalite: "oui" } : {}) };
@@ -217,10 +217,22 @@ for (let i = 0; i < NB; i++) {
   verifier(validerSession(JSON.parse(JSON.stringify(SESSION_VIDE))) !== null, "la session vide est refusée");
 }
 
+// 2.8 Le projet : poids de départ 0,5, remplacés par une réponse qui va dans un autre sens.
+{
+  const base: Etat = { ...ETAT_VIDE, profil: { objectif: "aventure" }, priorites: ["securite", "travail", "francais"] };
+  const prix = (e: Etat) => effetsActifs(e).find((x) => x.mesure === "prix");
+  verifier(prix(base)?.poids === 0.5 && !!prix(base)?.origine.startsWith("objectif:"), "aventure : la vie pas chère n'a pas son poids de départ de 0,5");
+  verifier(!effetsActifs(base).some((x) => x.mesure === "salaire"), "aventure : le salaire a reçu un poids de départ");
+  const salaire = { ...base, reponses: { "deux-offres": "a" }, ordre: ["deux-offres"] };
+  verifier(prix(salaire) === undefined, "aventure + « 3 200 € par mois » : le poids de départ sur les prix n'a pas disparu");
+  const loyer = { ...base, reponses: { "deux-offres": "b" }, ordre: ["deux-offres"] };
+  verifier(prix(loyer)?.poids === 1, "aventure + « 2 400 € par mois » : la réponse ne l'emporte pas sur le poids de départ");
+}
+
 // ---------- Bilan ----------
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
   for (const e of echecs) console.error("  - " + e);
   process.exit(1);
 }
-console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 7 cas précis.`);
+console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 8 cas précis.`);
