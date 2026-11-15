@@ -546,34 +546,102 @@ export function portrait(etat: Etat): LignePortrait[] {
 
 export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
-// ---------- Raisons, points qui coincent, profil de travail ----------
-export type Argument = { titre: string; texte: string; preuve: Preuve };
-
-function argument(l: Ligne, d: Detail, profil: Profil): Argument {
-  const m = mesures[d.mesure];
-  const n = notes[l.pays.id][d.mesure];
-  const parle = d.mesure === "langue" && parleLangueDe(l.pays.id, profil);
-  const mot = parle ? "tu la parles déjà" : m.mots[(n.note ?? 1) - 1];
-  return { titre: `${m.nom} : ${mot}`, texte: n.texte, preuve: preuveMesure(l.pays.id, d.mesure) };
-}
-
+// ---------- Résultat rédigé pour toi, profil de travail ----------
 function uniques(details: Detail[]): Detail[] {
   const vus = new Set<string>();
   return details.filter((d) => (vus.has(d.mesure) ? false : (vus.add(d.mesure), true)));
 }
 
-// « Pourquoi ce pays » : seulement les points notés 4 ou 5 sur 5 dans le sens de tes réponses.
+// « Pour toi » : seulement les points notés 4 ou 5 sur 5 dans le sens de tes réponses.
 export const ACCORD_ARGUMENT = 0.75;
 
-export function raisons(l: Ligne, profil: Profil, n = 3): Argument[] {
-  const tries = [...l.details].filter((d) => !d.neutre && d.accord >= ACCORD_ARGUMENT).sort((a, b) => b.poids * b.accord - a.poids * a.accord || b.accord - a.accord);
-  return uniques(tries).slice(0, n).map((d) => argument(l, d, profil));
+// ---------- « Pour toi » et « À savoir » ----------
+// Une phrase qui relie la donnée à toi. La valeur chiffrée reste dans la pastille de preuve.
+export type LigneResultat = { texte: string; mesure: string; preuve: Preuve };
+
+// La phrase de fait d'une mesure pour un pays (« Le chômage des jeunes y est faible »).
+export function faitMesure(paysId: string, mesureId: string, profil: Profil): string | null {
+  const m = mesures[mesureId];
+  const note = noteEffective(paysId, mesureId, profil);
+  if (!m || note === null) return null;
+  if (mesureId === "langue" && parleLangueDe(paysId, profil)) return "Tu parles déjà la langue du pays";
+  if (Array.isArray(m.fait)) return m.fait[note - 1] ?? null;
+  if (m.fait) return m.fait.replace("{mot}", m.mots[note - 1]);
+  return `${m.nom}\u00a0: ${m.mots[note - 1]}`;
 }
 
-// « Ce qui peut coincer » : le point le plus défavorable (noté 1 ou 2 sur 5 dans le sens de tes réponses).
-export function coince(l: Ligne, profil: Profil): { arguments: Argument[]; alertes: Alerte[] } {
-  const tries = [...l.details].filter((d) => !d.neutre && d.accord <= 0.25).sort((a, b) => a.accord - b.accord || b.poids - a.poids);
-  return { arguments: uniques(tries).slice(0, 1).map((d) => argument(l, d, profil)), alertes: l.porte.alertes };
+// Seules les mesures liées à une priorité, à ton projet ou à une réponse de dilemme parlent de toi.
+const origineQuiParle = (d: Detail) => /^(priorite|objectif|dilemme):/.test(d.origine);
+const nomObjectif = (d: Detail) => quiz.objectifs[d.origine.split(":")[1]]?.nom ?? "ton projet";
+const personnel = (fait: string) => /^(Tu|Ton|Ta|Tes) /.test(fait);
+
+function preferenceDe(d: Detail, etat: Etat): string | undefined {
+  if (!d.origine.startsWith("dilemme:")) return undefined;
+  return optionChoisie(etat, d.origine.split(":")[1])?.preference;
+}
+
+function phrasePour(d: Detail, fait: string): string {
+  if (personnel(fait)) return `${fait}.`;
+  if (d.origine.startsWith("priorite:")) return `${fait}\u00a0: c’est une de tes priorités.`;
+  if (d.origine.startsWith("objectif:")) return `${fait}, utile pour ${nomObjectif(d)}.`;
+  if (d.sens === "position") return `${fait}, comme tu le préfères.`;
+  return `${fait}, et c’est ce que tu as choisi.`;
+}
+
+function phraseSavoir(d: Detail, fait: string, etat: Etat): string {
+  if (d.origine.startsWith("priorite:")) return `${fait}, alors que c’est une de tes priorités.`;
+  if (d.origine.startsWith("objectif:")) return `${fait}\u00a0: à prendre en compte pour ${nomObjectif(d)}.`;
+  const pref = preferenceDe(d, etat);
+  return pref ? `${fait}, et tu préférais ${pref}.` : `${fait}.`;
+}
+
+export const MAX_POUR_TOI = 3;
+// « À savoir » : un point moyen ou défavorable (2,5 sur 5 ou moins dans le sens de tes réponses).
+export const ACCORD_A_SAVOIR = 0.5;
+
+// « Pour toi » : 2 ou 3 points notés 4 ou 5 sur 5 dans le sens de tes réponses, jamais un point moyen.
+// « interdites » : les phrases déjà affichées pour un pays mieux classé (jamais deux fois la même).
+export function pourToi(l: Ligne, etat: Etat, interdites: Set<string> = new Set()): LigneResultat[] {
+  const tries = l.details
+    .filter((d) => !d.neutre && d.accord >= ACCORD_ARGUMENT && origineQuiParle(d))
+    .sort((a, b) => b.poids * b.accord - a.poids * a.accord || b.accord - a.accord);
+  const res: LigneResultat[] = [];
+  for (const d of uniques(tries)) {
+    if (res.length >= MAX_POUR_TOI) break;
+    const fait = faitMesure(l.pays.id, d.mesure, etat.profil);
+    if (!fait) continue;
+    const texte = phrasePour(d, fait);
+    if (interdites.has(texte)) continue;
+    res.push({ texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) });
+  }
+  return res;
+}
+
+// « À savoir » : la mesure la plus défavorable parmi celles qui comptent pour toi.
+export function aSavoir(l: Ligne, etat: Etat, interdites: Set<string> = new Set()): LigneResultat | null {
+  const tries = l.details
+    .filter((d) => !d.neutre && d.accord <= ACCORD_A_SAVOIR && origineQuiParle(d))
+    .sort((a, b) => a.accord - b.accord || b.poids - a.poids);
+  for (const d of uniques(tries)) {
+    const fait = faitMesure(l.pays.id, d.mesure, etat.profil);
+    if (!fait) continue;
+    const texte = phraseSavoir(d, fait, etat);
+    if (!interdites.has(texte)) return { texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) };
+  }
+  return null;
+}
+
+// Les lignes des pays affichés, dans l'ordre : un pays ne reprend jamais une phrase d'un pays mieux classé.
+export function lignesTop(liste: Ligne[], etat: Etat): Map<string, { pour: LigneResultat[]; savoir: LigneResultat | null }> {
+  const vues = new Set<string>();
+  const res = new Map<string, { pour: LigneResultat[]; savoir: LigneResultat | null }>();
+  for (const l of liste) {
+    const pour = pourToi(l, etat, vues);
+    const savoir = aSavoir(l, etat, vues);
+    for (const x of [...pour, ...(savoir ? [savoir] : [])]) vues.add(x.texte);
+    res.set(l.pays.id, { pour, savoir });
+  }
+  return res;
 }
 
 // « Ton profil de travail » : tes réponses aux dilemmes de culture au travail, comparées à ton top 3.

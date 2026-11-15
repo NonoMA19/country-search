@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Download } from "lucide-react";
 import { useSession } from "@/lib/memoire";
-import { calculer, coince, raisons } from "@/lib/moteur";
+import { aSavoir, calculer, portrait, pourToi } from "@/lib/moteur";
 import { telechargerDossier } from "@/lib/pdf";
 import { trouverPays } from "@/lib/pays";
 
@@ -32,8 +32,10 @@ export default function BoutonDossier({ paysId }: { paysId: string }) {
       await telechargerDossier({
         pays,
         ligne,
-        raisons: ligne && session ? raisons(ligne, session.etat.profil) : [],
-        coince: ligne && session ? coince(ligne, session.etat.profil) : undefined,
+        pour: ligne && session ? pourToi(ligne, session.etat) : [],
+        savoir: ligne && session ? aSavoir(ligne, session.etat) : null,
+        alertes: ligne?.porte.alertes ?? [],
+        portrait: fini ? portrait(session.etat).map((x) => x.texte) : [],
       });
     } catch {
       setErreur(true);

@@ -14,8 +14,8 @@ import Portrait from "@/components/Portrait";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, portrait, coince, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, raisons, repondues, verdict,
-  type Badge, type Etat, type Ligne,
+  LIBELLE_BADGE, budgetProfil, calculer, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
+  type Badge, type Etat, type Ligne, type LigneResultat,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
@@ -77,20 +77,21 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; surprise?: boolean }) {
+type LignesPays = { pour: LigneResultat[]; savoir: LigneResultat | null };
+
+function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; lignes: LignesPays; surprise?: boolean }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
-  const pour = raisons(ligne, etat.profil);
-  const contre = coince(ligne, etat.profil);
+  const { pour, savoir } = lignes;
   const score = Math.round(ligne.score);
   const { porte, pays: p } = ligne;
-  const rienNeCoince = contre.arguments.length === 0 && contre.alertes.length === 0;
+  const alertes = porte.alertes;
 
   const pdf = async () => {
     setEnCours(true);
     setErreur(false);
     try {
-      await telechargerDossier({ pays: p, ligne, raisons: pour, coince: contre, portrait: portrait(etat).map((x) => x.texte) });
+      await telechargerDossier({ pays: p, ligne, pour, savoir, alertes, portrait: portrait(etat).map((x) => x.texte) });
     } catch {
       setErreur(true);
     } finally {
@@ -124,6 +125,23 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         </p>
       </div>
 
+      <section className="mt-5">
+        <h4 className="font-semibold">Pour toi</h4>
+        {pour.length ? (
+          <ul className="mt-2 space-y-2">
+            {pour.map((a) => <Affirmation key={a.mesure} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
+          </ul>
+        ) : (
+          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
+        )}
+        {savoir && (
+          <>
+            <h4 className="mt-4 font-semibold">À savoir</h4>
+            <ul className="mt-2"><Affirmation texte={savoir.texte} preuve={savoir.preuve} pays={p.nom} /></ul>
+          </>
+        )}
+      </section>
+
       <details className="group mt-5 rounded-2xl border border-bord">
         <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
           <span>Voir le détail</span>
@@ -131,24 +149,12 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         </summary>
         <div className="px-4 pb-4">
       <section className="mt-3">
-        <h4 className="font-semibold">Pourquoi ce pays</h4>
-        {pour.length ? (
-          <ul className="mt-2 space-y-2">
-            {pour.map((a) => <Affirmation key={a.titre} {...a} pays={p.nom} />)}
-          </ul>
-        ) : (
-          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
-        )}
-      </section>
-
-      <section className="mt-5">
         <h4 className="font-semibold">Ce qui peut coincer</h4>
-        {rienNeCoince ? (
-          <p className="mt-2 text-gris">Rien de net dans tes réponses.</p>
+        {alertes.length === 0 ? (
+          <p className="mt-2 text-gris">Rien côté visa et argent.</p>
         ) : (
           <ul className="mt-2 space-y-2">
-            {contre.arguments.map((a) => <Affirmation key={a.titre} {...a} pays={p.nom} />)}
-            {contre.alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
+            {alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
           </ul>
         )}
         {ligne.neutres.length > 0 && (
@@ -189,7 +195,20 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
   );
 }
 
-function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: number; egalite?: boolean; action?: React.ReactNode }) {
+// « Moins adaptés pour toi » : une seule phrase par raison, en tête de groupe.
+// « Fermé à ton âge » regroupe les pays, la porte de chacun reste écrite sous son nom.
+const FERME = "Fermé à ton âge.";
+function groupesEcart(lignes: Ligne[]) {
+  const groupes = new Map<string, { ligne: Ligne; detail: string | null }[]>();
+  for (const l of lignes) {
+    const raison = l.ecart?.startsWith(FERME) ? FERME : (l.ecart ?? "");
+    const detail = raison === FERME ? (l.ecart ?? "").slice(FERME.length).trim() || null : null;
+    groupes.set(raison, [...(groupes.get(raison) ?? []), { ligne: l, detail }]);
+  }
+  return [...groupes].map(([raison, l]) => ({ raison, lignes: l }));
+}
+
+function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; rang?: number; egalite?: boolean; action?: React.ReactNode; raison?: string | null }) {
   return (
     <li className="rounded-2xl border border-bord bg-carte p-3">
       <div className="flex items-center gap-3">
@@ -206,7 +225,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
         <BadgePorte badge={ligne.porte.badge} petit />
         {egalite && <span className="text-xs text-gris">à égalité</span>}
       </div>
-      {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
+      {raison !== undefined ? raison && <p className="mt-2 pl-9 text-sm text-gris">{raison}</p> : ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
       {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
@@ -240,6 +259,8 @@ export default function Resultat() {
   const top = principaux.filter((l) => !l.peuDeDonnees).slice(0, 3);
   const suite = principaux.filter((l) => !top.includes(l));
   const surprise = paysSurprise(principaux);
+  // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
+  const phrases = lignesTop([...top, ...(surprise ? [surprise] : [])], etat);
   const style = profilTravail(etat, top);
   const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
@@ -286,7 +307,7 @@ export default function Resultat() {
           {toutAZero ? (
             <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
           ) : (
-            top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)
+            top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />)
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </div>
@@ -332,7 +353,7 @@ export default function Resultat() {
         <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
         <p className="mt-1 text-sm text-gris">Le mieux placé hors de ton top 3, parmi les pays où peu de Français vivent, s’il atteint au moins 70 %.</p>
         <div className="mt-4">
-          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
+          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} lignes={phrases.get(surprise.pays.id) ?? { pour: [], savoir: null }} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
         </div>
       </section>
 
@@ -394,15 +415,20 @@ export default function Resultat() {
           <div className="mt-6">
             <h3 className="font-semibold">Moins adaptés pour toi</h3>
             <p className="mt-1 text-sm text-gris">Ces pays restent visibles. Tu peux les remonter dans ton classement.</p>
-            <ul className="mt-3 space-y-2">
-              {ecartes.map((l) => (
-                <LignePays key={l.pays.id} ligne={l} action={
-                  <button type="button" onClick={() => maj({ etat: { ...etat, remontes: [...etat.remontes, l.pays.id] } })} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
-                    <ArrowUp aria-hidden="true" className="h-4 w-4" /> Le remonter
-                  </button>
-                } />
-              ))}
-            </ul>
+            {groupesEcart(ecartes).map((g) => (
+              <div key={g.raison} className="mt-4">
+                <p className="font-medium">{g.raison}</p>
+                <ul className="mt-2 space-y-2">
+                  {g.lignes.map(({ ligne: l, detail }) => (
+                    <LignePays key={l.pays.id} ligne={l} raison={detail} action={
+                      <button type="button" onClick={() => maj({ etat: { ...etat, remontes: [...etat.remontes, l.pays.id] } })} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
+                        <ArrowUp aria-hidden="true" className="h-4 w-4" /> Le remonter
+                      </button>
+                    } />
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         )}
       </section>

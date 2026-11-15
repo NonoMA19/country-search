@@ -109,7 +109,8 @@
           "moyen",
           "faible",
           "très faible"
-        ]
+        ],
+        "fait": "Le chômage des jeunes y est {mot}"
       }
     ]
   },
@@ -155,7 +156,8 @@
           "moyen",
           "élevé",
           "très élevé"
-        ]
+        ],
+        "fait": "Le salaire moyen y est {mot}, une fois les prix pris en compte"
       }
     ]
   },
@@ -187,6 +189,13 @@
           "possible dans les grandes entreprises",
           "très courant en entreprise",
           "langue du bureau"
+        ],
+        "fait": [
+          "Au travail, impossible de s'en sortir sans la langue locale",
+          "Au travail, la langue locale est presque toujours nécessaire",
+          "Au travail, l'anglais suffit surtout dans les grandes entreprises",
+          "Ton anglais suffit dans beaucoup d'entreprises",
+          "Ton anglais suffit au travail : c'est la langue du bureau"
         ]
       }
     ]
@@ -233,6 +242,13 @@
           "communauté moyenne",
           "grande communauté",
           "très grande communauté"
+        ],
+        "fait": [
+          "Très peu de Français vivent sur place",
+          "Peu de Français vivent sur place",
+          "Une communauté française de taille moyenne vit sur place",
+          "Une grande communauté française vit sur place",
+          "Une très grande communauté française vit sur place"
         ]
       }
     ]
@@ -279,6 +295,13 @@
           "semaines moyennes",
           "semaines plutôt courtes",
           "semaines courtes"
+        ],
+        "fait": [
+          "Les semaines de travail y sont très longues",
+          "Les semaines de travail y sont longues",
+          "Les semaines de travail y sont dans la moyenne",
+          "Les semaines de travail y sont plutôt courtes",
+          "Les semaines de travail y sont courtes"
         ]
       }
     ]
@@ -318,7 +341,8 @@
           "Le chef décide, souvent après avoir consulté l'équipe.",
           "Les décisions viennent d'en haut, et on contredit rarement son chef en public.",
           "Le rang et l'ancienneté comptent beaucoup, et les décisions suivent la voie hiérarchique."
-        ]
+        ],
+        "fait": "La hiérarchie y est {mot}"
       },
       {
         "id": "communication",
@@ -344,7 +368,8 @@
           "On dit les choses, mais avec des formes.",
           "Un refus est souvent suggéré plutôt que dit.",
           "Il faut lire entre les lignes : un « non » frontal est rare."
-        ]
+        ],
+        "fait": "La communication y est {mot}"
       },
       {
         "id": "ponctualite",
@@ -370,7 +395,8 @@
           "On arrive à l'heure, sans rigidité.",
           "Arriver en retard en réunion est mal vu.",
           "Être à l'heure, c'est arriver un peu en avance."
-        ]
+        ],
+        "fait": "La ponctualité y est {mot}"
       },
       {
         "id": "decision",
@@ -389,6 +415,13 @@
           "entre les deux",
           "accord du groupe recherché",
           "décision par consensus"
+        ],
+        "fait": [
+          "Le chef y tranche seul",
+          "Le chef y tranche après avoir écouté l'équipe",
+          "Les décisions s'y prennent entre les deux",
+          "On y cherche l'accord du groupe avant de décider",
+          "On y décide tous ensemble, par consensus"
         ]
       },
       {
@@ -408,6 +441,13 @@
           "un peu mêlées",
           "souvent mêlées",
           "très mêlées"
+        ],
+        "fait": [
+          "Vie pro et vie perso y sont très séparées",
+          "Vie pro et vie perso y sont plutôt séparées",
+          "Vie pro et vie perso s'y mêlent un peu",
+          "Vie pro et vie perso s'y mêlent souvent",
+          "Vie pro et vie perso s'y mêlent beaucoup"
         ]
       }
     ]
@@ -454,6 +494,13 @@
           "prix proches de ceux de la France",
           "moins cher que la France",
           "beaucoup moins cher que la France"
+        ],
+        "fait": [
+          "La vie y coûte beaucoup plus cher qu'en France",
+          "La vie y coûte plus cher qu'en France",
+          "La vie y coûte à peu près comme en France",
+          "La vie y coûte moins cher qu'en France",
+          "La vie y coûte beaucoup moins cher qu'en France"
         ]
       }
     ]
@@ -500,7 +547,8 @@
           "frais",
           "doux",
           "chaud"
-        ]
+        ],
+        "fait": "L'hiver y est {mot}"
       },
       {
         "id": "ete",
@@ -533,7 +581,8 @@
           "chaud",
           "très chaud",
           "étouffant"
-        ]
+        ],
+        "fait": "L'été y est {mot}"
       },
       {
         "id": "doux",
@@ -553,7 +602,8 @@
           "assez doux",
           "doux",
           "très doux"
-        ]
+        ],
+        "fait": "Le climat y est {mot}"
       }
     ]
   },
@@ -599,6 +649,13 @@
           "assez loin",
           "proche",
           "très proche"
+        ],
+        "fait": [
+          "La France est à plus de 14 h de vol",
+          "La France est à 10 à 14 h de vol",
+          "La France est à 6 à 10 h de vol",
+          "Tu rentres en France en 3 à 6 h de vol",
+          "Tu rentres en France en moins de 3 h de vol"
         ]
       },
       {
@@ -632,6 +689,13 @@
           "décalage moyen",
           "petit décalage",
           "presque la même heure"
+        ],
+        "fait": [
+          "Le décalage avec la France est de 9 h ou plus",
+          "Le décalage avec la France est de 7 à 8 h",
+          "Le décalage avec la France est de 4 à 6 h",
+          "Le décalage avec la France n'est que de 2 à 3 h",
+          "C'est presque la même heure qu'en France"
         ]
       }
     ]
@@ -664,6 +728,13 @@
           "anglais au quotidien",
           "langue proche du français",
           "on parle français"
+        ],
+        "fait": [
+          "Le quotidien se passe dans une langue et une écriture très éloignées du français",
+          "Le quotidien se passe dans une autre langue, à alphabet latin",
+          "Le quotidien se passe en anglais",
+          "Le quotidien se passe dans une langue proche du français",
+          "On y parle français au quotidien"
         ]
       }
     ]
@@ -710,7 +781,8 @@
           "moyen",
           "faible",
           "très faible"
-        ]
+        ],
+        "fait": "Le taux d'homicides y est {mot}"
       }
     ]
   },
@@ -746,6 +818,13 @@
           "accord avec la France",
           "système public accessible",
           "carte européenne valable"
+        ],
+        "fait": [
+          "Les soins y sont signalés comme très chers",
+          "Il faut y prévoir une assurance santé privée",
+          "Un accord de sécurité sociale existe avec la France",
+          "Le système de santé public y est ouvert aux travailleurs étrangers",
+          "Ta carte européenne d'assurance maladie y est valable"
         ]
       }
     ]
@@ -793,7 +872,8 @@
           "40 à 60 sur 100",
           "60 à 80 sur 100",
           "80 à 100 sur 100"
-        ]
+        ],
+        "fait": "La note de stabilité politique y est de {mot}"
       },
       {
         "id": "libertes",
@@ -826,7 +906,8 @@
           "40 à 60 sur 100",
           "60 à 80 sur 100",
           "80 à 100 sur 100"
-        ]
+        ],
+        "fait": "La note des libertés d'expression et de la presse y est de {mot}"
       },
       {
         "id": "egalite",
@@ -859,7 +940,8 @@
           "40 à 60 sur 100",
           "60 à 80 sur 100",
           "80 à 100 sur 100"
-        ]
+        ],
+        "fait": "La note d'égalité entre femmes et hommes dans la loi y est de {mot}"
       },
       {
         "id": "air",
@@ -892,7 +974,8 @@
           "10 à 15 µg/m³",
           "7,5 à 10 µg/m³",
           "moins de 7,5 µg/m³"
-        ]
+        ],
+        "fait": "La pollution aux particules fines y est de {mot}"
       }
     ]
   },
@@ -924,6 +1007,13 @@
           "une grande ville à taille humaine",
           "plusieurs grandes villes",
           "de très grandes métropoles"
+        ],
+        "fait": [
+          "Il n'y a pas de grande ville",
+          "Il y a peu de grandes villes",
+          "On y trouve une grande ville à taille humaine",
+          "On y trouve plusieurs grandes villes",
+          "On y trouve de très grandes métropoles"
         ]
       },
       {
@@ -943,6 +1033,13 @@
           "quelques villes moyennes",
           "beaucoup de villes moyennes",
           "un vrai réseau de villes moyennes"
+        ],
+        "fait": [
+          "Il n'y a pas de ville moyenne",
+          "Il y a peu de villes moyennes",
+          "On y trouve quelques villes moyennes",
+          "On y trouve beaucoup de villes moyennes",
+          "On y trouve un vrai réseau de villes moyennes"
         ]
       },
       {
@@ -962,6 +1059,13 @@
           "nature accessible",
           "nature proche",
           "nature aux portes des villes"
+        ],
+        "fait": [
+          "La nature y est très loin des villes",
+          "La nature y est limitée",
+          "La nature y est accessible",
+          "La nature y est proche des villes",
+          "La nature y est aux portes des villes"
         ]
       }
     ]

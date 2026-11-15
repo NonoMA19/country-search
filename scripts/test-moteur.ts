@@ -5,7 +5,7 @@ import { mesures, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  egalites, evaluerPorte, portrait, prochainDilemme, questionProfilVisible, raisons, repondre, resultatPret, trouverDilemme,
+  egalites, evaluerPorte, portrait, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -113,13 +113,24 @@ for (let i = 0; i < NB; i++) {
   const cles = effetsActifs(etat).map((e) => e.mesure);
   verifier(new Set(cles).size === cles.length, `quiz ${i} : la même mesure compte deux fois`);
 
-  // « Pourquoi ce pays » : seulement des points notés 4 ou 5 sur 5 dans le sens des réponses.
+  // « Pour toi » : seulement des points notés 4 ou 5 sur 5 dans le sens des réponses, liés à une priorité,
+  // au projet ou à un dilemme. « À savoir » : un point moyen ou défavorable. Jamais deux fois la même phrase.
+  const rediges = lignesTop(top, etat);
+  const toutes: string[] = [];
   for (const l of top) {
-    for (const a of raisons(l, etat.profil)) {
-      const d = l.details.find((x) => mesures[x.mesure]?.nom === a.preuve.titre && !x.neutre && x.accord >= 0.75);
-      verifier(!!d, `quiz ${i} : ${l.pays.nom} a un argument moyen ou défavorable (${a.titre})`);
+    const { pour, savoir } = rediges.get(l.pays.id)!;
+    verifier(pour.length <= 3, `quiz ${i} : ${l.pays.nom} a ${pour.length} lignes « Pour toi »`);
+    for (const a of pour) {
+      const d = l.details.find((x) => x.mesure === a.mesure && !x.neutre);
+      verifier(!!d && d.accord >= 0.75 && /^(priorite|objectif|dilemme):/.test(d.origine), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
     }
+    if (savoir) {
+      const d = l.details.find((x) => x.mesure === savoir.mesure && !x.neutre);
+      verifier(!!d && d.accord <= 0.5, `quiz ${i} : ${l.pays.nom} « À savoir » n'est pas un point défavorable (${savoir.texte})`);
+    }
+    toutes.push(...pour.map((a) => a.texte), ...(savoir ? [savoir.texte] : []));
   }
+  verifier(new Set(toutes).size === toutes.length, `quiz ${i} : la même phrase sous deux pays du top 3`);
 
   // Portrait : au plus 6 phrases, jamais une phrase sur un dilemme passé, jamais deux fois la même.
   const lignesPortrait = portrait(etat);
