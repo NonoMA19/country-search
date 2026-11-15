@@ -36,7 +36,7 @@ function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
         <Pastille preuve={preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe)} pays={nomPays} contexte="les règles du VIE" />
       </p>
       <p className="mt-2 text-sm">
-        {presence ? presence.texte : "Y a-t-il des missions VIE dans ce pays ? Ce n’est pas encore vérifié."}
+        {presence ? presence.texte : "Y a-t-il des missions VIE dans ce pays ? Ce n’est pas encore vérifié."}
         <Pastille preuve={presence ? preuveSource("Missions VIE dans ce pays", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE dans ce pays", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={nomPays} contexte="les missions VIE" />
       </p>
     </li>
@@ -188,7 +188,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
         )}
         <div className="mt-6">
           <BoutonDossier paysId={p.id} />
-          <p className="mt-2 text-sm text-gris">Le fichier est créé sur ton appareil : rien n’est envoyé.</p>
+          <p className="mt-2 text-sm text-gris">Le fichier est créé sur ton appareil : rien n’est envoyé.</p>
         </div>
       </section>
 

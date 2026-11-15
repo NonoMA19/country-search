@@ -55,6 +55,12 @@ const verifie = (idMesure, valeur, texte, source, lien, annee) => ({
   texte, annee: annee ?? null, source, lien, verifieLe: AUJOURDHUI,
 });
 
+// Typographie française : espace insécable avant : ; ! ? %, apostrophes courbes (comme scripts/typo.py).
+const typo = (t) => t.replace(/(?<=[A-Za-zÀ-ÿœŒ])'(?=[A-Za-zÀ-ÿœŒ])/g, "’").replace(/ +([:;!?%»])/g, "\u00a0$1").replace(/« +/g, "«\u00a0");
+const typoTextes = (scores) => {
+  for (const s of Object.values(scores)) for (const m of Object.values(s)) if (typeof m.texte === "string") m.texte = typo(m.texte);
+};
+
 // ---------- Les phrases affichées (une seule fonction par mesure) ----------
 const pluriel = (n, mot) => `${mot}${Math.round(n * 10) / 10 >= 2 ? "s" : ""}`;
 const TEXTE = {
@@ -253,6 +259,7 @@ if (TEXTES_SEUL) {
     Object.assign(s, notesAvis(p, dateAvis));
     delete s.conges;
   }
+  typoTextes(actuel.pays);
   fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
   console.log("Phrases réécrites. Valeurs et dates inchangées.");
   process.exit(0);
@@ -331,6 +338,7 @@ for (const p of pays) {
 
 const manquantes = [];
 for (const p of pays) for (const [id, m] of Object.entries(scores[p.id])) if (m.statut !== "verifie") manquantes.push(`${p.nom} : ${mesures[id]?.nom ?? id}`);
+typoTextes(scores);
 fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify({ genereLe: AUJOURDHUI, villes, pays: scores }, null, 1) + "\n");
 fs.writeFileSync(path.join(CACHE, "a-verifier.txt"), manquantes.join("\n") + "\n");
 console.log(`\ncontent/scores.json écrit. Notes vérifiées : ${Object.values(scores).reduce((t, s) => t + Object.values(s).filter((m) => m.statut === "verifie").length, 0)}. À vérifier : ${manquantes.length}.`);

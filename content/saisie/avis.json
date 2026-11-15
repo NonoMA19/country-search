@@ -9,15 +9,15 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "À Bruxelles, l'anglais est courant dans les institutions européennes et les grandes entreprises. Ailleurs, on travaille en français ou en néerlandais."
+   "texte": "À Bruxelles, l’anglais est courant dans les institutions européennes et les grandes entreprises. Ailleurs, on travaille en français ou en néerlandais."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est l'une des trois langues officielles : on le parle à Bruxelles et en Wallonie. En Flandre, la vie se passe en néerlandais."
+   "texte": "Le français est l’une des trois langues officielles : on le parle à Bruxelles et en Wallonie. En Flandre, la vie se passe en néerlandais."
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Le compromis est une habitude de travail : on cherche l'accord avant de trancher."
+   "texte": "Le compromis est une habitude de travail : on cherche l’accord avant de trancher."
   },
   "communication": {
    "note": 3,
@@ -28,7 +28,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet.",
+   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet.",
    "grande-ville": 3,
    "ville-moyenne": 4,
    "nature": 2
@@ -44,7 +44,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "L'anglais sert dans les multinationales et les organisations internationales (Genève, Zurich, Bâle). Le reste du marché travaille en allemand, en français ou en italien."
+   "texte": "L’anglais sert dans les multinationales et les organisations internationales (Genève, Zurich, Bâle). Le reste du marché travaille en allemand, en français ou en italien."
   },
   "langue": {
    "note": 5,
@@ -63,7 +63,7 @@
    "texte": "La fiabilité est une valeur centrale."
   },
   "villes": {
-   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes.",
+   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes.",
    "grande-ville": 2,
    "ville-moyenne": 5,
    "nature": 5
@@ -77,7 +77,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "L'anglais suffit dans beaucoup de start-up et de grands groupes, surtout à Berlin. L'allemand reste demandé dans la majorité des offres."
+   "texte": "L’anglais suffit dans beaucoup de start-up et de grands groupes, surtout à Berlin. L’allemand reste demandé dans la majorité des offres."
   },
   "langue": {
    "note": 2,
@@ -96,7 +96,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région.",
+   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région.",
    "grande-ville": 4,
    "ville-moyenne": 5,
    "nature": 3
@@ -115,22 +115,22 @@
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais. L'irlandais, langue officielle, est peu utilisé au quotidien."
+   "texte": "La vie quotidienne se passe en anglais. L’irlandais, langue officielle, est peu utilisé au quotidien."
   },
   "hierarchie": {
    "note": 2,
-   "texte": "L'ambiance est informelle et on s'appelle par le prénom."
+   "texte": "L’ambiance est informelle et on s’appelle par le prénom."
   },
   "communication": {
    "note": 3,
-   "texte": "Malgré l'ambiance informelle, les critiques restent enrobées."
+   "texte": "Malgré l’ambiance informelle, les critiques restent enrobées."
   },
   "ponctualite": {
    "note": 3,
    "texte": ""
   },
   "villes": {
-   "texte": "Dublin concentre une grande partie de l'emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches.",
+   "texte": "Dublin concentre une grande partie de l’emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches.",
    "grande-ville": 2,
    "ville-moyenne": 3,
    "nature": 4
@@ -146,11 +146,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "La place financière est très internationale : l'anglais est courant, à côté du français, de l'allemand et du luxembourgeois."
+   "texte": "La place financière est très internationale : l’anglais est courant, à côté du français, de l’allemand et du luxembourgeois."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est l'une des trois langues du pays et sert partout au quotidien, dans les commerces comme dans les administrations."
+   "texte": "Le français est l’une des trois langues du pays et sert partout au quotidien, dans les commerces comme dans les administrations."
   },
   "hierarchie": {
    "note": 3,
@@ -179,7 +179,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes. L'anglais suffit surtout dans quelques multinationales et centres de services."
+   "texte": "L’espagnol est nécessaire dans la plupart des postes. L’anglais suffit surtout dans quelques multinationales et centres de services."
   },
   "langue": {
    "note": 4,
@@ -212,7 +212,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'italien est nécessaire dans la plupart des postes. L'anglais suffit dans quelques multinationales, surtout à Milan."
+   "texte": "L’italien est nécessaire dans la plupart des postes. L’anglais suffit dans quelques multinationales, surtout à Milan."
   },
   "langue": {
    "note": 4,
@@ -245,11 +245,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales. Le néerlandais reste un plus pour évoluer."
+   "texte": "L’anglais est très courant dans les entreprises internationales. Le néerlandais reste un plus pour évoluer."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en néerlandais, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en néerlandais, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
@@ -264,7 +264,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage.",
+   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage.",
    "grande-ville": 3,
    "ville-moyenne": 5,
    "nature": 2
@@ -282,7 +282,7 @@
   },
   "langue": {
    "note": 4,
-   "texte": "On parle portugais, dans sa version européenne : une langue latine proche du français."
+   "texte": "On parle portugais, dans sa version européenne : une langue latine proche du français."
   },
   "hierarchie": {
    "note": 4,
@@ -297,7 +297,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Lisbonne et Porto concentrent l'emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L'océan et les parcs naturels sont proches.",
+   "texte": "Lisbonne et Porto concentrent l’emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L’océan et les parcs naturels sont proches.",
    "grande-ville": 3,
    "ville-moyenne": 3,
    "nature": 4
@@ -311,15 +311,15 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales, l'énergie et la tech. Le norvégien reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales, l’énergie et la tech. Le norvégien reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en norvégien, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en norvégien, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "L'égalité entre collègues est une valeur forte."
+   "texte": "L’égalité entre collègues est une valeur forte."
   },
   "communication": {
    "note": 2,
@@ -344,15 +344,15 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales et la tech. Le suédois reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales et la tech. Le suédois reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en suédois, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en suédois, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "On cherche le consensus : chacun donne son avis avant qu'une décision soit prise."
+   "texte": "On cherche le consensus : chacun donne son avis avant qu’une décision soit prise."
   },
   "communication": {
    "note": 3,
@@ -377,19 +377,19 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales. Le danois reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales. Le danois reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en danois, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en danois, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "L'organisation est très plate."
+   "texte": "L’organisation est très plate."
   },
   "communication": {
    "note": 1,
-   "texte": "On dit franchement ce qu'on pense, avec humour."
+   "texte": "On dit franchement ce qu’on pense, avec humour."
   },
   "ponctualite": {
    "note": 4,
@@ -411,11 +411,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail dans la majorité du pays. Au Québec, on travaille surtout en français."
+   "texte": "L’anglais est la langue de travail dans la majorité du pays. Au Québec, on travaille surtout en français."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est langue officielle avec l'anglais. On vit en français au Québec, en anglais dans la plupart des autres provinces."
+   "texte": "Le français est langue officielle avec l’anglais. On vit en français au Québec, en anglais dans la plupart des autres provinces."
   },
   "hierarchie": {
    "note": 2,
@@ -423,7 +423,7 @@
   },
   "communication": {
    "note": 3,
-   "texte": "Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
+   "texte": "Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
   },
   "ponctualite": {
    "note": 4,
@@ -444,7 +444,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais, à Sydney et Melbourne comme dans les autres capitales d'État."
+   "texte": "On travaille en anglais, à Sydney et Melbourne comme dans les autres capitales d’État."
   },
   "langue": {
    "note": 3,
@@ -452,7 +452,7 @@
   },
   "hierarchie": {
    "note": 2,
-   "texte": "L'ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
+   "texte": "L’ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
   },
   "communication": {
    "note": 2,
@@ -463,7 +463,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Sydney et Melbourne sont de grandes villes. L'emploi est concentré dans quelques capitales d'État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches.",
+   "texte": "Sydney et Melbourne sont de grandes villes. L’emploi est concentré dans quelques capitales d’État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches.",
    "grande-ville": 4,
    "ville-moyenne": 2,
    "nature": 5
@@ -477,11 +477,11 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le japonais est demandé dans la grande majorité des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le japonais est demandé dans la grande majorité des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
-   "texte": "La vie quotidienne se passe en japonais, avec trois systèmes d'écriture."
+   "texte": "La vie quotidienne se passe en japonais, avec trois systèmes d’écriture."
   },
   "hierarchie": {
    "note": 5,
@@ -519,7 +519,7 @@
   },
   "hierarchie": {
    "note": 2,
-   "texte": "L'ambiance est informelle et on attend de chacun qu'il se débrouille avec autonomie."
+   "texte": "L’ambiance est informelle et on attend de chacun qu’il se débrouille avec autonomie."
   },
   "communication": {
    "note": 2,
@@ -544,7 +544,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le coréen est demandé dans la grande majorité des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le coréen est demandé dans la grande majorité des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
@@ -552,7 +552,7 @@
   },
   "hierarchie": {
    "note": 5,
-   "texte": "L'âge et le rang fixent la façon de s'adresser à chacun."
+   "texte": "L’âge et le rang fixent la façon de s’adresser à chacun."
   },
   "communication": {
    "note": 5,
@@ -563,7 +563,7 @@
    "texte": "Les journées de travail sont longues."
   },
   "villes": {
-   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l'emploi international. Des montagnes entourent les villes.",
+   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l’emploi international. Des montagnes entourent les villes.",
    "grande-ville": 5,
    "ville-moyenne": 3,
    "nature": 3
@@ -577,7 +577,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le mandarin est demandé dans la plupart des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le mandarin est demandé dans la plupart des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
@@ -589,14 +589,14 @@
   },
   "communication": {
    "note": 4,
-   "texte": "On préserve l'harmonie du groupe et on évite de mettre quelqu'un en difficulté devant les autres."
+   "texte": "On préserve l’harmonie du groupe et on évite de mettre quelqu’un en difficulté devant les autres."
   },
   "ponctualite": {
    "note": 4,
    "texte": ""
   },
   "villes": {
-   "texte": "L'agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d'une heure.",
+   "texte": "L’agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d’une heure.",
    "grande-ville": 4,
    "ville-moyenne": 3,
    "nature": 4
@@ -611,7 +611,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est langue officielle avec le chinois, et il domine dans la finance et les entreprises internationales."
+   "texte": "L’anglais est langue officielle avec le chinois, et il domine dans la finance et les entreprises internationales."
   },
   "langue": {
    "note": 3,
@@ -627,10 +627,10 @@
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Le rythme est rapide et l'efficacité prime."
+   "texte": "Le rythme est rapide et l’efficacité prime."
   },
   "villes": {
-   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d'une heure du centre.",
+   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d’une heure du centre.",
    "grande-ville": 5,
    "ville-moyenne": 1,
    "nature": 3
@@ -644,7 +644,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Buenos Aires, Córdoba ou Rosario, l'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Buenos Aires, Córdoba ou Rosario, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
@@ -660,10 +660,10 @@
   },
   "ponctualite": {
    "note": 2,
-   "texte": "La relation personnelle passe avant l'agenda."
+   "texte": "La relation personnelle passe avant l’agenda."
   },
   "villes": {
-   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d'emploi.",
+   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d’emploi.",
    "grande-ville": 5,
    "ville-moyenne": 3,
    "nature": 3
@@ -677,7 +677,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Santiago, qui concentre l'essentiel de l'emploi, l'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Santiago, qui concentre l’essentiel de l’emploi, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
@@ -696,7 +696,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Santiago concentre l'essentiel de l'emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures.",
+   "texte": "Santiago concentre l’essentiel de l’emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures.",
    "grande-ville": 4,
    "ville-moyenne": 2,
    "nature": 5
@@ -710,7 +710,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Bogotá, Medellín ou Cali, l'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Bogotá, Medellín ou Cali, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
@@ -743,7 +743,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Mexico, Guadalajara ou Monterrey, l'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Mexico, Guadalajara ou Monterrey, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
@@ -780,7 +780,7 @@
   },
   "langue": {
    "note": 4,
-   "texte": "On parle portugais, dans sa version brésilienne : une langue latine proche du français."
+   "texte": "On parle portugais, dans sa version brésilienne : une langue latine proche du français."
   },
   "hierarchie": {
    "note": 4,
@@ -809,7 +809,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais. Pour le visa « Skilled Worker », il faut d'ailleurs prouver son niveau d'anglais."
+   "texte": "On travaille en anglais. Pour le visa « Skilled Worker », il faut d’ailleurs prouver son niveau d’anglais."
   },
   "langue": {
    "note": 3,
@@ -821,7 +821,7 @@
   },
   "communication": {
    "note": 4,
-   "texte": "L'humour et la litote sont partout : une critique est souvent dite à demi-mot."
+   "texte": "L’humour et la litote sont partout : une critique est souvent dite à demi-mot."
   },
   "ponctualite": {
    "note": 4,
@@ -846,7 +846,7 @@
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais. L'espagnol est aussi très présent."
+   "texte": "La vie quotidienne se passe en anglais. L’espagnol est aussi très présent."
   },
   "hierarchie": {
    "note": 2,
@@ -878,11 +878,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail et l'une des quatre langues officielles."
+   "texte": "L’anglais est la langue de travail et l’une des quatre langues officielles."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais, l'une des quatre langues officielles."
+   "texte": "La vie quotidienne se passe en anglais, l’une des quatre langues officielles."
   },
   "hierarchie": {
    "note": 4,
@@ -894,10 +894,10 @@
   },
   "ponctualite": {
    "note": 4,
-   "texte": "L'efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
+   "texte": "L’efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
   },
   "villes": {
-   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée.",
+   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée.",
    "grande-ville": 4,
    "ville-moyenne": 1,
    "nature": 2
@@ -911,15 +911,15 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est la langue courante des entreprises à Dubaï et à Abou Dabi, où la plupart des salariés sont étrangers. L'arabe est la langue officielle."
+   "texte": "L’anglais est la langue courante des entreprises à Dubaï et à Abou Dabi, où la plupart des salariés sont étrangers. L’arabe est la langue officielle."
   },
   "langue": {
    "note": 3,
-   "texte": "On peut vivre en anglais à Dubaï et à Abou Dabi. La langue officielle est l'arabe."
+   "texte": "On peut vivre en anglais à Dubaï et à Abou Dabi. La langue officielle est l’arabe."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Le rang de l'interlocuteur compte."
+   "texte": "Le rang de l’interlocuteur compte."
   },
   "communication": {
    "note": 4,
@@ -930,7 +930,7 @@
    "texte": ""
   },
   "villes": {
-   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d'emplois. Désert et littoral, avec une chaleur forte en été.",
+   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d’emplois. Désert et littoral, avec une chaleur forte en été.",
    "grande-ville": 4,
    "ville-moyenne": 2,
    "nature": 2
@@ -944,7 +944,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le mandarin est nécessaire dans la plupart des postes. L'anglais suffit dans certaines multinationales et dans l'enseignement."
+   "texte": "Le mandarin est nécessaire dans la plupart des postes. L’anglais suffit dans certaines multinationales et dans l’enseignement."
   },
   "langue": {
    "note": 1,
@@ -956,14 +956,14 @@
   },
   "communication": {
    "note": 4,
-   "texte": "On préserve la « face » de chacun, et le réseau de relations personnelles compte beaucoup."
+   "texte": "On préserve la « face » de chacun, et le réseau de relations personnelles compte beaucoup."
   },
   "ponctualite": {
    "note": 4,
    "texte": ""
   },
   "villes": {
-   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d'habitants. La nature est loin des centres.",
+   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d’habitants. La nature est loin des centres.",
    "grande-ville": 5,
    "ville-moyenne": 3,
    "nature": 2
@@ -978,7 +978,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'anglais est peu utilisé. On travaille surtout en français et en arabe."
+   "texte": "L’anglais est peu utilisé. On travaille surtout en français et en arabe."
   },
   "langue": {
    "note": 5,
@@ -990,14 +990,14 @@
   },
   "communication": {
    "note": 4,
-   "texte": "L'hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
+   "texte": "L’hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
   },
   "ponctualite": {
    "note": 2,
    "texte": ""
   },
   "villes": {
-   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L'Atlas et l'océan sont proches.",
+   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L’Atlas et l’océan sont proches.",
    "grande-ville": 4,
    "ville-moyenne": 3,
    "nature": 4

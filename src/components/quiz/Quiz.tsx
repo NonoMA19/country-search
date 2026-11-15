@@ -92,7 +92,7 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
         )}
       </div>
       <Pourquoi key={phrase.id} texte={phrase.pourquoi} />
-      <div className="mt-auto pt-6">
+      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
         {phrase.type === "choix" ? (
           <div className="space-y-3">
             {phrase.options?.map((o) => (
@@ -107,7 +107,7 @@ function CartePhrase({ phrase, repond }: { phrase: Phrase; repond: (r: string) =
               <button type="button" onClick={() => repond("passer")} className="min-h-16 rounded-2xl px-4 text-base font-medium text-gris hover:text-encre">Passer</button>
               <button type="button" onClick={() => repond("oui")} className="min-h-16 rounded-2xl bg-bleu text-xl font-semibold text-white hover:bg-blue-700">Oui</button>
             </div>
-            <p className="mt-3 text-center text-xs text-gris">Tu peux aussi faire glisser la carte : à droite pour oui, à gauche pour non.</p>
+            <p className="mt-3 text-center text-xs text-gris">Tu peux aussi faire glisser la carte : à droite pour oui, à gauche pour non.</p>
           </>
         )}
       </div>
@@ -176,7 +176,9 @@ export default function Quiz() {
                   );
                 })}
               </div>
-              <button type="button" onClick={() => suivant(choisies)} className={`${BOUTON_PLEIN} mt-4`}>{choisies.length ? "Continuer" : q.aucun}</button>
+              <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+                <button type="button" onClick={() => suivant(choisies)} className={BOUTON_PLEIN}>{choisies.length ? "Continuer" : q.aucun}</button>
+              </div>
             </>
           ) : (
             q.options.map((o) => {
@@ -220,7 +222,7 @@ export default function Quiz() {
             );
           })}
         </div>
-        <div className="mt-auto pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
           <p className="sr-only" aria-live="polite">{etat.priorites.length === 3 ? "3 priorités choisies." : `Encore ${3 - etat.priorites.length} à choisir.`}</p>
           <button type="button" disabled={etat.priorites.length !== 3} onClick={() => aller({ t: "sujets" })} className={BOUTON_PLEIN}>
             {etat.priorites.length === 3 ? "Continuer" : `Encore ${3 - etat.priorites.length} à choisir`}
@@ -235,7 +237,7 @@ export default function Quiz() {
     const lancer = (sujets: string[]) => aller({ t: "phrases" }, { etat: demarrerPhrases({ ...etat, sujets }), proposeA: -1 });
     return (
       <Cadre progression={((questions.length + 2) / (questions.length + 3)) * 50} retour={() => aller({ t: "priorites" })}>
-        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <div className="mt-5 space-y-3">
           {quiz.sujets.filter((s) => mesureDisponible(s.mesure)).map((s) => {
@@ -250,7 +252,7 @@ export default function Quiz() {
             );
           })}
         </div>
-        <div className="mt-auto space-y-2 pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur space-y-2">
           <button type="button" onClick={() => lancer(etat.sujets)} className={BOUTON_PLEIN}>{etat.sujets.length ? "Continuer" : "Passer"}</button>
         </div>
       </Cadre>
@@ -279,7 +281,7 @@ export default function Quiz() {
             </li>
           ))}
         </ul>
-        <div className="mt-auto space-y-3 pt-6">
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur space-y-3">
           <button type="button" onClick={voirResultat} className={BOUTON_PLEIN}>Voir mon résultat</button>
           {phrase && (
             <button type="button" onClick={() => aller({ t: "phrases" }, { proposeA: repondues(etat) })} className={`${BOUTON} border-bord bg-carte text-center hover:border-bleu`}>Continuer pour affiner</button>

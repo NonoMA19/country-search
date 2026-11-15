@@ -5,7 +5,7 @@ import PiedDePage from "@/components/PiedDePage";
 import { FAMILLES, NOM_FAMILLE, paysParFamille } from "@/lib/pays";
 
 export const metadata: Metadata = {
-  title: "Country Search : choisis le pays où partir travailler",
+  title: "Country Search : choisis le pays où partir travailler",
   description:
     "Un quiz gratuit, sans compte, pour classer 30 pays selon ce qui compte pour toi. Chaque score est expliqué, chaque information a sa source.",
 };
@@ -22,7 +22,7 @@ export default function Accueil() {
         </h1>
         <p className="mt-3 text-lg text-gris">
           Choisis le pays où partir travailler. Un quiz court classe 30 pays
-          selon ce qui compte pour toi, et te dit par quelle porte entrer :
+          selon ce qui compte pour toi, et te dit par quelle porte entrer :
           Europe sans visa, PVT ou visa de travail.
         </p>
         <p className="mt-2 text-gris">
@@ -73,7 +73,7 @@ export default function Accueil() {
       <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }]} />
       <p className="mt-2 text-sm text-gris">
         Projet gratuit, sans publicité, en construction. Son code est ouvert
-        (open source) : tout le monde peut le lire et le réutiliser.
+        (open source) : tout le monde peut le lire et le réutiliser.
       </p>
     </main>
   );

@@ -8,7 +8,7 @@ import type { Pays } from "./pays";
 // Les polices de base du PDF ne connaissent que l'alphabet latin simple.
 const propre = (t: string) =>
   t.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/[–—−]/g, "-").replace(/…/g, "...").replace(/œ/g, "oe").replace(/Œ/g, "OE")
-    .replace(/€/g, "euros").replace(/[  ]/g, " ").replace(/µ/g, "u").replace(/[^\x00-\xff]/g, "");
+    .replace(/€/g, "euros").replace(/[  ]/g, " ").replace(/µ/g, "u").replace(/[^\x00-\xff]/g, "");
 
 export async function telechargerDossier({ pays, ligne, porte, raisons, coince }: {
   pays: Pays;
@@ -43,16 +43,16 @@ export async function telechargerDossier({ pays, ligne, porte, raisons, coince }
     if (p.source) sources.set(p.source, p);
   };
 
-  ecrire(`Mon dossier : ${pays.nom}`, { taille: 22, gras: true, apres: 2 });
+  ecrire(`Mon dossier : ${pays.nom}`, { taille: 22, gras: true, apres: 2 });
   ecrire(`Country Search - dossier créé le ${dateFr(new Date().toISOString().slice(0, 10))}`, { taille: 10, gris: true, apres: 10 });
 
   if (ligne) {
     titre("Ton résultat");
-    ecrire(`${Math.round(ligne.score)} % - ${verdict(Math.round(ligne.score))}. C'est un indicateur, pas une vérité.`);
+    ecrire(`${Math.round(ligne.score)} % - ${verdict(Math.round(ligne.score))}. C’est un indicateur, pas une vérité.`);
   }
   const laPorte = porte ?? ligne?.porte ?? null;
   if (laPorte) {
-    titre("Ta porte d'entrée");
+    titre("Ta porte d’entrée");
     ecrire(`${LIBELLE_BADGE[laPorte.badge]} - ${laPorte.nom}`, { gras: true, apres: 2 });
     ecrire(laPorte.phrase, { apres: 2 });
     ecrire(laPorte.preuve.texte, { apres: 2 });

@@ -1,6 +1,6 @@
 {
   "bm-wdi": {
-    "nom": "Banque mondiale, Indicateurs du développement dans le monde (données reprises de l'OIT, de l'OMS et d'autres organismes)",
+    "nom": "Banque mondiale, Indicateurs du développement dans le monde (données reprises de l’OIT, de l’OMS et d’autres organismes)",
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
     "type": "donnee-ouverte"
@@ -20,7 +20,7 @@
     "page": "https://www.ilo.org/fr/donnees-et-statistiques"
   },
   "meae-registre": {
-    "nom": "Ministère de l'Europe et des Affaires étrangères, registre des Français établis hors de France (data.gouv.fr)",
+    "nom": "Ministère de l’Europe et des Affaires étrangères, registre des Français établis hors de France (data.gouv.fr)",
     "url": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
     "licence": "Licence Ouverte",
     "type": "officiel"
@@ -58,27 +58,27 @@
     "type": "officiel"
   },
   "service-public-soins": {
-    "nom": "Service-Public, Remboursement des soins à l'étranger",
+    "nom": "Service-Public, Remboursement des soins à l’étranger",
     "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F213",
     "licence": "Licence Ouverte 2.0",
     "type": "officiel"
   },
   "europa-travail": {
-    "nom": "L'Europe est à vous (Union européenne), Travailler à l'étranger",
+    "nom": "L’Europe est à vous (Union européenne), Travailler à l’étranger",
     "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
-    "licence": "Lien seulement, aucun contenu copié (selon l'avis juridique du site europa.eu)",
+    "licence": "Lien seulement, aucun contenu copié (selon l’avis juridique du site europa.eu)",
     "type": "officiel"
   },
   "europa-permis": {
-    "nom": "L'Europe est à vous (Union européenne), Permis de travail",
+    "nom": "L’Europe est à vous (Union européenne), Permis de travail",
     "url": "https://europa.eu/youreurope/citizens/work/work-abroad/work-permits/index_fr.htm",
-    "licence": "Lien seulement, aucun contenu copié (selon l'avis juridique du site europa.eu)",
+    "licence": "Lien seulement, aucun contenu copié (selon l’avis juridique du site europa.eu)",
     "type": "officiel"
   },
   "cleiss-accords": {
     "nom": "Cleiss, Conventions bilatérales de sécurité sociale",
     "url": "https://www.cleiss.fr/docs/textes/index.html",
-    "licence": "Pas de licence ouverte : lien seulement, aucun contenu copié",
+    "licence": "Pas de licence ouverte : lien seulement, aucun contenu copié",
     "type": "officiel"
   },
   "gov-uk-visa": {
@@ -112,7 +112,7 @@
     "type": "notre-avis"
   },
   "bm-wbl": {
-    "nom": "Banque mondiale, Les femmes, l'entreprise et le droit (cadre juridique)",
+    "nom": "Banque mondiale, Les femmes, l’entreprise et le droit (cadre juridique)",
     "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
     "licence": "CC BY 4.0",
     "type": "donnee-ouverte"
