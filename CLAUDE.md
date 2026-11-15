@@ -9,7 +9,7 @@ Aider les étudiants et jeunes diplômés francophones à choisir le pays où pa
 - Gratuit et open source. Aucune publicité, aucune affiliation (hébergement Vercel gratuit, usage non commercial).
 
 ## Version 1 (ce qu'on construit maintenant)
-- Quiz façon Elyze : des phrases à valider ou rejeter, sans compte.
+- Quiz de dilemmes : de petites scènes à 2 ou 3 options, chacune avec un avantage et un prix, sans compte.
 - Classement des 30 pays par un calcul transparent (pas d'IA), avec le « pourquoi » de chaque score et une méthode publiée.
 - Top 3 pays, fiches pays, checklist Jour J de J-90 à J+30.
 - 10 fiches complètes, 20 fiches courtes.
@@ -53,12 +53,16 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Parcours (diplôme et expériences), reconversion.
 - Croisement avec les offres d'emploi par secteur.
 - Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
-- Biais de classement (mesuré au prompt 3 sur 5 000 quiz) : l'Allemagne est n°1 dans 29 % des profils, la Colombie et le Chili ne sont jamais dans le top 3, parce que les 8 priorités vont toutes dans le sens « plus c'est mieux ». À traiter avec les questions de situation (prompt 3b), pas avec une pondération arbitraire.
-- Questions de situation (prompt 3b).
+- Biais de classement (remesuré au prompt 3b, `npm run simulation`, 5 000 profils) : l'Allemagne reste n°1 dans 30 % des profils (31 % avant), la Colombie et le Chili sont dans le top 3 dans 0,1 % des profils. Raison : l'Allemagne a la note maximale sur 8 des 15 mesures « plus c'est mieux » (chômage des jeunes, heures, vol, décalage, sécurité, santé, Français inscrits, villes moyennes) ; la Colombie et le Chili ont les mêmes points forts que le Mexique et le Brésil (prix, nature, langue proche) avec de moins bonnes notes ailleurs : même avec les réponses les plus favorables, leur meilleur rang est 8 et 7. Pistes, sans pondération arbitraire : (1) « Réseau français » compte des inscrits en valeur absolue, ce qui avantage les grands pays : passer à une part de la population ou à la ville d'arrivée (prompt 3c) ; (2) 8 dilemmes actifs sur 16 ont une option « ne change rien » : leur donner un effet contraire quand une donnée existe (par exemple « Aucun contact français » = position « peu de Français ») ; (3) remplir « décision » et « vie pro et vie perso » (D7, D8), où l'Allemagne n'est pas forcément favorisée.
+- Prompt 3c : données vérifiées en fichiers. Visas de travail (conditions détaillées), liens manquants (UFE, ADFE, consulat en Argentine, Alliance française), culture du travail pour les mesures « decision » et « pro-perso » (dilemmes D7 et D8, inactifs tant qu'elles sont notées pour moins de 60 % des pays).
+- Prompt 4 « Ta vie là-bas » : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
+- Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
+- Écran Valeurs (stabilité, libertés, air) en fin de parcours : à repenser (il arrive tard et change le top 3 après le portrait).
+- Direction artistique et mascotte.
+- Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir).
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).
 - Comparateur de pays.
-- Refonte visuelle, mascotte et direction artistique (prompt 5).
 - Fiches ★ complètes à construire (banque, SIM, santé, logement, CV, codes culturels) : la promesse affichée est « fiche détaillée à venir en priorité ».
 - Congés payés légaux : à remettre dans le calcul quand ils seront vérifiés pays par pays dans les textes de loi.
 - Égalité femmes-hommes dans la loi : `scripts/collecte.mjs` sait déjà la télécharger (Banque mondiale, indicateur GD_WBL_OVL_LAW, source 14) ; l'API était trop lente depuis la session du prompt 3.
@@ -118,4 +122,20 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Qualité de l'air : Taïwan, Hong Kong. Français inscrits : Hong Kong.
 - Taïwan : chômage des jeunes, prix, homicides, stabilité, libertés (absent des bases de la Banque mondiale).
 - Français inscrits : la donnée la plus récente sur data.gouv.fr date de fin 2020 (vérifié le 14 novembre 2026), elle est affichée comme ancienne.
+
+### 15 novembre 2026 : le moteur te comprend (prompt 3b)
+**Ce qui est fait** (une pull request, un commit par lot)
+- Lot 1 : les 22 phrases sont remplacées par 18 dilemmes (`content/quiz.json`, clé `dilemmes` : thème, titre, scène, options avec ligne grise, effets, phrase de portrait, préférence). Effets mesure par mesure : poids 1 ou 0,5 pour les mesures « haut », position préférée pour les mesures « position » (accord = 1 − écart / 4). Poids d'une mesure = maximum, jamais la somme. Un dilemme dont une mesure est notée pour moins de 60 % des pays n'est jamais posé. Nouvelles mesures `decision` et `pro-perso` (critère style de travail), « à vérifier » pour les 30 pays : D7 et D8 inactifs. Le choix du dilemme ignore une option qui ne ferait que redonner une importance déjà acquise. Écran Valeurs déplacé en fin de parcours.
+- Lot 2 : `objectifs` dans `quiz.json` : poids de départ 0,5 par projet, retirés quand une réponse de dilemme va dans un autre sens.
+- Lot 3 : écran « Ton portrait » (4 à 6 phrases, « Ce n'est pas moi » rouvre le dilemme, les priorités ou le projet), repris en haut de /resultat et dans le PDF.
+- Lot 4 : « Pour toi » et « À savoir » sous chaque pays (modèles `fait` dans `criteres.json`), jamais la même phrase sous deux pays ; « Moins adaptés pour toi » regroupé par raison.
+- Lot 5 : départage quand le n°1 et le n°2 sont à 5 points ou moins (3 dilemmes au plus, ou comparaison côte à côte).
+- Lot 6 : top 3 animé (FLIP, `src/lib/animation.ts`), révélation du n°1, rien avec prefers-reduced-motion.
+- Lot 7 : été frais (sous 18 °C) noté 4 dans « climat doux » (Bogotá 5 → 4) ; 14 textes « Notre avis » qui n'ajoutaient que des noms de villes vidés ; nationalité non couverte dite clairement ; profil de travail sans phrase répétée.
+- Lot 8 : nouveaux invariants dans `npm run test:moteur` ; `npm run simulation` (5 000 profils).
+- Simulation avant / après : Allemagne n°1 31,4 % → 30,1 % ; top 3 différent selon l'objectif 0 % → 50,6 % des profils ; Colombie et Chili dans le top 3 : 0,4 % et 0,1 % → 0,1 % et 0,1 %.
+
+**Ce qui reste à faire**
+- Données de D7 et D8 (prompt 3c), puis vérifier qu'ils sont bien posés.
+- Décisions en attente de Nolhan : voir le rapport du prompt 3b (positions des dilemmes de culture, « été chaud » = niveau 4, option « Je garde ces soirées » qui fait aussi descendre les pays à autre écriture).
 
