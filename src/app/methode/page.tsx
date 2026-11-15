@@ -129,6 +129,15 @@ export default function Methode() {
       </section>
 
       <section className="mt-8">
+        <h2 className="text-xl font-semibold">Faisabilité et fiabilité</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Sous chaque pays de ton top 3, et dans le dossier du pays si tu as fait le quiz, trois listes courtes : les conditions remplies, celles à remplir (ou non remplies), et ce qui reste à vérifier, puis la prochaine étape avec le lien officiel. Elles viennent seulement de tes réponses (âge, budget, nationalité, projet) et des données sourcées des visas. On n’écrit jamais qu’un pays est « juridiquement accessible ».</li>
+          <li>Le badge de fiabilité compte la part de tes critères qui ont, pour ce pays, une donnée vérifiée par une source Officiel, Donnée ouverte ou Témoignages. 90 % ou plus : « Données complètes ». De 60 à 89 % : « Données partielles ». Moins de 60 % : « Peu de données vérifiées ».</li>
+          <li>« Notre avis » ne compte pas dans ce badge : c’est un jugement de la rédaction, pas une donnée vérifiée. Il compte en revanche dans la règle des 60 % du calcul (point 7 plus haut) : un pays peut donc être dans ton top 3 avec « Peu de données vérifiées » si beaucoup de tes critères reposent sur notre avis (culture au travail, langue, taille des villes).</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
         <h2 className="text-xl font-semibold">Le pays surprise</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>On cherche un pays qui te correspond très bien, mais qu’une seule de tes préférences a écarté : la zone choisie (Europe ou hors d’Europe), ou le visa lié à un employeur (« Je préfère pouvoir changer d’employeur librement »). Son pourcentage reste celui calculé sur tes réponses.</li>

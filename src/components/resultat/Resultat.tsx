@@ -8,18 +8,18 @@ import { ArrowUp, BadgeCheck, ChevronDown, CircleAlert, CircleCheck, DoorOpen, D
 import { AvecDefinitions } from "@/components/Definition";
 import Drapeau from "@/components/Drapeau";
 import { ErreurPdf } from "@/components/BoutonDossier";
-import CarteVisa from "@/components/CarteVisa";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import Portrait from "@/components/Portrait";
 import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
+import { BadgeFiabilite, FicheFaisabilite, VisaCourt } from "@/components/resultat/Faisabilite";
 import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, preuveMesure, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
   CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  lignesTop, niveauDeduit, paysSurprise, portrait, prochainDilemme, repondues, valeurLisible, verdict,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurLisible, verdict,
   type Badge, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -103,12 +103,14 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, points }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays }) {
+function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: number | null }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
   const score = Math.round(ligne.score);
   const { porte, pays: p } = ligne;
   const alertes = porte.alertes;
+  const visa = visaSimple(p, etat.profil);
+  const fais = faisabilite(p, etat.profil, budget);
 
   const pdf = async () => {
     setEnCours(true);
@@ -138,22 +140,20 @@ function CartePays({ ligne, rang, egalite, etat, points }: { ligne: Ligne; rang:
           </p>
         </div>
       </div>
+      <BadgeFiabilite f={ligne.fiabilite} />
 
       <PointsParCategorie points={points} pays={p.nom} />
 
-      <div className="mt-5 rounded-2xl bg-creux p-4">
+      <section className="mt-5 rounded-2xl bg-creux p-4">
+        <h4 className="sr-only">Faisabilité</h4>
         <BadgePorte badge={porte.badge} />
         <p className="mt-2 font-medium">
           {porte.phrase}
           <Pastille preuve={porte.preuve} pays={p.nom} contexte={`la porte d’entrée (${porte.nom})`} />
         </p>
-        {porte.mention && (
-          <p className="mt-2 text-sm font-medium">
-            {porte.mention.texte}
-            {porte.mention.preuve && <Pastille preuve={porte.mention.preuve} pays={p.nom} contexte="la saison du PVT" />}
-          </p>
-        )}
-      </div>
+        <FicheFaisabilite f={fais} />
+      </section>
+      {visa && <VisaCourt v={visa.lien?.url === fais.etape?.url ? { ...visa, lien: null } : visa} paysId={p.id} />}
 
       <details className="group mt-5 rounded-2xl border border-bord">
         <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
@@ -170,26 +170,6 @@ function CartePays({ ligne, rang, egalite, etat, points }: { ligne: Ligne; rang:
             {ligne.manquantes.length > 0 && (
               <p className="mt-2 text-sm text-gris">À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.court ?? m).join(", ")}.</p>
             )}
-          </section>
-          <section className="mt-5">
-            <h4 className="font-semibold">Ce qui peut coincer</h4>
-            {alertes.length === 0 ? (
-              <p className="mt-2 text-gris">Rien côté visa et argent.</p>
-            ) : (
-              <ul className="mt-2 space-y-2">
-                {alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
-              </ul>
-            )}
-          </section>
-          <section className="mt-5">
-            <h4 className="font-semibold">Ta porte d’entrée</h4>
-            <p className="mt-2">
-              <span className="font-medium">{porte.nom}. </span>
-              <span className="text-gris">{porte.preuve.texte}</span>
-              <Pastille preuve={porte.preuve} pays={p.nom} contexte={porte.nom} />
-            </p>
-            {porte.autres.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t}</p>)}
-            {porte.visa && <CarteVisa visa={porte.visa} pays={p.nom} titre={porte.type === "pvt" ? "Après le PVT, ou sans PVT : le visa de travail" : "Le visa de travail"} />}
           </section>
         </div>
       </details>
@@ -358,7 +338,7 @@ export default function Resultat() {
           ) : (
             top.map((l, i) => (
               <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
-                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={reglages.budget ?? budgetProfil(etat.profil)} />
               </div>
             ))
           )}

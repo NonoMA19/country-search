@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, europe, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource, preuveVisa,
+  avis, dateFr, doubleNationalite, europe, mesures, notes, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
   type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
 } from "./donnees";
 
@@ -345,6 +345,111 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null, mention: null };
 }
 
+// ---------- Fiche de faisabilité ----------
+// Trois listes courtes, tirées seulement des données sourcées (âge, nationalité, budget, visas, statuts),
+// et une prochaine étape avec le lien officiel. Jamais « juridiquement accessible » sans source.
+export type LienEtape = { texte: string; url: string; nom: string };
+export type Faisabilite = { remplies: string[]; aRemplir: string[]; aVerifier: string[]; etape: LienEtape | null };
+const premiereSouphrase = (t: string) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
+
+export function faisabilite(p: Pays, profil: Profil, budget: number | null): Faisabilite {
+  const porte = evaluerPorte(p, profil, budget);
+  const f: Faisabilite = { remplies: [], aRemplir: [], aVerifier: [], etape: null };
+  const age = ageMax(profil);
+  const liste = portes(p.id);
+  // VIE (ton projet) : la condition d'âge, confrontée à ton profil.
+  if (profil.objectif === "stage-vie") {
+    if (age === null) f.aVerifier.push("Ton âge n’est pas connu : le VIE se demande avant 28 ans.");
+    else if (age <= vie.ageMaxCandidature) f.remplies.push("Ton âge permet le VIE (moins de 28 ans à la candidature).");
+    else f.aRemplir.push("Le VIE n’est plus possible à ton âge (moins de 28 ans à la candidature).");
+  }
+  if (porte.type === "nationalite") {
+    const cas = casNationalite(profil)!;
+    f.remplies.unshift(`Ta nationalité ${cas.nationalite.toLowerCase()} suffit pour y vivre et y travailler.`);
+    if (cas.genre === "piege") f.aVerifier.push(`${cas.titre.replace(/^Piège\s?:\s*/, "").replace(/^./, (c) => c.toUpperCase())}.`);
+    f.etape = { texte: "Lire la page officielle", url: cas.lien, nom: cas.source };
+    return f;
+  }
+  if (porte.type === "ue") {
+    const ue = liste.find((x) => x.type === "ue")!;
+    f.remplies.unshift("Ta nationalité française suffit pour y travailler sans visa.");
+    const local = europe.pays[p.id];
+    if (local) f.aRemplir.push("Au-delà de trois mois : un permis de séjour à demander au canton, avant d’arriver.");
+    f.aVerifier.push("Inscription auprès des autorités locales : elle peut être demandée dans les 3 mois après l’arrivée.");
+    f.etape = local
+      ? { texte: "Lire les démarches sur le site officiel", url: local.lien, nom: "Suisse : entrée et séjour (France Diplomatie)" }
+      : { texte: "Lire les démarches sur le site officiel", url: ue.lien ?? europe.inscription.lien, nom: "Travailler dans un autre pays d’Europe" };
+    return f;
+  }
+  const pvt = liste.find((x) => x.type === "pvt");
+  const visa = liste.find((x) => x.type === "visa-travail");
+  if (pvt && pvt.ageMax !== undefined && porte.type === "pvt" && porte.badge !== "fermee") {
+    if (age === null) f.aVerifier.push(`Ton âge n’est pas connu : le PVT est ouvert jusqu’à ${pvt.ageMax} ans.`);
+    else f.remplies.push(`Ton âge permet le PVT (jusqu’à ${pvt.ageMax} ans).`);
+    const fonds = pvt.fonds?.euros ?? null;
+    if (fonds !== null && budget !== null && budget >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
+    else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait environ ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    else if (pvt.fonds) f.aRemplir.push(`Prévoir les ressources demandées\u00a0: ${pvt.fonds.texte}.`);
+    if (pvt.invitation) f.aRemplir.push("Recevoir une invitation : rien n’est garanti.");
+    else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) f.aRemplir.push(`Obtenir une des ${pvt.quota} places de l’année.`);
+    if ((dureeMois(profil) ?? 0) > 12 || profil.objectif === "carriere") f.aRemplir.push("Prévoir un autre visa pour rester plus d’un an.");
+    if (porte.mention) f.aVerifier.push(porte.mention.texte);
+    f.etape = pvt.invitation && pvt.saison
+      ? { texte: "Créer ton profil sur le site officiel", url: pvt.saison.lien, nom: "Expérience internationale Canada : devenir candidat" }
+      : { texte: "Lire les conditions du PVT sur le site officiel", url: pvt.lien ?? "", nom: "Programme Vacances-Travail (France Diplomatie)" };
+    return f;
+  }
+  // Visa de travail (ou PVT fermé à ton âge).
+  if (porte.badge === "fermee" && pvt?.ageMax !== undefined) f.aRemplir.push(`Ton âge dépasse la limite du PVT (${pvt.ageMax} ans) : il faut un visa de travail.`);
+  const d = visa?.detail;
+  if (d) {
+    if (d.employeurRequis) f.aRemplir.push("Trouver un employeur : le visa demande une offre d’emploi.");
+    if (d.experience) {
+      f.aRemplir.push(premiereSouphrase(d.experience));
+      f.aVerifier.push("Ton expérience pro n’est pas connue du site.");
+    }
+    if (d.lieEmployeur === "a-verifier") f.aVerifier.push("Le lien du visa avec ton employeur reste à vérifier.");
+    if (d.statut !== "verifie") f.aVerifier.push("Les conditions détaillées du visa restent à vérifier sur le site officiel.");
+    if (d.liens[0]) f.etape = { texte: "Lire les conditions du visa sur le site officiel", url: d.liens[0].url, nom: d.liens[0].libelle };
+  } else {
+    f.aRemplir.push("Trouver un employeur qui te fait venir.");
+    if (!visa || visa.statut !== "verifie" || visa.detailsAVerifier) f.aVerifier.push("Les conditions détaillées du visa restent à vérifier sur le site officiel.");
+    if (visa?.lien) f.etape = { texte: "Lire la page officielle sur le visa", url: visa.lien, nom: visa.statut === "verifie" ? sources[visa.source ?? ""]?.nom ?? visa.nom : visa.nom };
+  }
+  return f;
+}
+
+// Le visa en version simple : son nom, la page officielle et 3 points courts au plus.
+export type VisaSimple = { nom: string; lien: { url: string; nom: string } | null; points: string[] };
+export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
+  const porte = evaluerPorte(p, profil, null);
+  const liste = portes(p.id);
+  if (porte.type === "nationalite") {
+    const cas = casNationalite(profil)!;
+    return { nom: porte.nom, lien: { url: cas.lien, nom: cas.source }, points: ["Sans visa ni permis de travail"] };
+  }
+  if (porte.type === "ue") {
+    const ue = liste.find((x) => x.type === "ue")!;
+    return {
+      nom: ue.nom, lien: ue.lien ? { url: ue.lien, nom: "Travailler dans un autre pays d’Europe" } : null,
+      points: ["Pas de visa ni de permis de travail", europe.pays[p.id] ? "Permis de séjour du canton au-delà de 3 mois" : "Inscription sur place possible"],
+    };
+  }
+  const pvt = liste.find((x) => x.type === "pvt");
+  if (pvt && porte.type === "pvt" && porte.badge !== "fermee") {
+    const points = [`Jusqu’à ${pvt.ageMax} ans`, pvt.invitation ? "Sur invitation" : pvt.quota ? `${pvt.quota.toLocaleString("fr-FR")} places par an` : "Sans quota", "Un an au plus"];
+    return { nom: pvt.nom, lien: pvt.lien ? { url: pvt.lien, nom: "Programme Vacances-Travail (France Diplomatie)" } : null, points };
+  }
+  const visa = liste.find((x) => x.type === "visa-travail");
+  const d = visa?.detail;
+  if (d) {
+    const lie = LIBELLE_LIE[d.lieEmployeur];
+    const points = [d.employeurRequis ? "Employeur obligatoire" : "", lie ?? "", d.experience ? "Diplôme ou expérience exigés" : ""].filter(Boolean).slice(0, 3);
+    return { nom: d.nom, lien: d.liens[0] ? { url: d.liens[0].url, nom: d.liens[0].libelle } : null, points };
+  }
+  return { nom: visa?.nom ?? "Visa de travail", lien: visa?.lien ? { url: visa.lien, nom: "Entrée et séjour (France Diplomatie)" } : null, points: ["Employeur obligatoire", "Conditions à vérifier"] };
+}
+
 // ---------- Pays qui descendent dans « Moins adaptés pour toi » ----------
 export function concerne(regle: string | undefined, p: Pays, etat: Etat): boolean {
   // (« Je garde ces soirées pour moi » n'écarte plus aucun pays : c'est une pénalité, voir la mesure « apprendre-langue ».)
@@ -405,7 +510,31 @@ export type Ligne = {
   porte: Porte;
   couverture: number; // part de tes critères (en nombre) pour lesquels ce pays a une donnée vérifiée
   peuDeDonnees: boolean;
+  fiabilite: Fiabilite;
 };
+
+// ---------- Fiabilité des données ----------
+// Part de tes critères qui ont, pour ce pays, une donnée vérifiée par une source Officiel, Donnée ouverte
+// ou Témoignages. « Notre avis » (un jugement de la rédaction) et « À vérifier » ne comptent pas.
+export type NiveauFiabilite = "complete" | "partielle" | "faible";
+export type Fiabilite = { verifies: number; total: number; niveau: NiveauFiabilite };
+export const TYPES_VERIFIES = ["officiel", "donnee-ouverte", "temoignages"];
+export const LIBELLE_FIABILITE: Record<NiveauFiabilite, string> = {
+  complete: "Données complètes",
+  partielle: "Données partielles",
+  faible: "Peu de données vérifiées",
+};
+export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil): Fiabilite {
+  const verifies = criteres.filter((m) => {
+    const n = notes[paysId]?.[m];
+    if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
+    // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
+    if ((m === "langue" || m === "apprendre-langue") && parleLangueDe(paysId, profil)) return true;
+    return TYPES_VERIFIES.includes(sources[n.source]?.type);
+  }).length;
+  const part = criteres.length ? verifies / criteres.length : 1;
+  return { verifies, total: criteres.length, niveau: part >= 0.9 ? "complete" : part >= 0.6 ? "partielle" : "faible" };
+}
 
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
 export const COUVERTURE_MIN = 0.6;
@@ -447,6 +576,7 @@ export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Lign
     const reelles = details.filter((d) => !d.neutre).length;
     const porte = evaluerPorte(p, etat.profil, budget);
     return {
+      fiabilite: fiabiliteDe(p.id, tesCriteres, etat.profil),
       couverture,
       peuDeDonnees: couverture < COUVERTURE_MIN || reelles === 0,
       sansDonnees: reelles === 0,

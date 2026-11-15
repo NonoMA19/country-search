@@ -5,7 +5,7 @@ import { notes as notesPays, portes, quiz, sources } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, aplatir, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -68,6 +68,7 @@ function quizAuHasard(r: Alea, passerTout = false): Etat {
   return etat;
 }
 
+const budgetDe = (p: Profil) => quiz.profil.find((q) => q.id === "budget")!.options.find((o) => o.id === p.budget)?.euros ?? null;
 const scores = (etat: Etat) => Object.fromEntries(calculer(etat).map((l) => [l.pays.id, l.score]));
 const memesScores = (a: Record<string, number>, b: Record<string, number>) => Object.keys(a).every((k) => Math.abs(a[k] - b[k]) < 1e-9);
 
@@ -498,6 +499,45 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     const v = valeurLisible(p.id, m, {});
     if (v) verifier(!!v.mot, `valeur : pas de mot pour ${m} (${p.nom})`);
   }
+}
+
+// 2.13 Fiabilité des données et fiche de faisabilité (prompt 3d, lot 3).
+{
+  // Fiabilité : « Notre avis » ne compte pas comme une donnée vérifiée ; seuils 90 % et 60 %.
+  const avisSeul = fiabiliteDe("allemagne", ["hierarchie"], {});
+  verifier(sources[notesPays.allemagne.hierarchie.source!].type === "notre-avis" && avisSeul.verifies === 0 && avisSeul.niveau === "faible", "fiabilité : « Notre avis » compté comme vérifié");
+  const ouvertes = fiabiliteDe("allemagne", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "doux", "prix", "air"], {});
+  verifier(ouvertes.niveau === "complete" && ouvertes.verifies === 10, "fiabilité : 10 données ouvertes sur 10 ne donnent pas « Données complètes »");
+  const partielle = fiabiliteDe("allemagne", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "hierarchie", "communication", "ponctualite"], {});
+  verifier(partielle.niveau === "partielle", `fiabilité : 7 sur 10 donne ${partielle.niveau}`);
+  verifier(fiabiliteDe("japon", ["langue"], { langues: ["ja"] }).verifies === 1, "fiabilité : la langue que tu parles ne compte pas");
+  for (const p of pays) for (const m of Object.keys(notesPays[p.id])) {
+    const n = notesPays[p.id][m];
+    const f = fiabiliteDe(p.id, [m], {});
+    verifier(f.verifies === (n.statut === "verifie" && n.note !== null && !!n.source && TYPES_VERIFIES.includes(sources[n.source].type) ? 1 : 0), `fiabilité : ${m} mal compté pour ${p.nom}`);
+  }
+
+  // Faisabilité : seulement des données sourcées, une prochaine étape vers un site officiel, jamais « juridiquement ».
+  const profils: Profil[] = [{}, { age: "18-25", budget: "1000", objectif: "stage-vie" }, { age: "31-35", budget: "5000", duree: "plus-2" }, { age: "36-plus", objectif: "carriere" },
+    { age: "26-27", nationalite: "oui", "nationalite-laquelle": "canadienne" }];
+  for (const pr of profils) for (const p of pays) {
+    const f = faisabilite(p, pr, budgetDe(pr));
+    const tout = [...f.remplies, ...f.aRemplir, ...f.aVerifier];
+    verifier(!tout.some((x) => /juridique/i.test(x)), `faisabilité : « juridique » pour ${p.nom}`);
+    verifier(new Set(tout).size === tout.length, `faisabilité : phrase répétée pour ${p.nom}`);
+    if (f.etape) verifier(/^https:\/\//.test(f.etape.url), `faisabilité : prochaine étape sans lien pour ${p.nom}`);
+    const v = visaSimple(p, pr);
+    verifier(!!v && v.points.length <= 3, `visa simple : plus de 3 points pour ${p.nom}`);
+  }
+  const f = (id: string, pr: Profil) => faisabilite(trouverPays(id)!, pr, budgetDe(pr));
+  verifier(f("belgique", {}).remplies.some((x) => x.includes("nationalité française suffit")), "faisabilité : la Belgique sans « ta nationalité suffit »");
+  verifier(f("suisse", {}).aRemplir.some((x) => x.includes("permis de séjour")), "faisabilité : la Suisse sans le permis de séjour");
+  verifier(f("japon", { age: "18-25", budget: "1000" }).aRemplir.some((x) => x.startsWith("Il te manquerait environ 2")), "faisabilité : le manque d'argent n'est pas dit (Japon, 1 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "5000" }).remplies.some((x) => x.includes("Ton budget couvre")), "faisabilité : le budget suffisant n'est pas dit");
+  verifier(f("canada", { age: "18-25" }).aVerifier.some((x) => x.includes("Saison 2026 fermée")) && f("canada", { age: "18-25" }).etape?.texte === "Créer ton profil sur le site officiel", "faisabilité : Canada sans la saison fermée ou sans « Créer ton profil »");
+  verifier(f("australie", { age: "36-plus" }).aRemplir.some((x) => x.includes("1 an d’expérience")) && f("australie", { age: "36-plus" }).aVerifier.some((x) => x.includes("expérience pro")), "faisabilité : Australie sans l'expérience demandée");
+  verifier(f("japon", { age: "18-25", objectif: "stage-vie" }).remplies.some((x) => x.includes("permet le VIE")) && f("japon", { age: "28-30", objectif: "stage-vie" }).aRemplir.some((x) => x.includes("VIE n’est plus possible")), "faisabilité : condition d'âge du VIE mal confrontée");
+  verifier(f("canada", { age: "26-27", nationalite: "oui", "nationalite-laquelle": "canadienne" }).remplies[0].includes("nationalité canadienne"), "faisabilité : la nationalité canadienne n'ouvre pas le Canada");
 }
 
 // ---------- Bilan ----------
