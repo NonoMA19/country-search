@@ -152,7 +152,7 @@ export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
 export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
 export const avis = avisData as unknown as Record<string, Avis>;
-export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; avertissement: string };
+export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; autresPays: string; avertissement: string };
 
 export const mesures: Record<string, DefMesure & { critere: Critere }> = Object.fromEntries(
   criteres.flatMap((c) => c.mesures.map((m) => [m.id, { ...m, critere: c }])),

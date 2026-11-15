@@ -85,9 +85,10 @@ const TEXTE = {
 };
 
 // Climat doux : la plus basse des deux notes, hiver et été (règle expliquée sur /methode).
+// L'été n'a la note maximale qu'entre 18 et 23 °C : en dessous de 18 °C, il est « frais » (4).
 function noteDoux(hiver, ete) {
   const h = hiver < -5 ? 1 : hiver < 2 ? 2 : hiver < 5 ? 3 : hiver < 8 ? 4 : 5;
-  const e = ete >= 29 ? 1 : ete >= 27 ? 2 : ete >= 25 ? 3 : ete >= 23 ? 4 : 5;
+  const e = ete >= 29 ? 1 : ete >= 27 ? 2 : ete >= 25 ? 3 : ete >= 23 ? 4 : ete >= 18 ? 5 : 4;
   return Math.min(h, e);
 }
 const doux = (hiver, ete, p) => ({

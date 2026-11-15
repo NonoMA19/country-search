@@ -588,13 +588,13 @@
         "id": "doux",
         "nom": "Climat doux (hiver et été modérés)",
         "sens": "haut",
-        "regle": "On note l’hiver (moins de −5 °C : 1 ; de −5 à 2 °C : 2 ; de 2 à 5 °C : 3 ; de 5 à 8 °C : 4 ; 8 °C ou plus : 5) et l’été (29 °C ou plus : 1 ; de 27 à 29 °C : 2 ; de 25 à 27 °C : 3 ; de 23 à 25 °C : 4 ; moins de 23 °C : 5). Le climat doux prend la plus basse des deux notes : un pays très chaud en été n’est pas « doux », même si son hiver est chaud.",
+        "regle": "On note l’hiver (moins de −5 °C : 1 ; de −5 à 2 °C : 2 ; de 2 à 5 °C : 3 ; de 5 à 8 °C : 4 ; 8 °C ou plus : 5) et l’été, avec le mois le plus chaud (29 °C ou plus : 1 ; de 27 à 29 °C : 2 ; de 25 à 27 °C : 3 ; de 23 à 25 °C : 4 ; de 18 à 23 °C : 5 ; moins de 18 °C, un été frais : 4). Le climat doux prend la plus basse des deux notes : un pays très chaud en été n’est pas « doux », même si son hiver est chaud, et un été frais n’a pas la note maximale.",
         "echelle": [
-          "hiver sous −5 °C ou été à 29 °C ou plus",
-          "hiver de −5 à 2 °C ou été de 27 à 29 °C",
-          "hiver de 2 à 5 °C ou été de 25 à 27 °C",
-          "hiver de 5 à 8 °C ou été de 23 à 25 °C",
-          "hiver à 8 °C ou plus et été sous 23 °C"
+          "hiver sous −5 °C ou été à 29 °C ou plus",
+          "hiver de −5 à 2 °C ou été de 27 à 29 °C",
+          "hiver de 2 à 5 °C ou été de 25 à 27 °C",
+          "hiver de 5 à 8 °C, ou été de 23 à 25 °C, ou été frais (sous 18 °C)",
+          "hiver à 8 °C ou plus et été de 18 à 23 °C"
         ],
         "mots": [
           "pas doux du tout",

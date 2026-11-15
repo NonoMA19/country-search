@@ -1,11 +1,11 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { quiz } from "@/lib/donnees";
+import { notes as notesPays, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  bilanDepartage, egalites, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
+  bilanDepartage, egalites, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -133,6 +133,13 @@ for (let i = 0; i < NB; i++) {
   }
   verifier(new Set(toutes).size === toutes.length, `quiz ${i} : la même phrase sous deux pays du top 3`);
 
+  // Profil de travail : jamais la même phrase « proche de toi sur… » sous les trois pays.
+  const style = profilTravail(etat, top);
+  if (style && style.comparaisons.length === 3) {
+    const phrasesStyle = style.comparaisons.map((c) => `${c.communs.join("+")}|${c.differents.join("+")}`);
+    verifier(new Set(phrasesStyle).size > 1, `quiz ${i} : la même phrase de profil de travail sous les trois pays`);
+  }
+
   // Portrait : au plus 6 phrases, jamais une phrase sur un dilemme passé, jamais deux fois la même.
   const lignesPortrait = portrait(etat);
   verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
@@ -212,6 +219,12 @@ for (let i = 0; i < NB; i++) {
     const d = lignes.find((l) => l.pays.id === id)!.details.find((x) => x.mesure === "doux");
     verifier(!!d && d.accord <= 0.25, `climat doux : ${id} trop bien noté`);
   }
+  // Un été frais (mois le plus chaud sous 18 °C, comme à Bogotá) n'a pas la note maximale.
+  for (const p of pays) {
+    const n = notesPays[p.id];
+    if (n?.ete?.statut === "verifie" && (n.ete.valeur ?? 99) < 18) verifier(n.doux.note !== 5, `climat doux : ${p.nom} a la note maximale avec un été à ${n.ete.valeur} °C`);
+  }
+  verifier(notesPays.colombie.doux.note !== 5, "climat doux : Bogotá a encore la note maximale");
 }
 
 // 2.6 Deux réponses sur le salaire : importance 1, pas 2.

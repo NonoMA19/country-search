@@ -1072,7 +1072,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 5,
-    "texte": "On travaille en anglais, à Dublin comme à Cork, Galway ou Limerick.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -3437,7 +3437,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 5,
-    "texte": "On travaille en anglais, à Sydney et Melbourne comme dans les autres capitales d’État.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -3446,7 +3446,7 @@
    "langue": {
     "statut": "verifie",
     "note": 3,
-    "texte": "La vie quotidienne se passe en anglais, dans les grandes villes comme ailleurs.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -3901,7 +3901,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 5,
-    "texte": "On travaille en anglais, à Auckland comme à Wellington ou Christchurch.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -4789,7 +4789,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 2,
-    "texte": "À Buenos Aires, Córdoba ou Rosario, l’espagnol est nécessaire dans la plupart des postes.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -4798,7 +4798,7 @@
    "langue": {
     "statut": "verifie",
     "note": 4,
-    "texte": "On parle espagnol, une langue latine proche du français, à Buenos Aires comme à Córdoba ou Mendoza.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5026,7 +5026,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 2,
-    "texte": "À Santiago, qui concentre l’essentiel de l’emploi, l’espagnol est nécessaire dans la plupart des postes.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5035,7 +5035,7 @@
    "langue": {
     "statut": "verifie",
     "note": 4,
-    "texte": "On parle espagnol, une langue latine proche du français, de Santiago à Valparaíso.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5263,7 +5263,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 2,
-    "texte": "À Bogotá, Medellín ou Cali, l’espagnol est nécessaire dans la plupart des postes.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5272,7 +5272,7 @@
    "langue": {
     "statut": "verifie",
     "note": 4,
-    "texte": "On parle espagnol, une langue latine proche du français, à Bogotá comme à Medellín.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5334,7 +5334,7 @@
    },
    "doux": {
     "statut": "verifie",
-    "note": 5,
+    "note": 4,
     "texte": "À Bogotá, le mois le plus froid tourne autour de 13,8 °C et le mois le plus chaud autour de 14,5 °C (moyennes 1991-2020).",
     "annee": "1991-2020",
     "source": "open-meteo",
@@ -5500,7 +5500,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 2,
-    "texte": "À Mexico, Guadalajara ou Monterrey, l’espagnol est nécessaire dans la plupart des postes.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5509,7 +5509,7 @@
    "langue": {
     "statut": "verifie",
     "note": 4,
-    "texte": "On parle espagnol, une langue latine proche du français, de Mexico à Guadalajara.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -5737,7 +5737,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 2,
-    "texte": "À São Paulo comme à Rio de Janeiro, le portugais est nécessaire dans la plupart des postes.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,
@@ -6211,7 +6211,7 @@
    "anglais": {
     "statut": "verifie",
     "note": 5,
-    "texte": "On travaille en anglais, de New York à Los Angeles ou Chicago.",
+    "texte": "",
     "annee": null,
     "source": "notre-avis",
     "lien": null,

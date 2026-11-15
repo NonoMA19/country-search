@@ -17,7 +17,7 @@ import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
+  LIBELLE_BADGE, budgetProfil, calculer, listeFr, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
   type Badge, type Etat, type Ligne, type LigneResultat,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -388,18 +388,21 @@ export default function Resultat() {
         {style ? (
           <div className="mt-3 rounded-3xl border border-bord bg-carte p-5">
             <p className="text-lg font-medium">{style.phrase}</p>
-            <ul className="mt-3 space-y-2">
+            {style.commun && <p className="mt-2">{style.commun}</p>}
+            {!style.commun && style.comparaisons.length === 0 && <p className="mt-2 text-gris">Sur ces points, ton top 3 est à mi-chemin de ce que tu préfères.</p>}
+            {style.comparaisons.length > 0 && <ul className="mt-3 space-y-2">
               {style.comparaisons.map((c) => (
                 <li key={c.pays.id} className="leading-snug">
                   <span className="font-medium">{c.pays.nom} : </span>
                   <span className="text-gris">
-                    {c.communs.length ? `proche de toi sur ${c.communs.join(", ")}` : "peu de points communs"}
-                    {c.differents.length ? `, différent sur ${c.differents.join(", ")}` : ""}.
+                    {c.communs.length ? `proche de toi sur ${listeFr(c.communs)}` : ""}
+                    {c.communs.length && c.differents.length ? ", " : ""}
+                    {c.differents.length ? `différent sur ${listeFr(c.differents)}` : ""}.
                   </span>
                   <Pastille preuve={c.preuve} pays={c.pays.nom} contexte="le style de travail" />
                 </li>
               ))}
-            </ul>
+            </ul>}
           </div>
         ) : (
           <p className="mt-2 text-gris">Tu n’as pas encore répondu aux dilemmes sur la culture au travail. Continue le quiz pour le découvrir.</p>
@@ -418,7 +421,8 @@ export default function Resultat() {
                   <Pastille preuve={{ type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence }} />
                 </p>
                 <p className="mt-2 text-sm text-gris">
-                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {`${doubleNationalite.autresPays} `}
                   {doubleNationalite.avertissement}
                 </p>
               </>

@@ -703,7 +703,7 @@ export function profilTravail(etat: Etat, top: Ligne[]) {
   if (reponses.length === 0) return null;
   const morceaux = reponses.map((x) => x.o.style as string);
   const liste = morceaux.length > 1 ? `${morceaux.slice(0, -1).join(", ")} et ${morceaux.at(-1)}` : morceaux[0];
-  const comparaisons = top.map((l) => {
+  const brutes = top.map((l) => {
     const communs: string[] = [];
     const differents: string[] = [];
     for (const { d, o } of reponses) {
@@ -714,5 +714,18 @@ export function profilTravail(etat: Etat, top: Ligne[]) {
     }
     return { pays: l.pays, communs, differents, preuve: preuveMesure(l.pays.id, reponses[0].o.effets[0].mesures[0]) };
   });
-  return { phrase: `Tu préfères ${liste}.`, comparaisons };
+  // Ce qui est vrai pour tous les pays est dit une seule fois ; sous chaque pays, seulement ce qui le distingue.
+  const pourTous = (cle: "communs" | "differents") =>
+    brutes.length > 1 ? brutes[0][cle].filter((axe) => brutes.every((c) => c[cle].includes(axe))) : [];
+  const tousProches = pourTous("communs");
+  const tousDifferents = pourTous("differents");
+  const comparaisons = brutes
+    .map((c) => ({ ...c, communs: c.communs.filter((a) => !tousProches.includes(a)), differents: c.differents.filter((a) => !tousDifferents.includes(a)) }))
+    .filter((c) => c.communs.length > 0 || c.differents.length > 0);
+  const n = brutes.length;
+  const commun = [
+    tousProches.length ? `Tes ${n} pays sont proches de toi sur ${listeFr(tousProches)}.` : "",
+    tousDifferents.length ? `Tes ${n} pays sont différents de toi sur ${listeFr(tousDifferents)}.` : "",
+  ].filter(Boolean).join(" ");
+  return { phrase: `Tu préfères ${liste}.`, commun, comparaisons };
 }

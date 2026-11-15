@@ -111,7 +111,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais, à Dublin comme à Cork, Galway ou Limerick."
+   "texte": ""
   },
   "langue": {
    "note": 3,
@@ -444,11 +444,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais, à Sydney et Melbourne comme dans les autres capitales d’État."
+   "texte": ""
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais, dans les grandes villes comme ailleurs."
+   "texte": ""
   },
   "hierarchie": {
    "note": 2,
@@ -511,7 +511,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais, à Auckland comme à Wellington ou Christchurch."
+   "texte": ""
   },
   "langue": {
    "note": 3,
@@ -644,11 +644,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Buenos Aires, Córdoba ou Rosario, l’espagnol est nécessaire dans la plupart des postes."
+   "texte": ""
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français, à Buenos Aires comme à Córdoba ou Mendoza."
+   "texte": ""
   },
   "hierarchie": {
    "note": 3,
@@ -677,11 +677,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Santiago, qui concentre l’essentiel de l’emploi, l’espagnol est nécessaire dans la plupart des postes."
+   "texte": ""
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français, de Santiago à Valparaíso."
+   "texte": ""
   },
   "hierarchie": {
    "note": 4,
@@ -710,11 +710,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Bogotá, Medellín ou Cali, l’espagnol est nécessaire dans la plupart des postes."
+   "texte": ""
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français, à Bogotá comme à Medellín."
+   "texte": ""
   },
   "hierarchie": {
    "note": 4,
@@ -743,11 +743,11 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À Mexico, Guadalajara ou Monterrey, l’espagnol est nécessaire dans la plupart des postes."
+   "texte": ""
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français, de Mexico à Guadalajara."
+   "texte": ""
   },
   "hierarchie": {
    "note": 4,
@@ -776,7 +776,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "À São Paulo comme à Rio de Janeiro, le portugais est nécessaire dans la plupart des postes."
+   "texte": ""
   },
   "langue": {
    "note": 4,
@@ -842,7 +842,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "On travaille en anglais, de New York à Los Angeles ou Chicago."
+   "texte": ""
   },
   "langue": {
    "note": 3,
