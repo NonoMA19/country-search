@@ -5,17 +5,26 @@ import { quiz } from "./donnees";
 import { ETAT_VIDE, REGLAGES_DEFAUT, type Etat, type Reglages } from "./moteur";
 import { pays } from "./pays";
 
-export type Etape = { t: "profil"; i: number } | { t: "priorites" } | { t: "sujets" } | { t: "phrases" } | { t: "pret" };
+// L'ordre du parcours : profil, priorités, dilemmes, (résultat prêt), valeurs (en option), résultat.
+// « retour: "portrait" » : on vient de « Ce n'est pas moi », on revient au portrait après la réponse.
+export type Etape =
+  | { t: "profil"; i: number; retour?: "portrait" }
+  | { t: "priorites"; retour?: "portrait" }
+  | { t: "dilemmes" }
+  | { t: "pret" }
+  | { t: "sujets" }
+  | { t: "portrait" }
+  | { t: "revoir"; id: string };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 3;
+export const VERSION_SESSION = 4;
 
 export type Session = {
   v: number;
   etat: Etat;
   etape: Etape;
   reglages: Reglages;
-  proposeA: number; // nombre de phrases vues quand le résultat a été proposé pour la dernière fois
+  proposeA: number; // nombre de dilemmes répondus quand le résultat a été proposé pour la dernière fois
   ouvertes: boolean; // « Montrer seulement les portes ouvertes »
 };
 
@@ -37,7 +46,7 @@ const entier = (x: unknown, min: number) => typeof x === "number" && Number.isIn
 const QUESTIONS = new Map(quiz.profil.map((q) => [q.id, new Set(q.options.map((o) => o.id))]));
 const PRIORITES = new Set(quiz.priorites.map((p) => p.id));
 const SUJETS = new Set(quiz.sujets.map((s) => s.id));
-const PHRASES = new Map(quiz.phrases.map((p) => [p.id, new Set(["oui", "non", "passer", ...(p.options ?? []).map((o) => o.id)])]));
+const DILEMMES = new Map(quiz.dilemmes.map((d) => [d.id, new Set(["passer", ...d.options.map((o) => o.id)])]));
 const PAYS = new Set(pays.map((p) => p.id));
 const CRANS = new Set([0, 0.5, 1, 1.5, 2]);
 
@@ -57,7 +66,7 @@ function etatValide(x: unknown): x is Etat {
   if (!listeDe(x.sujets, (y) => SUJETS.has(y))) return false;
   if (!estObjet(x.reponses)) return false;
   const reponses = x.reponses;
-  if (!Object.entries(reponses).every(([k, v]) => estTexte(v) && !!PHRASES.get(k)?.has(v))) return false;
+  if (!Object.entries(reponses).every(([k, v]) => estTexte(v) && !!DILEMMES.get(k)?.has(v))) return false;
   if (!listeDe(x.ordre, (y) => y in reponses) || x.ordre.length !== Object.keys(reponses).length) return false;
   if (!listeDe(x.remontes, (y) => PAYS.has(y))) return false;
   return listeDe(x.historique, () => true) && x.historique.length <= x.ordre.length + 1;
@@ -65,8 +74,10 @@ function etatValide(x: unknown): x is Etat {
 
 function etapeValide(x: unknown): boolean {
   if (!estObjet(x)) return false;
+  if (x.retour !== undefined && x.retour !== "portrait") return false;
   if (x.t === "profil") return entier(x.i, 0) && (x.i as number) < quiz.profil.length;
-  return x.t === "priorites" || x.t === "sujets" || x.t === "phrases" || x.t === "pret";
+  if (x.t === "revoir") return estTexte(x.id) && DILEMMES.has(x.id);
+  return x.t === "priorites" || x.t === "sujets" || x.t === "dilemmes" || x.t === "pret" || x.t === "portrait";
 }
 
 function reglagesValides(x: unknown): boolean {

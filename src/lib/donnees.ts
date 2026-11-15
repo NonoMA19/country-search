@@ -17,6 +17,7 @@ export type DefMesure = {
   id: string;
   nom: string;
   sens: "haut" | "position";
+  fait?: string | string[]; // la phrase du résultat : un modèle avec {mot}, ou une phrase par niveau
   unite?: string;
   bornes?: number[];
   notes?: number[];
@@ -50,28 +51,30 @@ export type Note = {
   verifieLe?: string | null;
 };
 
-export type Effet = { mesures: string[]; sens: Sens; famille?: FamilleScore };
-
-export type Phrase = {
+// Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
+// « poids » pour une mesure « haut » (1 = normal, 0,5 = léger) ; « position » pour une mesure « position ».
+export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
+export type OptionDilemme = {
   id: string;
-  famille: "partir" | FamilleScore;
-  type: "oui-non" | "ecart" | "filtre" | "choix";
   texte: string;
+  detail?: string; // la ligne grise : l'avantage ou le prix de l'option
+  effets: EffetDilemme[];
+  ecart?: { regle: string; raison: string }; // fait descendre des pays dans « Moins adaptés pour toi »
+  portrait: string; // la phrase du portrait si tu choisis cette option
+  preference?: string; // ce que tu préfères, pour « À savoir » (« tu préférais un hiver doux »)
+  style?: string; // pour « Ton profil de travail »
+};
+export type Dilemme = {
+  id: string;
+  theme: string;
+  titre: string;
+  scene: string;
   pourquoi: string;
-  oui?: Effet[];
-  non?: Effet[];
-  options?: { id: string; label: string; effets: Effet[] }[];
-  ouvre?: string[];
-  ecarteSi?: "oui" | "non";
-  regle?: string;
-  raison?: string;
-  saufPriorites?: string[];
-  saufZone?: string;
-  saufReponse?: Record<string, string>;
-  siReponse?: Record<string, string>;
-  apresFiltre?: string;
+  exemple?: boolean; // les montants et durées sont des exemples fictifs
+  axe?: string; // axe du style de travail
   afficheSi?: string;
   regleAffichage?: string;
+  options: OptionDilemme[];
 };
 
 export type OptionProfil = { id: string; label: string; ageMax?: number; euros?: number; mois?: number; codes?: string[] };
@@ -86,6 +89,8 @@ export type QuestionProfil = {
   regleAffichage?: string;
   options: OptionProfil[];
 };
+// Ton projet donne des poids de départ, plus légers qu'une réponse de dilemme.
+export type Objectif = { nom: string; explication: string; effets: { mesures: string[]; afficheSi?: string }[] };
 export type Priorite = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; sens: Sens };
 export type Sujet = { id: string; label: string; mesure: string };
 
@@ -130,9 +135,10 @@ export const criteres = criteresData as Critere[];
 export const sources = sourcesData as Record<string, Source>;
 export const quiz = quizData as unknown as {
   profil: QuestionProfil[];
+  objectifs: Record<string, Objectif>;
   priorites: Priorite[];
   sujets: Sujet[];
-  phrases: Phrase[];
+  dilemmes: Dilemme[];
 };
 const scores = scoresData as unknown as {
   genereLe: string;
@@ -146,7 +152,7 @@ export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
 export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
 export const avis = avisData as unknown as Record<string, Avis>;
-export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; avertissement: string };
+export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; autresPays: string; avertissement: string };
 
 export const mesures: Record<string, DefMesure & { critere: Critere }> = Object.fromEntries(
   criteres.flatMap((c) => c.mesures.map((m) => [m.id, { ...m, critere: c }])),

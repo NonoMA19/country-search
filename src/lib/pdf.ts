@@ -2,7 +2,7 @@
 // Aucun serveur, aucun compte : le fichier est créé sur l'appareil de la personne.
 import { LIBELLE_TYPE, dateFr, type Preuve } from "./donnees";
 import { chargerDossier, liensVerifies } from "./dossiers";
-import { LIBELLE_BADGE, verdict, type Alerte, type Argument, type Ligne, type Porte } from "./moteur";
+import { LIBELLE_BADGE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
 import type { Pays } from "./pays";
 
 // Les polices de base du PDF ne connaissent que l'alphabet latin simple.
@@ -10,12 +10,14 @@ const propre = (t: string) =>
   t.replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/[–—−]/g, "-").replace(/…/g, "...").replace(/œ/g, "oe").replace(/Œ/g, "OE")
     .replace(/€/g, "euros").replace(/[  ]/g, " ").replace(/µ/g, "u").replace(/[^\x00-\xff]/g, "");
 
-export async function telechargerDossier({ pays, ligne, porte, raisons, coince }: {
+export async function telechargerDossier({ pays, ligne, porte, pour, savoir, alertes, portrait }: {
   pays: Pays;
+  portrait?: string[];
   ligne?: Ligne | null;
   porte?: Porte | null;
-  raisons?: Argument[];
-  coince?: { arguments: Argument[]; alertes: Alerte[] };
+  pour?: LigneResultat[];
+  savoir?: LigneResultat | null;
+  alertes?: Alerte[];
 }) {
   const { jsPDF } = await import("jspdf");
   const dossier = await chargerDossier(pays.id);
@@ -46,6 +48,10 @@ export async function telechargerDossier({ pays, ligne, porte, raisons, coince }
   ecrire(`Mon dossier : ${pays.nom}`, { taille: 22, gras: true, apres: 2 });
   ecrire(`Country Search - dossier créé le ${dateFr(new Date().toISOString().slice(0, 10))}`, { taille: 10, gris: true, apres: 10 });
 
+  if (portrait?.length) {
+    titre("Ton portrait");
+    for (const t of portrait) ecrire(`- ${t}`, { apres: 2 });
+  }
   if (ligne) {
     titre("Ton résultat");
     ecrire(`${Math.round(ligne.score)} % - ${verdict(Math.round(ligne.score))}. C’est un indicateur, pas une vérité.`);
@@ -59,14 +65,18 @@ export async function telechargerDossier({ pays, ligne, porte, raisons, coince }
     preuve(laPorte.preuve);
     laPorte.autres.forEach((a) => ecrire(a, { gris: true }));
   }
-  if (raisons?.length) {
-    titre("Pourquoi ce pays");
-    for (const a of raisons) { ecrire(`- ${a.titre}. ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
+  if (pour?.length) {
+    titre("Pour toi");
+    for (const a of pour) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
-  if (coince && (coince.arguments.length || coince.alertes.length)) {
+  if (savoir) {
+    titre("À savoir");
+    ecrire(`- ${savoir.texte}`, { apres: 2 });
+    preuve(savoir.preuve);
+  }
+  if (alertes?.length) {
     titre("Ce qui peut coincer");
-    for (const a of coince.arguments) { ecrire(`- ${a.titre}. ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
-    for (const a of coince.alertes) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
+    for (const a of alertes) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
 
   // Seuls les liens réellement vérifiés sont imprimés.

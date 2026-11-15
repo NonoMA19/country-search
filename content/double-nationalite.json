@@ -43,7 +43,8 @@
       "acces": "Tu as la nationalité américaine : tu entres aux États-Unis en citoyen, sans visa de travail."
     }
   ],
-  "autre": "Nous n’avons pas encore vérifié ton cas.",
+  "autre": "Ton cas n’est pas encore couvert : nous avons vérifié seulement les nationalités irlandaise, canadienne et américaine. Tes badges et ton classement ne changent pas.",
   "avertissement": "Ces informations sur les visas et les impôts ne sont pas un conseil juridique.",
-  "regle": "Le badge d'un pays devient « Porte ouverte grâce à ta nationalité » seulement pour les cas listés ici : la nationalité du pays lui-même, ou un accord décrit et sourcé (Irlande et Royaume-Uni)."
+  "regle": "Le badge d'un pays devient « Porte ouverte grâce à ta nationalité » seulement pour les cas listés ici : la nationalité du pays lui-même, ou un accord décrit et sourcé (Irlande et Royaume-Uni).",
+  "autresPays": "Pour les autres pays, ta nationalité n’est pas encore couverte : leur badge ne change pas."
 }

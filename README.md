@@ -10,7 +10,7 @@ Country Search aide les étudiants et jeunes diplômés francophones à choisir 
 
 ## Ce qui est prévu (version 1)
 
-- Un quiz de phrases à valider ou rejeter, sans compte.
+- Un quiz de dilemmes (de petites scènes à 2 ou 3 options), sans compte.
 - Un classement des 30 pays par un calcul transparent, avec le « pourquoi » de chaque score.
 - Un top 3, des fiches pays (10 complètes, 20 courtes) et une checklist Jour J, de J-90 à J+30.
 

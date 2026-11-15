@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { DUREE_REVELATION, useFlip } from "@/lib/animation";
 import { ArrowUp, BadgeCheck, ChevronDown, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
@@ -10,11 +11,14 @@ import { ErreurPdf } from "@/components/BoutonDossier";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
+import Portrait from "@/components/Portrait";
+import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
+import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, coince, egalites as calculerEgalites, paysSurprise, prochainePhrase, profilTravail, raisons, repondues, verdict,
-  type Badge, type Etat, type Ligne,
+  LIBELLE_BADGE, budgetProfil, calculer, listeFr, portrait, lignesTop, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, repondues, verdict,
+  type Badge, type Etat, type Ligne, type LigneResultat,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
@@ -76,20 +80,21 @@ function Affirmation({ titre, texte, preuve, pays }: { titre?: string; texte: st
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; surprise?: boolean }) {
+type LignesPays = { pour: LigneResultat[]; savoir: LigneResultat | null };
+
+function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { ligne: Ligne; rang: number | null; egalite: boolean; etat: Etat; lignes: LignesPays; surprise?: boolean }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
-  const pour = raisons(ligne, etat.profil);
-  const contre = coince(ligne, etat.profil);
+  const { pour, savoir } = lignes;
   const score = Math.round(ligne.score);
   const { porte, pays: p } = ligne;
-  const rienNeCoince = contre.arguments.length === 0 && contre.alertes.length === 0;
+  const alertes = porte.alertes;
 
   const pdf = async () => {
     setEnCours(true);
     setErreur(false);
     try {
-      await telechargerDossier({ pays: p, ligne, raisons: pour, coince: contre });
+      await telechargerDossier({ pays: p, ligne, pour, savoir, alertes, portrait: portrait(etat).map((x) => x.texte) });
     } catch {
       setErreur(true);
     } finally {
@@ -123,6 +128,23 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         </p>
       </div>
 
+      <section className="mt-5">
+        <h4 className="font-semibold">Pour toi</h4>
+        {pour.length ? (
+          <ul className="mt-2 space-y-2">
+            {pour.map((a) => <Affirmation key={a.mesure} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
+          </ul>
+        ) : (
+          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
+        )}
+        {savoir && (
+          <>
+            <h4 className="mt-4 font-semibold">À savoir</h4>
+            <ul className="mt-2"><Affirmation texte={savoir.texte} preuve={savoir.preuve} pays={p.nom} /></ul>
+          </>
+        )}
+      </section>
+
       <details className="group mt-5 rounded-2xl border border-bord">
         <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
           <span>Voir le détail</span>
@@ -130,34 +152,22 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
         </summary>
         <div className="px-4 pb-4">
       <section className="mt-3">
-        <h4 className="font-semibold">Pourquoi ce pays</h4>
-        {pour.length ? (
-          <ul className="mt-2 space-y-2">
-            {pour.map((a) => <Affirmation key={a.titre} {...a} pays={p.nom} />)}
-          </ul>
-        ) : (
-          <p className="mt-2 text-gris">Aucune de tes réponses ne le met vraiment en avant : il est là faute de mieux.</p>
-        )}
-      </section>
-
-      <section className="mt-5">
         <h4 className="font-semibold">Ce qui peut coincer</h4>
-        {rienNeCoince ? (
-          <p className="mt-2 text-gris">Rien de net dans tes réponses.</p>
+        {alertes.length === 0 ? (
+          <p className="mt-2 text-gris">Rien côté visa et argent.</p>
         ) : (
           <ul className="mt-2 space-y-2">
-            {contre.arguments.map((a) => <Affirmation key={a.titre} {...a} pays={p.nom} />)}
-            {contre.alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
+            {alertes.map((a) => <Affirmation key={a.texte} texte={a.texte} preuve={a.preuve} pays={p.nom} />)}
           </ul>
         )}
         {ligne.neutres.length > 0 && (
           <p className="mt-2 text-sm text-gris">
-            Compté à 50 % faute de donnée vérifiée : {ligne.neutres.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+            Compté à 50 % faute de donnée vérifiée : {ligne.neutres.map((m) => mesures[m]?.nom ?? m).join(", ")}.
           </p>
         )}
         {ligne.manquantes.length > 0 && (
           <p className="mt-2 text-sm text-gris">
-            À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.nom ?? m).join(", ")}.
+            À vérifier, donc pas compté : {ligne.manquantes.map((m) => mesures[m]?.nom ?? m).join(", ")}.
           </p>
         )}
       </section>
@@ -188,7 +198,26 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
   );
 }
 
-function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: number; egalite?: boolean; action?: React.ReactNode }) {
+// Le top 3 : quand un curseur « Et si… ? » change l'ordre, les cartes glissent vers leur nouvelle place.
+function Glissement({ cle, children }: { cle: string; children: ReactNode }) {
+  const ref = useFlip<HTMLDivElement>(cle);
+  return <div ref={ref} className="mt-4 space-y-5">{children}</div>;
+}
+
+// « Moins adaptés pour toi » : une seule phrase par raison, en tête de groupe.
+// « Fermé à ton âge » regroupe les pays, la porte de chacun reste écrite sous son nom.
+const FERME = "Fermé à ton âge.";
+function groupesEcart(lignes: Ligne[]) {
+  const groupes = new Map<string, { ligne: Ligne; detail: string | null }[]>();
+  for (const l of lignes) {
+    const raison = l.ecart?.startsWith(FERME) ? FERME : (l.ecart ?? "");
+    const detail = raison === FERME ? (l.ecart ?? "").slice(FERME.length).trim() || null : null;
+    groupes.set(raison, [...(groupes.get(raison) ?? []), { ligne: l, detail }]);
+  }
+  return [...groupes].map(([raison, l]) => ({ raison, lignes: l }));
+}
+
+function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; rang?: number; egalite?: boolean; action?: React.ReactNode; raison?: string | null }) {
   return (
     <li className="rounded-2xl border border-bord bg-carte p-3">
       <div className="flex items-center gap-3">
@@ -205,7 +234,7 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
         <BadgePorte badge={ligne.porte.badge} petit />
         {egalite && <span className="text-xs text-gris">à égalité</span>}
       </div>
-      {ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
+      {raison !== undefined ? raison && <p className="mt-2 pl-9 text-sm text-gris">{raison}</p> : ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
       {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
@@ -215,6 +244,15 @@ function LignePays({ ligne, rang, egalite, action }: { ligne: Ligne; rang?: numb
 export default function Resultat() {
   const session = useSession();
   const router = useRouter();
+  const [departage, setDepartage] = useState<EtatDepartage | null>(null);
+  // Révélation du n°1 : seulement au premier affichage de la page.
+  const [arrivee, setArrivee] = useState(true);
+  const charge = session !== null;
+  useEffect(() => {
+    if (!charge) return;
+    const t = setTimeout(() => setArrivee(false), DUREE_REVELATION + 100);
+    return () => clearTimeout(t);
+  }, [charge]);
   if (!session) return <Chargement />;
 
   const { etat, reglages } = session;
@@ -239,13 +277,16 @@ export default function Resultat() {
   const top = principaux.filter((l) => !l.peuDeDonnees).slice(0, 3);
   const suite = principaux.filter((l) => !top.includes(l));
   const surprise = paysSurprise(principaux);
+  // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
+  const phrases = lignesTop([...top, ...(surprise ? [surprise] : [])], etat);
   const style = profilTravail(etat, top);
   const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const famillesActives = FAMILLES.filter((f) => lignes.some((l) => l.familles[f.id] !== null));
   const egalites = calculerEgalites(principaux);
-  const encoreDesPhrases = etat.historique.length > 0 && prochainePhrase(etat) !== null;
-  const affiner = () => { ecrire({ ...session, etape: { t: "phrases" }, proposeA: repondues(etat) }); router.push("/quiz"); };
+  const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
+  const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
+  const affiner = () => { ecrire({ ...session, etape: { t: "dilemmes" }, proposeA: repondues(etat) }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
   // Si tous les curseurs sont à « ne compte plus », il n'y a plus rien à classer.
@@ -259,6 +300,17 @@ export default function Resultat() {
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
       </p>
 
+      <details open className="group mt-5 rounded-3xl border border-bord bg-creux">
+        <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
+          <span>Ton portrait</span>
+          <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="px-4 pb-4">
+          <Portrait lignes={portrait(etat)} compact />
+          <button type="button" onClick={revoirPortrait} className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Ce n’est pas toi ? Revoir ton portrait</button>
+        </div>
+      </details>
+
       <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4 py-2">
         <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 shrink-0 accent-bleu" />
         <span className="font-medium">Montrer seulement les portes ouvertes</span>
@@ -269,21 +321,29 @@ export default function Resultat() {
         {!toutAZero && egalites.slice(0, 3).some(Boolean) && (
           <p className="mt-1 text-sm text-gris">Des pays à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
-        <div className="mt-4 space-y-5">
+        <Glissement cle={top.map((l) => l.pays.id).join(",")}>
           {toutAZero ? (
             <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
           ) : (
-            top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} />)
+            top.map((l, i) => (
+              <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
+                <CartePays ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />
+              </div>
+            ))
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
-        </div>
+        </Glissement>
       </section>
+
+      {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
+        <Departage etat={etat} reglages={reglages} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
+      )}
 
       <section aria-labelledby="titre-etsi" className="mt-10">
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
         <p className="mt-1 text-sm text-gris">Bouge les curseurs : le classement se met à jour tout de suite.</p>
         <p className="sr-only" aria-live="polite">
-          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
+          {toutAZero ? "Plus aucun classement : remets au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
         </p>
         <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
           {famillesActives.map((f) => {
@@ -319,7 +379,7 @@ export default function Resultat() {
         <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
         <p className="mt-1 text-sm text-gris">Le mieux placé hors de ton top 3, parmi les pays où peu de Français vivent, s’il atteint au moins 70 %.</p>
         <div className="mt-4">
-          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
+          {surprise && !toutAZero ? <CartePays ligne={surprise} rang={null} egalite={false} etat={etat} lignes={phrases.get(surprise.pays.id) ?? { pour: [], savoir: null }} surprise /> : <p className="rounded-2xl border border-dashed border-bord p-4 text-gris">Pas de surprise cette fois.</p>}
         </div>
       </section>
 
@@ -328,21 +388,24 @@ export default function Resultat() {
         {style ? (
           <div className="mt-3 rounded-3xl border border-bord bg-carte p-5">
             <p className="text-lg font-medium">{style.phrase}</p>
-            <ul className="mt-3 space-y-2">
+            {style.commun && <p className="mt-2">{style.commun}</p>}
+            {!style.commun && style.comparaisons.length === 0 && <p className="mt-2 text-gris">Sur ces points, ton top 3 est à mi-chemin de ce que tu préfères.</p>}
+            {style.comparaisons.length > 0 && <ul className="mt-3 space-y-2">
               {style.comparaisons.map((c) => (
                 <li key={c.pays.id} className="leading-snug">
                   <span className="font-medium">{c.pays.nom} : </span>
                   <span className="text-gris">
-                    {c.communs.length ? `proche de toi sur ${c.communs.join(", ")}` : "peu de points communs"}
-                    {c.differents.length ? `, différent sur ${c.differents.join(", ")}` : ""}.
+                    {c.communs.length ? `proche de toi sur ${listeFr(c.communs)}` : ""}
+                    {c.communs.length && c.differents.length ? ", " : ""}
+                    {c.differents.length ? `différent sur ${listeFr(c.differents)}` : ""}.
                   </span>
                   <Pastille preuve={c.preuve} pays={c.pays.nom} contexte="le style de travail" />
                 </li>
               ))}
-            </ul>
+            </ul>}
           </div>
         ) : (
-          <p className="mt-2 text-gris">Tu n’as pas encore répondu aux phrases sur le style de travail. Continue le quiz pour le découvrir.</p>
+          <p className="mt-2 text-gris">Tu n’as pas encore répondu aux dilemmes sur la culture au travail. Continue le quiz pour le découvrir.</p>
         )}
       </section>
 
@@ -358,7 +421,8 @@ export default function Resultat() {
                   <Pastille preuve={{ type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence }} />
                 </p>
                 <p className="mt-2 text-sm text-gris">
-                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {cas.acces && paysCas ? `Le badge pour ${paysCas.le} en tient compte : « ${LIBELLE_BADGE.nationalite} ». Son pourcentage, lui, ne change pas. ` : "Ton classement ne change pas. "}
+                  {`${doubleNationalite.autresPays} `}
                   {doubleNationalite.avertissement}
                 </p>
               </>
@@ -381,24 +445,29 @@ export default function Resultat() {
           <div className="mt-6">
             <h3 className="font-semibold">Moins adaptés pour toi</h3>
             <p className="mt-1 text-sm text-gris">Ces pays restent visibles. Tu peux les remonter dans ton classement.</p>
-            <ul className="mt-3 space-y-2">
-              {ecartes.map((l) => (
-                <LignePays key={l.pays.id} ligne={l} action={
-                  <button type="button" onClick={() => maj({ etat: { ...etat, remontes: [...etat.remontes, l.pays.id] } })} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
-                    <ArrowUp aria-hidden="true" className="h-4 w-4" /> Le remonter
-                  </button>
-                } />
-              ))}
-            </ul>
+            {groupesEcart(ecartes).map((g) => (
+              <div key={g.raison} className="mt-4">
+                <p className="font-medium">{g.raison}</p>
+                <ul className="mt-2 space-y-2">
+                  {g.lignes.map(({ ligne: l, detail }) => (
+                    <LignePays key={l.pays.id} ligne={l} raison={detail} action={
+                      <button type="button" onClick={() => maj({ etat: { ...etat, remontes: [...etat.remontes, l.pays.id] } })} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
+                        <ArrowUp aria-hidden="true" className="h-4 w-4" /> Le remonter
+                      </button>
+                    } />
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         )}
       </section>
 
       <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
-        {encoreDesPhrases ? (
+        {encoreDesDilemmes ? (
           <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu"><span className="min-w-0 hyphens-auto">Continuer pour affiner</span></button>
         ) : (
-          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à toutes les phrases utiles : ton classement ne peut plus s’affiner.</p>
+          <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à tous les dilemmes utiles : ton classement ne peut plus s’affiner.</p>
         )}
         <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu">
           <RotateCcw aria-hidden="true" className="hidden h-5 w-5 shrink-0 min-[240px]:block" /> <span className="min-w-0 hyphens-auto">Recommencer</span>
