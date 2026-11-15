@@ -10,10 +10,11 @@ import { ErreurPdf } from "@/components/BoutonDossier";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
+import Portrait from "@/components/Portrait";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  LIBELLE_BADGE, budgetProfil, calculer, coince, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, raisons, repondues, verdict,
+  LIBELLE_BADGE, budgetProfil, calculer, portrait, coince, egalites as calculerEgalites, paysSurprise, prochainDilemme, profilTravail, raisons, repondues, verdict,
   type Badge, type Etat, type Ligne,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -89,7 +90,7 @@ function CartePays({ ligne, rang, egalite, etat, surprise = false }: { ligne: Li
     setEnCours(true);
     setErreur(false);
     try {
-      await telechargerDossier({ pays: p, ligne, raisons: pour, coince: contre });
+      await telechargerDossier({ pays: p, ligne, raisons: pour, coince: contre, portrait: portrait(etat).map((x) => x.texte) });
     } catch {
       setErreur(true);
     } finally {
@@ -245,6 +246,7 @@ export default function Resultat() {
   const famillesActives = FAMILLES.filter((f) => lignes.some((l) => l.familles[f.id] !== null));
   const egalites = calculerEgalites(principaux);
   const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
+  const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
   const affiner = () => { ecrire({ ...session, etape: { t: "dilemmes" }, proposeA: repondues(etat) }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
@@ -258,6 +260,17 @@ export default function Resultat() {
         Le pourcentage dit à quel point un pays te ressemble, d’après tes réponses. C’est un indicateur, pas une vérité.{" "}
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
       </p>
+
+      <details open className="group mt-5 rounded-3xl border border-bord bg-creux">
+        <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
+          <span>Ton portrait</span>
+          <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="px-4 pb-4">
+          <Portrait lignes={portrait(etat)} compact />
+          <button type="button" onClick={revoirPortrait} className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Ce n’est pas toi ? Revoir ton portrait</button>
+        </div>
+      </details>
 
       <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4 py-2">
         <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 shrink-0 accent-bleu" />

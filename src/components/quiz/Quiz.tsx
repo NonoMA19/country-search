@@ -7,11 +7,12 @@ import { Check, ChevronLeft, CircleHelp } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
+import Portrait from "@/components/Portrait";
 import { quiz, type Dilemme } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import {
-  MIN_DILEMMES, REPONSES_STABLES, annulerDerniere, calculer, demarrerDilemmes, mesureDisponible,
-  prochainDilemme, questionProfilVisible, repondre, repondues, reponsesStables, resultatPret, type Profil,
+  MIN_DILEMMES, REPONSES_STABLES, annulerDerniere, calculer, changerReponse, demarrerDilemmes, mesureDisponible, portrait,
+  prochainDilemme, questionProfilVisible, rejouer, repondre, repondues, reponsesStables, resultatPret, trouverDilemme, type LignePortrait, type Profil,
 } from "@/lib/moteur";
 
 export const BOUTON = "min-h-14 w-full rounded-2xl border px-5 py-3 text-left text-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
@@ -59,7 +60,9 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
 }
 
 // Un dilemme : une scène, puis 2 ou 3 options en cartes. Un tap pour répondre.
-export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran" }: { dilemme: Dilemme; repond: (r: string) => void; titreId?: string }) {
+export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie, passer = "Passer" }: {
+  dilemme: Dilemme; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string;
+}) {
   const lettres = ["A", "B", "C"];
   return (
     <>
@@ -68,8 +71,8 @@ export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran" }: { dil
       <p className="mt-2 text-lg leading-snug">{dilemme.scene}</p>
       <div className="mt-5 space-y-3" role="group" aria-labelledby={titreId}>
         {dilemme.options.map((o, i) => (
-          <button key={o.id} type="button" onClick={() => repond(o.id)}
-            className="flex min-h-16 w-full items-start gap-3 rounded-2xl border-2 border-bord bg-carte px-4 py-3 text-left transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu">
+          <button key={o.id} type="button" onClick={() => repond(o.id)} aria-pressed={choisie !== undefined ? choisie === o.id : undefined}
+            className={`flex min-h-16 w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu ${choisie === o.id ? "border-bleu bg-bleu-doux" : "border-bord bg-carte"}`}>
             <span aria-hidden="true" className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-creux text-sm font-semibold text-gris">{lettres[i]}</span>
             <span className="min-w-0">
               <span className="block text-lg leading-snug font-medium break-words">{o.texte}</span>
@@ -80,7 +83,7 @@ export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran" }: { dil
       </div>
       {dilemme.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
       <Pourquoi key={dilemme.id} texte={dilemme.pourquoi} />
-      <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">Passer</button>
+      <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">{passer}</button>
     </>
   );
 }
@@ -124,13 +127,14 @@ export default function Quiz() {
     const suivant = (valeur: string | string[] | undefined) => {
       const profil: Profil = { ...etat.profil, [q.id]: valeur };
       for (const autre of quiz.profil) if (!questionProfilVisible(autre.id, profil)) delete profil[autre.id];
+      if (etape.retour === "portrait") return aller({ t: "portrait" }, { etat: rejouer({ ...etat, profil }) });
       const liste = visibles(profil);
       const i = liste.findIndex((x) => x.id === q.id) + 1;
       aller(i < liste.length ? { t: "profil", i } : { t: "priorites" }, { etat: { ...etat, profil } });
     };
     const choisies = Array.isArray(etat.profil[q.id]) ? (etat.profil[q.id] as string[]) : [];
     return (
-      <Cadre progression={((rang + 1) / (questions.length + 1)) * 40} retour={rang > 0 ? () => aller({ t: "profil", i: rang - 1 }) : null}>
+      <Cadre progression={((rang + 1) / (questions.length + 1)) * 40} retour={etape.retour === "portrait" ? () => aller({ t: "portrait" }) : rang > 0 ? () => aller({ t: "profil", i: rang - 1 }) : null}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">{q.question}</h1>
         <Pourquoi key={q.id} texte={q.pourquoi} />
         <div className="mt-5 space-y-3">
@@ -178,7 +182,7 @@ export default function Quiz() {
       maj({ etat: { ...etat, priorites: p } });
     };
     return (
-      <Cadre progression={((questions.length + 1) / (questions.length + 1)) * 40} retour={() => aller({ t: "profil", i: questions.length - 1 })}>
+      <Cadre progression={((questions.length + 1) / (questions.length + 1)) * 40} retour={() => (etape.retour === "portrait" ? aller({ t: "portrait" }) : aller({ t: "profil", i: questions.length - 1 }))}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Tes 3 priorités</h1>
         <p className="mt-2 text-gris">Choisis-en exactement 3. Elles compteront double dans ton résultat.</p>
         <div className="mt-5 grid grid-cols-2 gap-3">
@@ -196,7 +200,7 @@ export default function Quiz() {
         </div>
         <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
           <p className="sr-only" aria-live="polite">{etat.priorites.length === 3 ? "3 priorités choisies." : `Encore ${3 - etat.priorites.length} à choisir.`}</p>
-          <button type="button" disabled={etat.priorites.length !== 3} onClick={() => aller({ t: "dilemmes" }, { etat: demarrerDilemmes(etat), proposeA: -1 })} className={BOUTON_PLEIN}>
+          <button type="button" disabled={etat.priorites.length !== 3} onClick={() => (etape.retour === "portrait" ? aller({ t: "portrait" }, { etat: rejouer(etat) }) : aller({ t: "dilemmes" }, { etat: demarrerDilemmes(etat), proposeA: -1 }))} className={BOUTON_PLEIN}>
             {etat.priorites.length === 3 ? "Continuer" : `Encore ${3 - etat.priorites.length} à choisir`}
           </button>
         </div>
@@ -206,11 +210,11 @@ export default function Quiz() {
 
   // ----- Sujets en option -----
   if (etape.t === "sujets") {
-    const lancer = () => allerAuResultat();
+    const lancer = () => aller({ t: "portrait" });
     return (
       <Cadre progression={100} retour={() => aller({ t: "pret" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
-        <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe directement à ton résultat.</p>
+        <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <div className="mt-5 space-y-3">
           {quiz.sujets.filter((s) => mesureDisponible(s.mesure)).map((s) => {
             const actif = etat.sujets.includes(s.id);
@@ -225,10 +229,42 @@ export default function Quiz() {
           })}
         </div>
         <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur space-y-2">
-          <button type="button" onClick={lancer} className={BOUTON_PLEIN}>{etat.sujets.length ? "Voir mon résultat" : "Passer et voir mon résultat"}</button>
+          <button type="button" onClick={lancer} className={BOUTON_PLEIN}>{etat.sujets.length ? "Continuer" : "Passer"}</button>
         </div>
       </Cadre>
     );
+  }
+
+  // ----- Ton portrait -----
+  if (etape.t === "portrait") {
+    const revoir = (l: LignePortrait) => {
+      if (l.revoir.t === "dilemme") aller({ t: "revoir", id: l.revoir.id });
+      else if (l.revoir.t === "priorites") aller({ t: "priorites", retour: "portrait" });
+      else aller({ t: "profil", i: Math.max(0, questions.findIndex((x) => x.id === "objectif")), retour: "portrait" });
+    };
+    return (
+      <Cadre progression={100} retour={() => aller({ t: "sujets" })}>
+        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
+        <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
+        <div className="mt-5"><Portrait lignes={portrait(etat)} revoir={revoir} /></div>
+        <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+          <button type="button" onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
+        </div>
+      </Cadre>
+    );
+  }
+
+  // ----- Revoir un dilemme depuis le portrait -----
+  if (etape.t === "revoir") {
+    const d = trouverDilemme(etape.id);
+    if (d) {
+      const change = (r: string) => (r === "passer" ? aller({ t: "portrait" }) : aller({ t: "portrait" }, { etat: changerReponse(etat, d.id, r) }));
+      return (
+        <Cadre progression={100} retour={() => aller({ t: "portrait" })}>
+          <CarteDilemme key={d.id} dilemme={d} repond={change} choisie={etat.reponses[d.id]} passer="Garder ma réponse" />
+        </Cadre>
+      );
+    }
   }
 
   // ----- Dilemmes, un par un -----

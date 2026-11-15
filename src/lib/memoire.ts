@@ -6,7 +6,15 @@ import { ETAT_VIDE, REGLAGES_DEFAUT, type Etat, type Reglages } from "./moteur";
 import { pays } from "./pays";
 
 // L'ordre du parcours : profil, priorités, dilemmes, (résultat prêt), valeurs (en option), résultat.
-export type Etape = { t: "profil"; i: number } | { t: "priorites" } | { t: "dilemmes" } | { t: "pret" } | { t: "sujets" };
+// « retour: "portrait" » : on vient de « Ce n'est pas moi », on revient au portrait après la réponse.
+export type Etape =
+  | { t: "profil"; i: number; retour?: "portrait" }
+  | { t: "priorites"; retour?: "portrait" }
+  | { t: "dilemmes" }
+  | { t: "pret" }
+  | { t: "sujets" }
+  | { t: "portrait" }
+  | { t: "revoir"; id: string };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
 export const VERSION_SESSION = 4;
@@ -66,8 +74,10 @@ function etatValide(x: unknown): x is Etat {
 
 function etapeValide(x: unknown): boolean {
   if (!estObjet(x)) return false;
+  if (x.retour !== undefined && x.retour !== "portrait") return false;
   if (x.t === "profil") return entier(x.i, 0) && (x.i as number) < quiz.profil.length;
-  return x.t === "priorites" || x.t === "sujets" || x.t === "dilemmes" || x.t === "pret";
+  if (x.t === "revoir") return estTexte(x.id) && DILEMMES.has(x.id);
+  return x.t === "priorites" || x.t === "sujets" || x.t === "dilemmes" || x.t === "pret" || x.t === "portrait";
 }
 
 function reglagesValides(x: unknown): boolean {

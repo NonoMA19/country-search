@@ -102,6 +102,7 @@ export default function Methode() {
           <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays, « Pourquoi ce pays » ne cite que des points notés 4 ou 5 sur 5 dans le sens de tes réponses. « Ce qui peut coincer » cite un point noté 1 ou 2 sur 5.</li>
+          <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais. « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
           <li>Certaines options font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
         </ul>
       </section>

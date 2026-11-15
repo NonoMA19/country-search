@@ -498,6 +498,52 @@ export function annulerDerniere(etat: Etat): Etat {
   return { ...etat, reponses, ordre: etat.ordre.slice(0, -1), historique: etat.historique.slice(0, -1) };
 }
 
+// Recalcule l'historique du top 3 après un changement de réponse (« Ce n'est pas moi »).
+export function rejouer(etat: Etat): Etat {
+  const historique = [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))];
+  for (let k = 1; k <= etat.ordre.length; k++) {
+    const ordre = etat.ordre.slice(0, k);
+    historique.push(cleTop3(calculer({ ...etat, ordre, reponses: Object.fromEntries(ordre.map((id) => [id, etat.reponses[id]])) })));
+  }
+  return { ...etat, historique };
+}
+
+export function changerReponse(etat: Etat, id: string, reponse: string): Etat {
+  if (!etat.ordre.includes(id)) return repondre(etat, id, reponse);
+  return rejouer({ ...etat, reponses: { ...etat.reponses, [id]: reponse } });
+}
+
+// ---------- Ton portrait ----------
+// 4 à 6 phrases tirées de tes vraies réponses : ton projet, tes priorités, tes dilemmes.
+// Jamais une phrase sur une question passée.
+export type LignePortrait = { cle: string; texte: string; revoir: { t: "objectif" } | { t: "priorites" } | { t: "dilemme"; id: string } };
+export const MAX_PORTRAIT = 6;
+
+const minuscule = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+export const listeFr = (l: string[]) => (l.length > 1 ? `${l.slice(0, -1).join(", ")} et ${l.at(-1)}` : (l[0] ?? ""));
+
+export function portrait(etat: Etat): LignePortrait[] {
+  const res: LignePortrait[] = [];
+  const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
+  if (obj) res.push({ cle: "objectif", texte: `Tu pars pour ${obj.nom}.`, revoir: { t: "objectif" } });
+  const prio = etat.priorites.map((id) => quiz.priorites.find((p) => p.id === id)?.label).filter((x): x is string => !!x);
+  if (prio.length) res.push({ cle: "priorites", texte: `Ce qui compte le plus pour toi\u00a0: ${listeFr(prio.map(minuscule))}.`, revoir: { t: "priorites" } });
+  // Les réponses qui changent le plus ton classement d'abord : une option avec un effet avant une option sans effet.
+  const poids = (o: OptionDilemme) => (o.ecart ? 1 : 0) + o.effets.reduce((a, e) => a + (e.position !== undefined ? 1 : (e.poids ?? 1)), 0);
+  const dilemmes = etat.ordre
+    .map((id, rang) => ({ id, rang, o: optionChoisie(etat, id) }))
+    .filter((x): x is { id: string; rang: number; o: OptionDilemme } => !!x.o?.portrait)
+    .sort((a, b) => poids(b.o) - poids(a.o) || a.rang - b.rang);
+  const vus = new Set(res.map((r) => r.texte));
+  for (const { id, o } of dilemmes) {
+    if (res.length >= MAX_PORTRAIT) break;
+    if (vus.has(o.portrait)) continue;
+    vus.add(o.portrait);
+    res.push({ cle: `dilemme:${id}`, texte: o.portrait, revoir: { t: "dilemme", id } });
+  }
+  return res;
+}
+
 export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
 // ---------- Raisons, points qui coincent, profil de travail ----------

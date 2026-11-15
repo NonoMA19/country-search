@@ -5,7 +5,7 @@ import { mesures, quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  egalites, evaluerPorte, prochainDilemme, questionProfilVisible, raisons, repondre, resultatPret, trouverDilemme,
+  egalites, evaluerPorte, portrait, prochainDilemme, questionProfilVisible, raisons, repondre, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -120,6 +120,12 @@ for (let i = 0; i < NB; i++) {
       verifier(!!d, `quiz ${i} : ${l.pays.nom} a un argument moyen ou défavorable (${a.titre})`);
     }
   }
+
+  // Portrait : au plus 6 phrases, jamais une phrase sur un dilemme passé, jamais deux fois la même.
+  const lignesPortrait = portrait(etat);
+  verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
+  verifier(new Set(lignesPortrait.map((l) => l.texte)).size === lignesPortrait.length, `quiz ${i} : phrase répétée dans le portrait`);
+  for (const l of lignesPortrait) if (l.revoir.t === "dilemme") verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un dilemme passé (${l.revoir.id})`);
 
   // Égalités : dans chaque groupe à égalité, au plus 5 points entre le premier et le dernier.
   const principaux = lignes.filter((l) => !l.ecart);
