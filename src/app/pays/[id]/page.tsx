@@ -4,12 +4,14 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import BoutonDossier from "@/components/BoutonDossier";
 import CarteVisa from "@/components/CarteVisa";
+import { AvecDefinitions } from "@/components/Definition";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
+import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { paysCouverts } from "@/lib/moteur";
-import { criteres, dateFr, notes, portes, preuveMesure, preuveSource, vie, type Critere } from "@/lib/donnees";
+import { criteres, dateFr, europe, notes, portes, preuveMesure, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
@@ -50,7 +52,16 @@ const FAMILLES = [
   { id: "valeurs", nom: "Valeurs" },
 ];
 
-function Lien({ lien, date }: { lien: LienDossier; date: string }) {
+function Lien({ lien, date, officiel = false }: { lien: LienDossier; date: string; officiel?: boolean }) {
+  if (officiel) {
+    return (
+      <li>
+        <p className="text-sm font-medium text-gris">{lien.titre}</p>
+        <LienOfficiel url={lien.url as string} nom={lien.nom ?? lien.titre} className="mt-1" />
+        <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
+      </li>
+    );
+  }
   return (
     <li className="rounded-2xl border border-bord bg-carte p-4">
       <p className="text-sm font-medium text-gris">{lien.titre}</p>
@@ -59,6 +70,17 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
       </a>
       <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
     </li>
+  );
+}
+
+// « Europe sans visa » : ce qui peut être demandé sur place, avec sa source.
+function NoteEurope({ note, titre, pays }: { note: NoteSourcee; titre: string; pays: string }) {
+  const texte = note.datePage ? `${note.texte} (page mise à jour le ${dateFr(note.datePage)})` : note.texte;
+  return (
+    <p className="mt-2 text-sm">
+      {note.texte}
+      <Pastille preuve={preuveSource(titre, texte, note.source, note.lien, note.verifieLe)} pays={pays} contexte={titre.toLowerCase()} />
+    </p>
   );
 }
 
@@ -82,7 +104,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
         <ul className="mt-1 space-y-1.5">
           {lignes.map((l) => (
             <li key={l.m.id}>
-              <span className="font-semibold">{l.m.nom} : </span>{l.mot}
+              <span className="font-semibold"><AvecDefinitions texte={l.m.nom} />{"\u00a0"}: </span>{l.mot}
               {l.explication && <span className="block text-sm text-gris">{l.explication}</span>}
             </li>
           ))}
@@ -103,7 +125,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
         <ul className="mt-1 space-y-3">
           {lignes.map((l) => (
             <li key={l.m.id}>
-              <span className="font-semibold">{l.m.nom} : </span>{l.mot}
+              <span className="font-semibold"><AvecDefinitions texte={l.m.nom} />{"\u00a0"}: </span>{l.mot}
               {l.explication && <span className="block text-sm text-gris">{l.explication}</span>}
               <span className="mt-0.5 block">
                 {l.n?.texte}
@@ -119,7 +141,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
     <>
       {lignes.map(({ m, n, ok, mot, explication }) => (
         <li key={m.id} className="rounded-2xl border border-bord bg-carte p-4">
-          <p className="text-sm font-medium text-gris">{m.nom}</p>
+          <p className="text-sm font-medium text-gris"><AvecDefinitions texte={m.nom} /></p>
           {ok && <p className="mt-0.5 font-semibold first-letter:uppercase">{mot}</p>}
           {explication && <p className="mt-0.5 text-sm text-gris">{explication}</p>}
           <p className={`mt-1 ${ok ? "" : "text-gris"}`}>
@@ -179,6 +201,13 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                   <Pastille preuve={preuveSource("Invitation à présenter une demande", b.invitationTexte, b.invitationSource.source, b.invitationSource.lien, b.invitationSource.verifieLe)} pays={p.nom} contexte="l’invitation" />
                 </p>
               )}
+              {b.type === "ue" && (
+                <>
+                  <p className="mt-2 text-sm text-gris">{europe.texte}</p>
+                  <NoteEurope note={europe.inscription} titre="Inscription sur place" pays={p.nom} />
+                  {europe.pays[p.id] && <NoteEurope note={europe.pays[p.id]} titre="Séjour de plus de trois mois" pays={p.nom} />}
+                </>
+              )}
               {b.detailsAVerifier && <p className="mt-2 text-sm text-gris">Les conditions détaillées du visa de travail (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.</p>}
               {(b.conditions ?? []).length > 0 && (
                 <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
@@ -204,7 +233,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Liens officiels</h2>
         <ul className="mt-3 space-y-3">
-          {liens.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} />)}
+          {liens.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} officiel />)}
         </ul>
         {associations.length > 0 && (
           <>

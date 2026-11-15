@@ -3,11 +3,6 @@
     {
       "id": "objectif",
       "question": "Quel est ton projet ?",
-      "pourquoi": "Ton projet change la porte d’entrée qu’on te propose : PVT (Programme Vacances-Travail, un visa d’un an pour voyager et travailler), VIE (Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l’étranger, à demander avant 28 ans) ou visa de travail.",
-      "influence": [
-        "visa",
-        "age-conditions"
-      ],
       "options": [
         {
           "id": "stage-vie",
@@ -25,16 +20,32 @@
           "id": "carriere",
           "label": "Une carrière longue"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Ton projet donne tes premiers critères, avant les dilemmes.",
+        "cartes": [
+          {
+            "pastille": "Stage ou VIE",
+            "texte": "Emploi des jeunes et Français sur place. Le VIE est détaillé à la fin."
+          },
+          {
+            "pastille": "Aventure",
+            "texte": "Vie pas chère, nature et climat doux. Le salaire ne compte pas au départ."
+          },
+          {
+            "pastille": "Premier poste",
+            "texte": "Emploi des jeunes, salaire et travail en anglais."
+          },
+          {
+            "pastille": "Carrière",
+            "texte": "Salaire, stabilité et santé. On te signale que le PVT dure un an."
+          }
+        ]
+      }
     },
     {
       "id": "age",
       "question": "Quel âge as-tu ?",
-      "pourquoi": "Le PVT s’arrête à 30 ou 35 ans selon le pays, et le VIE à 28 ans.",
-      "influence": [
-        "visa",
-        "age-conditions"
-      ],
       "options": [
         {
           "id": "18-25",
@@ -61,15 +72,32 @@
           "label": "36 ans ou plus",
           "ageMax": 99
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Le PVT s’arrête à 30 ou 35 ans selon le pays, le VIE à 28 ans.",
+        "cartes": [
+          {
+            "pastille": "Moins de 28 ans",
+            "texte": "Tous les PVT et le VIE te sont ouverts."
+          },
+          {
+            "pastille": "28 à 30 ans",
+            "texte": "Le VIE se ferme, les PVT restent ouverts."
+          },
+          {
+            "pastille": "31 à 35 ans",
+            "texte": "Les PVT limités à 30 ans passent dans « Moins adaptés pour toi »."
+          },
+          {
+            "pastille": "36 ans ou plus",
+            "texte": "Plus aucun PVT : il faudra un visa de travail."
+          }
+        ]
+      }
     },
     {
       "id": "budget",
       "question": "Combien peux-tu mettre de côté pour partir ?",
-      "pourquoi": "Certains visas demandent une somme minimale. Ce n’est jamais bloquant : on te dit seulement ce qu’il te manquerait.",
-      "influence": [
-        "argent"
-      ],
       "options": [
         {
           "id": "1000",
@@ -91,15 +119,20 @@
           "label": "5 000 € ou plus",
           "euros": 5000
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Certains PVT demandent une somme minimale à l’arrivée.",
+        "cartes": [
+          {
+            "pastille": "Ta réponse",
+            "texte": "Elle ne change jamais ton classement. On te dit seulement ce qu’il te manquerait, pays par pays."
+          }
+        ]
+      }
     },
     {
       "id": "duree",
       "question": "Tu pars pour combien de temps ?",
-      "pourquoi": "Un PVT dure un an maximum, un VIE de 6 à 24 mois.",
-      "influence": [
-        "age-conditions"
-      ],
       "options": [
         {
           "id": "moins-6",
@@ -121,15 +154,24 @@
           "label": "Plus de 2 ans",
           "mois": 36
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Un PVT dure un an au plus.",
+        "cartes": [
+          {
+            "pastille": "Jusqu’à 12 mois",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Plus d’un an",
+            "texte": "On te prévient que le PVT ne suffira pas : il faudra un autre visa ensuite. Ton classement ne change pas."
+          }
+        ]
+      }
     },
     {
       "id": "anglais",
       "question": "Ton niveau d’anglais ?",
-      "pourquoi": "Pour savoir si on peut te proposer des pays où le bureau parle anglais.",
-      "influence": [
-        "langue-travail"
-      ],
       "options": [
         {
           "id": "debutant",
@@ -143,16 +185,24 @@
           "id": "courant",
           "label": "Courant"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "L’anglais ouvre la majorité des postes à l’étranger.",
+        "cartes": [
+          {
+            "pastille": "Débutant",
+            "texte": "Si tu ne parles pas d’autre langue, on te demande si travailler en anglais te va. Si non, les pays où il faut travailler en anglais passent dans « Moins adaptés pour toi »."
+          },
+          {
+            "pastille": "Moyen ou courant",
+            "texte": "Tous les pays restent ouverts. Pour un premier poste, ceux où l’on travaille en anglais passent un peu devant."
+          }
+        ]
+      }
     },
     {
       "id": "langues",
       "question": "Tu parles d’autres langues ?",
-      "pourquoi": "Un pays dont tu parles déjà la langue devient plus simple au quotidien.",
-      "influence": [
-        "langue-quotidien",
-        "langue-travail"
-      ],
       "multiple": true,
       "options": [
         {
@@ -228,15 +278,24 @@
           ]
         }
       ],
-      "aucun": "Aucune autre"
+      "aucun": "Aucune autre",
+      "aide": {
+        "enjeu": "Parler la langue du pays simplifie toute ta vie sur place.",
+        "cartes": [
+          {
+            "pastille": "Une langue cochée",
+            "texte": "Dans les pays qui la parlent, la vie au quotidien compte comme en français, et il n’y a rien à apprendre."
+          },
+          {
+            "pastille": "Aucune autre",
+            "texte": "Rien ne change."
+          }
+        ]
+      }
     },
     {
       "id": "pret-anglais",
       "question": "Travailler en anglais, ça te va ?",
-      "pourquoi": "Si ce n’est pas le cas, on met en avant les pays où l’on peut travailler en français.",
-      "influence": [
-        "langue-travail"
-      ],
       "afficheSi": "anglais-debutant-sans-autre-langue",
       "regleAffichage": "Seulement si ton anglais est débutant et que tu ne parles aucune autre langue.",
       "options": [
@@ -248,13 +307,24 @@
           "id": "non",
           "label": "Non"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Sans anglais, le choix de postes se réduit beaucoup.",
+        "cartes": [
+          {
+            "pastille": "Oui",
+            "texte": "Tous les pays restent ouverts."
+          },
+          {
+            "pastille": "Non",
+            "texte": "Seuls les pays où l’on peut travailler en français restent dans ton classement. Les autres passent dans « Moins adaptés pour toi »."
+          }
+        ]
+      }
     },
     {
       "id": "nationalite",
       "question": "As-tu une autre nationalité ?",
-      "pourquoi": "Certaines nationalités donnent des avantages ou des obligations. On te les signale à la fin.",
-      "influence": [],
       "options": [
         {
           "id": "non",
@@ -264,13 +334,24 @@
           "id": "oui",
           "label": "Oui"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Une autre nationalité peut ouvrir un pays sans visa, ou créer des obligations.",
+        "cartes": [
+          {
+            "pastille": "Non",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Oui",
+            "texte": "On te demande laquelle. Les cas vérifiés sont expliqués dans ton résultat."
+          }
+        ]
+      }
     },
     {
       "id": "nationalite-laquelle",
       "question": "Laquelle ?",
-      "pourquoi": "Pour l’instant, nous n’avons vérifié que trois cas.",
-      "influence": [],
       "afficheSi": "autre-nationalite",
       "regleAffichage": "Seulement si tu as répondu oui à la question précédente.",
       "options": [
@@ -290,15 +371,32 @@
           "id": "autre",
           "label": "Une autre"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Nous n’avons vérifié que trois cas pour l’instant.",
+        "cartes": [
+          {
+            "pastille": "Irlandaise",
+            "texte": "Le Royaume-Uni t’est ouvert sans visa."
+          },
+          {
+            "pastille": "Canadienne ou américaine",
+            "texte": "Tu entres dans ce pays en citoyen. On te signale aussi un piège à connaître."
+          },
+          {
+            "pastille": "Une autre",
+            "texte": "Ce cas n’est pas encore couvert : ton résultat le dit."
+          },
+          {
+            "pastille": "Pour tous",
+            "texte": "Le badge du pays change, pas son pourcentage."
+          }
+        ]
+      }
     },
     {
       "id": "zone",
       "question": "Où veux-tu partir ?",
-      "pourquoi": "Les pays de l’autre zone restent visibles, plus bas dans ta liste.",
-      "influence": [
-        "distance"
-      ],
       "options": [
         {
           "id": "europe",
@@ -312,7 +410,24 @@
           "id": "peu-importe",
           "label": "Peu importe"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Partir en Europe ou plus loin, ce n’est pas le même projet.",
+        "cartes": [
+          {
+            "pastille": "En Europe",
+            "texte": "Les pays hors d’Europe passent dans « Moins adaptés pour toi ». Tu peux les remonter."
+          },
+          {
+            "pastille": "Hors d’Europe",
+            "texte": "Les pays d’Europe passent dans « Moins adaptés pour toi ». Tu peux les remonter."
+          },
+          {
+            "pastille": "Peu importe",
+            "texte": "Les 30 pays restent dans ton classement."
+          }
+        ]
+      }
     }
   ],
   "objectifs": {
@@ -502,6 +617,38 @@
       "mesure": "air"
     }
   ],
+  "aides": {
+    "priorites": {
+      "enjeu": "Trois choses qui comptent plus que tout le reste.",
+      "cartes": [
+        {
+          "pastille": "Choisie",
+          "texte": "Elle compte double dans ton pourcentage (importance 2)."
+        },
+        {
+          "pastille": "Donnée manquante",
+          "texte": "Un pays sans donnée vérifiée sur une de tes priorités reçoit une note neutre de 50 %."
+        },
+        {
+          "pastille": "Non choisie",
+          "texte": "Elle peut encore compter, plus légèrement, si ton projet ou un dilemme la vise."
+        }
+      ]
+    },
+    "sujets": {
+      "enjeu": "Ces sujets parlent moins du travail que de ta vie sur place.",
+      "cartes": [
+        {
+          "pastille": "Touché",
+          "texte": "Le sujet compte dans ton pourcentage, autant qu’une réponse de dilemme (importance 1)."
+        },
+        {
+          "pastille": "Pas touché",
+          "texte": "Il ne compte pas. Rien n’écarte un pays ici."
+        }
+      ]
+    }
+  },
   "dilemmes": [
     {
       "id": "deux-offres",
@@ -509,7 +656,6 @@
       "titre": "Deux offres",
       "exemple": true,
       "scene": "Pour le même poste, on te propose deux contrats.",
-      "pourquoi": "A donne plus de place aux pays où le salaire achète le plus, une fois les prix pris en compte. B donne plus de place aux pays où la vie coûte moins cher.",
       "options": [
         {
           "id": "a",
@@ -541,14 +687,26 @@
           "portrait": "Tu regardes ce qu’il te reste à la fin du mois.",
           "preference": "une vie moins chère"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Un gros salaire ne veut rien dire sans le loyer en face.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les meilleurs salaires, une fois les prix pris en compte. Tu mets plus de côté si tu tiens ton budget."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où la vie coûte moins cher. Ton salaire est plus petit, mais il va plus loin."
+          }
+        ]
+      }
     },
     {
       "id": "promotion",
       "theme": "Argent et travail",
       "titre": "La promotion",
       "scene": "On te propose une promotion bien payée, mais tu finiras à 20 h tous les soirs.",
-      "pourquoi": "A donne plus de place aux pays où le salaire achète le plus. B donne plus de place aux pays où l’on travaille moins d’heures par semaine.",
       "options": [
         {
           "id": "a",
@@ -579,7 +737,20 @@
           "portrait": "Tu privilégies ton temps libre au salaire.",
           "preference": "des semaines de travail courtes"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Dans certains pays, finir tard est normal. Dans d’autres, c’est mal vu.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où les salaires sont élevés, quitte à travailler plus."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on travaille moins d’heures. Moins de primes, plus de soirées libres."
+          }
+        ]
+      }
     },
     {
       "id": "sortie-ecole",
@@ -587,7 +758,6 @@
       "titre": "La sortie d’école",
       "exemple": true,
       "scene": "Tu viens de finir tes études et tu cherches ton premier poste.",
-      "pourquoi": "A donne plus de place aux pays où le chômage des jeunes est bas. B donne plus de place aux pays où le salaire achète le plus.",
       "options": [
         {
           "id": "a",
@@ -619,7 +789,20 @@
           "portrait": "Chercher longtemps pour mieux gagner ta vie ne te fait pas peur.",
           "preference": "un salaire élevé"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Trouver vite ou trouver mieux : les marchés du travail ne se ressemblent pas.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où les jeunes trouvent facilement du travail. Tu démarres vite, sans forcément viser haut."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où les salaires sont élevés. Ça peut prendre du temps, mais l’arrivée vaut le coup."
+          }
+        ]
+      }
     },
     {
       "id": "premier-dossier",
@@ -627,7 +810,6 @@
       "titre": "Ton premier dossier rendu",
       "axe": "communication",
       "scene": "Tu rends ton premier dossier. Ta manager te répond.",
-      "pourquoi": "Dans certains pays on dit tout sans détour, dans d’autres il faut lire entre les lignes. A rapproche des pays où la communication est directe, B des pays où elle est indirecte.",
       "options": [
         {
           "id": "a",
@@ -661,7 +843,20 @@
           "preference": "une communication qui ménage les gens",
           "style": "qu’on y mette les formes"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Le retour de ta manager, tu vas le recevoir presque tous les jours.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où l’on dit les choses franchement. Tu sauras toujours où tu en es, mais il faudra encaisser."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on reste diplomate. L’ambiance est plus douce, mais il faudra lire entre les lignes."
+          }
+        ]
+      }
     },
     {
       "id": "reunion-directeur",
@@ -669,7 +864,6 @@
       "titre": "La réunion avec le directeur",
       "axe": "hiérarchie",
       "scene": "Le directeur propose une idée que tu trouves fragile.",
-      "pourquoi": "A rapproche des pays où la hiérarchie est plate, B des pays où elle est marquée.",
       "options": [
         {
           "id": "a",
@@ -703,7 +897,20 @@
           "preference": "une hiérarchie marquée",
           "style": "une hiérarchie marquée"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Contredire son chef est normal dans certains pays, mal vu dans d’autres.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où la hiérarchie est plate. Ta voix compte tout de suite, mais il faut oser parler."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où la hiérarchie est marquée. Les règles sont claires, mais on passe par les bons canaux."
+          }
+        ]
+      }
     },
     {
       "id": "reunion-9h",
@@ -711,7 +918,6 @@
       "titre": "Réunion à 9 h",
       "axe": "ponctualité",
       "scene": "Ton équipe a une réunion à 9 h.",
-      "pourquoi": "La ponctualité est stricte dans certains pays, souple dans d’autres. A rapproche des pays où elle est stricte, B des pays où elle est souple.",
       "options": [
         {
           "id": "a",
@@ -745,7 +951,20 @@
           "preference": "des horaires souples",
           "style": "des horaires souples"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Être à l’heure ne veut pas dire la même chose partout.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où la ponctualité est stricte. Tout est carré, mais une minute de retard se remarque."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays plus souples avec l’heure. L’ambiance est détendue, mais il faut accepter d’attendre."
+          }
+        ]
+      }
     },
     {
       "id": "idee-reunion",
@@ -753,7 +972,6 @@
       "titre": "Ton idée en réunion",
       "axe": "décision",
       "scene": "Tu proposes une amélioration.",
-      "pourquoi": "A rapproche des pays où le chef tranche, B des pays où l’on décide par consensus.",
       "options": [
         {
           "id": "a",
@@ -787,7 +1005,20 @@
           "preference": "des décisions prises ensemble",
           "style": "des décisions prises ensemble"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Décidé vite ou décidé ensemble : chaque pays a sa façon d’avancer.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où le chef tranche. Ça va vite, mais la décision ne t’appartient pas toujours."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on décide en équipe. C’est plus long, mais tout le monde suit ensuite."
+          }
+        ]
+      }
     },
     {
       "id": "vendredi-18h",
@@ -795,7 +1026,6 @@
       "titre": "Vendredi 18 h",
       "axe": "vie pro et vie perso",
       "scene": "La semaine de travail est finie.",
-      "pourquoi": "A rapproche des pays où vie pro et vie perso sont séparées, B des pays où elles se mêlent.",
       "options": [
         {
           "id": "a",
@@ -829,7 +1059,20 @@
           "preference": "voir tes collègues en dehors du bureau",
           "style": "voir tes collègues en dehors du bureau"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Tes collègues seront peut-être tes premiers amis sur place. Ou pas.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où travail et vie privée restent séparés. Tes soirées sont à toi, mais il faudra te faire des amis ailleurs."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on sort entre collègues. Tu t’intègres vite, mais tes soirées appartiennent un peu au bureau."
+          }
+        ]
+      }
     },
     {
       "id": "deux-langues",
@@ -838,7 +1081,6 @@
       "afficheSi": "peut-travailler-en-anglais",
       "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
       "scene": "Au bureau, tout se passe en anglais. Mais chez le médecin ou pour signer ton bail, c’est la langue locale, que tu ne parles pas.",
-      "pourquoi": "B donne plus de place aux pays où l’on vit en français, ou dans une langue que tu parles déjà. A ne change rien.",
       "options": [
         {
           "id": "a",
@@ -861,7 +1103,20 @@
           "portrait": "Tu veux pouvoir gérer ton quotidien sans aide.",
           "preference": "gérer ton quotidien sans aide"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "L’anglais au bureau ne suffit pas toujours pour vivre au quotidien.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Aucun pays ne recule. Tu acceptes de te débrouiller hors du bureau."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on vit en français, dans une langue proche du français ou dans une langue que tu parles. Plus simple au quotidien, mais moins de choix."
+          }
+        ]
+      }
     },
     {
       "id": "cours-offerts",
@@ -871,7 +1126,6 @@
       "afficheSi": "peut-travailler-en-anglais",
       "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
       "scene": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
-      "pourquoi": "B fait perdre des points aux pays où il faut apprendre une langue : beaucoup si elle s’écrit avec un autre alphabet, un peu sinon (sauf si tu la parles déjà). Aucun pays n’est écarté. A ne change rien.",
       "options": [
         {
           "id": "a",
@@ -895,14 +1149,26 @@
           "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
           "preference": "ne pas avoir de langue à apprendre"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Apprendre la langue ouvre des portes, mais demande du temps.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Tous les pays restent dans la course, même avec un autre alphabet. Tu gagnes un vrai atout."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où il faut apprendre une nouvelle langue reculent, surtout avec un autre alphabet. Tu gardes ton temps, mais tu fermes quelques portes."
+          }
+        ]
+      }
     },
     {
       "id": "premier-mois",
       "theme": "Langue et intégration",
       "titre": "Ton premier mois",
       "scene": "Tu viens d’arriver dans ta nouvelle ville.",
-      "pourquoi": "A donne plus de place aux pays où beaucoup de Français vivent déjà. B ne change rien.",
       "options": [
         {
           "id": "a",
@@ -926,7 +1192,20 @@
           "effets": [],
           "portrait": "Tu n’as pas besoin de Français autour de toi."
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Un réseau français aide à démarrer, mais peut aussi t’enfermer dans une bulle.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où les Français sont nombreux, par rapport à la population. Tout est plus simple au début."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les Français sur place ne comptent pas plus que le reste. Plus dépaysant, plus lent aussi."
+          }
+        ]
+      }
     },
     {
       "id": "noel",
@@ -934,7 +1213,6 @@
       "titre": "Noël approche",
       "exemple": true,
       "scene": "Tu veux voir ta famille pour les fêtes.",
-      "pourquoi": "A donne plus de place aux pays proches de la France (temps de vol et décalage horaire). B aussi, mais deux fois moins. C ne change rien : les pays lointains ne gagnent pas de points.",
       "options": [
         {
           "id": "a",
@@ -975,7 +1253,24 @@
           "effets": [],
           "portrait": "La distance avec la France ne te fait pas peur."
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "La distance se ressent surtout aux grandes occasions.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met nettement en avant les pays proches, avec peu de décalage horaire."
+          },
+          {
+            "pastille": "B",
+            "texte": "La distance compte un peu."
+          },
+          {
+            "pastille": "C",
+            "texte": "Ta réponse ne fait reculer aucun pays lointain : tous restent dans la course."
+          }
+        ]
+      }
     },
     {
       "id": "janvier",
@@ -983,7 +1278,6 @@
       "titre": "Janvier",
       "exemple": true,
       "scene": "C’est l’hiver dans ta nouvelle ville.",
-      "pourquoi": "B rapproche des pays où l’hiver est doux (mois le plus froid entre 8 et 15 °C). A ne change rien : le froid ne fait perdre aucun point.",
       "options": [
         {
           "id": "a",
@@ -1006,7 +1300,20 @@
           "portrait": "Tu préfères un hiver doux.",
           "preference": "un hiver doux"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Un hiver, ça dure des mois. Mieux vaut savoir si tu le supportes.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Ta réponse ne fait reculer aucun pays froid."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays aux hivers doux."
+          }
+        ]
+      }
     },
     {
       "id": "aout",
@@ -1014,7 +1321,6 @@
       "titre": "Août",
       "exemple": true,
       "scene": "C’est l’été dans ta nouvelle ville.",
-      "pourquoi": "A rapproche des pays aux étés très chauds (mois le plus chaud entre 25 et 29 °C en moyenne). B rapproche des pays aux étés tempérés (entre 17 et 21 °C en moyenne).",
       "options": [
         {
           "id": "a",
@@ -1046,7 +1352,20 @@
           "portrait": "Tu préfères un été tempéré.",
           "preference": "un été tempéré"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "La chaleur, certains l’adorent, d’autres la subissent.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays aux étés chauds."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays aux étés tempérés."
+          }
+        ]
+      }
     },
     {
       "id": "appartement",
@@ -1054,7 +1373,6 @@
       "titre": "Ton appartement",
       "exemple": true,
       "scene": "Pour le même loyer, on te propose deux appartements.",
-      "pourquoi": "A donne plus de place aux pays qui ont de grandes villes. B donne plus de place aux pays qui ont des villes moyennes et une nature proche.",
       "options": [
         {
           "id": "a",
@@ -1086,14 +1404,26 @@
           "portrait": "Tu préfères une ville moyenne, près de la nature.",
           "preference": "une ville moyenne près de la nature"
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "À loyer égal, on choisit souvent entre l’espace et l’animation.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays aux grandes villes animées."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays aux villes moyennes, avec la nature à côté."
+          }
+        ]
+      }
     },
     {
       "id": "nuit",
       "theme": "Sécurité, santé, visa",
       "titre": "1 h du matin",
       "scene": "Tu rentres à pied d’une soirée, sans personne avec toi.",
-      "pourquoi": "A donne plus de place aux pays où il y a le moins de violences graves. B ne change rien.",
       "options": [
         {
           "id": "a",
@@ -1116,7 +1446,20 @@
           "effets": [],
           "portrait": "La sécurité ne décidera pas de ton choix."
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Te sentir en sécurité change ta vie de tous les jours.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays les plus sûrs, ceux où il y a le moins d’homicides."
+          },
+          {
+            "pastille": "B",
+            "texte": "La sécurité ne compte pas plus que le reste."
+          }
+        ]
+      }
     },
     {
       "id": "poignet",
@@ -1124,7 +1467,6 @@
       "titre": "Le poignet cassé",
       "exemple": true,
       "scene": "Tu te casses le poignet le deuxième mois.",
-      "pourquoi": "A donne plus de place aux pays où les soins sont pris en charge dès l’arrivée, sans assurance privée. B ne change rien. On ne te demande rien sur ta santé.",
       "options": [
         {
           "id": "a",
@@ -1148,7 +1490,20 @@
           "effets": [],
           "portrait": "Payer une assurance santé privée ne te gêne pas."
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Selon le pays, une personne qui arrive n’est pas toujours couverte tout de suite.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où ta santé est bien couverte dès ton arrivée."
+          },
+          {
+            "pastille": "B",
+            "texte": "La couverture santé ne compte pas plus que le reste : tu acceptes une assurance privée."
+          }
+        ]
+      }
     },
     {
       "id": "job-de-reve",
@@ -1156,7 +1511,6 @@
       "titre": "Le job de rêve",
       "exemple": true,
       "scene": "On t’offre le poste de tes rêves. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir.",
-      "pourquoi": "B fait descendre dans « Moins adaptés pour toi » les pays où il faut un employeur ou une mission pour entrer. Tu peux les remonter. A ne change rien.",
       "options": [
         {
           "id": "a",
@@ -1175,7 +1529,20 @@
           },
           "portrait": "Tu veux pouvoir changer d’employeur librement."
         }
-      ]
+      ],
+      "aide": {
+        "enjeu": "Dans beaucoup de pays, ton visa de travail est attaché à ton employeur.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Rien ne change au classement."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où ton visa dépend d’un employeur, ou où ce n’est pas encore vérifié, passent dans « Moins adaptés pour toi ». Tu peux les remonter."
+          }
+        ]
+      }
     }
   ]
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BoutonCommencer from "@/components/BoutonCommencer";
+import Definition from "@/components/Definition";
 import PiedDePage from "@/components/PiedDePage";
+import { europe } from "@/lib/donnees";
 import { FAMILLES, NOM_FAMILLE, paysParFamille } from "@/lib/pays";
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default function Accueil() {
         <p className="mt-3 text-lg text-gris">
           Choisis le pays où partir travailler. Un quiz court classe 30 pays
           selon ce qui compte pour toi, et te dit par quelle porte entrer :
-          Europe sans visa, PVT ou visa de travail.
+          Europe sans visa, <Definition cle="pvt" /> ou visa de travail.
         </p>
         <p className="mt-2 text-gris">
           Chaque score est expliqué, chaque information a sa source et sa date
@@ -62,6 +64,7 @@ export default function Accueil() {
                 </li>
               ))}
             </ul>
+            {famille === "Europe sans visa" && <p className="mt-2 text-sm text-gris">{europe.court}</p>}
           </div>
         ))}
         <p className="mt-4 text-sm text-gris">

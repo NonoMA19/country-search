@@ -389,6 +389,28 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(DUREE_REVELATION < 1000, "révélation du n°1 : une seconde ou plus");
 }
 
+// 2.11 « Pourquoi on te demande ça » : 60 mots au plus, une mini-carte par option de dilemme,
+// et un texte qui dit vrai sur le calcul (« On met en avant » seulement si l'option a un effet).
+{
+  const mots = (t: string) => t.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
+  const aides = [...quiz.profil.map((q) => [q.id, q.aide] as const), ...Object.entries(quiz.aides), ...quiz.dilemmes.map((d) => [d.id, d.aide] as const)];
+  for (const [id, a] of aides) {
+    verifier(!!a?.enjeu && a.cartes.length > 0, `aide de ${id} absente ou vide`);
+    const n = mots(a.enjeu) + a.cartes.reduce((s, c) => s + mots(c.texte), 0);
+    verifier(n <= 60, `aide de ${id} : ${n} mots (60 au plus)`);
+  }
+  for (const d of quiz.dilemmes) {
+    verifier(d.aide.cartes.length === d.options.length && d.aide.cartes.every((c, i) => c.pastille === "ABC"[i]), `aide de ${d.id} : une mini-carte par option, A, B, C`);
+    d.options.forEach((o, i) => {
+      const texte = d.aide.cartes[i]?.texte ?? "";
+      const agit = o.effets.some((e) => e.position !== undefined || (e.poids ?? 1) > 0);
+      if (/^On met (nettement )?en avant/.test(texte)) verifier(agit, `aide de ${d.id} ${o.id} : « on met en avant » sans effet codé`);
+      if (/ne recule|ne compte pas plus|Rien ne change|ne fait reculer aucun/.test(texte)) verifier(!agit && !o.ecart, `aide de ${d.id} ${o.id} : « rien ne change » alors que l'option agit`);
+      if (o.ecart) verifier(texte.includes("Moins adaptés pour toi"), `aide de ${d.id} ${o.id} : l'écart n'est pas dit`);
+    });
+  }
+}
+
 // ---------- Bilan ----------
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);

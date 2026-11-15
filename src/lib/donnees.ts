@@ -6,6 +6,7 @@ import sourcesData from "../../content/sources.json";
 import portesData from "../../content/portes.json";
 import avisData from "../../content/saisie/avis.json";
 import doubleData from "../../content/double-nationalite.json";
+import glossaireData from "../../content/glossaire.json";
 
 export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis" | "temoignages";
 // Confiance d'une note tirée de témoignages : « bonne » (sources nombreuses et concordantes) ou « moyenne ».
@@ -56,6 +57,10 @@ export type Note = {
   confiance?: Confiance;
 };
 
+// « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
+// 60 mots au maximum en tout (vérifié par npm run test:moteur).
+export type Aide = { enjeu: string; cartes: { pastille: string; texte: string }[] };
+
 // Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
 // « poids » pour une mesure « haut » (1 = normal, 0,5 = léger) ; « position » pour une mesure « position ».
 export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
@@ -74,7 +79,7 @@ export type Dilemme = {
   theme: string;
   titre: string;
   scene: string;
-  pourquoi: string;
+  aide: Aide;
   exemple?: boolean; // les montants et durées sont des exemples fictifs
   axe?: string; // axe du style de travail
   afficheSi?: string;
@@ -86,8 +91,7 @@ export type OptionProfil = { id: string; label: string; ageMax?: number; euros?:
 export type QuestionProfil = {
   id: string;
   question: string;
-  pourquoi: string;
-  influence: string[];
+  aide: Aide;
   multiple?: boolean;
   aucun?: string;
   afficheSi?: string;
@@ -163,6 +167,7 @@ export const quiz = quizData as unknown as {
   objectifs: Record<string, Objectif>;
   priorites: Priorite[];
   sujets: Sujet[];
+  aides: { priorites: Aide; sujets: Aide };
   dilemmes: Dilemme[];
 };
 const scores = scoresData as unknown as {
@@ -177,6 +182,9 @@ export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
 export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
 export const avis = avisData as unknown as Record<string, Avis>;
+// « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
+export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };
+export const europe = portesToutes._europe as unknown as { texte: string; court: string; inscription: NoteSourcee; pays: Record<string, NoteSourcee> };
 export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; autresPays: string; avertissement: string };
 
 export const mesures: Record<string, DefMesure & { critere: Critere }> = Object.fromEntries(
@@ -191,13 +199,17 @@ export const LIBELLE_TYPE: Record<TypeSource | "a-verifier", string> = {
   "a-verifier": "À vérifier",
 };
 
+// Les petites définitions au toucher (PVT, VIE, PPA…), toutes dans content/glossaire.json.
+export type CleGlossaire = keyof typeof glossaireData;
+export const glossaire = glossaireData as Record<CleGlossaire, { terme: string; definition: string }>;
+
 // Une phrase courte pour expliquer chaque étiquette, la première fois qu'on la rencontre.
 export const EXPLICATION_TYPE: Record<TypeSource | "a-verifier", string> = {
-  officiel: "Information lue sur le site d’un État ou d’un organisme public.",
-  "donnee-ouverte": "Chiffre tiré d’une base de données publique, libre de réutilisation (donnée ouverte).",
-  "notre-avis": "Jugement de la rédaction, justifié par écrit. C’est un avis, pas un fait.",
-  temoignages: "Tendance tirée de guides d’expatriation et de témoignages, recoupée par au moins deux sources concordantes. Ce n’est pas une donnée officielle.",
-  "a-verifier": "Information pas encore vérifiée sur une source officielle.",
+  officiel: glossaire.officiel.definition,
+  "donnee-ouverte": glossaire["donnee-ouverte"].definition,
+  "notre-avis": glossaire["notre-avis"].definition,
+  temoignages: glossaire.temoignages.definition,
+  "a-verifier": glossaire["a-verifier"].definition,
 };
 
 // Une preuve : ce qu'on affiche quand la personne touche une pastille.

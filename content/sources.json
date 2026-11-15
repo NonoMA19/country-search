@@ -75,6 +75,12 @@
     "licence": "Lien seulement, aucun contenu copié (selon l’avis juridique du site europa.eu)",
     "type": "officiel"
   },
+  "europa-sejour": {
+    "nom": "L’Europe est à vous (Union européenne), Droit de séjour des travailleurs",
+    "url": "https://europa.eu/youreurope/citizens/residence/residence-rights/workers/index_fr.htm",
+    "licence": "Lien seulement, aucun contenu copié (selon l’avis juridique du site europa.eu)",
+    "type": "officiel"
+  },
   "cleiss-accords": {
     "nom": "Cleiss, Conventions bilatérales de sécurité sociale",
     "url": "https://www.cleiss.fr/docs/textes/index.html",

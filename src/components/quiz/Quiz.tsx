@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Check, ChevronLeft, CircleHelp } from "lucide-react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { Check, ChevronLeft } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Portrait from "@/components/Portrait";
+import Pourquoi from "@/components/Pourquoi";
 import { useFlip } from "@/lib/animation";
 import { quiz, type Dilemme } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
@@ -20,19 +21,6 @@ export const BOUTON = "min-h-14 w-full rounded-2xl border px-5 py-3 text-left te
 const BOUTON_PLEIN = "min-h-14 w-full rounded-2xl bg-bleu px-5 py-3 text-lg font-semibold text-white hover:bg-blue-700 disabled:bg-bord disabled:text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
 
 const visibles = (p: Profil) => quiz.profil.filter((q) => questionProfilVisible(q.id, p));
-
-function Pourquoi({ texte }: { texte: string }) {
-  const [ouvert, setOuvert] = useState(false);
-  return (
-    <div className="mt-3">
-      <button type="button" onClick={() => setOuvert(!ouvert)} aria-expanded={ouvert} className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 text-sm text-gris hover:text-encre">
-        <CircleHelp aria-hidden="true" className="h-5 w-5" />
-        <span>Pourquoi on te demande ça</span>
-      </button>
-      {ouvert && <p className="mt-1 rounded-xl bg-creux px-3 py-2 text-sm">{texte}</p>}
-    </div>
-  );
-}
 
 function Cadre({ progression, retour, children }: { progression: number; retour: (() => void) | null; children: ReactNode }) {
   return (
@@ -84,7 +72,7 @@ export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie
         ))}
       </div>
       {dilemme.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
-      <Pourquoi key={dilemme.id} texte={dilemme.pourquoi} />
+      <Pourquoi key={dilemme.id} aide={dilemme.aide} />
       <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">{passer}</button>
     </>
   );
@@ -158,7 +146,7 @@ export default function Quiz() {
     return (
       <Cadre progression={((rang + 1) / (questions.length + 1)) * 40} retour={etape.retour === "portrait" ? () => aller({ t: "portrait" }) : rang > 0 ? () => aller({ t: "profil", i: rang - 1 }) : null}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">{q.question}</h1>
-        <Pourquoi key={q.id} texte={q.pourquoi} />
+        <Pourquoi key={q.id} aide={q.aide} />
         <div className="mt-5 space-y-3">
           {q.multiple ? (
             <>
@@ -207,6 +195,7 @@ export default function Quiz() {
       <Cadre progression={((questions.length + 1) / (questions.length + 1)) * 40} retour={() => (etape.retour === "portrait" ? aller({ t: "portrait" }) : aller({ t: "profil", i: questions.length - 1 }))}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Tes 3 priorités</h1>
         <p className="mt-2 text-gris">Choisis-en exactement 3. Elles compteront double dans ton résultat.</p>
+        <Pourquoi aide={quiz.aides.priorites} />
         <div className="mt-5 grid grid-cols-2 gap-3">
           {quiz.priorites.filter((p) => p.mesures.some(mesureDisponible)).map((p) => {
             const actif = etat.priorites.includes(p.id);
@@ -237,6 +226,7 @@ export default function Quiz() {
       <Cadre progression={100} retour={() => aller({ t: "pret" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
+        <Pourquoi aide={quiz.aides.sujets} />
         <div className="mt-5 space-y-3">
           {quiz.sujets.filter((s) => mesureDisponible(s.mesure)).map((s) => {
             const actif = etat.sujets.includes(s.id);

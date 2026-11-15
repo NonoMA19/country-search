@@ -1,0 +1,42 @@
+{
+  "pvt": {
+    "terme": "PVT",
+    "definition": "Programme Vacances-Travail. Un visa d’un an au plus pour voyager et travailler dans un pays partenaire. Il est ouvert jusqu’à 30 ou 35 ans selon le pays."
+  },
+  "vie": {
+    "terme": "VIE",
+    "definition": "Volontariat international en entreprise. Une mission de 6 à 24 mois pour une entreprise française à l’étranger, à demander avant 28 ans."
+  },
+  "ppa": {
+    "terme": "Pouvoir d’achat (PPA)",
+    "definition": "Des dollars « à parité de pouvoir d’achat » (PPA) : ils tiennent compte des prix de chaque pays. 1 000 $ PPA achètent à peu près la même chose partout."
+  },
+  "pm25": {
+    "terme": "PM2,5",
+    "definition": "Des particules fines, assez petites pour entrer dans les poumons. Plus leur taux dans l’air est bas, mieux c’est."
+  },
+  "indice-bm": {
+    "terme": "Indice de la Banque mondiale",
+    "definition": "Une note sur 100 publiée par la Banque mondiale, calculée à partir de nombreuses enquêtes et sources. Elle sert à comparer les pays entre eux, pas à mesurer au point près."
+  },
+  "officiel": {
+    "terme": "Officiel",
+    "definition": "Information lue sur le site d’un État ou d’un organisme public."
+  },
+  "donnee-ouverte": {
+    "terme": "Donnée ouverte",
+    "definition": "Chiffre tiré d’une base de données publique, libre de réutilisation."
+  },
+  "temoignages": {
+    "terme": "Témoignages",
+    "definition": "Tendance tirée de guides d’expatriation et de témoignages, recoupée par au moins deux sources concordantes. Ce n’est pas une donnée officielle."
+  },
+  "notre-avis": {
+    "terme": "Notre avis",
+    "definition": "Jugement de la rédaction, justifié par écrit. C’est un avis, pas un fait."
+  },
+  "a-verifier": {
+    "terme": "À vérifier",
+    "definition": "Information pas encore vérifiée sur une source officielle."
+  }
+}

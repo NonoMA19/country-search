@@ -1,4 +1,5 @@
-import { ExternalLink, GraduationCap } from "lucide-react";
+import { GraduationCap } from "lucide-react";
+import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
 import { preuveVisa, type DetailVisa } from "@/lib/donnees";
 import { LIBELLE_LIE } from "@/lib/moteur";
@@ -38,14 +39,8 @@ export default function CarteVisa({ visa, pays, titre }: { visa: DetailVisa; pay
       {visa.statut !== "verifie" && visa.conditions.length > 0 && (
         <p className="mt-2 text-sm text-gris">Lu sur une page officielle, mais pas encore vérifié en détail.</p>
       )}
-      <ul className="mt-2">
-        {visa.liens.map((l) => (
-          <li key={l.url}>
-            <a href={l.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-lien underline">
-              {l.libelle} <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
-            </a>
-          </li>
-        ))}
+      <ul className="mt-3 space-y-2">
+        {visa.liens.map((l) => <li key={l.url}><LienOfficiel url={l.url} nom={l.libelle} className="" /></li>)}
       </ul>
     </div>
   );
