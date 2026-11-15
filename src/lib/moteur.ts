@@ -55,8 +55,8 @@ export function questionProfilVisible(id: string, p: Profil): boolean {
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   const n = notes[paysId]?.[mesureId];
   if (!n || n.statut !== "verifie" || n.note === null) return null;
-  // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français.
-  if (mesureId === "langue" && parleLangueDe(paysId, p)) return 5;
+  // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français, et rien n'est à apprendre.
+  if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, p)) return 5;
   return n.note;
 }
 
@@ -297,8 +297,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
 
 // ---------- Pays qui descendent dans « Moins adaptés pour toi » ----------
 export function concerne(regle: string | undefined, p: Pays, etat: Etat): boolean {
-  const a = avis[p.id];
-  if (regle === "autre-ecriture") return !!a?.autreEcriture && !parleLangueDe(p.id, etat.profil);
+  // (« Je garde ces soirées pour moi » n'écarte plus aucun pays : c'est une pénalité, voir la mesure « apprendre-langue ».)
   if (regle === "employeur-requis") {
     const b = evaluerPorte(p, etat.profil, null).badge;
     if (b !== "conditions" && b !== "fermee") return false;
@@ -417,15 +416,28 @@ export function verdict(score: number): string {
 
 // Égalités : dans chaque groupe (même liste, même fiabilité), on compare chaque pays au premier
 // du groupe, sur les scores non arrondis. À 5 points ou moins du premier, il est à égalité avec lui.
-export function egalites(lignes: Ligne[]): boolean[] {
-  const res = lignes.map(() => false);
+// Pour chaque pays : l'indice du premier de son groupe d'égalité, ou -1 s'il n'est à égalité avec personne.
+export function groupesEgalite(lignes: Ligne[]): number[] {
+  const res = lignes.map(() => -1);
   let chef = -1;
   lignes.forEach((l, i) => {
     const c = chef >= 0 ? lignes[chef] : null;
     const memeGroupe = c && !c.ecart === !l.ecart && c.peuDeDonnees === l.peuDeDonnees && !l.peuDeDonnees && c.score - l.score <= ECART_EX_AEQUO;
-    if (memeGroupe) { res[i] = true; res[chef] = true; } else chef = i;
+    if (memeGroupe) { res[i] = chef; res[chef] = chef; } else chef = i;
   });
   return res;
+}
+export const egalites = (lignes: Ligne[]): boolean[] => groupesEgalite(lignes).map((g) => g >= 0);
+
+// « À égalité avec les Pays-Bas » : les pays du top 3 de son groupe. S'il n'est à égalité
+// qu'avec des pays hors du top 3 : « À égalité avec la Suède (n° 4) ».
+export function avecQui(lignes: Ligne[], i: number, top = 3): string | null {
+  const g = groupesEgalite(lignes);
+  if (g[i] < 0) return null;
+  const autres = g.map((x, k) => (x === g[i] && k !== i ? k : -1)).filter((k) => k >= 0);
+  const dedans = autres.filter((k) => k < top);
+  if (dedans.length) return `À égalité avec ${listeFr(dedans.map((k) => lignes[k].pays.le))}`;
+  return `À égalité avec ${lignes[autres[0]].pays.le} (n°\u00a0${autres[0] + 1})`;
 }
 
 export function paysSurprise(lignes: Ligne[]): Ligne | null {
@@ -567,9 +579,19 @@ export function portrait(etat: Etat): LignePortrait[] {
     .filter((x): x is { id: string; rang: number; o: OptionDilemme } => !!x.o?.portrait)
     .sort((a, b) => poids(b.o) - poids(a.o) || a.rang - b.rang);
   const vus = new Set(res.map((r) => r.texte));
+  // Une réponse qui ne vise que des mesures déjà dans tes priorités répète la phrase des priorités :
+  // on ne l'affiche pas (« Tu regardes d'abord le salaire » quand « bon salaire » est déjà cité).
+  // Deux réponses sur exactement les mêmes mesures : seule la première (la plus forte) est gardée.
+  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
+  const cibles = (o: OptionDilemme) => o.effets.flatMap((e) => e.mesures);
+  const repetePriorite = (o: OptionDilemme) => cibles(o).length > 0 && o.effets.every((e) => e.position === undefined) && cibles(o).every((m) => mesuresPrio.has(m));
+  const mesuresVues = new Set<string>();
   for (const { id, o } of dilemmes) {
     if (res.length >= MAX_PORTRAIT) break;
-    if (vus.has(o.portrait)) continue;
+    if (vus.has(o.portrait) || repetePriorite(o)) continue;
+    const cle = [...new Set(cibles(o))].sort().join("+");
+    if (cle && !o.ecart && mesuresVues.has(cle)) continue;
+    if (cle) mesuresVues.add(cle);
     vus.add(o.portrait);
     res.push({ cle: `dilemme:${id}`, texte: o.portrait, revoir: { t: "dilemme", id } });
   }
@@ -646,7 +668,7 @@ export function faitMesure(paysId: string, mesureId: string, profil: Profil): st
   const m = mesures[mesureId];
   const note = noteEffective(paysId, mesureId, profil);
   if (!m || note === null) return null;
-  if (mesureId === "langue" && parleLangueDe(paysId, profil)) return "Tu parles déjà la langue du pays";
+  if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, profil)) return "Tu parles déjà la langue du pays";
   if (Array.isArray(m.fait)) return m.fait[note - 1] ?? null;
   if (m.fait) return m.fait.replace("{mot}", m.mots[note - 1]);
   return `${m.nom}\u00a0: ${m.mots[note - 1]}`;
@@ -693,7 +715,8 @@ export function pourToi(l: Ligne, etat: Etat, interdites: Set<string> = new Set(
     const fait = faitMesure(l.pays.id, d.mesure, etat.profil);
     if (!fait) continue;
     const texte = phrasePour(d, fait);
-    if (interdites.has(texte)) continue;
+    // Jamais deux fois la même phrase, ni sous deux pays, ni sous le même (langue et langue à apprendre).
+    if (interdites.has(texte) || res.some((x) => x.texte === texte)) continue;
     res.push({ texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) });
   }
   return res;

@@ -5,7 +5,7 @@ import { notes as notesPays, portes, quiz, sources } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  bilanDepartage, concerne, egalites, paysCouverts, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
+  avecQui, bilanDepartage, concerne, egalites, paysCouverts, profilTravail, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -158,6 +158,13 @@ for (let i = 0; i < NB; i++) {
   verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
   verifier(new Set(lignesPortrait.map((l) => l.texte)).size === lignesPortrait.length, `quiz ${i} : phrase répétée dans le portrait`);
   for (const l of lignesPortrait) if (l.revoir.t === "dilemme") verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un dilemme passé (${l.revoir.id})`);
+  // Portrait : jamais une phrase de dilemme qui répète une priorité déjà citée.
+  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
+  for (const l of lignesPortrait) if (l.revoir.t === "dilemme") {
+    const o = trouverDilemme(l.revoir.id)!.options.find((x) => x.id === etat.reponses[(l.revoir as { id: string }).id])!;
+    const ms = o.effets.flatMap((e) => e.mesures);
+    verifier(!(ms.length > 0 && o.effets.every((e) => e.position === undefined) && ms.every((m) => mesuresPrio.has(m))), `quiz ${i} : le portrait répète une priorité (${l.texte})`);
+  }
 
   // Égalités : dans chaque groupe à égalité, au plus 5 points entre le premier et le dernier.
   const principaux = lignes.filter((l) => !l.ecart);
@@ -172,6 +179,16 @@ for (let i = 0; i < NB; i++) {
     }
   }
   for (let k = 0; k < principaux.length; k++) if (eg[k]) verifier(!principaux[k].peuDeDonnees, `quiz ${i} : égalité affichée pour un pays sans assez de données`);
+  // « À égalité avec… » : toujours dit avec qui, et le partenaire est bien à 5 points ou moins.
+  for (let k = 0; k < Math.min(3, principaux.length); k++) {
+    const t = avecQui(principaux, k);
+    verifier(eg[k] === (t !== null), `quiz ${i} : libellé d'égalité incohérent pour ${principaux[k].pays.nom}`);
+    if (t) {
+      const autre = principaux.find((x, j) => j !== k && t.includes(x.pays.le));
+      verifier(!!autre && Math.abs(autre.score - principaux[k].score) <= 2 * ECART_EX_AEQUO + 1e-9, `quiz ${i} : « ${t} » ne nomme pas un pays proche`);
+      if (!/\(n°/.test(t)) verifier(principaux.slice(0, 3).some((x, j) => j !== k && t.includes(x.pays.le)), `quiz ${i} : « ${t} » sans pays du top 3`);
+    }
+  }
 }
 
 verifier(changeAvecObjectif > 0, "le projet ne change le top 3 dans aucun profil");
@@ -301,6 +318,18 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const porte = evaluerPorte(trouverPays("canada")!, { age: "18-25" }, null);
   verifier(porte.badge === "difficile" && !!porte.mention?.texte.includes("Saison 2026 fermée"), "Canada : la saison fermée n'est pas dite, ou le badge a changé");
   verifier(porte.mention?.preuve?.type === "officiel", "Canada : la saison fermée n'a pas de preuve officielle");
+}
+
+// 2.6 quinquies « Je garde ces soirées pour moi » : une pénalité, plus un filtre.
+{
+  const etat: Etat = { ...ETAT_VIDE, profil: { anglais: "courant" }, priorites: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" }, ordre: ["cours-offerts"] };
+  const lignes = calculer(etat);
+  for (const id of ["japon", "coree-du-sud", "taiwan", "chine"]) verifier(!lignes.find((l) => l.pays.id === id)!.ecart, `cours-offerts B : ${id} est encore écarté`);
+  const accord = (id: string) => lignes.find((l) => l.pays.id === id)!.details.find((d) => d.mesure === "apprendre-langue")?.accord;
+  verifier(accord("japon") === 0 && accord("espagne") === 0.5 && accord("irlande") === 1, "cours-offerts B : pénalité mal graduée (1 pour une autre écriture, 0,5 pour une autre langue)");
+  // Qui parle japonais n'a rien à apprendre au Japon.
+  const nippo = calculer({ ...etat, profil: { anglais: "courant", langues: ["ja"] } }).find((l) => l.pays.id === "japon")!;
+  verifier(nippo.details.find((d) => d.mesure === "apprendre-langue")?.accord === 1, "cours-offerts B : pénalité alors que tu parles la langue");
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.

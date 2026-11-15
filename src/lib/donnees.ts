@@ -27,6 +27,7 @@ export type DefMesure = {
   mots: string[];
   explications?: string[];
   regle?: string;
+  interne?: boolean; // mesure de calcul seulement (pénalité d'un dilemme) : pas de carte dans la fiche pays
 };
 
 export type Critere = {

@@ -232,7 +232,7 @@
     },
     {
       "id": "pret-anglais",
-      "question": "Es-tu prêt à travailler en anglais ?",
+      "question": "Travailler en anglais, ça te va ?",
       "pourquoi": "Si ce n’est pas le cas, on met en avant les pays où l’on peut travailler en français.",
       "influence": [
         "langue-travail"
@@ -336,7 +336,7 @@
           "afficheSi": "peut-travailler-en-anglais"
         }
       ],
-      "explication": "Un premier poste : le chômage des jeunes, le salaire et le travail en anglais (si tu es prêt à travailler en anglais)."
+      "explication": "Un premier poste : le chômage des jeunes, le salaire et le travail en anglais (si travailler en anglais te va)."
     },
     "stage-vie": {
       "nom": "un stage ou un VIE",
@@ -394,7 +394,7 @@
           ]
         }
       ],
-      "explication": "Une carrière longue : le salaire, la stabilité politique et la couverture santé. Aucune pénalité de départ pour une langue à apprendre : tu as le temps de l’apprendre."
+      "explication": "Une carrière longue : le salaire, la stabilité politique et la couverture santé."
     }
   },
   "priorites": [
@@ -616,7 +616,7 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu es prêt à chercher longtemps pour mieux gagner ta vie.",
+          "portrait": "Chercher longtemps pour mieux gagner ta vie ne te fait pas peur.",
           "preference": "un salaire élevé"
         }
       ]
@@ -871,14 +871,14 @@
       "afficheSi": "peut-travailler-en-anglais",
       "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
       "scene": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
-      "pourquoi": "B donne plus de place aux pays où il n’y a pas de nouvelle langue à apprendre, et fait descendre dans « Moins adaptés pour toi » les pays où la langue s’écrit avec un autre alphabet (sauf si tu la parles déjà). A ne change rien.",
+      "pourquoi": "B fait perdre des points aux pays où il faut apprendre une langue : beaucoup si elle s’écrit avec un autre alphabet, un peu sinon (sauf si tu la parles déjà). Aucun pays n’est écarté. A ne change rien.",
       "options": [
         {
           "id": "a",
           "texte": "J’y vais",
           "detail": "C’est un vrai plus.",
           "effets": [],
-          "portrait": "Tu es prêt à apprendre une langue, même avec un autre alphabet."
+          "portrait": "Apprendre une langue, même avec un autre alphabet, ça te va."
         },
         {
           "id": "b",
@@ -887,15 +887,11 @@
           "effets": [
             {
               "mesures": [
-                "langue"
+                "apprendre-langue"
               ],
               "poids": 1
             }
           ],
-          "ecart": {
-            "regle": "autre-ecriture",
-            "raison": "Tu ne veux pas apprendre une langue avec une autre écriture."
-          },
           "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
           "preference": "ne pas avoir de langue à apprendre"
         }
@@ -1096,7 +1092,7 @@
       "id": "nuit",
       "theme": "Sécurité, santé, visa",
       "titre": "1 h du matin",
-      "scene": "Tu rentres seul à pied d’une soirée.",
+      "scene": "Tu rentres à pied d’une soirée, sans personne avec toi.",
       "pourquoi": "A donne plus de place aux pays où il y a le moins de violences graves. B ne change rien.",
       "options": [
         {
@@ -1128,7 +1124,7 @@
       "titre": "Le poignet cassé",
       "exemple": true,
       "scene": "Tu te casses le poignet le deuxième mois.",
-      "pourquoi": "A donne plus de place aux pays où un jeune étranger est couvert sans assurance privée. B ne change rien. On ne te demande rien sur ta santé.",
+      "pourquoi": "A donne plus de place aux pays où les soins sont pris en charge dès l’arrivée, sans assurance privée. B ne change rien. On ne te demande rien sur ta santé.",
       "options": [
         {
           "id": "a",
@@ -1142,8 +1138,8 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu veux être couvert pour ta santé dès l’arrivée.",
-          "preference": "être couvert dès l’arrivée"
+          "portrait": "Tu veux une couverture santé dès ton arrivée.",
+          "preference": "une couverture santé dès l’arrivée"
         },
         {
           "id": "b",

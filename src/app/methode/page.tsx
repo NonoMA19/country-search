@@ -104,8 +104,8 @@ export default function Methode() {
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays de ton top 3, « Pour toi » cite 2 ou 3 points notés 4 ou 5 sur 5 dans le sens de tes réponses, et seulement s’ils viennent d’une de tes priorités, de ton projet ou d’un dilemme. Un point moyen ou défavorable n’y apparaît jamais. « À savoir » cite le point le plus défavorable parmi ceux qui comptent pour toi (2,5 sur 5 ou moins). Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde, l’autre passe au point suivant, ou n’affiche rien.</li>
           <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager : au plus 3 dilemmes encore sans réponse, choisis parce que leurs options font le plus varier l’écart entre ces deux pays. S’il n’en reste aucun, on te montre les deux pays côte à côte sur tes critères, sans nouveau calcul. Tes réponses comptent comme les autres, et une phrase dit laquelle a fait la différence.</li>
-          <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais. « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
-          <li>Certaines options font descendre des pays dans « Moins adaptés pour toi ». La raison est écrite, et un bouton permet de les remonter.</li>
+          <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais, ni une réponse qui répète une de tes priorités (« Tu regardes d’abord le salaire » quand « bon salaire » est déjà cité). « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
+          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays.</li>
         </ul>
       </section>
 
@@ -133,7 +133,7 @@ export default function Methode() {
             <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans les 30 pays.</li>
           </ul>
         </div>
-        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité.</p>
+        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité, avec le nom de l’autre pays (et son rang s’il est hors de ton top 3).</p>
       </section>
 
       {familles.map((f) => (

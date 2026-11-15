@@ -113,3 +113,23 @@ for (const q of toutesLesQuestions()) {
   const n = posee[q.id] ?? 0;
   console.log(`  ${q.id.padEnd(22)} ${pct(n).padStart(7)} | ${n ? pct(sensible[q.id] ?? 0, n).padStart(7) : "      –"} | ${n ? pct(sensibleN1[q.id] ?? 0, n).padStart(7) : "      –"}`);
 }
+
+// ---------- Personas de contrôle (prompt 3c) ----------
+// Six profils types, toujours les mêmes, rejoués à chaque simulation. On affiche leur top 5 sans rien forcer.
+// Les réponses de dilemme traduisent ce que dit chaque profil ; tout le reste est laissé sans réponse.
+type Persona = { nom: string; profil: Profil; priorites: string[]; reponses: Record<string, string> };
+const PERSONAS: Persona[] = [
+  { nom: "a) Premier poste en finance, anglais courant, salaire, travail facile, grande ville", profil: { objectif: "premier-poste", age: "18-25", anglais: "courant", zone: "peu-importe" }, priorites: ["salaire", "travail"], reponses: { appartement: "a" } },
+  { nom: "b) Année d'aventure, 22 ans, coût de la vie, nature, climat doux", profil: { objectif: "aventure", age: "18-25", anglais: "moyen", zone: "peu-importe" }, priorites: ["prix", "climat"], reponses: { appartement: "b" } },
+  { nom: "c) Stage ou VIE, des Français sur place, près de la France", profil: { objectif: "stage-vie", age: "18-25", anglais: "moyen", zone: "peu-importe" }, priorites: ["francais", "proche"], reponses: { "premier-mois": "a", noel: "a" } },
+  { nom: "d) Carrière longue, apprendre une langue lui va, sécurité et équilibre", profil: { objectif: "carriere", age: "26-27", anglais: "courant", zone: "peu-importe" }, priorites: ["securite", "equilibre"], reponses: { "cours-offerts": "a", "deux-langues": "a" } },
+  { nom: "e) Parle espagnol, aime la chaleur, vie moins chère", profil: { age: "18-25", anglais: "moyen", langues: ["es"], zone: "peu-importe" }, priorites: ["prix"], reponses: { aout: "a", janvier: "b" } },
+  { nom: "f) Hiérarchie plate, consensus, collègues vus après le travail", profil: { age: "26-27", anglais: "courant", zone: "peu-importe" }, priorites: [], reponses: { "reunion-directeur": "a", "idee-reunion": "b", "vendredi-18h": "b" } },
+];
+console.log("\nPersonas de contrôle : top 5 (score)");
+for (const p of PERSONAS) {
+  const ordre = Object.keys(p.reponses);
+  const etat: Etat = { ...demarrerDilemmes({ ...ETAT_VIDE, profil: p.profil, priorites: p.priorites }), reponses: p.reponses, ordre };
+  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
+  console.log(`  ${p.nom}\n    ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
+}

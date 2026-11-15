@@ -20,7 +20,10 @@ def parcourir(x, cle=None):
     if isinstance(x, dict):
         return {k: (v if k in CLES_INTACTES and not isinstance(v, (dict, list)) else parcourir(v, k)) for k, v in x.items()}
     if isinstance(x, list):
-        return x if cle in CLES_INTACTES else [parcourir(v, cle) for v in x]
+        # Une liste d'identifiants reste intacte ; une liste d'objets (les mesures de criteres.json) est parcourue.
+        if cle in CLES_INTACTES and not any(isinstance(v, dict) for v in x):
+            return x
+        return [parcourir(v, None if isinstance(v, dict) else cle) for v in x]
     if isinstance(x, str):
         return typo(x)
     return x

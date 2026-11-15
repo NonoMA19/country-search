@@ -66,7 +66,7 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
 // le texte n'apparaît qu'une fois : jamais deux fois le même paragraphe sur une page.
 function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
   // Une mesure sans aucune donnée pour aucun pays n'est pas affichée (elle ne compte pas).
-  const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0).map((m) => {
+  const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0 && !m.interne).map((m) => {
     const n = notes[paysId]?.[m.id];
     const ok = n?.statut === "verifie" && n.note !== null;
     return { m, n, ok, mot: ok ? m.mots[(n.note as number) - 1] : null, explication: ok ? m.explications?.[(n.note as number) - 1] : undefined };
