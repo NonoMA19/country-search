@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { DUREE_REVELATION, useFlip } from "@/lib/animation";
 import { ArrowUp, BadgeCheck, ChevronDown, DoorOpen, Download, FileCheck, FolderOpen, Hourglass, Lock, RotateCcw, Sparkles } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
@@ -197,6 +198,12 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
   );
 }
 
+// Le top 3 : quand un curseur « Et si… ? » change l'ordre, les cartes glissent vers leur nouvelle place.
+function Glissement({ cle, children }: { cle: string; children: ReactNode }) {
+  const ref = useFlip<HTMLDivElement>(cle);
+  return <div ref={ref} className="mt-4 space-y-5">{children}</div>;
+}
+
 // « Moins adaptés pour toi » : une seule phrase par raison, en tête de groupe.
 // « Fermé à ton âge » regroupe les pays, la porte de chacun reste écrite sous son nom.
 const FERME = "Fermé à ton âge.";
@@ -238,6 +245,14 @@ export default function Resultat() {
   const session = useSession();
   const router = useRouter();
   const [departage, setDepartage] = useState<EtatDepartage | null>(null);
+  // Révélation du n°1 : seulement au premier affichage de la page.
+  const [arrivee, setArrivee] = useState(true);
+  const charge = session !== null;
+  useEffect(() => {
+    if (!charge) return;
+    const t = setTimeout(() => setArrivee(false), DUREE_REVELATION + 100);
+    return () => clearTimeout(t);
+  }, [charge]);
   if (!session) return <Chargement />;
 
   const { etat, reglages } = session;
@@ -306,14 +321,18 @@ export default function Resultat() {
         {!toutAZero && egalites.slice(0, 3).some(Boolean) && (
           <p className="mt-1 text-sm text-gris">Des pays à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
-        <div className="mt-4 space-y-5">
+        <Glissement cle={top.map((l) => l.pays.id).join(",")}>
           {toutAZero ? (
             <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Tous les curseurs « Et si… ? » sont sur « ne compte plus » : il n’y a plus rien pour classer les pays. Remets au moins un curseur.</p>
           ) : (
-            top.map((l, i) => <CartePays key={l.pays.id} ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />)
+            top.map((l, i) => (
+              <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
+                <CartePays ligne={l} rang={i + 1} egalite={egalites[i]} etat={etat} lignes={phrases.get(l.pays.id) ?? { pour: [], savoir: null }} />
+              </div>
+            ))
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
-        </div>
+        </Glissement>
       </section>
 
       {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (

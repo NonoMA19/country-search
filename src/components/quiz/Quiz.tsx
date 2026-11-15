@@ -8,6 +8,7 @@ import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Portrait from "@/components/Portrait";
+import { useFlip } from "@/lib/animation";
 import { quiz, type Dilemme } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import {
@@ -85,6 +86,26 @@ export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie
       {dilemme.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
       <Pourquoi key={dilemme.id} texte={dilemme.pourquoi} />
       <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">{passer}</button>
+    </>
+  );
+}
+
+// « Ton top 3 pour l'instant » : les drapeaux glissent vers leur nouvelle place quand le classement change.
+function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: string }[]; change: boolean }) {
+  const cle = top.map((p) => p.id).join(",");
+  const ref = useFlip<HTMLUListElement>(cle);
+  const noms = top.map((p) => p.nom).join(", ");
+  return (
+    <>
+      <p className="text-xs font-medium tracking-wide text-gris uppercase">Ton top 3 pour l’instant</p>
+      <p className="sr-only" aria-live="polite">{change ? `Ton top 3 a changé\u00a0: ${noms}.` : `Ton top 3 pour l’instant\u00a0: ${noms}.`}</p>
+      <ul ref={ref} className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+        {top.map((p) => (
+          <li key={p.id} data-flip={p.id} className="flex items-center gap-2 text-sm font-medium">
+            <Drapeau iso2={p.iso2} className="h-4 w-6" /> {p.nom}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
@@ -311,15 +332,7 @@ export default function Quiz() {
     <Cadre progression={progression} retour={retourDilemme}>
       <CarteDilemme key={dilemme.id} dilemme={dilemme} repond={repond} />
       <div className="mt-6 border-t border-bord pt-4">
-        <p className="text-xs font-medium tracking-wide text-gris uppercase">Ton top 3 pour l’instant</p>
-        <p className="sr-only" aria-live="polite">Ton top 3 pour l’instant : {top.map((l) => l.pays.nom).join(", ")}.</p>
-        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
-          {top.map((l) => (
-            <li key={l.pays.id} className="flex items-center gap-2 text-sm font-medium">
-              <Drapeau iso2={l.pays.iso2} className="h-4 w-6" /> {l.pays.nom}
-            </li>
-          ))}
-        </ul>
+        <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2)} />
         <button type="button" onClick={voirResultat} className="mt-3 min-h-11 text-sm font-medium text-lien underline">
           M’arrêter là et voir mon résultat
         </button>

@@ -9,6 +9,7 @@ import {
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
+import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
 
 // ---------- Hasard reproductible ----------
@@ -269,10 +270,19 @@ for (let i = 0; i < NB; i++) {
   verifier(essais > 0, "départage : aucun dilemme proposé, le test ne prouve rien");
 }
 
+// 2.10 Animations : aucune quand la personne demande moins de mouvement (prefers-reduced-motion).
+{
+  const reduit = { matchMedia: (q: string) => ({ matches: q === "(prefers-reduced-motion: reduce)" }) };
+  const normal = { matchMedia: () => ({ matches: false }) };
+  verifier(mouvementReduit(reduit) && dureeAnimation(DUREE_DEPLACEMENT, reduit) === 0, "animation : une durée non nulle malgré prefers-reduced-motion");
+  verifier(dureeAnimation(DUREE_DEPLACEMENT, normal) === DUREE_DEPLACEMENT, "animation : durée nulle sans prefers-reduced-motion");
+  verifier(DUREE_REVELATION < 1000, "révélation du n°1 : une seconde ou plus");
+}
+
 // ---------- Bilan ----------
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
   for (const e of echecs) console.error("  - " + e);
   process.exit(1);
 }
-console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 9 cas précis.`);
+console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 10 cas précis.`);
