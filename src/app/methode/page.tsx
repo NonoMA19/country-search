@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, mesures, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import Definition, { AvecDefinitions } from "@/components/Definition";
+import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { POIDS_OBJECTIF, SEUIL_DILEMME, dilemmeActif, paysCouverts } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
@@ -63,7 +65,11 @@ export default function Methode() {
           <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait.</li>
           <li>Si tu déclares une autre nationalité, le badge devient « Porte ouverte grâce à ta nationalité » seulement dans les cas que nous avons vérifiés : la nationalité du pays lui-même (canadienne pour le Canada, américaine pour les États-Unis) et la nationalité irlandaise pour le Royaume-Uni. Le pourcentage ne change pas. Pour toute autre nationalité, ou pour les autres pays, le résultat dit clairement que ce cas n’est pas encore couvert.</li>
         </ul>
-        <p className="mt-3 text-sm text-gris">PVT : Programme Vacances-Travail, un visa d’un an pour voyager et travailler. VIE : Volontariat international en entreprise, une mission de 6 à 24 mois pour une entreprise française à l’étranger.</p>
+        <p className="mt-3">
+          Europe sans visa : {europe.texte}
+          <Pastille preuve={preuveSource("Inscription sur place", europe.inscription.texte, europe.inscription.source, europe.inscription.lien, europe.inscription.verifieLe)} contexte="l’inscription sur place en Europe" />
+        </p>
+        <p className="mt-3 text-sm text-gris">Touche un mot souligné en pointillé pour lire sa définition : <Definition cle="pvt" />, <Definition cle="vie" />.</p>
       </section>
 
       <section className="mt-8">
@@ -149,7 +155,7 @@ export default function Methode() {
                 )}
                 {c.mesures.map((m) => (
                   <div key={m.id} className="mt-3 text-sm">
-                    <p className="font-medium">{m.nom}{m.sens === "position" ? " (une position, ni bonne ni mauvaise)" : ""}</p>
+                    <p className="font-medium"><AvecDefinitions texte={m.nom} />{m.sens === "position" ? " (une position, ni bonne ni mauvaise)" : ""}</p>
                     <p className="text-gris">Les 5 niveaux, du plus bas au plus haut : {m.echelle.join(" · ")}.</p>
                     {m.regle && <p className="text-gris">Règle : {m.regle}</p>}
                     <p className="text-gris">

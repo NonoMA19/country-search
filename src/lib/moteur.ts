@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource, preuveVisa,
+  avis, dateFr, doubleNationalite, europe, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource, preuveVisa,
   type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
 } from "./donnees";
 
@@ -236,6 +236,9 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
 
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
+    // Suisse : un permis de séjour à demander au canton au-delà de trois mois (France Diplomatie).
+    const local = europe.pays[p.id];
+    if (local) alertes.push({ texte: local.texte, preuve: preuveSource("Séjour de plus de trois mois", local.texte, local.source, local.lien, local.verifieLe) });
     if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
     return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres, visa: null, mention: null };
   }

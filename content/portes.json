@@ -12,6 +12,25 @@
   "statut": "verifie",
   "presenceParPays": "a-verifier"
  },
+ "_europe": {
+  "texte": "L’Union européenne, la Norvège et la Suisse n’ont pas exactement le même cadre : la Norvège et la Suisse ne font pas partie de l’Union, et leurs règles sont proches sans être identiques. Sur place, une inscription auprès des autorités locales peut être demandée.",
+  "court": "Union européenne, Norvège et Suisse : le cadre n’est pas exactement le même, et une inscription auprès des autorités locales peut être demandée sur place.",
+  "inscription": {
+   "texte": "Certains pays demandent de signaler ton arrivée aux autorités locales, souvent la mairie ou la police. Ils doivent te laisser au moins 3 mois pour t’enregistrer.",
+   "source": "europa-sejour",
+   "lien": "https://europa.eu/youreurope/citizens/residence/residence-rights/workers/index_fr.htm",
+   "verifieLe": "2026-11-15"
+  },
+  "pays": {
+   "suisse": {
+    "texte": "Pour un séjour de plus de trois mois, il faut demander un permis de séjour à l’office cantonal de migration, avant d’arriver en Suisse.",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/suisse/conseils-aux-voyageurs-entree-sejour",
+    "datePage": "2026-09-15",
+    "verifieLe": "2026-11-15"
+   }
+  }
+ },
  "belgique": [
   {
    "type": "ue",
