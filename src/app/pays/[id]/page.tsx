@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import BoutonDossier from "@/components/BoutonDossier";
+import CarteVisa from "@/components/CarteVisa";
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import Pastille from "@/components/Pastille";
@@ -178,6 +179,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                   {b.conditions?.map((c) => <li key={c}>{c}</li>)}
                 </ul>
               )}
+              {b.detail && <CarteVisa visa={b.detail} pays={p.nom} />}
             </li>
           ))}
           <CarteVie paysId={p.id} nomPays={p.nom} />

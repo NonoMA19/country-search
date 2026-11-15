@@ -1,8 +1,8 @@
 // Fabrique le dossier PDF dans le navigateur (bibliothèque libre jsPDF, licence MIT).
 // Aucun serveur, aucun compte : le fichier est créé sur l'appareil de la personne.
-import { LIBELLE_TYPE, dateFr, type Preuve } from "./donnees";
+import { LIBELLE_TYPE, dateFr, preuveVisa, type Preuve } from "./donnees";
 import { chargerDossier, liensVerifies } from "./dossiers";
-import { LIBELLE_BADGE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
+import { LIBELLE_BADGE, LIBELLE_LIE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
 import type { Pays } from "./pays";
 
 // Les polices de base du PDF ne connaissent que l'alphabet latin simple.
@@ -64,6 +64,17 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     ecrire(laPorte.preuve.texte, { apres: 2 });
     preuve(laPorte.preuve);
     laPorte.autres.forEach((a) => ecrire(a, { gris: true }));
+    const v = laPorte.visa;
+    if (v) {
+      ecrire(`${laPorte.type === "pvt" ? "Après le PVT, ou sans PVT" : "Le visa de travail"}\u00a0: ${v.nom}`, { gras: true, apres: 2 });
+      const lie = LIBELLE_LIE[v.lieEmployeur];
+      if (lie) ecrire(`${lie}.`, { apres: 2 });
+      if (v.experience) ecrire(`${v.experience} ${v.jeuneDiplome ?? ""}`.trim(), { apres: 2 });
+      if (v.conditions.length) v.conditions.forEach((c) => ecrire(`- ${c}`, { apres: 1 }));
+      else ecrire("Conditions à vérifier sur le site officiel.", { apres: 2 });
+      v.liens.forEach((l) => ecrire(`${l.libelle}\u00a0: ${l.url}`, { taille: 10, apres: 1 }));
+      preuve(preuveVisa(v));
+    }
   }
   if (pour?.length) {
     titre("Pour toi");

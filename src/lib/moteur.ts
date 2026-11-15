@@ -3,8 +3,8 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource,
-  type CasDouble, type Dilemme, type FamilleScore, type OptionDilemme, type PorteBrute, type Preuve,
+  avis, doubleNationalite, mesures, notes, portes, quiz, vie, preuveMesure, preuveSource, preuveVisa,
+  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
 } from "./donnees";
 
 export type Profil = Record<string, string | string[] | undefined>;
@@ -182,7 +182,26 @@ export type Porte = {
   alertes: Alerte[];
   preuve: Preuve;
   autres: string[];
+  visa: DetailVisa | null; // le visa de travail lu sur la page officielle du pays, s'il est connu
 };
+
+// Le visa de travail reste-t-il lié à l'employeur ? « à vérifier » ne dit rien.
+export const LIBELLE_LIE: Record<LieEmployeur, string | null> = {
+  oui: "Visa lié à ton employeur",
+  partiellement: "Visa en partie lié à ton employeur",
+  non: "Visa non lié à un seul employeur",
+  "a-verifier": null,
+};
+const PHRASE_LIE: Record<LieEmployeur, string> = {
+  oui: " Le visa reste lié à cet employeur.",
+  partiellement: " Le visa reste en partie lié à cet employeur.",
+  non: " Le visa n’est pas lié à un seul employeur.",
+  "a-verifier": "",
+};
+export const visaTravail = (id: string) => portes(id).find((x) => x.type === "visa-travail");
+// Diplôme ou expérience exigés : dit clairement, avec une phrase pour un jeune diplômé.
+const alerteExperience = (d: DetailVisa | undefined): Alerte[] =>
+  d?.experience ? [{ texte: `${d.experience} ${d.jeuneDiplome ?? ""}`.trim(), preuve: preuveVisa(d) }] : [];
 
 const euros = (n: number) => `${Math.round(n / 50) * 50}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " €";
 const preuvePorte = (b: PorteBrute) => preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe);
@@ -200,7 +219,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     const preuve: Preuve = { type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence };
     return {
       badge: "nationalite", nom: `Nationalité ${cas.nationalite.toLowerCase()}`, type: "nationalite", phrase: cas.acces,
-      fonds: null, manque: null, alertes: cas.genre === "piege" ? [{ texte: cas.texte, preuve }] : [], preuve, autres: [],
+      fonds: null, manque: null, alertes: cas.genre === "piege" ? [{ texte: cas.texte, preuve }] : [], preuve, autres: [], visa: null,
     };
   }
   const liste = portes(p.id);
@@ -217,18 +236,19 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
     if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
-    return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres };
+    return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres, visa: null };
   }
 
   const pvt = liste.find((x) => x.type === "pvt");
   const visa = liste.find((x) => x.type === "visa-travail");
   if (pvt && pvt.ageMax !== undefined) {
     if (age !== null && age > pvt.ageMax) {
-      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: preuvePorte(visa) });
+      if (visa && (visa.statut !== "verifie" || visa.detailsAVerifier)) alertes.push({ texte: "Les conditions détaillées du visa de travail ne sont pas encore vérifiées.", preuve: visa.detail ? preuveVisa(visa.detail) : preuvePorte(visa) });
+      alertes.push(...alerteExperience(visa?.detail));
       return {
         badge: "fermee", nom: pvt.nom, type: "pvt",
         phrase: `Le PVT (Programme Vacances-Travail) s’arrête à ${pvt.ageMax} ans. Autre porte : le visa de travail, avec un employeur.`,
-        fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres,
+        fonds: null, manque: null, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null,
       };
     }
     const quand = age !== null ? "à ton âge" : `jusqu’à ${pvt.ageMax} ans`;
@@ -255,16 +275,20 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
       alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
     if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
-    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres };
+    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null };
   }
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
   let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
+  const d = base.detail;
+  if (d) phrase += PHRASE_LIE[d.lieEmployeur];
   if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
-  for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
+  // Avec le détail du visa, les conditions sont dans la carte du visa ; seule l'exigence de diplôme ou d'expérience est une alerte.
+  if (d) alertes.push(...alerteExperience(d));
+  else for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
   if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n’est pas encore vérifiée.");
-  return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres };
+  return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null };
 }
 
 // ---------- Pays qui descendent dans « Moins adaptés pour toi » ----------
@@ -273,7 +297,11 @@ export function concerne(regle: string | undefined, p: Pays, etat: Etat): boolea
   if (regle === "autre-ecriture") return !!a?.autreEcriture && !parleLangueDe(p.id, etat.profil);
   if (regle === "employeur-requis") {
     const b = evaluerPorte(p, etat.profil, null).badge;
-    return b === "conditions" || b === "fermee";
+    if (b !== "conditions" && b !== "fermee") return false;
+    // Quand on sait si le visa de travail est lié à l'employeur, on s'en sert : seul « oui » écarte le pays.
+    // « à vérifier » ne compte pas : la règle d'avant s'applique (un employeur est exigé).
+    const lie = visaTravail(p.id)?.detail?.lieEmployeur;
+    return lie !== "non" && lie !== "partiellement";
   }
   return false;
 }

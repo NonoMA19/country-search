@@ -8,6 +8,7 @@ import { ArrowUp, BadgeCheck, ChevronDown, DoorOpen, Download, FileCheck, Folder
 import Drapeau from "@/components/Drapeau";
 import Icone from "@/components/Icone";
 import { ErreurPdf } from "@/components/BoutonDossier";
+import CarteVisa from "@/components/CarteVisa";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
@@ -180,6 +181,7 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
           <Pastille preuve={porte.preuve} pays={p.nom} contexte={porte.nom} />
         </p>
         {porte.autres.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t}</p>)}
+        {porte.visa && <CarteVisa visa={porte.visa} pays={p.nom} titre={porte.type === "pvt" ? "Après le PVT, ou sans PVT : le visa de travail" : "Le visa de travail"} />}
       </section>
 
         </div>

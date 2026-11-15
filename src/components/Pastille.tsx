@@ -118,6 +118,24 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
                 </div>
                 <p className="rounded-xl bg-creux p-3">Ce sont des tendances générales tirées de témoignages. Ton entreprise peut être très différente.</p>
               </>
+            ) : preuve.type === "a-verifier" && preuve.lien ? (
+              <>
+                <div><dd className="text-gris">Lu sur une page officielle, mais pas encore vérifié en détail. Vérifie sur la page avant toute démarche.</dd></div>
+                <div>
+                  <dt className="font-medium text-gris">Page lue</dt>
+                  <dd>
+                    <a href={preuve.lien} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-lien underline">
+                      {preuve.source ?? preuve.lien} <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+                    </a>
+                  </dd>
+                </div>
+                {preuve.verifieLe && (
+                  <div>
+                    <dt className="font-medium text-gris">Lu le</dt>
+                    <dd>{dateFr(preuve.verifieLe)}</dd>
+                  </div>
+                )}
+              </>
             ) : preuve.type === "a-verifier" ? (
               <div><dd className="text-gris">On n’a pas encore trouvé de source officielle ou de donnée ouverte pour cette information.</dd></div>
             ) : (

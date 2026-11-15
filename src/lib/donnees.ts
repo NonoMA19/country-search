@@ -98,6 +98,24 @@ export type Objectif = { nom: string; explication: string; effets: { mesures: st
 export type Priorite = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; sens: Sens };
 export type Sujet = { id: string; label: string; mesure: string };
 
+// Le visa de travail, lu sur la page officielle du pays (prompt 3c).
+// « statut » : « verifie » (pastille Officiel) ou « a-verifier » (lu sur une page officielle, pas encore vérifié en détail).
+export type LieEmployeur = "oui" | "partiellement" | "non" | "a-verifier";
+export type DetailVisa = {
+  nom: string;
+  employeurRequis: boolean;
+  lieEmployeur: LieEmployeur;
+  experience?: string; // diplôme ou expérience exigés, mis en avant pour un jeune diplômé
+  jeuneDiplome?: string;
+  conditions: string[];
+  liens: { url: string; libelle: string }[];
+  source: string;
+  statut: "verifie" | "a-verifier";
+  verifieLe: string;
+};
+// Le statut du moment d'une porte (exemple : saison du PVT fermée), avec sa source.
+export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string };
+
 export type PorteBrute = {
   type: "ue" | "pvt" | "vie" | "visa-travail";
   nom: string;
@@ -112,6 +130,8 @@ export type PorteBrute = {
   employeur?: boolean;
   conditions?: string[];
   detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
+  detail?: DetailVisa;
+  saison?: StatutPorte;
   source: string | null;
   lien: string | null;
   verifieLe: string | null;
@@ -219,6 +239,14 @@ export function preuveSource(titre: string, texte: string, sourceId: string | nu
   const s = sourceId ? sources[sourceId] : null;
   if (!s) return { type: "a-verifier", titre, texte, source: null, lien: null, verifieLe: null, licence: null };
   return { type: s.type, titre, texte, source: s.nom, lien: lien ?? s.url, verifieLe, licence: s.licence };
+}
+
+// La preuve d'un visa de travail. « À vérifier » garde le lien de la page officielle lue.
+export function preuveVisa(d: DetailVisa): Preuve {
+  const s = sources[d.source];
+  const texte = d.conditions.length ? d.conditions.join(" ") : "Conditions à vérifier sur le site officiel.";
+  if (d.statut === "verifie") return { type: s.type, titre: d.nom, texte, source: s.nom, lien: d.liens[0]?.url ?? s.url, verifieLe: d.verifieLe, licence: s.licence };
+  return { type: "a-verifier", titre: d.nom, texte, source: s?.nom ?? null, lien: d.liens[0]?.url ?? null, verifieLe: d.verifieLe, licence: s?.licence ?? null };
 }
 
 export const dateFr = (iso: string | null | undefined) =>
