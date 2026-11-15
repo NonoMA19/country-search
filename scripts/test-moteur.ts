@@ -1,7 +1,7 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { notes as notesPays, portes, quiz, sources } from "@/lib/donnees";
+import { notes as notesPays, portes, quiz, sources, vie } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
@@ -538,6 +538,13 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(f("australie", { age: "36-plus" }).aRemplir.some((x) => x.includes("1 an d’expérience")) && f("australie", { age: "36-plus" }).aVerifier.some((x) => x.includes("expérience pro")), "faisabilité : Australie sans l'expérience demandée");
   verifier(f("japon", { age: "18-25", objectif: "stage-vie" }).remplies.some((x) => x.includes("permet le VIE")) && f("japon", { age: "28-30", objectif: "stage-vie" }).aRemplir.some((x) => x.includes("VIE n’est plus possible")), "faisabilité : condition d'âge du VIE mal confrontée");
   verifier(f("canada", { age: "26-27", nationalite: "oui", "nationalite-laquelle": "canadienne" }).remplies[0].includes("nationalité canadienne"), "faisabilité : la nationalité canadienne n'ouvre pas le Canada");
+}
+
+// 2.14 VIE (lot 4) : conditions sourcées, lien des offres officiel.
+{
+  verifier(vie.ageMaxCandidature === 27 && vie.dureeMoisMin === 6 && vie.dureeMoisMax === 24 && vie.statut === "verifie", "VIE : conditions non sourcées ou changées");
+  verifier(new URL(vie.offres.url).hostname === "mon-vie-via.businessfrance.fr" && sources[vie.offres.source]?.type === "officiel", "VIE : lien des offres non officiel");
+  verifier(vie.resume.length === 2, "VIE : le résumé n'a pas deux phrases");
 }
 
 // ---------- Bilan ----------

@@ -13,6 +13,7 @@ import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import Portrait from "@/components/Portrait";
 import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
+import BlocVie from "@/components/resultat/BlocVie";
 import { BadgeFiabilite, FicheFaisabilite, VisaCourt } from "@/components/resultat/Faisabilite";
 import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, preuveMesure, type Preuve } from "@/lib/donnees";
@@ -403,6 +404,8 @@ export default function Resultat() {
           <div className="mt-4"><CarteSurprise s={surprise} remonter={() => remonter(surprise.ligne.pays.id)} /></div>
         </section>
       )}
+
+      {etat.profil.objectif === "stage-vie" && !toutAZero && <BlocVie etat={etat} top={top} />}
 
       {etat.profil.nationalite === "oui" && (
         <section aria-labelledby="titre-double" className="mt-10">

@@ -10,7 +10,17 @@
   "lien": "https://www.service-public.gouv.fr/particuliers/vosdroits/F10040",
   "verifieLe": "2026-11-14",
   "statut": "verifie",
-  "presenceParPays": "a-verifier"
+  "presenceParPays": "a-verifier",
+  "resume": [
+   "Le VIE est une mission de 6 à 24 mois à l’étranger, dans une entreprise française ou une entreprise liée à elle par un accord de partenariat.",
+   "C’est à toi de trouver ta mission, par exemple parmi les offres publiées par Business France."
+  ],
+  "offres": {
+   "url": "https://mon-vie-via.businessfrance.fr/offres/recherche",
+   "nom": "Offres de VIE (Business France)",
+   "source": "businessfrance-vie",
+   "verifieLe": "2026-11-15"
+  }
  },
  "_europe": {
   "texte": "L’Union européenne, la Norvège et la Suisse n’ont pas exactement le même cadre : la Norvège et la Suisse ne font pas partie de l’Union, et leurs règles sont proches sans être identiques. Sur place, une inscription auprès des autorités locales peut être demandée.",

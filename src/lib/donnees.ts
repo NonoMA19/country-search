@@ -186,7 +186,10 @@ export const notes = scores.pays;
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
-export const vie = portesToutes._vie as unknown as PorteBrute & { ageMaxCandidature: number; presence?: Record<string, PresenceVie> };
+export const vie = portesToutes._vie as unknown as PorteBrute & {
+  ageMaxCandidature: number; dureeMoisMin: number; dureeMoisMax: number; presence?: Record<string, PresenceVie>;
+  resume: string[]; offres: { url: string; nom: string; source: string; verifieLe: string };
+};
 export const avis = avisData as unknown as Record<string, Avis>;
 // « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
 export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };
