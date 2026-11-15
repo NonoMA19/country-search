@@ -52,7 +52,16 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Reconnaissance du CV et des diplômes par secteur.
 - Parcours (diplôme et expériences), reconversion.
 - Croisement avec les offres d'emploi par secteur.
-- Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts`.
+- Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
+- Biais de classement (mesuré au prompt 3 sur 5 000 quiz) : l'Allemagne est n°1 dans 29 % des profils, la Colombie et le Chili ne sont jamais dans le top 3, parce que les 8 priorités vont toutes dans le sens « plus c'est mieux ». À traiter avec les questions de situation (prompt 3b), pas avec une pondération arbitraire.
+- Questions de situation (prompt 3b).
+- Budget sur 3 mois.
+- Checklist Jour J (J-90 à J+30).
+- Comparateur de pays.
+- Refonte visuelle, mascotte et direction artistique (prompt 5).
+- Fiches ★ complètes à construire (banque, SIM, santé, logement, CV, codes culturels) : la promesse affichée est « fiche détaillée à venir en priorité ».
+- Congés payés légaux : à remettre dans le calcul quand ils seront vérifiés pays par pays dans les textes de loi.
+- Égalité femmes-hommes dans la loi : `scripts/collecte.mjs` sait déjà la télécharger (Banque mondiale, indicateur GD_WBL_OVL_LAW, source 14) ; l'API était trop lente depuis la session du prompt 3.
 
 ## Journal
 
@@ -82,3 +91,31 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Qualité de l'air : Taïwan, Hong Kong.
 - Français inscrits au consulat : Hong Kong.
 - Chômage des jeunes, niveau des prix, homicides, stabilité politique, libertés : Taïwan (absent des bases de la Banque mondiale).
+
+### 14 et 15 novembre 2026 : corrections après la passe QA (prompt 3)
+**Ce qui est fait** (deux pull requests : lots 1 à 3, puis lots 4 à 6)
+- Lot 1, robustesse : garde anti double clic (400 ms) dans le quiz ; session validée avec un numéro de version (`src/lib/memoire.ts`) ; fenêtre de preuve en portail (plus d'erreur React 418) ; page 404 en français et 404 pour tout pays inconnu (`src/proxy.ts`) ; capture du pointeur pour le glissement ; erreur PDF visible ; message sans JavaScript ; en-têtes de sécurité dans `next.config.ts`.
+- Lot 2, honnêteté : « ★ = fiche détaillée à venir en priorité » ; plus aucun « Bientôt » ni « À compléter » visible ; « Notre avis » réécrit sans doublon (`content/saisie/avis.json`, nouvelle forme : `villes` regroupe les trois mesures de taille de ville, phrases de style rattachées à un seul axe) ; page `/mentions-legales` ; une description par page ; jargon expliqué ; « importance » au lieu de « poids » ; congés payés retirés du calcul.
+- Lot 3, moteur : donnée manquante sur une priorité comptée à 50 % ; couverture en nombre de mesures ; importance maximale (pas la somme) ; mesure « Climat doux » ; égalités au premier du groupe ; « Fermé à ton âge » hors du top 3 ; badge « Porte ouverte grâce à ta nationalité » (cas de `double-nationalite.json`, champ `acces`) ; « Passer » ne compte plus ; `npm run test:moteur` (`scripts/test-moteur.ts`, chargeur `scripts/chargeur.mjs`, aucune dépendance en plus).
+- Lot 4, données : visas de travail de 10 pays d'après France Diplomatie « Entrée et séjour » (vérifiés le 14 novembre 2026, conditions détaillées encore « à vérifier », champ `detailsAVerifier`) ; lien consulaire de Hong Kong ; pages de présentation lisibles des sources (champ `page` de `sources.json`) ; Norvège et Suède recalculées (17,74 °C réels).
+- Lot 5, accessibilité : focus sur le titre à chaque écran, phrase en h1, aria-pressed et coche, annonces polies, curseurs nommés, contrastes, mode contraste forcé, « Reprendre mon quiz ».
+- Lot 6, responsive : détails repliés sous chaque carte, « Et si… ? » sous le top 3, barre d'action collée en bas du quiz, zones tactiles de 44 px, typographie (insécables, apostrophes) avec `scripts/typo.py`.
+- `node scripts/collecte.mjs --textes` réécrit les phrases de `scores.json` sans rien télécharger (valeurs et dates inchangées).
+
+**Ce qui reste à faire**
+- Visas de travail : conditions détaillées des 10 pays ci-dessus sur les sites officiels des pays (inaccessibles depuis la session) ; Brésil, Maroc et Hong Kong (aucune information travail sur France Diplomatie, page Hong Kong absente) ; quotas et tirage au sort américains.
+- Canada : statut 2026 des invitations EIC (canada.ca inaccessible depuis la session).
+- Présence de missions VIE par pays (Business France) : toujours « à vérifier ».
+- UFE et Français du monde-ADFE : sites inaccessibles, liens masqués. Consulat en Argentine : page France Diplomatie refusée (403), lien masqué.
+- Alliance française : retrouver la page de chaque pays (l'ancien lien était le même pour tous).
+- Page de présentation lisible pour les indicateurs de la Banque mondiale (donnees.banquemondiale.org inaccessible depuis la session).
+- Zoom 200 % à 160 px : 2 px de défilement horizontal restant sur /resultat, sans élément visible en cause.
+
+**Notes « à vérifier » (hors calcul)**
+- Égalité femmes-hommes dans la loi : 30 pays (sujet masqué).
+- Heures travaillées : Australie, Japon, Nouvelle-Zélande, Taïwan, Hong Kong, Singapour, Chine, Maroc (aucune donnée OIT, même avec d'autres indicateurs).
+- Salaire moyen : Taïwan, Hong Kong (2016, écarté), Émirats arabes unis (2009, écarté), Maroc.
+- Qualité de l'air : Taïwan, Hong Kong. Français inscrits : Hong Kong.
+- Taïwan : chômage des jeunes, prix, homicides, stabilité, libertés (absent des bases de la Banque mondiale).
+- Français inscrits : la donnée la plus récente sur data.gouv.fr date de fin 2020 (vérifié le 14 novembre 2026), elle est affichée comme ancienne.
+

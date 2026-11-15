@@ -1,12 +1,11 @@
 {
   "pays": "danemark",
-  "complet": false,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
-      "nom": "Travailler dans un autre pays d'Europe (L'Europe est à vous, Union européenne)",
+      "titre": "Travailler dans un autre pays d’Europe",
+      "nom": "Travailler dans un autre pays d’Europe (L’Europe est à vous, Union européenne)",
       "url": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
       "statut": "verifie"
     },
@@ -20,14 +19,14 @@
     {
       "id": "consulat",
       "titre": "Ambassade ou consulat de France",
-      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/danemark/conseils-aux-voyageurs-contacts-utiles",
       "statut": "verifie"
     },
     {
       "id": "registre",
       "titre": "Inscription au registre des Français établis hors de France",
-      "nom": "S'inscrire au registre (France Diplomatie)",
+      "nom": "S’inscrire au registre (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
       "statut": "verifie"
     }
@@ -40,6 +39,5 @@
       "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/europe/exporter-s-implanter-danemark.html",
       "statut": "verifie"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

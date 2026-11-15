@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import BoutonCommencer from "@/components/BoutonCommencer";
-import { FAMILLES, paysParFamille } from "@/lib/pays";
+import PiedDePage from "@/components/PiedDePage";
+import { FAMILLES, NOM_FAMILLE, paysParFamille } from "@/lib/pays";
+
+export const metadata: Metadata = {
+  title: "Country Search : choisis le pays où partir travailler",
+  description:
+    "Un quiz gratuit, sans compte, pour classer 30 pays selon ce qui compte pour toi. Chaque score est expliqué, chaque information a sa source.",
+};
 
 export default function Accueil() {
   return (
@@ -13,8 +21,13 @@ export default function Accueil() {
           Country Search
         </h1>
         <p className="mt-3 text-lg text-gris">
-          Choisis le pays où partir travailler, puis arrive prêt le jour J :
-          visa, banque, carte SIM, santé, logement, CV local, codes culturels.
+          Choisis le pays où partir travailler. Un quiz court classe 30 pays
+          selon ce qui compte pour toi, et te dit par quelle porte entrer :
+          Europe sans visa, PVT ou visa de travail.
+        </p>
+        <p className="mt-2 text-gris">
+          Chaque score est expliqué, chaque information a sa source et sa date
+          de vérification.
         </p>
         <div className="mt-6">
           <BoutonCommencer />
@@ -28,44 +41,40 @@ export default function Accueil() {
 
         {FAMILLES.map((famille) => (
           <div key={famille} className="mt-6">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-gris">
-              {famille}
+            <h3 className="text-sm font-semibold tracking-wide text-gris uppercase">
+              {NOM_FAMILLE[famille]}
             </h3>
             <ul className="mt-3 flex flex-wrap gap-2">
               {paysParFamille(famille).map((p) => (
                 <li key={p.id}>
                   <Link
                     href={`/pays/${p.id}`}
-                    className="inline-block rounded-full border border-bord bg-carte px-3 py-1.5 text-sm hover:border-bleu"
+                    className="inline-flex min-h-11 items-center rounded-full border border-bord bg-carte px-4 text-sm hover:border-bleu"
                   >
-                  {p.nom}
-                  {p.ficheComplete && (
-                    <span className="ml-1 text-lien" title="Fiche complète">
-                      <span aria-hidden="true">★</span>
-                      <span className="sr-only"> (fiche complète)</span>
-                    </span>
-                  )}
+                    {p.nom}
+                    {p.ficheComplete && (
+                      <span className="ml-1 text-lien">
+                        <span aria-hidden="true">★</span>
+                        <span className="sr-only"> (fiche détaillée à venir en priorité)</span>
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
         ))}
-        <p className="mt-4 text-sm text-gris">★ = fiche complète</p>
+        <p className="mt-4 text-sm text-gris">
+          ★ = fiche détaillée à venir en priorité. Pour l’instant, chaque page
+          pays réunit les données vérifiées et les liens officiels.
+        </p>
       </section>
 
-      <footer className="mt-14 border-t border-bord pt-5 text-sm text-gris">
-        <p>
-          Les informations sur les visas et les impôts ne constituent pas un
-          conseil juridique. Vérifie toujours auprès des sources officielles.
-        </p>
-        <p className="mt-2">
-          Projet gratuit et open source, en construction.{" "}
-          <Link href="/methode" className="text-lien underline">
-            Comment on calcule
-          </Link>
-        </p>
-      </footer>
+      <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }]} />
+      <p className="mt-2 text-sm text-gris">
+        Projet gratuit, sans publicité, en construction. Son code est ouvert
+        (open source) : tout le monde peut le lire et le réutiliser.
+      </p>
     </main>
   );
 }

@@ -1,11 +1,10 @@
 {
   "pays": "australie",
-  "complet": true,
   "verifieLe": "2026-11-14",
   "liens": [
     {
       "id": "visa",
-      "titre": "Page officielle du visa",
+      "titre": "Informations générales sur le PVT",
       "nom": "Programme Vacances-Travail (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
       "statut": "verifie"
@@ -20,14 +19,14 @@
     {
       "id": "consulat",
       "titre": "Ambassade ou consulat de France",
-      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/australie/conseils-aux-voyageurs-contacts-utiles",
       "statut": "verifie"
     },
     {
       "id": "registre",
       "titre": "Inscription au registre des Français établis hors de France",
-      "nom": "S'inscrire au registre (France Diplomatie)",
+      "nom": "S’inscrire au registre (France Diplomatie)",
       "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
       "statut": "verifie"
     }
@@ -41,26 +40,18 @@
       "statut": "verifie"
     },
     {
-      "id": "alliance",
-      "titre": "Alliance française",
-      "nom": "Fondation des Alliances Françaises (réseau mondial)",
-      "url": "https://www.fondation-alliancefr.org/",
-      "statut": "verifie"
-    },
-    {
       "id": "ufe",
-      "titre": "Association de Français de l'étranger",
-      "nom": "Union des Français de l'étranger (UFE)",
+      "titre": "Association de Français de l’étranger",
+      "nom": "Union des Français de l’étranger (UFE)",
       "url": null,
-      "statut": "a-completer"
+      "statut": "a-verifier"
     },
     {
       "id": "adfe",
-      "titre": "Association de Français de l'étranger",
-      "nom": "Français du monde - ADFE",
+      "titre": "Association de Français de l’étranger",
+      "nom": "Français du monde-ADFE",
       "url": null,
-      "statut": "a-completer"
+      "statut": "a-verifier"
     }
-  ],
-  "checklist": "Bientôt"
+  ]
 }

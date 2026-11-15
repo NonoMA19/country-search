@@ -6,7 +6,7 @@
 // l'application de courriel de la personne, avec un message prérempli.
 export const CONTACT_EMAIL = "";
 
-// Deux pays à moins de 5 points d'écart sont affichés ex aequo.
+// Un pays à 5 points ou moins du premier de son groupe est affiché à égalité avec lui.
 export const ECART_EX_AEQUO = 5;
 
 // Le pays surprise doit atteindre au moins ce pourcentage.

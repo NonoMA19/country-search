@@ -60,3 +60,39 @@ input[type="range"] {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Message affiché seulement si la page reste bloquée sur « Chargement… ». */
+.apparait-tard {
+  opacity: 0;
+  animation: apparait 0.3s ease 5s forwards;
+}
+@keyframes apparait {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mode contraste forcé (Windows) : les états et les jauges restent visibles. */
+@media (forced-colors: active) {
+  button[aria-pressed="true"],
+  [aria-checked="true"] {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
+  [role="progressbar"],
+  .jauge {
+    border: 1px solid CanvasText;
+  }
+  [role="progressbar"] > div,
+  .jauge > div {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+  button:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+  dialog {
+    border: 2px solid CanvasText;
+  }
+}

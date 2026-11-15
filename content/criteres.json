@@ -4,21 +4,24 @@
     "id": "visa",
     "famille": "partir",
     "nom": "Accès au visa",
-    "definition": "La meilleure porte d'entrée ouverte à ton âge : libre circulation en Europe, PVT, VIE ou visa de travail.",
+    "definition": "La meilleure porte d’entrée ouverte à ton âge : libre circulation en Europe, PVT, VIE ou visa de travail.",
     "type": "officiel",
     "role": "badge",
     "echelle": [
-      "Libre circulation : aucun visa",
+      "Libre circulation : aucun visa",
       "PVT ouvert à ton âge",
-      "VIE : il faut décrocher une mission",
-      "Visa de travail : il faut un employeur",
+      "VIE : il faut décrocher une mission",
+      "Visa de travail : il faut un employeur",
       "Quota serré ou invitation à obtenir"
     ],
     "sources": [
       "europa-travail",
       "europa-permis",
       "diplomatie-pvt",
-      "service-public-vie"
+      "service-public-vie",
+      "gov-uk-visa",
+      "mom-singapour",
+      "canada-eic"
     ],
     "mesures": []
   },
@@ -27,12 +30,12 @@
     "id": "age-conditions",
     "famille": "partir",
     "nom": "Âge et conditions",
-    "definition": "Les limites d'âge du PVT (30 ou 35 ans) et du VIE (moins de 28 ans à la candidature), les quotas annuels et la durée maximale.",
+    "definition": "Les limites d’âge du PVT (30 ou 35 ans) et du VIE (moins de 28 ans à la candidature), les quotas annuels et la durée maximale.",
     "type": "officiel",
     "role": "badge",
     "echelle": [
-      "Aucune limite d'âge ni quota",
-      "Limite d'âge",
+      "Aucune limite d’âge ni quota",
+      "Limite d’âge",
       "Quota annuel",
       "Quota de 500 places ou moins, ou invitation à obtenir",
       "Fermé à ton âge"
@@ -49,7 +52,7 @@
     "id": "argent",
     "famille": "partir",
     "nom": "Argent minimum à prévoir",
-    "definition": "Le montant officiel exigé pour obtenir le visa, par exemple pour un PVT. Il n'est jamais bloquant : on t'affiche seulement ce qu'il te manquerait.",
+    "definition": "Le montant officiel exigé pour obtenir le visa, par exemple pour un PVT. Il n’est jamais bloquant : on t’affiche seulement ce qu’il te manquerait.",
     "type": "officiel",
     "role": "badge",
     "echelle": [
@@ -69,7 +72,7 @@
     "id": "chomage-jeunes",
     "famille": "travailler",
     "nom": "Chômage des jeunes",
-    "definition": "Part des 15-24 ans qui cherchent un emploi sans en trouver. Limite : ce chiffre ne dit rien de la qualité des emplois.",
+    "definition": "Part des 15-24 ans qui cherchent un emploi sans en trouver. Limite : ce chiffre ne dit rien de la qualité des emplois.",
     "type": "donnee-ouverte",
     "sources": [
       "bm-wdi"
@@ -115,7 +118,7 @@
     "id": "salaire",
     "famille": "travailler",
     "nom": "Salaire par rapport au coût de la vie",
-    "definition": "Salaire mensuel moyen des salariés, converti en pouvoir d'achat (dollars à parité de pouvoir d'achat). Limites : c'est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. À prendre comme un ordre de grandeur. Une donnée de plus de six ans n'est pas comptée.",
+    "definition": "Salaire mensuel moyen des salariés, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. À prendre comme un ordre de grandeur. Une donnée de plus de six ans n’est pas comptée.",
     "type": "donnee-ouverte",
     "sources": [
       "oit-ilostat"
@@ -161,7 +164,7 @@
     "id": "langue-travail",
     "famille": "travailler",
     "nom": "Langue de travail",
-    "definition": "L'anglais suffit-il au bureau ? Notre avis, justifié pays par pays.",
+    "definition": "L’anglais suffit-il au bureau ? Notre avis, justifié pays par pays.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"
@@ -193,7 +196,7 @@
     "id": "reseau-francais",
     "famille": "travailler",
     "nom": "Réseau français sur place",
-    "definition": "Nombre de Français inscrits au registre consulaire. Limite : l'inscription n'est pas obligatoire, le vrai nombre est plus élevé.",
+    "definition": "Nombre de Français inscrits au registre consulaire. Limite : l’inscription n’est pas obligatoire, le vrai nombre est plus élevé.",
     "type": "officiel",
     "sources": [
       "meae-registre"
@@ -239,7 +242,7 @@
     "id": "equilibre",
     "famille": "travailler",
     "nom": "Équilibre vie pro et vie perso",
-    "definition": "Heures réellement travaillées par semaine et congés payés légaux. Les congés légaux ne sont pas encore vérifiés pays par pays : seules les heures comptent pour l'instant.",
+    "definition": "Heures réellement travaillées par semaine, en moyenne. Les congés payés légaux ne sont pas comptés : on n’a pas encore pu les vérifier pays par pays dans les textes de loi.",
     "type": "donnee-ouverte",
     "sources": [
       "oit-ilostat"
@@ -277,39 +280,6 @@
           "semaines plutôt courtes",
           "semaines courtes"
         ]
-      },
-      {
-        "id": "conges",
-        "nom": "Congés payés légaux",
-        "sens": "haut",
-        "unite": "jours par an",
-        "bornes": [
-          10,
-          15,
-          20,
-          25
-        ],
-        "notes": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
-        "echelle": [
-          "moins de 10 jours",
-          "de 10 à 14 jours",
-          "de 15 à 19 jours",
-          "de 20 à 24 jours",
-          "25 jours ou plus"
-        ],
-        "mots": [
-          "très peu de congés",
-          "peu de congés",
-          "congés moyens",
-          "beaucoup de congés",
-          "énormément de congés"
-        ]
       }
     ]
   },
@@ -318,7 +288,7 @@
     "id": "style-travail",
     "famille": "travailler",
     "nom": "Style de travail",
-    "definition": "Trois positions, ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer et la ponctualité. Notre avis, justifié pays par pays.",
+    "definition": "Trois positions, ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer et la ponctualité. Notre avis, justifié pays par pays.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"
@@ -341,6 +311,13 @@
           "intermédiaire",
           "marquée",
           "très marquée"
+        ],
+        "explications": [
+          "On parle à son chef comme à un collègue, et on peut le contredire en réunion.",
+          "Le chef reste accessible et on attend de toi des initiatives.",
+          "Le chef décide, souvent après avoir consulté l'équipe.",
+          "Les décisions viennent d'en haut, et on contredit rarement son chef en public.",
+          "Le rang et l'ancienneté comptent beaucoup, et les décisions suivent la voie hiérarchique."
         ]
       },
       {
@@ -360,6 +337,13 @@
           "nuancée",
           "plutôt indirecte",
           "très indirecte"
+        ],
+        "explications": [
+          "On dit ses désaccords franchement, sans détour.",
+          "On va droit au but, en restant courtois.",
+          "On dit les choses, mais avec des formes.",
+          "Un refus est souvent suggéré plutôt que dit.",
+          "Il faut lire entre les lignes : un « non » frontal est rare."
         ]
       },
       {
@@ -379,6 +363,13 @@
           "intermédiaire",
           "attendue",
           "stricte"
+        ],
+        "explications": [
+          "Arriver avec un bon retard en réunion n'étonne personne.",
+          "Quelques minutes de retard en réunion sont courantes.",
+          "On arrive à l'heure, sans rigidité.",
+          "Arriver en retard en réunion est mal vu.",
+          "Être à l'heure, c'est arriver un peu en avance."
         ]
       }
     ]
@@ -388,7 +379,7 @@
     "id": "cout-vie",
     "famille": "vivre",
     "nom": "Coût de la vie",
-    "definition": "Niveau général des prix à la consommation, comparé à la France (France = 100). Limite : c'est une moyenne nationale, les loyers des grandes villes pèsent plus lourd.",
+    "definition": "Niveau général des prix à la consommation, comparé à la France (France = 100). Limite : c’est une moyenne nationale, les loyers des grandes villes pèsent plus lourd.",
     "type": "donnee-ouverte",
     "sources": [
       "bm-wdi"
@@ -422,7 +413,7 @@
         "mots": [
           "beaucoup plus cher que la France",
           "plus cher que la France",
-          "proche de la France",
+          "prix proches de ceux de la France",
           "moins cher que la France",
           "beaucoup moins cher que la France"
         ]
@@ -434,7 +425,7 @@
     "id": "climat",
     "famille": "vivre",
     "nom": "Climat",
-    "definition": "Température moyenne du mois le plus froid et du mois le plus chaud, sur 30 ans (1991-2020), dans la plus grande ville du pays. Deux positions, ni bonnes ni mauvaises.",
+    "definition": "Température moyenne du mois le plus froid et du mois le plus chaud, sur 30 ans (1991-2020), dans la plus grande ville du pays. L’hiver et l’été sont deux positions, ni bonnes ni mauvaises. Le « climat doux » combine les deux : il récompense un hiver qui ne gèle pas et un été qui ne brûle pas.",
     "type": "donnee-ouverte",
     "sources": [
       "open-meteo"
@@ -505,6 +496,26 @@
           "très chaud",
           "étouffant"
         ]
+      },
+      {
+        "id": "doux",
+        "nom": "Climat doux (hiver et été modérés)",
+        "sens": "haut",
+        "regle": "On note l’hiver (moins de −5 °C : 1 ; de −5 à 2 °C : 2 ; de 2 à 5 °C : 3 ; de 5 à 8 °C : 4 ; 8 °C ou plus : 5) et l’été (29 °C ou plus : 1 ; de 27 à 29 °C : 2 ; de 25 à 27 °C : 3 ; de 23 à 25 °C : 4 ; moins de 23 °C : 5). Le climat doux prend la plus basse des deux notes : un pays très chaud en été n’est pas « doux », même si son hiver est chaud.",
+        "echelle": [
+          "hiver sous −5 °C ou été à 29 °C ou plus",
+          "hiver de −5 à 2 °C ou été de 27 à 29 °C",
+          "hiver de 2 à 5 °C ou été de 25 à 27 °C",
+          "hiver de 5 à 8 °C ou été de 23 à 25 °C",
+          "hiver à 8 °C ou plus et été sous 23 °C"
+        ],
+        "mots": [
+          "pas doux du tout",
+          "peu doux",
+          "assez doux",
+          "doux",
+          "très doux"
+        ]
       }
     ]
   },
@@ -513,7 +524,7 @@
     "id": "distance",
     "famille": "vivre",
     "nom": "Distance et décalage horaire avec la France",
-    "definition": "Temps de vol estimé depuis Paris (distance à vol d'oiseau divisée par 800 km/h, plus 30 minutes) et décalage horaire avec Paris en janvier.",
+    "definition": "Temps de vol estimé depuis Paris (distance à vol d’oiseau divisée par 800 km/h, plus 30 minutes) et décalage horaire avec Paris en janvier.",
     "type": "donnee-ouverte",
     "sources": [
       "geonames"
@@ -592,7 +603,7 @@
     "id": "langue-quotidien",
     "famille": "vivre",
     "nom": "Langue du quotidien",
-    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays.",
+    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"
@@ -624,7 +635,7 @@
     "id": "securite",
     "famille": "vivre",
     "nom": "Sécurité",
-    "definition": "Homicides volontaires pour 100 000 habitants. Limite : c'est un seul aspect de la sécurité, et une moyenne nationale.",
+    "definition": "Homicides volontaires pour 100 000 habitants. Limite : c’est un seul aspect de la sécurité, et une moyenne nationale.",
     "type": "donnee-ouverte",
     "sources": [
       "bm-wdi"
@@ -669,8 +680,8 @@
     "numero": 15,
     "id": "sante",
     "famille": "vivre",
-    "nom": "Santé : couverture d'un jeune étranger",
-    "definition": "Es-tu couvert en arrivant, et à quel prix ? On applique une grille fixe à des faits officiels. Rien n'est demandé sur ta santé.",
+    "nom": "Santé : couverture d’un jeune étranger",
+    "definition": "Es-tu couvert en arrivant, et à quel prix ? On applique une grille fixe à des faits officiels. Rien n’est demandé sur ta santé.",
     "type": "officiel",
     "sources": [
       "service-public-soins",
@@ -702,7 +713,7 @@
     ]
   },
   {
-    "numero": 16,
+    "numero": 17,
     "id": "valeurs",
     "famille": "valeurs",
     "nom": "Valeurs (en option)",
@@ -715,7 +726,7 @@
     "mesures": [
       {
         "id": "stabilite",
-        "nom": "Stabilité politique (indice de la Banque mondiale, sur 100)",
+        "nom": "Stabilité politique (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -748,7 +759,7 @@
       },
       {
         "id": "libertes",
-        "nom": "Libertés d'expression et de la presse (indice de la Banque mondiale, sur 100)",
+        "nom": "Libertés d'expression et de la presse (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -781,7 +792,7 @@
       },
       {
         "id": "egalite",
-        "nom": "Égalité femmes-hommes dans la loi (indice de la Banque mondiale, sur 100)",
+        "nom": "Égalité femmes-hommes dans la loi (note de la Banque mondiale, sur 100)",
         "sens": "haut",
         "unite": "sur 100",
         "bornes": [
@@ -848,11 +859,11 @@
     ]
   },
   {
-    "numero": 17,
+    "numero": 16,
     "id": "taille-ville",
     "famille": "vivre",
     "nom": "Taille de ville (facultatif)",
-    "definition": "Le pays offre-t-il de très grandes villes, des villes moyennes actives, de la nature près des lieux d'emploi ? Notre avis, justifié pays par pays.",
+    "definition": "Le pays offre-t-il de très grandes villes, des villes moyennes actives, de la nature près des lieux d’emploi ? Notre avis, justifié pays par pays.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"

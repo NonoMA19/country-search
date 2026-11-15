@@ -9,35 +9,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "À Bruxelles, l'anglais est courant dans les institutions européennes et les grandes entreprises. Ailleurs, on travaille en français ou en néerlandais."
+   "texte": "À Bruxelles, l’anglais est courant dans les institutions européennes et les grandes entreprises. Ailleurs, on travaille en français ou en néerlandais."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est l'une des trois langues officielles : on le parle à Bruxelles et en Wallonie. En Flandre, la vie se passe en néerlandais."
+   "texte": "Le français est l’une des trois langues officielles : on le parle à Bruxelles et en Wallonie. En Flandre, la vie se passe en néerlandais."
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. Le compromis est une habitude de travail : on cherche l'accord avant de trancher."
+   "texte": "Le compromis est une habitude de travail : on cherche l’accord avant de trancher."
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. Le compromis est une habitude de travail : on cherche l'accord avant de trancher."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. Le compromis est une habitude de travail : on cherche l'accord avant de trancher."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 3,
-   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet."
-  },
-  "nature": {
-   "note": 2,
-   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet."
+  "villes": {
+   "texte": "Bruxelles est une capitale à taille humaine. Anvers, Gand, Liège ou Louvain sont des villes moyennes actives. Le pays est très dense : la nature (Ardennes, côte) demande un trajet.",
+   "grande-ville": 3,
+   "ville-moyenne": 4,
+   "nature": 2
   }
  },
  "suisse": {
@@ -50,7 +44,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "L'anglais sert dans les multinationales et les organisations internationales (Genève, Zurich, Bâle). Le reste du marché travaille en allemand, en français ou en italien."
+   "texte": "L’anglais sert dans les multinationales et les organisations internationales (Genève, Zurich, Bâle). Le reste du marché travaille en allemand, en français ou en italien."
   },
   "langue": {
    "note": 5,
@@ -58,27 +52,21 @@
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. Les décisions se prennent par consensus et la fiabilité est une valeur centrale."
+   "texte": "Les décisions se prennent par consensus."
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. Les décisions se prennent par consensus et la fiabilité est une valeur centrale."
+   "texte": ""
   },
   "ponctualite": {
    "note": 5,
-   "texte": "Ponctualité stricte : être à l'heure, c'est arriver un peu en avance. Les décisions se prennent par consensus et la fiabilité est une valeur centrale."
+   "texte": "La fiabilité est une valeur centrale."
   },
-  "grande-ville": {
-   "note": 2,
-   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes."
-  },
-  "ville-moyenne": {
-   "note": 5,
-   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes."
+  "villes": {
+   "texte": "Pas de très grande ville : Zurich et Genève restent de taille moyenne. Lausanne, Bâle ou Berne forment un réseau bien relié par le train. Lacs et montagnes sont aux portes des villes.",
+   "grande-ville": 2,
+   "ville-moyenne": 5,
+   "nature": 5
   }
  },
  "allemagne": {
@@ -89,7 +77,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 3,
-   "texte": "L'anglais suffit dans beaucoup de start-up et de grands groupes, surtout à Berlin. L'allemand reste demandé dans la majorité des offres."
+   "texte": "L’anglais suffit dans beaucoup de start-up et de grands groupes, surtout à Berlin. L’allemand reste demandé dans la majorité des offres."
   },
   "langue": {
    "note": 2,
@@ -97,27 +85,21 @@
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. On sépare nettement le travail et la vie privée, et une critique porte sur le travail, pas sur la personne."
+   "texte": ""
   },
   "communication": {
    "note": 1,
-   "texte": "Communication très directe : on dit ses désaccords franchement, sans détour. On sépare nettement le travail et la vie privée, et une critique porte sur le travail, pas sur la personne."
+   "texte": "On sépare nettement le travail et la vie privée, et une critique porte sur le travail, pas sur la personne."
   },
   "ponctualite": {
    "note": 5,
-   "texte": "Ponctualité stricte : être à l'heure, c'est arriver un peu en avance. On sépare nettement le travail et la vie privée, et une critique porte sur le travail, pas sur la personne."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région."
-  },
-  "ville-moyenne": {
-   "note": 5,
-   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région."
+  "villes": {
+   "texte": "Berlin, Hambourg et Munich sont de grandes villes. Le pays est très décentralisé : beaucoup de villes moyennes offrent des emplois. Forêts, lacs et Alpes selon la région.",
+   "grande-ville": 4,
+   "ville-moyenne": 5,
+   "nature": 3
   }
  },
  "irlande": {
@@ -129,35 +111,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail."
+   "texte": "On travaille en anglais, à Dublin comme à Cork, Galway ou Limerick."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais. L'irlandais, langue officielle, est peu utilisé au quotidien."
+   "texte": "La vie quotidienne se passe en anglais. L’irlandais, langue officielle, est peu utilisé au quotidien."
   },
   "hierarchie": {
    "note": 2,
-   "texte": "Hiérarchie plutôt plate : le chef reste accessible et on attend de toi des initiatives. L'ambiance est informelle et on s'appelle par le prénom, mais les critiques restent enrobées."
+   "texte": "L’ambiance est informelle et on s’appelle par le prénom."
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. L'ambiance est informelle et on s'appelle par le prénom, mais les critiques restent enrobées."
+   "texte": "Malgré l’ambiance informelle, les critiques restent enrobées."
   },
   "ponctualite": {
    "note": 3,
-   "texte": "Ponctualité intermédiaire : on arrive à l'heure, sans rigidité. L'ambiance est informelle et on s'appelle par le prénom, mais les critiques restent enrobées."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 2,
-   "texte": "Dublin concentre une grande partie de l'emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Dublin concentre une grande partie de l'emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "Dublin concentre une grande partie de l'emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches."
+  "villes": {
+   "texte": "Dublin concentre une grande partie de l’emploi et reste de taille moyenne. Cork, Galway et Limerick sont plus petites. La côte et la campagne sont proches.",
+   "grande-ville": 2,
+   "ville-moyenne": 3,
+   "nature": 4
   }
  },
  "luxembourg": {
@@ -170,35 +146,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "La place financière est très internationale : l'anglais est courant, à côté du français, de l'allemand et du luxembourgeois."
+   "texte": "La place financière est très internationale : l’anglais est courant, à côté du français, de l’allemand et du luxembourgeois."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est l'une des trois langues du pays et sert partout au quotidien, dans les commerces comme dans les administrations."
+   "texte": "Le français est l’une des trois langues du pays et sert partout au quotidien, dans les commerces comme dans les administrations."
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. Les équipes mêlent beaucoup de nationalités et de travailleurs frontaliers."
+   "texte": ""
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. Les équipes mêlent beaucoup de nationalités et de travailleurs frontaliers."
+   "texte": "Les équipes mêlent beaucoup de nationalités et de travailleurs frontaliers."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. Les équipes mêlent beaucoup de nationalités et de travailleurs frontaliers."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 1,
-   "texte": "Luxembourg-Ville est une petite capitale. Le reste du pays est fait de petites villes. Forêts et vallées sont à quelques minutes."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Luxembourg-Ville est une petite capitale. Le reste du pays est fait de petites villes. Forêts et vallées sont à quelques minutes."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Luxembourg-Ville est une petite capitale. Le reste du pays est fait de petites villes. Forêts et vallées sont à quelques minutes."
+  "villes": {
+   "texte": "Luxembourg-Ville est une petite capitale. Le reste du pays est fait de petites villes. Forêts et vallées sont à quelques minutes.",
+   "grande-ville": 1,
+   "ville-moyenne": 3,
+   "nature": 3
   }
  },
  "espagne": {
@@ -209,7 +179,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes. L'anglais suffit surtout dans quelques multinationales et centres de services."
+   "texte": "L’espagnol est nécessaire dans la plupart des postes. L’anglais suffit surtout dans quelques multinationales et centres de services."
   },
   "langue": {
    "note": 4,
@@ -217,27 +187,21 @@
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. Les relations personnelles comptent beaucoup, et la journée de travail finit souvent tard."
+   "texte": ""
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. Les relations personnelles comptent beaucoup, et la journée de travail finit souvent tard."
+   "texte": "Les relations personnelles comptent beaucoup."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. Les relations personnelles comptent beaucoup, et la journée de travail finit souvent tard."
+   "texte": "La journée de travail finit souvent tard."
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Madrid et Barcelone sont de grandes villes. Valence, Séville, Bilbao ou Malaga sont des villes moyennes actives. Mer et montagne selon la région."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "Madrid et Barcelone sont de grandes villes. Valence, Séville, Bilbao ou Malaga sont des villes moyennes actives. Mer et montagne selon la région."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Madrid et Barcelone sont de grandes villes. Valence, Séville, Bilbao ou Malaga sont des villes moyennes actives. Mer et montagne selon la région."
+  "villes": {
+   "texte": "Madrid et Barcelone sont de grandes villes. Valence, Séville, Bilbao ou Malaga sont des villes moyennes actives. Mer et montagne selon la région.",
+   "grande-ville": 4,
+   "ville-moyenne": 4,
+   "nature": 3
   }
  },
  "italie": {
@@ -248,7 +212,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'italien est nécessaire dans la plupart des postes. L'anglais suffit dans quelques multinationales, surtout à Milan."
+   "texte": "L’italien est nécessaire dans la plupart des postes. L’anglais suffit dans quelques multinationales, surtout à Milan."
   },
   "langue": {
    "note": 4,
@@ -256,27 +220,21 @@
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. Les relations personnelles et la confiance ouvrent beaucoup de portes."
+   "texte": ""
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. Les relations personnelles et la confiance ouvrent beaucoup de portes."
+   "texte": "Les relations personnelles et la confiance ouvrent beaucoup de portes."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. Les relations personnelles et la confiance ouvrent beaucoup de portes."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Milan et Rome sont de grandes villes. Turin, Bologne, Florence ou Padoue forment un réseau dense de villes moyennes. Mer, lacs et montagnes selon la région."
-  },
-  "ville-moyenne": {
-   "note": 5,
-   "texte": "Milan et Rome sont de grandes villes. Turin, Bologne, Florence ou Padoue forment un réseau dense de villes moyennes. Mer, lacs et montagnes selon la région."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Milan et Rome sont de grandes villes. Turin, Bologne, Florence ou Padoue forment un réseau dense de villes moyennes. Mer, lacs et montagnes selon la région."
+  "villes": {
+   "texte": "Milan et Rome sont de grandes villes. Turin, Bologne, Florence ou Padoue forment un réseau dense de villes moyennes. Mer, lacs et montagnes selon la région.",
+   "grande-ville": 4,
+   "ville-moyenne": 5,
+   "nature": 3
   }
  },
  "pays-bas": {
@@ -287,35 +245,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales. Le néerlandais reste un plus pour évoluer."
+   "texte": "L’anglais est très courant dans les entreprises internationales. Le néerlandais reste un plus pour évoluer."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en néerlandais, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en néerlandais, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "Hiérarchie très plate : on parle à son chef comme à un collègue et on peut le contredire en réunion. On donne son avis sans détour, y compris à son chef, et les décisions se prennent ensemble."
+   "texte": "Les décisions se prennent ensemble."
   },
   "communication": {
    "note": 1,
-   "texte": "Communication très directe : on dit ses désaccords franchement, sans détour. On donne son avis sans détour, y compris à son chef, et les décisions se prennent ensemble."
+   "texte": "On donne son avis sans détour, y compris à son chef."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. On donne son avis sans détour, y compris à son chef, et les décisions se prennent ensemble."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 3,
-   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage."
-  },
-  "ville-moyenne": {
-   "note": 5,
-   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage."
-  },
-  "nature": {
-   "note": 2,
-   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage."
+  "villes": {
+   "texte": "Amsterdam reste à taille humaine. Rotterdam, La Haye, Utrecht et Eindhoven forment un réseau de villes proches les unes des autres. Le pays est très dense : peu de nature sauvage.",
+   "grande-ville": 3,
+   "ville-moyenne": 5,
+   "nature": 2
   }
  },
  "portugal": {
@@ -330,31 +282,25 @@
   },
   "langue": {
    "note": 4,
-   "texte": "On parle portugais, une langue latine proche du français."
+   "texte": "On parle portugais, dans sa version européenne : une langue latine proche du français."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. Le respect des titres et des aînés reste présent, et on évite la confrontation directe."
+   "texte": "Le respect des titres et des aînés reste présent."
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. Le respect des titres et des aînés reste présent, et on évite la confrontation directe."
+   "texte": "On évite la confrontation directe."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. Le respect des titres et des aînés reste présent, et on évite la confrontation directe."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 3,
-   "texte": "Lisbonne et Porto concentrent l'emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L'océan et les parcs naturels sont proches."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Lisbonne et Porto concentrent l'emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L'océan et les parcs naturels sont proches."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "Lisbonne et Porto concentrent l'emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L'océan et les parcs naturels sont proches."
+  "villes": {
+   "texte": "Lisbonne et Porto concentrent l’emploi et restent de taille moyenne. Braga ou Coimbra sont plus petites. L’océan et les parcs naturels sont proches.",
+   "grande-ville": 3,
+   "ville-moyenne": 3,
+   "nature": 4
   }
  },
  "norvege": {
@@ -365,35 +311,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales, l'énergie et la tech. Le norvégien reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales, l’énergie et la tech. Le norvégien reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en norvégien, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en norvégien, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "Hiérarchie très plate : on parle à son chef comme à un collègue et on peut le contredire en réunion. L'égalité entre collègues est une valeur forte et la journée de travail finit tôt."
+   "texte": "L’égalité entre collègues est une valeur forte."
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. L'égalité entre collègues est une valeur forte et la journée de travail finit tôt."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. L'égalité entre collègues est une valeur forte et la journée de travail finit tôt."
+   "texte": "La journée de travail finit tôt."
   },
-  "grande-ville": {
-   "note": 2,
-   "texte": "Oslo est une petite capitale. Bergen, Trondheim et Stavanger sont des villes moyennes. Fjords, forêts et montagnes sont aux portes des villes."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Oslo est une petite capitale. Bergen, Trondheim et Stavanger sont des villes moyennes. Fjords, forêts et montagnes sont aux portes des villes."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Oslo est une petite capitale. Bergen, Trondheim et Stavanger sont des villes moyennes. Fjords, forêts et montagnes sont aux portes des villes."
+  "villes": {
+   "texte": "Oslo est une petite capitale. Bergen, Trondheim et Stavanger sont des villes moyennes. Fjords, forêts et montagnes sont aux portes des villes.",
+   "grande-ville": 2,
+   "ville-moyenne": 3,
+   "nature": 5
   }
  },
  "suede": {
@@ -404,35 +344,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales et la tech. Le suédois reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales et la tech. Le suédois reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en suédois, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en suédois, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "Hiérarchie très plate : on parle à son chef comme à un collègue et on peut le contredire en réunion. On cherche le consensus : chacun donne son avis avant qu'une décision soit prise."
+   "texte": "On cherche le consensus : chacun donne son avis avant qu’une décision soit prise."
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. On cherche le consensus : chacun donne son avis avant qu'une décision soit prise."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. On cherche le consensus : chacun donne son avis avant qu'une décision soit prise."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 3,
-   "texte": "Stockholm est une capitale de taille moyenne. Göteborg et Malmö sont plus petites. Lacs et forêts sont aux portes des villes."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Stockholm est une capitale de taille moyenne. Göteborg et Malmö sont plus petites. Lacs et forêts sont aux portes des villes."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Stockholm est une capitale de taille moyenne. Göteborg et Malmö sont plus petites. Lacs et forêts sont aux portes des villes."
+  "villes": {
+   "texte": "Stockholm est une capitale de taille moyenne. Göteborg et Malmö sont plus petites. Lacs et forêts sont aux portes des villes.",
+   "grande-ville": 3,
+   "ville-moyenne": 3,
+   "nature": 5
   }
  },
  "danemark": {
@@ -443,35 +377,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est très courant dans les entreprises internationales. Le danois reste demandé dans beaucoup de postes."
+   "texte": "L’anglais est très courant dans les entreprises internationales. Le danois reste demandé dans beaucoup de postes."
   },
   "langue": {
    "note": 2,
-   "texte": "La vie quotidienne se passe en danois, une langue à alphabet latin éloignée du français. Beaucoup d'habitants parlent aussi anglais."
+   "texte": "La vie quotidienne se passe en danois, une langue à alphabet latin éloignée du français. Beaucoup d’habitants parlent aussi anglais."
   },
   "hierarchie": {
    "note": 1,
-   "texte": "Hiérarchie très plate : on parle à son chef comme à un collègue et on peut le contredire en réunion. L'organisation est très plate et on dit franchement ce qu'on pense, avec humour."
+   "texte": "L’organisation est très plate."
   },
   "communication": {
    "note": 1,
-   "texte": "Communication très directe : on dit ses désaccords franchement, sans détour. L'organisation est très plate et on dit franchement ce qu'on pense, avec humour."
+   "texte": "On dit franchement ce qu’on pense, avec humour."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. L'organisation est très plate et on dit franchement ce qu'on pense, avec humour."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 3,
-   "texte": "Copenhague est une capitale de taille moyenne. Aarhus et Odense sont plus petites. La mer est partout, le relief est plat."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Copenhague est une capitale de taille moyenne. Aarhus et Odense sont plus petites. La mer est partout, le relief est plat."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Copenhague est une capitale de taille moyenne. Aarhus et Odense sont plus petites. La mer est partout, le relief est plat."
+  "villes": {
+   "texte": "Copenhague est une capitale de taille moyenne. Aarhus et Odense sont plus petites. La mer est partout, le relief est plat.",
+   "grande-ville": 3,
+   "ville-moyenne": 3,
+   "nature": 3
   }
  },
  "canada": {
@@ -483,35 +411,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail dans la majorité du pays. Au Québec, on travaille surtout en français."
+   "texte": "L’anglais est la langue de travail dans la majorité du pays. Au Québec, on travaille surtout en français."
   },
   "langue": {
    "note": 5,
-   "texte": "Le français est langue officielle avec l'anglais. On vit en français au Québec, en anglais dans la plupart des autres provinces."
+   "texte": "Le français est langue officielle avec l’anglais. On vit en français au Québec, en anglais dans la plupart des autres provinces."
   },
   "hierarchie": {
    "note": 2,
-   "texte": "Hiérarchie plutôt plate : le chef reste accessible et on attend de toi des initiatives. Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
+   "texte": ""
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
+   "texte": "Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. Le ton est poli et positif : une critique est souvent glissée entre deux compliments."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Toronto, Montréal et Vancouver sont de grandes villes. Ottawa, Calgary ou Québec sont plus petites. Lacs, forêts et montagnes sont très accessibles."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Toronto, Montréal et Vancouver sont de grandes villes. Ottawa, Calgary ou Québec sont plus petites. Lacs, forêts et montagnes sont très accessibles."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Toronto, Montréal et Vancouver sont de grandes villes. Ottawa, Calgary ou Québec sont plus petites. Lacs, forêts et montagnes sont très accessibles."
+  "villes": {
+   "texte": "Toronto, Montréal et Vancouver sont de grandes villes. Ottawa, Calgary ou Québec sont plus petites. Lacs, forêts et montagnes sont très accessibles.",
+   "grande-ville": 4,
+   "ville-moyenne": 3,
+   "nature": 5
   }
  },
  "australie": {
@@ -522,35 +444,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail."
+   "texte": "On travaille en anglais, à Sydney et Melbourne comme dans les autres capitales d’État."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais."
+   "texte": "La vie quotidienne se passe en anglais, dans les grandes villes comme ailleurs."
   },
   "hierarchie": {
    "note": 2,
-   "texte": "Hiérarchie plutôt plate : le chef reste accessible et on attend de toi des initiatives. L'ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
+   "texte": "L’ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. L'ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
+   "texte": ""
   },
   "ponctualite": {
    "note": 3,
-   "texte": "Ponctualité intermédiaire : on arrive à l'heure, sans rigidité. L'ambiance est décontractée et on se méfie de ceux qui se mettent en avant."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Sydney et Melbourne sont de grandes villes. L'emploi est concentré dans quelques capitales d'État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches."
-  },
-  "ville-moyenne": {
-   "note": 2,
-   "texte": "Sydney et Melbourne sont de grandes villes. L'emploi est concentré dans quelques capitales d'État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Sydney et Melbourne sont de grandes villes. L'emploi est concentré dans quelques capitales d'État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches."
+  "villes": {
+   "texte": "Sydney et Melbourne sont de grandes villes. L’emploi est concentré dans quelques capitales d’État, il y a peu de villes moyennes. Plages et parcs nationaux sont proches.",
+   "grande-ville": 4,
+   "ville-moyenne": 2,
+   "nature": 5
   }
  },
  "japon": {
@@ -561,35 +477,29 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le japonais est demandé dans la grande majorité des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le japonais est demandé dans la grande majorité des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
-   "texte": "La vie quotidienne se passe en japonais, avec trois systèmes d'écriture."
+   "texte": "La vie quotidienne se passe en japonais, avec trois systèmes d’écriture."
   },
   "hierarchie": {
    "note": 5,
-   "texte": "Hiérarchie très marquée : le rang et l'ancienneté comptent beaucoup, les décisions suivent la voie hiérarchique. Les décisions se préparent en amont, par consensus, avant la réunion qui les valide."
+   "texte": "Les décisions se préparent en amont, par consensus, avant la réunion qui les valide."
   },
   "communication": {
    "note": 5,
-   "texte": "Communication très indirecte : il faut lire entre les lignes, un « non » frontal est rare. Les décisions se préparent en amont, par consensus, avant la réunion qui les valide."
+   "texte": ""
   },
   "ponctualite": {
    "note": 5,
-   "texte": "Ponctualité stricte : être à l'heure, c'est arriver un peu en avance. Les décisions se préparent en amont, par consensus, avant la réunion qui les valide."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Tokyo et Osaka sont de très grandes métropoles. Fukuoka, Sapporo ou Kyoto sont des villes actives, bien reliées en train. Montagnes et forêts sont accessibles."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "Tokyo et Osaka sont de très grandes métropoles. Fukuoka, Sapporo ou Kyoto sont des villes actives, bien reliées en train. Montagnes et forêts sont accessibles."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "Tokyo et Osaka sont de très grandes métropoles. Fukuoka, Sapporo ou Kyoto sont des villes actives, bien reliées en train. Montagnes et forêts sont accessibles."
+  "villes": {
+   "texte": "Tokyo et Osaka sont de très grandes métropoles. Fukuoka, Sapporo ou Kyoto sont des villes actives, bien reliées en train. Montagnes et forêts sont accessibles.",
+   "grande-ville": 5,
+   "ville-moyenne": 4,
+   "nature": 4
   }
  },
  "nouvelle-zelande": {
@@ -601,7 +511,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail."
+   "texte": "On travaille en anglais, à Auckland comme à Wellington ou Christchurch."
   },
   "langue": {
    "note": 3,
@@ -609,27 +519,21 @@
   },
   "hierarchie": {
    "note": 2,
-   "texte": "Hiérarchie plutôt plate : le chef reste accessible et on attend de toi des initiatives. L'ambiance est informelle et on attend de chacun qu'il se débrouille avec autonomie."
+   "texte": "L’ambiance est informelle et on attend de chacun qu’il se débrouille avec autonomie."
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. L'ambiance est informelle et on attend de chacun qu'il se débrouille avec autonomie."
+   "texte": ""
   },
   "ponctualite": {
    "note": 3,
-   "texte": "Ponctualité intermédiaire : on arrive à l'heure, sans rigidité. L'ambiance est informelle et on attend de chacun qu'il se débrouille avec autonomie."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 2,
-   "texte": "Auckland est la seule grande ville. Wellington et Christchurch sont de taille moyenne. Plages, montagnes et sentiers sont aux portes des villes."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Auckland est la seule grande ville. Wellington et Christchurch sont de taille moyenne. Plages, montagnes et sentiers sont aux portes des villes."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Auckland est la seule grande ville. Wellington et Christchurch sont de taille moyenne. Plages, montagnes et sentiers sont aux portes des villes."
+  "villes": {
+   "texte": "Auckland est la seule grande ville. Wellington et Christchurch sont de taille moyenne. Plages, montagnes et sentiers sont aux portes des villes.",
+   "grande-ville": 2,
+   "ville-moyenne": 3,
+   "nature": 5
   }
  },
  "coree-du-sud": {
@@ -640,7 +544,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le coréen est demandé dans la grande majorité des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le coréen est demandé dans la grande majorité des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
@@ -648,27 +552,21 @@
   },
   "hierarchie": {
    "note": 5,
-   "texte": "Hiérarchie très marquée : le rang et l'ancienneté comptent beaucoup, les décisions suivent la voie hiérarchique. L'âge et le rang fixent la façon de s'adresser à chacun, et les journées sont longues."
+   "texte": "L’âge et le rang fixent la façon de s’adresser à chacun."
   },
   "communication": {
    "note": 5,
-   "texte": "Communication très indirecte : il faut lire entre les lignes, un « non » frontal est rare. L'âge et le rang fixent la façon de s'adresser à chacun, et les journées sont longues."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. L'âge et le rang fixent la façon de s'adresser à chacun, et les journées sont longues."
+   "texte": "Les journées de travail sont longues."
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l'emploi international. Des montagnes entourent les villes."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l'emploi international. Des montagnes entourent les villes."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l'emploi international. Des montagnes entourent les villes."
+  "villes": {
+   "texte": "Séoul est une très grande métropole, Busan une grande ville. Les villes moyennes sont moins tournées vers l’emploi international. Des montagnes entourent les villes.",
+   "grande-ville": 5,
+   "ville-moyenne": 3,
+   "nature": 3
   }
  },
  "taiwan": {
@@ -679,7 +577,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le mandarin est demandé dans la plupart des postes. L'anglais suffit dans quelques entreprises internationales et dans l'enseignement des langues."
+   "texte": "Le mandarin est demandé dans la plupart des postes. L’anglais suffit dans quelques entreprises internationales et dans l’enseignement des langues."
   },
   "langue": {
    "note": 1,
@@ -687,27 +585,21 @@
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. On préserve l'harmonie du groupe et on évite de mettre quelqu'un en difficulté devant les autres."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. On préserve l'harmonie du groupe et on évite de mettre quelqu'un en difficulté devant les autres."
+   "texte": "On préserve l’harmonie du groupe et on évite de mettre quelqu’un en difficulté devant les autres."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. On préserve l'harmonie du groupe et on évite de mettre quelqu'un en difficulté devant les autres."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "L'agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d'une heure."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "L'agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d'une heure."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "L'agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d'une heure."
+  "villes": {
+   "texte": "L’agglomération de Taipei est une grande ville. Taichung, Tainan et Kaohsiung sont actives. Montagnes et côte sont à moins d’une heure.",
+   "grande-ville": 4,
+   "ville-moyenne": 3,
+   "nature": 4
   }
  },
  "hong-kong": {
@@ -719,7 +611,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est langue officielle avec le chinois, et il domine dans la finance et les entreprises internationales."
+   "texte": "L’anglais est langue officielle avec le chinois, et il domine dans la finance et les entreprises internationales."
   },
   "langue": {
    "note": 3,
@@ -727,27 +619,21 @@
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. Le rythme est rapide et l'efficacité prime, avec un respect net de la hiérarchie."
+   "texte": "Le respect de la hiérarchie est net."
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. Le rythme est rapide et l'efficacité prime, avec un respect net de la hiérarchie."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. Le rythme est rapide et l'efficacité prime, avec un respect net de la hiérarchie."
+   "texte": "Le rythme est rapide et l’efficacité prime."
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d'une heure du centre."
-  },
-  "ville-moyenne": {
-   "note": 1,
-   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d'une heure du centre."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d'une heure du centre."
+  "villes": {
+   "texte": "Hong Kong est une ville-territoire très dense, sans ville moyenne. Des sentiers et des parcs naturels sont à moins d’une heure du centre.",
+   "grande-ville": 5,
+   "ville-moyenne": 1,
+   "nature": 3
   }
  },
  "argentine": {
@@ -758,35 +644,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Buenos Aires, Córdoba ou Rosario, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français."
+   "texte": "On parle espagnol, une langue latine proche du français, à Buenos Aires comme à Córdoba ou Mendoza."
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. On discute volontiers et avec passion, et la relation personnelle passe avant l'agenda."
+   "texte": ""
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. On discute volontiers et avec passion, et la relation personnelle passe avant l'agenda."
+   "texte": "On discute volontiers et avec passion."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. On discute volontiers et avec passion, et la relation personnelle passe avant l'agenda."
+   "texte": "La relation personnelle passe avant l’agenda."
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d'emploi."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d'emploi."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d'emploi."
+  "villes": {
+   "texte": "Buenos Aires est une très grande métropole. Córdoba, Rosario et Mendoza sont des villes actives. Les grands espaces sont loin des bassins d’emploi.",
+   "grande-ville": 5,
+   "ville-moyenne": 3,
+   "nature": 3
   }
  },
  "chili": {
@@ -797,35 +677,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Santiago, qui concentre l’essentiel de l’emploi, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français."
+   "texte": "On parle espagnol, une langue latine proche du français, de Santiago à Valparaíso."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. Le ton est poli et formel, et on évite de dire non frontalement."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. Le ton est poli et formel, et on évite de dire non frontalement."
+   "texte": "Le ton est poli et formel, et on évite de dire non frontalement."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. Le ton est poli et formel, et on évite de dire non frontalement."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Santiago concentre l'essentiel de l'emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures."
-  },
-  "ville-moyenne": {
-   "note": 2,
-   "texte": "Santiago concentre l'essentiel de l'emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures."
-  },
-  "nature": {
-   "note": 5,
-   "texte": "Santiago concentre l'essentiel de l'emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures."
+  "villes": {
+   "texte": "Santiago concentre l’essentiel de l’emploi. Valparaíso et Concepción sont plus petites. Les Andes et le Pacifique sont à une ou deux heures.",
+   "grande-ville": 4,
+   "ville-moyenne": 2,
+   "nature": 5
   }
  },
  "colombie": {
@@ -836,35 +710,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Bogotá, Medellín ou Cali, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français."
+   "texte": "On parle espagnol, une langue latine proche du français, à Bogotá comme à Medellín."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. La politesse et la chaleur des relations comptent beaucoup avant de parler affaires."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. La politesse et la chaleur des relations comptent beaucoup avant de parler affaires."
+   "texte": "La politesse et la chaleur des relations comptent beaucoup avant de parler affaires."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. La politesse et la chaleur des relations comptent beaucoup avant de parler affaires."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Bogotá est une très grande ville, Medellín et Cali de grandes villes. Montagnes et campagne sont proches."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Bogotá est une très grande ville, Medellín et Cali de grandes villes. Montagnes et campagne sont proches."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "Bogotá est une très grande ville, Medellín et Cali de grandes villes. Montagnes et campagne sont proches."
+  "villes": {
+   "texte": "Bogotá est une très grande ville, Medellín et Cali de grandes villes. Montagnes et campagne sont proches.",
+   "grande-ville": 4,
+   "ville-moyenne": 3,
+   "nature": 4
   }
  },
  "mexique": {
@@ -875,35 +743,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'espagnol est nécessaire dans la plupart des postes."
+   "texte": "À Mexico, Guadalajara ou Monterrey, l’espagnol est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
-   "texte": "On parle espagnol, une langue latine proche du français."
+   "texte": "On parle espagnol, une langue latine proche du français, de Mexico à Guadalajara."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. La relation personnelle se construit avant le travail, et on ménage son interlocuteur."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. La relation personnelle se construit avant le travail, et on ménage son interlocuteur."
+   "texte": "La relation personnelle se construit avant le travail, et on ménage son interlocuteur."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. La relation personnelle se construit avant le travail, et on ménage son interlocuteur."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Mexico est une très grande métropole. Guadalajara, Monterrey, Querétaro ou Puebla sont des villes actives. Nature variée, souvent à quelques heures."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "Mexico est une très grande métropole. Guadalajara, Monterrey, Querétaro ou Puebla sont des villes actives. Nature variée, souvent à quelques heures."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Mexico est une très grande métropole. Guadalajara, Monterrey, Querétaro ou Puebla sont des villes actives. Nature variée, souvent à quelques heures."
+  "villes": {
+   "texte": "Mexico est une très grande métropole. Guadalajara, Monterrey, Querétaro ou Puebla sont des villes actives. Nature variée, souvent à quelques heures.",
+   "grande-ville": 5,
+   "ville-moyenne": 4,
+   "nature": 3
   }
  },
  "bresil": {
@@ -914,35 +776,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "Le portugais est nécessaire dans la plupart des postes."
+   "texte": "À São Paulo comme à Rio de Janeiro, le portugais est nécessaire dans la plupart des postes."
   },
   "langue": {
    "note": 4,
-   "texte": "On parle portugais, une langue latine proche du français."
+   "texte": "On parle portugais, dans sa version brésilienne : une langue latine proche du français."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. Le contact est chaleureux et informel, mais la décision reste au chef."
+   "texte": "La décision reste au chef, même quand le contact est informel."
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. Le contact est chaleureux et informel, mais la décision reste au chef."
+   "texte": "Le contact est chaleureux et informel."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. Le contact est chaleureux et informel, mais la décision reste au chef."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "São Paulo et Rio de Janeiro sont de très grandes métropoles. Curitiba, Belo Horizonte ou Florianópolis sont actives. Plages et forêts selon la région."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "São Paulo et Rio de Janeiro sont de très grandes métropoles. Curitiba, Belo Horizonte ou Florianópolis sont actives. Plages et forêts selon la région."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "São Paulo et Rio de Janeiro sont de très grandes métropoles. Curitiba, Belo Horizonte ou Florianópolis sont actives. Plages et forêts selon la région."
+  "villes": {
+   "texte": "São Paulo et Rio de Janeiro sont de très grandes métropoles. Curitiba, Belo Horizonte ou Florianópolis sont actives. Plages et forêts selon la région.",
+   "grande-ville": 5,
+   "ville-moyenne": 3,
+   "nature": 3
   }
  },
  "royaume-uni": {
@@ -953,35 +809,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail."
+   "texte": "On travaille en anglais. Pour le visa « Skilled Worker », il faut d’ailleurs prouver son niveau d’anglais."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais."
+   "texte": "La vie quotidienne se passe en anglais. Au pays de Galles, le gallois est aussi langue officielle."
   },
   "hierarchie": {
    "note": 3,
-   "texte": "Hiérarchie intermédiaire : le chef décide, souvent après avoir consulté l'équipe. L'humour et la litote sont partout : une critique est souvent dite à demi-mot."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. L'humour et la litote sont partout : une critique est souvent dite à demi-mot."
+   "texte": "L’humour et la litote sont partout : une critique est souvent dite à demi-mot."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. L'humour et la litote sont partout : une critique est souvent dite à demi-mot."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Londres est une très grande métropole. Manchester, Édimbourg, Bristol ou Leeds sont des villes actives. Campagne et parcs nationaux sont accessibles."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "Londres est une très grande métropole. Manchester, Édimbourg, Bristol ou Leeds sont des villes actives. Campagne et parcs nationaux sont accessibles."
-  },
-  "nature": {
-   "note": 3,
-   "texte": "Londres est une très grande métropole. Manchester, Édimbourg, Bristol ou Leeds sont des villes actives. Campagne et parcs nationaux sont accessibles."
+  "villes": {
+   "texte": "Londres est une très grande métropole. Manchester, Édimbourg, Bristol ou Leeds sont des villes actives. Campagne et parcs nationaux sont accessibles.",
+   "grande-ville": 5,
+   "ville-moyenne": 4,
+   "nature": 3
   }
  },
  "etats-unis": {
@@ -992,35 +842,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail."
+   "texte": "On travaille en anglais, de New York à Los Angeles ou Chicago."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais. L'espagnol est aussi très présent."
+   "texte": "La vie quotidienne se passe en anglais. L’espagnol est aussi très présent."
   },
   "hierarchie": {
    "note": 2,
-   "texte": "Hiérarchie plutôt plate : le chef reste accessible et on attend de toi des initiatives. Le ton est direct et positif, on attend des résultats rapides et on parle facilement à son chef."
+   "texte": "On parle facilement à son chef."
   },
   "communication": {
    "note": 2,
-   "texte": "Communication plutôt directe : on va droit au but, en restant courtois. Le ton est direct et positif, on attend des résultats rapides et on parle facilement à son chef."
+   "texte": "Le ton est direct et positif, et on attend des résultats rapides."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. Le ton est direct et positif, on attend des résultats rapides et on parle facilement à son chef."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "New York, Los Angeles ou Chicago sont de très grandes métropoles. Austin, Denver ou Seattle sont des villes actives. Les parcs nationaux et les grands espaces sont nombreux."
-  },
-  "ville-moyenne": {
-   "note": 4,
-   "texte": "New York, Los Angeles ou Chicago sont de très grandes métropoles. Austin, Denver ou Seattle sont des villes actives. Les parcs nationaux et les grands espaces sont nombreux."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "New York, Los Angeles ou Chicago sont de très grandes métropoles. Austin, Denver ou Seattle sont des villes actives. Les parcs nationaux et les grands espaces sont nombreux."
+  "villes": {
+   "texte": "New York, Los Angeles ou Chicago sont de très grandes métropoles. Austin, Denver ou Seattle sont des villes actives. Les parcs nationaux et les grands espaces sont nombreux.",
+   "grande-ville": 5,
+   "ville-moyenne": 4,
+   "nature": 4
   }
  },
  "singapour": {
@@ -1034,35 +878,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 5,
-   "texte": "L'anglais est la langue de travail et l'une des quatre langues officielles."
+   "texte": "L’anglais est la langue de travail et l’une des quatre langues officielles."
   },
   "langue": {
    "note": 3,
-   "texte": "La vie quotidienne se passe en anglais, l'une des quatre langues officielles."
+   "texte": "La vie quotidienne se passe en anglais, l’une des quatre langues officielles."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. L'efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
+   "texte": ""
   },
   "communication": {
    "note": 3,
-   "texte": "Communication nuancée : on dit les choses, mais avec des formes. L'efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
+   "texte": ""
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. L'efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
+   "texte": "L’efficacité et le respect des règles sont très valorisés, dans des équipes très internationales."
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée."
-  },
-  "ville-moyenne": {
-   "note": 1,
-   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée."
-  },
-  "nature": {
-   "note": 2,
-   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée."
+  "villes": {
+   "texte": "Singapour est une cité-État : une seule grande ville, pas de ville moyenne. Des parcs et des réserves existent, mais la nature reste limitée.",
+   "grande-ville": 4,
+   "ville-moyenne": 1,
+   "nature": 2
   }
  },
  "emirats-arabes-unis": {
@@ -1073,35 +911,29 @@
   "autreEcriture": false,
   "anglais": {
    "note": 4,
-   "texte": "L'anglais est la langue courante des entreprises à Dubaï et à Abou Dabi, où la plupart des salariés sont étrangers. L'arabe est la langue officielle."
+   "texte": "L’anglais est la langue courante des entreprises à Dubaï et à Abou Dabi, où la plupart des salariés sont étrangers. L’arabe est la langue officielle."
   },
   "langue": {
    "note": 3,
-   "texte": "On peut vivre en anglais à Dubaï et à Abou Dabi. La langue officielle est l'arabe."
+   "texte": "On peut vivre en anglais à Dubaï et à Abou Dabi. La langue officielle est l’arabe."
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. La relation de confiance se construit avant les affaires, et le rang de l'interlocuteur compte."
+   "texte": "Le rang de l’interlocuteur compte."
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. La relation de confiance se construit avant les affaires, et le rang de l'interlocuteur compte."
+   "texte": "La relation de confiance se construit avant les affaires."
   },
   "ponctualite": {
    "note": 3,
-   "texte": "Ponctualité intermédiaire : on arrive à l'heure, sans rigidité. La relation de confiance se construit avant les affaires, et le rang de l'interlocuteur compte."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d'emplois. Désert et littoral, avec une chaleur forte en été."
-  },
-  "ville-moyenne": {
-   "note": 2,
-   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d'emplois. Désert et littoral, avec une chaleur forte en été."
-  },
-  "nature": {
-   "note": 2,
-   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d'emplois. Désert et littoral, avec une chaleur forte en été."
+  "villes": {
+   "texte": "Dubaï et Abou Dabi sont de grandes villes. Les autres villes offrent moins d’emplois. Désert et littoral, avec une chaleur forte en été.",
+   "grande-ville": 4,
+   "ville-moyenne": 2,
+   "nature": 2
   }
  },
  "chine": {
@@ -1112,7 +944,7 @@
   "autreEcriture": true,
   "anglais": {
    "note": 2,
-   "texte": "Le mandarin est nécessaire dans la plupart des postes. L'anglais suffit dans certaines multinationales et dans l'enseignement."
+   "texte": "Le mandarin est nécessaire dans la plupart des postes. L’anglais suffit dans certaines multinationales et dans l’enseignement."
   },
   "langue": {
    "note": 1,
@@ -1120,27 +952,21 @@
   },
   "hierarchie": {
    "note": 5,
-   "texte": "Hiérarchie très marquée : le rang et l'ancienneté comptent beaucoup, les décisions suivent la voie hiérarchique. On préserve la « face » de chacun et le réseau de relations personnelles compte beaucoup."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. On préserve la « face » de chacun et le réseau de relations personnelles compte beaucoup."
+   "texte": "On préserve la « face » de chacun, et le réseau de relations personnelles compte beaucoup."
   },
   "ponctualite": {
    "note": 4,
-   "texte": "Ponctualité attendue : arriver en retard en réunion est mal vu. On préserve la « face » de chacun et le réseau de relations personnelles compte beaucoup."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 5,
-   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d'habitants. La nature est loin des centres."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d'habitants. La nature est loin des centres."
-  },
-  "nature": {
-   "note": 2,
-   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d'habitants. La nature est loin des centres."
+  "villes": {
+   "texte": "Shanghai, Pékin et Shenzhen sont de très grandes métropoles. Les villes dites moyennes comptent plusieurs millions d’habitants. La nature est loin des centres.",
+   "grande-ville": 5,
+   "ville-moyenne": 3,
+   "nature": 2
   }
  },
  "maroc": {
@@ -1152,7 +978,7 @@
   "autreEcriture": false,
   "anglais": {
    "note": 2,
-   "texte": "L'anglais est peu utilisé. On travaille surtout en français et en arabe."
+   "texte": "L’anglais est peu utilisé. On travaille surtout en français et en arabe."
   },
   "langue": {
    "note": 5,
@@ -1160,27 +986,21 @@
   },
   "hierarchie": {
    "note": 4,
-   "texte": "Hiérarchie marquée : les décisions viennent d'en haut et on contredit rarement son chef en public. L'hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
+   "texte": ""
   },
   "communication": {
    "note": 4,
-   "texte": "Communication plutôt indirecte : un refus est souvent suggéré plutôt que dit. L'hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
+   "texte": "L’hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
   },
   "ponctualite": {
    "note": 2,
-   "texte": "Ponctualité souple : quelques minutes de retard en réunion sont courantes. L'hospitalité et la relation personnelle passent avant le dossier, et on évite de dire non."
+   "texte": ""
   },
-  "grande-ville": {
-   "note": 4,
-   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L'Atlas et l'océan sont proches."
-  },
-  "ville-moyenne": {
-   "note": 3,
-   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L'Atlas et l'océan sont proches."
-  },
-  "nature": {
-   "note": 4,
-   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L'Atlas et l'océan sont proches."
+  "villes": {
+   "texte": "Casablanca est une grande ville. Rabat, Tanger et Marrakech sont actives. L’Atlas et l’océan sont proches.",
+   "grande-ville": 4,
+   "ville-moyenne": 3,
+   "nature": 4
   }
  }
 }
