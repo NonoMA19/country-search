@@ -16,7 +16,7 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
   ligne?: Ligne | null;
   porte?: Porte | null;
   pour?: LigneResultat[];
-  savoir?: LigneResultat | null;
+  savoir?: LigneResultat[];
   alertes?: Alerte[];
 }) {
   const { jsPDF } = await import("jspdf");
@@ -81,10 +81,9 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Pour toi");
     for (const a of pour) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
-  if (savoir) {
+  if (savoir?.length) {
     titre("À savoir");
-    ecrire(`- ${savoir.texte}`, { apres: 2 });
-    preuve(savoir.preuve);
+    for (const a of savoir) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
   if (alertes?.length) {
     titre("Ce qui peut coincer");

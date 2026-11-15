@@ -110,7 +110,18 @@
           "faible",
           "très faible"
         ],
-        "fait": "Le chômage des jeunes y est {mot}"
+        "fait": "Le chômage des jeunes y est {mot}",
+        "court": "Chômage des jeunes",
+        "affichage": "{v} %",
+        "decimales": 1,
+        "theme": "l’emploi des jeunes",
+        "etiquettes": [
+          "Chômage très élevé",
+          "Chômage élevé",
+          "Chômage moyen",
+          "Chômage faible",
+          "Chômage très faible"
+        ]
       }
     ]
   },
@@ -157,7 +168,18 @@
           "élevé",
           "très élevé"
         ],
-        "fait": "Le salaire moyen y est {mot}, une fois les prix pris en compte"
+        "fait": "Le salaire moyen y est {mot}, une fois les prix pris en compte",
+        "court": "Salaire (pouvoir d’achat)",
+        "affichage": "{v} $ PPA par mois",
+        "decimales": 0,
+        "theme": "le salaire",
+        "etiquettes": [
+          "Salaire très bas",
+          "Salaire bas",
+          "Salaire moyen",
+          "Salaire élevé",
+          "Salaire très élevé"
+        ]
       }
     ]
   },
@@ -196,6 +218,15 @@
           "Au travail, l’anglais suffit surtout dans les grandes entreprises",
           "Ton anglais suffit dans beaucoup d’entreprises",
           "Ton anglais suffit au travail : c’est la langue du bureau"
+        ],
+        "court": "Travailler en anglais",
+        "theme": "le travail en anglais",
+        "etiquettes": [
+          "Impossible sans la langue locale",
+          "Langue locale presque toujours nécessaire",
+          "Possible dans les grandes entreprises",
+          "Très courant en entreprise",
+          "Langue du bureau"
         ]
       }
     ]
@@ -251,7 +282,18 @@
           "La communauté française y est grande, par rapport à la population",
           "La communauté française y est très grande, par rapport à la population"
         ],
-        "regle": "Français inscrits au registre consulaire fin 2020, divisés par la population du pays en 2020 (Banque mondiale, indicateur SP.POP.TOTL), pour 100 000 habitants. Le nombre total reste affiché dans la fiche pays."
+        "regle": "Français inscrits au registre consulaire fin 2020, divisés par la population du pays en 2020 (Banque mondiale, indicateur SP.POP.TOTL), pour 100 000 habitants. Le nombre total reste affiché dans la fiche pays.",
+        "court": "Français sur place",
+        "affichage": "{v} pour 100 000 habitants",
+        "decimales": 0,
+        "theme": "les Français sur place",
+        "etiquettes": [
+          "Très petite communauté",
+          "Petite communauté",
+          "Communauté moyenne",
+          "Grande communauté",
+          "Très grande communauté"
+        ]
       }
     ]
   },
@@ -304,6 +346,17 @@
           "Les semaines de travail y sont dans la moyenne",
           "Les semaines de travail y sont plutôt courtes",
           "Les semaines de travail y sont courtes"
+        ],
+        "court": "Heures de travail",
+        "affichage": "{v} h par semaine",
+        "decimales": 1,
+        "theme": "les heures de travail",
+        "etiquettes": [
+          "Semaines très longues",
+          "Semaines longues",
+          "Semaines moyennes",
+          "Semaines plutôt courtes",
+          "Semaines courtes"
         ]
       }
     ]
@@ -345,7 +398,16 @@
           "Les décisions viennent d’en haut, et on contredit rarement son chef en public.",
           "Le rang et l’ancienneté comptent beaucoup, et les décisions suivent la voie hiérarchique."
         ],
-        "fait": "La hiérarchie y est {mot}"
+        "fait": "La hiérarchie y est {mot}",
+        "court": "Hiérarchie",
+        "theme": "la culture au travail",
+        "etiquettes": [
+          "Hiérarchie très plate",
+          "Hiérarchie plutôt plate",
+          "Hiérarchie intermédiaire",
+          "Hiérarchie marquée",
+          "Hiérarchie très marquée"
+        ]
       },
       {
         "id": "communication",
@@ -372,7 +434,16 @@
           "Un refus est souvent suggéré plutôt que dit.",
           "Il faut lire entre les lignes : un « non » frontal est rare."
         ],
-        "fait": "La communication y est {mot}"
+        "fait": "La communication y est {mot}",
+        "court": "Communication",
+        "theme": "la culture au travail",
+        "etiquettes": [
+          "Communication très directe",
+          "Communication plutôt directe",
+          "Communication nuancée",
+          "Communication plutôt indirecte",
+          "Communication très indirecte"
+        ]
       },
       {
         "id": "ponctualite",
@@ -399,7 +470,16 @@
           "Arriver en retard en réunion est mal vu.",
           "Être à l’heure, c’est arriver un peu en avance."
         ],
-        "fait": "La ponctualité y est {mot}"
+        "fait": "La ponctualité y est {mot}",
+        "court": "Ponctualité",
+        "theme": "la culture au travail",
+        "etiquettes": [
+          "Ponctualité très souple",
+          "Ponctualité souple",
+          "Ponctualité intermédiaire",
+          "Ponctualité attendue",
+          "Ponctualité stricte"
+        ]
       },
       {
         "id": "decision",
@@ -425,6 +505,15 @@
           "Les décisions s’y prennent entre les deux",
           "On y cherche l’accord du groupe avant de décider",
           "On y décide tous ensemble, par consensus"
+        ],
+        "court": "Prise de décision",
+        "theme": "la culture au travail",
+        "etiquettes": [
+          "Le chef tranche seul",
+          "Le chef tranche après avoir écouté",
+          "Entre les deux",
+          "Accord du groupe recherché",
+          "Décision par consensus"
         ]
       },
       {
@@ -451,6 +540,15 @@
           "Vie pro et vie perso s’y mêlent un peu",
           "Vie pro et vie perso s’y mêlent souvent",
           "Vie pro et vie perso s’y mêlent beaucoup"
+        ],
+        "court": "Vie pro et vie perso",
+        "theme": "la culture au travail",
+        "etiquettes": [
+          "Vie pro et perso très séparées",
+          "Vie pro et perso plutôt séparées",
+          "Vie pro et perso un peu mêlées",
+          "Vie pro et perso souvent mêlées",
+          "Vie pro et perso très mêlées"
         ]
       }
     ]
@@ -504,6 +602,17 @@
           "La vie y coûte à peu près comme en France",
           "La vie y coûte moins cher qu’en France",
           "La vie y coûte beaucoup moins cher qu’en France"
+        ],
+        "court": "Coût de la vie",
+        "affichage": "{v} (France = 100)",
+        "decimales": 0,
+        "theme": "le coût de la vie",
+        "etiquettes": [
+          "Beaucoup plus cher que la France",
+          "Plus cher que la France",
+          "Prix proches de ceux de la France",
+          "Moins cher que la France",
+          "Beaucoup moins cher que la France"
         ]
       }
     ]
@@ -551,7 +660,18 @@
           "doux",
           "chaud"
         ],
-        "fait": "L’hiver y est {mot}"
+        "fait": "L’hiver y est {mot}",
+        "court": "Hiver",
+        "affichage": "{v} °C au mois le plus froid",
+        "decimales": 1,
+        "theme": "le climat",
+        "etiquettes": [
+          "Hiver très froid",
+          "Hiver froid",
+          "Hiver frais",
+          "Hiver doux",
+          "Hiver chaud"
+        ]
       },
       {
         "id": "ete",
@@ -585,7 +705,18 @@
           "très chaud",
           "étouffant"
         ],
-        "fait": "L’été y est {mot}"
+        "fait": "L’été y est {mot}",
+        "court": "Été",
+        "affichage": "{v} °C au mois le plus chaud",
+        "decimales": 1,
+        "theme": "le climat",
+        "etiquettes": [
+          "Été frais",
+          "Été tempéré",
+          "Été chaud",
+          "Été très chaud",
+          "Été étouffant"
+        ]
       },
       {
         "id": "doux",
@@ -606,7 +737,16 @@
           "doux",
           "très doux"
         ],
-        "fait": "Le climat y est {mot}"
+        "fait": "Le climat y est {mot}",
+        "court": "Climat doux",
+        "theme": "le climat",
+        "etiquettes": [
+          "Climat pas doux du tout",
+          "Climat peu doux",
+          "Climat assez doux",
+          "Climat doux",
+          "Climat très doux"
+        ]
       }
     ]
   },
@@ -659,6 +799,17 @@
           "La France est à 6 à 10 h de vol",
           "Tu rentres en France en 3 à 6 h de vol",
           "Tu rentres en France en moins de 3 h de vol"
+        ],
+        "court": "Distance",
+        "affichage": "{v} h de vol",
+        "decimales": 1,
+        "theme": "la distance",
+        "etiquettes": [
+          "Très loin",
+          "Loin",
+          "Assez loin",
+          "Proche",
+          "Très proche"
         ]
       },
       {
@@ -699,6 +850,17 @@
           "Le décalage avec la France est de 4 à 6 h",
           "Le décalage avec la France n’est que de 2 à 3 h",
           "C’est presque la même heure qu’en France"
+        ],
+        "court": "Décalage horaire",
+        "affichage": "{v} h de décalage",
+        "decimales": 0,
+        "theme": "la distance",
+        "etiquettes": [
+          "Décalage très fort",
+          "Décalage fort",
+          "Décalage moyen",
+          "Petit décalage",
+          "Presque la même heure"
         ]
       }
     ]
@@ -738,6 +900,15 @@
           "Le quotidien se passe en anglais",
           "Le quotidien se passe dans une langue proche du français",
           "On y parle français au quotidien"
+        ],
+        "court": "Langue du quotidien",
+        "theme": "la langue",
+        "etiquettes": [
+          "Langue et écriture très éloignées",
+          "Autre langue à alphabet latin",
+          "Anglais au quotidien",
+          "Langue proche du français",
+          "On parle français"
         ]
       },
       {
@@ -766,7 +937,16 @@
           "On peut presque y vivre en français ou en anglais",
           "On peut y vivre en français ou en anglais"
         ],
-        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre."
+        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre.",
+        "court": "Langue à apprendre",
+        "theme": "la langue",
+        "etiquettes": [
+          "Une langue et une écriture à apprendre",
+          "Entre les deux",
+          "Une langue à apprendre",
+          "Entre les deux",
+          "Rien à apprendre"
+        ]
       }
     ]
   },
@@ -813,7 +993,19 @@
           "faible",
           "très faible"
         ],
-        "fait": "Le taux d’homicides y est {mot}"
+        "fait": "Le taux d’homicides y est {mot}",
+        "court": "Sécurité",
+        "affichage": "{v} homicides pour 100 000 habitants",
+        "decimales": 1,
+        "theme": "la sécurité",
+        "etiquettes": [
+          "Peu sûr",
+          "Plutôt peu sûr",
+          "Moyennement sûr",
+          "Sûr",
+          "Très sûr"
+        ],
+        "affichageSingulier": "{v} homicide pour 100 000 habitants"
       }
     ]
   },
@@ -856,6 +1048,15 @@
           "Un accord de sécurité sociale existe avec la France",
           "Le système de santé public y est ouvert aux travailleurs étrangers",
           "Ta carte européenne d’assurance maladie y est valable"
+        ],
+        "court": "Santé à l’arrivée",
+        "theme": "la santé",
+        "etiquettes": [
+          "Soins très chers",
+          "Assurance privée à prévoir",
+          "Accord avec la France",
+          "Système public accessible",
+          "Carte européenne valable"
         ]
       }
     ]
@@ -904,7 +1105,18 @@
           "60 à 80 sur 100",
           "80 à 100 sur 100"
         ],
-        "fait": "La note de stabilité politique y est de {mot}"
+        "fait": "La note de stabilité politique y est de {mot}",
+        "court": "Stabilité politique",
+        "affichage": "{v} sur 100",
+        "decimales": 0,
+        "theme": "la stabilité",
+        "etiquettes": [
+          "Très instable",
+          "Plutôt instable",
+          "Moyennement stable",
+          "Stable",
+          "Très stable"
+        ]
       },
       {
         "id": "libertes",
@@ -938,7 +1150,18 @@
           "60 à 80 sur 100",
           "80 à 100 sur 100"
         ],
-        "fait": "La note des libertés d’expression et de la presse y est de {mot}"
+        "fait": "La note des libertés d’expression et de la presse y est de {mot}",
+        "court": "Libertés",
+        "affichage": "{v} sur 100",
+        "decimales": 0,
+        "theme": "les libertés",
+        "etiquettes": [
+          "Très peu respectées",
+          "Peu respectées",
+          "Moyennement respectées",
+          "Respectées",
+          "Très respectées"
+        ]
       },
       {
         "id": "egalite",
@@ -972,7 +1195,18 @@
           "60 à 80 sur 100",
           "80 à 100 sur 100"
         ],
-        "fait": "La note d’égalité entre femmes et hommes dans la loi y est de {mot}"
+        "fait": "La note d’égalité entre femmes et hommes dans la loi y est de {mot}",
+        "court": "Égalité femmes-hommes",
+        "affichage": "{v} sur 100",
+        "decimales": 0,
+        "theme": "l’égalité dans la loi",
+        "etiquettes": [
+          "Très inégale",
+          "Plutôt inégale",
+          "Moyenne",
+          "Plutôt égale",
+          "Très égale"
+        ]
       },
       {
         "id": "air",
@@ -1006,7 +1240,18 @@
           "7,5 à 10 µg/m³",
           "moins de 7,5 µg/m³"
         ],
-        "fait": "La pollution aux particules fines y est de {mot}"
+        "fait": "La pollution aux particules fines y est de {mot}",
+        "court": "Qualité de l’air",
+        "affichage": "{v} µg/m³ de PM2,5",
+        "decimales": 1,
+        "theme": "l’air",
+        "etiquettes": [
+          "Très pollué",
+          "Pollué",
+          "Moyennement pollué",
+          "Peu pollué",
+          "Très peu pollué"
+        ]
       }
     ]
   },
@@ -1045,6 +1290,15 @@
           "On y trouve une grande ville à taille humaine",
           "On y trouve plusieurs grandes villes",
           "On y trouve de très grandes métropoles"
+        ],
+        "court": "Grandes villes",
+        "theme": "la ville et la nature",
+        "etiquettes": [
+          "Pas de grande ville",
+          "Peu de grandes villes",
+          "Une grande ville à taille humaine",
+          "Plusieurs grandes villes",
+          "De très grandes métropoles"
         ]
       },
       {
@@ -1071,6 +1325,15 @@
           "On y trouve quelques villes moyennes",
           "On y trouve beaucoup de villes moyennes",
           "On y trouve un vrai réseau de villes moyennes"
+        ],
+        "court": "Villes moyennes",
+        "theme": "la ville et la nature",
+        "etiquettes": [
+          "Pas de ville moyenne",
+          "Peu de villes moyennes",
+          "Quelques villes moyennes",
+          "Beaucoup de villes moyennes",
+          "Un vrai réseau de villes moyennes"
         ]
       },
       {
@@ -1097,6 +1360,15 @@
           "La nature y est accessible",
           "La nature y est proche des villes",
           "La nature y est aux portes des villes"
+        ],
+        "court": "Nature",
+        "theme": "la ville et la nature",
+        "etiquettes": [
+          "Nature très loin",
+          "Nature limitée",
+          "Nature accessible",
+          "Nature proche",
+          "Nature aux portes des villes"
         ]
       }
     ]

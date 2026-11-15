@@ -2,7 +2,7 @@
 // Tout s'efface quand on ferme l'onglet.
 import { useSyncExternalStore } from "react";
 import { quiz } from "./donnees";
-import { ETAT_VIDE, REGLAGES_DEFAUT, type Etat, type Reglages } from "./moteur";
+import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, type Etat, type Reglages } from "./moteur";
 import { pays } from "./pays";
 
 // L'ordre du parcours : profil, priorités, dilemmes, (résultat prêt), valeurs (en option), résultat.
@@ -17,7 +17,7 @@ export type Etape =
   | { t: "revoir"; id: string };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 4;
+export const VERSION_SESSION = 5;
 
 export type Session = {
   v: number;
@@ -48,7 +48,8 @@ const PRIORITES = new Set(quiz.priorites.map((p) => p.id));
 const SUJETS = new Set(quiz.sujets.map((s) => s.id));
 const DILEMMES = new Map(quiz.dilemmes.map((d) => [d.id, new Set(["passer", ...d.options.map((o) => o.id)])]));
 const PAYS = new Set(pays.map((p) => p.id));
-const CRANS = new Set([0, 0.5, 1, 1.5, 2]);
+const CRANS = new Set(NIVEAUX);
+const GROUPES_REGLAGE = new Set<string>(GROUPES.map((g) => g.id));
 
 function profilValide(x: unknown): boolean {
   if (!estObjet(x)) return false;
@@ -81,9 +82,8 @@ function etapeValide(x: unknown): boolean {
 }
 
 function reglagesValides(x: unknown): boolean {
-  if (!estObjet(x) || !estObjet(x.poids)) return false;
-  const p = x.poids;
-  const poidsOk = ["travailler", "vivre", "valeurs"].every((f) => typeof p[f] === "number" && CRANS.has(p[f] as number));
+  if (!estObjet(x) || !estObjet(x.niveaux)) return false;
+  const poidsOk = Object.entries(x.niveaux).every(([g, v]) => GROUPES_REGLAGE.has(g) && typeof v === "number" && CRANS.has(v));
   const budgetOk = x.budget === null || (typeof x.budget === "number" && Number.isFinite(x.budget) && x.budget >= 0 && x.budget <= 8000);
   return poidsOk && budgetOk;
 }

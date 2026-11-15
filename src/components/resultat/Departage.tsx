@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import { CarteDilemme } from "@/components/quiz/Quiz";
-import { mesures } from "@/lib/donnees";
-import { bilanDepartage, MAX_DEPARTAGE, prochainDepartage, repondre, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
+import { AvecDefinitions } from "@/components/Definition";
+import { bilanDepartage, comparer, MAX_DEPARTAGE, prochainDepartage, repondre, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.
 export type EtatDepartage =
@@ -15,36 +15,47 @@ export type EtatDepartage =
 
 const BOUTON = "inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl px-4 text-center font-semibold";
 
-// Deux jauges côte à côte, sans nouveau calcul : l'accord déjà calculé pour chaque critère.
-function Comparaison({ la, lb }: { la: Ligne; lb: Ligne }) {
-  const ids = [...new Set([...la.details, ...lb.details].filter((d) => !d.neutre).map((d) => d.mesure))];
-  const accord = (l: Ligne, m: string) => l.details.find((d) => d.mesure === m && !d.neutre)?.accord ?? null;
+// Les deux pays côte à côte, sans nouveau calcul : une ligne par critère qui compte pour toi,
+// la vraie valeur de chaque pays, et au centre une barre qui part du milieu vers le pays qui gagne.
+function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: Etat; reglages: Reglages }) {
+  const { lignes, synthese } = comparer(la, lb, etat, reglages);
+  const valeur = (v: { valeur: string | null; mot: string } | null) => (v ? (v.valeur ? `${v.valeur} · ${v.mot}` : v.mot) : "Pas de donnée");
+  const qui = (ecart: number) => (Math.abs(ecart) < 1e-9 ? "Égalité" : `${ecart > 0 ? la.pays.nom : lb.pays.nom} gagne`);
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-bord bg-carte">
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 border-b border-bord px-4 py-3 text-sm font-semibold">
         <span className="flex min-w-0 items-center gap-2"><Drapeau iso2={la.pays.iso2} className="h-4 w-6" /><span className="break-words">{la.pays.nom}</span></span>
-        <span className="flex min-w-0 items-center gap-2"><Drapeau iso2={lb.pays.iso2} className="h-4 w-6" /><span className="break-words">{lb.pays.nom}</span></span>
+        <span className="flex min-w-0 items-center justify-end gap-2 text-right"><span className="break-words">{lb.pays.nom}</span><Drapeau iso2={lb.pays.iso2} className="h-4 w-6" /></span>
       </div>
       <ul className="divide-y divide-bord">
-        {ids.map((m) => {
-          const va = accord(la, m), vb = accord(lb, m);
-          const jauge = (v: number | null, nom: string) => (
-            <span className="flex min-w-0 items-center gap-2">
-              <span className="jauge h-2.5 min-w-8 flex-1 overflow-hidden rounded-full bg-creux" aria-hidden="true">
-                <span className="block h-full rounded-full bg-bleu" style={{ width: `${Math.round((v ?? 0) * 100)}%` }} />
-              </span>
-              <span className="w-10 shrink-0 text-right text-xs text-gris tabular-nums">{v === null ? "?" : `${Math.round(v * 100)} %`}</span>
-              <span className="sr-only">{nom} : {v === null ? "pas de donnée" : `${Math.round(v * 100)} %`}</span>
-            </span>
-          );
+        {lignes.map((x) => {
+          const largeur = `${Math.round(Math.min(1, Math.abs(x.ecart)) * 50)}%`;
           return (
-            <li key={m} className="px-4 py-2.5">
-              <p className="text-sm font-medium">{mesures[m]?.nom ?? m}</p>
-              <div className="mt-1 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3">{jauge(va, la.pays.nom)}{jauge(vb, lb.pays.nom)}</div>
+            <li key={x.mesure} className="px-4 py-3">
+              <p className="sr-only">{x.libelle} : {la.pays.nom}, {valeur(x.a)} ; {lb.pays.nom}, {valeur(x.b)}. {qui(x.ecart)}.</p>
+              <div aria-hidden="true">
+                <p className="text-center text-sm font-semibold">{x.libelle}{x.priorite && <span className="font-normal text-gris"> · priorité</span>}</p>
+                <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 text-sm leading-snug">
+                  <span className="min-w-0 break-words"><AvecDefinitions texte={valeur(x.a)} /></span>
+                  <span className="min-w-0 text-right break-words">{valeur(x.b)}</span>
+                </div>
+                <div className="relative mt-2 h-2.5 rounded-full bg-creux">
+                  <span className="absolute top-[-3px] left-1/2 h-4 w-px bg-gris" />
+                  {Math.abs(x.ecart) < 1e-9 ? (
+                    <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 rounded bg-carte px-1 text-[11px] leading-none text-gris">égalité</span>
+                  ) : (
+                    <span className="jauge absolute top-0 h-full rounded-full bg-bleu" style={x.ecart > 0 ? { right: "50%", width: largeur } : { left: "50%", width: largeur }} />
+                  )}
+                </div>
+              </div>
             </li>
           );
         })}
       </ul>
+      <div className="border-t border-bord px-4 py-3">
+        <p className="font-medium">{synthese}</p>
+        <p className="mt-1 text-sm text-gris">À toi de voir ce qui compte le plus.</p>
+      </div>
     </div>
   );
 }
@@ -112,14 +123,15 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
         </>
       ) : etatDep?.t === "comparaison" ? (
         <>
-          <p className="mt-2">Il ne reste aucun dilemme pour les départager. Voici les deux pays côte à côte, sur ce qui compte pour toi.</p>
-          <Comparaison la={la} lb={lb} />
+          <p className="mt-2">Les deux pays côte à côte, sur ce qui compte pour toi.</p>
+          <Comparaison la={la} lb={lb} etat={etat} reglages={reglages} />
           <button type="button" onClick={() => setEtatDep(null)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Fermer</button>
         </>
       ) : (
         <>
           <p className="mt-1 text-gris">Ils sont à égalité. Trois questions pour trancher.</p>
           <button type="button" onClick={lancer} className={`${BOUTON} mt-3 bg-bleu text-white hover:bg-blue-700`}>Trancher entre les deux</button>
+          <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-2 border border-bord bg-carte hover:border-bleu`}>Les comparer côte à côte</button>
         </>
       )}
     </section>
