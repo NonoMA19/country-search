@@ -166,6 +166,14 @@
     "source": "canada-eic",
     "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/invitations-presenter-demande.html",
     "verifieLe": "2026-11-14"
+   },
+   "saison": {
+    "texte": "Saison 2026 fermée. La prochaine ouverture est annoncée sur canada.ca.",
+    "citation": "Les bassins de la saison 2026 sont fermés.",
+    "source": "canada-eic-candidat",
+    "lien": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/devenir-candidat.html",
+    "datePage": "2026-10-19",
+    "verifieLe": "2026-11-15"
    }
   },
   {

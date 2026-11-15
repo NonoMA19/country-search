@@ -127,6 +127,12 @@ function CartePays({ ligne, rang, egalite, etat, lignes, surprise = false }: { l
           {porte.phrase}
           <Pastille preuve={porte.preuve} pays={p.nom} contexte={`la porte d’entrée (${porte.nom})`} />
         </p>
+        {porte.mention && (
+          <p className="mt-2 text-sm font-medium">
+            {porte.mention.texte}
+            {porte.mention.preuve && <Pastille preuve={porte.mention.preuve} pays={p.nom} contexte="la saison du PVT" />}
+          </p>
+        )}
       </div>
 
       <section className="mt-5">

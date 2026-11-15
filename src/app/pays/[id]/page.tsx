@@ -57,7 +57,7 @@ function Lien({ lien, date }: { lien: LienDossier; date: string }) {
       <a href={lien.url as string} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-medium break-words text-lien underline">
         {lien.nom ?? lien.url} <ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
       </a>
-      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(date)}</p>
+      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
     </li>
   );
 }
@@ -167,6 +167,12 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                 {b.texte}
                 <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} contexte={b.nom} />
               </p>
+              {b.saison && (
+                <p className="mt-2 font-medium">
+                  {b.saison.texte}
+                  <Pastille preuve={preuveSource("Saison du PVT", `Phrase officielle : « ${b.saison.citation} » (page mise à jour le ${dateFr(b.saison.datePage)}).`, b.saison.source, b.saison.lien, b.saison.verifieLe)} pays={p.nom} contexte="la saison du PVT" />
+                </p>
+              )}
               {b.invitationTexte && b.invitationSource && (
                 <p className="mt-2">
                   {b.invitationTexte}

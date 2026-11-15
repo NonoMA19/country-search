@@ -61,6 +61,7 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Ta porte d’entrée");
     ecrire(`${LIBELLE_BADGE[laPorte.badge]} - ${laPorte.nom}`, { gras: true, apres: 2 });
     ecrire(laPorte.phrase, { apres: 2 });
+    if (laPorte.mention) { ecrire(laPorte.mention.texte, { gras: true, apres: 2 }); preuve(laPorte.mention.preuve); }
     ecrire(laPorte.preuve.texte, { apres: 2 });
     preuve(laPorte.preuve);
     laPorte.autres.forEach((a) => ecrire(a, { gris: true }));
@@ -97,14 +98,14 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Liens officiels");
     for (const l of liens) {
       ecrire(`${l.titre}${l.nom ? ` : ${l.nom}` : ""}`, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
+      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
     }
   }
   if (associations.length) {
     titre("Associations et réseaux");
     for (const l of associations) {
       ecrire(l.nom ?? l.titre, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(dossier?.verifieLe)})`, { taille: 10 });
+      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
     }
   }
 

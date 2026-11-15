@@ -296,6 +296,13 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(!concerne("employeur-requis", trouverPays("australie")!, { ...etat, profil: { age: "18-25" } }), "D18 : un PVT ouvert est écarté");
 }
 
+// 2.6 quater Canada : saison 2026 du PVT fermée. Mention affichée, badge et score inchangés.
+{
+  const porte = evaluerPorte(trouverPays("canada")!, { age: "18-25" }, null);
+  verifier(porte.badge === "difficile" && !!porte.mention?.texte.includes("Saison 2026 fermée"), "Canada : la saison fermée n'est pas dite, ou le badge a changé");
+  verifier(porte.mention?.preuve?.type === "officiel", "Canada : la saison fermée n'a pas de preuve officielle");
+}
+
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
 {
   const mauvaises: unknown[] = [null, {}, [], "texte", 3, { ...SESSION_VIDE, v: 1 }, { ...SESSION_VIDE, etat: null }, { ...SESSION_VIDE, etape: { t: "profil", i: -1 } },

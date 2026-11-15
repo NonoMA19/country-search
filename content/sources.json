@@ -200,5 +200,11 @@
     "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francais/preparer-son-expatriation/dossiers-pays-de-l-expatriation/maroc/emploi-stage/article/reglementation-du-travail",
     "licence": "Licence Ouverte 2.0",
     "type": "officiel"
+  },
+  "canada-eic-candidat": {
+    "nom": "Gouvernement du Canada, Expérience internationale Canada : devenir candidat",
+    "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/devenir-candidat.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
   }
 }

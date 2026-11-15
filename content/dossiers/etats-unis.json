@@ -49,9 +49,10 @@
     {
       "id": "adfe",
       "titre": "Association de Français de l’étranger",
-      "nom": "Français du monde-ADFE",
-      "url": null,
-      "statut": "a-verifier"
+      "nom": "Trouver une section Français du monde",
+      "url": "https://francais-du-monde.org/sections/",
+      "statut": "verifie",
+      "verifieLe": "2026-11-15"
     }
   ]
 }
