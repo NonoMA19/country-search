@@ -3,7 +3,7 @@
 // effet du projet (objectif) sur le top 3, et sensibilité de chaque question.
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de quiz)
 import { quiz } from "@/lib/donnees";
-import { ETAT_VIDE, calculer, cleTop3, demarrerDilemmes, prochainDilemme, questionProfilVisible, repondre, resultatPret, type Etat, type Profil } from "@/lib/moteur";
+import { ETAT_VIDE, LIBELLE_FIABILITE, calculer, cleTop3, demarrerDilemmes, paysSurprise, prochainDilemme, questionProfilVisible, repondre, resultatPret, type Etat, type NiveauFiabilite, type Profil } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
 
 function hasard(graine: number) {
@@ -67,10 +67,19 @@ const posee: Record<string, number> = {};
 const sensible: Record<string, number> = {};
 const sensibleN1: Record<string, number> = {};
 let nbQuestions = 0;
+// Prompt 3d : pays surprise et fiabilité des données du top 3.
+const surprises: Record<string, number> = { zone: 0, employeur: 0, langue: 0 };
+const surprisePays: Record<string, number> = {};
+const fiab: Record<NiveauFiabilite, number> = { complete: 0, partielle: 0, faible: 0 };
 
 for (let i = 0; i < NB; i++) {
   const etat = quizAuHasard(r);
-  const top = cleTop3(calculer(etat)).split(",").filter(Boolean);
+  const lignes = calculer(etat);
+  const top = cleTop3(lignes).split(",").filter(Boolean);
+  const top3 = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+  for (const l of top3) fiab[l.fiabilite.niveau]++;
+  const s = paysSurprise(etat, lignes, top3);
+  if (s) { surprises[s.cause]++; surprisePays[s.ligne.pays.id] = (surprisePays[s.ligne.pays.id] ?? 0) + 1; }
   if (top[0]) enN1[top[0]] = (enN1[top[0]] ?? 0) + 1;
   for (const id of top) enTop3[id] = (enTop3[id] ?? 0) + 1;
 
@@ -114,6 +123,12 @@ for (const q of toutesLesQuestions()) {
   console.log(`  ${q.id.padEnd(22)} ${pct(n).padStart(7)} | ${n ? pct(sensible[q.id] ?? 0, n).padStart(7) : "      –"} | ${n ? pct(sensibleN1[q.id] ?? 0, n).padStart(7) : "      –"}`);
 }
 
+const nbSurprises = Object.values(surprises).reduce((a, b) => a + b, 0);
+console.log(`\nPays surprise : ${pct(nbSurprises)} des profils (zone ${surprises.zone}, visa lié à l'employeur ${surprises.employeur}, langue à apprendre ${surprises.langue}).`);
+console.log(`  Les plus fréquents : ${Object.entries(surprisePays).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id, n]) => `${pays.find((p) => p.id === id)?.nom} ${pct(n, nbSurprises)}`).join(", ")}`);
+const nbTop = fiab.complete + fiab.partielle + fiab.faible;
+console.log(`Fiabilité des pays du top 3 : ${(Object.keys(fiab) as NiveauFiabilite[]).map((k) => `${LIBELLE_FIABILITE[k]} ${pct(fiab[k], nbTop)}`).join(" ; ")}.`);
+
 // ---------- Personas de contrôle (prompt 3c) ----------
 // Six profils types, toujours les mêmes, rejoués à chaque simulation. On affiche leur top 5 sans rien forcer.
 // Les réponses de dilemme traduisent ce que dit chaque profil ; tout le reste est laissé sans réponse.
@@ -130,6 +145,9 @@ console.log("\nPersonas de contrôle : top 5 (score)");
 for (const p of PERSONAS) {
   const ordre = Object.keys(p.reponses);
   const etat: Etat = { ...demarrerDilemmes({ ...ETAT_VIDE, profil: p.profil, priorites: p.priorites }), reponses: p.reponses, ordre };
-  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
+  const lignes = calculer(etat);
+  const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
+  const s = paysSurprise(etat, lignes, top.slice(0, 3));
   console.log(`  ${p.nom}\n    ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
+  console.log(`    fiabilité du top 3 : ${top.slice(0, 3).map((l) => `${l.pays.nom} ${l.fiabilite.verifies}/${l.fiabilite.total}`).join(", ")} ; pays surprise : ${s ? `${s.ligne.pays.nom} ${Math.round(s.score)} % (${s.cause})` : "aucun"}`);
 }

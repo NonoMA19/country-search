@@ -55,17 +55,21 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
 - Biais de classement (remesuré au prompt 3c, `npm run simulation`, 5 000 profils) : l'Allemagne n'est plus n°1 que dans 13,6 % des profils (30,1 % avant), derrière les Pays-Bas (16,9 %). Les deux changements du prompt 3c y contribuent : réseau français rapporté à la population (Allemagne 5 → 3) et D7, D8 actifs (Allemagne notée 3 et 2). La Colombie et le Chili restent dans le top 3 dans 0,1 % et 0,4 % des profils : mêmes points forts que le Mexique et le Brésil, moins bonnes notes ailleurs. Piste restante, sans pondération arbitraire : 8 dilemmes ont une option « ne change rien » ; leur donner un effet contraire quand une donnée existe (par exemple « Aucun contact français » = position « peu de Français »).
 - Restes du prompt 3c : visas de travail « à vérifier » (Corée du Sud, Colombie, Brésil, Chine, Maroc), lien avec l'employeur inconnu (Mexique, Corée du Sud, Colombie, Brésil, Maroc) ; culture au travail « à vérifier » : décision (Hong Kong, Brésil), vie pro et vie perso (Argentine, Colombie, Émirats arabes unis, Maroc) ; Alliance française par pays ; population de Taïwan (absente de la Banque mondiale) pour le réseau français.
-- Question facultative sur l'expérience pro (aucune, moins de 2 ans, 2 ans ou plus) et le diplôme : elle permettrait de changer le badge des visas qui exigent de l'expérience (Australie : 1 an ; Nouvelle-Zélande : 2 ans ou une licence ; Taïwan : master, ou licence et 2 ans ; Japon : diplôme universitaire). Pour l'instant, la condition est seulement affichée dans la carte du visa.
+- Question facultative sur l'expérience pro (aucune, moins de 2 ans, 2 ans ou plus) et le diplôme. Depuis le prompt 3d, la fiche de faisabilité affiche « Ton expérience pro n'est pas connue du site » : elle permettrait de changer le badge des visas qui exigent de l'expérience (Australie : 1 an ; Nouvelle-Zélande : 2 ans ou une licence ; Taïwan : master, ou licence et 2 ans ; Japon : diplôme universitaire). Pour l'instant, la condition est seulement affichée dans la carte du visa.
 - D18 « Je préfère pouvoir changer d'employeur librement » est le dernier dilemme qui écarte des pays (filtre). À décider : le transformer en pénalité, comme D10 au prompt 3c.
 - Témoignages de confiance « moyenne » : ils comptent comme les autres. Piste proposée, non appliquée : les compter à 75 % de leur importance.
-- Prompt 4 « Ta vie là-bas » : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
+- Prompt 4, simulateur « Ta vie là-bas » : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
 - Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
+- Prompt 3d, décisions en attente : (1) badge de fiabilité : « Notre avis » n'y compte pas (règle demandée), d'où 16,7 % des pays du top 3 en « Peu de données vérifiées » ; la règle des 60 % du calcul, elle, compte encore « Notre avis » (sinon 28,6 % des pays du top 3 sortiraient) : choisir une seule règle ; (2) pays surprise dans 51 % des profils (surtout un pays d'Europe écarté par « hors d'Europe ») : relever le seuil ou limiter à certaines préférences ; (3) D18 reste un filtre ; (4) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3.
+- Regarder comment les concurrents présentent leurs résultats (classement, comparaison, fiches) avant la refonte du prompt 5.
+- Secteurs et stages : croiser le top 3 avec les secteurs qui recrutent et les offres de stage (sources ouvertes à trouver).
+- Couleurs par pays : à décider avec la direction artistique (prompt 5), pas avant.
 - Écran Valeurs (stabilité, libertés, air) en fin de parcours : à repenser (il arrive tard et change le top 3 après le portrait).
-- Direction artistique et mascotte.
-- Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir).
+- Direction artistique et mascotte (avant le prompt 5).
+- Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page du PDF (il reprend les points par catégorie sous forme de liste simple depuis le prompt 3d), couleurs par pays.
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).
-- Comparateur de pays.
+- Comparateur de pays : réutiliser la comparaison côte à côte du départage (`comparer` dans `src/lib/moteur.ts`) pour 2 pays au choix.
 - Fiches ★ complètes à construire (banque, SIM, santé, logement, CV, codes culturels) : la promesse affichée est « fiche détaillée à venir en priorité ».
 - Congés payés légaux : à remettre dans le calcul quand ils seront vérifiés pays par pays dans les textes de loi.
 - Égalité femmes-hommes dans la loi : `scripts/collecte.mjs` sait déjà la télécharger (Banque mondiale, indicateur GD_WBL_OVL_LAW, source 14) ; l'API était trop lente depuis la session du prompt 3.
@@ -154,3 +158,19 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Voir « Restes du prompt 3c » dans les idées ci-dessus.
 - Personas : le profil « parle espagnol, chaleur, vie moins chère » a la Chine dans son top 5, car parler espagnol ne compte que si un dilemme fait entrer la langue du quotidien dans le calcul.
 - Décisions en attente de Nolhan : D18 filtre ou pénalité ; pondération des témoignages de confiance moyenne ; question facultative sur l'expérience.
+
+### 15 novembre 2026 : un résultat plus clair et plus honnête (prompt 3d)
+**Ce qui est fait** (deux pull requests : lots 1 et 5, puis lots 2, 3, 4 et 6 ; un commit par lot)
+- Lot 1 : « Pourquoi on te demande ça » en panneau déplié (`src/components/Pourquoi.tsx`) : enjeu en gras, une mini-carte par option. Champ `aide` dans `content/quiz.json` (questions, dilemmes, `aides.priorites`, `aides.sujets`), 60 mots au plus. Textes de D1, D9, D11, D12, D13, D16, D17, D18 corrigés pour coller au calcul.
+- Lot 5 : `content/glossaire.json` et `src/components/Definition.tsx` (définition au toucher, `AvecDefinitions` sur PVT, VIE, PPA, PM2,5, Banque mondiale) ; `src/components/LienOfficiel.tsx` (carte « Site officiel ») ; `_europe` dans `content/portes.json` (Union, Norvège, Suisse ; inscription sur place, source `europa-sejour` ; permis de séjour suisse, France Diplomatie).
+- Lot 2 : page résultat réordonnée (portrait, top 3, « Et si… ? », pays surprise, VIE, tous les pays). Cartes : verdict en gros, points par catégorie (Travailler, Vivre, Culture au travail ; 2 forts et 1 faible au plus). Égalités nommées avec rang hors vue. 4 curseurs concrets (`GROUPES`, `effetsAjustes`, session v5). Pays surprise (`paysSurprise`, seuil n° 3 ou 75 %). Comparaison côte à côte (`comparer`). Vraies valeurs et mots (`valeurLisible`, champs `court`, `affichage`, `etiquettes`, `theme` dans `criteres.json`). « Ton profil de travail » supprimé (phrase dans le portrait).
+- Lot 3 : `faisabilite`, `visaSimple`, `fiabiliteDe` ; `src/components/resultat/Faisabilite.tsx` (aussi sur la fiche pays, si le quiz est fait).
+- Lot 4 : `src/components/resultat/BlocVie.tsx`, offres de VIE Business France (source `businessfrance-vie`).
+- Lot 6 : test du moteur (aides, curseurs, pays surprise, égalités, valeurs, fiabilité, faisabilité, VIE) ; simulation avec pays surprise et fiabilité.
+- Simulation (5 000 profils) : classement identique au prompt 3c (aucune règle de score changée). Pays surprise : 51,1 % des profils. Fiabilité du top 3 : complètes 1,1 %, partielles 82,1 %, peu de données 16,7 %.
+
+**Ce qui reste à faire**
+- Décisions listées dans les idées (« Prompt 3d, décisions en attente »).
+- Condition de nationalité du VIE : non sourcée dans `/content`, donc pas affichée.
+- « Espace économique européen » et « accord sur la libre circulation » : pas trouvés sur une page officielle lisible depuis la session ; l'explication reste sans détail juridique.
+
