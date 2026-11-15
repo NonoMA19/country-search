@@ -60,14 +60,15 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
 }
 
 // Un dilemme : une scène, puis 2 ou 3 options en cartes. Un tap pour répondre.
-export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie, passer = "Passer" }: {
-  dilemme: Dilemme; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string;
+export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie, passer = "Passer", niveau = "h1" }: {
+  dilemme: Dilemme; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string; niveau?: "h1" | "h3";
 }) {
   const lettres = ["A", "B", "C"];
+  const Titre = niveau;
   return (
     <>
       <p className="text-xs font-medium tracking-wide text-gris uppercase">{dilemme.theme}</p>
-      <h1 id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{dilemme.titre}</h1>
+      <Titre id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{dilemme.titre}</Titre>
       <p className="mt-2 text-lg leading-snug">{dilemme.scene}</p>
       <div className="mt-5 space-y-3" role="group" aria-labelledby={titreId}>
         {dilemme.options.map((o, i) => (

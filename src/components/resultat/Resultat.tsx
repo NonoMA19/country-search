@@ -11,6 +11,8 @@ import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import Portrait from "@/components/Portrait";
+import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
+import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, type FamilleScore, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
@@ -235,6 +237,7 @@ function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; ran
 export default function Resultat() {
   const session = useSession();
   const router = useRouter();
+  const [departage, setDepartage] = useState<EtatDepartage | null>(null);
   if (!session) return <Chargement />;
 
   const { etat, reglages } = session;
@@ -312,6 +315,10 @@ export default function Resultat() {
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </div>
       </section>
+
+      {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
+        <Departage etat={etat} reglages={reglages} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
+      )}
 
       <section aria-labelledby="titre-etsi" className="mt-10">
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>

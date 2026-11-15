@@ -1,11 +1,11 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { mesures, quiz } from "@/lib/donnees";
+import { quiz } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  egalites, evaluerPorte, portrait, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
+  bilanDepartage, egalites, evaluerPorte, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, lignesTop, repondre, resultatPret, trouverDilemme,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -246,10 +246,33 @@ for (let i = 0; i < NB; i++) {
   verifier(prix(loyer)?.poids === 1, "aventure + « 2 400 € par mois » : la réponse ne l'emporte pas sur le poids de départ");
 }
 
+// 2.9 Départage : jamais un dilemme déjà répondu ou inactif, toujours un dilemme qui sépare les deux pays.
+{
+  const r3 = hasard(7);
+  let essais = 0;
+  for (let k = 0; k < 60; k++) {
+    let etat = quizAuHasard(r3);
+    const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 2);
+    if (top.length < 2) continue;
+    const [a, b] = top.map((l) => l.pays.id);
+    const avant = etat;
+    for (let n = 0; n < 3; n++) {
+      const d = prochainDepartage(etat, a, b);
+      if (!d) break;
+      essais++;
+      verifier(etat.reponses[d.id] === undefined && dilemmeActif(d), `départage : dilemme ${d.id} déjà répondu ou inactif`);
+      verifier(separation(d, etat, a, b) > 0, `départage : ${d.id} ne sépare pas ${a} et ${b}`);
+      etat = repondre(etat, d.id, d.options[n % d.options.length].id);
+    }
+    verifier(bilanDepartage(avant, etat, a, b).length > 0, "départage : bilan vide");
+  }
+  verifier(essais > 0, "départage : aucun dilemme proposé, le test ne prouve rien");
+}
+
 // ---------- Bilan ----------
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
   for (const e of echecs) console.error("  - " + e);
   process.exit(1);
 }
-console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 8 cas précis.`);
+console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et 9 cas précis.`);

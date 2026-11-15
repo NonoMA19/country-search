@@ -546,6 +546,56 @@ export function portrait(etat: Etat): LignePortrait[] {
 
 export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
+// ---------- Le départage ----------
+// Quand le n°1 et le n°2 sont à 5 points ou moins, au plus 3 dilemmes encore non répondus,
+// choisis parce qu'ils séparent le plus ces deux pays.
+export const MAX_DEPARTAGE = 3;
+const ecartEntre = (lignes: Ligne[], a: string, b: string) =>
+  (lignes.find((l) => l.pays.id === a)?.score ?? 0) - (lignes.find((l) => l.pays.id === b)?.score ?? 0);
+
+// De combien les options d'un dilemme font varier l'écart entre a et b (0 : il ne les sépare pas).
+export function separation(d: Dilemme, etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): number {
+  const ecarts = d.options.map((o) => ecartEntre(calculer(repondre(etat, d.id, o.id), reglages), a, b));
+  return Math.max(...ecarts) - Math.min(...ecarts);
+}
+
+export function prochainDepartage(etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): Dilemme | null {
+  let meilleur: Dilemme | null = null;
+  let max = 1e-6;
+  for (const d of quiz.dilemmes) {
+    if (!dilemmeVisible(d, etat)) continue;
+    const s = separation(d, etat, a, b, reglages);
+    if (s > max) { max = s; meilleur = d; }
+  }
+  return meilleur;
+}
+
+// La phrase de fin : la réponse qui a le plus changé l'écart, et qui est devant maintenant.
+export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): string {
+  const le = (id: string) => pays.find((p) => p.id === id)?.le ?? id;
+  const Le = (id: string) => le(id).charAt(0).toUpperCase() + le(id).slice(1);
+  const pluriel = (id: string) => le(id).startsWith("les ");
+  const ids = apres.ordre.filter((id) => !avant.ordre.includes(id) && apres.reponses[id] !== "passer");
+  const fin = ecartEntre(calculer(apres, reglages), a, b);
+  const devant = fin > 0 ? a : b, derriere = fin > 0 ? b : a;
+  const issue = Math.abs(fin) <= ECART_EX_AEQUO
+    ? `${Le(a)} et ${le(b)} restent à égalité.`
+    : `${Le(devant)} ${pluriel(devant) ? "passent" : "passe"} devant ${le(derriere)}.`;
+  if (ids.length === 0) return `Tu as passé les questions\u00a0: rien n’a changé. ${issue}`;
+  let etat = avant;
+  let plusFort = { id: ids[0], effet: -1 };
+  for (const id of ids) {
+    const avantCoup = ecartEntre(calculer(etat, reglages), a, b);
+    etat = repondre(etat, id, apres.reponses[id]);
+    const effet = Math.abs(ecartEntre(calculer(etat, reglages), a, b) - avantCoup);
+    if (effet > plusFort.effet) plusFort = { id, effet };
+  }
+  const d = trouverDilemme(plusFort.id);
+  const o = optionChoisie(apres, plusFort.id);
+  if (plusFort.effet < 0.05) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
+  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${d?.titre}\u00a0» (${o?.texte}). ${issue}`;
+}
+
 // ---------- Résultat rédigé pour toi, profil de travail ----------
 function uniques(details: Detail[]): Detail[] {
   const vus = new Set<string>();
