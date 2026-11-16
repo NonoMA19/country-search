@@ -693,25 +693,25 @@
       "options": [
         {
           "id": "moins-2000",
-          "label": "Moins de 2 000 €",
+          "label": "Moins de 2 000 €",
           "min": 0,
           "max": 2000
         },
         {
           "id": "2000-5000",
-          "label": "De 2 000 à 5 000 €",
+          "label": "De 2 000 à 5 000 €",
           "min": 2000,
           "max": 5000
         },
         {
           "id": "5000-10000",
-          "label": "De 5 000 à 10 000 €",
+          "label": "De 5 000 à 10 000 €",
           "min": 5000,
           "max": 10000
         },
         {
           "id": "plus-10000",
-          "label": "Plus de 10 000 €",
+          "label": "Plus de 10 000 €",
           "min": 10000
         },
         {
@@ -1359,12 +1359,12 @@
           "texte": "Pour le même poste, on te propose deux contrats.",
           "options": [
             {
-              "texte": "3 400 € par mois, 1 500 € de loyer",
+              "texte": "3 400 € par mois, 1 500 € de loyer",
               "plus": "Plus d’argent à mettre de côté, si tu tiens ton budget.",
               "moins": "Tout coûte cher autour de toi : sorties, transports, courses."
             },
             {
-              "texte": "2 300 € par mois, 650 € de loyer",
+              "texte": "2 300 € par mois, 650 € de loyer",
               "plus": "La vie est simple et pas chère, même avec un petit salaire.",
               "moins": "Tu mets moins de côté, et un billet pour la France pèse plus lourd."
             }
@@ -1379,7 +1379,7 @@
         {
           "id": "colocataire",
           "titre": "Le colocataire",
-          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
+          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
           "options": [
             {
               "texte": "Tu préfères sa situation",
@@ -1400,12 +1400,12 @@
           "texte": "Ce soir, ton équipe dîne au restaurant.",
           "options": [
             {
-              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
+              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
               "plus": "Tu suis sans problème, et ta paie grimpe vite.",
               "moins": "Chaque sortie pèse dans ton budget."
             },
             {
-              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
+              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
               "plus": "Tu sors autant que tu veux, sans compter.",
               "moins": "Ton salaire vaut peu une fois converti en euros."
             }
@@ -1537,7 +1537,15 @@
           ],
           "variantes": {
             "stage-vie": "Ta mission de VIE se termine.",
-            "aventure": "Ton premier job de PVT se termine."
+            "aventure": "Ton premier job de PVT se termine.",
+            "premier-poste": "Ta période d’essai se termine.",
+            "carriere": "Ton premier contrat sur place se termine."
+          },
+          "variantesTitre": {
+            "stage-vie": "La fin de la mission",
+            "aventure": "La fin du job",
+            "premier-poste": "La fin de la période d’essai",
+            "carriere": "La fin du premier contrat"
           }
         }
       ],
@@ -3748,7 +3756,7 @@
               "moins": "Une longue attente."
             },
             {
-              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
+              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
               "plus": "Des soins rapides.",
               "moins": "Une dépense chaque mois, malade ou pas."
             }
@@ -3783,7 +3791,7 @@
               "moins": "Il faut parfois attendre plusieurs jours."
             },
             {
-              "texte": "Une clinique privée, le jour même, 90 € la visite",
+              "texte": "Une clinique privée, le jour même, 90 € la visite",
               "plus": "Tu es soigné le jour même.",
               "moins": "Tu avances les frais, puis ton assurance rembourse."
             }
@@ -4110,7 +4118,16 @@
           "variantes": {
             "stage-vie": "Tu cherches ta mission de VIE sur place.",
             "aventure": "Tu cherches un job pour ton PVT.",
-            "premier-poste": "Tu cherches ton premier poste sur place."
+            "premier-poste": "Tu cherches ton premier poste sur place.",
+            "carriere": "Tu cherches ton poste sur place.",
+            "inconnu": "Tu cherches tes premières pistes de travail sur place."
+          },
+          "variantesTitre": {
+            "stage-vie": "La recherche de mission",
+            "aventure": "La recherche de job",
+            "premier-poste": "La recherche de poste",
+            "carriere": "La recherche de poste",
+            "inconnu": "Tes premières recherches"
           }
         },
         {

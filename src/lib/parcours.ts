@@ -290,5 +290,12 @@ export function prochainAffiner(etat: Etat): Element | null {
   return tirer(etat, selection(etat, 0, restants), `affiner:${etat.ordre.length}`);
 }
 
+// Résultat provisoire : tant que tes envies manquent, ou que moins de 3 écrans des chapitres 3 et 4 ont une vraie réponse.
+export const RESULTAT_PROVISOIRE_MIN = 3;
+export function resultatProvisoire(etat: Etat): boolean {
+  if (enviesDe(etat).length === 0) return true;
+  return etat.ordre.filter((id) => estAdaptatif(chapitreDe(id)) && etat.reponses[id] !== PASSER).length < RESULTAT_PROVISOIRE_MIN;
+}
+
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).
 export const nombreEcrans = (etat: Etat) => etat.ordre.length;

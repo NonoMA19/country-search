@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
@@ -157,6 +157,7 @@ function Secours({ chapitre, texte, portrait }: { chapitre: number; texte: strin
 export default function Quiz() {
   const session = useSession();
   const router = useRouter();
+  const [horsLigne, setHorsLigne] = useState(false);
   // À chaque nouvel écran, le focus va sur le titre : un lecteur d'écran lit la nouvelle question.
   const ecran = session ? `${JSON.stringify(session.etape)}:${session.etat.ordre.length}:${session.chapitresVus.length}` : "";
   const premier = useRef(true);
@@ -187,7 +188,13 @@ export default function Quiz() {
     marquerChangement();
     ecrire({ ...session, etape: e, ...autres });
   };
-  const allerAuResultat = () => { if (clicLibre()) { marquerChangement(); router.push("/resultat"); } };
+  // Hors ligne, la page du résultat ne peut pas se charger : on le dit dans le site, au lieu de la page d'erreur du navigateur.
+  const allerAuResultat = () => {
+    if (!clicLibre()) return;
+    if (typeof navigator !== "undefined" && navigator.onLine === false) { setHorsLigne(true); return; }
+    marquerChangement();
+    router.push("/resultat");
+  };
   const retourQuiz = () => (etat.ordre.length > 0 ? aller({ t: "quiz" }, { etat: annulerDerniere(etat) }) : null);
 
   // ----- Ton intuition et tes réponses -----
@@ -212,6 +219,7 @@ export default function Quiz() {
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
         <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
         <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+          {horsLigne && <p role="alert" className="rounded-2xl bg-creux px-4 py-3 text-sm font-medium">Tu sembles hors ligne : ton résultat ne peut pas s’ouvrir pour l’instant. Tes réponses sont gardées. Réessaie quand la connexion revient.</p>}
           <button type="button" onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
           {restants > 0 && prochainAffiner(etat) && (
             <button type="button" onClick={() => aller({ t: "affiner" })} className="min-h-12 w-full rounded-2xl border border-bord bg-carte px-3 text-base font-semibold hover:border-bleu">

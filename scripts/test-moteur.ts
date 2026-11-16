@@ -9,7 +9,7 @@ import {
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
-import { prochainAffiner, restantsAffiner, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
+import { prochainAffiner, restantsAffiner, resultatProvisoire, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
@@ -563,11 +563,11 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(f("belgique", {}).remplies.some((x) => x.includes("nationalité française suffit")), "faisabilité : la Belgique sans « ta nationalité suffit »");
   verifier(f("suisse", {}).aRemplir.some((x) => x.includes("permis de séjour")), "faisabilité : la Suisse sans le permis de séjour");
   // Budget en tranches (lot 5) : « au moins » sous la tranche, « pourrait » dans la tranche, « couvre » au-dessus.
-  verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => x.startsWith("Il te manquerait au moins 1 100")), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
-  verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => x.startsWith("Selon ta somme exacte, il pourrait te manquer jusqu’à 1 100")), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => /^Il te manquerait au moins 1\s100/.test(x)), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => /^Selon ta somme exacte, il pourrait te manquer jusqu’à 1\s100/.test(x)), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");
   verifier(f("japon", { age: "18-25", budget: "5000-10000" }).remplies.some((x) => x.includes("Ton budget couvre")), "faisabilité : le budget suffisant n'est pas dit");
   verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25", budget: "inconnu" }, budgetProfil({ budget: "inconnu" })).alertes.some((a) => a.texte.startsWith("Ce PVT demande 3")), "budget inconnu : la somme demandée n'est pas dite");
-  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25" }, { min: 2500, max: 2500 }).alertes.some((a) => a.texte.startsWith("Il te manquerait environ 600")), "curseur : somme exacte mal dite");
+  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25" }, { min: 2500, max: 2500 }).alertes.some((a) => /^Il te manquerait environ 600/.test(a.texte)), "curseur : somme exacte mal dite");
   verifier(f("canada", { age: "18-25" }).aVerifier.some((x) => x.includes("Saison 2026 fermée")) && f("canada", { age: "18-25" }).etape?.texte === "Créer ton profil sur le site officiel", "faisabilité : Canada sans la saison fermée ou sans « Créer ton profil »");
   verifier(f("australie", { age: "36-plus" }).aRemplir.some((x) => x.includes("1 an d’expérience")) && f("australie", { age: "36-plus" }).aVerifier.some((x) => x.includes("expérience pro")), "faisabilité : Australie sans l'expérience demandée");
   verifier(f("japon", { age: "18-25", objectif: "stage-vie" }).remplies.some((x) => x.includes("permet le VIE")) && f("japon", { age: "28-30", objectif: "stage-vie" }).aRemplir.some((x) => x.includes("VIE n’est plus possible")), "faisabilité : condition d'âge du VIE mal confrontée");
@@ -595,7 +595,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   for (let k = 1; k <= 5; k++) verifier(pays.filter((p) => notesPays[p.id].salaire.note === k).length >= 3, `salaire : la note ${k} est presque vide`);
   verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
   // Part qui reste après impôts : dans la preuve et le détail, jamais dans le score.
-  verifier(notesPays.belgique.salaire.resteSur100 === 60.5 && notesPays.belgique.salaire.texte.includes("il reste environ 61 €"), "impôts : la Belgique ne dit pas ce qui reste sur 100 €");
+  verifier(notesPays.belgique.salaire.resteSur100 === 60.5 && /il reste environ 61\s€/.test(notesPays.belgique.salaire.texte), "impôts : la Belgique ne dit pas ce qui reste sur 100 €");
   verifier(complementMesure("argentine", "salaire")?.includes("à vérifier") === true, "impôts : l'Argentine devrait être à vérifier");
   const sansImpots = construire({ envies: ["salaire", "travail", "prix", "climat", "securite"] });
   const scoreBel = calculer(sansImpots).find((l) => l.pays.id === "belgique")!.score;
@@ -812,7 +812,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   const avecVariantes = quiz.dilemmes.filter((d) => d.scenes.some((sc) => sc.variantes && Object.keys(sc.variantes).length));
   verifier(avecVariantes.length >= 10, `variantes : seulement ${avecVariantes.length} dilemmes`);
   for (const d of avecVariantes) for (const sc of d.scenes) for (const [projet, texte] of Object.entries(sc.variantes ?? {})) {
-    verifier(Object.keys(quiz.objectifs).includes(projet), `variantes : projet inconnu ${projet} (${d.id})`);
+    verifier(Object.keys(quiz.objectifs).includes(projet) || projet === "inconnu", `variantes : projet inconnu ${projet} (${d.id})`);
     const e = { ...ETAT_VIDE, profil: { objectif: projet }, dejaVues: d.scenes.filter((x) => x.id !== sc.id).map((x) => cleScene(d, x)) };
     verifier(sceneDe(d, e).texte === texte, `variantes : ${d.id}/${sc.id} n'utilise pas la variante ${projet}`);
     verifier(!pays.some((p) => texte.includes(p.nom)), `variantes : ${d.id}/${sc.id} nomme un vrai pays`);
@@ -1002,6 +1002,27 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     verifier(effetsActifs(e).find((x) => x.mesure === "stabilite")?.poids === 1 && effetsActifs(e).find((x) => x.mesure === "air")?.poids === 1, "valeurs : importance 1 non donnée");
     verifier(valeurValide(val, []) && valeurValide(val, "passer"), "valeurs : rien cocher ou passer refusé");
   }
+}
+
+// 2.27 Petits correctifs (prompt 3g, lot 6).
+{
+  // Le titre de la scène suit aussi le projet.
+  const d = trouverDilemme("premier-mois")!;
+  const sc = d.scenes.find((x) => x.id === "stage")!;
+  const e = { ...ETAT_VIDE, profil: { objectif: "carriere" }, dejaVues: d.scenes.filter((x) => x.id !== "stage").map((x) => cleScene(d, x)) };
+  verifier(sceneDe(d, e).titre === "La recherche de poste" && sceneDe(d, e).texte === sc.variantes!.carriere, "variantes : « La recherche de stage » montrée à une carrière longue");
+  // Le portrait d'un PVT qui veut surtout trouver du travail ne parle pas de carrière.
+  const pvt = portraitComplet(construire({ profil: { objectif: "aventure" }, envies: ["travail", "salaire", "prix", "climat", "securite"], reponses: { "pvt-boulots": "a" } }));
+  verifier(!pvt.titre.includes("carrière"), `portrait PVT : « ${pvt.titre} »`);
+  // Résultat provisoire : sans envies, ou avec moins de 3 vraies réponses aux chapitres 3 et 4.
+  const toutPasse = quizAuHasard(hasard(77), true);
+  verifier(resultatProvisoire(toutPasse), "provisoire : tout passer donne un résultat définitif");
+  const complet = quizAuHasard(hasard(78));
+  verifier(!resultatProvisoire(complet) || complet.ordre.filter((id) => [3, 4].includes(chapitreDe(id)) && complet.reponses[id] !== PASSER).length < 3, "provisoire : un parcours complet est provisoire");
+  // Hong Kong : la porte et son détail ont le même statut.
+  for (const p of pays) for (const b of portes(p.id)) if (b.detail?.statut === "verifie") verifier(b.statut === "verifie", `${p.nom} : porte « ${b.statut} » mais détail vérifié`);
+  // Un seul lien de visa vers une ambassade hors de France : aucun.
+  for (const p of pays) for (const b of portes(p.id)) for (const l of b.detail?.liens ?? []) verifier(!/\/fi-en\//.test(l.url), `${p.nom} : lien vers une ambassade en Finlande`);
 }
 
 // ---------- Bilan ----------

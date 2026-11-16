@@ -20,13 +20,13 @@ import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/
 import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, complementMesure, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
+  CATEGORIES, GROUPES, complementMesure, groupesEgalite, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
   faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { accord, trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
-import { prochainAffiner, questionnaireFini } from "@/lib/parcours";
+import { prochainAffiner, questionnaireFini, resultatProvisoire } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 
 const STYLE_BADGE: Record<Badge, string> = {
@@ -110,7 +110,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: Budget | null }) {
+function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = false }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: Budget | null; provisoire?: boolean }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
   const score = Math.round(ligne.score);
@@ -142,7 +142,7 @@ function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Lign
         <div className="min-w-0 flex-1">
           <h3 className="text-2xl leading-tight font-bold break-words sm:text-3xl">{p.nom}</h3>
           <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
-            <span className="text-xl font-semibold text-lien">{verdict(score)}</span>
+            <span className="text-xl font-semibold text-lien">{provisoire ? "Résultat provisoire" : verdict(score)}</span>
             <span className="text-base font-medium whitespace-nowrap text-gris tabular-nums">{score}{" "}%</span>
           </p>
         </div>
@@ -321,6 +321,12 @@ export default function Resultat() {
   const reponses = effetsActifs(etat);
   const reglagesModifies = Object.keys(reglages.niveaux).length > 0;
   const rangDe = (l: Ligne) => principaux.indexOf(l);
+  // Peu de réponses : on le dit, au lieu d'afficher « Très bonne piste » (et parfois 100 %) sur trop peu d'éléments.
+  const provisoire = resultatProvisoire(etat);
+  // Une longue chaîne d'égalités : une seule phrase au-dessus de la liste, plutôt que « À égalité avec… » sur chaque ligne.
+  const groupes = groupesEgalite(principaux);
+  const tailleGroupe = (k: number) => (groupes[k] < 0 ? 1 : groupes.filter((g) => g === groupes[k]).length);
+  const grandGroupe = (k: number) => tailleGroupe(k) >= 6;
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5">
@@ -330,6 +336,9 @@ export default function Resultat() {
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
       </p>
 
+      {provisoire && !rienRepondu && (
+        <p role="status" className="mt-4 rounded-2xl border border-bord bg-carte p-4 font-medium">Résultat provisoire : tu as répondu à peu de questions. Le classement peut encore beaucoup changer. <button type="button" onClick={affiner} className="inline-flex min-h-11 items-center text-lien underline">Répondre à plus de questions</button></p>
+      )}
       <details open className="group mt-5 rounded-3xl border border-bord bg-creux">
         <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-2 px-4 font-semibold">
           <span>Ton portrait</span>
@@ -364,7 +373,7 @@ export default function Resultat() {
           ) : (
             top.map((l, i) => (
               <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
-                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} provisoire={provisoire} />
               </div>
             ))
           )}
@@ -460,8 +469,9 @@ export default function Resultat() {
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
         {!toutAZero && suite.length > 0 && <details className="mt-3">
           <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
+          {suite.some((l) => grandGroupe(rangDe(l))) && <p className="mt-3 text-sm text-gris">Beaucoup de ces pays sont à 5 points ou moins les uns des autres : leur ordre compte peu. Réponds à plus de questions pour les départager.</p>}
           <ol className="mt-3 space-y-2">
-            {suite.map((l) => <LignePays key={l.pays.id} ligne={l} rang={rangDe(l) + 1} egalite={l.peuDeDonnees ? null : avecQui(principaux, rangDe(l), (k) => k >= top.length)} />)}
+            {suite.map((l) => <LignePays key={l.pays.id} ligne={l} rang={rangDe(l) + 1} egalite={l.peuDeDonnees || grandGroupe(rangDe(l)) ? null : avecQui(principaux, rangDe(l), (k) => k >= top.length)} />)}
           </ol>
         </details>}
         {ecartes.length > 0 && (

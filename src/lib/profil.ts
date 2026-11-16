@@ -192,6 +192,12 @@ const TITRES: Record<string, string> = {
   valeurs: "Tu cherches avant tout un pays sûr et stable",
   langue: "Tu cherches avant tout un pays où la langue ne sera pas un mur",
 };
+const TITRE_TRAVAIL: Record<string, string> = {
+  carriere: "Tu cherches avant tout une expérience qui fait avancer ta carrière",
+  "premier-poste": "Tu cherches avant tout un premier poste qui lance ta vie pro",
+  "stage-vie": "Tu cherches avant tout une première expérience qui compte sur ton CV",
+  aventure: "Tu cherches avant tout une année d’aventure où le travail se trouve facilement",
+};
 const CULTURE = ["hierarchie", "communication", "ponctualite", "decision", "pro-perso"];
 
 // La phrase de portrait d'une réponse (dilemme, curseur, phrase, ambiance, question du projet).
@@ -237,6 +243,9 @@ export function portraitComplet(etat: Etat): Portrait {
   const obj = typeof etat.profil.objectif === "string" ? etat.profil.objectif : undefined;
   let titre = premiere ? TITRES[premiere.id] : CULTURE.some((c) => profil[c]?.poids) ? "Tu cherches avant tout une culture de travail qui te ressemble" : "Tu cherches un pays qui te ressemble";
   if (obj === "aventure" && premiere && ["cout", "climat", "ville"].includes(premiere.id)) titre = "Tu cherches avant tout une aventure qui te ressemble, sans te ruiner";
+  // Le travail en tête : la phrase suit ton projet (un PVT de petits boulots ne parle pas de « carrière »).
+  if (premiere && ["salaire", "emploi", "secteur"].includes(premiere.id)) titre = TITRE_TRAVAIL[obj ?? ""] ?? "Tu cherches avant tout un pays où le travail ne manque pas";
+  if (premiere?.id === "depaysement") titre = obj === "aventure" ? "Tu cherches avant tout une aventure loin de tes repères" : "Tu cherches avant tout un vrai dépaysement";
 
   const lignes: LignePortrait[] = [];
   const projet = obj ? quiz.objectifs[obj] : undefined;

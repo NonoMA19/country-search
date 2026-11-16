@@ -153,7 +153,8 @@ export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> & { 
   const scene = liste[hacher(etat.graine, d.id) % liste.length];
   const projet = etat.profil?.objectif;
   const variante = typeof projet === "string" ? scene.variantes?.[projet] : undefined;
-  return variante ? { ...scene, texte: variante } : scene;
+  const titre = typeof projet === "string" ? scene.variantesTitre?.[projet] : undefined;
+  return variante || titre ? { ...scene, texte: variante ?? scene.texte, titre: titre ?? scene.titre } : scene;
 }
 
 // Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».
@@ -366,7 +367,7 @@ export const visaTravail = (id: string) => portes(id).find((x) => x.type === "vi
 const alerteExperience = (d: DetailVisa | undefined): Alerte[] =>
   d?.experience ? [{ texte: `${d.experience} ${d.jeuneDiplome ?? ""}`.trim(), preuve: preuveVisa(d) }] : [];
 
-const euros = (n: number) => `${Math.round(n / 50) * 50}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " €";
+const euros = (n: number) => `${Math.round(n / 50) * 50}`.replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0") + "\u00a0€";
 const preuvePorte = (b: PorteBrute) => preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe);
 const preuveVie = () => preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe);
 

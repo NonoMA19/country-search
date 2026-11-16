@@ -97,6 +97,18 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
   const textes = [...new Set(lignes.map((l) => l.n?.texte ?? "").filter(Boolean))];
   // Une seule carte si les mesures partagent le même texte (taille de ville) ou décrivent un même style (style de travail).
   if (lignes.length === 0) return null;
+  // Toutes « à vérifier » avec la même phrase (l'emploi par secteur, par exemple) : une seule ligne, pas huit.
+  if (lignes.length > 1 && lignes.every((l) => !l.ok) && textes.length <= 1) {
+    return (
+      <li className="rounded-2xl border border-bord bg-carte p-4">
+        <p className="text-sm font-medium text-gris">{c.nom}</p>
+        <p className="mt-1">
+          {textes[0] ?? "À vérifier."}
+          <Pastille preuve={preuveMesure(paysId, lignes[0].m.id)} pays={nomPays} contexte={c.nom} />
+        </p>
+      </li>
+    );
+  }
   const regrouper = lignes.length > 1 && lignes.every((l) => l.ok) && (textes.length <= 1 || c.id === "style-travail");
   if (regrouper && c.id !== "style-travail") {
     return (

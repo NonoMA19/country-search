@@ -41,7 +41,7 @@
 
 /* La barre d'action collée en bas du quiz ne doit jamais cacher l'élément qui reçoit le focus. */
 html {
-  scroll-padding-bottom: 9rem;
+  scroll-padding-bottom: 8.5rem;
   scroll-padding-top: 1rem;
 }
 

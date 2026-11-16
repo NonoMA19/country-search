@@ -14,6 +14,9 @@ def typo(t):
     t = re.sub(r"(?<=[A-Za-zÀ-ÿœŒ])'(?=[A-Za-zÀ-ÿœŒ])", "’", t)
     t = re.sub(r" +([:;!?%»])", NBSP + r"\1", t)
     t = re.sub(r"« +", "«" + NBSP, t)
+    # Montants : « 2 900 € », « 102 611 $ » ne se coupent jamais en fin de ligne.
+    t = re.sub(r"(?<=\d) (?=\d{3}(?!\d))", NBSP, t)
+    t = re.sub(r"(?<=\d) (?=[€$])", NBSP, t)
     return t
 
 def parcourir(x, cle=None):

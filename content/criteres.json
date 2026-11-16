@@ -57,10 +57,10 @@
     "role": "badge",
     "echelle": [
       "Aucun montant exigé",
-      "Moins de 2 000 €",
-      "De 2 000 à 2 999 €",
-      "De 3 000 à 3 999 €",
-      "4 000 € ou plus"
+      "Moins de 2 000 €",
+      "De 2 000 à 2 999 €",
+      "De 3 000 à 3 999 €",
+      "4 000 € ou plus"
     ],
     "sources": [
       "diplomatie-pvt"
@@ -159,11 +159,11 @@
           5
         ],
         "echelle": [
-          "moins de 39 000 $",
-          "de 39 000 à 58 500 $",
-          "de 58 500 à 73 500 $",
-          "de 73 500 à 86 500 $",
-          "86 500 $ ou plus"
+          "moins de 39 000 $",
+          "de 39 000 à 58 500 $",
+          "de 58 500 à 73 500 $",
+          "de 73 500 à 86 500 $",
+          "86 500 $ ou plus"
         ],
         "mots": [
           "très bas",
@@ -207,11 +207,11 @@
           5
         ],
         "echelle": [
-          "moins de 2 600 €",
-          "de 2 600 à 2 900 €",
-          "de 2 900 à 3 200 €",
-          "de 3 200 à 3 450 €",
-          "3 450 € ou plus"
+          "moins de 2 600 €",
+          "de 2 600 à 2 900 €",
+          "de 2 900 à 3 200 €",
+          "de 3 200 à 3 450 €",
+          "3 450 € ou plus"
         ],
         "mots": [
           "très basse",
@@ -337,9 +337,9 @@
     "mesures": [
       {
         "id": "francais",
-        "nom": "Français inscrits pour 100 000 habitants",
+        "nom": "Français inscrits pour 100 000 habitants",
         "sens": "haut",
-        "unite": "inscrits pour 100 000 habitants",
+        "unite": "inscrits pour 100 000 habitants",
         "bornes": [
           10,
           50,
@@ -376,7 +376,7 @@
         ],
         "regle": "Français inscrits au registre consulaire fin 2020, divisés par la population du pays en 2020 (Banque mondiale, indicateur SP.POP.TOTL), pour 100 000 habitants. Le nombre total reste affiché dans la fiche pays.",
         "court": "Français sur place",
-        "affichage": "{v} pour 100 000 habitants",
+        "affichage": "{v} pour 100 000 habitants",
         "decimales": 0,
         "theme": "les Français sur place",
         "etiquettes": [
@@ -1099,7 +1099,7 @@
     "id": "securite",
     "famille": "vivre",
     "nom": "Sécurité",
-    "definition": "Homicides volontaires pour 100 000 habitants. Limite : c’est un seul aspect de la sécurité, et une moyenne nationale.",
+    "definition": "Homicides volontaires pour 100 000 habitants. Limite : c’est un seul aspect de la sécurité, et une moyenne nationale.",
     "type": "donnee-ouverte",
     "sources": [
       "bm-wdi"
@@ -1107,9 +1107,9 @@
     "mesures": [
       {
         "id": "securite",
-        "nom": "Homicides pour 100 000 habitants",
+        "nom": "Homicides pour 100 000 habitants",
         "sens": "haut",
-        "unite": "pour 100 000 habitants",
+        "unite": "pour 100 000 habitants",
         "bornes": [
           1,
           2,
@@ -1139,7 +1139,7 @@
         ],
         "fait": "Le taux d’homicides y est {mot}",
         "court": "Sécurité",
-        "affichage": "{v} homicides pour 100 000 habitants",
+        "affichage": "{v} homicides pour 100 000 habitants",
         "decimales": 1,
         "theme": "la sécurité",
         "etiquettes": [
@@ -1149,7 +1149,7 @@
           "Sûr",
           "Très sûr"
         ],
-        "affichageSingulier": "{v} homicide pour 100 000 habitants",
+        "affichageSingulier": "{v} homicide pour 100 000 habitants",
         "sujet": "la sécurité"
       }
     ]
@@ -1730,11 +1730,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (finance et banque)",
         "affichage": "{v} % des emplois",
@@ -1742,11 +1742,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1771,11 +1771,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (conseil et audit)",
         "affichage": "{v} % des emplois",
@@ -1783,11 +1783,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1812,11 +1812,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (ingénierie et industrie)",
         "affichage": "{v} % des emplois",
@@ -1824,11 +1824,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1853,11 +1853,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (tech et data)",
         "affichage": "{v} % des emplois",
@@ -1865,11 +1865,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1894,11 +1894,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (marketing et commerce)",
         "affichage": "{v} % des emplois",
@@ -1906,11 +1906,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1935,11 +1935,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (santé)",
         "affichage": "{v} % des emplois",
@@ -1947,11 +1947,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -1976,11 +1976,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (hôtellerie et tourisme)",
         "affichage": "{v} % des emplois",
@@ -1988,11 +1988,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       },
       {
@@ -2017,11 +2017,11 @@
           "très forte"
         ],
         "fait": [
-          "Ton secteur y pèse très peu dans l’emploi",
-          "Ton secteur y pèse peu dans l’emploi",
-          "Ton secteur y pèse comme ailleurs dans l’emploi",
-          "Ton secteur y emploie beaucoup de monde",
-          "Ton secteur y emploie énormément de monde"
+          "Ton secteur y pèse très peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse peu dans l’emploi, par rapport aux 30 pays",
+          "Ton secteur y pèse comme dans la moyenne des 30 pays",
+          "Ton secteur y emploie beaucoup de monde, par rapport aux 30 pays",
+          "Ton secteur y emploie énormément de monde, par rapport aux 30 pays"
         ],
         "court": "Ton secteur (enseignement et recherche)",
         "affichage": "{v} % des emplois",
@@ -2029,11 +2029,11 @@
         "theme": "ton secteur",
         "sujet": "le poids de ton secteur",
         "etiquettes": [
-          "Secteur très peu présent",
-          "Secteur peu présent",
-          "Secteur dans la moyenne",
-          "Secteur très présent",
-          "Secteur parmi les plus présents"
+          "Très peu présent (par rapport aux 30 pays)",
+          "Peu présent (par rapport aux 30 pays)",
+          "Dans la moyenne des 30 pays",
+          "Très présent (par rapport aux 30 pays)",
+          "Parmi les plus présents des 30 pays"
         ]
       }
     ]

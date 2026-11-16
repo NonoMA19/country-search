@@ -96,6 +96,7 @@ export type Scene = {
   exemple?: boolean; // les montants et durées sont des exemples fictifs
   options: OptionScene[]; // dans l'ordre des options du dilemme
   variantes?: Record<string, string>; // le texte de la scène selon ton projet (« ta mission de VIE », « ton job de PVT »)
+  variantesTitre?: Record<string, string>; // le titre de la scène selon ton projet (« La recherche de poste »)
 };
 
 // ---------- La banque d'éléments (prompt 3f) ----------
