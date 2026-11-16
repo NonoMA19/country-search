@@ -27,7 +27,7 @@ import {
 import { accord, trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
 import { prochainAffiner, questionnaireFini } from "@/lib/parcours";
-import { portrait } from "@/lib/portrait";
+import { portrait, portraitComplet } from "@/lib/portrait";
 
 const STYLE_BADGE: Record<Badge, string> = {
   nationalite: "bg-bleu text-white",
@@ -331,7 +331,7 @@ export default function Resultat() {
           <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
         </summary>
         <div className="px-4 pb-4">
-          <Portrait lignes={portrait(etat)} compact />
+          <Portrait portrait={portraitComplet(etat)} compact />
           <button type="button" onClick={revoirPortrait} className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Ce n’est pas toi ? Revoir ton portrait</button>
         </div>
       </details>

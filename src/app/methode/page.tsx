@@ -129,6 +129,17 @@ export default function Methode() {
       </section>
 
       <section className="mt-8">
+        <h2 className="text-xl font-semibold">Ton profil, ses certitudes et ses hésitations</h2>
+        <p className="mt-3">Tes réponses sont rangées par dimension : le salaire, le coût de la vie, trouver du travail, ton secteur, l’équilibre, la distance, le climat, la ville, la sécurité, la santé, la langue, les Français sur place, la culture au travail (hiérarchie, communication, ponctualité, décision, vie pro et vie perso), les valeurs, ton visa. Le calcul lit ce profil : pour chaque mesure, la plus grande importance donnée par une seule réponse.</p>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Chaque dimension garde la source de tes réponses : déclarée (tes envies, tes limites, tes thermomètres d’anglais, ton secteur) ou déduite (dilemmes, curseur, phrases à glisser, ambiances, questions sur ton projet).</li>
+          <li>Sa certitude vient du nombre de réponses et de leur franchise : une réponse franche (« Plutôt », une envie, une limite, un curseur près d’un bord) vaut 1,5 point ; une réponse plus prudente (« Un peu », une phrase à glisser) 1 ; une réponse au milieu 0,5. Moins de 1,5 point : certitude faible ; moins de 2,5 : moyenne ; sinon forte. Deux réponses franches qui disent le contraire font baisser la certitude d’un cran.</li>
+          <li>Une hésitation n’est signalée que si au moins deux réponses s’opposent nettement. Exemples : « Vie pas chère » classée n° 1 ou 2, mais deux fois l’option chère et bien payée ; « Proche de la France » parmi tes 3 premières envies, mais « Plutôt » 12 h de vol pour Noël ; « Bon salaire » n° 1, mais le curseur tout près du temps libre (25 ou moins) ; « Vivre hors d’Europe » rédhibitoire alors que ta carte ne cochait que des régions hors d’Europe. Sinon, c’est un compromis : on n’en dit rien. Une hésitation ne change pas le calcul : les deux réponses comptent.</li>
+          <li>Ton portrait a un titre tiré de la dimension la plus importante pour toi, 4 à 6 phrases (« Tes réponses montrent… », « Tu acceptes plus facilement… », jamais « Tu es… »), une hésitation s’il y en a une, et « Ce qu’on va chercher pour toi » : tes 3 critères les plus importants.</li>
+        </ul>
+      </section>
+
+      <section className="mt-8">
         <h2 className="text-xl font-semibold">Les curseurs « Et si… ? »</h2>
         <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire brut moyen en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">

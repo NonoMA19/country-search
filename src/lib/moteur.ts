@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
+  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
   type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
 import {
@@ -242,13 +242,27 @@ export function effetsActifs(etat: Etat): EffetActif[] {
   memoEffets.set(etat, res);
   return res;
 }
-function effetsActifsSansMemoire(etat: Etat): EffetActif[] {
-  const groupes = new Map<string, EffetActif>();
+// Le profil de calcul : tes réponses rangées par dimension (salaire, climat, langue…), puis mesure par mesure,
+// avec la plus grande importance donnée par une seule réponse. Le score lit ce profil, rien d'autre.
+// La couche « profil » (src/lib/profil.ts) y ajoute la source des réponses, la certitude et les contradictions.
+export type ProfilCalcul = Map<string, Map<string, EffetActif>>;
+const memoProfil = new WeakMap<Etat, ProfilCalcul>();
+export function profilCalcul(etat: Etat): ProfilCalcul {
+  const deja = memoProfil.get(etat);
+  if (deja) return deja;
+  const dims: ProfilCalcul = new Map();
   for (const e of effetsBruts(etat)) {
-    const deja = groupes.get(e.mesure);
-    if (!deja || e.poids > deja.poids) groupes.set(e.mesure, e);
+    const d = dimensionDe[e.mesure] ?? (e.mesure.startsWith("secteur-") ? "secteur" : e.mesure);
+    const m = dims.get(d) ?? new Map<string, EffetActif>();
+    const avant = m.get(e.mesure);
+    if (!avant || e.poids > avant.poids) m.set(e.mesure, e);
+    dims.set(d, m);
   }
-  return [...groupes.values()];
+  memoProfil.set(etat, dims);
+  return dims;
+}
+function effetsActifsSansMemoire(etat: Etat): EffetActif[] {
+  return [...profilCalcul(etat).values()].flatMap((m) => [...m.values()]);
 }
 
 // ---------- « Et si… ? » ----------

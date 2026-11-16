@@ -4,6 +4,7 @@
 // Tout se déduit des réponses : « Retour » et le rechargement de la page donnent le même écran.
 import { quiz, trouverElement, type EffetDilemme, type Element, type PhraseSwipe, type Situation, type Swipe, type TriLimites } from "./donnees";
 import { PASSER, conditionRemplie } from "./elements";
+import { certitudeFaible } from "./profil";
 import { calculer, dilemmeActif, hacher, limiteTouche, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
 
 export const chapitreDe = (id: string) => trouverElement(id)?.chapitre ?? 0;
@@ -29,9 +30,6 @@ export function elementVisible(el: Element, etat: Etat): boolean {
   if (el.dejaCouvertPar?.some((id) => etat.reponses[id] !== undefined && etat.reponses[id] !== PASSER) && !certitudeFaible(el, etat)) return false;
   return true;
 }
-// Remplacée au lot 3 par la vraie certitude du profil.
-let certitudeFaible: (el: Element, etat: Etat) => boolean = () => false;
-export const brancherCertitude = (f: (el: Element, etat: Etat) => boolean) => { certitudeFaible = f; };
 
 // Les réponses possibles d'un élément, en effets : pour mesurer à quel point il départagerait les pays.
 export function reponsesPossibles(el: Element, etat: Etat): EffetDilemme[][] {

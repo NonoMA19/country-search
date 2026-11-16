@@ -17,7 +17,7 @@ import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import { annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
 import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, topCourant, vusDans } from "@/lib/parcours";
-import { portrait, type LignePortrait } from "@/lib/portrait";
+import { portraitComplet, type LignePortrait } from "@/lib/portrait";
 
 export { BOUTON_PLEIN };
 
@@ -190,7 +190,7 @@ export default function Quiz() {
       <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
-        <div className="mt-5"><Portrait lignes={portrait(etat)} revoir={revoir} /></div>
+        <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
         <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
           <button type="button" onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
           {prochainAffiner(etat) && (

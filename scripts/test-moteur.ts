@@ -10,7 +10,8 @@ import {
 } from "@/lib/moteur";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
 import { chapitreDe, elementVisible, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
-import { portrait } from "@/lib/portrait";
+import { portrait, portraitComplet } from "@/lib/portrait";
+import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
@@ -163,8 +164,23 @@ for (let i = 0; i < NB; i++) {
   }
 
   // Portrait : au plus 6 phrases, jamais une phrase sur un dilemme passé, jamais deux fois la même.
+  const complet = portraitComplet(etat);
   const lignesPortrait = portrait(etat);
-  verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
+  verifier(complet.lignes.length <= 6 && complet.cherche.length <= 3 && complet.titre.length > 0, `quiz ${i} : portrait de ${complet.lignes.length} phrases`);
+  verifier(!lignesPortrait.some((l) => /^Tu es\b/.test(l.texte)) && !/^Tu es\b/.test(complet.titre), `quiz ${i} : « Tu es… » dans le portrait`);
+  // Une contradiction s'appuie toujours sur au moins deux réponses données.
+  for (const c of contradictions(etat)) {
+    verifier(c.reponses.length >= 2, `quiz ${i} : contradiction « ${c.id} » sur une seule réponse`);
+    for (const r of c.reponses) verifier(r.startsWith("envie:") ? enviesDe(etat).includes(r.slice(6)) : etat.reponses[r] !== undefined && etat.reponses[r] !== PASSER, `quiz ${i} : contradiction « ${c.id} » sur une réponse absente (${r})`);
+  }
+  // Le profil : chaque dimension qui compte a une certitude ; une dimension sans réponse est à certitude faible.
+  const pr = construireProfil(etat);
+  for (const d of Object.values(pr)) {
+    verifier(["faible", "moyenne", "forte"].includes(d.certitude), `quiz ${i} : certitude absente pour ${d.id}`);
+    if (d.reponses === 0) verifier(d.certitude === "faible", `quiz ${i} : ${d.id} sans réponse mais certitude ${d.certitude}`);
+  }
+  // Le calcul lit le profil : les importances du profil sont exactement celles du calcul.
+  verifier(Object.values(pr).flatMap((d) => d.mesures).length === effetsActifs(etat).length, `quiz ${i} : le profil et le calcul ne voient pas les mêmes mesures`);
   verifier(new Set(lignesPortrait.map((l) => l.texte)).size === lignesPortrait.length, `quiz ${i} : phrase répétée dans le portrait`);
   for (const l of lignesPortrait) if (l.revoir && l.cle.startsWith("element:")) verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un élément passé (${l.revoir.id})`);
 
@@ -790,6 +806,36 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   verifier(autre.cas === "autre" && autre.phrase.startsWith("Tu pensais à") && autre.raisons.length > 0 && autre.raisons.length <= 3, `intuition : cas « autre » mal dit (${autre.phrase})`);
   verifier(intuition(repondre(base, "carte", ["aucune"])).phrase.startsWith("Tu partais sans idée"), "intuition : « Aucune idée » mal dit");
   verifier(memesScores(scores(base), scores(repondre(base, "carte", ["oceanie"]))), "intuition : la carte change le score");
+}
+
+// 2.21 Profil et contradictions (prompt 3f, lot 3).
+{
+  const e = (reponses: Record<string, Valeur>, envies = ["prix", "securite", "proche", "travail", "climat"]) => construire({ envies, reponses });
+  const ids = (x: Etat) => contradictions(x).map((c) => c.id);
+  // Jamais de contradiction avec une seule réponse : chaque règle a besoin de ses deux côtés.
+  verifier(!ids(e({ "deux-offres": "a" })).includes("prix"), "contradiction « prix » avec une seule réponse chère");
+  verifier(ids(e({ "deux-offres": "a", phrases: { S3: "oui" } })).includes("prix"), "contradiction « prix » non vue avec deux réponses chères");
+  verifier(!ids(e({ "deux-offres": "a", phrases: { S3: "oui" } }, ["securite", "travail", "climat", "prix", "proche"])).includes("prix"), "contradiction « prix » alors que la vie pas chère n'est que n° 4");
+  verifier(!ids(e({ noel: "peu-b" })).includes("proche") && ids(e({ noel: "b" })).includes("proche"), "contradiction « proche » : « Un peu » ne doit pas suffire, « Plutôt » oui");
+  verifier(!ids(e({}, ["climat", "travail", "prix", "proche", "francais"])).length, "contradiction sans réponse opposée");
+  verifier(ids(e({ phrases: { S11: "oui" } })).includes("securite") && !ids(e({ phrases: { S11: "non" } })).includes("securite"), "contradiction « sécurité » mal vue");
+  verifier(ids(e({ equilibre: 10 }, ["salaire", "travail", "prix", "proche", "climat"])).includes("salaire") && !ids(e({ equilibre: 40 }, ["salaire", "travail", "prix", "proche", "climat"])).includes("salaire"), "contradiction « salaire » mal vue");
+  verifier(ids(e({ carte: ["asie-est"], limites: { "hors-europe": "redhibitoire" } })).includes("europe") && !ids(e({ carte: ["asie-est", "europe"], limites: { "hors-europe": "redhibitoire" } })).includes("europe"), "contradiction « Europe » mal vue");
+  verifier(!ids(e({ limites: { "hors-europe": "redhibitoire" } })).includes("europe"), "contradiction « Europe » sans carte");
+  // Certitude : une envie seule = moyenne ; envie + réponse qui va dans le même sens = forte ; deux réponses opposées baissent d'un cran.
+  verifier(construireProfil(e({}))["cout"].certitude === "moyenne", "certitude : une envie seule n'est pas moyenne");
+  verifier(construireProfil(e({ "deux-offres": "b" }))["cout"].certitude === "forte", "certitude : envie confirmée n'est pas forte");
+  const opposes = construireProfil(e({ "deux-offres": "a", phrases: { S3: "oui" } }))["cout"];
+  verifier(!opposes.coherente, "certitude : envie « Vie pas chère » et deux choix chers ne sont pas incohérents");
+  verifier(construireProfil(e({}))["climat"].declare.includes("envie:climat") && construireProfil(e({ janvier: "a" }))["climat"].deduit.includes("janvier"), "profil : sources déclarées et déduites mal rangées");
+  verifier(niveauCertitude([]).certitude === "faible", "certitude : rien = faible");
+  // « Déjà couvert par » : « La promotion » n'est posée après le curseur que si la certitude reste faible.
+  const promo = trouverElement("promotion")!;
+  verifier(!elementVisible(promo, construire({ envies: ["salaire", "equilibre", "travail", "prix", "climat"], reponses: { equilibre: 90 } })), "« La promotion » reposée alors que le salaire et l'équilibre sont sûrs");
+  verifier(elementVisible(promo, construire({ envies: ["securite", "travail", "prix", "climat", "proche"], reponses: { equilibre: 50 } })), "« La promotion » non reposée alors que la certitude reste faible");
+  // Portrait : un titre, jamais « Tu es », « Ce qu'on va chercher pour toi » = 3 critères.
+  const p = portraitComplet(e({ "deux-offres": "a", phrases: { S3: "oui" }, noel: "b" }));
+  verifier(p.titre.startsWith("Tu cherches") && p.cherche.length === 3 && !!p.contradiction, "portrait : titre, critères ou contradiction absents");
 }
 
 // ---------- Bilan ----------
