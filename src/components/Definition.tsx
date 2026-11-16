@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { glossaire, type CleGlossaire } from "@/lib/donnees";
 
 // Une petite définition au toucher (pas une infobulle au survol) : le mot souligné en pointillé
@@ -9,6 +9,13 @@ export default function Definition({ cle, children }: { cle: CleGlossaire; child
   const [ouvert, setOuvert] = useState(false);
   const id = useId();
   const g = glossaire[cle];
+  // Échap ferme la définition ouverte, où que soit le focus.
+  useEffect(() => {
+    if (!ouvert) return;
+    const fermer = (e: KeyboardEvent) => { if (e.key === "Escape") setOuvert(false); };
+    document.addEventListener("keydown", fermer);
+    return () => document.removeEventListener("keydown", fermer);
+  }, [ouvert]);
   return (
     <>
       <button
@@ -16,7 +23,6 @@ export default function Definition({ cle, children }: { cle: CleGlossaire; child
         aria-expanded={ouvert}
         aria-controls={id}
         onClick={() => setOuvert(!ouvert)}
-        onKeyDown={(e) => { if (e.key === "Escape") setOuvert(false); }}
         className="relative inline p-0 text-left align-baseline font-[inherit] underline decoration-gris decoration-dotted underline-offset-4 after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-[''] hover:decoration-bleu"
       >
         {children ?? g.terme}

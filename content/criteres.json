@@ -121,7 +121,8 @@
           "Chômage moyen",
           "Chômage faible",
           "Chômage très faible"
-        ]
+        ],
+        "sujet": "le chômage des jeunes"
       }
     ]
   },
@@ -129,8 +130,8 @@
     "numero": 5,
     "id": "salaire",
     "famille": "travailler",
-    "nom": "Salaire par rapport au coût de la vie",
-    "definition": "Salaire mensuel moyen des salariés, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. À prendre comme un ordre de grandeur. Une donnée de plus de six ans n’est pas comptée.",
+    "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
+    "definition": "Salaire mensuel brut moyen des salariés, avant impôts et cotisations, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. Ton salaire net dépendra de ton métier et des impôts du pays. À prendre comme un ordre de grandeur. Une donnée de plus de six ans, ou d’une année trop éloignée de celle des autres pays, n’est pas comptée.",
     "type": "donnee-ouverte",
     "sources": [
       "oit-ilostat"
@@ -138,8 +139,10 @@
     "mesures": [
       {
         "id": "salaire",
-        "nom": "Salaire moyen en pouvoir d’achat",
+        "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
         "sens": "haut",
+        "regle": "Salaire moyen des salariés de l’OIT (indicateur EAR_EMTA_SEX_CUR_NB_A, dollars PPA). Les années doivent être comparables : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. La source visée est le salaire annuel moyen de l’OCDE (même année pour tous les pays) : pas encore récupéré.",
+        "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations. Ton salaire net dépendra de ton métier et des impôts du pays.",
         "unite": "$ PPA par mois",
         "bornes": [
           2000,
@@ -168,9 +171,9 @@
           "élevé",
           "très élevé"
         ],
-        "fait": "Le salaire moyen y est {mot}, une fois les prix pris en compte",
-        "court": "Salaire (pouvoir d’achat)",
-        "affichage": "{v} $ PPA par mois",
+        "fait": "Le salaire brut moyen y est {mot}, une fois les prix pris en compte",
+        "court": "Salaire brut moyen (pouvoir d’achat)",
+        "affichage": "{v} $ PPA brut par mois",
         "decimales": 0,
         "theme": "le salaire",
         "etiquettes": [
@@ -179,7 +182,8 @@
           "Salaire moyen",
           "Salaire élevé",
           "Salaire très élevé"
-        ]
+        ],
+        "sujet": "le salaire brut moyen"
       }
     ]
   },
@@ -227,7 +231,8 @@
           "Possible dans les grandes entreprises",
           "Très courant en entreprise",
           "Langue du bureau"
-        ]
+        ],
+        "sujet": "le travail en anglais"
       }
     ]
   },
@@ -293,7 +298,8 @@
           "Communauté moyenne",
           "Grande communauté",
           "Très grande communauté"
-        ]
+        ],
+        "sujet": "le nombre de Français sur place"
       }
     ]
   },
@@ -357,7 +363,8 @@
           "Semaines moyennes",
           "Semaines plutôt courtes",
           "Semaines courtes"
-        ]
+        ],
+        "sujet": "les heures de travail"
       }
     ]
   },
@@ -407,7 +414,8 @@
           "Hiérarchie intermédiaire",
           "Hiérarchie marquée",
           "Hiérarchie très marquée"
-        ]
+        ],
+        "sujet": "la hiérarchie"
       },
       {
         "id": "communication",
@@ -443,7 +451,8 @@
           "Communication nuancée",
           "Communication plutôt indirecte",
           "Communication très indirecte"
-        ]
+        ],
+        "sujet": "la façon de communiquer"
       },
       {
         "id": "ponctualite",
@@ -479,7 +488,8 @@
           "Ponctualité intermédiaire",
           "Ponctualité attendue",
           "Ponctualité stricte"
-        ]
+        ],
+        "sujet": "la ponctualité"
       },
       {
         "id": "decision",
@@ -514,7 +524,8 @@
           "Entre les deux",
           "Accord du groupe recherché",
           "Décision par consensus"
-        ]
+        ],
+        "sujet": "la façon de décider"
       },
       {
         "id": "pro-perso",
@@ -549,7 +560,8 @@
           "Vie pro et perso un peu mêlées",
           "Vie pro et perso souvent mêlées",
           "Vie pro et perso très mêlées"
-        ]
+        ],
+        "sujet": "le lien entre vie pro et vie perso"
       }
     ]
   },
@@ -613,7 +625,8 @@
           "Prix proches de ceux de la France",
           "Moins cher que la France",
           "Beaucoup moins cher que la France"
-        ]
+        ],
+        "sujet": "le coût de la vie"
       }
     ]
   },
@@ -671,7 +684,8 @@
           "Hiver frais",
           "Hiver doux",
           "Hiver chaud"
-        ]
+        ],
+        "sujet": "l’hiver"
       },
       {
         "id": "ete",
@@ -716,7 +730,8 @@
           "Été chaud",
           "Été très chaud",
           "Été étouffant"
-        ]
+        ],
+        "sujet": "l’été"
       },
       {
         "id": "doux",
@@ -746,7 +761,8 @@
           "Climat assez doux",
           "Climat doux",
           "Climat très doux"
-        ]
+        ],
+        "sujet": "la douceur du climat"
       }
     ]
   },
@@ -810,7 +826,8 @@
           "Assez loin",
           "Proche",
           "Très proche"
-        ]
+        ],
+        "sujet": "la distance avec la France"
       },
       {
         "id": "decalage",
@@ -861,7 +878,8 @@
           "Décalage moyen",
           "Petit décalage",
           "Presque la même heure"
-        ]
+        ],
+        "sujet": "le décalage horaire"
       }
     ]
   },
@@ -909,7 +927,8 @@
           "Anglais au quotidien",
           "Langue proche du français",
           "On parle français"
-        ]
+        ],
+        "sujet": "la langue du quotidien"
       },
       {
         "id": "apprendre-langue",
@@ -937,7 +956,7 @@
           "On peut presque y vivre en français ou en anglais",
           "On peut y vivre en français ou en anglais"
         ],
-        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre.",
+        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre.",
         "court": "Langue à apprendre",
         "theme": "la langue",
         "etiquettes": [
@@ -946,7 +965,8 @@
           "Une langue à apprendre",
           "Entre les deux",
           "Rien à apprendre"
-        ]
+        ],
+        "sujet": "la langue à apprendre"
       }
     ]
   },
@@ -1005,7 +1025,8 @@
           "Sûr",
           "Très sûr"
         ],
-        "affichageSingulier": "{v} homicide pour 100 000 habitants"
+        "affichageSingulier": "{v} homicide pour 100 000 habitants",
+        "sujet": "la sécurité"
       }
     ]
   },
@@ -1057,7 +1078,8 @@
           "Accord avec la France",
           "Système public accessible",
           "Carte européenne valable"
-        ]
+        ],
+        "sujet": "la couverture santé à l’arrivée"
       }
     ]
   },
@@ -1116,7 +1138,8 @@
           "Moyennement stable",
           "Stable",
           "Très stable"
-        ]
+        ],
+        "sujet": "la stabilité politique"
       },
       {
         "id": "libertes",
@@ -1161,7 +1184,8 @@
           "Moyennement respectées",
           "Respectées",
           "Très respectées"
-        ]
+        ],
+        "sujet": "les libertés"
       },
       {
         "id": "egalite",
@@ -1206,7 +1230,8 @@
           "Moyenne",
           "Plutôt égale",
           "Très égale"
-        ]
+        ],
+        "sujet": "l’égalité femmes-hommes dans la loi"
       },
       {
         "id": "air",
@@ -1251,7 +1276,8 @@
           "Moyennement pollué",
           "Peu pollué",
           "Très peu pollué"
-        ]
+        ],
+        "sujet": "la qualité de l’air"
       }
     ]
   },
@@ -1299,7 +1325,8 @@
           "Une grande ville à taille humaine",
           "Plusieurs grandes villes",
           "De très grandes métropoles"
-        ]
+        ],
+        "sujet": "les grandes villes"
       },
       {
         "id": "ville-moyenne",
@@ -1334,7 +1361,8 @@
           "Quelques villes moyennes",
           "Beaucoup de villes moyennes",
           "Un vrai réseau de villes moyennes"
-        ]
+        ],
+        "sujet": "les villes moyennes"
       },
       {
         "id": "nature",
@@ -1369,6 +1397,127 @@
           "Nature accessible",
           "Nature proche",
           "Nature aux portes des villes"
+        ],
+        "sujet": "la nature proche"
+      }
+    ]
+  },
+  {
+    "numero": 18,
+    "id": "alimentation",
+    "famille": "vivre",
+    "nom": "Manger sainement",
+    "definition": "Part des adultes en situation d’obésité (indice de masse corporelle de 30 ou plus), estimée par l’Organisation mondiale de la santé. C’est un repère indirect : on mange en moyenne plus sainement là où l’obésité est rare, mais l’alimentation n’est qu’une des causes (sport, revenus, génétique…). Licence de l’OMS : usage non commercial seulement.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "oms-gho"
+    ],
+    "mesures": [
+      {
+        "id": "manger-sain",
+        "nom": "Obésité des adultes (manger sainement)",
+        "sens": "haut",
+        "unite": "% des adultes",
+        "bornes": [
+          10,
+          16,
+          22,
+          30
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "30 % ou plus",
+          "de 22 à 30 %",
+          "de 16 à 22 %",
+          "de 10 à 16 %",
+          "moins de 10 %"
+        ],
+        "mots": [
+          "très fréquente",
+          "fréquente",
+          "moyenne",
+          "peu fréquente",
+          "rare"
+        ],
+        "fait": [
+          "L’obésité y touche beaucoup d’adultes",
+          "L’obésité y est fréquente",
+          "L’obésité y est dans la moyenne",
+          "L’obésité y est peu fréquente",
+          "L’obésité y est rare"
+        ],
+        "regle": "Moyenne des taux d’obésité des femmes et des hommes de 18 ans et plus (OMS, relayés par la base Gender Statistics de la Banque mondiale, indicateurs SH.STA.OB18.FE.ZS et SH.STA.OB18.MA.ZS), la dernière année où les deux existent.",
+        "court": "Manger sainement",
+        "affichage": "{v} % d’adultes obèses",
+        "decimales": 1,
+        "theme": "l’alimentation",
+        "etiquettes": [
+          "Obésité très fréquente",
+          "Obésité fréquente",
+          "Obésité moyenne",
+          "Obésité peu fréquente",
+          "Obésité rare"
+        ],
+        "avertissement": "C’est un repère indirect : l’obésité dépend aussi du sport, des revenus et de la génétique, pas seulement de ce qu’on mange.",
+        "sujet": "l’obésité des adultes"
+      }
+    ]
+  },
+  {
+    "numero": 19,
+    "id": "liberte-employeur",
+    "famille": "travailler",
+    "nom": "Changer d’employeur librement",
+    "definition": "Ton visa te laisserait-il changer d’employeur ? Tiré des portes d’entrée et des visas de travail lus sur les sites officiels. Cette mesure ne compte que si tu as répondu « Je préfère pouvoir changer d’employeur librement » : c’est une pénalité, elle n’écarte aucun pays.",
+    "type": "officiel",
+    "sources": [
+      "europa-travail",
+      "diplomatie-pvt",
+      "diplomatie-expatriation"
+    ],
+    "mesures": [
+      {
+        "id": "employeur-libre",
+        "nom": "Changer d’employeur librement",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : aucun visa ne te lie à un employeur (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou le visa de travail n’est pas lié à un seul employeur. 3 : visa en partie lié à l’employeur. 1 : visa lié à l’employeur, ou lien pas encore vérifié (un employeur reste exigé).",
+        "echelle": [
+          "visa lié à l’employeur, ou lien pas encore vérifié",
+          "(niveau non utilisé)",
+          "visa en partie lié à l’employeur",
+          "(niveau non utilisé)",
+          "aucun visa lié à un employeur"
+        ],
+        "mots": [
+          "visa lié à l’employeur",
+          "visa lié à l’employeur",
+          "visa en partie lié à l’employeur",
+          "libre de changer d’employeur",
+          "libre de changer d’employeur"
+        ],
+        "fait": [
+          "Ton visa y dépendrait de ton employeur",
+          "Ton visa y dépendrait de ton employeur",
+          "Ton visa y dépendrait en partie de ton employeur",
+          "Tu pourrais y changer d’employeur librement",
+          "Tu pourrais y changer d’employeur librement"
+        ],
+        "court": "Changer d’employeur",
+        "theme": "le visa",
+        "sujet": "la liberté de changer d’employeur",
+        "etiquettes": [
+          "Visa lié à l’employeur",
+          "Visa lié à l’employeur",
+          "Visa en partie lié",
+          "Libre de changer d’employeur",
+          "Libre de changer d’employeur"
         ]
       }
     ]

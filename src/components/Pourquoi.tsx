@@ -12,9 +12,10 @@ export default function Pourquoi({ aide }: { aide: Aide }) {
   const id = useId();
   return (
     <div className="mt-3">
-      <button type="button" onClick={() => setOuvert(!ouvert)} aria-expanded={ouvert} aria-controls={id} className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 text-sm text-gris hover:text-encre">
-        <CircleHelp aria-hidden="true" className="h-5 w-5" />
-        <span>Pourquoi on te demande ça</span>
+      <button type="button" onClick={() => setOuvert(!ouvert)} aria-expanded={ouvert} aria-controls={id}
+        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-bord bg-carte py-1 pr-4 pl-2 text-sm font-semibold text-lien hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu">
+        <CircleHelp aria-hidden="true" className="h-6 w-6 shrink-0" />
+        <span>Pourquoi on te demande ça{"\u00a0"}?</span>
       </button>
       <div id={id} hidden={!ouvert} className="mt-1 rounded-2xl bg-creux p-3">
         <p className="font-semibold leading-snug"><AvecDefinitions texte={aide.enjeu} /></p>

@@ -6,7 +6,7 @@
   --encre: #0f172a;
   --carte: #ffffff;
   --bord: #e2e8f0;
-  --gris: #64748b;
+  --gris: #5e6e84; /* #64748b assombri : 4,5:1 au moins sur --creux (#f1f5f9) */
   --lien: #2563eb;
   --bleu-doux: #dbeafe;
   --creux: #f1f5f9;

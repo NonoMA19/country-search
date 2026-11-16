@@ -38,6 +38,7 @@ Sobre, moderne, orienté travail, jamais « vacances ». Palette Ardoise et bleu
 
 ## Licences
 Code : MIT. Contenu des fiches : CC BY-SA 4.0.
+Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY-NC-SA 3.0 IGO, usage non commercial seulement (à revoir si le site devient payant).
 
 ## Comment travailler avec Nolhan
 - Expliquer simplement, en français, sans jargon.
@@ -53,19 +54,18 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Parcours (diplôme et expériences), reconversion.
 - Croisement avec les offres d'emploi par secteur.
 - Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
-- Biais de classement (remesuré au prompt 3c, `npm run simulation`, 5 000 profils) : l'Allemagne n'est plus n°1 que dans 13,6 % des profils (30,1 % avant), derrière les Pays-Bas (16,9 %). Les deux changements du prompt 3c y contribuent : réseau français rapporté à la population (Allemagne 5 → 3) et D7, D8 actifs (Allemagne notée 3 et 2). La Colombie et le Chili restent dans le top 3 dans 0,1 % et 0,4 % des profils : mêmes points forts que le Mexique et le Brésil, moins bonnes notes ailleurs. Piste restante, sans pondération arbitraire : 8 dilemmes ont une option « ne change rien » ; leur donner un effet contraire quand une donnée existe (par exemple « Aucun contact français » = position « peu de Français »).
+- Biais de classement (remesuré au prompt 3e, `npm run simulation`, 5 000 profils) : Pays-Bas n°1 dans 18,9 % des profils, Belgique 10,1 %, Suisse 9,6 %, Allemagne 8,6 % (l'Allemagne a perdu son salaire, passé « à vérifier »). La Colombie et le Chili restent presque absents du top 3 (0,0 % et 0,2 %).
 - Restes du prompt 3c : visas de travail « à vérifier » (Corée du Sud, Colombie, Brésil, Chine, Maroc), lien avec l'employeur inconnu (Mexique, Corée du Sud, Colombie, Brésil, Maroc) ; culture au travail « à vérifier » : décision (Hong Kong, Brésil), vie pro et vie perso (Argentine, Colombie, Émirats arabes unis, Maroc) ; Alliance française par pays ; population de Taïwan (absente de la Banque mondiale) pour le réseau français.
 - Question facultative sur l'expérience pro (aucune, moins de 2 ans, 2 ans ou plus) et le diplôme. Depuis le prompt 3d, la fiche de faisabilité affiche « Ton expérience pro n'est pas connue du site » : elle permettrait de changer le badge des visas qui exigent de l'expérience (Australie : 1 an ; Nouvelle-Zélande : 2 ans ou une licence ; Taïwan : master, ou licence et 2 ans ; Japon : diplôme universitaire). Pour l'instant, la condition est seulement affichée dans la carte du visa.
-- D18 « Je préfère pouvoir changer d'employeur librement » est le dernier dilemme qui écarte des pays (filtre). À décider : le transformer en pénalité, comme D10 au prompt 3c.
 - Témoignages de confiance « moyenne » : ils comptent comme les autres. Piste proposée, non appliquée : les compter à 75 % de leur importance.
-- Prompt 4, simulateur « Ta vie là-bas » : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
+- Salaire net et simulateur « Ta vie là-bas » (prompt 4) : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
 - Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
-- Prompt 3d, décisions en attente : (1) badge de fiabilité : « Notre avis » n'y compte pas (règle demandée), d'où 16,7 % des pays du top 3 en « Peu de données vérifiées » ; la règle des 60 % du calcul, elle, compte encore « Notre avis » (sinon 28,6 % des pays du top 3 sortiraient) : choisir une seule règle ; (2) pays surprise dans 51 % des profils (surtout un pays d'Europe écarté par « hors d'Europe ») : relever le seuil ou limiter à certaines préférences ; (3) D18 reste un filtre ; (4) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3.
+- Décisions en attente (prompts 3d et 3e) : (1) badge de fiabilité : « Notre avis » n'y compte pas, mais la règle des 60 % du calcul le compte encore : choisir une seule règle ; (2) pays surprise : 38,9 % des profils au prompt 3e (51 % avant), presque toujours un pays écarté par la zone choisie : le réserver aux pénalités, ou au n° 1 seulement ? (3) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3.
 - Regarder comment les concurrents présentent leurs résultats (classement, comparaison, fiches) avant la refonte du prompt 5.
 - Secteurs et stages : croiser le top 3 avec les secteurs qui recrutent et les offres de stage (sources ouvertes à trouver).
 - Couleurs par pays : à décider avec la direction artistique (prompt 5), pas avant.
 - Écran Valeurs (stabilité, libertés, air) en fin de parcours : à repenser (il arrive tard et change le top 3 après le portrait).
-- Direction artistique et mascotte (avant le prompt 5).
+- Direction artistique, mascotte et illustrations : au prompt 5, une fois la DA choisie (pas avant).
 - Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page du PDF (il reprend les points par catégorie sous forme de liste simple depuis le prompt 3d), couleurs par pays.
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).
@@ -73,6 +73,12 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Fiches ★ complètes à construire (banque, SIM, santé, logement, CV, codes culturels) : la promesse affichée est « fiche détaillée à venir en priorité ».
 - Congés payés légaux : à remettre dans le calcul quand ils seront vérifiés pays par pays dans les textes de loi.
 - Égalité femmes-hommes dans la loi : `scripts/collecte.mjs` sait déjà la télécharger (Banque mondiale, indicateur GD_WBL_OVL_LAW, source 14) ; l'API était trop lente depuis la session du prompt 3.
+- Salaire de l'OCDE (prompt 3e, en attente) : l'API sdmx.oecd.org était inaccessible depuis la session. Nolhan fournira le salaire annuel moyen de l'OCDE (dollars PPA, prix constants, même année pour tous) : remplacer la source `oit-ilostat` de la mesure `salaire` dans `scripts/collecte.mjs` (notes « annuel ÷ 12 » ou nouvelles bornes à décider), puis `node scripts/collecte.mjs --textes`. En attendant, l'OIT reste incohérente : Belgique 8 077 $, Luxembourg 9 275 $, France 3 084 $ par mois (même source, même année 2025).
+- Années trop éloignées entre pays (prompt 3e) : niveau des prix (Argentine 2021, les autres 2025) et homicides (de 2020 pour la Chine à 2023). L'année est dite dans chaque preuve. Choisir : passer en « à vérifier » ou garder.
+- Données par ville (plus tard) : climat, loyer, qualité de l'air et culture n'ont pas la même valeur partout dans un pays (exemple : Lisbonne et Porto, Barcelone et Madrid, Sydney et Melbourne). Thèmes à étudier par ville : culture sportive, alimentation.
+- Vie active et sportive : la part d'adultes à l'activité physique insuffisante (OMS) n'était téléchargeable ni sur le site de l'OMS (bloqué depuis la session) ni sur la Banque mondiale. Mesure et dilemme « Ton dimanche » à faire quand la donnée sera trouvée.
+- Licence non commerciale : les données de l'OMS (mesure « Manger sainement », obésité des adultes) sont sous CC BY-NC-SA 3.0 IGO. Si le site devient payant ou commercial, retirer la mesure ou trouver une autre source.
+- Relire les 66 scènes avec des testeurs (équilibre des options) ; ajouter des scènes si deux personnes se plaignent encore de questions répétées.
 
 ## Journal
 
@@ -174,3 +180,17 @@ Code : MIT. Contenu des fiches : CC BY-SA 4.0.
 - Condition de nationalité du VIE : non sourcée dans `/content`, donc pas affichée.
 - « Espace économique européen » et « accord sur la libre circulation » : pas trouvés sur une page officielle lisible depuis la session ; l'explication reste sans détail juridique.
 
+
+### 16 novembre 2026 : fiabilité et questions (prompt 3e)
+**Ce qui est fait** (une pull request, un commit par lot)
+- Lot 1, données : l'API de l'OCDE est inaccessible depuis la session, le salaire reste celui de l'OIT ; un pays dont l'année s'écarte de plus d'un an de l'année médiane (2025) passe « à vérifier » (Allemagne, Australie, Japon, Nouvelle-Zélande, Corée du Sud, Singapour, Chine), la valeur écartée reste dans `ancien`. Libellé « Salaire brut moyen, avant impôts, en pouvoir d'achat » et avertissement dans la preuve (champ `avertissement` des mesures). Année de la donnée dans chaque preuve, années par mesure sur /methode#annees. La France, pays repère non classé (`reference.france` dans `scores.json`, `node scripts/collecte.mjs --france`), affichée « Pour comparer, France : … ».
+- Lot 2, options équilibrées : ligne « + » et ligne « − » sur chaque option ; 8 dilemmes en échelle (Plutôt A, Un peu A, Un peu B, Plutôt B ; « Un peu » = importance 0,5 ou position à mi-chemin de 3) ; nouvelle forme des dilemmes (`options` = effets, `scenes` = textes) ; 18 dilemmes réécrits sans « bonne réponse » ; « Janvier » A favorise désormais les hivers froids (position 2).
+- Lot 3, 22 dilemmes et 66 scènes (3 par dilemme). Nouveaux : travailler en anglais, climat doux, qualité de l'air, « Manger sainement » (obésité des adultes, OMS via la Banque mondiale, `node scripts/collecte.mjs --oms`). Graine par parcours (`graine`, `dejaVues` dans l'état, session v7) : scène tirée au hasard, jamais une scène vue dans un parcours précédent ; 4 premiers dilemmes tirés parmi ceux à 60 % ou plus de la meilleure utilité. Mesure de diversité dans `npm run simulation` (`scripts/diversite.ts`).
+- Lot 4, départage : seulement des dilemmes dont une mesure sépare les deux pays de 2 niveaux ou plus (données vérifiées des deux côtés), phrase « On te pose cette question parce que… » (champ `sujet` des mesures), 5 questions au plus tant que l'écart reste de 5 points ou moins, bilan cohérent, « Non comparable » dans la comparaison.
+- Lot 5 : accueil en trois lignes, bouton « Trouver mon pays », PVT défini dès l'accueil ; bouton « Pourquoi on te demande ça ? » visible, sous la question ; budget en tranches (« au moins », « pourrait te manquer jusqu'à ») ; thème en pastille.
+- Lot 6 : garde anti double clic partagée (`src/lib/clic.ts`) ; accords au pluriel (`pluriel` dans `pays.json`) ; égalités en chaîne de voisins ; retour du navigateur dans le quiz ; focus sur le titre de /resultat ; Échap du glossaire ; nom accessible des cartes « Site officiel » ; `--gris` #5e6e84 (4,75:1 sur `--creux`) ; zones tactiles de 44 px ; pays surprise seulement s'il serait n° 1 ou n° 2 ; D18 devient une pénalité (mesure interne `employeur-libre`), plus aucun dilemme n'écarte de pays.
+- Simulation avant / après (5 000 profils, et 1 000 parcours pour la diversité) : questions identiques entre deux parcours (Jaccard) 51,4 % → 11,6 % ; profils types qui commencent par les 3 mêmes questions 34 à 75 % → 0,5 à 1,5 % ; même n° 1 qu'avec tous les dilemmes 92,0 % → 82,7 %, perte moyenne sur le n° 1 0,17 → 0,42 point ; pays surprise 51,1 % → 38,9 % ; Allemagne n° 1 13,6 % → 8,6 %, Pays-Bas 16,9 % → 18,9 %.
+
+**Ce qui reste à faire**
+- Chiffres de l'OCDE pour le salaire (Nolhan) ; Belgique et Luxembourg restent anormalement hauts avec l'OIT.
+- Voir les idées : années des prix et des homicides, vie active et sportive, pays surprise par la zone, données par ville.

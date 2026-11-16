@@ -35,6 +35,8 @@ export type DefMesure = {
   decimales?: number;
   theme?: string; // pour les phrases de synthèse : « la distance », « le climat »
   etiquettes?: string[]; // un mot par niveau, à côté de la valeur : « Très sûr », « Hiver doux »
+  avertissement?: string; // une phrase de prudence affichée dans la fenêtre de preuve (salaire brut moyen…)
+  sujet?: string; // pour le départage : « l’Allemagne et la Belgique diffèrent surtout sur la ponctualité »
 };
 
 export type Critere = {
@@ -61,39 +63,51 @@ export type Note = {
   verifieLe?: string | null;
   liens?: string[]; // témoignages : toutes les sources, au moins deux
   confiance?: Confiance;
+  ancien?: { valeur: number; annee: string }; // valeur écartée (année trop éloignée des autres pays), hors calcul
 };
 
 // « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
 // 60 mots au maximum en tout (vérifié par npm run test:moteur).
 export type Aide = { enjeu: string; cartes: { pastille: string; texte: string }[] };
 
-// Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
-// « poids » pour une mesure « haut » (1 = normal, 0,5 = léger) ; « position » pour une mesure « position ».
+// Un dilemme : une mesure, 2 options (A et B), et plusieurs scènes de la vie réelle qui posent la même question.
+// Chaque option agit sur des mesures existantes : « poids » pour une mesure « haut » (1 = normal, 0,5 = léger),
+// « position » pour une mesure « position ». Les effets sont ceux du dilemme : la scène ne change que les mots.
 export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
 export type OptionDilemme = {
   id: string;
-  texte: string;
-  detail?: string; // la ligne grise : l'avantage ou le prix de l'option
   effets: EffetDilemme[];
   ecart?: { regle: string; raison: string }; // fait descendre des pays dans « Moins adaptés pour toi »
   portrait: string; // la phrase du portrait si tu choisis cette option
+  portraitPeu?: string; // la phrase du portrait pour « Un peu A » (dilemmes en échelle)
   preference?: string; // ce que tu préfères, pour « À savoir » (« tu préférais un hiver doux »)
-  style?: string; // pour « Ton profil de travail »
+  preferencePeu?: string;
+  style?: string; // pour la phrase de style de travail du portrait
+};
+// Une option dans une scène : son texte, son avantage (+) et son prix (−), affichés sur la carte.
+export type OptionScene = { texte: string; plus: string; moins: string };
+export type Scene = {
+  id: string;
+  titre: string;
+  texte: string;
+  exemple?: boolean; // les montants et durées sont des exemples fictifs
+  options: OptionScene[]; // dans l'ordre des options du dilemme
 };
 export type Dilemme = {
   id: string;
   theme: string;
-  titre: string;
-  scene: string;
+  titre: string; // le nom du dilemme (« Salaire ou coût de la vie »), pas celui d'une scène
   aide: Aide;
-  exemple?: boolean; // les montants et durées sont des exemples fictifs
+  echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B
   axe?: string; // axe du style de travail
   afficheSi?: string;
   regleAffichage?: string;
   options: OptionDilemme[];
+  scenes: Scene[];
 };
 
-export type OptionProfil = { id: string; label: string; ageMax?: number; euros?: number; mois?: number; codes?: string[] };
+// Budget : une tranche (« de 2 000 à 5 000 € ») : min et max en euros (pas de max pour « plus de 10 000 € »).
+export type OptionProfil = { id: string; label: string; ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[] };
 export type QuestionProfil = {
   id: string;
   question: string;
@@ -180,9 +194,12 @@ const scores = scoresData as unknown as {
   genereLe: string;
   villes: Record<string, { nom: string; lat: number; lon: number; fuseau: string }>;
   pays: Record<string, Record<string, Note>>;
+  reference?: { france?: { nom: string; notes: Record<string, Note> } };
 };
 export const dateDonnees = scores.genereLe;
 export const notes = scores.pays;
+// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les 30 pays.
+export const notesFrance: Record<string, Note> = scores.reference?.france?.notes ?? {};
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
@@ -233,13 +250,15 @@ export type Preuve = {
   licence: string | null;
   liens?: string[]; // témoignages : la liste des sources
   confiance?: Confiance;
+  annee?: string | null; // l'année de la donnée, toujours dite quand elle est connue
+  avertissement?: string | null; // une phrase de prudence propre à la mesure
 };
 
 export function preuveMesure(paysId: string, mesureId: string): Preuve {
   const n = notes[paysId]?.[mesureId];
   const m = mesures[mesureId];
   if (!n || n.statut !== "verifie" || !n.source) {
-    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "À vérifier.", source: null, lien: null, verifieLe: null, licence: null };
+    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "À vérifier.", source: null, lien: null, verifieLe: null, licence: null, avertissement: m?.avertissement ?? null };
   }
   const s = sources[n.source];
   return {
@@ -253,6 +272,8 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     page: n.lien && s.page && n.lien !== s.page ? s.page : null,
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
+    annee: n.annee ?? null,
+    avertissement: m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }

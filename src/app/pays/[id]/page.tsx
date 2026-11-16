@@ -11,7 +11,7 @@ import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { FaisabilitePourToi } from "@/components/resultat/Faisabilite";
-import { paysCouverts } from "@/lib/moteur";
+import { paysCouverts, valeurFrance } from "@/lib/moteur";
 import { criteres, dateFr, europe, notes, portes, preuveMesure, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
@@ -149,6 +149,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
             {n?.texte || (ok ? "" : "À vérifier.")}
             <Pastille preuve={preuveMesure(paysId, m.id)} pays={nomPays} contexte={m.nom} />
           </p>
+          {ok && valeurFrance(m.id, n?.annee) && <p className="mt-1 text-sm text-gris">Pour comparer, {valeurFrance(m.id, n?.annee)}</p>}
         </li>
       ))}
     </>

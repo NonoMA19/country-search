@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, notes, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
 import Definition, { AvecDefinitions } from "@/components/Definition";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
@@ -25,6 +25,16 @@ function Type({ type }: { type: TypeSource }) {
 }
 
 const nombre = (n: number) => n.toLocaleString("fr-FR");
+
+// Pour chaque mesure datée : la plus ancienne et la plus récente année parmi les notes vérifiées des 30 pays.
+function anneesParMesure() {
+  return Object.values(mesures).flatMap((m) => {
+    const ans = pays.map((p) => notes[p.id]?.[m.id]).filter((n) => n?.statut === "verifie" && n.annee && /^\d{4}$/.test(n.annee)).map((n) => Number(n!.annee));
+    if (!ans.length) return [];
+    const min = Math.min(...ans), max = Math.max(...ans);
+    return [{ id: m.id, nom: m.court ?? m.nom, min, max, ecart: max - min }];
+  });
+}
 
 // L'effet d'une option, en mots simples.
 function effet(o: OptionDilemme): string {
@@ -62,7 +72,7 @@ export default function Methode() {
         <p className="mt-3">La famille Partir (visa, âge, argent) n’entre pas dans le pourcentage. Elle donne un badge : Porte ouverte, Faisable avec conditions, Difficile ou Fermé à ton âge.</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Un pays « Fermé à ton âge » ne peut pas entrer dans ton top 3 : il passe dans « Moins adaptés pour toi », avec la raison et son pourcentage inchangé. Un bouton permet de le remonter.</li>
-          <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait.</li>
+          <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait. Tu choisis une tranche (moins de 2 000 €, de 2 000 à 5 000 €, de 5 000 à 10 000 €, plus de 10 000 €, ou « Je ne sais pas encore »). Si le haut de ta tranche est sous la somme demandée par un visa, on dit « il te manquerait au moins » la différence. Si la somme demandée tombe dans ta tranche, on dit « il pourrait te manquer jusqu’à » la différence avec le bas de ta tranche. Sans réponse, on donne seulement la somme demandée.</li>
           <li>Si tu déclares une autre nationalité, le badge devient « Porte ouverte grâce à ta nationalité » seulement dans les cas que nous avons vérifiés : la nationalité du pays lui-même (canadienne pour le Canada, américaine pour les États-Unis) et la nationalité irlandaise pour le Royaume-Uni. Le pourcentage ne change pas. Pour toute autre nationalité, ou pour les autres pays, le résultat dit clairement que ce cas n’est pas encore couvert.</li>
         </ul>
         <p className="mt-3">
@@ -103,22 +113,25 @@ export default function Methode() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Comment les dilemmes sont choisis</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
-          <li>Un dilemme est une petite scène avec 2 ou 3 options. Chaque option a un avantage et un prix : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
+          <li>Un dilemme est une petite scène avec 2 options. Chaque option affiche son avantage (+) et son prix (−) : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
+          <li>Les dilemmes qui forment une échelle (salaire et coût de la vie, salaire et temps libre, emploi et salaire, distance, hiver, été, ville et nature, sécurité…) ont 4 réponses : « Plutôt A », « Un peu A », « Un peu B », « Plutôt B ». « Plutôt » donne l’effet complet de l’option (importance 1, ou sa position). « Un peu » en donne la moitié : importance 0,5, ou une position à mi-chemin entre celle de l’option et le milieu de l’échelle (exemple : la position 4 devient 3,5). Les dilemmes de culture au travail gardent 2 options : une réponse « entre les deux » n’apprendrait rien.</li>
           <li>Après tes 3 priorités, on regarde les 5 premiers pays de ton classement.</li>
           <li>On te pose le dilemme pour lequel ces 5 pays sont les plus différents. Une option qui ne ferait que redonner une importance déjà acquise (par une de tes priorités, par exemple) ne compte pas : elle ne départagerait rien. C’est un calcul, pas une IA.</li>
+          <li>Chaque dilemme mesure une seule chose, mais il a 3 scènes de la vie réelle (par exemple « Deux offres », « Le colocataire », « La sortie du vendredi » pour le salaire face au coût de la vie). Les 3 scènes ont exactement le même effet. Le site en tire une au hasard, et ne te repose jamais une scène que tu as déjà vue dans un parcours précédent (tant qu’il en reste). Le tirage dépend d’un nombre choisi au début de ton parcours : « Retour » et le rechargement de la page te montrent la même scène.</li>
+          <li>Les 4 premiers dilemmes sont tirés au hasard parmi ceux qui départagent au moins 60 % autant que le meilleur. Deux personnes au profil proche n’ont donc pas les mêmes premières questions. Ensuite, on pose toujours le plus utile.</li>
           <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays de ton top 3, les points sont rangés en trois catégories : Travailler, Vivre, Culture au travail. Par catégorie, au plus 2 points forts (notés 4 ou 5 sur 5 dans le sens de tes réponses) et 1 point faible (2,5 sur 5 ou moins). Seulement des points liés à tes réponses : une priorité, ton projet, un dilemme, un sujet de l’écran Valeurs ou un curseur « Et si… ? ». Une catégorie sans rien à dire n’est pas affichée. Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde.</li>
           <li>Dans « Voir le détail », chaque critère est donné avec sa vraie valeur et un mot (« 1,6 h de vol · Très proche »), jamais avec un pourcentage. Les pourcentages restent pour le score global du pays.</li>
-          <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager : au plus 3 dilemmes encore sans réponse, choisis parce que leurs options font le plus varier l’écart entre ces deux pays. Tes réponses comptent comme les autres, et une phrase dit laquelle a fait la différence. Tu peux aussi les comparer côte à côte, sans nouveau calcul : une ligne par critère qui compte pour toi (tes priorités d’abord), la vraie valeur de chaque pays, et une barre qui va vers le pays qui gagne, plus longue si l’écart de note est grand. Une phrase dit qui gagne sur quoi, en tenant compte de l’importance de chaque critère.</li>
+          <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager. On te pose seulement des dilemmes encore sans réponse dont une mesure sépare vraiment ces deux pays : au moins 2 niveaux d’écart sur l’échelle de 1 à 5, avec une donnée vérifiée des deux côtés. Une ligne te dit pourquoi (« On te pose cette question parce que l’Allemagne et la Belgique diffèrent surtout sur la ponctualité. »). Parmi eux, on choisit celui dont les options font le plus varier l’écart. Jusqu’à 5 questions, tant que l’écart reste de 5 points ou moins. Tes réponses comptent comme les autres. Si l’un passe devant, une phrase dit quelle réponse a fait la différence ; s’ils restent à égalité, on le dit, et on te montre la comparaison côte à côte. Cette comparaison ne refait aucun calcul : une ligne par critère qui compte pour toi (tes priorités d’abord), la vraie valeur de chaque pays, et une barre qui va vers le pays qui gagne, plus longue si l’écart de note est grand. Si une donnée manque d’un côté, la ligne dit « Non comparable ». Une phrase dit qui gagne sur quoi, en tenant compte de l’importance de chaque critère.</li>
           <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais, ni une réponse qui répète une de tes priorités (« Tu regardes d’abord le salaire » quand « bon salaire » est déjà cité). « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
-          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays. Un pays remonté à la main ne subit plus ni l’écart, ni la pénalité de langue à apprendre.</li>
+          <li>Aucune réponse de dilemme n’écarte un pays : seuls ton âge et tes choix du début (zone, travail en anglais) le font. « Je préfère pouvoir changer d’employeur librement » est une pénalité (importance 1) : un pays où ton visa dépendrait d’un employeur, ou où ce lien n’est pas encore vérifié, reçoit la note 1 ; en partie lié, 3 ; sans visa lié (Europe sans visa, PVT ouvert à ton âge, ta nationalité, ou visa non lié), 5. Comme ce point dépend de ton âge et de ta nationalité, ce sont les seuls cas où ils changent ton pourcentage. Ne pas vouloir apprendre de langue est aussi une pénalité. Un pays remonté à la main ne subit plus ces pénalités.</li>
         </ul>
       </section>
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Les curseurs « Et si… ? »</h2>
-        <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
+        <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire brut moyen en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Chaque curseur va de « Ne compte pas » (importance 0) à « Compte beaucoup » (importance 2, comme une priorité), en passant par « Compte un peu » (0,5) et « Compte » (1).</li>
           <li>Il part de la valeur déduite de tes réponses : la plus forte importance qu’une seule de tes réponses donne à ce groupe. Exemple : la priorité « Proche de la France » donne 2, l’option « 6 h de vol » donne 0,5.</li>
@@ -141,11 +154,11 @@ export default function Methode() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Le pays surprise</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
-          <li>On cherche un pays qui te correspond très bien, mais qu’une seule de tes préférences a écarté : la zone choisie (Europe ou hors d’Europe), ou le visa lié à un employeur (« Je préfère pouvoir changer d’employeur librement »). Son pourcentage reste celui calculé sur tes réponses.</li>
-          <li>La langue à apprendre (« Je garde ces soirées pour moi ») n’écarte aucun pays : c’est une pénalité. Un pays compte comme écarté par elle seulement si, sans cette réponse, il atteindrait au moins le score de ton n° 3.</li>
-          <li>On garde le meilleur, s’il atteint au moins le score de ton n° 3, ou 75 %.</li>
-          <li>Jamais pour une règle légale (ton âge, ta nationalité), ni pour le budget, ni pour un pays déjà dans ton top 3. S’il n’y en a aucun, la section n’apparaît pas.</li>
-          <li>« Le remonter » le fait revenir dans ton classement, sans l’écart ni la pénalité.</li>
+          <li>On cherche un pays qu’une seule de tes préférences met de côté : la zone choisie (Europe ou hors d’Europe), qui écarte des pays, ou une réponse qui en fait reculer : « Je préfère pouvoir changer d’employeur librement » et « Je garde ces soirées pour moi » (langue à apprendre).</li>
+          <li>Pour une réponse qui fait reculer des pays, on recalcule le score du pays sans cette seule réponse.</li>
+          <li>Il n’apparaît que si, sans cette préférence, son score l’aurait placé n° 1 ou n° 2 de ton classement (au moins le score de ton n° 2). Avant, il suffisait d’égaler ton n° 3 ou 75 % : il apparaissait dans un profil sur deux, ce n’était plus une surprise.</li>
+          <li>Jamais pour une règle légale (ton âge, ta nationalité), ni pour le budget, ni pour un pays déjà dans ton top 3. S’il te manquerait de l’argent pour ce pays, la carte le dit.</li>
+          <li>« Le remonter » le fait revenir dans ton classement, sans l’écart ni la pénalité.</li>
         </ul>
       </section>
 
@@ -173,7 +186,24 @@ export default function Methode() {
             <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans les 30 pays.</li>
           </ul>
         </div>
-        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité, avec le nom de l’autre pays (et son rang s’il est hors de ton top 3).</p>
+        <div id="annees" className="mt-4 scroll-mt-4 rounded-2xl border border-bord bg-carte p-4">
+          <h3 className="font-semibold">Des années comparables, et la France comme repère</h3>
+          <ul className="mt-2 list-disc space-y-2 pl-5">
+            <li>Chaque fenêtre de preuve donne l’année de la donnée quand elle est connue.</li>
+            <li>Salaire : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. Une moyenne de 2021 ne se compare pas à une moyenne de 2025. C’est un salaire brut moyen, avant impôts et cotisations, tous métiers confondus : ton salaire net dépendra de ton métier et des impôts du pays.</li>
+            <li>La France n’est pas classée. Quand la même source donne sa valeur, on l’affiche à côté (« France : … ») pour que tu compares à ce que tu connais. Le niveau des prix est déjà calculé par rapport à la France, et la distance ou le climat dépendent d’une ville : pas de valeur France pour eux.</li>
+          </ul>
+          <p className="mt-3 font-medium">Années des données, mesure par mesure</p>
+          <ul className="mt-2 space-y-1 text-sm">
+            {anneesParMesure().map((x) => (
+              <li key={x.id}>
+                {x.nom} : {x.min === x.max ? x.min : `de ${x.min} à ${x.max}`}
+                {x.ecart > 2 && <span className="text-gris"> (plus de 2 ans d’écart entre pays : l’année est dite dans chaque preuve)</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Deux pays voisins dans le classement, à 5 points d’écart ou moins, sont à égalité. Un groupe d’égalité est une chaîne : chaque pays est à 5 points ou moins de son voisin. « À égalité avec… » cite le voisin le plus proche, avec son rang s’il est hors de ton top 3.</p>
       </section>
 
       {familles.map((f) => (
@@ -230,10 +260,18 @@ export default function Methode() {
           {quiz.dilemmes.map((d) => (
             <li key={d.id} className="rounded-2xl border border-bord bg-carte p-4 text-sm">
               <p className="text-xs font-medium tracking-wide text-gris uppercase">{d.theme}</p>
-              <p className="text-base font-medium">{d.titre}</p>
-              <p className="mt-1">{d.scene}</p>
+              <p className="text-base font-medium">{d.titre}{d.echelle ? " (en échelle : 4 réponses)" : ""}</p>
               <ul className="mt-2 space-y-1 text-gris">
-                {d.options.map((o, i) => <li key={o.id}>{["A", "B", "C"][i]}. {o.texte} : {effet(o)}.</li>)}
+                {d.options.map((o, i) => <li key={o.id}>{["A", "B", "C"][i]} : {effet(o)}.</li>)}
+              </ul>
+              <p className="mt-2 font-medium">{d.scenes.length > 1 ? `Ses ${d.scenes.length} scènes` : "Sa scène"}</p>
+              <ul className="mt-1 space-y-2">
+                {d.scenes.map((sc) => (
+                  <li key={sc.id}>
+                    <span className="font-medium">{sc.titre}.</span> {sc.texte}
+                    <span className="block text-gris">{sc.options.map((o, i) => `${["A", "B", "C"][i]}. ${o.texte} (+ ${o.plus} − ${o.moins})`).join(" ")}</span>
+                  </li>
+                ))}
               </ul>
               {d.regleAffichage && <p className="mt-1 text-gris">Règle d’affichage : {d.regleAffichage}</p>}
               {!dilemmeActif(d) && <p className="mt-1 font-medium">Pas encore posé : sa mesure n’est pas assez renseignée (moins de {Math.round(SEUIL_DILEMME * 100)} % des pays).</p>}
@@ -252,7 +290,7 @@ export default function Methode() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-sm text-gris">Sources écartées parce que leur licence ne permet pas la réutilisation : Numbeo, EF EPI, Hofstede.</p>
+        <p className="mt-4 text-sm text-gris">Licence à surveiller : les données de l’OMS (manger sainement) sont réutilisables seulement pour un usage non commercial (CC BY-NC-SA 3.0 IGO). Si le site devenait payant, il faudrait les retirer. Pas encore de mesure « vie active et sportive » : la part d’adultes à l’activité physique insuffisante (OMS) n’était pas téléchargeable depuis nos outils. Sources écartées parce que leur licence ne permet pas la réutilisation : Numbeo, EF EPI, Hofstede.</p>
       </section>
 
       <p className="mt-10 text-sm text-gris">Code sous licence MIT, contenu sous licence CC BY-SA 4.0.</p>

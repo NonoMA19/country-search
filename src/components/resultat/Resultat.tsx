@@ -16,14 +16,15 @@ import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
 import BlocVie from "@/components/resultat/BlocVie";
 import { BadgeFiabilite, FicheFaisabilite, VisaCourt } from "@/components/resultat/Faisabilite";
 import { ECART_EX_AEQUO } from "@/config";
-import { doubleNationalite, mesures, preuveMesure, type Preuve } from "@/lib/donnees";
+import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/lib/donnees";
+import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurLisible, verdict,
-  type Badge, type Etat, type Ligne, type PointsPays, type Surprise,
+  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurFrance, valeurLisible, verdict,
+  type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
-import { trouverPays } from "@/lib/pays";
+import { accord, trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
 
 const STYLE_BADGE: Record<Badge, string> = {
@@ -90,6 +91,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
       {details.map((d) => {
         const v = valeurLisible(ligne.pays.id, d.mesure, etat.profil);
         const m = mesures[d.mesure];
+        const france = v?.valeur ? valeurFrance(d.mesure, notes[ligne.pays.id]?.[d.mesure]?.annee) : null;
         return (
           <li key={d.mesure} className="py-2">
             <p className="text-sm text-gris">{m?.court ?? m?.nom}</p>
@@ -97,6 +99,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
               {v?.valeur && <><AvecDefinitions texte={v.valeur} /> · </>}{v?.mot}
               <Pastille preuve={preuveMesure(ligne.pays.id, d.mesure)} pays={ligne.pays.nom} contexte={m?.court ?? d.mesure} />
             </p>
+            {france && <p className="text-sm text-gris">{france}</p>}
           </li>
         );
       })}
@@ -104,7 +107,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: number | null }) {
+function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: Budget | null }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
   const score = Math.round(ligne.score);
@@ -199,8 +202,9 @@ function CarteSurprise({ s, remonter }: { s: Surprise; remonter: () => void }) {
         <h3 className="min-w-0 text-xl font-bold break-words">{p.nom}</h3>
       </div>
       <p className="mt-3 text-lg leading-snug">
-        {Le} te correspond à {Math.round(s.score)}{" "}%. {s.phrase}
+        {Le} te {accord(p, "correspond", "correspondent")} à {Math.round(s.score)}{" "}%. {s.phrase}
       </p>
+      {s.argent && <p className="mt-2 flex items-start gap-2 text-sm font-medium"><CircleAlert aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-gris" /><span>{s.argent}</span></p>}
       <div className="mt-4 flex flex-wrap gap-3">
         <button type="button" onClick={remonter} className="inline-flex min-h-12 items-center gap-1.5 rounded-2xl bg-bleu px-4 font-semibold text-white hover:bg-blue-700">
           <ArrowUp aria-hidden="true" className="h-5 w-5" /> Le remonter
@@ -263,6 +267,8 @@ export default function Resultat() {
   const charge = session !== null;
   useEffect(() => {
     if (!charge) return;
+    // À l'arrivée, le focus va sur le titre : un lecteur d'écran annonce la page.
+    document.getElementById("titre-resultat")?.focus({ preventScroll: true });
     const t = setTimeout(() => setArrivee(false), DUREE_REVELATION + 100);
     return () => clearTimeout(t);
   }, [charge]);
@@ -282,7 +288,8 @@ export default function Resultat() {
   const maj = (s: Partial<typeof session>) => ecrire({ ...session, ...s });
   const seulementOuvertes = session.ouvertes;
   const setSeulementOuvertes = (v: boolean) => maj({ ouvertes: v });
-  const remonter = (id: string) => maj({ etat: { ...etat, remontes: [...etat.remontes, id] } });
+  // Un double clic sur « Le remonter » ne remonte qu’un seul pays (garde de 400 ms, comme dans le quiz).
+  const remonter = (id: string) => uneFois(() => { if (!etat.remontes.includes(id)) maj({ etat: { ...etat, remontes: [...etat.remontes, id] } }); });
 
   const lignes = calculer(etat, reglages);
   const tous = lignes.filter((l) => !l.ecart);
@@ -294,7 +301,8 @@ export default function Resultat() {
   const surprise = brute && (!seulementOuvertes || brute.ligne.porte.badge === "ouverte") ? brute : null;
   // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
   const phrases = lignesTop(top, etat);
-  const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
+  // Le curseur part du bas de ta tranche de budget (ou de 2 000 € si tu ne sais pas encore).
+  const budget = reglages.budget ?? budgetProfil(etat.profil)?.min ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
   const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
@@ -309,7 +317,7 @@ export default function Resultat() {
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5">
-      <h1 className="text-3xl font-bold tracking-tight">Ton résultat</h1>
+      <h1 id="titre-resultat" tabIndex={-1} className="text-3xl font-bold tracking-tight outline-none">Ton résultat</h1>
       <p className="mt-2 text-gris">
         Le pourcentage dit à quel point un pays te ressemble, d’après tes réponses. C’est un indicateur, pas une vérité.{" "}
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
@@ -339,14 +347,14 @@ export default function Resultat() {
           ) : (
             top.map((l, i) => (
               <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
-                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={reglages.budget ?? budgetProfil(etat.profil)} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} />
               </div>
             ))
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </Glissement>
         {!toutAZero && top.some((l) => avecQui(principaux, rangDe(l))) && (
-          <p className="mt-3 text-sm text-gris">Des pays à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
+          <p className="mt-3 text-sm text-gris">Deux pays voisins à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
         {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
           <Departage etat={etat} reglages={reglages} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
@@ -385,7 +393,7 @@ export default function Resultat() {
               <span className="font-medium">Et si mon budget était de…</span>
               <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
             </span>
-            <input type="range" min={0} max={8000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
+            <input type="range" min={0} max={15000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
             <span className="mt-1 block text-sm text-gris">
               {sansArgent.length === 0
                 ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
@@ -400,7 +408,7 @@ export default function Resultat() {
       {surprise && !toutAZero && (
         <section aria-labelledby="titre-surprise" className="mt-10">
           <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
-          <p className="mt-1 text-sm text-gris">Un pays qui te correspond très bien, mais qu’un seul de tes choix met de côté.</p>
+          <p className="mt-1 text-sm text-gris">Un pays qu’un seul de tes choix met de côté ou fait reculer, alors que sans ce choix il serait ton n° 1 ou ton n° 2.</p>
           <div className="mt-4"><CarteSurprise s={surprise} remonter={() => remonter(surprise.ligne.pays.id)} /></div>
         </section>
       )}

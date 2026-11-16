@@ -10,11 +10,12 @@ import Icone from "@/components/Icone";
 import Portrait from "@/components/Portrait";
 import Pourquoi from "@/components/Pourquoi";
 import { useFlip } from "@/lib/animation";
-import { quiz, type Dilemme } from "@/lib/donnees";
+import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
+import { quiz, type Dilemme, type OptionScene, type Scene } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import {
-  MIN_DILEMMES, REPONSES_STABLES, annulerDerniere, calculer, changerReponse, demarrerDilemmes, mesureDisponible, portrait,
-  prochainDilemme, questionProfilVisible, rejouer, repondre, repondues, reponsesStables, resultatPret, trouverDilemme, type LignePortrait, type Profil,
+  LIBELLE_ECHELLE, MIN_DILEMMES, REPONSES_ECHELLE, REPONSES_STABLES, annulerDerniere, calculer, changerReponse, demarrerDilemmes, mesureDisponible, portrait,
+  prochainDilemme, questionProfilVisible, rejouer, sceneDe, repondre, repondues, reponsesStables, resultatPret, trouverDilemme, type LignePortrait, type Profil,
 } from "@/lib/moteur";
 
 export const BOUTON = "min-h-14 w-full rounded-2xl border px-5 py-3 text-left text-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
@@ -27,7 +28,7 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
     <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-5 pt-4 pb-8">
       <div className="flex items-center gap-3">
         {retour ? (
-          <button type="button" onClick={retour} className="-ml-2 inline-flex min-h-11 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
+          <button type="button" data-retour onClick={retour} className="-ml-2 inline-flex min-h-11 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
             <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Retour
           </button>
         ) : (
@@ -48,31 +49,69 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
   );
 }
 
-// Un dilemme : une scène, puis 2 ou 3 options en cartes. Un tap pour répondre.
-export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie, passer = "Passer", niveau = "h1" }: {
-  dilemme: Dilemme; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string; niveau?: "h1" | "h3";
+// L'avantage (+) et le prix (−) d'une option, en petit, sous son texte.
+function PlusMoins({ o }: { o: OptionScene }) {
+  return (
+    <span className="mt-1.5 block space-y-0.5 text-sm leading-snug">
+      <span className="flex gap-1.5"><span aria-hidden="true" className="w-3 shrink-0 font-bold text-lien">+</span><span className="min-w-0"><span className="sr-only">Avantage : </span>{o.plus}</span></span>
+      <span className="flex gap-1.5 text-gris"><span aria-hidden="true" className="w-3 shrink-0 font-bold">−</span><span className="min-w-0"><span className="sr-only">Prix : </span>{o.moins}</span></span>
+    </span>
+  );
+}
+
+// Un dilemme : une scène, puis ses options. Chaque option montre son avantage et son prix.
+// Dilemme en échelle : les deux options côte à côte (A à gauche, B à droite), puis 4 réponses.
+export function CarteDilemme({ dilemme, scene, repond, titreId = "titre-ecran", choisie, passer = "Passer", niveau = "h1" }: {
+  dilemme: Dilemme; scene: Scene; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string; niveau?: "h1" | "h3";
 }) {
   const lettres = ["A", "B", "C"];
   const Titre = niveau;
   return (
     <>
-      <p className="text-xs font-medium tracking-wide text-gris uppercase">{dilemme.theme}</p>
-      <Titre id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{dilemme.titre}</Titre>
-      <p className="mt-2 text-lg leading-snug">{dilemme.scene}</p>
-      <div className="mt-5 space-y-3" role="group" aria-labelledby={titreId}>
-        {dilemme.options.map((o, i) => (
-          <button key={o.id} type="button" onClick={() => repond(o.id)} aria-pressed={choisie !== undefined ? choisie === o.id : undefined}
-            className={`flex min-h-16 w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu ${choisie === o.id ? "border-bleu bg-bleu-doux" : "border-bord bg-carte"}`}>
-            <span aria-hidden="true" className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-creux text-sm font-semibold text-gris">{lettres[i]}</span>
-            <span className="min-w-0">
-              <span className="block text-lg leading-snug font-medium break-words">{o.texte}</span>
-              {o.detail && <span className="mt-0.5 block text-sm leading-snug text-gris">{o.detail}</span>}
-            </span>
-          </button>
-        ))}
-      </div>
-      {dilemme.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
+      <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">{dilemme.theme}</p>
+      <Titre id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{scene.titre}</Titre>
+      <p className="mt-2 text-lg leading-snug">{scene.texte}</p>
       <Pourquoi key={dilemme.id} aide={dilemme.aide} />
+      {dilemme.echelle ? (
+        <>
+          <div className="mt-5 grid grid-cols-2 gap-2">
+            {scene.options.map((o, i) => (
+              <div key={i} className="min-w-0 rounded-2xl border-2 border-bord bg-carte p-3">
+                <span aria-hidden="true" className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-creux text-sm font-semibold text-gris">{lettres[i]}</span>
+                <span className="sr-only">Option {lettres[i]} : </span>
+                <span className="mt-1.5 block text-base leading-snug font-medium break-words hyphens-auto">{o.texte}</span>
+                <PlusMoins o={o} />
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 grid grid-cols-4 gap-1.5" role="group" aria-labelledby={titreId}>
+            {REPONSES_ECHELLE.map((r) => (
+              <button key={r} type="button" data-reponse={r} onClick={() => repond(r)} aria-pressed={choisie !== undefined ? choisie === r : undefined}
+                className={`min-h-14 rounded-2xl border-2 px-1 text-center text-sm leading-tight font-semibold transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu ${choisie === r ? "border-bleu bg-bleu-doux" : "border-bord bg-carte"}`}>
+                {LIBELLE_ECHELLE[r]}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-gris">« Un peu » compte deux fois moins que « Plutôt ».</p>
+        </>
+      ) : (
+        <div className="mt-5 space-y-3" role="group" aria-labelledby={titreId}>
+          {dilemme.options.map((opt, i) => {
+            const o = scene.options[i];
+            return (
+              <button key={opt.id} type="button" data-reponse={opt.id} onClick={() => repond(opt.id)} aria-pressed={choisie !== undefined ? choisie === opt.id : undefined}
+                className={`flex min-h-16 w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu ${choisie === opt.id ? "border-bleu bg-bleu-doux" : "border-bord bg-carte"}`}>
+                <span aria-hidden="true" className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-creux text-sm font-semibold text-gris">{lettres[i]}</span>
+                <span className="min-w-0">
+                  <span className="block text-lg leading-snug font-medium break-words">{o.texte}</span>
+                  <PlusMoins o={o} />
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {scene.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
       <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">{passer}</button>
     </>
   );
@@ -86,7 +125,7 @@ function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: str
   return (
     <>
       <p className="text-xs font-medium tracking-wide text-gris uppercase">Ton top 3 pour l’instant</p>
-      <p className="sr-only" aria-live="polite">{change ? `Ton top 3 a changé\u00a0: ${noms}.` : `Ton top 3 pour l’instant\u00a0: ${noms}.`}</p>
+      <p className="sr-only" aria-live="polite">{change ? `Ton top 3 a changé : ${noms}.` : `Ton top 3 pour l’instant : ${noms}.`}</p>
       <ul ref={ref} className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
         {top.map((p) => (
           <li key={p.id} data-flip={p.id} className="flex items-center gap-2 text-sm font-medium">
@@ -98,12 +137,7 @@ function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: str
   );
 }
 
-// Après un changement d'écran, les clics arrivés trop vite sont ignorés :
-// un double clic ne doit pas répondre aussi à la question suivante.
-const DELAI_CLIC = 400;
-let dernierChangement = -Infinity;
-const clicLibre = () => performance.now() - dernierChangement >= DELAI_CLIC;
-const marquerChangement = () => { dernierChangement = performance.now(); };
+// Après un changement d’écran, les clics arrivés trop vite sont ignorés (src/lib/clic.ts).
 
 export default function Quiz() {
   const session = useSession();
@@ -116,6 +150,19 @@ export default function Quiz() {
     if (premier.current) { premier.current = false; return; }
     document.getElementById("titre-ecran")?.focus({ preventScroll: false });
   }, [ecran]);
+  // Bouton Retour du navigateur et geste retour d'Android : on revient à la question précédente, sans quitter le quiz.
+  // Une entrée d'historique « tampon » (même adresse) est ajoutée ; quand elle est consommée, on clique sur le bouton
+  // Retour de l'écran et on la remet. Au premier écran (lien « Accueil »), on laisse le navigateur quitter le quiz.
+  useEffect(() => {
+    const armer = () => window.history.pushState({ ...(window.history.state ?? {}), csQuiz: true }, "");
+    armer();
+    const surRetour = () => {
+      const bouton = document.querySelector<HTMLButtonElement>("[data-retour]");
+      if (bouton) { marquerLibre(); bouton.click(); armer(); } else window.history.back();
+    };
+    window.addEventListener("popstate", surRetour);
+    return () => window.removeEventListener("popstate", surRetour);
+  }, []);
   if (!session) return <Chargement />;
 
   const { etat, etape } = session;
@@ -224,7 +271,8 @@ export default function Quiz() {
     const lancer = () => aller({ t: "portrait" });
     return (
       <Cadre progression={100} retour={() => aller({ t: "pret" })}>
-        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
+        <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Valeurs</p>
+        <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <Pourquoi aide={quiz.aides.sujets} />
         <div className="mt-5 space-y-3">
@@ -273,7 +321,7 @@ export default function Quiz() {
       const change = (r: string) => (r === "passer" ? aller({ t: "portrait" }) : aller({ t: "portrait" }, { etat: changerReponse(etat, d.id, r) }));
       return (
         <Cadre progression={100} retour={() => aller({ t: "portrait" })}>
-          <CarteDilemme key={d.id} dilemme={d} repond={change} choisie={etat.reponses[d.id]} passer="Garder ma réponse" />
+          <CarteDilemme key={d.id} dilemme={d} scene={sceneDe(d, etat)} repond={change} choisie={etat.reponses[d.id]} passer="Garder ma réponse" />
         </Cadre>
       );
     }
@@ -320,7 +368,7 @@ export default function Quiz() {
 
   return (
     <Cadre progression={progression} retour={retourDilemme}>
-      <CarteDilemme key={dilemme.id} dilemme={dilemme} repond={repond} />
+      <CarteDilemme key={dilemme.id} dilemme={dilemme} scene={sceneDe(dilemme, etat)} repond={repond} />
       <div className="mt-6 border-t border-bord pt-4">
         <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2)} />
         <button type="button" onClick={voirResultat} className="mt-3 min-h-11 text-sm font-medium text-lien underline">

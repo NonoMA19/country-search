@@ -14,7 +14,11 @@ export type Pays = {
   villeRecherche: string;
   en: string; // « en Belgique », « au Canada »…
   le: string; // « la Belgique », « le Canada »…
+  pluriel?: boolean; // « les Pays-Bas » : le verbe s’accorde (« te correspondent »)
 };
+
+// Le verbe accordé au nom du pays : accord(p, "correspond", "correspondent").
+export const accord = (p: Pick<Pays, "pluriel">, singulier: string, pluriel: string) => (p.pluriel ? pluriel : singulier);
 
 // Le nom affiché de chaque famille, sans sigle obscur.
 export const NOM_FAMILLE: Record<Famille, string> = {

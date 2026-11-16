@@ -1,10 +1,10 @@
 // Le calcul du quiz : un simple calcul, sans IA.
 // La méthode complète est expliquée sur la page /methode.
-import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
-import { pays, type Pays } from "./pays";
+import { ECART_EX_AEQUO } from "@/config";
+import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, europe, mesures, notes, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
-  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
+  avis, dateFr, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
+  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene,
 } from "./donnees";
 
 export type Profil = Record<string, string | string[] | undefined>;
@@ -17,6 +17,8 @@ export type Etat = {
   ordre: string[]; // dilemmes dans l'ordre où ils ont été vus
   remontes: string[]; // pays remontés à la main depuis « Moins adaptés »
   historique: string[]; // le top 3 après chaque réponse (le premier : avant les dilemmes)
+  graine: number; // tirée au hasard au début du parcours : scènes et premiers dilemmes en dépendent (stable au retour et au rechargement)
+  dejaVues: string[]; // scènes vues dans tes parcours précédents (« dilemme/scène ») : on ne te les repose pas
 };
 
 // « Et si… ? » : 4 curseurs concrets. Chacun règle l'importance d'un groupe de mesures,
@@ -34,7 +36,7 @@ export const GROUPES: { id: GroupeReglage; nom: string; mesures: string[]; defau
   { id: "culture", nom: "La culture au travail", mesures: ["hierarchie", "communication", "ponctualite", "decision", "pro-perso"], defaut: [] },
 ];
 
-export const ETAT_VIDE: Etat = { profil: {}, priorites: [], sujets: [], reponses: {}, ordre: [], remontes: [], historique: [] };
+export const ETAT_VIDE: Etat = { profil: {}, priorites: [], sujets: [], reponses: {}, ordre: [], remontes: [], historique: [], graine: 0, dejaVues: [] };
 export const REGLAGES_DEFAUT: Reglages = { niveaux: {}, budget: null };
 export const MIN_DILEMMES = 6;
 export const REPONSES_STABLES = 3;
@@ -44,7 +46,15 @@ const option = (question: string, id: unknown) =>
   quiz.profil.find((q) => q.id === question)?.options.find((o) => o.id === id);
 
 export const ageMax = (p: Profil) => option("age", p.age)?.ageMax ?? null;
-export const budgetProfil = (p: Profil) => option("budget", p.budget)?.euros ?? null;
+// Ton budget : une tranche tirée du profil (« de 2 000 à 5 000 € »), ou une somme exacte (curseur « Et si… ? »).
+export type Budget = { min: number; max: number | null };
+export function budgetProfil(p: Profil): Budget | null {
+  const o = option("budget", p.budget);
+  return o?.min !== undefined ? { min: o.min, max: o.max ?? null } : null;
+}
+export const budgetExact = (n: number): Budget => ({ min: n, max: n });
+export const budgetDe = (etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Budget | null =>
+  reglages.budget !== null ? budgetExact(reglages.budget) : budgetProfil(etat.profil);
 export const dureeMois = (p: Profil) => option("duree", p.duree)?.mois ?? null;
 
 export function languesParlees(p: Profil): string[] {
@@ -66,6 +76,7 @@ export function questionProfilVisible(id: string, p: Profil): boolean {
 
 // ---------- Notes ----------
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
+  if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
   const n = notes[paysId]?.[mesureId];
   if (!n || n.statut !== "verifie" || n.note === null) return null;
   // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français, et rien n'est à apprendre.
@@ -75,6 +86,7 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
 
 const disponibilite: Record<string, number> = {};
 export function paysCouverts(mesureId: string): number {
+  if (MESURES_CALCULEES.includes(mesureId)) return pays.length;
   disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie").length;
   return disponibilite[mesureId];
 }
@@ -86,7 +98,59 @@ export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0
 export type EffetActif = { mesure: string; sens: "haut" | "position"; position?: number; poids: number; famille: FamilleScore; origine: string };
 
 export const trouverDilemme = (id: string) => quiz.dilemmes.find((x) => x.id === id);
-export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined => trouverDilemme(id)?.options.find((o) => o.id === etat.reponses[id]);
+
+// ---------- Réponses graduées ----------
+// Un dilemme « en échelle » a 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B.
+// « Plutôt » : l'effet complet de l'option (importance 1, ou sa position).
+// « Un peu » : la moitié (importance 0,5, ou la position à mi-chemin entre celle de l'option et le milieu de l'échelle, 3).
+export const REPONSES_ECHELLE = ["a", "peu-a", "peu-b", "b"] as const;
+export const LIBELLE_ECHELLE: Record<string, string> = { a: "Plutôt A", "peu-a": "Un peu A", "peu-b": "Un peu B", b: "Plutôt B" };
+export const reponsesDe = (d: Dilemme): string[] => (d.echelle ? [...REPONSES_ECHELLE] : d.options.map((o) => o.id));
+export const MILIEU_ECHELLE = 3;
+
+export function optionReponse(d: Dilemme, reponse: string | undefined): OptionDilemme | undefined {
+  if (!reponse || reponse === "passer") return undefined;
+  if (!d.echelle || !reponse.startsWith("peu-")) return d.options.find((o) => o.id === reponse);
+  const o = d.options.find((x) => x.id === reponse.slice(4));
+  if (!o) return undefined;
+  return {
+    ...o,
+    id: reponse,
+    effets: o.effets.map((e) => (e.position !== undefined ? { ...e, position: (e.position + MILIEU_ECHELLE) / 2 } : { ...e, poids: (e.poids ?? 1) / 2 })),
+    portrait: o.portraitPeu ?? o.portrait,
+    preference: o.preferencePeu ?? o.preference,
+  };
+}
+export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined => {
+  const d = trouverDilemme(id);
+  return d ? optionReponse(d, etat.reponses[id]) : undefined;
+};
+
+// ---------- Hasard reproductible ----------
+// Un nombre tiré de la graine du parcours et d'un texte : toujours le même pour la même graine.
+export function hacher(graine: number, texte: string): number {
+  let h = (graine ^ 0x811c9dc5) >>> 0;
+  for (let i = 0; i < texte.length; i++) h = Math.imul(h ^ texte.charCodeAt(i), 0x01000193) >>> 0;
+  h ^= h >>> 15; h = Math.imul(h, 0x2c1b3c6d) >>> 0; h ^= h >>> 12;
+  return h >>> 0;
+}
+
+// La scène montrée pour un dilemme : tirée au hasard (avec la graine) parmi celles que tu n'as pas vues
+// dans tes parcours précédents. Le même dilemme montre toujours la même scène dans un parcours.
+export const cleScene = (d: Dilemme, s: Scene) => `${d.id}/${s.id}`;
+export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> = ETAT_VIDE): Scene {
+  const neuves = d.scenes.filter((s) => !etat.dejaVues.includes(cleScene(d, s)));
+  const liste = neuves.length ? neuves : d.scenes;
+  return liste[hacher(etat.graine, d.id) % liste.length];
+}
+
+// Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».
+export function libelleReponse(d: Dilemme, reponse: string, etat?: Etat): string {
+  const scene = sceneDe(d, etat);
+  const i = d.options.findIndex((o) => o.id === reponse.replace(/^peu-/, ""));
+  const texte = scene.options[i]?.texte ?? "";
+  return d.echelle ? `${LIBELLE_ECHELLE[reponse] ?? reponse} : ${texte}` : texte;
+}
 
 // Un dilemme n'est jamais proposé si l'une de ses mesures est notée pour moins de 60 % des pays.
 export const SEUIL_DILEMME = 0.6;
@@ -225,7 +289,8 @@ export type Porte = {
   type: PorteBrute["type"] | "nationalite";
   phrase: string;
   fonds: number | null;
-  manque: number | null;
+  manque: number | null; // ce qui te manque à coup sûr (au moins), selon ta tranche de budget
+  manquePossible?: number | null; // ce qui pourrait te manquer, selon ta somme exacte dans la tranche
   alertes: Alerte[];
   preuve: Preuve;
   autres: string[];
@@ -261,7 +326,7 @@ export function casNationalite(profil: Profil): CasDouble | null {
   return doubleNationalite.cas.find((c) => c.id === profil["nationalite-laquelle"]) ?? null;
 }
 
-export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Porte {
+export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Porte {
   const cas = casNationalite(profil);
   if (cas?.pays === p.id && cas.acces) {
     const preuve: Preuve = { type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence };
@@ -316,10 +381,15 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     }
     const fonds = pvt.fonds?.euros ?? null;
     let manque: number | null = null;
-    if (fonds !== null && budget !== null && budget < fonds) {
-      manque = fonds - budget;
-      alertes.push({ texte: `Il te manquerait environ ${euros(manque)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
-    } else if (fonds === null && pvt.fonds) {
+    let manquePossible: number | null = null;
+    // Avec une tranche : ce qui manque à coup sûr (le haut de la tranche ne suffit pas), ou ce qui pourrait manquer.
+    if (fonds !== null && budget !== null && budget.max !== null && budget.max < fonds) {
+      manque = fonds - budget.max;
+      alertes.push({ texte: `Il te manquerait ${budget.min === budget.max ? "environ" : "au moins"} ${euros(manque)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
+    } else if (fonds !== null && budget !== null && budget.min < fonds) {
+      manquePossible = fonds - budget.min;
+      alertes.push({ texte: `Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(manquePossible)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
+    } else if ((fonds === null || budget === null) && pvt.fonds) {
       alertes.push({ texte: `Ce PVT demande ${pvt.fonds.texte}.`, preuve: preuvePorte(pvt) });
     }
     if ((duree !== null && duree > 12) || profil.objectif === "carriere") {
@@ -329,7 +399,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
     const sa = pvt.saison;
     const mention = sa ? { texte: sa.texte, preuve: preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
-    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
+    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, manquePossible, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
   }
 
   // Pays « visa de travail »
@@ -352,7 +422,7 @@ export type LienEtape = { texte: string; url: string; nom: string };
 export type Faisabilite = { remplies: string[]; aRemplir: string[]; aVerifier: string[]; etape: LienEtape | null };
 const premiereSouphrase = (t: string) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
 
-export function faisabilite(p: Pays, profil: Profil, budget: number | null): Faisabilite {
+export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Faisabilite {
   const porte = evaluerPorte(p, profil, budget);
   const f: Faisabilite = { remplies: [], aRemplir: [], aVerifier: [], etape: null };
   const age = ageMax(profil);
@@ -387,8 +457,9 @@ export function faisabilite(p: Pays, profil: Profil, budget: number | null): Fai
     if (age === null) f.aVerifier.push(`Ton âge n’est pas connu : le PVT est ouvert jusqu’à ${pvt.ageMax} ans.`);
     else f.remplies.push(`Ton âge permet le PVT (jusqu’à ${pvt.ageMax} ans).`);
     const fonds = pvt.fonds?.euros ?? null;
-    if (fonds !== null && budget !== null && budget >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
-    else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait environ ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    if (fonds !== null && budget !== null && budget.min >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
+    else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait ${budget?.min === budget?.max ? "environ" : "au moins"} ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    else if (porte.manquePossible) f.aVerifier.push(`Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(porte.manquePossible)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
     else if (pvt.fonds) f.aRemplir.push(`Prévoir les ressources demandées\u00a0: ${pvt.fonds.texte}.`);
     if (pvt.invitation) f.aRemplir.push("Recevoir une invitation : rien n’est garanti.");
     else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) f.aRemplir.push(`Obtenir une des ${pvt.quota} places de l’année.`);
@@ -450,32 +521,46 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
   return { nom: visa?.nom ?? "Visa de travail", lien: visa?.lien ? { url: visa.lien, nom: "Entrée et séjour (France Diplomatie)" } : null, points: ["Employeur obligatoire", "Conditions à vérifier"] };
 }
 
-// ---------- Pays qui descendent dans « Moins adaptés pour toi » ----------
-export function concerne(regle: string | undefined, p: Pays, etat: Etat): boolean {
-  // (« Je garde ces soirées pour moi » n'écarte plus aucun pays : c'est une pénalité, voir la mesure « apprendre-langue ».)
-  if (regle === "employeur-requis") {
-    const b = evaluerPorte(p, etat.profil, null).badge;
-    if (b !== "conditions" && b !== "fermee") return false;
-    // Quand on sait si le visa de travail est lié à l'employeur, on s'en sert : seul « oui » écarte le pays.
-    // « à vérifier » ne compte pas : la règle d'avant s'applique (un employeur est exigé).
-    const lie = visaTravail(p.id)?.detail?.lieEmployeur;
-    return lie !== "non" && lie !== "partiellement";
+// ---------- Changer d'employeur librement (D18) : une pénalité, plus un filtre ----------
+// La note dit si ton visa te laisserait changer d'employeur : 5 si aucun visa ne te lie à un employeur
+// (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
+// 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
+export const MESURES_CALCULEES = ["employeur-libre"];
+const cacheLibre = new Map<string, number>();
+export function noteEmployeurLibre(paysId: string, profil: Profil): number | null {
+  const p = pays.find((x) => x.id === paysId);
+  if (!p) return null;
+  const cle = `${paysId}|${profil.age ?? ""}|${profil.nationalite ?? ""}|${profil["nationalite-laquelle"] ?? ""}`;
+  const deja = cacheLibre.get(cle);
+  if (deja !== undefined) return deja;
+  const porte = evaluerPorte(p, profil, null);
+  let n = 1;
+  if (porte.type === "nationalite" || porte.type === "ue" || (porte.type === "pvt" && porte.badge !== "fermee")) n = 5;
+  else {
+    const lie = visaTravail(paysId)?.detail?.lieEmployeur;
+    n = lie === "non" ? 5 : lie === "partiellement" ? 3 : 1;
   }
-  return false;
+  cacheLibre.set(cle, n);
+  return n;
+}
+
+// La preuve d'une mesure. « Changer d'employeur » vient de la porte d'entrée (et du visa de travail s'il est lu).
+export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preuve {
+  if (mesureId !== "employeur-libre") return preuveMesure(paysId, mesureId);
+  const p = pays.find((x) => x.id === paysId)!;
+  const porte = evaluerPorte(p, profil, null);
+  const visa = porte.type === "visa-travail" || porte.badge === "fermee" ? visaTravail(paysId)?.detail : undefined;
+  return visa ? preuveVisa(visa) : porte.preuve;
 }
 
 // Toutes les raisons qui font descendre un pays dans « Moins adaptés pour toi », dans l'ordre.
 // « age » : une règle légale (le PVT fermé à ton âge). Les autres sont tes préférences.
-export type CauseEcart = { cause: "zone" | "francais" | "employeur" | "age"; raison: string };
+export type CauseEcart = { cause: "zone" | "francais" | "age"; raison: string };
 export function causesEcart(p: Pays, etat: Etat): CauseEcart[] {
   const res: CauseEcart[] = [];
   if (etat.profil.zone === "europe" && p.zone !== "europe") res.push({ cause: "zone", raison: "Tu as choisi de partir en Europe." });
   if (etat.profil.zone === "hors-europe" && p.zone === "europe") res.push({ cause: "zone", raison: "Tu as choisi de partir hors d’Europe." });
   if (etat.profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) res.push({ cause: "francais", raison: "Tu veux travailler en français." });
-  for (const id of etat.ordre) {
-    const ecart = optionChoisie(etat, id)?.ecart;
-    if (ecart && concerne(ecart.regle, p, etat)) res.push({ cause: "employeur", raison: ecart.raison });
-  }
   const porte = evaluerPorte(p, etat.profil, null);
   if (porte.badge === "fermee") res.push({ cause: "age", raison: `Fermé à ton âge. ${porte.phrase}` });
   return res;
@@ -492,7 +577,7 @@ export function raisonsEcart(etat: Etat): Record<string, string> {
 }
 
 // Les pénalités (pas des filtres) : un pays remonté à la main ne les subit plus.
-export const PENALITES = ["apprendre-langue"];
+export const PENALITES = ["apprendre-langue", "employeur-libre"];
 
 // ---------- Score ----------
 export type Detail = {
@@ -526,6 +611,7 @@ export const LIBELLE_FIABILITE: Record<NiveauFiabilite, string> = {
 };
 export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil): Fiabilite {
   const verifies = criteres.filter((m) => {
+    if (MESURES_CALCULEES.includes(m)) return TYPES_VERIFIES.includes(preuveDe(paysId, m, profil).type);
     const n = notes[paysId]?.[m];
     if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
     // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
@@ -546,7 +632,7 @@ const estPriorite = (e: EffetActif) => e.origine.startsWith("priorite:");
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
   const effets = effetsAjustes(etat, reglages);
   const ecarts = raisonsEcart(etat);
-  const budget = reglages.budget ?? budgetProfil(etat.profil);
+  const budget = budgetDe(etat, reglages);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
   const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))];
   const lignes = pays.map((p) => {
@@ -600,70 +686,75 @@ export function verdict(score: number): string {
   return "Piste possible";
 }
 
-// Égalités : dans chaque groupe (même liste, même fiabilité), on compare chaque pays au premier
-// du groupe, sur les scores non arrondis. À 5 points ou moins du premier, il est à égalité avec lui.
+// Égalités : un groupe d'égalité est une chaîne de pays (même liste, même fiabilité) dont chaque voisin
+// est à 5 points ou moins, sur les scores non arrondis.
 // Pour chaque pays : l'indice du premier de son groupe d'égalité, ou -1 s'il n'est à égalité avec personne.
 export function groupesEgalite(lignes: Ligne[]): number[] {
   const res = lignes.map(() => -1);
-  let chef = -1;
   lignes.forEach((l, i) => {
-    const c = chef >= 0 ? lignes[chef] : null;
-    const memeGroupe = c && !c.ecart === !l.ecart && c.peuDeDonnees === l.peuDeDonnees && !l.peuDeDonnees && c.score - l.score <= ECART_EX_AEQUO;
-    if (memeGroupe) { res[i] = chef; res[chef] = chef; } else chef = i;
+    const prec = i > 0 ? lignes[i - 1] : null;
+    const chaine = prec && !prec.ecart === !l.ecart && prec.peuDeDonnees === l.peuDeDonnees && !l.peuDeDonnees && prec.score - l.score <= ECART_EX_AEQUO;
+    if (chaine) {
+      if (res[i - 1] < 0) res[i - 1] = i - 1;
+      res[i] = res[i - 1];
+    }
   });
   return res;
 }
 export const egalites = (lignes: Ligne[]): boolean[] => groupesEgalite(lignes).map((g) => g >= 0);
 
-// « À égalité avec les Pays-Bas » : on dit toujours avec qui. Un pays hors de la vue (le top 3 pour une carte,
-// la suite du classement pour la liste) est suivi de son rang : « À égalité avec l'Italie (n° 5) ».
-// Au plus deux noms, puis « et 3 autres pays ».
+// « À égalité avec les Pays-Bas » : on cite le voisin le plus proche (au-dessus ou en dessous, dans la même chaîne).
+// Un voisin hors de la vue (le top 3 pour une carte, la suite du classement pour la liste) est suivi de son rang.
 export function avecQui(lignes: Ligne[], i: number, dansLaVue: (k: number) => boolean = (k) => k < 3): string | null {
   const g = groupesEgalite(lignes);
   if (g[i] < 0) return null;
-  const autres = g.map((x, k) => (x === g[i] && k !== i ? k : -1)).filter((k) => k >= 0);
-  // Les pays visibles d'abord, puis les plus proches au classement.
-  const tries = [...autres].sort((a, b) => Number(dansLaVue(b)) - Number(dansLaVue(a)) || Math.abs(a - i) - Math.abs(b - i));
-  const noms = tries.slice(0, 2).map((k) => (dansLaVue(k) ? lignes[k].pays.le : `${lignes[k].pays.le} (n°\u00a0${k + 1})`));
-  const reste = tries.length - noms.length;
-  return `À égalité avec ${reste > 0 ? `${noms.join(", ")} et ${reste} autre${reste > 1 ? "s" : ""} pays` : listeFr(noms)}`;
+  const voisins = [i - 1, i + 1].filter((k) => k >= 0 && k < lignes.length && g[k] === g[i]);
+  const k = voisins.sort((a, b) => Math.abs(lignes[a].score - lignes[i].score) - Math.abs(lignes[b].score - lignes[i].score) || Number(dansLaVue(b)) - Number(dansLaVue(a)))[0];
+  if (k === undefined) return null;
+  return `À égalité avec ${dansLaVue(k) ? lignes[k].pays.le : `${lignes[k].pays.le} (n°\u00a0${k + 1})`}`;
 }
 
 // ---------- Le pays surprise ----------
-// Un pays qui te correspond très bien, mais qu'une seule de tes préférences écarte : la zone choisie,
-// le visa lié à l'employeur (D18), ou la langue à apprendre (D10, une pénalité : il compte s'il entrerait
-// dans ton top 3 sans elle). Jamais pour une règle légale (âge) ni pour le budget.
-// On garde le meilleur, s'il atteint au moins le score de ton n° 3, ou 75 %.
-export type Surprise = { ligne: Ligne; score: number; cause: "zone" | "employeur" | "langue"; phrase: string };
+// Un pays qu'une seule de tes préférences écarte ou fait reculer : la zone choisie (un filtre), ou une pénalité
+// (« Je préfère pouvoir changer d'employeur librement », « Je garde ces soirées pour moi »).
+// Il n'apparaît que si, sans cette préférence, son score l'aurait placé n° 1 ou n° 2 de ton classement.
+// Jamais pour une règle légale (âge) ni pour le budget. S'il te manquerait de l'argent pour ce pays, la carte le dit.
+export type Surprise = { ligne: Ligne; score: number; cause: "zone" | "employeur" | "langue"; phrase: string; argent: string | null };
 const PHRASE_SURPRISE = {
-  europe: "Seul ton choix de rester en Europe l’écarte.",
-  "hors-europe": "Seul ton choix de partir hors d’Europe l’écarte.",
-  employeur: "Seul ton choix de pouvoir changer d’employeur librement l’écarte.",
-  langue: "Seul ton choix de ne pas apprendre de nouvelle langue le fait reculer.",
+  europe: "Seul ton choix de rester en Europe écarte ce pays.",
+  "hors-europe": "Seul ton choix de partir hors d’Europe écarte ce pays.",
+  employeur: "Seul ton choix de pouvoir changer d’employeur librement fait reculer ce pays.",
+  langue: "Seul ton choix de ne pas apprendre de nouvelle langue fait reculer ce pays.",
 };
+// Les préférences qui sont des pénalités : le dilemme, la mesure, la cause.
+const PENALITES_SURPRISE = [
+  { dilemme: "job-de-reve", mesure: "employeur-libre", cause: "employeur" as const },
+  { dilemme: "cours-offerts", mesure: "apprendre-langue", cause: "langue" as const },
+];
+const phraseArgent = (l: Ligne) => l.porte.alertes.find((a) => /^(Il te manquerait|Selon ta somme exacte)/.test(a.texte))?.texte ?? null;
+
 export function paysSurprise(etat: Etat, lignes: Ligne[], top: Ligne[], reglages: Reglages = REGLAGES_DEFAUT): Surprise | null {
-  const n3 = top.length >= 3 ? top[2].score : Infinity;
-  const seuil = Math.min(n3, SEUIL_SURPRISE);
+  if (top.length === 0) return null;
+  const seuil = top[Math.min(1, top.length - 1)].score; // le score de ton n° 2
   const dansTop = new Set(top.map((l) => l.pays.id));
   const candidats: Surprise[] = [];
   for (const l of lignes) {
     if (!l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id)) continue;
     const causes = causesEcart(l.pays, etat);
-    if (causes.length !== 1 || (causes[0].cause !== "zone" && causes[0].cause !== "employeur")) continue;
-    const cause = causes[0].cause;
-    const phrase = cause === "employeur" ? PHRASE_SURPRISE.employeur : PHRASE_SURPRISE[etat.profil.zone === "europe" ? "europe" : "hors-europe"];
-    candidats.push({ ligne: l, score: l.score, cause, phrase });
+    if (causes.length !== 1 || causes[0].cause !== "zone") continue;
+    candidats.push({ ligne: l, score: l.score, cause: "zone", phrase: PHRASE_SURPRISE[etat.profil.zone === "europe" ? "europe" : "hors-europe"], argent: phraseArgent(l) });
   }
-  // La langue à apprendre : on recalcule sans cette seule réponse.
-  if (etat.reponses["cours-offerts"] === "b") {
+  // Une pénalité : on recalcule sans cette seule réponse.
+  for (const pen of PENALITES_SURPRISE) {
+    if (!optionChoisie(etat, pen.dilemme)?.effets.some((e) => e.mesures.includes(pen.mesure))) continue;
     const reponses = { ...etat.reponses };
-    delete reponses["cours-offerts"];
-    const sans = calculer({ ...etat, reponses, ordre: etat.ordre.filter((id) => id !== "cours-offerts") }, reglages);
+    delete reponses[pen.dilemme];
+    const sans = calculer({ ...etat, reponses, ordre: etat.ordre.filter((id) => id !== pen.dilemme) }, reglages);
     for (const l of lignes) {
       if (l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id) || etat.remontes.includes(l.pays.id)) continue;
-      const penalise = l.details.some((d) => d.mesure === "apprendre-langue" && d.accord < 1);
+      if (!l.details.some((d) => d.mesure === pen.mesure && d.accord < 1)) continue;
       const score = sans.find((x) => x.pays.id === l.pays.id)?.score ?? 0;
-      if (penalise && score >= n3) candidats.push({ ligne: l, score, cause: "langue", phrase: PHRASE_SURPRISE.langue });
+      candidats.push({ ligne: l, score, cause: pen.cause, phrase: PHRASE_SURPRISE[pen.cause], argent: phraseArgent(l) });
     }
   }
   const meilleur = candidats.sort((a, b) => b.score - a.score)[0];
@@ -709,25 +800,25 @@ function etendue(effets: EffetActif[], liste: Ligne[], profil: Profil): number {
 // À quel point un dilemme départage les pays donnés (0 : il ne change rien).
 export function utilite(d: Dilemme, etat: Etat, liste: Ligne[]): number {
   return Math.max(0, ...d.options.map((o) => {
-    let u = etendue(effetsNouveaux(o, etat), liste, etat.profil);
-    if (o.ecart) {
-      const touches = liste.filter((l) => concerne(o.ecart?.regle, l.pays, etat)).length;
-      if (touches > 0) u = Math.max(u, 4 + touches / 1000);
-    }
-    return u;
+    return etendue(effetsNouveaux(o, etat), liste, etat.profil);
   }));
 }
 
+// Les 4 premiers dilemmes sont tirés au hasard (avec la graine) parmi ceux qui départagent au moins
+// 60 % autant que le meilleur : deux personnes au profil proche n'ont pas les mêmes questions.
+// Ensuite, toujours le plus utile.
+export const DEBUT_ALEATOIRE = 4;
+export const PART_UTILITE = 0.6;
 export function prochainDilemme(etat: Etat): Dilemme | null {
   const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
-  let meilleur: Dilemme | null = null;
-  let max = 0;
-  for (const d of quiz.dilemmes) {
-    if (!dilemmeVisible(d, etat)) continue;
-    const u = utilite(d, etat, top);
-    if (u > max + 1e-9) { max = u; meilleur = d; }
+  const candidats = quiz.dilemmes.filter((d) => dilemmeVisible(d, etat)).map((d) => ({ d, u: utilite(d, etat, top) })).filter((x) => x.u > 1e-9);
+  if (!candidats.length) return null;
+  const max = Math.max(...candidats.map((x) => x.u));
+  if (etat.ordre.length < DEBUT_ALEATOIRE) {
+    const proches = candidats.filter((x) => x.u >= PART_UTILITE * max - 1e-9);
+    return proches[hacher(etat.graine, `debut:${etat.ordre.length}`) % proches.length].d;
   }
-  return meilleur;
+  return candidats.find((x) => x.u >= max - 1e-9)!.d;
 }
 
 // « Passer » ne compte ni pour le minimum de dilemmes, ni pour la stabilité du top 3.
@@ -833,11 +924,26 @@ export function portrait(etat: Etat, regrouperStyle = false): LignePortrait[] {
 export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
 // ---------- Le départage ----------
-// Quand le n°1 et le n°2 sont à 5 points ou moins, au plus 3 dilemmes encore non répondus,
-// choisis parce qu'ils séparent le plus ces deux pays.
-export const MAX_DEPARTAGE = 3;
+// Quand le n°1 et le n°2 sont à 5 points ou moins : au plus 5 dilemmes encore non répondus, tant que l'écart
+// reste sous 5 points, puis la comparaison côte à côte. Seulement des dilemmes dont une mesure sépare vraiment
+// les deux pays : deux niveaux d'écart ou plus, avec une donnée vérifiée des deux côtés.
+export const MAX_DEPARTAGE = 5;
+export const ECART_NIVEAUX_DEPARTAGE = 2;
 const ecartEntre = (lignes: Ligne[], a: string, b: string) =>
   (lignes.find((l) => l.pays.id === a)?.score ?? 0) - (lignes.find((l) => l.pays.id === b)?.score ?? 0);
+const lePays = (id: string) => pays.find((p) => p.id === id)?.le ?? id;
+const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
+// Les mesures d'un dilemme qui séparent a et b (de la plus grande différence à la plus petite).
+export function mesuresQuiSeparent(d: Dilemme, etat: Etat, a: string, b: string): { mesure: string; ecart: number }[] {
+  return mesuresDuDilemme(d)
+    .map((m) => {
+      const na = noteEffective(a, m, etat.profil), nb = noteEffective(b, m, etat.profil);
+      return na === null || nb === null ? null : { mesure: m, ecart: Math.abs(na - nb) };
+    })
+    .filter((x): x is { mesure: string; ecart: number } => !!x && x.ecart >= ECART_NIVEAUX_DEPARTAGE)
+    .sort((x, y) => y.ecart - x.ecart);
+}
 
 // De combien les options d'un dilemme font varier l'écart entre a et b (0 : il ne les sépare pas).
 export function separation(d: Dilemme, etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): number {
@@ -849,25 +955,40 @@ export function prochainDepartage(etat: Etat, a: string, b: string, reglages: Re
   let meilleur: Dilemme | null = null;
   let max = 1e-6;
   for (const d of quiz.dilemmes) {
-    if (!dilemmeVisible(d, etat)) continue;
+    if (!dilemmeVisible(d, etat) || mesuresQuiSeparent(d, etat, a, b).length === 0) continue;
     const s = separation(d, etat, a, b, reglages);
     if (s > max) { max = s; meilleur = d; }
   }
   return meilleur;
 }
 
-// La phrase de fin : la réponse qui a le plus changé l'écart, et qui est devant maintenant.
+// « On te pose cette question parce que l'Allemagne et la Belgique diffèrent surtout sur la ponctualité. »
+export function raisonDepartage(d: Dilemme, etat: Etat, a: string, b: string): string {
+  const m = mesuresQuiSeparent(d, etat, a, b)[0];
+  const sujet = m ? (mesures[m.mesure]?.sujet ?? mesures[m.mesure]?.nom.toLowerCase()) : "ce point";
+  return `On te pose cette question parce que ${lePays(a)} et ${lePays(b)} diffèrent surtout sur ${sujet}.`;
+}
+
+// L'écart entre deux pays est-il encore une égalité (5 points ou moins) ?
+export const encoreEgalite = (etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT) =>
+  Math.abs(ecartEntre(calculer(etat, reglages), a, b)) <= ECART_EX_AEQUO;
+
+// La phrase de fin. Si les deux pays restent à égalité, on ne dit pas « ce qui a fait la différence ».
 export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): string {
-  const le = (id: string) => pays.find((p) => p.id === id)?.le ?? id;
-  const Le = (id: string) => le(id).charAt(0).toUpperCase() + le(id).slice(1);
-  const pluriel = (id: string) => le(id).startsWith("les ");
+  const pluriel = (id: string) => !!pays.find((p) => p.id === id)?.pluriel;
   const ids = apres.ordre.filter((id) => !avant.ordre.includes(id) && apres.reponses[id] !== "passer");
+  const debut = ecartEntre(calculer(avant, reglages), a, b);
   const fin = ecartEntre(calculer(apres, reglages), a, b);
+  const egalite = Math.abs(fin) <= ECART_EX_AEQUO;
+  const ecartFin = Math.round(Math.abs(fin));
+  const points = `${ecartFin}\u00a0point${ecartFin > 1 ? "s" : ""} d’écart`;
   const devant = fin > 0 ? a : b, derriere = fin > 0 ? b : a;
-  const issue = Math.abs(fin) <= ECART_EX_AEQUO
-    ? `${Le(a)} et ${le(b)} restent à égalité.`
-    : `${Le(devant)} ${pluriel(devant) ? "passent" : "passe"} devant ${le(derriere)}.`;
+  const egaux = `${lePays(a)} et ${lePays(b)} restent à égalité (${points}).`;
+  const issue = egalite
+    ? majuscule(egaux)
+    : `${majuscule(lePays(devant))} ${Math.sign(fin) === Math.sign(debut) && debut !== 0 ? (pluriel(devant) ? "restent" : "reste") : (pluriel(devant) ? "passent" : "passe")} devant ${lePays(derriere)}, avec ${points}.`;
   if (ids.length === 0) return `Tu as passé les questions\u00a0: rien n’a changé. ${issue}`;
+  if (egalite) return `Tes réponses n’ont pas suffi à les départager\u00a0: ${egaux}`;
   let etat = avant;
   let plusFort = { id: ids[0], effet: -1 };
   for (const id of ids) {
@@ -877,9 +998,8 @@ export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, r
     if (effet > plusFort.effet) plusFort = { id, effet };
   }
   const d = trouverDilemme(plusFort.id);
-  const o = optionChoisie(apres, plusFort.id);
-  if (plusFort.effet < 0.05) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
-  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${d?.titre}\u00a0» (${o?.texte}). ${issue}`;
+  if (!d) return issue;
+  return `${issue} Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d, apres).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id], apres)}).`;
 }
 
 // ---------- Résultat rédigé pour toi ----------
@@ -968,7 +1088,7 @@ export function pointsPays(l: Ligne, etat: Etat, interdites: Set<string> = new S
     // Jamais deux fois la même phrase, ni sous deux pays, ni sous le même (langue et langue à apprendre).
     if (interdites.has(texte) || vues.has(texte)) continue;
     vues.add(texte);
-    cat.pour.push({ texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) });
+    cat.pour.push({ texte, mesure: d.mesure, preuve: preuveDe(l.pays.id, d.mesure, etat.profil) });
   }
   const contre = uniques([...parle].filter((d) => d.accord <= ACCORD_A_SAVOIR).sort((a, b) => a.accord - b.accord || b.poids - a.poids));
   for (const d of contre) {
@@ -979,7 +1099,7 @@ export function pointsPays(l: Ligne, etat: Etat, interdites: Set<string> = new S
     const texte = phraseSavoir(d, fait, etat);
     if (interdites.has(texte) || vues.has(texte)) continue;
     vues.add(texte);
-    cat.savoir = { texte, mesure: d.mesure, preuve: preuveMesure(l.pays.id, d.mesure) };
+    cat.savoir = { texte, mesure: d.mesure, preuve: preuveDe(l.pays.id, d.mesure, etat.profil) };
   }
   return res;
 }
@@ -1011,12 +1131,25 @@ export function valeurLisible(paysId: string, mesureId: string, profil: Profil):
   return { valeur, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
 }
 
+// La valeur de la France pour comparer à ce qu'on connaît : « France : 17,3 % ».
+// Seulement quand la même source la donne, avec les mêmes règles (années comparables pour le salaire).
+// « annee » : l'année du pays comparé ; si celle de la France en diffère, elle est dite.
+export function valeurFrance(mesureId: string, annee?: string | null): string | null {
+  const m = mesures[mesureId];
+  const n = notesFrance[mesureId];
+  if (!m?.affichage || !n || n.statut !== "verifie" || typeof n.valeur !== "number") return null;
+  const modele = n.valeur < 2 && m.affichageSingulier ? m.affichageSingulier : m.affichage;
+  const v = modele.replace("{v} ", "{v} ").replace("{v}", nombreFr(n.valeur, m.decimales ?? 0));
+  return `France : ${v}${n.annee && annee && n.annee !== annee ? ` (${n.annee})` : ""}`;
+}
+
 // ---------- La comparaison côte à côte ----------
 // Une ligne par critère qui compte pour toi, tes priorités d'abord, puis par importance.
 export type LigneComparaison = {
   mesure: string; libelle: string; theme: string; priorite: boolean; poids: number;
   a: { valeur: string | null; mot: string } | null; b: { valeur: string | null; mot: string } | null;
-  ecart: number; // accord de a moins accord de b : de −1 à 1 (0 : égalité)
+  ecart: number | null; // accord de a moins accord de b : de −1 à 1 (0 : égalité ; null : donnée manquante d'un côté, non comparable)
+  france: string | null; // « France : 17,3 % », pour comparer à ce qu'on connaît
 };
 export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = REGLAGES_DEFAUT) {
   const lignes: LigneComparaison[] = effetsAjustes(etat, reglages)
@@ -1028,17 +1161,18 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
       return {
         mesure: e.mesure, libelle: m?.court ?? m?.nom ?? e.mesure, theme: m?.theme ?? "", priorite: e.origine.startsWith("priorite:"), poids: e.poids,
         a: valeurLisible(la.pays.id, e.mesure, etat.profil), b: valeurLisible(lb.pays.id, e.mesure, etat.profil),
-        ecart: da && db ? da.accord - db.accord : 0,
+        ecart: da && db ? da.accord - db.accord : null,
+        france: valeurFrance(e.mesure),
       };
     })
     .filter((x) => x.a || x.b)
     .sort((x, y) => Number(y.priorite) - Number(x.priorite) || y.poids - x.poids);
   // Par thème : qui gagne, en tenant compte de l'importance de chaque critère.
   const themes = new Map<string, number>();
-  for (const x of lignes) themes.set(x.theme, (themes.get(x.theme) ?? 0) + x.poids * x.ecart);
+  for (const x of lignes) if (x.ecart !== null) themes.set(x.theme, (themes.get(x.theme) ?? 0) + x.poids * x.ecart);
   const gagnes = (signe: number) => [...themes].filter(([, s]) => s * signe > 0.05).sort((p, q) => Math.abs(q[1]) - Math.abs(p[1])).map(([th]) => th);
   const Le = (l: Ligne) => l.pays.le.charAt(0).toUpperCase() + l.pays.le.slice(1);
-  const gagne = (l: Ligne) => (l.pays.le.startsWith("les ") ? "gagnent" : "gagne");
+  const gagne = (l: Ligne) => accord(l.pays, "gagne", "gagnent");
   const phrases = [
     gagnes(1).length ? `${Le(la)} ${gagne(la)} sur ${listeFr(gagnes(1))}.` : "",
     gagnes(-1).length ? `${Le(lb)} ${gagne(lb)} sur ${listeFr(gagnes(-1))}.` : "",

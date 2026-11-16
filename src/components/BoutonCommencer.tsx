@@ -20,10 +20,10 @@ export default function BoutonCommencer() {
           <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className={VIDE}>Recommencer</button>
         </div>
       ) : (
-        <Link href="/quiz" className={PLEIN}>Commencer</Link>
+        <Link href="/quiz" className={PLEIN}>Trouver mon pays</Link>
       )}
       <p className="mt-3 text-sm text-gris">
-        Quelques minutes, sans compte. Tes réponses restent dans ton navigateur.
+        Tes réponses restent dans ton navigateur : rien n’est envoyé.
       </p>
     </div>
   );

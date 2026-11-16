@@ -6,7 +6,7 @@ import { CircleAlert, CircleCheck, CircleHelp, ShieldCheck } from "lucide-react"
 import Definition from "@/components/Definition";
 import LienOfficiel from "@/components/LienOfficiel";
 import { useSession } from "@/lib/memoire";
-import { LIBELLE_FIABILITE, budgetProfil, calculer, faisabilite, type Faisabilite, type Fiabilite, type VisaSimple } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, budgetDe, calculer, faisabilite, type Faisabilite, type Fiabilite, type VisaSimple } from "@/lib/moteur";
 import { trouverPays, type Pays } from "@/lib/pays";
 
 // Le badge de fiabilité : un toucher explique le calcul en une phrase.
@@ -16,7 +16,7 @@ export function BadgeFiabilite({ f }: { f: Fiabilite }) {
   const style = f.niveau === "complete" ? "bg-bleu-doux text-encre" : f.niveau === "partielle" ? "border border-bord bg-carte text-encre" : "border border-dashed border-gris text-gris";
   return (
     <div className="mt-3">
-      <button type="button" aria-expanded={ouvert} aria-controls={id} onClick={() => setOuvert(!ouvert)} className={`inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 text-sm font-medium ${style}`}>
+      <button type="button" aria-expanded={ouvert} aria-controls={id} onClick={() => setOuvert(!ouvert)} className={`relative inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 text-sm font-medium after:absolute after:-inset-x-1 after:-inset-y-1.5 after:content-[''] ${style}`}>
         <ShieldCheck aria-hidden="true" className="h-4 w-4" /> {LIBELLE_FIABILITE[f.niveau]}
         <span className="sr-only"> : voir comment on le calcule</span>
       </button>
@@ -90,7 +90,7 @@ export function FaisabilitePourToi({ paysId }: { paysId: string }) {
     );
   }
   const { etat, reglages } = session;
-  const budget = reglages.budget ?? budgetProfil(etat.profil);
+  const budget = budgetDe(etat, reglages);
   const ligne = calculer(etat, reglages).find((l) => l.pays.id === paysId);
   return (
     <div className="mt-3 rounded-2xl border border-bord bg-carte p-4">
