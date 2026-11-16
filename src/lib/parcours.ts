@@ -58,6 +58,10 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   }
   // Passée : les phrases montrées à ce moment-là (l'état d'avant).
   if (deja !== undefined) return phrasesSwipe(el, etatAvant(etat, el.id));
+  // Ta carte ne coche que des régions hors d'Europe : la phrase « dépaysement » entre dans la série (sans effet de la carte sur le score).
+  const carte = etat.reponses.carte;
+  const horsEurope = Array.isArray(carte) && carte.length > 0 && !carte.includes("europe") && !carte.includes("aucune");
+  const imposee = horsEurope ? el.phrases.find((p) => p.id === "S16") : undefined;
   const precedent = dimensionsPrecedentes(etat, el.id);
   const top = topCourant(etat);
   const notes = el.phrases
@@ -65,11 +69,11 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
     .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.75 + 0.5 * ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
     .sort((a, b) => b.s - a.s);
   // Pas deux phrases sur exactement les mêmes dimensions quand on peut l'éviter.
-  const res: PhraseSwipe[] = [];
-  const vues = new Set<string>();
+  const res: PhraseSwipe[] = imposee ? [imposee] : [];
+  const vues = new Set<string>(imposee ? [imposee.dimensions.join("+")] : []);
   for (const { p } of notes) {
     const cle = p.dimensions.join("+");
-    if (vues.has(cle)) continue;
+    if (vues.has(cle) || res.includes(p)) continue;
     vues.add(cle); res.push(p);
     if (res.length === el.nombre) return res;
   }

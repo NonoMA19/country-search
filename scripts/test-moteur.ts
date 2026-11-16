@@ -624,7 +624,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 // 2.16 Options équilibrées et réponses graduées (prompt 3e, lot 2).
 {
   for (const d of quiz.dilemmes) {
-    verifier(d.options.length === 2, `${d.id} : ${d.options.length} options au lieu de 2`);
+    verifier(d.options.length === (d.id === "noel" ? 3 : 2), `${d.id} : ${d.options.length} options`);
     verifier(d.scenes.length >= 1, `${d.id} : aucune scène`);
     for (const sc of d.scenes) {
       verifier(sc.options.length === d.options.length, `${d.id}/${sc.id} : pas autant d'options que le dilemme`);
@@ -633,7 +633,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     // Les dilemmes de culture au travail gardent 2 options : jamais d'échelle.
     if (d.theme === "Culture au travail") verifier(!d.echelle, `${d.id} : la culture au travail ne doit pas être en échelle`);
   }
-  for (const id of ["deux-offres", "promotion", "sortie-ecole", "noel", "janvier", "aout", "appartement", "nuit"]) verifier(!!trouverDilemme(id)?.echelle, `${id} : pas en échelle`);
+  for (const id of ["deux-offres", "promotion", "sortie-ecole", "janvier", "aout", "appartement", "nuit"]) verifier(!!trouverDilemme(id)?.echelle, `${id} : pas en échelle`);
   // « Un peu » : la moitié de l'effet (importance 0,5, ou une position à mi-chemin du milieu).
   for (const d of quiz.dilemmes.filter((x) => x.echelle)) {
     verifier(reponsesDe(d).join() === "a,peu-a,peu-b,b", `${d.id} : réponses de l'échelle incorrectes`);
@@ -958,6 +958,31 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     // Une session restée à l'étape « affiner » sans rien à affiner revient au portrait (rechargement, « Reprendre mon quiz »).
     const s = validerSession(JSON.parse(JSON.stringify({ ...SESSION_VIDE, etat, etape: { t: "affiner" } })));
     verifier(s?.etape.t === "portrait" && (s.etape as { fin?: boolean }).fin === true, `affiner ${k} : la session reste sur « affiner » (page vide)`);
+  }
+}
+
+// 2.25 Proche ou loin (prompt 3g, lot 3) : le dépaysement est l'inverse exact de la proximité, sans nouvelle donnée.
+{
+  for (const p of pays) {
+    const v = noteEffective(p.id, "vol", {}), d = noteEffective(p.id, "decalage", {}), dep = noteEffective(p.id, "depaysement", {});
+    if (v !== null && d !== null) verifier(dep === Math.round((12 - v - d) / 2), `dépaysement : ${p.nom} = ${dep} (vol ${v}, décalage ${d})`);
+  }
+  verifier(noteEffective("australie", "depaysement", {})! > noteEffective("belgique", "depaysement", {})!, "dépaysement : l'Australie moins dépaysante que la Belgique");
+  verifier(quiz.envies.length === 10 && quiz.envies.some((e) => e.id === "depaysement"), "dépaysement : l'envie manque (10 envies)");
+  const loin = construire({ envies: ["depaysement", "salaire", "travail", "securite", "climat"] });
+  verifier(effetsActifs(loin).find((e) => e.mesure === "depaysement")?.poids === 2, "dépaysement : l'envie n° 1 ne compte pas 2");
+  // Phrase S16, Noël C et S2.
+  const sw = (x: Record<string, string>) => effetsActifs(repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "phrases", x));
+  verifier(sw({ S16: "oui" }).find((e) => e.mesure === "depaysement")?.poids === 1, "S16 « Ça me correspond » : pas 1 sur le dépaysement");
+  verifier(sw({ S16: "non" }).find((e) => e.mesure === "vol")?.poids === 0.25 && sw({ S16: "non" }).find((e) => e.mesure === "decalage")?.poids === 0.25, "S16 « Pas vraiment » : pas 0,5 sur la proximité");
+  verifier(sw({ S2: "oui" }).find((e) => e.mesure === "depaysement")?.poids === 0.5, "S2 « Ça me correspond » : pas 0,5 sur le dépaysement");
+  verifier(effetsActifs(repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "noel", "c")).find((e) => e.mesure === "depaysement")?.poids === 0.5, "Noël C : pas 0,5 sur le dépaysement");
+  // La carte hors d'Europe fait entrer la phrase S16 dans la série, sans changer le score.
+  const phr = trouverElement("phrases");
+  if (phr?.type === "swipe") {
+    const avecCarte = repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "carte", ["oceanie", "asie-est"]);
+    verifier(phrasesSwipe(phr, avecCarte).some((p) => p.id === "S16") && phrasesSwipe(phr, avecCarte).length === 5, "carte hors d'Europe : la phrase « dépaysement » n'est pas dans la série");
+    verifier(memesScores(scores(avecCarte), scores(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }))), "carte hors d'Europe : le score change");
   }
 }
 

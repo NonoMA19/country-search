@@ -967,6 +967,43 @@
           "Presque la même heure"
         ],
         "sujet": "le décalage horaire"
+      },
+      {
+        "id": "depaysement",
+        "nom": "Dépaysement (loin de Paris, en heures de vol et en décalage horaire)",
+        "sens": "haut",
+        "regle": "L’inverse de la proximité, sans nouvelle donnée : la moyenne de (6 − note du temps de vol) et (6 − note du décalage horaire), arrondie. Plus le pays est loin de Paris, plus la note est haute.",
+        "echelle": [
+          "très proche de Paris",
+          "proche",
+          "assez loin",
+          "loin",
+          "très loin de Paris"
+        ],
+        "mots": [
+          "très faible",
+          "faible",
+          "moyen",
+          "fort",
+          "très fort"
+        ],
+        "fait": [
+          "Le dépaysement y est très faible : c’est tout près de Paris",
+          "Le dépaysement y est faible : c’est proche de Paris",
+          "Le dépaysement y est moyen",
+          "Le dépaysement y est fort : c’est loin de Paris",
+          "Le dépaysement y est très fort : c’est à l’autre bout du monde"
+        ],
+        "court": "Dépaysement",
+        "theme": "le dépaysement",
+        "sujet": "le dépaysement",
+        "etiquettes": [
+          "Très proche",
+          "Proche",
+          "Assez loin",
+          "Loin",
+          "À l’autre bout du monde"
+        ]
       }
     ]
   },

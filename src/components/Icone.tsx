@@ -1,6 +1,6 @@
 // Icônes libres (Lucide, licence ISC).
 import {
-  Backpack, Banknote, Bed, BookOpen, Briefcase, Building2, CircleHelp, ClipboardList, Clock, Cpu, Factory, GraduationCap, House, Landmark,
+  Backpack, Banknote, Bed, BookOpen, Briefcase, Building2, CircleHelp, ClipboardList, Clock, Cpu, Factory, Globe, GraduationCap, House, Landmark,
   PiggyBank, Plane, Scale, ShieldCheck, ShoppingBag, Stethoscope, Sun, Trees, TrendingUp, Users, type LucideProps,
 } from "lucide-react";
 
@@ -9,7 +9,7 @@ const ICONES = {
   shield: ShieldCheck, users: Users, travailler: Briefcase, vivre: House, valeurs: Scale,
   "graduation-cap": GraduationCap, backpack: Backpack, "trending-up": TrendingUp, "circle-help": CircleHelp, landmark: Landmark,
   "clipboard-list": ClipboardList, factory: Factory, cpu: Cpu, "shopping-bag": ShoppingBag, stethoscope: Stethoscope, bed: Bed,
-  "book-open": BookOpen, "building-2": Building2, house: House, trees: Trees,
+  "book-open": BookOpen, "building-2": Building2, house: House, trees: Trees, globe: Globe,
 };
 
 export default function Icone({ nom, ...props }: { nom: string } & LucideProps) {

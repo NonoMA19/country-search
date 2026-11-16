@@ -150,7 +150,7 @@ export function contradictions(etat: Etat): Contradiction[] {
   const cheres = [rep(etat, "deux-offres") === "a" ? "deux-offres" : "", swipe(etat, "S3") === "oui" ? "phrases" : "", rep(etat, "mission-vie") === "a" ? "mission-vie" : ""].filter(Boolean);
   if (rangEnvie(etat, "prix") <= 2 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "classement", texte: "Tu as classé « Vie pas chère » tout en haut, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
   // 2. « Proche de la France », mais 12 h de vol pour Noël, c'est le jeu.
-  const loin = [rep(etat, "noel") === "b" ? "noel" : "", swipe(etat, "S6") === "non" ? "phrases" : ""].filter(Boolean);
+  const loin = [rep(etat, "noel") === "b" || rep(etat, "noel") === "c" ? "noel" : "", swipe(etat, "S6") === "non" ? "phrases" : ""].filter(Boolean);
   if (rangEnvie(etat, "proche") <= 3 && loin.length >= 1) res.push({ id: "proche", reponses: ["envie:proche", ...loin], revoir: loin[0], texte: "Tu as choisi « Proche de la France » parmi tes envies, mais un long vol pour rentrer ne te gêne pas vraiment. On garde la distance dans ton calcul, avec son rang." });
   // 3. « Sécurité », mais une ville où il faut rester vigilant te va.
   const vigilant = [swipe(etat, "S11") === "oui" ? "phrases" : "", rep(etat, "nuit") === "b" ? "nuit" : ""].filter(Boolean);

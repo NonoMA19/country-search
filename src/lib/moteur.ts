@@ -97,6 +97,11 @@ export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
   if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
+  // Dépaysement : l'inverse de la proximité (temps de vol et décalage horaire), sans nouvelle donnée.
+  if (mesureId === "depaysement") {
+    const inv = ["vol", "decalage"].map((m) => noteEffective(paysId, m, p)).filter((n): n is number => n !== null).map((n) => 6 - n);
+    return inv.length ? Math.round(inv.reduce((a, b) => a + b, 0) / inv.length) : null;
+  }
   if (mesureId === "langue-travail") {
     if (avis[paysId]?.francaisAuTravail) return 5;
     return noteEffective(paysId, "anglais", p);
@@ -570,7 +575,7 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
 // La note dit si ton visa te laisserait changer d'employeur : 5 si aucun visa ne te lie à un employeur
 // (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
 // 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
-export const MESURES_CALCULEES = ["employeur-libre"];
+export const MESURES_CALCULEES = ["employeur-libre", "depaysement"];
 const cacheLibre = new Map<string, number>();
 export function noteEmployeurLibre(paysId: string, profil: Profil): number | null {
   const p = pays.find((x) => x.id === paysId);
@@ -591,6 +596,11 @@ export function noteEmployeurLibre(paysId: string, profil: Profil): number | nul
 
 // La preuve d'une mesure. « Changer d'employeur » vient de la porte d'entrée (et du visa de travail s'il est lu).
 export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preuve {
+  // Le dépaysement se lit sur la distance : on montre la preuve du temps de vol (et le décalage dans le texte).
+  if (mesureId === "depaysement") {
+    const vol = preuveMesure(paysId, "vol"), dec = notes[paysId]?.decalage;
+    return { ...vol, titre: "Dépaysement", texte: `${vol.texte}${dec?.texte ? ` ${dec.texte}` : ""} Le dépaysement est l’inverse de cette proximité.` };
+  }
   if (mesureId !== "employeur-libre") return preuveMesure(paysId, mesureId);
   const p = pays.find((x) => x.id === paysId)!;
   const porte = evaluerPorte(p, profil, null);

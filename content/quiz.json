@@ -196,6 +196,15 @@
       "mesures": [
         "secteur"
       ]
+    },
+    {
+      "id": "depaysement",
+      "label": "Vivre un vrai dépaysement",
+      "icone": "globe",
+      "famille": "vivre",
+      "mesures": [
+        "depaysement"
+      ]
     }
   ],
   "poidsRang": [
@@ -345,6 +354,12 @@
       "nom": "L’Europe ou plus loin",
       "mesures": [
         "en-europe"
+      ]
+    },
+    "depaysement": {
+      "nom": "Le dépaysement",
+      "mesures": [
+        "depaysement"
       ]
     }
   },
@@ -998,7 +1013,7 @@
       "multiple": true,
       "nombre": 5,
       "titre": "Choisis 5 envies",
-      "texte": "Les cinq qui comptent le plus pour ton départ.",
+      "texte": "Les cinq qui comptent le plus pour ton départ, parmi dix.",
       "dimensions": [],
       "aide": {
         "enjeu": "Tes envies sont le cœur de ton classement.",
@@ -2633,6 +2648,7 @@
         "communication",
         "cout",
         "decision",
+        "depaysement",
         "distance",
         "langue",
         "pro-perso",
@@ -2682,7 +2698,14 @@
         {
           "id": "S2",
           "texte": "Je pourrais m’éloigner de ma famille plusieurs années.",
-          "oui": [],
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
           "non": [
             {
               "mesures": [
@@ -2695,6 +2718,7 @@
           "portraitOui": "Tu acceptes plus facilement d’être loin de ta famille.",
           "portraitNon": "Rester pas trop loin de ta famille compte pour toi.",
           "dimensions": [
+            "depaysement",
             "distance"
           ]
         },
@@ -2966,6 +2990,33 @@
           "portraitNon": "Tu n’as pas besoin de Français autour de toi.",
           "dimensions": [
             "reseau"
+          ]
+        },
+        {
+          "id": "S16",
+          "texte": "J’ai envie d’une vie très différente de celle que je connais en France.",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "vol",
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portraitOui": "Tu as envie d’une vie très différente de celle que tu connais en France.",
+          "portraitNon": "Tu préfères garder des repères proches de ta vie en France.",
+          "dimensions": [
+            "depaysement",
+            "distance"
           ]
         }
       ]
@@ -3805,17 +3856,21 @@
       "id": "noel",
       "theme": "Ton quotidien",
       "titre": "Près ou loin de la France",
-      "echelle": true,
+      "echelle": false,
       "aide": {
-        "enjeu": "La distance se ressent surtout aux grandes occasions.",
+        "enjeu": "Être loin de ta famille, ça se vit tous les jours.",
         "cartes": [
           {
             "pastille": "A",
-            "texte": "On met en avant les pays proches, avec peu de décalage horaire."
+            "texte": "On met en avant les pays proches de la France, en vol et en décalage horaire."
           },
           {
             "pastille": "B",
-            "texte": "Ta réponse ne fait reculer aucun pays lointain."
+            "texte": "Rien ne change : la distance ne compte pas pour toi."
+          },
+          {
+            "pastille": "C",
+            "texte": "On met un peu en avant les pays loin de la France (dépaysement, importance 0,5)."
           }
         ]
       },
@@ -3841,6 +3896,19 @@
           "effets": [],
           "portrait": "La distance avec la France ne te fait pas peur.",
           "portraitPeu": "La distance avec la France compte peu pour toi."
+        },
+        {
+          "id": "c",
+          "effets": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portrait": "Tu cherches à vivre vraiment ailleurs, même pour les fêtes.",
+          "preference": "un vrai dépaysement"
         }
       ],
       "scenes": [
@@ -3858,6 +3926,11 @@
               "texte": "12 h de vol ou plus",
               "plus": "Un vrai changement de monde.",
               "moins": "Tu rentres une fois par an, c’est le jeu."
+            },
+            {
+              "texte": "Tu fêtes Noël sur place, à la mode du pays",
+              "plus": "Une fête que tu n’oublieras pas.",
+              "moins": "Ta famille te manque ce soir-là."
             }
           ],
           "exemple": true
@@ -3876,6 +3949,11 @@
               "texte": "Il te faut une semaine de congés et un billet cher",
               "plus": "Tu vis à l’autre bout du monde, avec tout ce qu’il offre.",
               "moins": "Tu rates souvent les fêtes de famille."
+            },
+            {
+              "texte": "Tu suis le mariage en vidéo, depuis l’autre bout du monde",
+              "plus": "Tu vis pleinement ta nouvelle vie.",
+              "moins": "Tu rates un moment de famille."
             }
           ]
         },
@@ -3893,6 +3971,11 @@
               "texte": "Ils dorment quand tu te réveilles",
               "plus": "Tu vis vraiment ailleurs.",
               "moins": "Il faut caler les appels tôt le matin ou tard le soir."
+            },
+            {
+              "texte": "Vous vous écrivez surtout : tu vis à un tout autre rythme",
+              "plus": "Tu te sens vraiment ailleurs, et ça te plaît.",
+              "moins": "Les appels en direct se font rares."
             }
           ]
         }
@@ -3900,6 +3983,7 @@
       "type": "dilemme",
       "chapitre": 4,
       "dimensions": [
+        "depaysement",
         "distance"
       ]
     },

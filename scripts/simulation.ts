@@ -80,6 +80,9 @@ console.log("Pays : part en n° 1 | part dans le top 3");
 for (const p of [...pays].sort((a, b) => (enN1[b.id] ?? 0) - (enN1[a.id] ?? 0) || (enTop3[b.id] ?? 0) - (enTop3[a.id] ?? 0))) {
   console.log(`  ${p.nom.padEnd(22)} ${pct(enN1[p.id] ?? 0).padStart(7)} | ${pct(enTop3[p.id] ?? 0).padStart(7)}`);
 }
+// Part des pays européens en n° 1, et les pays qui dépassent 20 % de n° 1.
+const europeN1 = pays.filter((p) => p.zone === "europe").reduce((t, p) => t + (enN1[p.id] ?? 0), 0);
+console.log(`\nPart des pays européens en n° 1 : ${pct(europeN1)} ; pays au-dessus de 20 % de n° 1 : ${pays.filter((p) => (enN1[p.id] ?? 0) > 0.2 * NB).map((p) => `${p.nom} ${pct(enN1[p.id])}`).join(", ") || "aucun"}.`);
 console.log(`\nTop 3 différent selon le projet (mêmes réponses, 1 000 parcours) : ${pct(changeAvecObjectif, Math.min(NB, 1000))}.`);
 const tri = [...ecrans].sort((a, b) => a - b);
 console.log(`\nDurée : ${nombre(ecrans.reduce((a, b) => a + b, 0) / NB)} écrans en moyenne (min ${tri[0]}, max ${tri.at(-1)}, médiane ${tri[Math.floor(NB / 2)]}) ; moins de 18 écrans : ${pct(ecrans.filter((x) => x < 18).length)}.`);
@@ -136,6 +139,7 @@ const PERSONAS: Persona[] = [
   { nom: "d) Carrière longue, apprendre une langue lui va, sécurité et équilibre", graine: 4, reponses: { objectif: "carriere", age: "26-27", "anglais-reunion": 5, "anglais-vie": 4, envies: ["securite", "equilibre", "salaire", "travail", "climat"], classement: ["securite", "equilibre", "salaire", "travail", "climat"], "cours-offerts": "a", "deux-langues": "a" } },
   { nom: "e) Parle espagnol, aime la chaleur, vie moins chère", graine: 5, reponses: { age: "18-25", "anglais-reunion": 3, "anglais-vie": 3, langues: ["es"], envies: ["prix", "climat", "travail", "securite", "equilibre"], classement: ["prix", "climat", "travail", "securite", "equilibre"], aout: "a", janvier: "b", ambiances: ["soleil"] } },
   { nom: "f) Hiérarchie plate, consensus, collègues vus après le travail", graine: 6, reponses: { age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, envies: ["equilibre", "travail", "salaire", "securite", "proche"], classement: ["equilibre", "travail", "salaire", "securite", "proche"], "reunion-directeur": "a", "idee-reunion": "b", "vendredi-18h": "b" } },
+  { nom: "k) Karim : Océanie et Asie de l’Est, « Climat doux » n° 1, soleil, 10 h de vol sans problème", graine: 11, reponses: { age: "18-25", "anglais-reunion": 4, "anglais-vie": 4, carte: ["oceanie", "asie-est"], envies: ["climat", "travail", "salaire", "securite", "prix"], classement: ["climat", "travail", "salaire", "securite", "prix"], ambiances: ["soleil"], limites: { "vol-10h": "ok" } } },
   { nom: "g) Finance, anglais courant, carrière, peu importe la zone", graine: 7, reponses: { objectif: "carriere", secteur: "finance", age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, carte: ["aucune"], envies: ["secteur", "salaire", "travail", "securite", "equilibre"], classement: ["secteur", "salaire", "travail", "securite", "equilibre"], "secteur-ville": "a", ambiances: ["metropole"], "langue-bureau": "a", limites: {} } },
 ];
 // Un profil type répond seulement à ce qu'il dit. Le reste : « Passer » (chapitres 3 et 4), « Non » pour la nationalité,
