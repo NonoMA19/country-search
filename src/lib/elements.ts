@@ -3,7 +3,7 @@
 // Ce fichier ne calcule aucun score : il traduit les réponses en effets, mesure par mesure (voir moteur.ts).
 import {
   dimensionDe, quiz, trouverElement,
-  type ChoixCartes, type Dilemme, type EffetDilemme, type Element, type OptionDilemme, type TypeElement, type Valeur,
+  type ChoixCartes, type Curseur, type Dilemme, type EffetDilemme, type Element, type OptionDilemme, type TypeElement, type Valeur,
 } from "./donnees";
 
 export const PASSER = "passer";
@@ -113,6 +113,9 @@ export function penalitesRetirees(el: Element, v: Valeur | undefined): string[] 
   if (el.type !== "choix-cartes" || el.profil || el.source || v === undefined || v === PASSER) return [];
   return (Array.isArray(v) ? v : [v]).flatMap((id) => el.options.find((o) => o.id === id)?.sansPenalite ?? []);
 }
+
+// Le libellé d'un curseur selon sa position (« Plutôt du temps libre », « Un équilibre », « Plutôt le salaire »).
+export const libelleCurseur = (el: Curseur, v: number) => el.libelles.find((l) => v <= l.jusqua)?.texte ?? el.libelles.at(-1)!.texte;
 
 // Les situations jugées « Rédhibitoire ».
 export function limitesRedhibitoires(reponses: Record<string, Valeur>): string[] {

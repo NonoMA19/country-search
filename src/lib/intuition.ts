@@ -16,9 +16,10 @@ export type Intuition = {
 };
 
 const carte = () => trouverElement("carte") as CarteMonde;
-const AVEC_ARTICLE: Record<string, string> = {
-  europe: "l’Europe", "amerique-nord": "l’Amérique du Nord", "amerique-latine": "l’Amérique latine", "asie-est": "l’Asie de l’Est",
-  "asie-sud-est": "l’Asie du Sud-Est", oceanie: "l’Océanie", "moyen-orient": "le Moyen-Orient et l’Afrique du Nord",
+// « Tu pensais à l'Europe », « au Moyen-Orient et à l'Afrique du Nord ».
+const A_LA_ZONE: Record<string, string> = {
+  europe: "à l’Europe", "amerique-nord": "à l’Amérique du Nord", "amerique-latine": "à l’Amérique latine", "asie-est": "à l’Asie de l’Est",
+  "asie-sud-est": "à l’Asie du Sud-Est", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
 };
 const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
@@ -94,7 +95,7 @@ export function intuition(etat: Etat): Intuition {
   const paysZones = new Set(zones.flatMap((z) => z.pays));
   const meilleur = lignes.find((l) => paysZones.has(l.pays.id) && !l.peuDeDonnees) ?? null;
   const raisons = meilleur ? raisonsAvance(etat, n1, [meilleur], 3) : [];
-  return { cas: "autre", n1, zones: noms, meilleurDansZones: meilleur, raisons, phrase: `Tu pensais à ${listeFr(zones.map((z) => AVEC_ARTICLE[z.id] ?? z.label))}. Tes réponses te mènent vers ${n1.pays.le}.` };
+  return { cas: "autre", n1, zones: noms, meilleurDansZones: meilleur, raisons, phrase: `Tu pensais ${listeFr(zones.map((z) => A_LA_ZONE[z.id] ?? `à ${z.label}`))}. Tes réponses te mènent vers ${n1.pays.le}.` };
 }
 
 export const nomsPays = (ids: string[]) => ids.map((id) => pays.find((p) => p.id === id)?.nom ?? id);

@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test:moteur": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/test-moteur.ts",
-    "simulation": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/simulation.ts"
+    "simulation": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/simulation.ts",
+    "banque": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/banque.ts",
+    "exemples": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/exemples.ts"
   },
   "dependencies": {
     "country-flag-icons": "^1.6.20",

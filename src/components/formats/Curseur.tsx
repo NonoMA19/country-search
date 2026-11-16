@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import type { Curseur as TCurseur } from "@/lib/donnees";
+import { libelleCurseur } from "@/lib/elements";
 import { Actions, BOUTON_PLEIN, EnTete, type PropsFormat } from "./commun";
 
 // Un axe entre deux pôles, de 0 à 100. Le libellé change avec la position ; la valeur devient une importance, de façon continue.
 // Curseur natif : flèches du clavier, Début et Fin, et lecteur d'écran (aria-valuetext).
-export const libelleCurseur = (el: TCurseur, v: number) => el.libelles.find((l) => v <= l.jusqua)?.texte ?? el.libelles.at(-1)!.texte;
 
 export default function Curseur({ element: el, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TCurseur>) {
   const [v, setV] = useState(typeof valeur === "number" ? valeur : 50);

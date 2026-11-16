@@ -9,7 +9,7 @@ Aider les étudiants et jeunes diplômés francophones à choisir le pays où pa
 - Gratuit et open source. Aucune publicité, aucune affiliation (hébergement Vercel gratuit, usage non commercial).
 
 ## Version 1 (ce qu'on construit maintenant)
-- Quiz de dilemmes : de petites scènes à 2 ou 3 options, chacune avec un avantage et un prix, sans compte.
+- Quiz en 5 chapitres (prompt 3f) : point de départ, envies, travail, vie, limites ; 9 formats (cartes, classement, curseur, swipe, ambiances, thermomètre, carte du monde, tri des limites, dilemme) ; chaque option garde son avantage et son prix ; sans compte.
 - Classement des 30 pays par un calcul transparent (pas d'IA), avec le « pourquoi » de chaque score et une méthode publiée.
 - Top 3 pays, fiches pays, checklist Jour J de J-90 à J+30.
 - 10 fiches complètes, 20 fiches courtes.
@@ -54,31 +54,36 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Parcours (diplôme et expériences), reconversion.
 - Croisement avec les offres d'emploi par secteur.
 - Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
-- Biais de classement (remesuré au prompt 3e, `npm run simulation`, 5 000 profils) : Pays-Bas n°1 dans 18,9 % des profils, Belgique 10,1 %, Suisse 9,6 %, Allemagne 8,6 % (l'Allemagne a perdu son salaire, passé « à vérifier »). La Colombie et le Chili restent presque absents du top 3 (0,0 % et 0,2 %).
+- Biais de classement (remesuré au prompt 3f, `npm run simulation`, 5 000 parcours) : n° 1 européen dans presque tous les parcours tirés au hasard (Allemagne 31,2 %, Suisse 21,4 %, Pays-Bas 13,5 %) ; États-Unis, Chili, Colombie, Chine et Taïwan jamais n° 1. Cause mesurée : sans la question de zone, rien ne dit « je veux partir loin », alors que plusieurs réponses disent « je veux rester proche » (93 % de n° 1 européens même avec toutes les limites à « Aucun problème »). Décision à prendre (voir rapport du prompt 3f).
 - Restes du prompt 3c : visas de travail « à vérifier » (Corée du Sud, Colombie, Brésil, Chine, Maroc), lien avec l'employeur inconnu (Mexique, Corée du Sud, Colombie, Brésil, Maroc) ; culture au travail « à vérifier » : décision (Hong Kong, Brésil), vie pro et vie perso (Argentine, Colombie, Émirats arabes unis, Maroc) ; Alliance française par pays ; population de Taïwan (absente de la Banque mondiale) pour le réseau français.
 - Question facultative sur l'expérience pro (aucune, moins de 2 ans, 2 ans ou plus) et le diplôme. Depuis le prompt 3d, la fiche de faisabilité affiche « Ton expérience pro n'est pas connue du site » : elle permettrait de changer le badge des visas qui exigent de l'expérience (Australie : 1 an ; Nouvelle-Zélande : 2 ans ou une licence ; Taïwan : master, ou licence et 2 ans ; Japon : diplôme universitaire). Pour l'instant, la condition est seulement affichée dans la carte du visa.
 - Témoignages de confiance « moyenne » : ils comptent comme les autres. Piste proposée, non appliquée : les compter à 75 % de leur importance.
-- Salaire net et simulateur « Ta vie là-bas » (prompt 4) : salaire net après impôts (OCDE), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
+- Simulateur « Ta vie là-bas » (prompt 6) : salaire net (la part après impôts de l'OCDE est déjà affichée), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
 - Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
-- Décisions en attente (prompts 3d et 3e) : (1) badge de fiabilité : « Notre avis » n'y compte pas, mais la règle des 60 % du calcul le compte encore : choisir une seule règle ; (2) pays surprise : 38,9 % des profils au prompt 3e (51 % avant), presque toujours un pays écarté par la zone choisie : le réserver aux pénalités, ou au n° 1 seulement ? (3) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3.
+- Décisions en attente (prompts 3d, 3e et 3f) : (1) badge de fiabilité : « Notre avis » n'y compte pas, mais la règle des 60 % du calcul le compte encore : choisir une seule règle ; (2) pays surprise : 4 % des parcours depuis le prompt 3f (la zone ne filtre plus) ; (3) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3 ; (4) les décisions du rapport du prompt 3f (zone « partir loin », poids de « Je préfère éviter », Rédhibitoire « vigilance » au seuil de 10 homicides, ambiances et phrases obligatoires, Écran Valeurs supprimé).
 - Regarder comment les concurrents présentent leurs résultats (classement, comparaison, fiches) avant la refonte du prompt 5.
-- Secteurs et stages : croiser le top 3 avec les secteurs qui recrutent et les offres de stage (sources ouvertes à trouver).
+- Secteurs et stages : le poids du secteur dans l'emploi est fait (prompt 3f, ILOSTAT) ; reste à croiser avec les offres ouvertes et les stages (sources ouvertes à trouver), et les salaires par secteur.
 - Couleurs par pays : à décider avec la direction artistique (prompt 5), pas avant.
-- Écran Valeurs (stabilité, libertés, air) en fin de parcours : à repenser (il arrive tard et change le top 3 après le portrait).
-- Direction artistique, mascotte et illustrations : au prompt 5, une fois la DA choisie (pas avant).
-- Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page du PDF (il reprend les points par catégorie sous forme de liste simple depuis le prompt 3d), couleurs par pays.
+- Écran Valeurs supprimé au prompt 3f : la stabilité passe par une phrase à glisser et « Dans 5 ans », l'air pur par un dilemme ; les libertés et l'égalité femmes-hommes ne sont plus demandées. À rediscuter.
+- Nom Orizo, mascotte caméléon, direction artistique « Atlas pop », illustrations finales des cartes (aujourd'hui des icônes Lucide sur fond uni, avec texte alternatif) : au prompt 5, pas avant.
+- Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page pour ordinateur (le site reste pensé d'abord pour le téléphone), mise en page du PDF, couleurs par pays, carte du monde dessinée.
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).
 - Comparateur de pays : réutiliser la comparaison côte à côte du départage (`comparer` dans `src/lib/moteur.ts`) pour 2 pays au choix.
 - Fiches ★ complètes à construire (banque, SIM, santé, logement, CV, codes culturels) : la promesse affichée est « fiche détaillée à venir en priorité ».
 - Congés payés légaux : à remettre dans le calcul quand ils seront vérifiés pays par pays dans les textes de loi.
 - Égalité femmes-hommes dans la loi : `scripts/collecte.mjs` sait déjà la télécharger (Banque mondiale, indicateur GD_WBL_OVL_LAW, source 14) ; l'API était trop lente depuis la session du prompt 3.
-- Salaire de l'OCDE (prompt 3e, en attente) : l'API sdmx.oecd.org était inaccessible depuis la session. Nolhan fournira le salaire annuel moyen de l'OCDE (dollars PPA, prix constants, même année pour tous) : remplacer la source `oit-ilostat` de la mesure `salaire` dans `scripts/collecte.mjs` (notes « annuel ÷ 12 » ou nouvelles bornes à décider), puis `node scripts/collecte.mjs --textes`. En attendant, l'OIT reste incohérente : Belgique 8 077 $, Luxembourg 9 275 $, France 3 084 $ par mois (même source, même année 2025).
+- Salaires des 5 pays sans chiffre comparable de l'OCDE (Taïwan, Hong Kong, Singapour, Émirats arabes unis, Maroc) et part après impôts de 8 pays (dont Argentine, Brésil, Chine) : à trouver. Barème VIE : le relire sur mon-vie-via.businessfrance.fr (illisible depuis la session) et le mettre à jour chaque trimestre.
 - Années trop éloignées entre pays (prompt 3e) : niveau des prix (Argentine 2021, les autres 2025) et homicides (de 2020 pour la Chine à 2023). L'année est dite dans chaque preuve. Choisir : passer en « à vérifier » ou garder.
 - Données par ville (plus tard) : climat, loyer, qualité de l'air et culture n'ont pas la même valeur partout dans un pays (exemple : Lisbonne et Porto, Barcelone et Madrid, Sydney et Melbourne). Thèmes à étudier par ville : culture sportive, alimentation.
 - Vie active et sportive : la part d'adultes à l'activité physique insuffisante (OMS) n'était téléchargeable ni sur le site de l'OMS (bloqué depuis la session) ni sur la Banque mondiale. Mesure et dilemme « Ton dimanche » à faire quand la donnée sera trouvée.
 - Licence non commerciale : les données de l'OMS (mesure « Manger sainement », obésité des adultes) sont sous CC BY-NC-SA 3.0 IGO. Si le site devient payant ou commercial, retirer la mesure ou trouver une autre source.
 - Relire les 66 scènes avec des testeurs (équilibre des options) ; ajouter des scènes si deux personnes se plaignent encore de questions répétées.
+
+- Données par ville : climat, loyer, qualité de l'air, indemnité VIE par ville (déjà dans le détail) ; choisir sa ville dans le pays.
+- Portrait rédigé par une IA (plus tard, version 2) : aujourd'hui le portrait est calculé, sans IA.
+- Blind test : faire passer le quiz à des testeurs sans leur montrer le nom des pays, puis comparer leur intuition (carte du début) et leur résultat.
+- Salaires par secteur (OCDE ou ILOSTAT), pour remplacer le salaire moyen tous métiers quand le secteur est connu.
 
 ## Journal
 
@@ -194,3 +199,19 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 **Ce qui reste à faire**
 - Chiffres de l'OCDE pour le salaire (Nolhan) ; Belgique et Luxembourg restent anormalement hauts avec l'OIT.
 - Voir les idées : années des prix et des homicides, vie active et sportive, pays surprise par la zone, données par ville.
+
+### 16 novembre 2026 : le quiz Orizo (prompt 3f)
+**Ce qui est fait** (une pull request, un commit par lot)
+- Lot 1 : `content/quiz.json` devient une banque de 43 éléments (format, chapitre, thème, dimensions, conditions, « déjà couvert par ») ; schéma de réponse commun (`src/lib/elements.ts`, certitude par réponse) ; 9 composants de format et un registre (`src/components/formats`) ; carte du monde Natural Earth (`scripts/carte.mjs`, `content/carte-monde.json`) ; session v8.
+- Lot 2 : 5 chapitres, barre par chapitre, écrans d'ouverture, envies (5 parmi 9) puis classement (2 ; 1,75 ; 1,5 ; 1,25 ; 1,1), deux thermomètres d'anglais, secteur, 4 questions selon le projet ou le secteur, ambiances, 15 phrases à glisser, tri des limites (« Rédhibitoire » = Moins adaptés), écran « Ton intuition et tes réponses » (`src/lib/intuition.ts`), 48 variantes de texte selon le projet sur 14 dilemmes. La question de zone et l'écran Valeurs disparaissent.
+- Lot 3 : profil par dimension (`src/lib/profil.ts` : importance, sources déclarées ou déduites, certitude) ; le calcul lit ce profil (`profilCalcul`) ; 7 règles de contradiction (jamais sur une seule réponse) ; portrait avec titre, phrases, hésitation et « Ce qu'on va chercher pour toi ».
+- Lot 4 : score des écrans adaptatifs (importance × incertitude × départage), tirage parmi les 60 % meilleurs, règles (dimension, format, thèmes, obligatoires), fin de chapitre de 4 à 7 écrans. 22,9 écrans en moyenne (20 à 28).
+- Lot 5 : salaire OCDE 2024 (25 pays, `content/saisie/ocde.json`, `--ocde`), part après impôts (Taxing Wages 2026, hors score), indemnité VIE au 1er janvier 2026 (relayée, à vérifier, `content/saisie/vie-indemnites.json`, `--vie`) utilisée à la place du salaire pour un VIE.
+- Lot 6 : part de l'emploi par secteur (ILOSTAT, CITI rév. 4, `--secteur`), 25 pays sur 30 ; ligne « Ton secteur » sous le top 3 ; profil finance : Royaume-Uni n° 3 (n° 7 sans le secteur).
+- Lot 7 : tests (221 617 vérifications), simulation avant / après, `npm run banque` (`docs/banque-quiz.md`) et `npm run exemples` (`docs/parcours-exemples.md`).
+
+**Ce qui reste à faire**
+- Décisions de Nolhan : voir le rapport du prompt 3f (biais européen sans question de zone, poids de « Je préfère éviter », seuils des limites, éléments communs entre deux parcours 35,8 % au lieu de moins de 30 %).
+- Relire la banque (`docs/banque-quiz.md`) et les variantes avec des testeurs.
+- Barème VIE et salaires manquants (voir les idées).
+
