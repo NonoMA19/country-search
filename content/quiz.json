@@ -2615,7 +2615,7 @@
       "id": "phrases",
       "type": "swipe",
       "chapitre": 4,
-      "theme": "Ce qui te ressemble",
+      "theme": "Ton quotidien",
       "obligatoire": true,
       "nombre": 5,
       "titre": "Ça te correspond ?",
@@ -3897,7 +3897,7 @@
     },
     {
       "id": "premier-mois",
-      "theme": "Langue et entourage",
+      "theme": "Ton quotidien",
       "titre": "Réseau français ou immersion",
       "aide": {
         "enjeu": "Un réseau français aide à démarrer, mais peut aussi t’enfermer dans une bulle.",
@@ -4002,7 +4002,7 @@
     },
     {
       "id": "deux-langues",
-      "theme": "Langue et entourage",
+      "theme": "Ton quotidien",
       "titre": "Vivre dans une langue inconnue",
       "afficheSi": "peut-travailler-en-anglais",
       "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
@@ -4100,7 +4100,7 @@
     },
     {
       "id": "cours-offerts",
-      "theme": "Langue et entourage",
+      "theme": "Ton quotidien",
       "titre": "Apprendre une nouvelle langue",
       "afficheSi": "peut-travailler-en-anglais",
       "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",

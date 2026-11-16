@@ -9,7 +9,7 @@ import {
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
-import { chapitreDe, elementVisible, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
+import { chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
@@ -836,6 +836,56 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   // Portrait : un titre, jamais « Tu es », « Ce qu'on va chercher pour toi » = 3 critères.
   const p = portraitComplet(e({ "deux-offres": "a", phrases: { S3: "oui" }, noel: "b" }));
   verifier(p.titre.startsWith("Tu cherches") && p.cherche.length === 3 && !!p.contradiction, "portrait : titre, critères ou contradiction absents");
+}
+
+// 2.22 Un questionnaire adapté à chacun (prompt 3f, lot 4).
+{
+  const r9 = hasard(49);
+  for (let k = 0; k < 120; k++) {
+    const etat = quizAuHasard(r9);
+    verifier(etat.ordre.length >= 18, `adaptatif ${k} : ${etat.ordre.length} écrans (18 au moins)`);
+    for (const c of [3, 4]) {
+      const ids = etat.ordre.filter((id) => chapitreDe(id) === c);
+      verifier(ids.length >= 4 && ids.length <= 7, `adaptatif ${k} : chapitre ${c} de ${ids.length} écrans`);
+      // Jamais deux éléments de suite sur la même dimension ; jamais 4 fois de suite le même format.
+      for (let i = 1; i < ids.length; i++) {
+        const avant = dimensionsElement(trouverElement(ids[i - 1])!, etat), apres = dimensionsElement(trouverElement(ids[i])!, etat);
+        verifier(!avant.some((d) => apres.includes(d)), `adaptatif ${k} : ${ids[i - 1]} puis ${ids[i]} sur la même dimension`);
+      }
+      const types = ids.map((id) => trouverElement(id)!.type);
+      for (let i = 3; i < types.length; i++) verifier(new Set(types.slice(i - 3, i + 1)).size > 1, `adaptatif ${k} : 4 fois le format ${types[i]} de suite (chapitre ${c})`);
+      // Les obligatoires et un élément de chaque thème du chapitre.
+      const themes = new Set(quiz.elements.filter((x) => x.chapitre === c && (etat.reponses[x.id] !== undefined || elementVisible(x, etat))).map((x) => x.theme));
+      const vus = new Set(ids.map((id) => trouverElement(id)!.theme));
+      for (const t of themes) verifier(vus.has(t), `adaptatif ${k} : thème « ${t} » absent du chapitre ${c}`);
+      for (const x of quiz.elements.filter((y) => y.chapitre === c && y.obligatoire)) verifier(ids.includes(x.id), `adaptatif ${k} : ${x.id} obligatoire absent`);
+      // Conditions d'apparition respectées.
+      for (const id of ids) {
+        const el = trouverElement(id)!;
+        if (el.condition?.startsWith("projet:")) verifier(etat.profil.objectif === el.condition.slice(7), `adaptatif ${k} : ${id} posé hors de son projet`);
+        if (el.condition === "secteur-choisi") verifier(typeof etat.profil.secteur === "string" && etat.profil.secteur !== "autre", `adaptatif ${k} : ${id} posé sans secteur`);
+      }
+    }
+  }
+  // Le tirage : l'élément proposé est à au moins 60 % du meilleur score, et toujours le même pour le même état.
+  const r10 = hasard(50);
+  for (let k = 0; k < 30; k++) {
+    let etat = etatDepart({ ...ETAT_VIDE, graine: Math.floor(r10() * 2 ** 31) });
+    for (let n = 0; n < 40; n++) {
+      const el = prochainElement(etat);
+      if (!el) break;
+      verifier(prochainElement({ ...etat })?.id === el.id, "tirage : pas stable pour le même état");
+      if ([3, 4].includes(el.chapitre)) {
+        const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
+        const autres = quiz.elements.filter((x) => x.chapitre === el.chapitre && etat.reponses[x.id] === undefined && elementVisible(x, etat));
+        verifier(scoreElement(el, etat, top) > 0 && autres.includes(el), `tirage : ${el.id} hors des candidats`);
+      }
+      etat = repondre(etat, el.id, reponseAuHasard(el, etat, r10));
+    }
+  }
+  // Importance : l'envie n° 1 compte plus que le projet, qui compte plus que rien.
+  const e1 = construire({ profil: { objectif: "aventure" }, envies: ["salaire", "securite", "proche", "travail", "francais"] });
+  verifier(importance("salaire", e1) === 3 && importance("cout", e1) === 1.5 && importance("hierarchie", e1) === 1, "importance : envie, projet et rien mal comptés");
 }
 
 // ---------- Bilan ----------
