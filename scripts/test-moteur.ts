@@ -1,30 +1,20 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, vie } from "@/lib/donnees";
+import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, trouverElement, vie, type Valeur } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
-  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
+  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
+import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
+import { chapitreDe, elementVisible, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
+import { portrait } from "@/lib/portrait";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
-
-// ---------- Hasard reproductible ----------
-function hasard(graine: number) {
-  let a = graine >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-type Alea = () => number;
-const choisir = <T,>(r: Alea, l: T[]): T => l[Math.floor(r() * l.length)];
+import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
 
 // ---------- Compteur d'échecs ----------
 const echecs: string[] = [];
@@ -35,40 +25,29 @@ function verifier(ok: boolean, message: string) {
   else if (!ok) echecs.push("…");
 }
 
-// ---------- Un quiz au hasard ----------
-function profilAuHasard(r: Alea): Profil {
-  const p: Profil = {};
-  for (const q of quiz.profil) {
-    if (!questionProfilVisible(q.id, p)) continue;
-    if (r() < 0.1) continue; // « Passer »
-    if (q.multiple) p[q.id] = q.options.filter(() => r() < 0.2).map((o) => o.id);
-    else p[q.id] = choisir(r, q.options).id;
-  }
-  return p;
+// ---------- Un quiz au hasard (tous les formats) ----------
+function quizAuHasard(r: Alea, passerTout = false): Etat {
+  return parcoursAuHasard(r, { passer: passerTout ? 1 : 0.08 });
 }
 
-function quizAuHasard(r: Alea, passerTout = false): Etat {
-  const dispo = quiz.priorites.map((x) => x.id);
-  const priorites: string[] = [];
-  while (priorites.length < 3) {
-    const id = choisir(r, dispo);
-    if (!priorites.includes(id)) priorites.push(id);
+// ---------- Un état construit à la main ----------
+// « profil » : les réponses du chapitre 1 (anglais : « debutant », « moyen » ou « courant », traduit en thermomètres) ;
+// « envies » : dans l'ordre du classement (complété jusqu'à 5 avec des envies sans effet sur le test, si besoin, en fin de liste).
+const NIVEAU_THERMO: Record<string, number> = { debutant: 1, moyen: 3, courant: 5 };
+function construire({ profil = {}, envies = [], reponses = {} }: { profil?: Record<string, string | string[]>; envies?: string[]; reponses?: Record<string, Valeur> } = {}): Etat {
+  const r: Record<string, Valeur> = {};
+  for (const [k, v] of Object.entries(profil)) {
+    if (k === "anglais") { r["anglais-reunion"] = NIVEAU_THERMO[v as string]; r["anglais-vie"] = NIVEAU_THERMO[v as string]; continue; }
+    if (trouverElement(k)) r[k] = v;
   }
-  const sujets = quiz.sujets.filter(() => r() < 0.3).map((s) => s.id);
-  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets, graine: Math.floor(r() * 2 ** 31) });
-  for (let n = 0; n < 30; n++) {
-    const d = prochainDilemme(etat);
-    if (!d) break;
-    // Un dilemme inactif (mesure notée pour moins de 60 % des pays) n'est jamais proposé.
-    verifier(dilemmeActif(d), `dilemme inactif proposé : ${d.id}`);
-    const choix = passerTout ? ["passer"] : [...reponsesDe(d), "passer"];
-    etat = repondre(etat, d.id, choisir(r, choix));
-    if (!passerTout && resultatPret(etat) && r() < 0.5) break;
-  }
-  return etat;
+  if (envies.length) { r.envies = envies; r.classement = envies; }
+  Object.assign(r, reponses);
+  return rejouer({ ...ETAT_VIDE, reponses: r, ordre: Object.keys(r) });
 }
 
 const budgetDe = (p: Profil) => budgetProfil(p);
+// Ancienne forme { ...ETAT_VIDE, profil, priorites } → état construit.
+const etatDe = (x: { profil?: Profil; priorites?: string[] } & Partial<Etat>) => construire({ profil: (x.profil ?? {}) as Record<string, string>, envies: x.priorites ?? [] });
 const scores = (etat: Etat) => Object.fromEntries(calculer(etat).map((l) => [l.pays.id, l.score]));
 const memesScores = (a: Record<string, number>, b: Record<string, number>) => Object.keys(a).every((k) => Math.abs(a[k] - b[k]) < 1e-9);
 
@@ -86,7 +65,7 @@ for (let i = 0; i < NB; i++) {
   if (new Set(objectifs.map((o) => cleTop3(calculer({ ...etat, profil: { ...etat.profil, objectif: o } })))).size > 1) changeAvecObjectif++;
 
   // « Passer » ne compte pas : ni comme réponse, ni dans le calcul.
-  const suivant = prochainDilemme(etat);
+  const suivant = trouverDilemme(choisir(r, quiz.dilemmes.filter((d) => etat.reponses[d.id] === undefined)).id);
   if (suivant) {
     const passe = repondre(etat, suivant.id, "passer");
     verifier(repondues(passe) === repondues(etat), `quiz ${i} : « Passer » compte comme une réponse`);
@@ -101,7 +80,8 @@ for (let i = 0; i < NB; i++) {
   // Le score ne dépend ni de l'âge, ni du budget, ni de la durée, ni de la nationalité (l'objectif, lui, compte : lot 2).
   // Exception (prompt 3e) : avec « Je préfère pouvoir changer d'employeur librement », l'âge et la nationalité comptent,
   // parce qu'ils décident si un visa te lie à un employeur (PVT ouvert ou fermé, nationalité du pays).
-  const d18 = (etat.reponses["job-de-reve"] ?? "").endsWith("b");
+  const limites = (etat.reponses.limites ?? {}) as Record<string, string>;
+  const d18 = String(etat.reponses["job-de-reve"] ?? "").endsWith("b") || limites["visa-employeur"] === "eviter";
   for (const champ of d18 ? ["budget", "duree"] : ["age", "budget", "duree", "nationalite-laquelle"]) {
     const q = quiz.profil.find((x) => x.id === champ);
     for (const o of q?.options ?? []) {
@@ -123,7 +103,7 @@ for (let i = 0; i < NB; i++) {
   }
 
   // Une donnée manquante sur une priorité compte exactement 50 %, jamais plus.
-  for (const l of lignes) for (const d of l.details) if (d.neutre) verifier(d.accord === ACCORD_NEUTRE && d.origine.startsWith("priorite:"), `quiz ${i} : donnée manquante mal comptée pour ${l.pays.nom} (${d.mesure})`);
+  for (const l of lignes) for (const d of l.details) if (d.neutre) verifier(d.accord === ACCORD_NEUTRE && d.origine.startsWith("envie:"), `quiz ${i} : donnée manquante mal comptée pour ${l.pays.nom} (${d.mesure})`);
 
   // Importance : maximum 2 par mesure (jamais la somme de plusieurs réponses).
   for (const e of effetsActifs(etat)) verifier(e.poids <= 2, `quiz ${i} : importance ${e.poids} pour ${e.mesure}`);
@@ -144,7 +124,7 @@ for (let i = 0; i < NB; i++) {
     const { pour, savoir } = aplatir(points);
     for (const a of pour) {
       const d = l.details.find((x) => x.mesure === a.mesure && !x.neutre);
-      verifier(!!d && d.accord >= 0.75 && /^(priorite|objectif|dilemme|sujet|reglage):/.test(d.origine), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
+      verifier(!!d && d.accord >= 0.75 && /^(envie|objectif|dilemme|element|limite|reglage):/.test(d.origine), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
     }
     for (const s of savoir) {
       const d = l.details.find((x) => x.mesure === s.mesure && !x.neutre);
@@ -160,7 +140,7 @@ for (let i = 0; i < NB; i++) {
     verifier(!top.some((l) => l.pays.id === surprise.ligne.pays.id), `quiz ${i} : pays surprise déjà dans le top 3`);
     const causes = causesEcart(surprise.ligne.pays, etat);
     verifier(!causes.some((c) => c.cause === "age" || c.cause === "francais"), `quiz ${i} : pays surprise écarté par l'âge ou la langue de travail`);
-    verifier(surprise.cause === "zone" ? causes.length === 1 : causes.length === 0, `quiz ${i} : pays surprise écarté par plusieurs raisons`);
+    verifier(surprise.cause === "limite" ? causes.length === 1 : causes.length === 0, `quiz ${i} : pays surprise écarté par plusieurs raisons`);
     // Prompt 3e : seulement si, sans la préférence en cause, il serait n° 1 ou n° 2.
     verifier(surprise.score >= top[Math.min(1, top.length - 1)].score - 1e-9, `quiz ${i} : pays surprise sous le score du n° 2`);
     if (surprise.ligne.porte.manque !== null) verifier(!!surprise.argent?.startsWith("Il te manquerait"), `quiz ${i} : pays surprise sans le manque d'argent`);
@@ -185,14 +165,7 @@ for (let i = 0; i < NB; i++) {
   const lignesPortrait = portrait(etat);
   verifier(lignesPortrait.length <= 6, `quiz ${i} : portrait de ${lignesPortrait.length} phrases`);
   verifier(new Set(lignesPortrait.map((l) => l.texte)).size === lignesPortrait.length, `quiz ${i} : phrase répétée dans le portrait`);
-  for (const l of lignesPortrait) if (l.revoir.t === "dilemme") verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un dilemme passé (${l.revoir.id})`);
-  // Portrait : jamais une phrase de dilemme qui répète une priorité déjà citée.
-  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
-  for (const l of lignesPortrait) if (l.revoir.t === "dilemme") {
-    const o = optionReponse(trouverDilemme(l.revoir.id)!, etat.reponses[l.revoir.id])!;
-    const ms = o.effets.flatMap((e) => e.mesures);
-    verifier(!(ms.length > 0 && o.effets.every((e) => e.position === undefined) && ms.every((m) => mesuresPrio.has(m))), `quiz ${i} : le portrait répète une priorité (${l.texte})`);
-  }
+  for (const l of lignesPortrait) if (l.revoir && l.cle.startsWith("element:")) verifier(etat.reponses[l.revoir.id] !== "passer" && etat.reponses[l.revoir.id] !== undefined, `quiz ${i} : portrait sur un élément passé (${l.revoir.id})`);
 
   // Égalités (prompt 3e) : une chaîne de pays dont chaque voisin est à 5 points ou moins.
   const principaux = lignes.filter((l) => !l.ecart);
@@ -221,7 +194,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 // ---------- 2. Cas précis ----------
 // 2.1 L'ancien biais : aventure, 18-25 ans, priorité Salaire. Les pays sans salaire vérifié ne peuvent plus finir à 100 %.
 {
-  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: { objectif: "aventure", age: "18-25" }, priorites: ["salaire", "travail", "securite"] });
+  const etat = etatDe({ ...ETAT_VIDE, profil: { objectif: "aventure", age: "18-25" }, priorites: ["salaire", "travail", "securite"] });
   for (const l of calculer(etat)) {
     if (l.neutres.includes("salaire")) verifier(l.score < 100, `donnée manquante : ${l.pays.nom} à 100 % sans salaire vérifié`);
   }
@@ -229,19 +202,21 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   console.log("Aventure 18-25, priorités salaire, travail, sécurité : top 3 =", top.join(", "));
 }
 
-// 2.2 « Passer » ne compte pas : tout passer ne propose jamais le résultat.
+// 2.2 « Passer » ne compte pas : tout passer ne change aucun score, et le questionnaire va quand même jusqu'au bout,
+// avec au moins 18 écrans (prompt 3f).
 {
   const r2 = hasard(42);
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 10; i++) {
     const etat = quizAuHasard(r2, true);
-    verifier(!resultatPret(etat), `passer : résultat proposé après ${etat.ordre.length} dilemmes tous passés`);
+    verifier(repondues(etat) <= 2, `passer : ${repondues(etat)} réponses comptées alors que tout est passé`);
+    verifier(questionnaireFini(etat), "passer : le questionnaire ne finit pas");
+    verifier(etat.ordre.length >= 18, `passer : ${etat.ordre.length} écrans seulement`);
   }
-  verifier(MIN_DILEMMES === 6, "le minimum de dilemmes n'est plus 6");
 }
 
 // 2.3 Fermé à ton âge : jamais dans le top 3, score inchangé, et remontable.
 {
-  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: { age: "31-35" }, priorites: ["climat", "proche", "francais"] });
+  const etat = etatDe({ ...ETAT_VIDE, profil: { age: "31-35" }, priorites: ["climat", "proche", "francais"] });
   const lignes = calculer(etat);
   const fermes = lignes.filter((l) => l.porte.badge === "fermee");
   verifier(fermes.length > 0, "31-35 ans : aucun pays fermé, le test ne prouve rien");
@@ -270,7 +245,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.5 Climat doux : un pays très chaud en été n'a pas la note maximale.
 {
-  const etat = demarrerDilemmes({ ...ETAT_VIDE, profil: {}, priorites: ["climat", "travail", "securite"] });
+  const etat = etatDe({ ...ETAT_VIDE, profil: {}, priorites: ["climat", "travail", "securite"] });
   const lignes = calculer(etat);
   for (const id of ["emirats-arabes-unis", "singapour"]) {
     const d = lignes.find((l) => l.pays.id === id)!.details.find((x) => x.mesure === "doux");
@@ -286,12 +261,12 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.6 Poids = maximum, jamais la somme. Deux réponses sur le salaire : importance 1, pas 2.
 {
-  const etat: Etat = { ...ETAT_VIDE, priorites: ["travail", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a" }, ordre: ["deux-offres", "promotion"] };
+  const etat: Etat = construire({ envies: ["travail", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a" } });
   const salaire = effetsActifs(etat).filter((e) => e.mesure === "salaire");
   verifier(salaire.length === 1 && salaire[0].poids === 1, `salaire : importance ${salaire.map((e) => e.poids).join("+")} au lieu de 1`);
   verifier(!!trouverDilemme("deux-offres") && !!trouverDilemme("promotion"), "dilemmes du test introuvables");
-  // Priorité Bon salaire (2) + réponse salaire (1) + projet carrière (0,5) : importance 2.
-  const cumul: Etat = { ...ETAT_VIDE, profil: { objectif: "carriere" }, priorites: ["salaire", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a", "sortie-ecole": "b" }, ordre: ["deux-offres", "promotion", "sortie-ecole"] };
+  // Envie Bon salaire classée n° 1 (2) + réponse salaire (1) + projet carrière (0,5) : importance 2.
+  const cumul: Etat = construire({ profil: { objectif: "carriere" }, envies: ["salaire", "securite", "climat"], reponses: { "deux-offres": "a", promotion: "a", "sortie-ecole": "b" } });
   const s2 = effetsActifs(cumul).filter((e) => e.mesure === "salaire");
   verifier(s2.length === 1 && s2[0].poids === 2, `salaire : importance ${s2.map((e) => e.poids).join("+")} au lieu de 2`);
 }
@@ -335,13 +310,13 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(libre("australie") === 1 && libre("nouvelle-zelande") === 1, "D18 : un visa lié n'a pas la note 1");
   verifier(libre("etats-unis") === 1 && libre("mexique") === 1, "D18 : un lien « à vérifier » n'a pas la note 1");
   verifier(libre("australie", { age: "18-25" }) === 5 && libre("belgique") === 5, "D18 : un PVT ouvert ou l'Europe sans visa sont pénalisés");
-  const d18: Etat = { ...ETAT_VIDE, profil: vieux, priorites: ["salaire", "travail", "securite"], reponses: { "job-de-reve": "b" }, ordre: ["job-de-reve"] };
+  const d18: Etat = construire({ profil: vieux as Record<string, string>, envies: ["salaire", "travail", "securite"], reponses: { "job-de-reve": "b" } });
   const l18 = calculer(d18);
   for (const l of l18) verifier(!l.ecart || causesEcart(l.pays, d18).length > 0, `D18 : ${l.pays.nom} écarté sans raison du profil`);
   verifier(!l18.find((l) => l.pays.id === "australie")!.ecart || l18.find((l) => l.pays.id === "australie")!.porte.badge === "fermee", "D18 : un pays est encore écarté par la réponse");
   verifier(l18.find((l) => l.pays.id === "etats-unis")!.details.find((d) => d.mesure === "employeur-libre")?.accord === 0, "D18 : la pénalité ne s'applique pas");
   verifier(PENALITES.includes("employeur-libre"), "D18 : « Le remonter » ne retire pas la pénalité");
-  verifier(!quiz.dilemmes.some((d) => d.options.some((o) => o.ecart)), "un dilemme écarte encore des pays (seuls les filtres du profil le font)");
+  verifier(!quiz.dilemmes.some((d) => d.options.some((o) => "ecart" in o)), "un dilemme écarte encore des pays (seuls les limites et le profil le font)");
 }
 
 // 2.6 quater Canada : saison 2026 du PVT fermée. Mention affichée, badge et score inchangés.
@@ -353,21 +328,25 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.6 quinquies « Je garde ces soirées pour moi » : une pénalité, plus un filtre.
 {
-  const etat: Etat = { ...ETAT_VIDE, profil: { anglais: "courant" }, priorites: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" }, ordre: ["cours-offerts"] };
+  const etat: Etat = construire({ profil: { anglais: "courant" }, envies: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" } });
   const lignes = calculer(etat);
   for (const id of ["japon", "coree-du-sud", "taiwan", "chine"]) verifier(!lignes.find((l) => l.pays.id === id)!.ecart, `cours-offerts B : ${id} est encore écarté`);
   const accord = (id: string) => lignes.find((l) => l.pays.id === id)!.details.find((d) => d.mesure === "apprendre-langue")?.accord;
   verifier(accord("japon") === 0 && accord("espagne") === 0.5 && accord("irlande") === 1, "cours-offerts B : pénalité mal graduée (1 pour une autre écriture, 0,5 pour une autre langue)");
   // Qui parle japonais n'a rien à apprendre au Japon.
-  const nippo = calculer({ ...etat, profil: { anglais: "courant", langues: ["ja"] } }).find((l) => l.pays.id === "japon")!;
+  const nippo = calculer(construire({ profil: { anglais: "courant", langues: ["ja"] }, envies: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" } })).find((l) => l.pays.id === "japon")!;
   verifier(nippo.details.find((d) => d.mesure === "apprendre-langue")?.accord === 1, "cours-offerts B : pénalité alors que tu parles la langue");
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
 {
-  const mauvaises: unknown[] = [null, {}, [], "texte", 3, { ...SESSION_VIDE, v: 1 }, { ...SESSION_VIDE, etat: null }, { ...SESSION_VIDE, etape: { t: "profil", i: -1 } },
-    { ...SESSION_VIDE, etape: { t: "profil", i: "2" } }, { ...SESSION_VIDE, reglages: null }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, sujets: undefined } },
-    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, priorites: ["a", "b", "c", "d"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { noel: "d" }, ordre: ["noel"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { emploi: "oui" }, ordre: ["emploi"] } }];
+  const mauvaises: unknown[] = [null, {}, [], "texte", 3, { ...SESSION_VIDE, v: 1 }, { ...SESSION_VIDE, etat: null }, { ...SESSION_VIDE, etape: { t: "profil", i: 0 } },
+    { ...SESSION_VIDE, etape: { t: "transition", chapitre: 9 } }, { ...SESSION_VIDE, reglages: null }, { ...SESSION_VIDE, chapitresVus: ["a"] },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { noel: "d" }, ordre: ["noel"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { emploi: "oui" }, ordre: ["emploi"] } },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { equilibre: 140 }, ordre: ["equilibre"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "anglais-vie": 2.5 }, ordre: ["anglais-vie"] } },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { envies: ["salaire", "prix"] }, ordre: ["envies"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { phrases: { S1: "peut-etre" } }, ordre: ["phrases"] } },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { limites: { inconnue: "ok" } }, ordre: ["limites"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { ambiances: ["metropole", "nature", "soleil"] }, ordre: ["ambiances"] } },
+    { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { carte: ["mars"] }, ordre: ["carte"] } }, { ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { age: "a" }, ordre: [] } }];
   for (const m of mauvaises) {
     let res: unknown = "erreur";
     try { res = validerSession(m); } catch { res = "erreur"; }
@@ -378,13 +357,13 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.8 Le projet : poids de départ 0,5, remplacés par une réponse qui va dans un autre sens.
 {
-  const base: Etat = { ...ETAT_VIDE, profil: { objectif: "aventure" }, priorites: ["securite", "travail", "francais"] };
+  const base: Etat = construire({ profil: { objectif: "aventure" }, envies: ["securite", "travail", "francais"] });
   const prix = (e: Etat) => effetsActifs(e).find((x) => x.mesure === "prix");
   verifier(prix(base)?.poids === 0.5 && !!prix(base)?.origine.startsWith("objectif:"), "aventure : la vie pas chère n'a pas son poids de départ de 0,5");
   verifier(!effetsActifs(base).some((x) => x.mesure === "salaire"), "aventure : le salaire a reçu un poids de départ");
-  const salaire = { ...base, reponses: { "deux-offres": "a" }, ordre: ["deux-offres"] };
+  const salaire = construire({ profil: { objectif: "aventure" }, envies: ["securite", "travail", "francais"], reponses: { "deux-offres": "a" } });
   verifier(prix(salaire) === undefined, "aventure + « 3 200 € par mois » : le poids de départ sur les prix n'a pas disparu");
-  const loyer = { ...base, reponses: { "deux-offres": "b" }, ordre: ["deux-offres"] };
+  const loyer = construire({ profil: { objectif: "aventure" }, envies: ["securite", "travail", "francais"], reponses: { "deux-offres": "b" } });
   verifier(prix(loyer)?.poids === 1, "aventure + « 2 400 € par mois » : la réponse ne l'emporte pas sur le poids de départ");
 }
 
@@ -427,7 +406,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const sante = trouverDilemme("poignet")!;
   verifier(mesuresQuiSeparent(sante, ETAT_VIDE, "allemagne", "belgique").length === 0, "départage : la santé sépare l'Allemagne et la Belgique");
   // Comparaison : une donnée manquante d'un côté donne « Non comparable » (null), jamais une égalité.
-  const ea: Etat = { ...ETAT_VIDE, priorites: ["salaire", "travail", "securite"] };
+  const ea: Etat = construire({ envies: ["salaire", "travail", "securite"] });
   const lc = calculer(ea);
   const c = comparer(lc.find((l) => l.pays.id === "allemagne")!, lc.find((l) => l.pays.id === "belgique")!, ea);
   verifier(c.lignes.find((x) => x.mesure === "salaire")?.ecart === null, "comparaison : salaire manquant pour l'Allemagne, mais pas « Non comparable »");
@@ -447,7 +426,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 // et un texte qui dit vrai sur le calcul (« On met en avant » seulement si l'option a un effet).
 {
   const mots = (t: string) => t.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
-  const aides = [...quiz.profil.map((q) => [q.id, q.aide] as const), ...Object.entries(quiz.aides), ...quiz.dilemmes.map((d) => [d.id, d.aide] as const)];
+  const aides = quiz.elements.map((e) => [e.id, e.aide] as const);
   for (const [id, a] of aides) {
     verifier(!!a?.enjeu && a.cartes.length > 0, `aide de ${id} absente ou vide`);
     const n = mots(a.enjeu) + a.cartes.reduce((s, c) => s + mots(c.texte), 0);
@@ -459,8 +438,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
       const texte = d.aide.cartes[i]?.texte ?? "";
       const agit = o.effets.some((e) => e.position !== undefined || (e.poids ?? 1) > 0);
       if (/^On met (nettement )?en avant/.test(texte)) verifier(agit, `aide de ${d.id} ${o.id} : « on met en avant » sans effet codé`);
-      if (/ne recule|ne compte pas plus|Rien ne change|ne fait reculer aucun/.test(texte)) verifier(!agit && !o.ecart, `aide de ${d.id} ${o.id} : « rien ne change » alors que l'option agit`);
-      if (o.ecart) verifier(texte.includes("Moins adaptés pour toi"), `aide de ${d.id} ${o.id} : l'écart n'est pas dit`);
+      if (/ne recule|ne compte pas plus|Rien ne change|ne fait reculer aucun/.test(texte)) verifier(!agit, `aide de ${d.id} ${o.id} : « rien ne change » alors que l'option agit`);
     });
   }
 }
@@ -471,7 +449,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   let surprises = 0, parLangue = 0, rangsHorsVue = 0;
   for (let k = 0; k < 150; k++) {
     let etat = quizAuHasard(r4);
-    if (k % 3 === 0) etat = { ...etat, profil: { ...etat.profil, zone: k % 2 ? "europe" : "hors-europe" } };
+    if (k % 3 === 0) etat = repondre(etat, "limites", { "hors-europe": k % 2 ? "redhibitoire" : "ok", alphabet: "redhibitoire" });
     if (k % 5 === 0) etat = repondre(etat, "cours-offerts", "b");
     const lignes = calculer(etat);
     const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
@@ -483,7 +461,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
       const apres = calculer({ ...etat, remontes: [...etat.remontes, s.ligne.pays.id] }).find((l) => l.pays.id === s.ligne.pays.id)!;
       verifier(!apres.ecart, `surprise : ${s.ligne.pays.nom} reste écarté après « Le remonter »`);
       if (s.cause === "langue") verifier(Math.abs(apres.score - s.score) < 1e-6, `surprise : ${s.ligne.pays.nom} remonté sans retrouver son score sans pénalité`);
-      verifier(/^Seul ton choix de/.test(s.phrase), "surprise : phrase sans la préférence en cause");
+      verifier(/^(Seul ton choix de|Seule ta limite)/.test(s.phrase), "surprise : phrase sans la préférence en cause");
     }
     // Égalités dans la liste : un partenaire du top 3 (hors de la vue) est suivi de son rang.
     const principaux = lignes.filter((l) => !l.ecart);
@@ -504,19 +482,19 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   console.log(`Pays surprise : ${surprises} quiz sur 150 (dont ${parLangue} par la langue à apprendre) ; égalités avec rang hors vue : ${rangsHorsVue}.`);
 
   // Âge : un pays fermé à ton âge n'est jamais le pays surprise, même très bien noté.
-  const vieux: Etat = demarrerDilemmes({ ...ETAT_VIDE, profil: { age: "36-plus", zone: "peu-importe" }, priorites: ["prix", "climat", "proche"] });
+  const vieux: Etat = construire({ profil: { age: "36-plus" }, envies: ["prix", "climat", "proche"] });
   const lv = calculer(vieux);
   const sv = paysSurprise(vieux, lv, lv.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3));
   verifier(!sv || causesEcart(sv.ligne.pays, vieux).every((c) => c.cause !== "age"), "surprise : un pays fermé à ton âge proposé");
 
   // Curseurs : « Compte beaucoup » sur la distance, sans aucune réponse sur la distance, ajoute vol et décalage.
-  const sansDistance: Etat = { ...ETAT_VIDE, priorites: ["salaire", "travail", "securite"] };
+  const sansDistance: Etat = construire({ envies: ["salaire", "travail", "securite"] });
   verifier(niveauDeduit(effetsActifs(sansDistance), "distance") === 0, "curseur : distance déduite non nulle sans réponse");
   const ajoutes = effetsAjustes(sansDistance, { ...REGLAGES_DEFAUT, niveaux: { distance: 2 } }).filter((e) => e.origine === "reglage:distance");
   verifier(ajoutes.length === 2 && ajoutes.every((e) => e.poids === 1), "curseur : la distance n'ajoute pas vol et décalage (importance 2 en tout)");
-  // Priorité « Proche de la France » : niveau déduit 2, et « Compte un peu » divise par 4.
-  const proche: Etat = { ...ETAT_VIDE, priorites: ["proche", "travail", "securite"] };
-  verifier(niveauDeduit(effetsActifs(proche), "distance") === 2, "curseur : la priorité Proche ne donne pas le niveau 2");
+  // Envie « Proche de la France » classée n° 1 : niveau déduit 2, et « Compte un peu » divise par 4.
+  const proche: Etat = construire({ envies: ["proche", "travail", "securite"] });
+  verifier(niveauDeduit(effetsActifs(proche), "distance") === 2, "curseur : l’envie Proche n° 1 ne donne pas le niveau 2");
   const peu = effetsAjustes(proche, { ...REGLAGES_DEFAUT, niveaux: { distance: 0.5 } }).filter((e) => e.mesure === "vol" || e.mesure === "decalage");
   verifier(peu.length === 2 && peu.every((e) => Math.abs(e.poids - 0.25) < 1e-9), "curseur : « Compte un peu » mal appliqué à la priorité Proche");
   // Culture : sans réponse, rien à ajouter (on ne sait pas dans quel sens aller).
@@ -634,7 +612,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     verifier(Object.keys(LIBELLE_ECHELLE).length === 4, "échelle : il faut 4 libellés");
   }
   // Réponse « Un peu A » à « Deux offres » : salaire d'importance 0,5.
-  const peu: Etat = { ...ETAT_VIDE, priorites: ["securite", "climat", "proche"], reponses: { "deux-offres": "peu-a" }, ordre: ["deux-offres"] };
+  const peu: Etat = construire({ envies: ["securite", "climat", "proche"], reponses: { "deux-offres": "peu-a" } });
   verifier(effetsDe(peu).find((e) => e.mesure === "salaire")?.poids === 0.5, "« Un peu A » ne donne pas l'importance 0,5");
   // Une session avec une réponse graduée est acceptée, une réponse inconnue refusée.
   verifier(validerSession({ ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "deux-offres": "peu-b" }, ordre: ["deux-offres"], historique: [] } }) !== null, "session : « peu-b » refusé");
@@ -669,21 +647,15 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     verifier(!!sceneDe(d, { ...e, dejaVues: d.scenes.map((x) => cleScene(d, x)) }), `scène : ${d.id} sans scène quand tout est vu`);
   }
   verifier(differentes > 80, `scène : la graine ne change presque jamais la scène (${differentes} sur 200)`);
-  // Les 4 premiers dilemmes : tirés parmi ceux qui départagent au moins 60 % autant que le meilleur ; stables au retour.
+  // « Retour » : l'élément annulé est reproposé, identique (le parcours se déduit des réponses et de la graine).
   const r6 = hasard(5);
-  for (let k = 0; k < 80; k++) {
-    let etat = quizAuHasard(r6);
-    etat = demarrerDilemmes({ ...etat, reponses: {}, ordre: [] });
-    for (let n = 0; n < DEBUT_ALEATOIRE + 2; n++) {
-      const d = prochainDilemme(etat);
-      if (!d) break;
-      const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
-      const us = quiz.dilemmes.filter((x) => dilemmeVisible(x, etat)).map((x) => utilite(x, etat, top));
-      const u = utilite(d, etat, top), max = Math.max(...us);
-      if (n < DEBUT_ALEATOIRE) verifier(u >= PART_UTILITE * max - 1e-9, `début : ${d.id} trop peu utile (${u.toFixed(2)} pour ${max.toFixed(2)})`);
-      else verifier(u >= max - 1e-9, `après le début : ${d.id} n'est pas le plus utile`);
-      const suivant = repondre(etat, d.id, choisir(r6, reponsesDe(d)));
-      verifier(prochainDilemme(annulerDerniere(suivant))?.id === d.id, `retour : ${d.id} n'est plus proposé après « Retour »`);
+  for (let k = 0; k < 40; k++) {
+    let etat = etatDepart({ ...ETAT_VIDE, graine: Math.floor(r6() * 2 ** 31) });
+    for (let n = 0; n < 30; n++) {
+      const el = prochainElement(etat);
+      if (!el) break;
+      const suivant = repondre(etat, el.id, reponseAuHasard(el, etat, r6));
+      verifier(prochainElement(annulerDerniere(suivant))?.id === el.id, `retour : ${el.id} n'est plus proposé après « Retour »`);
       etat = suivant;
     }
   }
@@ -693,12 +665,91 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(validerSession(JSON.parse(JSON.stringify(s1))) !== null, "nouvelle session refusée");
   const fait = quizAuHasard(hasard(8));
   const vues = scenesVues(fait);
-  verifier(vues.length === fait.ordre.length, "scènes vues : il en manque");
+  verifier(vues.length === fait.ordre.filter((id) => trouverDilemme(id)).length, "scènes vues : il en manque");
   verifier(nouvelleSession(vues).etat.dejaVues.length === vues.length, "recommencer : scènes déjà vues oubliées");
 }
 
 // 2.18 Accords (prompt 3e, lot 6) : un pays au pluriel (« les Pays-Bas ») accorde le verbe.
 for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord : ${p.nom} mal marqué au pluriel`);
+
+// 2.19 Formats (prompt 3f, lot 1) : chaque format produit une réponse valide, enregistrée avec son format,
+// sa valeur, les dimensions touchées et une certitude ; ses effets sur le calcul sont ceux de la banque.
+{
+  const r7 = hasard(19);
+  const vus = new Set<string>();
+  for (let k = 0; k < 60; k++) {
+    let etat = etatDepart({ ...ETAT_VIDE, graine: Math.floor(r7() * 2 ** 31) });
+    for (let n = 0; n < 40; n++) {
+      const el = prochainElement(etat);
+      if (!el) break;
+      vus.add(el.type);
+      const v = reponseAuHasard(el, etat, r7);
+      verifier(valeurValide(el, v), `format ${el.type} (${el.id}) : réponse invalide ${JSON.stringify(v)}`);
+      verifier(valeurValide(el, PASSER), `format ${el.type} : « passer » refusé`);
+      const rec = enregistrer(el.id, v)!;
+      verifier(rec.format === el.type && rec.valeur === v && ["faible", "moyenne", "forte"].includes(rec.certitude), `format ${el.type} : enregistrement incomplet`);
+      for (const d of rec.dimensions) verifier(!!quiz.dimensions[d], `format ${el.type} : dimension inconnue ${d}`);
+      for (const { effet } of effetsReponse(el, v)) for (const m of effet.mesures) verifier(m === "secteur" || !!quiz.dimensions && !!Object.values(quiz.dimensions).some((x) => x.mesures.includes(m)), `format ${el.type} : mesure ${m} sans dimension`);
+      verifier(chapitreDe(el.id) === el.chapitre && elementVisible(el, etat), `format ${el.type} : élément proposé alors qu'il n'est pas visible`);
+      etat = repondre(etat, el.id, v);
+    }
+  }
+  for (const t of ["choix-cartes", "classement", "curseur", "swipe", "ambiances", "thermometre", "carte-monde", "tri-limites", "dilemme"]) verifier(vus.has(t), `format ${t} : jamais proposé`);
+  // Classement des envies : rang 1 = 2 ; 2 = 1,75 ; 3 = 1,5 ; 4 = 1,25 ; 5 = 1,1.
+  verifier([0, 1, 2, 3, 4].map(poidsRang).join() === "2,1.75,1.5,1.25,1.1", "envies : poids des rangs incorrects");
+  const cinq = ["securite", "salaire", "prix", "travail", "climat"];
+  const e5 = construire({ envies: cinq });
+  verifier(enviesDe(e5).join() === cinq.join(), "envies : l'ordre du classement n'est pas lu");
+  const poidsDe = (e: Etat, m: string) => effetsActifs(e).find((x) => x.mesure === m)?.poids;
+  verifier(poidsDe(e5, "securite") === 2 && poidsDe(e5, "salaire") === 1.75 && poidsDe(e5, "prix") === 1.5 && poidsDe(e5, "emploi") === 1.25 && poidsDe(e5, "doux") === 1.1, "envies : importances du classement mal appliquées");
+  const proche = construire({ envies: ["proche", "salaire", "prix", "travail", "climat"] });
+  verifier(poidsDe(proche, "vol") === 1 && poidsDe(proche, "decalage") === 1, "envies : « Proche de la France » n° 1 ne partage pas 2 entre vol et décalage");
+  // Classement passé : l'ordre du choix des envies sert de classement.
+  const sansClassement = rejouer({ ...ETAT_VIDE, reponses: { envies: cinq, classement: PASSER }, ordre: ["envies", "classement"] });
+  verifier(enviesDe(sansClassement).join() === cinq.join(), "envies : classement passé mal lu");
+  // La carte du monde n'a aucun effet sur le score.
+  const avecCarte = repondre(e5, "carte", ["asie-est", "oceanie"]);
+  verifier(memesScores(scores(e5), scores(avecCarte)) && effetsActifs(avecCarte).length === effetsActifs(e5).length, "carte : elle change le score");
+  // Curseur : continu, 0 = temps libre seulement, 100 = salaire seulement, 50 = les deux à 0,5.
+  const curseur = (v: number) => effetsActifs(repondre(construire({ envies: ["securite", "prix", "travail", "climat", "francais"] }), "equilibre", v));
+  verifier(curseur(0).find((e) => e.mesure === "heures")?.poids === 1 && !curseur(0).some((e) => e.mesure === "salaire"), "curseur : 0 ne donne pas le temps libre seul");
+  verifier(curseur(100).find((e) => e.mesure === "salaire")?.poids === 1 && !curseur(100).some((e) => e.mesure === "heures"), "curseur : 100 ne donne pas le salaire seul");
+  verifier(curseur(50).find((e) => e.mesure === "salaire")?.poids === 0.5 && curseur(50).find((e) => e.mesure === "heures")?.poids === 0.5, "curseur : 50 ne donne pas 0,5 et 0,5");
+  verifier(Math.abs((curseur(70).find((e) => e.mesure === "salaire")?.poids ?? 0) - 0.7) < 1e-9, "curseur : pas continu");
+  // Swipe : « Ça dépend » ne compte pas ; « Pas vraiment » sur S3 met le coût de la vie.
+  const sw = (x: Record<string, string>) => effetsActifs(repondre(construire({ envies: ["securite", "travail", "climat", "francais", "equilibre"] }), "phrases", x));
+  verifier(sw({ S3: "depend", S7: "depend" }).length === sw({}).length, "swipe : « Ça dépend » compte");
+  verifier(sw({ S3: "non" }).some((e) => e.mesure === "prix") && sw({ S3: "oui" }).some((e) => e.mesure === "salaire"), "swipe : S3 mal traduit");
+  verifier(sw({ S13: "oui" }).find((e) => e.mesure === "decision")?.position === 1, "swipe : S13 ne vise pas la décision rapide");
+  // Ambiances : 2 au plus, chacune son effet.
+  const amb = effetsActifs(repondre(e5, "ambiances", ["nature", "soleil"]));
+  verifier(amb.some((e) => e.mesure === "nature") && amb.some((e) => e.mesure === "ete" && e.position === 4), "ambiances : effets manquants");
+  verifier(!valeurValide(trouverElement("ambiances")!, ["nature", "soleil", "metropole"]), "ambiances : 3 choix acceptés");
+  // Thermomètres : la moyenne donne le niveau d'anglais (1 à 2 débutant, 3 moyen, 4 à 5 courant).
+  verifier(niveauAnglais({ "anglais-reunion": 1, "anglais-vie": 2 }) === "debutant" && niveauAnglais({ "anglais-reunion": 2, "anglais-vie": 3 }) === "moyen" && niveauAnglais({ "anglais-reunion": 3, "anglais-vie": 4 }) === "courant" && niveauAnglais({ "anglais-reunion": 4 }) === "courant", "thermomètres : niveau d'anglais mal déduit");
+  verifier(profilDe({ "anglais-reunion": 1, "anglais-vie": 1 }).anglais === "debutant" && elementVisible(trouverElement("pret-anglais")!, construire({ profil: { anglais: "debutant" } })), "thermomètres : la question « Travailler en anglais » n'apparaît pas pour un débutant");
+  verifier(!elementVisible(trouverElement("pret-anglais")!, construire({ profil: { anglais: "debutant", langues: ["es"] } })), "thermomètres : la question apparaît alors qu'une autre langue est parlée");
+  // Tri des limites : « Je préfère éviter » = pénalité de poids 1 ; « Rédhibitoire » = « Moins adaptés », avec « Le remonter ».
+  const lim = repondre(e5, "limites", { "hors-europe": "redhibitoire", "vol-10h": "eviter" });
+  const ll = calculer(lim);
+  for (const l of ll) {
+    if (l.pays.zone !== "europe") verifier(!!l.ecart && causesEcart(l.pays, lim).some((c) => c.cause === "limite" && c.limite === "hors-europe"), `limites : ${l.pays.nom} pas écarté par « Vivre hors d’Europe »`);
+    else verifier(!l.ecart || causesEcart(l.pays, lim).every((c) => c.limite !== "hors-europe"), `limites : ${l.pays.nom} écarté à tort`);
+  }
+  verifier(effetsActifs(lim).find((e) => e.mesure === "vol")?.poids === 1 && effetsActifs(lim).find((e) => e.mesure === "vol")?.origine === "limite:vol-10h", "limites : « Je préfère éviter » n'est pas une pénalité de poids 1");
+  const remonte = calculer({ ...lim, remontes: ["japon"] }).find((l) => l.pays.id === "japon")!;
+  verifier(!remonte.ecart, "limites : « Le remonter » ne marche pas");
+  verifier(limiteTouche("alphabet", "japon", {}) && !limiteTouche("alphabet", "japon", { langues: ["ja"] }) && !limiteTouche("alphabet", "espagne", {}), "limites : l'autre alphabet mal détecté");
+  verifier(!limiteTouche("vol-10h", "maroc", {}) && limiteTouche("vol-10h", "australie", {}), "limites : plus de 10 h de vol mal détecté");
+  // 6 situations sur 8, toujours les mêmes pour le même état ; la série de phrases : 5 sur 15.
+  const tri = trouverElement("limites");
+  if (tri?.type === "tri-limites") verifier(situationsLimites(tri, e5).length === 6 && situationsLimites(tri, e5).map((x) => x.id).join() === situationsLimites(tri, { ...e5 }).map((x) => x.id).join(), "limites : pas 6 situations stables");
+  const phr = trouverElement("phrases");
+  if (phr?.type === "swipe") verifier(phrasesSwipe(phr, e5).length === 5 && new Set(phrasesSwipe(phr, e5).map((x) => x.id)).size === 5, "swipe : pas 5 phrases différentes");
+  // Certitude : « Plutôt » est forte, « Un peu » moyenne ; un curseur au milieu est faible.
+  verifier(certitudeReponse(trouverDilemme("noel")!, "a") === "forte" && certitudeReponse(trouverDilemme("noel")!, "peu-a") === "moyenne" && certitudeReponse(trouverElement("equilibre")!, 50) === "faible", "certitude mal calculée");
+  verifier(dimensionsReponse(trouverElement("phrases")!, { S3: "oui", S7: "depend" }).join() === "cout,salaire", "swipe : dimensions touchées incorrectes");
+}
 
 // ---------- Bilan ----------
 if (echecs.length) {

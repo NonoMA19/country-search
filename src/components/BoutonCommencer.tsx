@@ -11,7 +11,7 @@ const VIDE = "inline-flex min-h-14 w-full items-center justify-center rounded-2x
 export default function BoutonCommencer() {
   const session = useSession();
   const router = useRouter();
-  const entame = !!session && (session.etape.t !== "profil" || session.etape.i > 0 || Object.keys(session.etat.profil).length > 0);
+  const entame = !!session && (session.etape.t !== "quiz" || session.etat.ordre.length > 0);
   return (
     <div>
       {entame ? (

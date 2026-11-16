@@ -233,6 +233,44 @@
           "Langue du bureau"
         ],
         "sujet": "le travail en anglais"
+      },
+      {
+        "id": "langue-travail",
+        "nom": "Travailler en français ou en anglais",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : on peut y travailler en français. Sinon, la note « Travailler en anglais ». Ne compte que si tu dis préférer éviter, ou refuser, de travailler ni en français ni en anglais.",
+        "echelle": [
+          "ni en français ni en anglais",
+          "langue locale presque toujours nécessaire",
+          "anglais dans les grandes entreprises",
+          "anglais très courant",
+          "français ou anglais au bureau"
+        ],
+        "mots": [
+          "ni français ni anglais",
+          "langue locale presque toujours nécessaire",
+          "anglais dans les grandes entreprises",
+          "anglais très courant",
+          "français ou anglais au bureau"
+        ],
+        "fait": [
+          "Au travail, il faut la langue locale : ni le français ni l’anglais ne suffisent",
+          "Au travail, la langue locale est presque toujours nécessaire",
+          "Au travail, l’anglais suffit surtout dans les grandes entreprises",
+          "Au travail, l’anglais suffit dans beaucoup d’entreprises",
+          "Tu peux y travailler en français ou en anglais"
+        ],
+        "court": "Travailler en français ou en anglais",
+        "theme": "la langue de travail",
+        "sujet": "la langue de travail",
+        "etiquettes": [
+          "Ni français ni anglais",
+          "Langue locale nécessaire",
+          "Grandes entreprises",
+          "Anglais courant",
+          "Français ou anglais"
+        ]
       }
     ]
   },
@@ -1518,6 +1556,57 @@
           "Visa en partie lié",
           "Libre de changer d’employeur",
           "Libre de changer d’employeur"
+        ]
+      }
+    ]
+  },
+  {
+    "numero": 20,
+    "id": "zone",
+    "famille": "vivre",
+    "nom": "En Europe ou plus loin",
+    "definition": "Le pays est-il en Europe ? Tiré de la liste des 30 pays. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "geonames"
+    ],
+    "mesures": [
+      {
+        "id": "en-europe",
+        "nom": "Vivre en Europe",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : le pays est en Europe. 1 : il est hors d’Europe.",
+        "echelle": [
+          "hors d’Europe",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "en Europe"
+        ],
+        "mots": [
+          "hors d’Europe",
+          "hors d’Europe",
+          "hors d’Europe",
+          "en Europe",
+          "en Europe"
+        ],
+        "fait": [
+          "Il est hors d’Europe",
+          "Il est hors d’Europe",
+          "Il est hors d’Europe",
+          "Il est en Europe",
+          "Il est en Europe"
+        ],
+        "court": "En Europe",
+        "theme": "la distance",
+        "sujet": "l’Europe",
+        "etiquettes": [
+          "Hors d’Europe",
+          "Hors d’Europe",
+          "Hors d’Europe",
+          "En Europe",
+          "En Europe"
         ]
       }
     ]
