@@ -53,8 +53,8 @@ const scorePhrase = (p: PhraseSwipe, etat: Etat, top: Ligne[]) =>
 export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const deja = etat.reponses[el.id];
   if (deja && typeof deja === "object" && !Array.isArray(deja)) {
-    const ids = Object.keys(deja);
-    return el.phrases.filter((p) => ids.includes(p.id));
+    // Dans l'ordre où elles ont été vues (l'ordre des réponses), pour les revoir à l'identique.
+    return Object.keys(deja).map((id) => el.phrases.find((p) => p.id === id)).filter((p): p is PhraseSwipe => !!p);
   }
   // Passée : les phrases montrées à ce moment-là (l'état d'avant).
   if (deja !== undefined) return phrasesSwipe(el, etatAvant(etat, el.id));

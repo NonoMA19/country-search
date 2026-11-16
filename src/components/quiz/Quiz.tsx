@@ -39,9 +39,10 @@ function Progression({ chapitre, part }: { chapitre: number; part: number }) {
   );
 }
 
-function Cadre({ chapitre, part, retour, children }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode }) {
+// « cle » change à chaque écran : l'écran entre en fondu avec un léger glissement (un simple fondu en mouvement réduit).
+function Cadre({ chapitre, part, retour, children, cle = "" }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode; cle?: string }) {
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-5 pt-4 pb-6">
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col overflow-x-clip px-5 pt-4 pb-6">
       <div className="flex items-center gap-3">
         {retour ? (
           <button type="button" data-retour onClick={retour} className="-ml-2 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
@@ -54,7 +55,7 @@ function Cadre({ chapitre, part, retour, children }: { chapitre: number; part: n
         )}
         <Progression chapitre={chapitre} part={part} />
       </div>
-      <div className="flex flex-1 flex-col pt-5">{children}</div>
+      <div key={cle} className="ecran-entree flex flex-1 flex-col pt-5">{children}</div>
       <p className="mt-6 text-xs text-gris">
         Les informations sur les visas et les impôts ne constituent pas un conseil juridique. Vérifie toujours auprès des sources officielles.{" "}
         <Link href="/mentions-legales" className="text-lien underline">Mentions légales</Link>
@@ -194,7 +195,7 @@ export default function Quiz() {
     // Retour : rouvre tes limites. Si tu as affiné depuis, on les rouvre telles quelles, sans rien annuler.
     const retourIntuition = () => (etat.ordre.at(-1) === "limites" ? retourQuiz() : aller({ t: "revoir", id: "limites", retour: "intuition" }));
     return (
-      <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourIntuition}>
+      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourIntuition}>
         <EcranIntuition etat={etat} suite={() => aller({ t: "portrait" })} />
       </Cadre>
     );
@@ -205,7 +206,7 @@ export default function Quiz() {
     const revoir = (l: LignePortrait) => { if (l.revoir) aller({ t: "revoir", id: l.revoir.id }); };
     const restants = restantsAffiner(etat);
     return (
-      <Cadre chapitre={NB_CHAPITRES} part={1} retour={() => aller({ t: "intuition" })}>
+      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={() => aller({ t: "intuition" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
         {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
@@ -230,7 +231,7 @@ export default function Quiz() {
     {
       const F = FORMATS[el.type];
       return (
-        <Cadre chapitre={el.chapitre} part={1} retour={() => aller(apres)}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller(apres)}>
           <F key={el.id} element={el} etat={etat} valeur={etat.reponses[el.id]} libellePasser="Garder ma réponse"
             repondre={(v: Valeur) => aller(apres, { etat: changerReponse(etat, el.id, v) })} passer={() => aller(apres)} />
         </Cadre>
@@ -249,7 +250,7 @@ export default function Quiz() {
         aller(prochainAffiner(nouvel) ? { t: "affiner" } : { t: "portrait", fin: true }, { etat: nouvel });
       };
       return (
-        <Cadre chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
           <p className="mb-2 text-sm font-medium text-gris">{phraseRestants(restantsAffiner(etat))}</p>
           <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
           <button type="button" onClick={() => aller({ t: "portrait" })} className="mt-3 min-h-11 text-sm font-medium text-lien underline">J’ai fini, revoir mon portrait</button>
@@ -269,7 +270,7 @@ export default function Quiz() {
   // Un nouveau chapitre commence : son écran d'ouverture (à partir du chapitre 2).
   if (el.chapitre > 1 && !session.chapitresVus.includes(el.chapitre) && vusDans(etat, el.chapitre).length === 0) {
     return (
-      <Cadre chapitre={el.chapitre} part={0} retour={retourQuiz}>
+      <Cadre cle={ecran} chapitre={el.chapitre} part={0} retour={retourQuiz}>
         <Transition chapitre={el.chapitre} continuer={() => aller({ t: "quiz" }, { chapitresVus: [...session.chapitresVus, el.chapitre] })} />
       </Cadre>
     );
@@ -279,7 +280,7 @@ export default function Quiz() {
   const adaptatif = estAdaptatif(el.chapitre);
   const top = adaptatif ? topCourant(etat, 3) : [];
   return (
-    <Cadre chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null}>
+    <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null}>
       <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
       {adaptatif && top.length > 0 && (
         <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre} />

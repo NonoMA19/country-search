@@ -60,10 +60,42 @@ input[type="range"] {
   accent-color: #2563eb;
 }
 
+/* Moins de mouvement demandé : plus aucun déplacement, mais un simple fondu (jamais rien de figé).
+   Les transitions ne gardent que l'opacité et les couleurs ; chaque animation a sa version en fondu. */
 @media (prefers-reduced-motion: reduce) {
   * {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+  }
+}
+
+/* Entrée d'un écran du quiz : fondu et léger glissement (200 ms, durée provisoire). */
+.ecran-entree {
+  animation: ecran-entree 200ms ease-out both;
+}
+@keyframes ecran-entree {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ecran-entree {
+    animation-name: fondu;
+  }
+  .revelation {
+    animation: fondu 0.3s ease-out both;
+  }
+}
+@keyframes fondu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
