@@ -35,6 +35,7 @@ export type DefMesure = {
   decimales?: number;
   theme?: string; // pour les phrases de synthèse : « la distance », « le climat »
   etiquettes?: string[]; // un mot par niveau, à côté de la valeur : « Très sûr », « Hiver doux »
+  avertissement?: string; // une phrase de prudence affichée dans la fenêtre de preuve (salaire brut moyen…)
 };
 
 export type Critere = {
@@ -61,6 +62,7 @@ export type Note = {
   verifieLe?: string | null;
   liens?: string[]; // témoignages : toutes les sources, au moins deux
   confiance?: Confiance;
+  ancien?: { valeur: number; annee: string }; // valeur écartée (année trop éloignée des autres pays), hors calcul
 };
 
 // « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
@@ -180,9 +182,12 @@ const scores = scoresData as unknown as {
   genereLe: string;
   villes: Record<string, { nom: string; lat: number; lon: number; fuseau: string }>;
   pays: Record<string, Record<string, Note>>;
+  reference?: { france?: { nom: string; notes: Record<string, Note> } };
 };
 export const dateDonnees = scores.genereLe;
 export const notes = scores.pays;
+// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les 30 pays.
+export const notesFrance: Record<string, Note> = scores.reference?.france?.notes ?? {};
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
 export type PresenceVie = { texte: string; source: string; lien: string; verifieLe: string };
@@ -233,13 +238,15 @@ export type Preuve = {
   licence: string | null;
   liens?: string[]; // témoignages : la liste des sources
   confiance?: Confiance;
+  annee?: string | null; // l'année de la donnée, toujours dite quand elle est connue
+  avertissement?: string | null; // une phrase de prudence propre à la mesure
 };
 
 export function preuveMesure(paysId: string, mesureId: string): Preuve {
   const n = notes[paysId]?.[mesureId];
   const m = mesures[mesureId];
   if (!n || n.statut !== "verifie" || !n.source) {
-    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "À vérifier.", source: null, lien: null, verifieLe: null, licence: null };
+    return { type: "a-verifier", titre: m?.nom ?? mesureId, texte: n?.texte ?? "À vérifier.", source: null, lien: null, verifieLe: null, licence: null, avertissement: m?.avertissement ?? null };
   }
   const s = sources[n.source];
   return {
@@ -253,6 +260,8 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     page: n.lien && s.page && n.lien !== s.page ? s.page : null,
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
+    annee: n.annee ?? null,
+    avertissement: m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }

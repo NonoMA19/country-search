@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, notes, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
 import Definition, { AvecDefinitions } from "@/components/Definition";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
@@ -25,6 +25,16 @@ function Type({ type }: { type: TypeSource }) {
 }
 
 const nombre = (n: number) => n.toLocaleString("fr-FR");
+
+// Pour chaque mesure datée : la plus ancienne et la plus récente année parmi les notes vérifiées des 30 pays.
+function anneesParMesure() {
+  return Object.values(mesures).flatMap((m) => {
+    const ans = pays.map((p) => notes[p.id]?.[m.id]).filter((n) => n?.statut === "verifie" && n.annee && /^\d{4}$/.test(n.annee)).map((n) => Number(n!.annee));
+    if (!ans.length) return [];
+    const min = Math.min(...ans), max = Math.max(...ans);
+    return [{ id: m.id, nom: m.court ?? m.nom, min, max, ecart: max - min }];
+  });
+}
 
 // L'effet d'une option, en mots simples.
 function effet(o: OptionDilemme): string {
@@ -118,7 +128,7 @@ export default function Methode() {
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Les curseurs « Et si… ? »</h2>
-        <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
+        <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire brut moyen en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Chaque curseur va de « Ne compte pas » (importance 0) à « Compte beaucoup » (importance 2, comme une priorité), en passant par « Compte un peu » (0,5) et « Compte » (1).</li>
           <li>Il part de la valeur déduite de tes réponses : la plus forte importance qu’une seule de tes réponses donne à ce groupe. Exemple : la priorité « Proche de la France » donne 2, l’option « 6 h de vol » donne 0,5.</li>
@@ -171,6 +181,23 @@ export default function Methode() {
             <li>Ce sont des tendances générales, à l’échelle d’un pays. Une start-up et une grande banque du même pays peuvent fonctionner tout à fait autrement : ton entreprise peut être très différente.</li>
             <li>Les témoignages viennent surtout d’expatriés, souvent dans de grandes villes et dans des entreprises internationales.</li>
             <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans les 30 pays.</li>
+          </ul>
+        </div>
+        <div id="annees" className="mt-4 scroll-mt-4 rounded-2xl border border-bord bg-carte p-4">
+          <h3 className="font-semibold">Des années comparables, et la France comme repère</h3>
+          <ul className="mt-2 list-disc space-y-2 pl-5">
+            <li>Chaque fenêtre de preuve donne l’année de la donnée quand elle est connue.</li>
+            <li>Salaire : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. Une moyenne de 2021 ne se compare pas à une moyenne de 2025. C’est un salaire brut moyen, avant impôts et cotisations, tous métiers confondus : ton salaire net dépendra de ton métier et des impôts du pays.</li>
+            <li>La France n’est pas classée. Quand la même source donne sa valeur, on l’affiche à côté (« France : … ») pour que tu compares à ce que tu connais. Le niveau des prix est déjà calculé par rapport à la France, et la distance ou le climat dépendent d’une ville : pas de valeur France pour eux.</li>
+          </ul>
+          <p className="mt-3 font-medium">Années des données, mesure par mesure</p>
+          <ul className="mt-2 space-y-1 text-sm">
+            {anneesParMesure().map((x) => (
+              <li key={x.id}>
+                {x.nom} : {x.min === x.max ? x.min : `de ${x.min} à ${x.max}`}
+                {x.ecart > 2 && <span className="text-gris"> (plus de 2 ans d’écart entre pays : l’année est dite dans chaque preuve)</span>}
+              </li>
+            ))}
           </ul>
         </div>
         <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité, avec le nom de l’autre pays (et son rang s’il est hors de ton top 3).</p>

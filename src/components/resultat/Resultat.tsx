@@ -16,11 +16,11 @@ import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
 import BlocVie from "@/components/resultat/BlocVie";
 import { BadgeFiabilite, FicheFaisabilite, VisaCourt } from "@/components/resultat/Faisabilite";
 import { ECART_EX_AEQUO } from "@/config";
-import { doubleNationalite, mesures, preuveMesure, type Preuve } from "@/lib/donnees";
+import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
   CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurLisible, verdict,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurFrance, valeurLisible, verdict,
   type Badge, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
@@ -90,6 +90,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
       {details.map((d) => {
         const v = valeurLisible(ligne.pays.id, d.mesure, etat.profil);
         const m = mesures[d.mesure];
+        const france = v?.valeur ? valeurFrance(d.mesure, notes[ligne.pays.id]?.[d.mesure]?.annee) : null;
         return (
           <li key={d.mesure} className="py-2">
             <p className="text-sm text-gris">{m?.court ?? m?.nom}</p>
@@ -97,6 +98,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
               {v?.valeur && <><AvecDefinitions texte={v.valeur} /> · </>}{v?.mot}
               <Pastille preuve={preuveMesure(ligne.pays.id, d.mesure)} pays={ligne.pays.nom} contexte={m?.court ?? d.mesure} />
             </p>
+            {france && <p className="text-sm text-gris">{france}</p>}
           </li>
         );
       })}

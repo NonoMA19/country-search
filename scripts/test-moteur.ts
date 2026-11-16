@@ -1,11 +1,11 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
-import { notes as notesPays, portes, quiz, sources, vie } from "@/lib/donnees";
+import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, vie } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -506,9 +506,9 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   // Fiabilité : « Notre avis » ne compte pas comme une donnée vérifiée ; seuils 90 % et 60 %.
   const avisSeul = fiabiliteDe("allemagne", ["hierarchie"], {});
   verifier(sources[notesPays.allemagne.hierarchie.source!].type === "notre-avis" && avisSeul.verifies === 0 && avisSeul.niveau === "faible", "fiabilité : « Notre avis » compté comme vérifié");
-  const ouvertes = fiabiliteDe("allemagne", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "doux", "prix", "air"], {});
+  const ouvertes = fiabiliteDe("pays-bas", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "doux", "prix", "air"], {});
   verifier(ouvertes.niveau === "complete" && ouvertes.verifies === 10, "fiabilité : 10 données ouvertes sur 10 ne donnent pas « Données complètes »");
-  const partielle = fiabiliteDe("allemagne", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "hierarchie", "communication", "ponctualite"], {});
+  const partielle = fiabiliteDe("pays-bas", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "hierarchie", "communication", "ponctualite"], {});
   verifier(partielle.niveau === "partielle", `fiabilité : 7 sur 10 donne ${partielle.niveau}`);
   verifier(fiabiliteDe("japon", ["langue"], { langues: ["ja"] }).verifies === 1, "fiabilité : la langue que tu parles ne compte pas");
   for (const p of pays) for (const m of Object.keys(notesPays[p.id])) {
@@ -545,6 +545,30 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(vie.ageMaxCandidature === 27 && vie.dureeMoisMin === 6 && vie.dureeMoisMax === 24 && vie.statut === "verifie", "VIE : conditions non sourcées ou changées");
   verifier(new URL(vie.offres.url).hostname === "mon-vie-via.businessfrance.fr" && sources[vie.offres.source]?.type === "officiel", "VIE : lien des offres non officiel");
   verifier(vie.resume.length === 2, "VIE : le résumé n'a pas deux phrases");
+}
+
+// 2.15 Fiabilité des données (prompt 3e, lot 1).
+{
+  // Salaire : années comparables (au plus un an d'écart avec l'année médiane), libellé honnête.
+  const ans = pays.map((p) => notesPays[p.id].salaire).map((n) => Number(n.annee ?? n.ancien?.annee)).filter(Number.isFinite).sort((a, b) => a - b);
+  const mediane = ans[Math.floor((ans.length - 1) / 2)];
+  for (const p of pays) {
+    const n = notesPays[p.id].salaire;
+    if (n.statut === "verifie") verifier(Math.abs(Number(n.annee) - mediane) <= 1, `salaire : ${p.nom} compté avec une donnée de ${n.annee} (médiane ${mediane})`);
+    if (n.statut === "verifie") verifier(n.texte.includes("brut") && n.texte.includes("avant impôts"), `salaire : ${p.nom} sans « brut, avant impôts »`);
+  }
+  verifier(paysCouverts("salaire") >= 0.6 * pays.length, `salaire : seulement ${paysCouverts("salaire")} pays notés, les dilemmes du salaire ne seraient plus posés`);
+  verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
+  // L'année de la donnée est dans la preuve.
+  for (const p of pays) for (const [m, n] of Object.entries(notesPays[p.id])) {
+    if (n.statut === "verifie" && n.annee) verifier(preuveMesure(p.id, m).annee === n.annee, `preuve : année absente pour ${m} (${p.nom})`);
+  }
+  // La France : repère non classé, jamais pour une mesure relative à la France ou à une ville.
+  verifier(!pays.some((p) => p.id === "france"), "la France est classée");
+  for (const m of ["prix", "vol", "decalage", "hiver", "ete", "doux"]) verifier(valeurFrance(m) === null, `France : valeur affichée pour ${m}`);
+  for (const [m, n] of Object.entries(notesFrance)) {
+    if (n.statut === "verifie") verifier(!!valeurFrance(m)?.startsWith("France :"), `France : ${m} vérifiée mais non affichée`);
+  }
 }
 
 // ---------- Bilan ----------

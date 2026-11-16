@@ -61,7 +61,7 @@ export function CarteDilemme({ dilemme, repond, titreId = "titre-ecran", choisie
       <p className="mt-2 text-lg leading-snug">{dilemme.scene}</p>
       <div className="mt-5 space-y-3" role="group" aria-labelledby={titreId}>
         {dilemme.options.map((o, i) => (
-          <button key={o.id} type="button" onClick={() => repond(o.id)} aria-pressed={choisie !== undefined ? choisie === o.id : undefined}
+          <button key={o.id} type="button" data-reponse={o.id} onClick={() => repond(o.id)} aria-pressed={choisie !== undefined ? choisie === o.id : undefined}
             className={`flex min-h-16 w-full items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu ${choisie === o.id ? "border-bleu bg-bleu-doux" : "border-bord bg-carte"}`}>
             <span aria-hidden="true" className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-creux text-sm font-semibold text-gris">{lettres[i]}</span>
             <span className="min-w-0">

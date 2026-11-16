@@ -129,8 +129,8 @@
     "numero": 5,
     "id": "salaire",
     "famille": "travailler",
-    "nom": "Salaire par rapport au coût de la vie",
-    "definition": "Salaire mensuel moyen des salariés, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. À prendre comme un ordre de grandeur. Une donnée de plus de six ans n’est pas comptée.",
+    "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
+    "definition": "Salaire mensuel brut moyen des salariés, avant impôts et cotisations, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. Ton salaire net dépendra de ton métier et des impôts du pays. À prendre comme un ordre de grandeur. Une donnée de plus de six ans, ou d’une année trop éloignée de celle des autres pays, n’est pas comptée.",
     "type": "donnee-ouverte",
     "sources": [
       "oit-ilostat"
@@ -138,8 +138,10 @@
     "mesures": [
       {
         "id": "salaire",
-        "nom": "Salaire moyen en pouvoir d’achat",
+        "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
         "sens": "haut",
+        "regle": "Salaire moyen des salariés de l’OIT (indicateur EAR_EMTA_SEX_CUR_NB_A, dollars PPA). Les années doivent être comparables : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. La source visée est le salaire annuel moyen de l’OCDE (même année pour tous les pays) : pas encore récupéré.",
+        "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations. Ton salaire net dépendra de ton métier et des impôts du pays.",
         "unite": "$ PPA par mois",
         "bornes": [
           2000,
@@ -168,9 +170,9 @@
           "élevé",
           "très élevé"
         ],
-        "fait": "Le salaire moyen y est {mot}, une fois les prix pris en compte",
-        "court": "Salaire (pouvoir d’achat)",
-        "affichage": "{v} $ PPA par mois",
+        "fait": "Le salaire brut moyen y est {mot}, une fois les prix pris en compte",
+        "court": "Salaire brut moyen (pouvoir d’achat)",
+        "affichage": "{v} $ PPA brut par mois",
         "decimales": 0,
         "theme": "le salaire",
         "etiquettes": [

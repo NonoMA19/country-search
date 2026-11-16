@@ -3,7 +3,12 @@
 //         node scripts/collecte.mjs --population   (télécharge seulement la population et recalcule le réseau français)
 //         node scripts/collecte.mjs --textes   (réécrit seulement les phrases, sans rien télécharger :
 //                                              les valeurs et les dates « vérifié le » restent celles du fichier)
+//         node scripts/collecte.mjs --france   (télécharge seulement les valeurs de la France, pays repère non classé)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
+//
+// Salaire (prompt 3e) : la source visée est le salaire annuel moyen de l'OCDE (dollars PPA, prix constants,
+// même année pour tous). L'API de l'OCDE (sdmx.oecd.org) était inaccessible depuis la session : on garde l'OIT,
+// et un pays dont l'année s'écarte de plus d'un an de l'année médiane passe « à vérifier » (voir salaireCoherent).
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -15,6 +20,7 @@ const AUJOURDHUI = new Date().toISOString().slice(0, 10);
 const UA = "country-search-bot/0.1 (projet open source non commercial)";
 const TEXTES_SEUL = process.argv.includes("--textes");
 const POPULATION_SEULE = process.argv.includes("--population");
+const FRANCE_SEULE = process.argv.includes("--france");
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
@@ -26,7 +32,7 @@ const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => 
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_"))) return null;
+  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -69,7 +75,7 @@ const typoTextes = (scores) => {
 const pluriel = (n, mot) => `${mot}${Math.round(n * 10) / 10 >= 2 ? "s" : ""}`;
 const TEXTE = {
   emploi: (v, an) => `Parmi les 15-24 ans qui travaillent ou cherchent un emploi, ${fr(v)} % sont au chômage (${an}, estimation de l'Organisation internationale du travail).`,
-  salaire: (v, an) => `Salaire moyen des salariés : ${fr(v, 0)} $ par mois, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (${an}).`,
+  salaire: (v, an) => `Salaire brut moyen des salariés, avant impôts et cotisations : ${fr(v, 0)} $ par mois, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (${an}).`,
   heures: (v, an) => `${fr(v)} heures réellement travaillées par semaine en moyenne (${an}).`,
   francais: (v, an, p, inscrits) => `${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020, soit ${fr(v, v < 10 ? 1 : 0)} pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
   prix: (v, an) => {
@@ -99,6 +105,34 @@ const doux = (hiver, ete, p) => ({
   statut: "verifie", note: noteDoux(hiver.valeur, ete.valeur), texte: TEXTE.doux(hiver.valeur, hiver.annee, p, ete.valeur),
   annee: hiver.annee, source: hiver.source, lien: hiver.lien, verifieLe: hiver.verifieLe,
 });
+
+// ---------- Salaire : des années comparables ----------
+// Une moyenne de 2021 et une moyenne de 2025 ne se comparent pas : un pays dont l'année s'écarte
+// de plus d'un an de l'année médiane des 30 pays passe « à vérifier ». Sa valeur reste dans le fichier
+// (« ancien »), hors calcul, pour qu'on puisse la remplacer plus tard. La fonction ne change rien si on la relance.
+const ECART_ANNEES_SALAIRE = 1;
+function anneeMediane(scores, id) {
+  const ans = Object.values(scores).map((s) => Number(s[id]?.annee ?? s[id]?.ancien?.annee)).filter((x) => Number.isFinite(x)).sort((a, b) => a - b);
+  return ans.length ? ans[Math.floor((ans.length - 1) / 2)] : null;
+}
+function salaireCoherent(scores, mediane = anneeMediane(scores, "salaire")) {
+  if (mediane === null) return;
+  for (const s of Object.values(scores)) {
+    const m = s.salaire;
+    if (m?.statut !== "verifie" || Math.abs(Number(m.annee) - mediane) <= ECART_ANNEES_SALAIRE) continue;
+    s.salaire = {
+      ...aVerifier(`Salaire brut moyen : la donnée la plus récente de cette source date de ${m.annee}, alors que la plupart des pays ont une donnée de ${mediane}. Des années trop différentes faussent la comparaison : on ne la compte pas.`),
+      ancien: { valeur: m.valeur, annee: m.annee, source: m.source, lien: m.lien, verifieLe: m.verifieLe },
+    };
+  }
+  return mediane;
+}
+
+// ---------- La France, pays repère (non classé) ----------
+// Mêmes sources et mêmes règles que les 30 pays, pour comparer à ce qu'on connaît.
+// Pas de mesure « par rapport à la France » (niveau des prix), ni de mesure par ville (distance, climat).
+const FRANCE = { nom: "France", ville: "Paris", le: "la France", en: "en France", iso3: "FRA" };
+const MESURES_FRANCE = ["emploi", "salaire", "heures", "securite", "air", "stabilite", "libertes"];
 
 // ---------- Banque mondiale ----------
 const ISO3 = pays.map((p) => p.iso3).join(";");
@@ -142,7 +176,7 @@ const prixFrance = niveauPrix("FRA");
 
 // ---------- OIT ----------
 function oit(indicateur, iso3, filtre) {
-  const f = telecharger(`oit_${indicateur}_${iso3}.csv`, `https://rplumber.ilo.org/data/indicator/?id=${indicateur}&ref_area=${iso3}&format=.csv`);
+  const f = telecharger(`${FRANCE_SEULE ? "fr_" : ""}oit_${indicateur}_${iso3}.csv`,`https://rplumber.ilo.org/data/indicator/?id=${indicateur}&ref_area=${iso3}&format=.csv`);
   if (!f) return null;
   const lignes = fs.readFileSync(f, "utf8").replace(/^﻿/, "").trim().split("\n");
   const entetes = lignes[0].split(",").map((s) => s.replace(/"/g, ""));
@@ -155,6 +189,46 @@ function oit(indicateur, iso3, filtre) {
     if (!meilleur || o.time > meilleur.annee) meilleur = { annee: o.time, valeur: Number(o.obs_value) };
   }
   return meilleur;
+}
+
+// Les notes de la France. « series » : la dernière valeur de chaque indicateur de la Banque mondiale, avec son lien.
+const LIEN_OIT = (ind, iso3) => `https://rplumber.ilo.org/data/indicator/?id=${ind}&ref_area=${iso3}&format=.csv`;
+function notesFrance(series, medianeSalaire) {
+  const note = (id, x, source, lien) => (x ? verifie(id, x.valeur, TEXTE[id](x.valeur, x.annee, FRANCE), source, lien, x.annee) : aVerifier("Pas de donnée dans cette source."));
+  const res = {
+    emploi: note("emploi", series.emploi?.x, "bm-wdi", series.emploi?.url),
+    salaire: note("salaire", oit("EAR_EMTA_SEX_CUR_NB_A", "FRA", (o) => o.classif1 === "CUR_TYPE_PPP"), "oit-ilostat", LIEN_OIT("EAR_EMTA_SEX_CUR_NB_A", "FRA")),
+    heures: note("heures", oit("HOW_TEMP_SEX_NB_A", "FRA", () => true), "oit-ilostat", LIEN_OIT("HOW_TEMP_SEX_NB_A", "FRA")),
+    securite: note("securite", series.homicides?.x, "bm-wdi", series.homicides?.url),
+    air: note("air", series.air?.x, "bm-wdi", series.air?.url),
+    stabilite: note("stabilite", series.stabilite?.x, "bm-wgi", series.stabilite?.url),
+    libertes: note("libertes", series.libertes?.x, "bm-wgi", series.libertes?.url),
+  };
+  salaireCoherent({ france: res }, medianeSalaire);
+  return res;
+}
+
+// ---------- Mode --france : télécharger seulement les valeurs de la France ----------
+if (FRANCE_SEULE) {
+  const actuel = lire("scores.json");
+  const INDICATEURS = { emploi: ["SL.UEM.1524.ZS", ""], homicides: ["VC.IHR.PSRC.P5", ""], air: ["EN.ATM.PM25.MC.M3", ""], stabilite: ["GOV_WGI_PV.SC", "&source=3"], libertes: ["GOV_WGI_VA.SC", "&source=3"] };
+  const series = {};
+  for (const [k, [ind, extra]] of Object.entries(INDICATEURS)) {
+    const url = `https://api.worldbank.org/v2/country/FRA/indicator/${ind}?format=json&per_page=1000&date=2015:2026${extra}`;
+    const d = json(`fr_bm_${ind}.json`, url);
+    const serie = {};
+    for (const l of Array.isArray(d?.[1]) ? d[1] : []) if (l.value !== null) serie[l.date] = l.value;
+    series[k] = { x: dernier(Object.keys(serie).length ? serie : null), url };
+  }
+  const notes = notesFrance(series, anneeMediane(actuel.pays, "salaire"));
+  // Une donnée déjà vérifiée n'est jamais remplacée par un échec de téléchargement.
+  const avant = actuel.reference?.france?.notes ?? {};
+  for (const id of MESURES_FRANCE) if (notes[id].statut !== "verifie" && avant[id]?.statut === "verifie") notes[id] = avant[id];
+  actuel.reference = { france: { nom: FRANCE.nom, notes } };
+  typoTextes({ france: notes });
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const id of MESURES_FRANCE) console.log(id, notes[id].statut === "verifie" ? `${notes[id].valeur} (${notes[id].annee})` : notes[id].texte);
+  process.exit(0);
 }
 
 // ---------- Population (Banque mondiale, SP.POP.TOTL), pays par pays : la requête groupée est trop lente ----------
@@ -314,6 +388,13 @@ if (TEXTES_SEUL) {
     Object.assign(s, notesAvis(p, dateAvis));
     delete s.conges;
   }
+  const mediane = salaireCoherent(actuel.pays);
+  const france = actuel.reference?.france?.notes;
+  if (france) {
+    for (const [id, m] of Object.entries(france)) if (m.statut === "verifie" && TEXTE[id]) m.texte = TEXTE[id](m.valeur, m.annee, FRANCE);
+    salaireCoherent({ france }, mediane);
+    typoTextes({ france });
+  }
   typoTextes(actuel.pays);
   fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
   console.log("Phrases réécrites. Valeurs et dates inchangées.");
@@ -334,8 +415,8 @@ for (const p of pays) {
 
   const sal = oit("EAR_EMTA_SEX_CUR_NB_A", p.iso3, (o) => o.classif1 === "CUR_TYPE_PPP");
   const ANNEE_MIN = Number(AUJOURDHUI.slice(0, 4)) - 6;
-  if (sal && Number(sal.annee) < ANNEE_MIN) s.salaire = aVerifier(`Salaire moyen : la dernière donnée date de ${sal.annee}, elle est trop ancienne pour être comptée.`);
-  else s.salaire = sal ? verifie("salaire", sal.valeur, TEXTE.salaire(sal.valeur, sal.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=${p.iso3}&format=.csv`, sal.annee) : aVerifier("Salaire moyen : pas de donnée dans cette source.");
+  if (sal && Number(sal.annee) < ANNEE_MIN) s.salaire = aVerifier(`Salaire brut moyen : la dernière donnée date de ${sal.annee}, elle est trop ancienne pour être comptée.`);
+  else s.salaire = sal ? verifie("salaire", sal.valeur, TEXTE.salaire(sal.valeur, sal.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=${p.iso3}&format=.csv`, sal.annee) : aVerifier("Salaire brut moyen : pas de donnée dans cette source.");
 
   const h = oit("HOW_TEMP_SEX_NB_A", p.iso3, () => true);
   s.heures = h ? verifie("heures", h.valeur, TEXTE.heures(h.valeur, h.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=${p.iso3}&format=.csv`, h.annee) : aVerifier("Heures travaillées : pas de donnée dans cette source.");
@@ -390,9 +471,14 @@ for (const p of pays) {
   scores[p.id] = s;
 }
 
+const medianeSalaire = salaireCoherent(scores);
+const pourFrance = (k) => ({ x: dernier(bm[k].serie.FRA), url: bm[k].url });
+const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes") }, medianeSalaire);
+typoTextes({ france });
+
 const manquantes = [];
 for (const p of pays) for (const [id, m] of Object.entries(scores[p.id])) if (m.statut !== "verifie") manquantes.push(`${p.nom} : ${mesures[id]?.nom ?? id}`);
 typoTextes(scores);
-fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify({ genereLe: AUJOURDHUI, villes, pays: scores }, null, 1) + "\n");
+fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify({ genereLe: AUJOURDHUI, villes, pays: scores, reference: { france: { nom: FRANCE.nom, notes: france } } }, null, 1) + "\n");
 fs.writeFileSync(path.join(CACHE, "a-verifier.txt"), manquantes.join("\n") + "\n");
 console.log(`\ncontent/scores.json écrit. Notes vérifiées : ${Object.values(scores).reduce((t, s) => t + Object.values(s).filter((m) => m.statut === "verifie").length, 0)}. À vérifier : ${manquantes.length}.`);

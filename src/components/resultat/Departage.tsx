@@ -32,7 +32,7 @@ function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: E
           const largeur = `${Math.round(Math.min(1, Math.abs(x.ecart)) * 50)}%`;
           return (
             <li key={x.mesure} className="px-4 py-3">
-              <p className="sr-only">{x.libelle} : {la.pays.nom}, {valeur(x.a)} ; {lb.pays.nom}, {valeur(x.b)}. {qui(x.ecart)}.</p>
+              <p className="sr-only">{x.libelle} : {la.pays.nom}, {valeur(x.a)} ; {lb.pays.nom}, {valeur(x.b)}. {qui(x.ecart)}.{x.france ? ` Pour comparer, ${x.france}.` : ""}</p>
               <div aria-hidden="true">
                 <p className="text-center text-sm font-semibold">{x.libelle}{x.priorite && <span className="font-normal text-gris"> · priorité</span>}</p>
                 <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 text-sm leading-snug">
@@ -47,6 +47,7 @@ function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: E
                     <span className="jauge absolute top-0 h-full rounded-full bg-bleu" style={x.ecart > 0 ? { right: "50%", width: largeur } : { left: "50%", width: largeur }} />
                   )}
                 </div>
+                {x.france && <p className="mt-1.5 text-center text-xs text-gris">{x.france}</p>}
               </div>
             </li>
           );

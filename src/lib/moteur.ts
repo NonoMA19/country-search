@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, europe, mesures, notes, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
+  avis, dateFr, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
   type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
 } from "./donnees";
 
@@ -1011,12 +1011,25 @@ export function valeurLisible(paysId: string, mesureId: string, profil: Profil):
   return { valeur, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
 }
 
+// La valeur de la France pour comparer à ce qu'on connaît : « France : 17,3 % ».
+// Seulement quand la même source la donne, avec les mêmes règles (années comparables pour le salaire).
+// « annee » : l'année du pays comparé ; si celle de la France en diffère, elle est dite.
+export function valeurFrance(mesureId: string, annee?: string | null): string | null {
+  const m = mesures[mesureId];
+  const n = notesFrance[mesureId];
+  if (!m?.affichage || !n || n.statut !== "verifie" || typeof n.valeur !== "number") return null;
+  const modele = n.valeur < 2 && m.affichageSingulier ? m.affichageSingulier : m.affichage;
+  const v = modele.replace("{v} ", "{v} ").replace("{v}", nombreFr(n.valeur, m.decimales ?? 0));
+  return `France : ${v}${n.annee && annee && n.annee !== annee ? ` (${n.annee})` : ""}`;
+}
+
 // ---------- La comparaison côte à côte ----------
 // Une ligne par critère qui compte pour toi, tes priorités d'abord, puis par importance.
 export type LigneComparaison = {
   mesure: string; libelle: string; theme: string; priorite: boolean; poids: number;
   a: { valeur: string | null; mot: string } | null; b: { valeur: string | null; mot: string } | null;
   ecart: number; // accord de a moins accord de b : de −1 à 1 (0 : égalité)
+  france: string | null; // « France : 17,3 % », pour comparer à ce qu'on connaît
 };
 export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = REGLAGES_DEFAUT) {
   const lignes: LigneComparaison[] = effetsAjustes(etat, reglages)
@@ -1029,6 +1042,7 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
         mesure: e.mesure, libelle: m?.court ?? m?.nom ?? e.mesure, theme: m?.theme ?? "", priorite: e.origine.startsWith("priorite:"), poids: e.poids,
         a: valeurLisible(la.pays.id, e.mesure, etat.profil), b: valeurLisible(lb.pays.id, e.mesure, etat.profil),
         ecart: da && db ? da.accord - db.accord : 0,
+        france: valeurFrance(e.mesure),
       };
     })
     .filter((x) => x.a || x.b)

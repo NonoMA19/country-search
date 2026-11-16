@@ -228,7 +228,7 @@
     "statut": "verifie",
     "note": 5,
     "valeur": 8077.25,
-    "texte": "Salaire moyen des salariés : 8 077 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 8 077 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BEL&format=.csv",
@@ -495,7 +495,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 6069.99,
-    "texte": "Salaire moyen des salariés : 6 070 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 070 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHE&format=.csv",
@@ -759,14 +759,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 4,
-    "valeur": 6134.91,
-    "texte": "Salaire moyen des salariés : 6 135 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2022).",
-    "annee": "2022",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DEU&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 6134.91,
+     "annee": "2022",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DEU&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1030,7 +1032,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 5576.85,
-    "texte": "Salaire moyen des salariés : 5 577 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 577 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=IRL&format=.csv",
@@ -1298,7 +1300,7 @@
     "statut": "verifie",
     "note": 5,
     "valeur": 9274.94,
-    "texte": "Salaire moyen des salariés : 9 275 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 9 275 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=LUX&format=.csv",
@@ -1565,7 +1567,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 5203.46,
-    "texte": "Salaire moyen des salariés : 5 203 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 203 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ESP&format=.csv",
@@ -1832,7 +1834,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 5481.1,
-    "texte": "Salaire moyen des salariés : 5 481 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 481 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ITA&format=.csv",
@@ -2100,7 +2102,7 @@
     "statut": "verifie",
     "note": 5,
     "valeur": 7383.4,
-    "texte": "Salaire moyen des salariés : 7 383 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 7 383 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NLD&format=.csv",
@@ -2368,7 +2370,7 @@
     "statut": "verifie",
     "note": 2,
     "valeur": 2196.15,
-    "texte": "Salaire moyen des salariés : 2 196 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 196 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=PRT&format=.csv",
@@ -2636,7 +2638,7 @@
     "statut": "verifie",
     "note": 5,
     "valeur": 6693.8,
-    "texte": "Salaire moyen des salariés : 6 694 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 694 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NOR&format=.csv",
@@ -2904,7 +2906,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 5284.05,
-    "texte": "Salaire moyen des salariés : 5 284 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 284 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SWE&format=.csv",
@@ -3172,7 +3174,7 @@
     "statut": "verifie",
     "note": 5,
     "valeur": 6689.19,
-    "texte": "Salaire moyen des salariés : 6 689 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 689 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DNK&format=.csv",
@@ -3440,7 +3442,7 @@
     "statut": "verifie",
     "note": 3,
     "valeur": 4571.22,
-    "texte": "Salaire moyen des salariés : 4 571 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 571 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CAN&format=.csv",
@@ -3705,14 +3707,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 3,
-    "valeur": 3925.81,
-    "texte": "Salaire moyen des salariés : 3 926 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2021).",
-    "annee": "2021",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=AUS&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 3925.81,
+     "annee": "2021",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=AUS&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "a-verifier",
@@ -3968,14 +3972,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 2,
-    "valeur": 2808.73,
-    "texte": "Salaire moyen des salariés : 2 809 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2021).",
-    "annee": "2021",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=JPN&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 2808.73,
+     "annee": "2021",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=JPN&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "a-verifier",
@@ -4231,14 +4237,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 3,
-    "valeur": 4064.16,
-    "texte": "Salaire moyen des salariés : 4 064 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2022).",
-    "annee": "2022",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NZL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 4064.16,
+     "annee": "2022",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NZL&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "a-verifier",
@@ -4494,14 +4502,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 3,
-    "valeur": 4525.45,
-    "texte": "Salaire moyen des salariés : 4 525 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2022).",
-    "annee": "2022",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=KOR&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 4525.45,
+     "annee": "2022",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=KOR&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -5223,7 +5233,7 @@
     "statut": "verifie",
     "note": 1,
     "valeur": 1522.6,
-    "texte": "Salaire moyen des salariés : 1 523 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 523 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ARG&format=.csv",
@@ -5481,7 +5491,7 @@
     "statut": "verifie",
     "note": 2,
     "valeur": 2078.79,
-    "texte": "Salaire moyen des salariés : 2 079 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2024).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 079 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2024).",
     "annee": "2024",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHL&format=.csv",
@@ -5748,7 +5758,7 @@
     "statut": "verifie",
     "note": 1,
     "valeur": 1214.38,
-    "texte": "Salaire moyen des salariés : 1 214 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 214 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=COL&format=.csv",
@@ -6005,7 +6015,7 @@
     "statut": "verifie",
     "note": 1,
     "valeur": 938.11,
-    "texte": "Salaire moyen des salariés : 938 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 938 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=MEX&format=.csv",
@@ -6271,7 +6281,7 @@
     "statut": "verifie",
     "note": 1,
     "valeur": 1314.42,
-    "texte": "Salaire moyen des salariés : 1 314 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 314 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BRA&format=.csv",
@@ -6529,7 +6539,7 @@
     "statut": "verifie",
     "note": 3,
     "valeur": 4499.88,
-    "texte": "Salaire moyen des salariés : 4 500 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 500 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=GBR&format=.csv",
@@ -6796,7 +6806,7 @@
     "statut": "verifie",
     "note": 4,
     "valeur": 6272.93,
-    "texte": "Salaire moyen des salariés : 6 273 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 273 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
     "annee": "2025",
     "source": "oit-ilostat",
     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=USA&format=.csv",
@@ -7060,14 +7070,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 3,
-    "valeur": 4419.63,
-    "texte": "Salaire moyen des salariés : 4 420 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2021).",
-    "annee": "2021",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SGP&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 4419.63,
+     "annee": "2021",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SGP&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "a-verifier",
@@ -7576,14 +7588,16 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 1,
-    "valeur": 1434.75,
-    "texte": "Salaire moyen des salariés : 1 435 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2022).",
-    "annee": "2022",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHN&format=.csv",
-    "verifieLe": "2026-11-14"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
+    "ancien": {
+     "valeur": 1434.75,
+     "annee": "2022",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHN&format=.csv",
+     "verifieLe": "2026-11-14"
+    }
    },
    "heures": {
     "statut": "a-verifier",
@@ -8071,6 +8085,83 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   }
+  }
+ },
+ "reference": {
+  "france": {
+   "nom": "France",
+   "notes": {
+    "emploi": {
+     "statut": "verifie",
+     "note": 2,
+     "valeur": 18.89,
+     "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 18,9 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+     "annee": "2025",
+     "source": "bm-wdi",
+     "lien": "https://api.worldbank.org/v2/country/FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+     "verifieLe": "2026-11-16"
+    },
+    "salaire": {
+     "statut": "verifie",
+     "note": 2,
+     "valeur": 3083.59,
+     "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 3 084 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "heures": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 35.35,
+     "texte": "35,4 heures réellement travaillées par semaine en moyenne (2025).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "securite": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 1.34,
+     "texte": "1,3 homicide pour 100 000 habitants (2023).",
+     "annee": "2023",
+     "source": "bm-wdi",
+     "lien": "https://api.worldbank.org/v2/country/FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+     "verifieLe": "2026-11-16"
+    },
+    "air": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 8.23,
+     "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 8,2 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+     "annee": "2023",
+     "source": "bm-wdi",
+     "lien": "https://api.worldbank.org/v2/country/FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+     "verifieLe": "2026-11-16"
+    },
+    "stabilite": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 63.99,
+     "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 64 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+     "annee": "2025",
+     "source": "bm-wgi",
+     "lien": "https://api.worldbank.org/v2/country/FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+     "verifieLe": "2026-11-16"
+    },
+    "libertes": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 78.99,
+     "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 79 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+     "annee": "2025",
+     "source": "bm-wgi",
+     "lien": "https://api.worldbank.org/v2/country/FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+     "verifieLe": "2026-11-16"
+    }
    }
   }
  }

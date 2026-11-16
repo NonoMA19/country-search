@@ -88,6 +88,7 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
           <p className="mt-2 text-sm text-gris">{EXPLICATION_TYPE[preuve.type]}</p>
           <h2 id={idTitre} className="mt-3 text-lg font-semibold">{preuve.titre}</h2>
           <p className="mt-2">{preuve.texte}</p>
+          {preuve.avertissement && <p className="mt-3 rounded-xl bg-creux p-3 text-sm">{preuve.avertissement}</p>}
           {preuve.type === "temoignages" && (
             <p className="mt-3 text-sm font-medium">{preuve.confiance === "bonne" ? "Confiance bonne" : "Confiance moyenne"}</p>
           )}
@@ -160,6 +161,12 @@ function Fenetre({ preuve, pays, fermer }: { preuve: Preuve; pays?: string; ferm
                         Fichier brut, pour les curieux <ExternalLink aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
                       </a>
                     </dd>
+                  </div>
+                )}
+                {preuve.annee && (
+                  <div>
+                    <dt className="font-medium text-gris">Année de la donnée</dt>
+                    <dd>{preuve.annee}</dd>
                   </div>
                 )}
                 <div>
