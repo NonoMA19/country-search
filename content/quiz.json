@@ -721,6 +721,51 @@
       ]
     },
     {
+      "id": "duree",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "duree",
+      "titre": "Tu pars pour combien de temps ?",
+      "dimensions": [],
+      "sansImage": true,
+      "aide": {
+        "enjeu": "Un PVT dure un an au plus.",
+        "cartes": [
+          {
+            "pastille": "Jusqu’à 12 mois",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Plus d’un an",
+            "texte": "On te prévient que le PVT ne suffira pas : il faudra un autre visa ensuite. Ton classement ne change pas."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "moins-6",
+          "label": "Moins de 6 mois",
+          "mois": 5
+        },
+        {
+          "id": "6-12",
+          "label": "6 à 12 mois",
+          "mois": 12
+        },
+        {
+          "id": "1-2",
+          "label": "1 à 2 ans",
+          "mois": 24
+        },
+        {
+          "id": "plus-2",
+          "label": "Plus de 2 ans",
+          "mois": 36
+        }
+      ]
+    },
+    {
       "id": "anglais-reunion",
       "type": "thermometre",
       "chapitre": 1,
@@ -4378,6 +4423,89 @@
           "mesure": "sante",
           "raison": "Tu as dit que payer une assurance santé privée était rédhibitoire.",
           "dimension": "sante"
+        }
+      ]
+    },
+    {
+      "id": "valeurs",
+      "type": "choix-cartes",
+      "chapitre": 5,
+      "theme": "Tes valeurs",
+      "multiple": true,
+      "sansImage": true,
+      "facultatif": true,
+      "titre": "Tes valeurs, si tu veux aller plus loin",
+      "texte": "C’est facultatif. Coche ce qui compte pour toi, ou passe.",
+      "aucun": "Rien de plus pour moi",
+      "dimensions": [
+        "sante",
+        "valeurs"
+      ],
+      "aide": {
+        "enjeu": "Ces sujets parlent moins du travail que de ta vie sur place.",
+        "cartes": [
+          {
+            "pastille": "Coché",
+            "texte": "Le sujet compte dans ton pourcentage, autant qu’une réponse de dilemme (importance 1)."
+          },
+          {
+            "pastille": "Pas coché",
+            "texte": "Il ne compte pas. Rien n’écarte un pays ici."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "stabilite",
+          "label": "Stabilité politique",
+          "effets": [
+            {
+              "mesures": [
+                "stabilite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "La stabilité politique du pays compte pour toi."
+        },
+        {
+          "id": "libertes",
+          "label": "Libertés d’expression et de la presse",
+          "effets": [
+            {
+              "mesures": [
+                "libertes"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Les libertés d’expression et de la presse comptent pour toi."
+        },
+        {
+          "id": "egalite",
+          "label": "Égalité femmes-hommes dans la loi",
+          "effets": [
+            {
+              "mesures": [
+                "egalite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "L’égalité femmes-hommes dans la loi compte pour toi."
+        },
+        {
+          "id": "air",
+          "label": "Qualité de l’air",
+          "effets": [
+            {
+              "mesures": [
+                "air"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "La qualité de l’air compte pour toi."
         }
       ]
     }

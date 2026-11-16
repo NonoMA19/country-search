@@ -8,7 +8,7 @@ import {
   GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
-import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
+import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
 import { prochainAffiner, restantsAffiner, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
@@ -983,6 +983,24 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     const avecCarte = repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "carte", ["oceanie", "asie-est"]);
     verifier(phrasesSwipe(phr, avecCarte).some((p) => p.id === "S16") && phrasesSwipe(phr, avecCarte).length === 5, "carte hors d'Europe : la phrase « dépaysement » n'est pas dans la série");
     verifier(memesScores(scores(avecCarte), scores(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }))), "carte hors d'Europe : le score change");
+  }
+}
+
+// 2.26 Ce qui revient (prompt 3g, lot 4) : la durée au chapitre 1, l'écran Valeurs facultatif au chapitre 5.
+{
+  const duree = trouverElement("duree");
+  verifier(duree?.chapitre === 1 && duree.type === "choix-cartes" && duree.profil === "duree", "durée : la question n'est pas au chapitre 1");
+  const pvt = evaluerPorte(trouverPays("australie")!, { age: "18-25", duree: "1-2" }, null);
+  verifier(pvt.alertes.some((a) => a.texte.includes("un an maximum")), "durée : l'alerte « le PVT dure un an » n'apparaît pas");
+  const val = trouverElement("valeurs");
+  verifier(val?.chapitre === 5 && val.type === "choix-cartes" && !!val.multiple, "valeurs : l'écran n'est pas au chapitre 5");
+  if (val?.type === "choix-cartes") {
+    const ids = optionsDe(val).map((o) => o.id);
+    verifier(ids.includes("stabilite") && ids.includes("air") && ids.includes("libertes"), "valeurs : stabilité, libertés ou air manquent");
+    verifier(ids.includes("egalite") === pays.some((p) => notesPays[p.id].egalite?.statut === "verifie"), "valeurs : l'égalité est proposée sans donnée (ou cachée avec)");
+    const e = repondre(construire({ envies: ["salaire", "travail", "prix", "climat", "proche"] }), "valeurs", ["stabilite", "air"]);
+    verifier(effetsActifs(e).find((x) => x.mesure === "stabilite")?.poids === 1 && effetsActifs(e).find((x) => x.mesure === "air")?.poids === 1, "valeurs : importance 1 non donnée");
+    verifier(valeurValide(val, []) && valeurValide(val, "passer"), "valeurs : rien cocher ou passer refusé");
   }
 }
 

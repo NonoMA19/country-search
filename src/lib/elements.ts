@@ -2,7 +2,7 @@
 // Un seul schéma de réponse pour tous les formats (le type Valeur de donnees.ts), ou « passer ».
 // Ce fichier ne calcule aucun score : il traduit les réponses en effets, mesure par mesure (voir moteur.ts).
 import {
-  dimensionDe, quiz, trouverElement,
+  dimensionDe, notes, quiz, trouverElement,
   type ChoixCartes, type Curseur, type Dilemme, type EffetDilemme, type Element, type OptionDilemme, type TypeElement, type Valeur,
 } from "./donnees";
 
@@ -66,9 +66,13 @@ export function valeurValide(el: Element, v: unknown): boolean {
 }
 
 // Les options d'une carte. Les envies viennent de quiz.envies.
+// Une option dont une mesure n'a aucune donnée vérifiée (l'égalité femmes-hommes, par exemple) n'est pas proposée.
+// (Les mesures calculées, comme le dépaysement, et « secteur » ne sont pas stockées : elles restent proposées.)
+const mesureStockee = (m: string) => Object.values(notes).some((n) => n[m] !== undefined);
+const mesureNotee = (m: string) => Object.values(notes).some((n) => n[m]?.statut === "verifie");
 export function optionsDe(el: ChoixCartes) {
   if (el.source === "envies") return quiz.envies.map((e) => ({ id: e.id, label: e.label, icone: e.icone }));
-  return el.options;
+  return el.options.filter((o) => !o.effets || o.effets.every((e) => e.mesures.every((m) => !mesureStockee(m) || mesureNotee(m))));
 }
 
 // ---------- Effets d'une réponse ----------

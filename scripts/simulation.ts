@@ -5,7 +5,7 @@
 import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
 import { PASSER, optionsDe } from "@/lib/elements";
 import { LIBELLE_FIABILITE, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
-import { chapitreDe, estAdaptatif, prochainAffiner, questionnaireFini, restantsAffiner, situationsLimites } from "@/lib/parcours";
+import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner, situationsLimites } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Repondeur } from "./hasard";
@@ -101,17 +101,27 @@ const jaccard = (a: string[], b: string[]) => {
   return union ? inter / union : 1;
 };
 const adaptatifs = (e: Etat) => e.ordre.filter((id) => estAdaptatif(chapitreDe(id)));
+// Ce que la personne lit vraiment dans les chapitres 3 et 4 : la scène d'un dilemme, chacune des 5 phrases à glisser,
+// le texte d'une question (curseur, ambiances, question du projet).
+const contenusLus = (e: Etat) => adaptatifs(e).flatMap((id) => {
+  const el = trouverElement(id)!;
+  if (el.type === "dilemme") return [`${id}/${sceneDe(el, etatAvant(e, id)).id}`];
+  if (el.type === "swipe") return phrasesSwipe(el, e).map((p) => `phrase/${p.id}`);
+  return [id];
+});
 const r2 = hasard(20261116);
-let jEl = 0, jEcran = 0, jTout = 0;
+let jEl = 0, jEcran = 0, jTout = 0, jLu = 0;
 const PAIRES = 3000;
 for (let k = 0; k < PAIRES; k++) {
   const a = choisir(r2, parcoursListe), b = choisir(r2, parcoursListe);
   jEl += jaccard(adaptatifs(a), adaptatifs(b));
+  jLu += jaccard(contenusLus(a), contenusLus(b));
   jEcran += jaccard(adaptatifs(a).map((id) => cleEcran(id, a)), adaptatifs(b).map((id) => cleEcran(id, b)));
   jTout += jaccard(a.ordre.map((id) => cleEcran(id, a)), b.ordre.map((id) => cleEcran(id, b)));
 }
 const modal = (m: Record<string, number>) => Object.entries(m).sort((a, b) => b[1] - a[1])[0] ?? ["", 0];
 console.log(`\nDiversité (${PAIRES} paires de parcours) :`);
+console.log(`  Contenu lu identique dans les chapitres 3 et 4 (scènes, phrases à glisser, questions ; Jaccard) : ${pct(jLu, PAIRES)} (objectif : moins de 30 %)`);
 console.log(`  Éléments en commun dans les chapitres 3 et 4 (Jaccard) : ${pct(jEl, PAIRES)} ; écrans identiques (même scène) : ${pct(jEcran, PAIRES)}`);
 console.log(`  Écrans identiques sur tout le parcours (chapitres 1, 2 et 5 compris, communs à tous) : ${pct(jTout, PAIRES)}`);
 const [m3, n3] = modal(debut3), [m4, n4] = modal(debut4);
