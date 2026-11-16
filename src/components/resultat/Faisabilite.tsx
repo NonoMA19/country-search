@@ -1,5 +1,6 @@
 "use client";
 
+import { questionnaireFini } from "@/lib/parcours";
 import Link from "next/link";
 import { useId, useState } from "react";
 import { CircleAlert, CircleCheck, CircleHelp, ShieldCheck } from "lucide-react";
@@ -95,7 +96,7 @@ export function FaisabilitePourToi({ paysId }: { paysId: string }) {
   return (
     <div className="mt-3 rounded-2xl border border-bord bg-carte p-4">
       <p className="font-semibold">D’après tes réponses au quiz</p>
-      {ligne && etat.priorites.length === 3 && <BadgeFiabilite f={ligne.fiabilite} />}
+      {ligne && questionnaireFini(etat) && <BadgeFiabilite f={ligne.fiabilite} />}
       <FicheFaisabilite f={faisabilite(p, etat.profil, budget)} />
     </div>
   );

@@ -227,12 +227,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 8077.25,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 8 077 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BEL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 86545,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 545 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 60.5,
+    "impots": {
+     "taux": 39.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -488,6 +495,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2950.61,
+    "texte": "Indemnité VIE en Belgique : 2 951 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3.04,
+    "texte": "La finance et la banque : 3 % des emplois en Belgique, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.64,
+    "texte": "Le conseil et l’audit : 6,6 % des emplois en Belgique, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.34,
+    "texte": "L’ingénierie et l’industrie : 11,3 % des emplois en Belgique, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.27,
+    "texte": "La tech et la data : 4,3 % des emplois en Belgique, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.24,
+    "texte": "Le marketing et le commerce : 11,2 % des emplois en Belgique, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.02,
+    "texte": "La santé : 15 % des emplois en Belgique, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.07,
+    "texte": "L’hôtellerie et le tourisme : 4,1 % des emplois en Belgique, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.76,
+    "texte": "L’enseignement et la recherche : 9,8 % des emplois en Belgique, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "suisse": {
@@ -503,13 +611,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 6069.99,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 070 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHE&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 5,
+    "valeur": 102611,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 102 611 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 82 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 81.9,
+    "impots": {
+     "taux": 18.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -765,6 +880,116 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4435.69,
+    "texte": "Indemnité VIE à Zurich : 4 436 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Genève, 4 130 € ; autres villes, 4 108 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Zurich",
+    "autres": [
+     {
+      "ville": "Genève",
+      "montant": 4130.11
+     },
+     {
+      "ville": "autres villes",
+      "montant": 4108.38
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.45,
+    "texte": "La finance et la banque : 5,4 % des emplois en Suisse, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.34,
+    "texte": "Le conseil et l’audit : 9,3 % des emplois en Suisse, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.84,
+    "texte": "L’ingénierie et l’industrie : 11,8 % des emplois en Suisse, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.81,
+    "texte": "La tech et la data : 3,8 % des emplois en Suisse, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.06,
+    "texte": "Le marketing et le commerce : 11,1 % des emplois en Suisse, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.52,
+    "texte": "La santé : 15,5 % des emplois en Suisse, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.03,
+    "texte": "L’hôtellerie et le tourisme : 4 % des emplois en Suisse, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.5,
+    "texte": "L’enseignement et la recherche : 7,5 % des emplois en Suisse, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "allemagne": {
@@ -779,15 +1004,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 6134.91,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DEU&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 88144,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 144 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 61.3,
+    "impots": {
+     "taux": 38.7,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -1045,6 +1275,116 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3230.98,
+    "texte": "Indemnité VIE à Berlin : 3 231 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Munich, 3 363 € ; autres villes, 3 012 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Berlin",
+    "autres": [
+     {
+      "ville": "Munich",
+      "montant": 3363.17
+     },
+     {
+      "ville": "autres villes",
+      "montant": 3011.73
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3.1,
+    "texte": "La finance et la banque : 3,1 % des emplois en Allemagne, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.59,
+    "texte": "Le conseil et l’audit : 5,6 % des emplois en Allemagne, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.89,
+    "texte": "L’ingénierie et l’industrie : 17,9 % des emplois en Allemagne, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.96,
+    "texte": "La tech et la data : 4 % des emplois en Allemagne, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.44,
+    "texte": "Le marketing et le commerce : 12,4 % des emplois en Allemagne, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.9,
+    "texte": "La santé : 14,9 % des emplois en Allemagne, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.69,
+    "texte": "L’hôtellerie et le tourisme : 3,7 % des emplois en Allemagne, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.9,
+    "texte": "L’enseignement et la recherche : 6,9 % des emplois en Allemagne, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "irlande": {
@@ -1061,12 +1401,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 5576.85,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 577 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=IRL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 86235,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 235 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 74.9,
+    "impots": {
+     "taux": 25.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1323,6 +1670,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3490.13,
+    "texte": "Indemnité VIE en Irlande : 3 490 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.75,
+    "texte": "La finance et la banque : 4,8 % des emplois en Irlande, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 7.09,
+    "texte": "Le conseil et l’audit : 7,1 % des emplois en Irlande, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.79,
+    "texte": "L’ingénierie et l’industrie : 10,8 % des emplois en Irlande, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 6.39,
+    "texte": "La tech et la data : 6,4 % des emplois en Irlande, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.49,
+    "texte": "Le marketing et le commerce : 11,5 % des emplois en Irlande, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 13.66,
+    "texte": "La santé : 13,7 % des emplois en Irlande, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.58,
+    "texte": "L’hôtellerie et le tourisme : 6,6 % des emplois en Irlande, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.77,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois en Irlande, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "luxembourg": {
@@ -1339,12 +1787,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 9274.94,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 9 275 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=LUX&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 90384,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 90 384 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 68 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 68,
+    "impots": {
+     "taux": 32,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1600,6 +2055,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3143.95,
+    "texte": "Indemnité VIE au Luxembourg : 3 144 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 13.5,
+    "texte": "La finance et la banque : 13,5 % des emplois au Luxembourg, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.58,
+    "texte": "Le conseil et l’audit : 8,6 % des emplois au Luxembourg, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.72,
+    "texte": "L’ingénierie et l’industrie : 2,7 % des emplois au Luxembourg, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.41,
+    "texte": "La tech et la data : 4,4 % des emplois au Luxembourg, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.77,
+    "texte": "Le marketing et le commerce : 7,8 % des emplois au Luxembourg, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 9.93,
+    "texte": "La santé : 9,9 % des emplois au Luxembourg, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.5,
+    "texte": "L’hôtellerie et le tourisme : 2,5 % des emplois au Luxembourg, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.27,
+    "texte": "L’enseignement et la recherche : 8,3 % des emplois au Luxembourg, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "espagne": {
@@ -1615,13 +2171,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5203.46,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 203 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ESP&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 2,
+    "valeur": 53185,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 53 185 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.5,
+    "impots": {
+     "taux": 23.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1877,6 +2440,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2673.49,
+    "texte": "Indemnité VIE en Espagne : 2 673 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.11,
+    "texte": "La finance et la banque : 2,1 % des emplois en Espagne, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.8,
+    "texte": "Le conseil et l’audit : 5,8 % des emplois en Espagne, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 12.14,
+    "texte": "L’ingénierie et l’industrie : 12,1 % des emplois en Espagne, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.78,
+    "texte": "La tech et la data : 3,8 % des emplois en Espagne, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.5,
+    "texte": "Le marketing et le commerce : 14,5 % des emplois en Espagne, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.42,
+    "texte": "La santé : 9,4 % des emplois en Espagne, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.22,
+    "texte": "L’hôtellerie et le tourisme : 8,2 % des emplois en Espagne, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.07,
+    "texte": "L’enseignement et la recherche : 7,1 % des emplois en Espagne, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "italie": {
@@ -1892,13 +2556,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5481.1,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 481 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ITA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 58772,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 772 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 71 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 71.4,
+    "impots": {
+     "taux": 28.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2155,6 +2826,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2994.76,
+    "texte": "Indemnité VIE en Italie : 2 995 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.39,
+    "texte": "La finance et la banque : 2,4 % des emplois en Italie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.77,
+    "texte": "Le conseil et l’audit : 6,8 % des emplois en Italie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.89,
+    "texte": "L’ingénierie et l’industrie : 17,9 % des emplois en Italie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.95,
+    "texte": "La tech et la data : 2,9 % des emplois en Italie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 13.69,
+    "texte": "Le marketing et le commerce : 13,7 % des emplois en Italie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.29,
+    "texte": "La santé : 8,3 % des emplois en Italie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.72,
+    "texte": "L’hôtellerie et le tourisme : 6,7 % des emplois en Italie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.09,
+    "texte": "L’enseignement et la recherche : 7,1 % des emplois en Italie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "pays-bas": {
@@ -2170,13 +2942,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 7383.4,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 7 383 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NLD&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 85877,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 85 877 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 72.1,
+    "impots": {
+     "taux": 27.9,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2433,6 +3212,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3379.49,
+    "texte": "Indemnité VIE aux Pays-Bas : 3 379 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.7,
+    "texte": "La finance et la banque : 2,7 % des emplois aux Pays-Bas, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.03,
+    "texte": "Le conseil et l’audit : 9 % des emplois aux Pays-Bas, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.04,
+    "texte": "L’ingénierie et l’industrie : 8 % des emplois aux Pays-Bas, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.42,
+    "texte": "La tech et la data : 4,4 % des emplois aux Pays-Bas, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.31,
+    "texte": "Le marketing et le commerce : 14,3 % des emplois aux Pays-Bas, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.34,
+    "texte": "La santé : 17,3 % des emplois aux Pays-Bas, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.8,
+    "texte": "L’hôtellerie et le tourisme : 4,8 % des emplois aux Pays-Bas, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.68,
+    "texte": "L’enseignement et la recherche : 7,7 % des emplois aux Pays-Bas, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "portugal": {
@@ -2449,12 +3329,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 2196.15,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 196 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=PRT&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 41294,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 41 294 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 75.1,
+    "impots": {
+     "taux": 24.9,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2711,6 +3598,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2670.23,
+    "texte": "Indemnité VIE au Portugal : 2 670 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.09,
+    "texte": "La finance et la banque : 2,1 % des emplois au Portugal, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.38,
+    "texte": "Le conseil et l’audit : 5,4 % des emplois au Portugal, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.88,
+    "texte": "L’ingénierie et l’industrie : 15,9 % des emplois au Portugal, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.21,
+    "texte": "La tech et la data : 4,2 % des emplois au Portugal, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.58,
+    "texte": "Le marketing et le commerce : 14,6 % des emplois au Portugal, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.13,
+    "texte": "La santé : 10,1 % des emplois au Portugal, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.46,
+    "texte": "L’hôtellerie et le tourisme : 6,5 % des emplois au Portugal, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 8,
+    "texte": "L’enseignement et la recherche : 8 % des emplois au Portugal, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "norvege": {
@@ -2726,13 +3714,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 6693.8,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 694 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NOR&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 82016,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 82 016 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 71.9,
+    "impots": {
+     "taux": 28.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2989,6 +3984,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3333.07,
+    "texte": "Indemnité VIE en Norvège : 3 333 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.82,
+    "texte": "La finance et la banque : 1,8 % des emplois en Norvège, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.26,
+    "texte": "Le conseil et l’audit : 6,3 % des emplois en Norvège, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.59,
+    "texte": "L’ingénierie et l’industrie : 6,6 % des emplois en Norvège, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.62,
+    "texte": "La tech et la data : 4,6 % des emplois en Norvège, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.86,
+    "texte": "Le marketing et le commerce : 11,9 % des emplois en Norvège, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 20.14,
+    "texte": "La santé : 20,1 % des emplois en Norvège, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.75,
+    "texte": "L’hôtellerie et le tourisme : 3,8 % des emplois en Norvège, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.87,
+    "texte": "L’enseignement et la recherche : 7,9 % des emplois en Norvège, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "suede": {
@@ -3004,13 +4100,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5284.05,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 284 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SWE&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 63934,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 63 934 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 77.4,
+    "impots": {
+     "taux": 22.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3267,6 +4370,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3164.69,
+    "texte": "Indemnité VIE en Suède : 3 165 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.22,
+    "texte": "La finance et la banque : 2,2 % des emplois en Suède, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.76,
+    "texte": "Le conseil et l’audit : 10,8 % des emplois en Suède, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.38,
+    "texte": "L’ingénierie et l’industrie : 9,4 % des emplois en Suède, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.68,
+    "texte": "La tech et la data : 5,7 % des emplois en Suède, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.8,
+    "texte": "Le marketing et le commerce : 9,8 % des emplois en Suède, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.9,
+    "texte": "La santé : 14,9 % des emplois en Suède, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.09,
+    "texte": "L’hôtellerie et le tourisme : 3,1 % des emplois en Suède, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.58,
+    "texte": "L’enseignement et la recherche : 10,6 % des emplois en Suède, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "danemark": {
@@ -3283,12 +4487,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 6689.19,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 689 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DNK&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 88971,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 971 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 65 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 64.7,
+    "impots": {
+     "taux": 35.3,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3545,6 +4756,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3672.29,
+    "texte": "Indemnité VIE au Danemark : 3 672 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.75,
+    "texte": "La finance et la banque : 2,8 % des emplois au Danemark, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.48,
+    "texte": "Le conseil et l’audit : 6,5 % des emplois au Danemark, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.23,
+    "texte": "L’ingénierie et l’industrie : 11,2 % des emplois au Danemark, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.11,
+    "texte": "La tech et la data : 4,1 % des emplois au Danemark, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.43,
+    "texte": "Le marketing et le commerce : 14,4 % des emplois au Danemark, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.75,
+    "texte": "La santé : 18,7 % des emplois au Danemark, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.66,
+    "texte": "L’hôtellerie et le tourisme : 3,7 % des emplois au Danemark, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.38,
+    "texte": "L’enseignement et la recherche : 8,4 % des emplois au Danemark, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "canada": {
@@ -3560,13 +4872,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 4571.22,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 571 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CAN&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 75586,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 75 586 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 74 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 74.4,
+    "impots": {
+     "taux": 25.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3823,6 +5142,68 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3360.25,
+    "texte": "Indemnité VIE à Vancouver : 3 360 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Ottawa, 2 636 € ; autres villes, à vérifier.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Vancouver",
+    "autres": [
+     {
+      "ville": "Ottawa",
+      "montant": 2635.95
+     },
+     {
+      "ville": "autres villes",
+      "montant": null
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   },
   "australie": {
@@ -3837,15 +5218,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 3925.81,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=AUS&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 72330,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 72 330 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.5,
+    "impots": {
+     "taux": 23.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4098,6 +5484,112 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3454.08,
+    "texte": "Indemnité VIE à Sydney : 3 454 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 3 224 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Sydney",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 3224.39
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3.78,
+    "texte": "La finance et la banque : 3,8 % des emplois en Australie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.85,
+    "texte": "Le conseil et l’audit : 6,8 % des emplois en Australie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.38,
+    "texte": "L’ingénierie et l’industrie : 6,4 % des emplois en Australie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 3.52,
+    "texte": "La tech et la data : 3,5 % des emplois en Australie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.58,
+    "texte": "Le marketing et le commerce : 12,6 % des emplois en Australie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 16.16,
+    "texte": "La santé : 16,2 % des emplois en Australie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.58,
+    "texte": "L’hôtellerie et le tourisme : 6,6 % des emplois en Australie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.85,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois en Australie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "japon": {
@@ -4112,15 +5604,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 2808.73,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=JPN&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 58439,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 439 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 77.4,
+    "impots": {
+     "taux": 22.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4373,6 +5870,112 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2842.35,
+    "texte": "Indemnité VIE à Tokyo : 2 842 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 2 495 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Tokyo",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 2495.28
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.31,
+    "texte": "La finance et la banque : 2,3 % des emplois au Japon, 3,4 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.29,
+    "texte": "Le conseil et l’audit : 2,3 % des emplois au Japon, 6,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.53,
+    "texte": "L’ingénierie et l’industrie : 14,5 % des emplois au Japon, 11 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.64,
+    "texte": "La tech et la data : 5,6 % des emplois au Japon, 3,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 15.88,
+    "texte": "Le marketing et le commerce : 15,9 % des emplois au Japon, 13 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 13.51,
+    "texte": "La santé : 13,5 % des emplois au Japon, 13,3 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.94,
+    "texte": "L’hôtellerie et le tourisme : 5,9 % des emplois au Japon, 4,6 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 5.13,
+    "texte": "L’enseignement et la recherche : 5,1 % des emplois au Japon, 7,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "nouvelle-zelande": {
@@ -4387,15 +5990,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4064.16,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NZL&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 54733,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 54 733 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 79 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 79.2,
+    "impots": {
+     "taux": 20.8,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4648,6 +6256,59 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2605.04,
+    "texte": "Indemnité VIE en Nouvelle-Zélande : 2 605 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
    }
   },
   "coree-du-sud": {
@@ -4662,15 +6323,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4525.45,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=KOR&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 70766,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 766 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 84 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 83.5,
+    "impots": {
+     "taux": 16.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4928,6 +6594,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2583.58,
+    "texte": "Indemnité VIE en Corée du Sud : 2 584 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.81,
+    "texte": "La finance et la banque : 2,8 % des emplois en Corée du Sud, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.11,
+    "texte": "Le conseil et l’audit : 5,1 % des emplois en Corée du Sud, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.17,
+    "texte": "L’ingénierie et l’industrie : 15,2 % des emplois en Corée du Sud, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.94,
+    "texte": "La tech et la data : 3,9 % des emplois en Corée du Sud, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.13,
+    "texte": "Le marketing et le commerce : 11,1 % des emplois en Corée du Sud, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11,
+    "texte": "La santé : 11 % des emplois en Corée du Sud, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.03,
+    "texte": "L’hôtellerie et le tourisme : 8 % des emplois en Corée du Sud, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.73,
+    "texte": "L’enseignement et la recherche : 6,7 % des emplois en Corée du Sud, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "taiwan": {
@@ -4939,7 +6706,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : pas de donnée dans cette source."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -5155,6 +6922,107 @@
     "statut": "a-verifier",
     "note": null,
     "texte": "Obésité des adultes : pas de donnée dans cette source."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2375.85,
+    "texte": "Indemnité VIE à Taipei : 2 376 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Taipei",
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3.77,
+    "texte": "La finance et la banque : 3,8 % des emplois à Taïwan, 3,4 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.32,
+    "texte": "Le conseil et l’audit : 3,3 % des emplois à Taïwan, 6,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 26.43,
+    "texte": "L’ingénierie et l’industrie : 26,4 % des emplois à Taïwan, 11 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.31,
+    "texte": "La tech et la data : 2,3 % des emplois à Taïwan, 3,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 16.51,
+    "texte": "Le marketing et le commerce : 16,5 % des emplois à Taïwan, 13 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.12,
+    "texte": "La santé : 4,1 % des emplois à Taïwan, 13,3 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.42,
+    "texte": "L’hôtellerie et le tourisme : 7,4 % des emplois à Taïwan, 4,6 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.71,
+    "texte": "L’enseignement et la recherche : 5,7 % des emplois à Taïwan, 7,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "hong-kong": {
@@ -5171,7 +7039,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : la dernière donnée date de 2016, elle est trop ancienne pour être comptée."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -5396,6 +7264,59 @@
     "statut": "a-verifier",
     "note": null,
     "texte": "Obésité des adultes : pas de donnée dans cette source."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3197.64,
+    "texte": "Indemnité VIE à Hong Kong : 3 198 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
    }
   },
   "argentine": {
@@ -5411,13 +7332,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 1,
-    "valeur": 1522.6,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 523 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ARG&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 2,
+    "valeur": 40134,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 40 134 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "verifie",
@@ -5664,6 +7585,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2741.18,
+    "texte": "Indemnité VIE en Argentine : 2 741 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.11,
+    "texte": "La finance et la banque : 2,1 % des emplois en Argentine, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.01,
+    "texte": "Le conseil et l’audit : 4 % des emplois en Argentine, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.59,
+    "texte": "L’ingénierie et l’industrie : 10,6 % des emplois en Argentine, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.39,
+    "texte": "La tech et la data : 2,4 % des emplois en Argentine, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 19.07,
+    "texte": "Le marketing et le commerce : 19,1 % des emplois en Argentine, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.7,
+    "texte": "La santé : 6,7 % des emplois en Argentine, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.02,
+    "texte": "L’hôtellerie et le tourisme : 5 % des emplois en Argentine, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.44,
+    "texte": "L’enseignement et la recherche : 6,4 % des emplois en Argentine, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "chili": {
@@ -5679,13 +7701,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 2,
-    "valeur": 2078.79,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 079 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2024).",
+    "note": 1,
+    "valeur": 31076,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 31 076 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 93 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
     "annee": "2024",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 92.9,
+    "impots": {
+     "taux": 7.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -5941,6 +7970,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2341.15,
+    "texte": "Indemnité VIE au Chili : 2 341 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.18,
+    "texte": "La finance et la banque : 2,2 % des emplois au Chili, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.81,
+    "texte": "Le conseil et l’audit : 3,8 % des emplois au Chili, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.55,
+    "texte": "L’ingénierie et l’industrie : 9,5 % des emplois au Chili, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.4,
+    "texte": "La tech et la data : 2,4 % des emplois au Chili, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.53,
+    "texte": "Le marketing et le commerce : 18,5 % des emplois au Chili, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.68,
+    "texte": "La santé : 7,7 % des emplois au Chili, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.85,
+    "texte": "L’hôtellerie et le tourisme : 4,9 % des emplois au Chili, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.52,
+    "texte": "L’enseignement et la recherche : 8,5 % des emplois au Chili, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "colombie": {
@@ -5957,12 +8087,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 1214.38,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 214 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=COL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 20293,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 20 293 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 100 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 100,
+    "impots": {
+     "taux": 0,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -6208,6 +8345,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2531.48,
+    "texte": "Indemnité VIE en Colombie : 2 531 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.83,
+    "texte": "La finance et la banque : 1,8 % des emplois en Colombie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.01,
+    "texte": "Le conseil et l’audit : 3 % des emplois en Colombie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.95,
+    "texte": "L’ingénierie et l’industrie : 11 % des emplois en Colombie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.7,
+    "texte": "La tech et la data : 1,7 % des emplois en Colombie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 17.23,
+    "texte": "Le marketing et le commerce : 17,2 % des emplois en Colombie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.32,
+    "texte": "La santé : 4,3 % des emplois en Colombie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.7,
+    "texte": "L’hôtellerie et le tourisme : 7,7 % des emplois en Colombie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.31,
+    "texte": "L’enseignement et la recherche : 4,3 % des emplois en Colombie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "mexique": {
@@ -6224,12 +8462,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 938.11,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 938 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=MEX&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 19311,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 19 311 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 87 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 86.8,
+    "impots": {
+     "taux": 13.2,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -6484,6 +8729,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3066.69,
+    "texte": "Indemnité VIE au Mexique : 3 067 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.39,
+    "texte": "La finance et la banque : 1,4 % des emplois au Mexique, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.46,
+    "texte": "Le conseil et l’audit : 4,5 % des emplois au Mexique, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.98,
+    "texte": "L’ingénierie et l’industrie : 16 % des emplois au Mexique, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.87,
+    "texte": "La tech et la data : 0,9 % des emplois au Mexique, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 19.87,
+    "texte": "Le marketing et le commerce : 19,9 % des emplois au Mexique, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.34,
+    "texte": "La santé : 3,3 % des emplois au Mexique, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.36,
+    "texte": "L’hôtellerie et le tourisme : 7,4 % des emplois au Mexique, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.72,
+    "texte": "L’enseignement et la recherche : 4,7 % des emplois au Mexique, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "bresil": {
@@ -6500,12 +8846,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 1314.42,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 314 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BRA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 16567,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 16 567 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "verifie",
@@ -6752,6 +9098,112 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2186.46,
+    "texte": "Indemnité VIE au Brésil : 2 186 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : São Paulo, 2 594 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": [
+     {
+      "ville": "São Paulo",
+      "montant": 2594.05
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.6,
+    "texte": "La finance et la banque : 1,6 % des emplois au Brésil, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.2,
+    "texte": "Le conseil et l’audit : 4,2 % des emplois au Brésil, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.58,
+    "texte": "L’ingénierie et l’industrie : 11,6 % des emplois au Brésil, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.74,
+    "texte": "La tech et la data : 1,7 % des emplois au Brésil, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.95,
+    "texte": "Le marketing et le commerce : 18,9 % des emplois au Brésil, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.85,
+    "texte": "La santé : 6,9 % des emplois au Brésil, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.31,
+    "texte": "L’hôtellerie et le tourisme : 5,3 % des emplois au Brésil, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.5,
+    "texte": "L’enseignement et la recherche : 6,5 % des emplois au Brésil, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "royaume-uni": {
@@ -6767,13 +9219,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 4499.88,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 500 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=GBR&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 78216,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 78 216 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.9,
+    "impots": {
+     "taux": 23.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -7029,6 +9488,112 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3816.01,
+    "texte": "Indemnité VIE à Londres : 3 816 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 2 732 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Londres",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 2732.43
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.05,
+    "texte": "La finance et la banque : 4 % des emplois au Royaume-Uni, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.64,
+    "texte": "Le conseil et l’audit : 8,6 % des emplois au Royaume-Uni, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 7.82,
+    "texte": "L’ingénierie et l’industrie : 7,8 % des emplois au Royaume-Uni, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.93,
+    "texte": "La tech et la data : 4,9 % des emplois au Royaume-Uni, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 10.69,
+    "texte": "Le marketing et le commerce : 10,7 % des emplois au Royaume-Uni, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 14.25,
+    "texte": "La santé : 14,2 % des emplois au Royaume-Uni, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.47,
+    "texte": "L’hôtellerie et le tourisme : 5,5 % des emplois au Royaume-Uni, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.67,
+    "texte": "L’enseignement et la recherche : 10,7 % des emplois au Royaume-Uni, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "etats-unis": {
@@ -7044,13 +9609,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 6272.93,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 273 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=USA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 70627,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 627 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 76 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 75.7,
+    "impots": {
+     "taux": 24.3,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -7306,6 +9878,116 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5046.14,
+    "texte": "Indemnité VIE à New York : 5 046 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Californie, 5 108 € ; autres États, à vérifier.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "New York",
+    "autres": [
+     {
+      "ville": "Californie",
+      "montant": 5107.94
+     },
+     {
+      "ville": "autres États",
+      "montant": null
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.17,
+    "texte": "La finance et la banque : 5,2 % des emplois aux États-Unis, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.19,
+    "texte": "Le conseil et l’audit : 6,2 % des emplois aux États-Unis, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.65,
+    "texte": "L’ingénierie et l’industrie : 9,7 % des emplois aux États-Unis, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.24,
+    "texte": "La tech et la data : 4,2 % des emplois aux États-Unis, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.94,
+    "texte": "Le marketing et le commerce : 11,9 % des emplois aux États-Unis, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.8,
+    "texte": "La santé : 14,8 % des emplois aux États-Unis, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.09,
+    "texte": "L’hôtellerie et le tourisme : 6,1 % des emplois aux États-Unis, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.83,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois aux États-Unis, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "singapour": {
@@ -7322,14 +10004,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4419.63,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SGP&format=.csv",
-     "verifieLe": "2026-11-14"
-    }
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -7581,6 +10256,107 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4054.86,
+    "texte": "Indemnité VIE à Singapour : 4 055 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.9,
+    "texte": "La finance et la banque : 9,9 % des emplois à Singapour, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.1,
+    "texte": "Le conseil et l’audit : 8,1 % des emplois à Singapour, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.84,
+    "texte": "L’ingénierie et l’industrie : 8,8 % des emplois à Singapour, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.45,
+    "texte": "La tech et la data : 5,4 % des emplois à Singapour, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.17,
+    "texte": "Le marketing et le commerce : 14,2 % des emplois à Singapour, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.69,
+    "texte": "La santé : 7,7 % des emplois à Singapour, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.14,
+    "texte": "L’hôtellerie et le tourisme : 6,1 % des emplois à Singapour, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.44,
+    "texte": "L’enseignement et la recherche : 6,4 % des emplois à Singapour, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "emirats-arabes-unis": {
@@ -7597,7 +10373,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : la dernière donnée date de 2009, elle est trop ancienne pour être comptée."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "verifie",
@@ -7844,6 +10620,112 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2635.44,
+    "texte": "Indemnité VIE à Dubaï : 2 635 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Abou Dhabi, 2 434 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Dubaï",
+    "autres": [
+     {
+      "ville": "Abou Dhabi",
+      "montant": 2433.98
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.83,
+    "texte": "La finance et la banque : 2,8 % des emplois aux Émirats arabes unis, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.78,
+    "texte": "Le conseil et l’audit : 4,8 % des emplois aux Émirats arabes unis, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.85,
+    "texte": "L’ingénierie et l’industrie : 10,8 % des emplois aux Émirats arabes unis, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.33,
+    "texte": "La tech et la data : 2,3 % des emplois aux Émirats arabes unis, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.47,
+    "texte": "Le marketing et le commerce : 12,5 % des emplois aux Émirats arabes unis, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.11,
+    "texte": "La santé : 2,1 % des emplois aux Émirats arabes unis, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.52,
+    "texte": "L’hôtellerie et le tourisme : 5,5 % des emplois aux Émirats arabes unis, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.86,
+    "texte": "L’enseignement et la recherche : 2,9 % des emplois aux Émirats arabes unis, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "chine": {
@@ -7858,16 +10740,14 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 1434.75,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHN&format=.csv",
-     "verifieLe": "2026-11-14"
-    }
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 34890,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 34 890 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "a-verifier",
@@ -8118,6 +10998,68 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2930.89,
+    "texte": "Indemnité VIE à Shanghai : 2 931 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Pékin, 2 884 € ; autres villes, 2 660 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Shanghai",
+    "autres": [
+     {
+      "ville": "Pékin",
+      "montant": 2884.06
+     },
+     {
+      "ville": "autres villes",
+      "montant": 2660.31
+     }
+    ]
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   },
   "maroc": {
@@ -8134,7 +11076,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : pas de donnée dans cette source."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -8375,6 +11317,59 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1965.76,
+    "texte": "Indemnité VIE au Maroc : 1 966 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   }
  },
@@ -8394,13 +11389,20 @@
     },
     "salaire": {
      "statut": "verifie",
-     "note": 2,
-     "valeur": 3083.59,
-     "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 3 084 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-     "annee": "2025",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=FRA&format=.csv",
-     "verifieLe": "2026-11-16"
+     "note": 3,
+     "valeur": 67318,
+     "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 67 318 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+     "annee": "2024",
+     "source": "ocde-salaire",
+     "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+     "verifieLe": "2026-11-16",
+     "resteSur100": 72,
+     "impots": {
+      "taux": 28,
+      "source": "ocde-impots",
+      "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+      "annee": "2025"
+     }
     },
     "heures": {
      "statut": "verifie",
@@ -8460,6 +11462,86 @@
      "annee": "2024",
      "source": "oms-gho",
      "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-finance": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 3.41,
+     "texte": "La finance et la banque : 3,4 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-conseil": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 6.84,
+     "texte": "Le conseil et l’audit : 6,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-ingenierie": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 10.98,
+     "texte": "L’ingénierie et l’industrie : 11 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-tech": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 3.8,
+     "texte": "La tech et la data : 3,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-commerce": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 12.99,
+     "texte": "Le marketing et le commerce : 13 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-sante": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 13.31,
+     "texte": "La santé : 13,3 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-hotellerie": {
+     "statut": "verifie",
+     "note": 2,
+     "valeur": 4.6,
+     "texte": "L’hôtellerie et le tourisme : 4,6 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-enseignement": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 7.8,
+     "texte": "L’enseignement et la recherche : 7,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
      "verifieLe": "2026-11-16"
     }
    }

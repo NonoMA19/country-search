@@ -5,11 +5,14 @@
 //                                              les valeurs et les dates « vérifié le » restent celles du fichier)
 //         node scripts/collecte.mjs --france   (télécharge seulement les valeurs de la France, pays repère non classé)
 //         node scripts/collecte.mjs --oms      (télécharge seulement l'obésité des adultes, mesure « Manger sainement »)
+//         node scripts/collecte.mjs --ocde     (salaire moyen de l'OCDE et part qui reste après impôts, depuis content/saisie/ocde.json)
+//         node scripts/collecte.mjs --vie      (indemnité VIE par pays, depuis content/saisie/vie-indemnites.json)
+//         node scripts/collecte.mjs --secteur  (part de l'emploi par secteur, ILOSTAT, CITI rév. 4)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
 //
-// Salaire (prompt 3e) : la source visée est le salaire annuel moyen de l'OCDE (dollars PPA, prix constants,
-// même année pour tous). L'API de l'OCDE (sdmx.oecd.org) était inaccessible depuis la session : on garde l'OIT,
-// et un pays dont l'année s'écarte de plus d'un an de l'année médiane passe « à vérifier » (voir salaireCoherent).
+// Salaire (prompt 3f) : salaire annuel moyen de l'OCDE 2024 (dollars PPA, même année pour tous), saisi dans
+// content/saisie/ocde.json (le site de l'OCDE est inaccessible depuis la session ; valeurs vérifiées hors session).
+// La part qui reste après impôts (Taxing Wages 2026) est affichée dans la preuve, sans entrer dans le score.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -23,6 +26,9 @@ const TEXTES_SEUL = process.argv.includes("--textes");
 const POPULATION_SEULE = process.argv.includes("--population");
 const FRANCE_SEULE = process.argv.includes("--france");
 const OMS_SEULE = process.argv.includes("--oms");
+const OCDE_SEULE = process.argv.includes("--ocde");
+const VIE_SEULE = process.argv.includes("--vie");
+const SECTEUR_SEUL = process.argv.includes("--secteur");
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
@@ -34,7 +40,7 @@ const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => 
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
+  if (TEXTES_SEUL || OCDE_SEULE || VIE_SEULE || (SECTEUR_SEUL && !nom.startsWith("ilo_eco_")) || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -77,7 +83,8 @@ const typoTextes = (scores) => {
 const pluriel = (n, mot) => `${mot}${Math.round(n * 10) / 10 >= 2 ? "s" : ""}`;
 const TEXTE = {
   emploi: (v, an) => `Parmi les 15-24 ans qui travaillent ou cherchent un emploi, ${fr(v)} % sont au chômage (${an}, estimation de l'Organisation internationale du travail).`,
-  salaire: (v, an) => `Salaire brut moyen des salariés, avant impôts et cotisations : ${fr(v, 0)} $ par mois, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (${an}).`,
+  salaire: (v, an, p, reste, bit) => `Salaire brut moyen d'un salarié à temps plein, tous métiers, avant impôts et cotisations : ${fr(v, 0)} $ par an, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (OCDE, ${an}${bit ? " ; donnée du Bureau international du travail reprise par l'OCDE dans le même tableau" : ""}). ${reste === null || reste === undefined ? "La part qui reste après impôts n'est pas encore connue pour ce pays : à vérifier." : `Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ ${fr(reste, 0)} € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).`}`,
+  "indemnite-vie": (v, an, p, ville, autres) => `Indemnité VIE ${ville ? `à ${ville}` : `${p.en}`} : ${fr(v, 0)} € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).${autres?.length ? ` Autres villes : ${autres.map((a) => `${a.ville}, ${a.montant ? `${fr(a.montant, 0)} €` : "à vérifier"}`).join(" ; ")}.` : ""}`,
   heures: (v, an) => `${fr(v)} heures réellement travaillées par semaine en moyenne (${an}).`,
   francais: (v, an, p, inscrits) => `${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020, soit ${fr(v, v < 10 ? 1 : 0)} pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
   prix: (v, an) => {
@@ -108,28 +115,6 @@ const doux = (hiver, ete, p) => ({
   statut: "verifie", note: noteDoux(hiver.valeur, ete.valeur), texte: TEXTE.doux(hiver.valeur, hiver.annee, p, ete.valeur),
   annee: hiver.annee, source: hiver.source, lien: hiver.lien, verifieLe: hiver.verifieLe,
 });
-
-// ---------- Salaire : des années comparables ----------
-// Une moyenne de 2021 et une moyenne de 2025 ne se comparent pas : un pays dont l'année s'écarte
-// de plus d'un an de l'année médiane des 30 pays passe « à vérifier ». Sa valeur reste dans le fichier
-// (« ancien »), hors calcul, pour qu'on puisse la remplacer plus tard. La fonction ne change rien si on la relance.
-const ECART_ANNEES_SALAIRE = 1;
-function anneeMediane(scores, id) {
-  const ans = Object.values(scores).map((s) => Number(s[id]?.annee ?? s[id]?.ancien?.annee)).filter((x) => Number.isFinite(x)).sort((a, b) => a - b);
-  return ans.length ? ans[Math.floor((ans.length - 1) / 2)] : null;
-}
-function salaireCoherent(scores, mediane = anneeMediane(scores, "salaire")) {
-  if (mediane === null) return;
-  for (const s of Object.values(scores)) {
-    const m = s.salaire;
-    if (m?.statut !== "verifie" || Math.abs(Number(m.annee) - mediane) <= ECART_ANNEES_SALAIRE) continue;
-    s.salaire = {
-      ...aVerifier(`Salaire brut moyen : la donnée la plus récente de cette source date de ${m.annee}, alors que la plupart des pays ont une donnée de ${mediane}. Des années trop différentes faussent la comparaison : on ne la compte pas.`),
-      ancien: { valeur: m.valeur, annee: m.annee, source: m.source, lien: m.lien, verifieLe: m.verifieLe },
-    };
-  }
-  return mediane;
-}
 
 // ---------- La France, pays repère (non classé) ----------
 // Mêmes sources et mêmes règles que les 30 pays, pour comparer à ce qu'on connaît.
@@ -184,6 +169,104 @@ const noteObesite = (iso3) => {
   return o ? verifie("manger-sain", o.valeur, TEXTE["manger-sain"](o.valeur, o.annee), "oms-gho", bm.obFemmes.url, o.annee) : aVerifier("Obésité des adultes : pas de donnée dans cette source.");
 };
 
+// ---------- Mode --ocde : salaire moyen de l'OCDE et part qui reste après impôts ----------
+const OCDE = lire("saisie/ocde.json");
+function noteSalaire(id, p) {
+  const v = id === "france" ? OCDE.salaire.france : OCDE.salaire.valeurs[id];
+  const taux = id === "france" ? OCDE.impots.france : OCDE.impots.taux[id];
+  const reste = typeof taux === "number" ? Math.round((100 - taux) * 10) / 10 : null;
+  if (typeof v !== "number") return { ...aVerifier("Salaire brut moyen : pas de chiffre comparable dans le tableau de l'OCDE pour ce pays (2024)."), ...(reste !== null ? { resteSur100: reste } : {}) };
+  const n = verifie("salaire", v, TEXTE.salaire(v, OCDE.salaire.annee, p, reste, OCDE.salaire.bit.includes(id)), OCDE.salaire.source, OCDE.salaire.lien, OCDE.salaire.annee);
+  return { ...n, verifieLe: OCDE.salaire.verifieLe, ...(reste !== null ? { resteSur100: reste, impots: { taux, source: OCDE.impots.source, lien: OCDE.impots.lien, annee: OCDE.impots.annee } } : {}) };
+}
+if (OCDE_SEULE) {
+  const actuel = lire("scores.json");
+  for (const p of pays) actuel.pays[p.id].salaire = noteSalaire(p.id, p);
+  const france = actuel.reference?.france?.notes;
+  if (france) france.salaire = noteSalaire("france", FRANCE);
+  typoTextes(actuel.pays);
+  if (france) typoTextes({ france });
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const p of pays) console.log(p.nom, actuel.pays[p.id].salaire.valeur ?? "à vérifier", actuel.pays[p.id].salaire.note ?? "", actuel.pays[p.id].salaire.resteSur100 ?? "");
+  process.exit(0);
+}
+
+// ---------- Mode --vie : indemnité VIE (barème au 1er janvier 2026, relayé, à vérifier sur le site officiel) ----------
+const VIE = lire("saisie/vie-indemnites.json");
+function noteVie(p) {
+  const x = VIE.pays[p.id];
+  if (!x) return aVerifier("Indemnité VIE : pas encore dans le barème saisi.");
+  const n = verifie("indemnite-vie", x.montant, TEXTE["indemnite-vie"](x.montant, null, p, x.ville, x.autres), VIE.source, VIE.lienOfficiel, VIE.dateBareme.slice(0, 4));
+  return { ...n, verifieLe: VIE.verifieLe, relaye: true, ville: x.ville, autres: x.autres };
+}
+if (VIE_SEULE) {
+  const actuel = lire("scores.json");
+  for (const p of pays) actuel.pays[p.id]["indemnite-vie"] = noteVie(p);
+  typoTextes(actuel.pays);
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const p of pays) console.log(p.nom, actuel.pays[p.id]["indemnite-vie"].valeur, actuel.pays[p.id]["indemnite-vie"].note);
+  process.exit(0);
+}
+
+// ---------- Mode --secteur : la part de l'emploi du pays dans chaque secteur (ILOSTAT, CC BY 4.0) ----------
+// Emploi par activité économique, CITI rév. 4 (indicateur EMP_TEMP_SEX_ECO_NB_A), femmes et hommes.
+// Pour chaque pays : la dernière année disponible, à condition qu'elle soit 2019 ou plus récente ; part = section ÷ total,
+// même source et même année. Note de 1 à 5 selon le rapport entre la part du pays et la médiane des 30 pays :
+// moins de 0,7 → 1 ; moins de 0,9 → 2 ; moins de 1,1 → 3 ; moins de 1,3 → 4 ; 1,3 ou plus → 5.
+const SECTEURS = { finance: "K", conseil: "M", ingenierie: "C", tech: "J", commerce: "G", sante: "Q", hotellerie: "I", enseignement: "P" };
+const NOMS_SECTEURS = { finance: "la finance et la banque", conseil: "le conseil et l'audit", ingenierie: "l'ingénierie et l'industrie", tech: "la tech et la data", commerce: "le marketing et le commerce", sante: "la santé", hotellerie: "l'hôtellerie et le tourisme", enseignement: "l'enseignement et la recherche" };
+const ANNEE_MIN_SECTEUR = 2019;
+const LIEN_ILO_ECO = (iso3) => `https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=${iso3}&format=.csv`;
+function emploiParSecteur(iso3) {
+  const f = telecharger(`ilo_eco_${iso3}.csv`, LIEN_ILO_ECO(iso3));
+  if (!f) return null;
+  const lignes = fs.readFileSync(f, "utf8").replace(/^\ufeff/, "").trim().split("\n");
+  const entetes = lignes[0].split(",").map((x) => x.replace(/"/g, ""));
+  const parCle = {}; // "source|année" → { classif: valeur }
+  for (const l of lignes.slice(1)) {
+    const c = l.match(/("([^"]*)"|[^,]*)(,|$)/g).map((x) => x.replace(/,$/, "").replace(/^"|"$/g, ""));
+    const o = Object.fromEntries(entetes.map((e, i) => [e, c[i]]));
+    if (o.sex !== "SEX_T" || !o.classif1?.startsWith("ECO_ISIC4_") || o.obs_value === "" || isNaN(Number(o.obs_value))) continue;
+    if (Number(o.time) > Number(AUJOURDHUI.slice(0, 4))) continue;
+    (parCle[`${o.source}|${o.time}`] ??= {})[o.classif1.slice(10)] = Number(o.obs_value);
+  }
+  // La dernière année avec le total et les 8 sections ; à égalité d'année, la source la plus complète.
+  const ok = Object.entries(parCle).filter(([, v]) => v.TOTAL > 0 && Object.values(SECTEURS).every((s) => v[s] !== undefined));
+  ok.sort((a, b) => Number(b[0].split("|")[1]) - Number(a[0].split("|")[1]) || Object.keys(b[1]).length - Object.keys(a[1]).length);
+  if (!ok.length) return null;
+  const [cle, v] = ok[0];
+  const annee = cle.split("|")[1];
+  return { annee, parts: Object.fromEntries(Object.entries(SECTEURS).map(([id, s]) => [id, (100 * v[s]) / v.TOTAL])) };
+}
+const noteRapport = (r) => (r < 0.7 ? 1 : r < 0.9 ? 2 : r < 1.1 ? 3 : r < 1.3 ? 4 : 5);
+if (SECTEUR_SEUL) {
+  const actuel = lire("scores.json");
+  const donnees = Object.fromEntries(pays.map((p) => [p.id, emploiParSecteur(p.iso3)]));
+  const fra = emploiParSecteur("FRA");
+  for (const id of Object.keys(SECTEURS)) {
+    const valides = pays.filter((p) => donnees[p.id] && Number(donnees[p.id].annee) >= ANNEE_MIN_SECTEUR).map((p) => donnees[p.id].parts[id]).sort((a, b) => a - b);
+    const mediane = valides.length ? (valides.length % 2 ? valides[(valides.length - 1) / 2] : (valides[valides.length / 2 - 1] + valides[valides.length / 2]) / 2) : null;
+    const ref = fra && Number(fra.annee) >= ANNEE_MIN_SECTEUR ? fra.parts[id] : null;
+    for (const p of pays) {
+      const d = donnees[p.id];
+      const cle = `secteur-${id}`;
+      if (!d) { actuel.pays[p.id][cle] = aVerifier(`Emploi par secteur : pas de donnée dans cette source (ILOSTAT).`); continue; }
+      if (Number(d.annee) < ANNEE_MIN_SECTEUR) { actuel.pays[p.id][cle] = aVerifier(`Emploi par secteur : la donnée la plus récente date de ${d.annee}, avant ${ANNEE_MIN_SECTEUR}. On ne la compte pas.`); continue; }
+      const v = d.parts[id];
+      const texte = `${NOMS_SECTEURS[id].charAt(0).toUpperCase() + NOMS_SECTEURS[id].slice(1)} : ${fr(v)} % des emplois ${p.en}${ref !== null ? `, ${fr(ref)} % en France` : ""} (${d.annee}, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : ${fr(mediane)} %. C'est la part de ce secteur dans l'emploi du pays, pas le nombre d'offres ouvertes.`;
+      actuel.pays[p.id][cle] = { statut: "verifie", note: noteRapport(v / mediane), valeur: Math.round(v * 100) / 100, texte, annee: d.annee, source: "oit-ilostat", lien: LIEN_ILO_ECO(p.iso3), verifieLe: AUJOURDHUI, mediane: Math.round(mediane * 100) / 100 };
+    }
+    const france = actuel.reference?.france?.notes;
+    if (france && ref !== null) france[`secteur-${id}`] = { statut: "verifie", note: noteRapport(ref / mediane), valeur: Math.round(ref * 100) / 100, texte: `${NOMS_SECTEURS[id].charAt(0).toUpperCase() + NOMS_SECTEURS[id].slice(1)} : ${fr(ref)} % des emplois en France (${fra.annee}, ILOSTAT).`, annee: fra.annee, source: "oit-ilostat", lien: LIEN_ILO_ECO("FRA"), verifieLe: AUJOURDHUI };
+    console.log(id, "médiane", mediane && fr(mediane), "pays notés", valides.length);
+  }
+  typoTextes(actuel.pays);
+  if (actuel.reference?.france?.notes) typoTextes({ france: actuel.reference.france.notes });
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const p of pays) console.log(p.nom, donnees[p.id]?.annee ?? "—", Object.keys(SECTEURS).map((id) => actuel.pays[p.id][`secteur-${id}`].note ?? "·").join(" "));
+  process.exit(0);
+}
+
 // ---------- Mode --oms : seulement l'obésité des adultes ----------
 if (OMS_SEULE) {
   const actuel = lire("scores.json");
@@ -224,11 +307,11 @@ function oit(indicateur, iso3, filtre) {
 
 // Les notes de la France. « series » : la dernière valeur de chaque indicateur de la Banque mondiale, avec son lien.
 const LIEN_OIT = (ind, iso3) => `https://rplumber.ilo.org/data/indicator/?id=${ind}&ref_area=${iso3}&format=.csv`;
-function notesFrance(series, medianeSalaire) {
+function notesFrance(series) {
   const note = (id, x, source, lien) => (x ? verifie(id, x.valeur, TEXTE[id](x.valeur, x.annee, FRANCE), source, lien, x.annee) : aVerifier("Pas de donnée dans cette source."));
   const res = {
     emploi: note("emploi", series.emploi?.x, "bm-wdi", series.emploi?.url),
-    salaire: note("salaire", oit("EAR_EMTA_SEX_CUR_NB_A", "FRA", (o) => o.classif1 === "CUR_TYPE_PPP"), "oit-ilostat", LIEN_OIT("EAR_EMTA_SEX_CUR_NB_A", "FRA")),
+    salaire: noteSalaire("france", FRANCE),
     heures: note("heures", oit("HOW_TEMP_SEX_NB_A", "FRA", () => true), "oit-ilostat", LIEN_OIT("HOW_TEMP_SEX_NB_A", "FRA")),
     securite: note("securite", series.homicides?.x, "bm-wdi", series.homicides?.url),
     air: note("air", series.air?.x, "bm-wdi", series.air?.url),
@@ -236,7 +319,6 @@ function notesFrance(series, medianeSalaire) {
     libertes: note("libertes", series.libertes?.x, "bm-wgi", series.libertes?.url),
     "manger-sain": series.mangerSain ?? aVerifier("Pas de donnée dans cette source."),
   };
-  salaireCoherent({ france: res }, medianeSalaire);
   return res;
 }
 
@@ -252,7 +334,7 @@ if (FRANCE_SEULE) {
     for (const l of Array.isArray(d?.[1]) ? d[1] : []) if (l.value !== null) serie[l.date] = l.value;
     series[k] = { x: dernier(Object.keys(serie).length ? serie : null), url };
   }
-  const notes = notesFrance(series, anneeMediane(actuel.pays, "salaire"));
+  const notes = notesFrance(series);
   // Une donnée déjà vérifiée n'est jamais remplacée par un échec de téléchargement.
   const avant = actuel.reference?.france?.notes ?? {};
   for (const id of MESURES_FRANCE) if (notes[id].statut !== "verifie" && avant[id]?.statut === "verifie") notes[id] = avant[id];
@@ -408,7 +490,7 @@ if (TEXTES_SEUL) {
   for (const p of pays) {
     const s = actuel.pays[p.id];
     for (const [id, m] of Object.entries(s)) {
-      if (m.statut !== "verifie" || m.valeur === undefined || !TEXTE[id]) continue;
+      if (m.statut !== "verifie" || m.valeur === undefined || !TEXTE[id] || id === "salaire" || id === "indemnite-vie") continue;
       if (id === "francais") { m.texte = TEXTE.francais(m.valeur, m.annee, p, m.inscrits); continue; }
       const km = id === "vol" ? Number((m.texte.match(/environ ([\d\s]+) km/)?.[1] ?? "").replace(/\s/g, "")) : null;
       if (id === "vol" && !km) continue;
@@ -419,12 +501,13 @@ if (TEXTES_SEUL) {
     const dateAvis = s.anglais?.verifieLe ?? AUJOURDHUI;
     Object.assign(s, notesAvis(p, dateAvis));
     delete s.conges;
+    s.salaire = noteSalaire(p.id, p);
+    s["indemnite-vie"] = noteVie(p);
   }
-  const mediane = salaireCoherent(actuel.pays);
   const france = actuel.reference?.france?.notes;
   if (france) {
-    for (const [id, m] of Object.entries(france)) if (m.statut === "verifie" && TEXTE[id]) m.texte = TEXTE[id](m.valeur, m.annee, FRANCE);
-    salaireCoherent({ france }, mediane);
+    for (const [id, m] of Object.entries(france)) if (m.statut === "verifie" && TEXTE[id] && id !== "salaire") m.texte = TEXTE[id](m.valeur, m.annee, FRANCE);
+    france.salaire = noteSalaire("france", FRANCE);
     typoTextes({ france });
   }
   typoTextes(actuel.pays);
@@ -445,10 +528,8 @@ for (const p of pays) {
   const e = dernier(bm.emploi.serie[p.iso3]);
   s.emploi = e ? verifie("emploi", e.valeur, TEXTE.emploi(e.valeur, e.annee), "bm-wdi", lienBm(bm.emploi), e.annee) : aVerifier("Chômage des jeunes : pas de donnée dans cette source.");
 
-  const sal = oit("EAR_EMTA_SEX_CUR_NB_A", p.iso3, (o) => o.classif1 === "CUR_TYPE_PPP");
-  const ANNEE_MIN = Number(AUJOURDHUI.slice(0, 4)) - 6;
-  if (sal && Number(sal.annee) < ANNEE_MIN) s.salaire = aVerifier(`Salaire brut moyen : la dernière donnée date de ${sal.annee}, elle est trop ancienne pour être comptée.`);
-  else s.salaire = sal ? verifie("salaire", sal.valeur, TEXTE.salaire(sal.valeur, sal.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=${p.iso3}&format=.csv`, sal.annee) : aVerifier("Salaire brut moyen : pas de donnée dans cette source.");
+  s.salaire = noteSalaire(p.id, p);
+  s["indemnite-vie"] = noteVie(p);
 
   const h = oit("HOW_TEMP_SEX_NB_A", p.iso3, () => true);
   s.heures = h ? verifie("heures", h.valeur, TEXTE.heures(h.valeur, h.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=${p.iso3}&format=.csv`, h.annee) : aVerifier("Heures travaillées : pas de donnée dans cette source.");
@@ -505,9 +586,8 @@ for (const p of pays) {
   scores[p.id] = s;
 }
 
-const medianeSalaire = salaireCoherent(scores);
 const pourFrance = (k) => ({ x: dernier(bm[k].serie.FRA), url: bm[k].url });
-const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes"), mangerSain: noteObesite("FRA") }, medianeSalaire);
+const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes"), mangerSain: noteObesite("FRA") });
 typoTextes({ france });
 
 const manquantes = [];

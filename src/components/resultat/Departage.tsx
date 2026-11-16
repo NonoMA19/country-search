@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
-import { CarteDilemme } from "@/components/quiz/Quiz";
+import { CarteDilemme } from "@/components/formats/Dilemme";
 import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.

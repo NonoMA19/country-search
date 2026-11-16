@@ -5,11 +5,18 @@ import { AvecDefinitions } from "@/components/Definition";
 import Drapeau from "@/components/Drapeau";
 import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
-import { preuveSource, vie } from "@/lib/donnees";
+import { notes, preuveMesure, preuveSource, vie } from "@/lib/donnees";
 import { ageMax, type Etat, type Ligne } from "@/lib/moteur";
 
 // « Le VIE pour toi » : seulement si ton projet est « Stage ou VIE ».
 // Uniquement les conditions officielles déjà sourcées (âge, durée) ; la présence de missions par pays reste « à vérifier ».
+// L'indemnité VIE du pays (barème au 1er janvier 2026, relayé, à vérifier sur le site officiel).
+function indemnite(paysId: string): string | null {
+  const n = notes[paysId]?.["indemnite-vie"];
+  if (!n || n.statut !== "verifie" || typeof n.valeur !== "number") return null;
+  return `Indemnité VIE${n.ville ? ` à ${n.ville}` : ""}\u00a0: ${Math.round(n.valeur).toLocaleString("fr-FR")}\u00a0€ par mois${n.autres?.length ? ` (autres villes\u00a0: ${n.autres.map((a) => `${a.ville}, ${a.montant ? `${Math.round(a.montant).toLocaleString("fr-FR")}\u00a0€` : "à vérifier"}`).join("\u00a0; ")})` : ""}.`;
+}
+
 export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
   const age = ageMax(etat.profil);
   const preuve = preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe);
@@ -38,7 +45,11 @@ export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
         <LienOfficiel url={vie.offres.url} nom={vie.offres.nom} className="mt-4" />
         {top.length > 0 && (
           <>
-            <p className="mt-5 text-sm font-semibold">Des missions dans ton top 3 ?</p>
+            <p className="mt-5 text-sm font-semibold">Ton top 3 en VIE</p>
+            <p className="mt-1 text-xs text-gris">
+              Indemnité commune de 772,87{"\u00a0"}€ comprise. Barème au 1er janvier 2026, relayé par un site d’information juridique{"\u00a0"}: à vérifier sur le site officiel.
+              <Pastille preuve={preuveMesure(top[0].pays.id, "indemnite-vie")} contexte="le barème des indemnités VIE" />
+            </p>
             <ul className="mt-1 space-y-2">
               {top.map((l) => {
                 const presence = vie.presence?.[l.pays.id];
@@ -47,6 +58,7 @@ export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
                     <Drapeau iso2={l.pays.iso2} className="h-4 w-6" />
                     <span className="font-medium">{l.pays.nom}</span>
                     <span className="text-gris">: {presence ? presence.texte : "Missions VIE : à vérifier"}</span>
+                    {indemnite(l.pays.id) && <span className="basis-full pl-8 font-medium">{indemnite(l.pays.id)}</span>}
                     <Pastille preuve={presence ? preuveSource("Missions VIE", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={l.pays.nom} contexte="les missions VIE" />
                   </li>
                 );

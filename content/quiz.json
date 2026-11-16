@@ -1,444 +1,35 @@
 {
-  "profil": [
+  "chapitres": [
     {
-      "id": "objectif",
-      "question": "Quel est ton projet ?",
-      "options": [
-        {
-          "id": "stage-vie",
-          "label": "Un stage ou un VIE (volontariat en entreprise)"
-        },
-        {
-          "id": "aventure",
-          "label": "Une année d’aventure"
-        },
-        {
-          "id": "premier-poste",
-          "label": "Un premier poste"
-        },
-        {
-          "id": "carriere",
-          "label": "Une carrière longue"
-        }
-      ],
-      "aide": {
-        "enjeu": "Ton projet donne tes premiers critères, avant les dilemmes.",
-        "cartes": [
-          {
-            "pastille": "Stage ou VIE",
-            "texte": "Emploi des jeunes et Français sur place. Le VIE est détaillé à la fin."
-          },
-          {
-            "pastille": "Aventure",
-            "texte": "Vie pas chère, nature et climat doux. Le salaire ne compte pas au départ."
-          },
-          {
-            "pastille": "Premier poste",
-            "texte": "Emploi des jeunes, salaire et travail en anglais."
-          },
-          {
-            "pastille": "Carrière",
-            "texte": "Salaire, stabilité et santé. On te signale que le PVT dure un an."
-          }
-        ]
-      }
+      "numero": 1,
+      "titre": "Ton point de départ",
+      "phrase": "Ton projet, ton secteur, tes langues : de quoi poser le décor."
     },
     {
-      "id": "age",
-      "question": "Quel âge as-tu ?",
-      "options": [
-        {
-          "id": "18-25",
-          "label": "18 à 25 ans",
-          "ageMax": 25
-        },
-        {
-          "id": "26-27",
-          "label": "26 ou 27 ans",
-          "ageMax": 27
-        },
-        {
-          "id": "28-30",
-          "label": "28 à 30 ans",
-          "ageMax": 30
-        },
-        {
-          "id": "31-35",
-          "label": "31 à 35 ans",
-          "ageMax": 35
-        },
-        {
-          "id": "36-plus",
-          "label": "36 ans ou plus",
-          "ageMax": 99
-        }
-      ],
-      "aide": {
-        "enjeu": "Le PVT s’arrête à 30 ou 35 ans selon le pays, le VIE à 28 ans.",
-        "cartes": [
-          {
-            "pastille": "Moins de 28 ans",
-            "texte": "Tous les PVT et le VIE te sont ouverts."
-          },
-          {
-            "pastille": "28 à 30 ans",
-            "texte": "Le VIE se ferme, les PVT restent ouverts."
-          },
-          {
-            "pastille": "31 à 35 ans",
-            "texte": "Les PVT limités à 30 ans passent dans « Moins adaptés pour toi »."
-          },
-          {
-            "pastille": "36 ans ou plus",
-            "texte": "Plus aucun PVT : il faudra un visa de travail."
-          }
-        ]
-      }
+      "numero": 2,
+      "titre": "Tes envies",
+      "phrase": "Cinq envies, puis leur ordre : c’est le cœur de ton classement."
     },
     {
-      "id": "budget",
-      "question": "Tu pars avec combien d’argent de côté ?",
-      "options": [
-        {
-          "id": "moins-2000",
-          "label": "Moins de 2 000 €",
-          "min": 0,
-          "max": 2000
-        },
-        {
-          "id": "2000-5000",
-          "label": "De 2 000 à 5 000 €",
-          "min": 2000,
-          "max": 5000
-        },
-        {
-          "id": "5000-10000",
-          "label": "De 5 000 à 10 000 €",
-          "min": 5000,
-          "max": 10000
-        },
-        {
-          "id": "plus-10000",
-          "label": "Plus de 10 000 €",
-          "min": 10000
-        },
-        {
-          "id": "inconnu",
-          "label": "Je ne sais pas encore"
-        }
-      ],
-      "aide": {
-        "enjeu": "Certains PVT demandent une somme minimale à l’arrivée, par exemple 3 100 € pour le Japon.",
-        "cartes": [
-          {
-            "pastille": "Ta réponse",
-            "texte": "Elle ne change jamais ton classement. On te dit seulement ce qu’il pourrait te manquer, pays par pays."
-          },
-          {
-            "pastille": "Je ne sais pas encore",
-            "texte": "On t’affiche la somme demandée par chaque visa, sans calcul."
-          }
-        ]
-      }
+      "numero": 3,
+      "titre": "Ton travail",
+      "phrase": "Quelques scènes de la vie au bureau. Il n’y a pas de bonne réponse.",
+      "adaptatif": true,
+      "min": 4,
+      "max": 7
     },
     {
-      "id": "duree",
-      "question": "Tu pars pour combien de temps ?",
-      "options": [
-        {
-          "id": "moins-6",
-          "label": "Moins de 6 mois",
-          "mois": 5
-        },
-        {
-          "id": "6-12",
-          "label": "6 à 12 mois",
-          "mois": 12
-        },
-        {
-          "id": "1-2",
-          "label": "1 à 2 ans",
-          "mois": 24
-        },
-        {
-          "id": "plus-2",
-          "label": "Plus de 2 ans",
-          "mois": 36
-        }
-      ],
-      "aide": {
-        "enjeu": "Un PVT dure un an au plus.",
-        "cartes": [
-          {
-            "pastille": "Jusqu’à 12 mois",
-            "texte": "Rien ne change."
-          },
-          {
-            "pastille": "Plus d’un an",
-            "texte": "On te prévient que le PVT ne suffira pas : il faudra un autre visa ensuite. Ton classement ne change pas."
-          }
-        ]
-      }
+      "numero": 4,
+      "titre": "Ta vie",
+      "phrase": "Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part.",
+      "adaptatif": true,
+      "min": 4,
+      "max": 7
     },
     {
-      "id": "anglais",
-      "question": "Ton niveau d’anglais ?",
-      "options": [
-        {
-          "id": "debutant",
-          "label": "Débutant"
-        },
-        {
-          "id": "moyen",
-          "label": "Je me débrouille"
-        },
-        {
-          "id": "courant",
-          "label": "Courant"
-        }
-      ],
-      "aide": {
-        "enjeu": "L’anglais ouvre la majorité des postes à l’étranger.",
-        "cartes": [
-          {
-            "pastille": "Débutant",
-            "texte": "Si tu ne parles pas d’autre langue, on te demande si travailler en anglais te va. Si non, les pays où il faut travailler en anglais passent dans « Moins adaptés pour toi »."
-          },
-          {
-            "pastille": "Moyen ou courant",
-            "texte": "Tous les pays restent ouverts. Pour un premier poste, ceux où l’on travaille en anglais passent un peu devant."
-          }
-        ]
-      }
-    },
-    {
-      "id": "langues",
-      "question": "Tu parles d’autres langues ?",
-      "multiple": true,
-      "options": [
-        {
-          "id": "es",
-          "label": "Espagnol",
-          "codes": [
-            "es"
-          ]
-        },
-        {
-          "id": "de",
-          "label": "Allemand",
-          "codes": [
-            "de"
-          ]
-        },
-        {
-          "id": "it",
-          "label": "Italien",
-          "codes": [
-            "it"
-          ]
-        },
-        {
-          "id": "pt",
-          "label": "Portugais",
-          "codes": [
-            "pt"
-          ]
-        },
-        {
-          "id": "nl",
-          "label": "Néerlandais",
-          "codes": [
-            "nl"
-          ]
-        },
-        {
-          "id": "scandinave",
-          "label": "Suédois, danois ou norvégien",
-          "codes": [
-            "sv",
-            "da",
-            "no"
-          ]
-        },
-        {
-          "id": "ja",
-          "label": "Japonais",
-          "codes": [
-            "ja"
-          ]
-        },
-        {
-          "id": "ko",
-          "label": "Coréen",
-          "codes": [
-            "ko"
-          ]
-        },
-        {
-          "id": "zh",
-          "label": "Chinois",
-          "codes": [
-            "zh"
-          ]
-        },
-        {
-          "id": "ar",
-          "label": "Arabe",
-          "codes": [
-            "ar"
-          ]
-        }
-      ],
-      "aucun": "Aucune autre",
-      "aide": {
-        "enjeu": "Parler la langue du pays simplifie toute ta vie sur place.",
-        "cartes": [
-          {
-            "pastille": "Une langue cochée",
-            "texte": "Dans les pays qui la parlent, la vie au quotidien compte comme en français, et il n’y a rien à apprendre."
-          },
-          {
-            "pastille": "Aucune autre",
-            "texte": "Rien ne change."
-          }
-        ]
-      }
-    },
-    {
-      "id": "pret-anglais",
-      "question": "Travailler en anglais, ça te va ?",
-      "afficheSi": "anglais-debutant-sans-autre-langue",
-      "regleAffichage": "Seulement si ton anglais est débutant et que tu ne parles aucune autre langue.",
-      "options": [
-        {
-          "id": "oui",
-          "label": "Oui"
-        },
-        {
-          "id": "non",
-          "label": "Non"
-        }
-      ],
-      "aide": {
-        "enjeu": "Sans anglais, le choix de postes se réduit beaucoup.",
-        "cartes": [
-          {
-            "pastille": "Oui",
-            "texte": "Tous les pays restent ouverts."
-          },
-          {
-            "pastille": "Non",
-            "texte": "Seuls les pays où l’on peut travailler en français restent dans ton classement. Les autres passent dans « Moins adaptés pour toi »."
-          }
-        ]
-      }
-    },
-    {
-      "id": "nationalite",
-      "question": "As-tu une autre nationalité ?",
-      "options": [
-        {
-          "id": "non",
-          "label": "Non"
-        },
-        {
-          "id": "oui",
-          "label": "Oui"
-        }
-      ],
-      "aide": {
-        "enjeu": "Une autre nationalité peut ouvrir un pays sans visa, ou créer des obligations.",
-        "cartes": [
-          {
-            "pastille": "Non",
-            "texte": "Rien ne change."
-          },
-          {
-            "pastille": "Oui",
-            "texte": "On te demande laquelle. Les cas vérifiés sont expliqués dans ton résultat."
-          }
-        ]
-      }
-    },
-    {
-      "id": "nationalite-laquelle",
-      "question": "Laquelle ?",
-      "afficheSi": "autre-nationalite",
-      "regleAffichage": "Seulement si tu as répondu oui à la question précédente.",
-      "options": [
-        {
-          "id": "irlandaise",
-          "label": "Irlandaise"
-        },
-        {
-          "id": "canadienne",
-          "label": "Canadienne"
-        },
-        {
-          "id": "americaine",
-          "label": "Américaine"
-        },
-        {
-          "id": "autre",
-          "label": "Une autre"
-        }
-      ],
-      "aide": {
-        "enjeu": "Nous n’avons vérifié que trois cas pour l’instant.",
-        "cartes": [
-          {
-            "pastille": "Irlandaise",
-            "texte": "Le Royaume-Uni t’est ouvert sans visa."
-          },
-          {
-            "pastille": "Canadienne ou américaine",
-            "texte": "Tu entres dans ce pays en citoyen. On te signale aussi un piège à connaître."
-          },
-          {
-            "pastille": "Une autre",
-            "texte": "Ce cas n’est pas encore couvert : ton résultat le dit."
-          },
-          {
-            "pastille": "Pour tous",
-            "texte": "Le badge du pays change, pas son pourcentage."
-          }
-        ]
-      }
-    },
-    {
-      "id": "zone",
-      "question": "Où veux-tu partir ?",
-      "options": [
-        {
-          "id": "europe",
-          "label": "En Europe"
-        },
-        {
-          "id": "hors-europe",
-          "label": "Hors d’Europe"
-        },
-        {
-          "id": "peu-importe",
-          "label": "Peu importe"
-        }
-      ],
-      "aide": {
-        "enjeu": "Partir en Europe ou plus loin, ce n’est pas le même projet.",
-        "cartes": [
-          {
-            "pastille": "En Europe",
-            "texte": "Les pays hors d’Europe passent dans « Moins adaptés pour toi ». Tu peux les remonter."
-          },
-          {
-            "pastille": "Hors d’Europe",
-            "texte": "Les pays d’Europe passent dans « Moins adaptés pour toi ». Tu peux les remonter."
-          },
-          {
-            "pastille": "Peu importe",
-            "texte": "Les 30 pays restent dans ton classement."
-          }
-        ]
-      }
+      "numero": 5,
+      "titre": "Tes limites",
+      "phrase": "Ce qui ne te gêne pas, ce que tu préfères éviter, et ce qui est hors de question."
     }
   ],
   "objectifs": {
@@ -523,17 +114,7 @@
       "explication": "Une carrière longue : le salaire, la stabilité politique et la couverture santé."
     }
   },
-  "priorites": [
-    {
-      "id": "travail",
-      "label": "Travail facile à trouver",
-      "icone": "briefcase",
-      "famille": "travailler",
-      "mesures": [
-        "emploi"
-      ],
-      "sens": "haut"
-    },
+  "envies": [
     {
       "id": "salaire",
       "label": "Bon salaire",
@@ -541,8 +122,16 @@
       "famille": "travailler",
       "mesures": [
         "salaire"
-      ],
-      "sens": "haut"
+      ]
+    },
+    {
+      "id": "travail",
+      "label": "Travail facile à trouver",
+      "icone": "briefcase",
+      "famille": "travailler",
+      "mesures": [
+        "emploi"
+      ]
     },
     {
       "id": "prix",
@@ -551,18 +140,7 @@
       "famille": "vivre",
       "mesures": [
         "prix"
-      ],
-      "sens": "haut"
-    },
-    {
-      "id": "equilibre",
-      "label": "Équilibre vie pro et perso",
-      "icone": "clock",
-      "famille": "travailler",
-      "mesures": [
-        "heures"
-      ],
-      "sens": "haut"
+      ]
     },
     {
       "id": "climat",
@@ -571,8 +149,16 @@
       "famille": "vivre",
       "mesures": [
         "doux"
-      ],
-      "sens": "haut"
+      ]
+    },
+    {
+      "id": "securite",
+      "label": "Sécurité",
+      "icone": "shield",
+      "famille": "vivre",
+      "mesures": [
+        "securite"
+      ]
     },
     {
       "id": "proche",
@@ -582,18 +168,7 @@
       "mesures": [
         "vol",
         "decalage"
-      ],
-      "sens": "haut"
-    },
-    {
-      "id": "securite",
-      "label": "Sécurité",
-      "icone": "shield",
-      "famille": "vivre",
-      "mesures": [
-        "securite"
-      ],
-      "sens": "haut"
+      ]
     },
     {
       "id": "francais",
@@ -602,173 +177,951 @@
       "famille": "travailler",
       "mesures": [
         "francais"
-      ],
-      "sens": "haut"
-    }
-  ],
-  "sujets": [
-    {
-      "id": "stabilite",
-      "label": "Stabilité politique",
-      "mesure": "stabilite"
-    },
-    {
-      "id": "libertes",
-      "label": "Libertés d’expression et de la presse",
-      "mesure": "libertes"
-    },
-    {
-      "id": "egalite",
-      "label": "Égalité femmes-hommes dans la loi",
-      "mesure": "egalite"
-    },
-    {
-      "id": "air",
-      "label": "Qualité de l’air",
-      "mesure": "air"
-    }
-  ],
-  "aides": {
-    "priorites": {
-      "enjeu": "Trois choses qui comptent plus que tout le reste.",
-      "cartes": [
-        {
-          "pastille": "Choisie",
-          "texte": "Elle compte double dans ton pourcentage (importance 2)."
-        },
-        {
-          "pastille": "Donnée manquante",
-          "texte": "Un pays sans donnée vérifiée sur une de tes priorités reçoit une note neutre de 50 %."
-        },
-        {
-          "pastille": "Non choisie",
-          "texte": "Elle peut encore compter, plus légèrement, si ton projet ou un dilemme la vise."
-        }
       ]
     },
-    "sujets": {
-      "enjeu": "Ces sujets parlent moins du travail que de ta vie sur place.",
-      "cartes": [
-        {
-          "pastille": "Touché",
-          "texte": "Le sujet compte dans ton pourcentage, autant qu’une réponse de dilemme (importance 1)."
-        },
-        {
-          "pastille": "Pas touché",
-          "texte": "Il ne compte pas. Rien n’écarte un pays ici."
-        }
+    {
+      "id": "equilibre",
+      "label": "Équilibre vie pro et vie perso",
+      "icone": "clock",
+      "famille": "travailler",
+      "mesures": [
+        "heures"
+      ]
+    },
+    {
+      "id": "secteur",
+      "label": "Évoluer dans mon secteur",
+      "icone": "trending-up",
+      "famille": "travailler",
+      "mesures": [
+        "secteur"
+      ]
+    }
+  ],
+  "poidsRang": [
+    2,
+    1.75,
+    1.5,
+    1.25,
+    1.1
+  ],
+  "dimensions": {
+    "salaire": {
+      "nom": "Le salaire",
+      "mesures": [
+        "salaire",
+        "indemnite-vie"
+      ]
+    },
+    "cout": {
+      "nom": "Le coût de la vie",
+      "mesures": [
+        "prix"
+      ]
+    },
+    "emploi": {
+      "nom": "Trouver du travail",
+      "mesures": [
+        "emploi"
+      ]
+    },
+    "secteur": {
+      "nom": "Ton secteur",
+      "mesures": [
+        "secteur",
+        "secteur-finance",
+        "secteur-conseil",
+        "secteur-ingenierie",
+        "secteur-tech",
+        "secteur-commerce",
+        "secteur-sante",
+        "secteur-hotellerie",
+        "secteur-enseignement"
+      ]
+    },
+    "equilibre": {
+      "nom": "L’équilibre vie pro et vie perso",
+      "mesures": [
+        "heures"
+      ]
+    },
+    "distance": {
+      "nom": "La distance avec la France",
+      "mesures": [
+        "vol",
+        "decalage"
+      ]
+    },
+    "climat": {
+      "nom": "Le climat",
+      "mesures": [
+        "hiver",
+        "ete",
+        "doux"
+      ]
+    },
+    "ville": {
+      "nom": "La ville et la nature",
+      "mesures": [
+        "grande-ville",
+        "ville-moyenne",
+        "nature"
+      ]
+    },
+    "securite": {
+      "nom": "La sécurité",
+      "mesures": [
+        "securite"
+      ]
+    },
+    "sante": {
+      "nom": "La santé",
+      "mesures": [
+        "sante",
+        "manger-sain",
+        "air"
+      ]
+    },
+    "langue": {
+      "nom": "La langue",
+      "mesures": [
+        "langue",
+        "apprendre-langue",
+        "anglais",
+        "langue-travail"
+      ]
+    },
+    "reseau": {
+      "nom": "Les Français sur place",
+      "mesures": [
+        "francais"
+      ]
+    },
+    "hierarchie": {
+      "nom": "La hiérarchie",
+      "mesures": [
+        "hierarchie"
+      ]
+    },
+    "communication": {
+      "nom": "La communication",
+      "mesures": [
+        "communication"
+      ]
+    },
+    "ponctualite": {
+      "nom": "La ponctualité",
+      "mesures": [
+        "ponctualite"
+      ]
+    },
+    "decision": {
+      "nom": "La prise de décision",
+      "mesures": [
+        "decision"
+      ]
+    },
+    "pro-perso": {
+      "nom": "Vie pro et vie perso",
+      "mesures": [
+        "pro-perso"
+      ]
+    },
+    "valeurs": {
+      "nom": "Les valeurs",
+      "mesures": [
+        "stabilite",
+        "libertes",
+        "egalite"
+      ]
+    },
+    "visa": {
+      "nom": "Ton visa",
+      "mesures": [
+        "employeur-libre"
+      ]
+    },
+    "zone": {
+      "nom": "L’Europe ou plus loin",
+      "mesures": [
+        "en-europe"
       ]
     }
   },
-  "dilemmes": [
+  "elements": [
     {
-      "id": "deux-offres",
-      "theme": "Argent et travail",
-      "titre": "Salaire ou coût de la vie",
-      "echelle": true,
+      "id": "carte",
+      "type": "carte-monde",
+      "chapitre": 1,
+      "theme": "Ton intuition",
+      "titre": "Avant de commencer : où pensais-tu partir ?",
+      "texte": "Coche une ou plusieurs régions. Ta réponse ne change pas ton classement : on la garde pour la fin.",
+      "dimensions": [],
       "aide": {
-        "enjeu": "Un gros salaire ne veut rien dire sans le loyer en face.",
+        "enjeu": "On compare ton intuition à ce que tes réponses diront.",
         "cartes": [
           {
-            "pastille": "A",
-            "texte": "On met en avant les pays aux salaires élevés, en pouvoir d’achat."
+            "pastille": "Ta réponse",
+            "texte": "Elle ne compte pas dans le calcul. À la fin, on te dit si tes réponses te mènent au même endroit."
           },
           {
-            "pastille": "B",
-            "texte": "On met en avant les pays où la vie coûte moins cher."
+            "pastille": "Aucune idée",
+            "texte": "C’est une réponse comme une autre."
+          }
+        ]
+      },
+      "zones": [
+        {
+          "id": "europe",
+          "label": "Europe",
+          "pays": [
+            "belgique",
+            "suisse",
+            "allemagne",
+            "irlande",
+            "luxembourg",
+            "espagne",
+            "italie",
+            "pays-bas",
+            "portugal",
+            "norvege",
+            "suede",
+            "danemark",
+            "royaume-uni"
+          ]
+        },
+        {
+          "id": "amerique-nord",
+          "label": "Amérique du Nord",
+          "detail": "Canada, États-Unis",
+          "pays": [
+            "canada",
+            "etats-unis"
+          ]
+        },
+        {
+          "id": "amerique-latine",
+          "label": "Amérique latine",
+          "pays": [
+            "argentine",
+            "chili",
+            "colombie",
+            "mexique",
+            "bresil"
+          ]
+        },
+        {
+          "id": "asie-est",
+          "label": "Asie de l’Est",
+          "detail": "Japon, Corée du Sud, Taïwan, Hong Kong, Chine",
+          "pays": [
+            "japon",
+            "coree-du-sud",
+            "taiwan",
+            "hong-kong",
+            "chine"
+          ]
+        },
+        {
+          "id": "asie-sud-est",
+          "label": "Asie du Sud-Est",
+          "detail": "Singapour",
+          "pays": [
+            "singapour"
+          ]
+        },
+        {
+          "id": "oceanie",
+          "label": "Océanie",
+          "pays": [
+            "australie",
+            "nouvelle-zelande"
+          ]
+        },
+        {
+          "id": "moyen-orient",
+          "label": "Moyen-Orient et Afrique du Nord",
+          "detail": "Émirats arabes unis, Maroc",
+          "pays": [
+            "emirats-arabes-unis",
+            "maroc"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "objectif",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton projet",
+      "profil": "objectif",
+      "titre": "Quel est ton projet ?",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Ton projet donne tes premiers critères, plus légers que tes envies.",
+        "cartes": [
+          {
+            "pastille": "Stage ou VIE",
+            "texte": "Emploi des jeunes et Français sur place."
+          },
+          {
+            "pastille": "Premier poste",
+            "texte": "Emploi des jeunes, salaire, travail en anglais."
+          },
+          {
+            "pastille": "Aventure",
+            "texte": "Vie pas chère, nature, climat doux."
+          },
+          {
+            "pastille": "Carrière",
+            "texte": "Salaire, stabilité, santé."
+          },
+          {
+            "pastille": "Je ne sais pas encore",
+            "texte": "Aucun poids de départ."
           }
         ]
       },
       "options": [
         {
-          "id": "a",
-          "effets": [
-            {
-              "mesures": [
-                "salaire"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu regardes d’abord le salaire.",
-          "preference": "un salaire élevé",
-          "portraitPeu": "Tu regardes un peu plus le salaire que le coût de la vie."
+          "id": "stage-vie",
+          "label": "Un stage ou un VIE",
+          "phrase": "Volontariat international en entreprise, ou stage.",
+          "icone": "graduation-cap"
         },
         {
-          "id": "b",
-          "effets": [
-            {
-              "mesures": [
-                "prix"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu regardes ce qu’il te reste à la fin du mois.",
-          "preference": "une vie moins chère",
-          "portraitPeu": "Tu regardes un peu plus le coût de la vie que le salaire."
-        }
-      ],
-      "scenes": [
-        {
-          "id": "contrats",
-          "titre": "Deux offres",
-          "texte": "Pour le même poste, on te propose deux contrats.",
-          "options": [
-            {
-              "texte": "3 400 € par mois, 1 500 € de loyer",
-              "plus": "Plus d’argent à mettre de côté, si tu tiens ton budget.",
-              "moins": "Tout coûte cher autour de toi : sorties, transports, courses."
-            },
-            {
-              "texte": "2 300 € par mois, 650 € de loyer",
-              "plus": "La vie est simple et pas chère, même avec un petit salaire.",
-              "moins": "Tu mets moins de côté, et un billet pour la France pèse plus lourd."
-            }
-          ],
-          "exemple": true
+          "id": "premier-poste",
+          "label": "Un premier poste",
+          "phrase": "Un vrai contrat pour lancer ta vie pro.",
+          "icone": "briefcase"
         },
         {
-          "id": "colocataire",
-          "titre": "Le colocataire",
-          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
-          "options": [
-            {
-              "texte": "Tu préfères sa situation",
-              "plus": "Un salaire plus haut, qui compte pour la suite.",
-              "moins": "Une grosse part de sa paie part dans le loyer."
-            },
-            {
-              "texte": "Tu préfères la tienne",
-              "plus": "Ton loyer léger te laisse respirer.",
-              "moins": "Ton salaire progresse moins vite."
-            }
-          ],
-          "exemple": true
+          "id": "aventure",
+          "label": "Une année d’aventure (PVT)",
+          "phrase": "Travailler et voyager, un an au plus.",
+          "icone": "backpack"
         },
         {
-          "id": "restaurant",
-          "titre": "La sortie du vendredi",
-          "texte": "Ce soir, ton équipe dîne au restaurant.",
-          "options": [
-            {
-              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
-              "plus": "Tu suis sans problème, et ta paie grimpe vite.",
-              "moins": "Chaque sortie pèse dans ton budget."
-            },
-            {
-              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
-              "plus": "Tu sors autant que tu veux, sans compter.",
-              "moins": "Ton salaire vaut peu une fois converti en euros."
-            }
-          ],
-          "exemple": true
+          "id": "carriere",
+          "label": "Une carrière longue",
+          "phrase": "T’installer pour plusieurs années.",
+          "icone": "trending-up"
+        },
+        {
+          "id": "inconnu",
+          "label": "Je ne sais pas encore",
+          "phrase": "Aucun poids de départ.",
+          "icone": "circle-help"
         }
       ]
     },
     {
+      "id": "secteur",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton projet",
+      "profil": "secteur",
+      "titre": "Ton secteur ?",
+      "texte": "Celui où tu veux travailler, ou celui de tes études.",
+      "dimensions": [
+        "secteur"
+      ],
+      "aide": {
+        "enjeu": "Certains pays emploient beaucoup plus de monde dans ton secteur que d’autres.",
+        "cartes": [
+          {
+            "pastille": "Un secteur",
+            "texte": "On compare la part des emplois de ce secteur dans chaque pays. Elle compte si tu choisis l’envie « Évoluer dans mon secteur »."
+          },
+          {
+            "pastille": "Autre ou je ne sais pas",
+            "texte": "Rien ne change."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "finance",
+          "label": "Finance et banque",
+          "icone": "landmark",
+          "citi": "K"
+        },
+        {
+          "id": "conseil",
+          "label": "Conseil et audit",
+          "icone": "clipboard-list",
+          "citi": "M"
+        },
+        {
+          "id": "ingenierie",
+          "label": "Ingénierie et industrie",
+          "icone": "factory",
+          "citi": "C"
+        },
+        {
+          "id": "tech",
+          "label": "Tech et data",
+          "icone": "cpu",
+          "citi": "J"
+        },
+        {
+          "id": "commerce",
+          "label": "Marketing et commerce",
+          "icone": "shopping-bag",
+          "citi": "G"
+        },
+        {
+          "id": "sante",
+          "label": "Santé",
+          "icone": "stethoscope",
+          "citi": "Q"
+        },
+        {
+          "id": "hotellerie",
+          "label": "Hôtellerie et tourisme",
+          "icone": "bed",
+          "citi": "I"
+        },
+        {
+          "id": "enseignement",
+          "label": "Enseignement et recherche",
+          "icone": "book-open",
+          "citi": "P"
+        },
+        {
+          "id": "autre",
+          "label": "Autre ou je ne sais pas",
+          "icone": "circle-help"
+        }
+      ]
+    },
+    {
+      "id": "age",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "age",
+      "titre": "Quel âge as-tu ?",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Le PVT s’arrête à 30 ou 35 ans selon le pays, le VIE à 28 ans.",
+        "cartes": [
+          {
+            "pastille": "Moins de 28 ans",
+            "texte": "Tous les PVT et le VIE te sont ouverts."
+          },
+          {
+            "pastille": "28 à 30 ans",
+            "texte": "Le VIE se ferme, les PVT restent ouverts."
+          },
+          {
+            "pastille": "31 à 35 ans",
+            "texte": "Les PVT limités à 30 ans passent dans « Moins adaptés pour toi »."
+          },
+          {
+            "pastille": "36 ans ou plus",
+            "texte": "Plus aucun PVT : il faudra un visa de travail."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "18-25",
+          "label": "18 à 25 ans",
+          "ageMax": 25
+        },
+        {
+          "id": "26-27",
+          "label": "26 ou 27 ans",
+          "ageMax": 27
+        },
+        {
+          "id": "28-30",
+          "label": "28 à 30 ans",
+          "ageMax": 30
+        },
+        {
+          "id": "31-35",
+          "label": "31 à 35 ans",
+          "ageMax": 35
+        },
+        {
+          "id": "36-plus",
+          "label": "36 ans ou plus",
+          "ageMax": 99
+        }
+      ]
+    },
+    {
+      "id": "budget",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "budget",
+      "titre": "Tu pars avec combien d’argent de côté ?",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Certains PVT demandent une somme minimale à l’arrivée, par exemple 3 100 € pour le Japon.",
+        "cartes": [
+          {
+            "pastille": "Ta réponse",
+            "texte": "Elle ne change jamais ton classement. On te dit seulement ce qu’il pourrait te manquer, pays par pays."
+          },
+          {
+            "pastille": "Je ne sais pas encore",
+            "texte": "On t’affiche la somme demandée par chaque visa, sans calcul."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "moins-2000",
+          "label": "Moins de 2 000 €",
+          "min": 0,
+          "max": 2000
+        },
+        {
+          "id": "2000-5000",
+          "label": "De 2 000 à 5 000 €",
+          "min": 2000,
+          "max": 5000
+        },
+        {
+          "id": "5000-10000",
+          "label": "De 5 000 à 10 000 €",
+          "min": 5000,
+          "max": 10000
+        },
+        {
+          "id": "plus-10000",
+          "label": "Plus de 10 000 €",
+          "min": 10000
+        },
+        {
+          "id": "inconnu",
+          "label": "Je ne sais pas encore"
+        }
+      ]
+    },
+    {
+      "id": "anglais-reunion",
+      "type": "thermometre",
+      "chapitre": 1,
+      "theme": "Ton anglais",
+      "titre": "Mener une réunion de travail entièrement en anglais",
+      "texte": "À quel point tu te sens à l’aise ?",
+      "niveaux": [
+        "Pas à l’aise",
+        "Peu à l’aise",
+        "Plutôt à l’aise",
+        "À l’aise",
+        "Très à l’aise"
+      ],
+      "dimensions": [
+        "langue"
+      ],
+      "aide": {
+        "enjeu": "L’anglais ouvre la majorité des postes à l’étranger.",
+        "cartes": [
+          {
+            "pastille": "Tes deux réponses",
+            "texte": "Leur moyenne donne ton niveau : 1 à 2, débutant ; 3, moyen ; 4 à 5, courant."
+          },
+          {
+            "pastille": "Débutant",
+            "texte": "Si tu ne parles pas d’autre langue, on te demande si travailler en anglais te va."
+          }
+        ]
+      }
+    },
+    {
+      "id": "anglais-vie",
+      "type": "thermometre",
+      "chapitre": 1,
+      "theme": "Ton anglais",
+      "titre": "Gérer ta vie de tous les jours en anglais",
+      "texte": "Le médecin, la banque, ton bail… À quel point tu te sens à l’aise ?",
+      "niveaux": [
+        "Pas à l’aise",
+        "Peu à l’aise",
+        "Plutôt à l’aise",
+        "À l’aise",
+        "Très à l’aise"
+      ],
+      "dimensions": [
+        "langue"
+      ],
+      "aide": {
+        "enjeu": "Au quotidien aussi, l’anglais aide, même quand ce n’est pas la langue du pays.",
+        "cartes": [
+          {
+            "pastille": "Tes deux réponses",
+            "texte": "Leur moyenne donne ton niveau : 1 à 2, débutant ; 3, moyen ; 4 à 5, courant."
+          },
+          {
+            "pastille": "Ton classement",
+            "texte": "Ce niveau ne change pas les notes des pays. Il décide seulement si on te pose la question sur le travail en anglais."
+          }
+        ]
+      }
+    },
+    {
+      "id": "langues",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Tes langues",
+      "profil": "langues",
+      "titre": "Tu parles d’autres langues ?",
+      "dimensions": [
+        "langue"
+      ],
+      "aide": {
+        "enjeu": "Parler la langue du pays simplifie toute ta vie sur place.",
+        "cartes": [
+          {
+            "pastille": "Une langue cochée",
+            "texte": "Dans les pays qui la parlent, la vie au quotidien compte comme en français, et il n’y a rien à apprendre."
+          },
+          {
+            "pastille": "Aucune autre",
+            "texte": "Rien ne change."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "es",
+          "label": "Espagnol",
+          "codes": [
+            "es"
+          ]
+        },
+        {
+          "id": "de",
+          "label": "Allemand",
+          "codes": [
+            "de"
+          ]
+        },
+        {
+          "id": "it",
+          "label": "Italien",
+          "codes": [
+            "it"
+          ]
+        },
+        {
+          "id": "pt",
+          "label": "Portugais",
+          "codes": [
+            "pt"
+          ]
+        },
+        {
+          "id": "nl",
+          "label": "Néerlandais",
+          "codes": [
+            "nl"
+          ]
+        },
+        {
+          "id": "scandinave",
+          "label": "Suédois, danois ou norvégien",
+          "codes": [
+            "sv",
+            "da",
+            "no"
+          ]
+        },
+        {
+          "id": "ja",
+          "label": "Japonais",
+          "codes": [
+            "ja"
+          ]
+        },
+        {
+          "id": "ko",
+          "label": "Coréen",
+          "codes": [
+            "ko"
+          ]
+        },
+        {
+          "id": "zh",
+          "label": "Chinois",
+          "codes": [
+            "zh"
+          ]
+        },
+        {
+          "id": "ar",
+          "label": "Arabe",
+          "codes": [
+            "ar"
+          ]
+        }
+      ],
+      "multiple": true,
+      "aucun": "Aucune autre"
+    },
+    {
+      "id": "pret-anglais",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Tes langues",
+      "profil": "pret-anglais",
+      "titre": "Travailler en anglais, ça te va ?",
+      "dimensions": [
+        "langue"
+      ],
+      "aide": {
+        "enjeu": "Sans anglais, le choix de postes se réduit beaucoup.",
+        "cartes": [
+          {
+            "pastille": "Oui",
+            "texte": "Tous les pays restent ouverts."
+          },
+          {
+            "pastille": "Non",
+            "texte": "Seuls les pays où l’on peut travailler en français restent dans ton classement. Les autres passent dans « Moins adaptés pour toi »."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "oui",
+          "label": "Oui"
+        },
+        {
+          "id": "non",
+          "label": "Non"
+        }
+      ],
+      "condition": "anglais-debutant-sans-autre-langue",
+      "regleAffichage": "Seulement si ton anglais est débutant et que tu ne parles aucune autre langue."
+    },
+    {
+      "id": "nationalite",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "nationalite",
+      "titre": "As-tu une autre nationalité ?",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Une autre nationalité peut ouvrir un pays sans visa, ou créer des obligations.",
+        "cartes": [
+          {
+            "pastille": "Non",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Oui",
+            "texte": "On te demande laquelle. Les cas vérifiés sont expliqués dans ton résultat."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "non",
+          "label": "Non"
+        },
+        {
+          "id": "oui",
+          "label": "Oui"
+        }
+      ]
+    },
+    {
+      "id": "nationalite-laquelle",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "nationalite-laquelle",
+      "titre": "Laquelle ?",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Nous n’avons vérifié que trois cas pour l’instant.",
+        "cartes": [
+          {
+            "pastille": "Irlandaise",
+            "texte": "Le Royaume-Uni t’est ouvert sans visa."
+          },
+          {
+            "pastille": "Canadienne ou américaine",
+            "texte": "Tu entres dans ce pays en citoyen. On te signale aussi un piège à connaître."
+          },
+          {
+            "pastille": "Une autre",
+            "texte": "Ce cas n’est pas encore couvert : ton résultat le dit."
+          },
+          {
+            "pastille": "Pour tous",
+            "texte": "Le badge du pays change, pas son pourcentage."
+          }
+        ]
+      },
+      "sansImage": true,
+      "options": [
+        {
+          "id": "irlandaise",
+          "label": "Irlandaise"
+        },
+        {
+          "id": "canadienne",
+          "label": "Canadienne"
+        },
+        {
+          "id": "americaine",
+          "label": "Américaine"
+        },
+        {
+          "id": "autre",
+          "label": "Une autre"
+        }
+      ],
+      "condition": "autre-nationalite",
+      "regleAffichage": "Seulement si tu as répondu oui à la question précédente."
+    },
+    {
+      "id": "envies",
+      "type": "choix-cartes",
+      "chapitre": 2,
+      "theme": "Tes envies",
+      "source": "envies",
+      "multiple": true,
+      "nombre": 5,
+      "titre": "Choisis 5 envies",
+      "texte": "Les cinq qui comptent le plus pour ton départ.",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Tes envies sont le cœur de ton classement.",
+        "cartes": [
+          {
+            "pastille": "Choisie",
+            "texte": "Elle compte beaucoup, selon son rang à l’écran suivant."
+          },
+          {
+            "pastille": "Donnée manquante",
+            "texte": "Un pays sans donnée vérifiée sur une de tes envies reçoit une note neutre de 50 %."
+          },
+          {
+            "pastille": "Non choisie",
+            "texte": "Elle peut encore compter, plus légèrement, si une autre réponse la vise."
+          }
+        ]
+      }
+    },
+    {
+      "id": "classement",
+      "type": "classement",
+      "chapitre": 2,
+      "theme": "Tes envies",
+      "source": "envies",
+      "titre": "Range-les de la plus importante à la moins importante",
+      "texte": "Glisse-les, ou utilise les flèches.",
+      "dimensions": [],
+      "aide": {
+        "enjeu": "Le rang donne l’importance de chaque envie.",
+        "cartes": [
+          {
+            "pastille": "N° 1",
+            "texte": "Importance 2."
+          },
+          {
+            "pastille": "N° 2",
+            "texte": "Importance 1,75."
+          },
+          {
+            "pastille": "N° 3",
+            "texte": "Importance 1,5."
+          },
+          {
+            "pastille": "N° 4",
+            "texte": "Importance 1,25."
+          },
+          {
+            "pastille": "N° 5",
+            "texte": "Importance 1,1."
+          }
+        ]
+      }
+    },
+    {
+      "id": "equilibre",
+      "type": "curseur",
+      "chapitre": 3,
+      "theme": "Ton poste",
+      "titre": "Ton équilibre idéal : plus de temps libre ou plus de salaire ?",
+      "dimensions": [
+        "equilibre",
+        "salaire"
+      ],
+      "gauche": {
+        "label": "Plus de temps libre",
+        "effets": [
+          {
+            "mesures": [
+              "heures"
+            ],
+            "poids": 1
+          }
+        ],
+        "portrait": "Tu privilégies ton temps libre au salaire."
+      },
+      "droite": {
+        "label": "Plus de salaire",
+        "effets": [
+          {
+            "mesures": [
+              "salaire"
+            ],
+            "poids": 1
+          }
+        ],
+        "portrait": "Tu privilégies le salaire au temps libre."
+      },
+      "libelles": [
+        {
+          "jusqua": 35,
+          "texte": "Plutôt du temps libre"
+        },
+        {
+          "jusqua": 64,
+          "texte": "Un équilibre"
+        },
+        {
+          "jusqua": 100,
+          "texte": "Plutôt le salaire"
+        }
+      ],
+      "aide": {
+        "enjeu": "Plus de salaire veut souvent dire plus d’heures.",
+        "cartes": [
+          {
+            "pastille": "Vers la gauche",
+            "texte": "Les pays où l’on travaille moins d’heures passent devant."
+          },
+          {
+            "pastille": "Au milieu",
+            "texte": "Les deux comptent un peu, à parts égales."
+          },
+          {
+            "pastille": "Vers la droite",
+            "texte": "Les pays aux salaires élevés passent devant."
+          }
+        ]
+      }
+    },
+    {
       "id": "promotion",
-      "theme": "Argent et travail",
+      "theme": "Ton poste",
       "titre": "Salaire ou temps libre",
       "echelle": true,
       "aide": {
@@ -831,7 +1184,12 @@
               "moins": "Ta paie ne bouge pas cette année."
             }
           ],
-          "exemple": true
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Pendant ta mission de VIE, on te propose plus de responsabilités, avec des journées plus longues.",
+            "aventure": "Ton job de PVT te propose plus d’heures, mieux payées.",
+            "carriere": "Après deux ans, on te propose une promotion, avec des journées plus longues."
+          }
         },
         {
           "id": "deux-formules",
@@ -849,7 +1207,11 @@
               "moins": "Pas de prime, et une paie plus basse."
             }
           ],
-          "exemple": true
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "L’entreprise de ta mission de VIE propose deux formules.",
+            "aventure": "Pour ton job de PVT, deux employeurs proposent deux rythmes."
+          }
         },
         {
           "id": "rendu-urgent",
@@ -866,13 +1228,145 @@
               "plus": "Ton rythme reste tranquille.",
               "moins": "Tu passes à côté de l’argent et de la visibilité."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Pendant ta mission de VIE, un gros client demande un rendu dans deux semaines."
+          }
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "equilibre",
+        "salaire"
+      ],
+      "dejaCouvertPar": [
+        "equilibre"
+      ]
+    },
+    {
+      "id": "deux-offres",
+      "theme": "Ton poste",
+      "titre": "Salaire ou coût de la vie",
+      "echelle": true,
+      "aide": {
+        "enjeu": "Un gros salaire ne veut rien dire sans le loyer en face.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays aux salaires élevés, en pouvoir d’achat."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où la vie coûte moins cher."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu regardes d’abord le salaire.",
+          "preference": "un salaire élevé",
+          "portraitPeu": "Tu regardes un peu plus le salaire que le coût de la vie."
+        },
+        {
+          "id": "b",
+          "effets": [
+            {
+              "mesures": [
+                "prix"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu regardes ce qu’il te reste à la fin du mois.",
+          "preference": "une vie moins chère",
+          "portraitPeu": "Tu regardes un peu plus le coût de la vie que le salaire."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "contrats",
+          "titre": "Deux offres",
+          "texte": "Pour le même poste, on te propose deux contrats.",
+          "options": [
+            {
+              "texte": "3 400 € par mois, 1 500 € de loyer",
+              "plus": "Plus d’argent à mettre de côté, si tu tiens ton budget.",
+              "moins": "Tout coûte cher autour de toi : sorties, transports, courses."
+            },
+            {
+              "texte": "2 300 € par mois, 650 € de loyer",
+              "plus": "La vie est simple et pas chère, même avec un petit salaire.",
+              "moins": "Tu mets moins de côté, et un billet pour la France pèse plus lourd."
+            }
+          ],
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Pour la même mission de VIE, deux villes te sont proposées.",
+            "aventure": "Pour ton job de PVT, deux villes te tentent.",
+            "carriere": "Pour le même poste, deux villes te proposent un contrat de longue durée."
+          }
+        },
+        {
+          "id": "colocataire",
+          "titre": "Le colocataire",
+          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
+          "options": [
+            {
+              "texte": "Tu préfères sa situation",
+              "plus": "Un salaire plus haut, qui compte pour la suite.",
+              "moins": "Une grosse part de sa paie part dans le loyer."
+            },
+            {
+              "texte": "Tu préfères la tienne",
+              "plus": "Ton loyer léger te laisse respirer.",
+              "moins": "Ton salaire progresse moins vite."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "restaurant",
+          "titre": "La sortie du vendredi",
+          "texte": "Ce soir, ton équipe dîne au restaurant.",
+          "options": [
+            {
+              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
+              "plus": "Tu suis sans problème, et ta paie grimpe vite.",
+              "moins": "Chaque sortie pèse dans ton budget."
+            },
+            {
+              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
+              "plus": "Tu sors autant que tu veux, sans compter.",
+              "moins": "Ton salaire vaut peu une fois converti en euros."
+            }
+          ],
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Ce soir, l’équipe de ta mission de VIE dîne au restaurant.",
+            "aventure": "Ce soir, tes collègues de PVT dînent au restaurant."
+          }
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "cout",
+        "salaire"
       ]
     },
     {
       "id": "sortie-ecole",
-      "theme": "Argent et travail",
+      "theme": "Ton poste",
       "titre": "Trouver vite ou gagner plus",
       "echelle": true,
       "aide": {
@@ -935,7 +1429,12 @@
               "moins": "Six mois à vivre sur tes économies."
             }
           ],
-          "exemple": true
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Tu cherches ta mission de VIE.",
+            "aventure": "Tu arrives pour ton PVT et tu cherches un job.",
+            "carriere": "Tu cherches le poste qui lancera ta carrière là-bas."
+          }
         },
         {
           "id": "deux-marches",
@@ -953,7 +1452,12 @@
               "moins": "La recherche peut durer, sans garantie."
             }
           ],
-          "exemple": true
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Deux pays te tentent pour ta mission de VIE, puis pour un premier poste.",
+            "aventure": "Deux pays te tentent pour ton PVT.",
+            "carriere": "Deux pays te tentent pour t’installer."
+          }
         },
         {
           "id": "fin-de-stage",
@@ -970,8 +1474,228 @@
               "plus": "Tu peux décrocher bien mieux.",
               "moins": "Tu repars de zéro, sans garantie."
             }
+          ],
+          "variantes": {
+            "stage-vie": "Ta mission de VIE se termine.",
+            "aventure": "Ton premier job de PVT se termine."
+          }
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "emploi",
+        "salaire"
+      ]
+    },
+    {
+      "id": "langue-bureau",
+      "theme": "Ton poste",
+      "titre": "Anglais ou langue du pays au bureau",
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
+      "aide": {
+        "enjeu": "Dans beaucoup de pays, l’anglais suffit au bureau. Dans d’autres, non.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où l’on travaille en anglais."
+          },
+          {
+            "pastille": "B",
+            "texte": "Ta réponse ne fait reculer aucun pays."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [
+            {
+              "mesures": [
+                "anglais"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux pouvoir travailler en anglais.",
+          "preference": "travailler en anglais"
+        },
+        {
+          "id": "b",
+          "effets": [],
+          "portrait": "Travailler dans la langue du pays ne te fait pas peur."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "reunion",
+          "titre": "Ta première réunion",
+          "texte": "Ta première réunion d’équipe commence.",
+          "options": [
+            {
+              "texte": "Tout le monde parle anglais",
+              "plus": "Tu es à l’aise dès le premier jour.",
+              "moins": "Tu progresses peu dans la langue du pays."
+            },
+            {
+              "texte": "Tout se passe dans la langue du pays",
+              "plus": "Tu apprends vite et tu t’intègres.",
+              "moins": "Les premiers mois, tu comprends la moitié."
+            }
+          ],
+          "variantes": {
+            "stage-vie": "La première réunion de ta mission de VIE commence.",
+            "aventure": "Premier jour de ton job de PVT : l’équipe se présente."
+          }
+        },
+        {
+          "id": "offres",
+          "titre": "Les offres d’emploi",
+          "texte": "Tu lis les offres d’emploi.",
+          "options": [
+            {
+              "texte": "La plupart sont en anglais : tu peux postuler partout",
+              "plus": "Beaucoup d’offres à ta portée.",
+              "moins": "Face à toi, des candidats du monde entier."
+            },
+            {
+              "texte": "La plupart demandent la langue du pays",
+              "plus": "Si tu l’apprends, elle te démarque.",
+              "moins": "Moins d’offres au début."
+            }
+          ],
+          "variantes": {
+            "stage-vie": "Tu lis les offres de VIE.",
+            "aventure": "Tu lis les offres de jobs pour ton PVT."
+          }
+        },
+        {
+          "id": "pause-cafe",
+          "titre": "La pause café",
+          "texte": "C’est la pause café.",
+          "options": [
+            {
+              "texte": "On parle anglais, avec des collègues du monde entier",
+              "plus": "Une ambiance internationale.",
+              "moins": "Tu restes un peu à part de la vie locale."
+            },
+            {
+              "texte": "On parle la langue du pays, tu suis comme tu peux",
+              "plus": "Tu entres dans la culture du pays.",
+              "moins": "Les blagues t’échappent pendant des mois."
+            }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "langue"
+      ]
+    },
+    {
+      "id": "job-de-reve",
+      "theme": "Ton poste",
+      "titre": "Visa lié à l’employeur, ou pas",
+      "aide": {
+        "enjeu": "Dans beaucoup de pays, ton visa de travail est attaché à ton employeur.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Rien ne change au classement."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où ton visa dépendrait d’un employeur reculent, aussi quand ce lien n’est pas encore vérifié. Ceux où il en dépend en partie reculent moins. Aucun pays n’est écarté."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [],
+          "portrait": "Dépendre d’un employeur pour ton visa ne te fait pas peur."
+        },
+        {
+          "id": "b",
+          "effets": [
+            {
+              "mesures": [
+                "employeur-libre"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux pouvoir changer d’employeur librement.",
+          "preference": "pouvoir changer d’employeur librement"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "job-de-reve",
+          "titre": "Le job de rêve",
+          "texte": "On t’offre le poste de tes rêves. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir.",
+          "options": [
+            {
+              "texte": "Tu prends le risque",
+              "plus": "Le poste de tes rêves.",
+              "moins": "Tu dépends de ton employeur."
+            },
+            {
+              "texte": "Tu préfères pouvoir changer d’employeur librement",
+              "plus": "Tu peux partir quand tu veux.",
+              "moins": "Tu vises peut-être moins haut."
+            }
+          ],
+          "exemple": true,
+          "variantes": {
+            "stage-vie": "Après ton VIE, on t’offre le poste de tes rêves sur place. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir.",
+            "carriere": "On t’offre le poste qui lancerait ta carrière. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir."
+          }
+        },
+        {
+          "id": "manager",
+          "titre": "Le manager difficile",
+          "texte": "Six mois après ton arrivée, ton manager devient insupportable.",
+          "options": [
+            {
+              "texte": "Ton visa est lié à l’entreprise : tu tiens bon, ou tu quittes le pays",
+              "plus": "Des pays avec de beaux postes restent possibles.",
+              "moins": "Changer de poste devient compliqué."
+            },
+            {
+              "texte": "Tu veux pouvoir démissionner et chercher ailleurs, sur place",
+              "plus": "Tu restes libre.",
+              "moins": "Moins de pays possibles."
+            }
+          ],
+          "variantes": {
+            "carriere": "Deux ans après ton arrivée, ton manager devient insupportable."
+          }
+        },
+        {
+          "id": "offre-concurrente",
+          "titre": "L’offre concurrente",
+          "texte": "Une autre entreprise te propose mieux.",
+          "options": [
+            {
+              "texte": "Il faudrait refaire ton dossier de visa : tu acceptes cette règle",
+              "plus": "Plus de pays possibles.",
+              "moins": "Saisir une meilleure offre prend du temps."
+            },
+            {
+              "texte": "Tu veux pouvoir dire oui tout de suite",
+              "plus": "Tu saisis les occasions.",
+              "moins": "Moins de pays possibles."
+            }
+          ]
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "visa"
       ]
     },
     {
@@ -1038,7 +1762,11 @@
               "plus": "L’ambiance reste douce et encourageante.",
               "moins": "Il faut lire entre les lignes pour savoir ce qui ne va pas."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Tu rends ton premier dossier de VIE. Ta manager te répond.",
+            "aventure": "Premier jour de ton job de PVT : ta responsable regarde ton travail."
+          }
         },
         {
           "id": "desaccord",
@@ -1072,8 +1800,17 @@
               "plus": "Tu en sors avec le moral.",
               "moins": "Les vrais reproches restent flous."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "C’est le bilan de mi-mission de ton VIE.",
+            "aventure": "Ton job de PVT se termine : ta responsable fait le point avec toi."
+          }
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "communication"
       ]
     },
     {
@@ -1119,7 +1856,7 @@
               "position": 5
             }
           ],
-          "portrait": "Tu es à l’aise avec une hiérarchie marquée.",
+          "portrait": "Une hiérarchie marquée te convient.",
           "preference": "une hiérarchie marquée",
           "style": "une hiérarchie marquée"
         }
@@ -1140,7 +1877,11 @@
               "plus": "Les rôles sont clairs, chacun sait qui décide.",
               "moins": "Tes idées passent par les bons canaux, et ça prend du temps."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Le directeur de la filiale où tu fais ton VIE propose une idée que tu trouves fragile.",
+            "aventure": "Le patron de ton job de PVT propose une idée que tu trouves fragile."
+          }
         },
         {
           "id": "ascenseur",
@@ -1157,7 +1898,11 @@
               "plus": "Le respect des rôles est clair : pas de faux pas.",
               "moins": "Tu restes loin des personnes qui décident."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Premier jour de ton VIE : tu croises la directrice générale dans l’ascenseur.",
+            "aventure": "Premier jour de ton job de PVT : tu croises la patronne à l’entrée."
+          }
         },
         {
           "id": "mail-client",
@@ -1176,6 +1921,11 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "hierarchie"
       ]
     },
     {
@@ -1242,7 +1992,11 @@
               "plus": "L’ambiance est détendue, personne ne court.",
               "moins": "Il faut accepter d’attendre, et les journées débordent."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "L’équipe de ta mission de VIE a une réunion à 9 h.",
+            "aventure": "Ton équipe de PVT commence son service à 9 h."
+          }
         },
         {
           "id": "diner",
@@ -1276,8 +2030,16 @@
               "plus": "Pas de stress si tu as un peu de retard.",
               "moins": "Tu peux aussi attendre une demi-heure à ton tour."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Pendant ton VIE, tu as rendez-vous chez un client."
+          }
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "ponctualite"
       ]
     },
     {
@@ -1344,7 +2106,11 @@
               "plus": "Ensuite, toute l’équipe porte le projet avec toi.",
               "moins": "Trois semaines de discussions avant de commencer."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "Pendant ta mission de VIE, tu proposes une amélioration.",
+            "aventure": "Dans ton job de PVT, tu proposes une amélioration."
+          }
         },
         {
           "id": "logiciel",
@@ -1361,7 +2127,10 @@
               "plus": "Chacun a eu son mot à dire.",
               "moins": "Un mois de réunions pour un logiciel."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "L’équipe de ta mission de VIE doit choisir un nouveau logiciel."
+          }
         },
         {
           "id": "seminaire",
@@ -1380,6 +2149,11 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "decision"
       ]
     },
     {
@@ -1446,7 +2220,11 @@
               "plus": "C’est là que se créent les liens et les promotions.",
               "moins": "Tes soirées appartiennent un peu au bureau."
             }
-          ]
+          ],
+          "variantes": {
+            "stage-vie": "La semaine de ta mission de VIE est finie.",
+            "aventure": "La semaine de ton job de PVT est finie."
+          }
         },
         {
           "id": "anniversaire",
@@ -1480,38 +2258,414 @@
               "plus": "Tu crées des liens qui comptent au travail.",
               "moins": "Ne pas venir se remarque."
             }
-          ]
+          ],
+          "variantes": {
+            "aventure": "Tes collègues de PVT organisent un tournoi de foot le samedi."
+          }
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 3,
+      "dimensions": [
+        "pro-perso"
       ]
     },
     {
-      "id": "deux-langues",
-      "theme": "Langue",
-      "titre": "Vivre dans une langue inconnue",
-      "afficheSi": "peut-travailler-en-anglais",
-      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
-      "aide": {
-        "enjeu": "L’anglais au bureau ne suffit pas toujours pour vivre au quotidien.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "Aucun pays ne recule."
-          },
-          {
-            "pastille": "B",
-            "texte": "On met en avant les pays où l’on vit en français, dans une langue proche du français ou dans une langue que tu parles."
-          }
-        ]
-      },
+      "id": "secteur-ville",
+      "type": "choix-cartes",
+      "chapitre": 3,
+      "theme": "Ton projet",
+      "condition": "secteur-choisi",
+      "titre": "Pour ta carrière, tu vises plutôt une grande ville où ton secteur est concentré, ou tu peux travailler n’importe où ?",
+      "dimensions": [
+        "secteur",
+        "ville"
+      ],
+      "sansImage": true,
+      "avecPlusMoins": true,
       "options": [
         {
           "id": "a",
-          "effets": [],
-          "portrait": "Une langue inconnue au quotidien ne te fait pas peur."
+          "label": "Une grande ville où mon secteur est concentré",
+          "plus": "Plus d’offres et de contacts dans ton domaine.",
+          "moins": "La vie y coûte souvent plus cher.",
+          "effets": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            },
+            {
+              "mesures": [
+                "secteur"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portrait": "Tu vises une grande ville où ton secteur est concentré."
         },
         {
           "id": "b",
+          "label": "Je peux travailler n’importe où",
+          "plus": "Tu choisis ta ville pour la vie qu’elle offre.",
+          "moins": "Moins d’offres dans ton domaine, parfois.",
+          "effets": [],
+          "portrait": "Tu peux travailler n’importe où, pas seulement dans les grandes villes de ton secteur."
+        }
+      ],
+      "aide": {
+        "enjeu": "Ton secteur et la taille de la ville vont souvent ensemble.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Les grandes villes et ton secteur comptent un peu (importance 0,5)."
+          },
+          {
+            "pastille": "B",
+            "texte": "Rien ne change."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mission-vie",
+      "type": "choix-cartes",
+      "chapitre": 3,
+      "theme": "Ton projet",
+      "condition": "projet:stage-vie",
+      "titre": "Ta mission idéale : une grande ville internationale où la vie coûte cher, ou une ville plus calme où ton indemnité va plus loin ?",
+      "dimensions": [
+        "cout",
+        "ville"
+      ],
+      "sansImage": true,
+      "avecPlusMoins": true,
+      "options": [
+        {
+          "id": "a",
+          "label": "Une grande ville internationale",
+          "plus": "Un réseau, des sorties, une vie animée.",
+          "moins": "Le loyer mange une bonne part de ton indemnité.",
           "effets": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Pour ta mission, tu vises une grande ville internationale."
+        },
+        {
+          "id": "b",
+          "label": "Une ville plus calme",
+          "plus": "Ton indemnité va plus loin.",
+          "moins": "Moins de sorties et de contacts.",
+          "effets": [
+            {
+              "mesures": [
+                "prix"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Pour ta mission, tu préfères que ton indemnité aille plus loin."
+        }
+      ],
+      "aide": {
+        "enjeu": "Une indemnité de VIE ne pèse pas pareil partout.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Les pays aux grandes villes animées passent devant."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où la vie coûte moins cher passent devant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pvt-boulots",
+      "type": "choix-cartes",
+      "chapitre": 3,
+      "theme": "Ton projet",
+      "condition": "projet:aventure",
+      "titre": "Pendant ton PVT, tu veux surtout enchaîner les petits boulots pour voyager, ou trouver un poste dans ton domaine ?",
+      "dimensions": [
+        "emploi",
+        "secteur"
+      ],
+      "sansImage": true,
+      "avecPlusMoins": true,
+      "options": [
+        {
+          "id": "a",
+          "label": "Enchaîner les petits boulots",
+          "plus": "Plus de liberté pour voyager.",
+          "moins": "Moins d’expérience dans ton domaine.",
+          "effets": [
+            {
+              "mesures": [
+                "emploi"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Pendant ton PVT, tu veux trouver du travail facilement, pour voyager."
+        },
+        {
+          "id": "b",
+          "label": "Un poste dans mon domaine",
+          "plus": "Une vraie ligne sur ton CV.",
+          "moins": "Plus long à trouver.",
+          "effets": [
+            {
+              "mesures": [
+                "secteur"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Pendant ton PVT, tu vises un poste dans ton domaine."
+        }
+      ],
+      "aide": {
+        "enjeu": "Un PVT peut être une pause ou un tremplin.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Les pays où les jeunes trouvent vite un emploi passent devant."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où ton secteur emploie beaucoup passent devant, si ton secteur est connu."
+          }
+        ]
+      }
+    },
+    {
+      "id": "dans-5-ans",
+      "type": "choix-cartes",
+      "chapitre": 3,
+      "theme": "Ton projet",
+      "condition": "projet:carriere",
+      "titre": "Dans 5 ans, tu te vois plutôt installé là-bas pour de bon, ou rentré en France avec une belle expérience ?",
+      "dimensions": [
+        "distance",
+        "langue",
+        "sante",
+        "valeurs"
+      ],
+      "sansImage": true,
+      "avecPlusMoins": true,
+      "options": [
+        {
+          "id": "a",
+          "label": "Installé là-bas pour de bon",
+          "plus": "Tu construis ta vie sur place.",
+          "moins": "Il faudra s’adapter à fond, langue comprise.",
+          "effets": [
+            {
+              "mesures": [
+                "stabilite"
+              ],
+              "poids": 1
+            },
+            {
+              "mesures": [
+                "sante"
+              ],
+              "poids": 1
+            }
+          ],
+          "sansPenalite": [
+            "apprendre-langue"
+          ],
+          "portrait": "Tu te vois installé là-bas pour de bon."
+        },
+        {
+          "id": "b",
+          "label": "Rentré en France avec une belle expérience",
+          "plus": "Ton expérience comptera à ton retour.",
+          "moins": "Tu restes un peu entre deux pays.",
+          "effets": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portrait": "Tu te vois rentrer en France avec une belle expérience."
+        }
+      ],
+      "aide": {
+        "enjeu": "S’installer ou revenir : ce ne sont pas les mêmes besoins.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "La stabilité et la couverture santé comptent. Apprendre une langue n’est plus une pénalité."
+          },
+          {
+            "pastille": "B",
+            "texte": "La distance avec la France compte un peu (importance 0,5)."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ambiances",
+      "type": "ambiances",
+      "chapitre": 4,
+      "theme": "Ton décor",
+      "obligatoire": true,
+      "max": 2,
+      "titre": "Dans quel décor imagines-tu ton quotidien ?",
+      "texte": "Choisis-en deux au plus.",
+      "dimensions": [
+        "climat",
+        "ville"
+      ],
+      "options": [
+        {
+          "id": "metropole",
+          "label": "Une grande métropole",
+          "phrase": "Du monde, des sorties, tout à pied ou en métro.",
+          "icone": "building-2",
+          "effets": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu t’imagines dans une grande métropole."
+        },
+        {
+          "id": "ville-humaine",
+          "label": "Une ville à taille humaine",
+          "phrase": "Assez grande pour bouger, assez calme pour souffler.",
+          "icone": "house",
+          "effets": [
+            {
+              "mesures": [
+                "ville-moyenne"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu t’imagines dans une ville à taille humaine."
+        },
+        {
+          "id": "nature",
+          "label": "La nature à portée de main",
+          "phrase": "Forêts, lacs ou montagnes, pas loin de chez toi.",
+          "icone": "trees",
+          "effets": [
+            {
+              "mesures": [
+                "nature"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux la nature à portée de main."
+        },
+        {
+          "id": "soleil",
+          "label": "Du soleil toute l’année",
+          "phrase": "Des hivers doux et des étés chauds.",
+          "icone": "sun",
+          "effets": [
+            {
+              "mesures": [
+                "doux"
+              ],
+              "poids": 1
+            },
+            {
+              "mesures": [
+                "ete"
+              ],
+              "position": 4
+            }
+          ],
+          "portrait": "Tu rêves de soleil toute l’année."
+        }
+      ],
+      "aide": {
+        "enjeu": "Le décor de ta vie compte autant que ton poste.",
+        "cartes": [
+          {
+            "pastille": "Métropole",
+            "texte": "Les pays aux grandes villes animées passent devant."
+          },
+          {
+            "pastille": "Taille humaine",
+            "texte": "Les pays aux villes moyennes actives passent devant."
+          },
+          {
+            "pastille": "Nature",
+            "texte": "Les pays où la nature est proche passent devant."
+          },
+          {
+            "pastille": "Soleil",
+            "texte": "Les climats doux et les étés chauds passent devant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "phrases",
+      "type": "swipe",
+      "chapitre": 4,
+      "theme": "Ton quotidien",
+      "obligatoire": true,
+      "nombre": 5,
+      "titre": "Ça te correspond ?",
+      "texte": "Glisse la carte à droite si la phrase te correspond, à gauche sinon. Ou utilise les boutons.",
+      "dimensions": [
+        "climat",
+        "communication",
+        "cout",
+        "decision",
+        "distance",
+        "langue",
+        "pro-perso",
+        "reseau",
+        "salaire",
+        "sante",
+        "securite",
+        "valeurs",
+        "ville"
+      ],
+      "aide": {
+        "enjeu": "Cinq phrases, choisies selon ce qu’on sait encore mal de toi.",
+        "cartes": [
+          {
+            "pastille": "Ça me correspond",
+            "texte": "La phrase compte dans ton classement (importance 1, ou une position)."
+          },
+          {
+            "pastille": "Pas vraiment",
+            "texte": "Elle compte dans l’autre sens, ou ne change rien."
+          },
+          {
+            "pastille": "Ça dépend",
+            "texte": "Elle ne compte pas."
+          }
+        ]
+      },
+      "phrases": [
+        {
+          "id": "S1",
+          "texte": "Je pourrais vivre dans un pays dont je ne parle pas la langue.",
+          "oui": [],
+          "non": [
             {
               "mesures": [
                 "langue"
@@ -1519,179 +2673,287 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu veux pouvoir gérer ton quotidien sans aide.",
-          "preference": "gérer ton quotidien sans aide"
-        }
-      ],
-      "scenes": [
-        {
-          "id": "deux-langues",
-          "titre": "Ta vie en deux langues",
-          "texte": "Au bureau, tout se passe en anglais. Chez le médecin ou pour signer ton bail, c’est la langue locale, que tu ne parles pas.",
-          "options": [
-            {
-              "texte": "Tu te débrouilles avec une appli de traduction",
-              "plus": "Tu découvres une langue nouvelle au quotidien.",
-              "moins": "Chaque démarche prend plus de temps."
-            },
-            {
-              "texte": "Tu veux gérer ton quotidien sans aide",
-              "plus": "Médecin, banque, bail : tout est simple.",
-              "moins": "Moins de pays possibles."
-            }
+          "portraitOui": "Vivre dans une langue que tu ne parles pas ne te fait pas peur.",
+          "portraitNon": "Tu veux comprendre la langue du pays au quotidien.",
+          "dimensions": [
+            "langue"
           ]
         },
         {
-          "id": "banque",
-          "titre": "Le rendez-vous à la banque",
-          "texte": "Tu dois ouvrir un compte en banque.",
-          "options": [
-            {
-              "texte": "Le conseiller ne parle que la langue locale : tu sors ton téléphone",
-              "plus": "Une petite aventure, et tu apprends des mots.",
-              "moins": "Tu ne sais jamais si tu as tout compris."
-            },
-            {
-              "texte": "Tout se fait dans une langue que tu comprends",
-              "plus": "Tu signes en sachant ce que tu signes.",
-              "moins": "Moins de pays possibles."
-            }
-          ]
-        },
-        {
-          "id": "voisin",
-          "titre": "La fuite d’eau",
-          "texte": "Ton voisin frappe pour te parler d’une fuite d’eau.",
-          "options": [
-            {
-              "texte": "Vous vous comprenez avec des gestes et quelques mots",
-              "plus": "Ça crée des liens, et ça fait rire.",
-              "moins": "Les vrais problèmes sont durs à régler."
-            },
-            {
-              "texte": "Vous parlez la même langue : tout est réglé en cinq minutes",
-              "plus": "Ta vie de tous les jours est simple.",
-              "moins": "Moins de dépaysement."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "cours-offerts",
-      "theme": "Langue",
-      "titre": "Apprendre une nouvelle langue",
-      "afficheSi": "peut-travailler-en-anglais",
-      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
-      "aide": {
-        "enjeu": "Apprendre la langue ouvre des portes, mais demande du temps.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "Tous les pays restent dans la course, même avec un autre alphabet."
-          },
-          {
-            "pastille": "B",
-            "texte": "Les pays où il faut apprendre une nouvelle langue reculent, surtout avec un autre alphabet."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [],
-          "portrait": "Apprendre une langue, même avec un autre alphabet, ça te va."
-        },
-        {
-          "id": "b",
-          "effets": [
+          "id": "S2",
+          "texte": "Je pourrais m’éloigner de ma famille plusieurs années.",
+          "oui": [],
+          "non": [
             {
               "mesures": [
-                "apprendre-langue"
+                "vol",
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portraitOui": "Tu acceptes plus facilement d’être loin de ta famille.",
+          "portraitNon": "Rester pas trop loin de ta famille compte pour toi.",
+          "dimensions": [
+            "distance"
+          ]
+        },
+        {
+          "id": "S3",
+          "texte": "Un pays cher ne me dérange pas si les salaires suivent.",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
               ],
               "poids": 1
             }
           ],
-          "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
-          "preference": "ne pas avoir de langue à apprendre"
-        }
-      ],
-      "scenes": [
-        {
-          "id": "cours",
-          "titre": "Les cours offerts",
-          "texte": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
-          "options": [
+          "non": [
             {
-              "texte": "Tu y vas",
-              "plus": "Un vrai atout, au travail comme dans la vie.",
-              "moins": "Trois soirées par semaine y passent."
-            },
-            {
-              "texte": "Tu gardes ces soirées pour toi : l’anglais te suffit",
-              "plus": "Ton temps libre reste à toi.",
-              "moins": "Tu fermes quelques portes."
+              "mesures": [
+                "prix"
+              ],
+              "poids": 1
             }
           ],
-          "exemple": true
-        },
-        {
-          "id": "menu",
-          "titre": "Le menu",
-          "texte": "Au restaurant, le menu n’est écrit que dans la langue du pays, avec un autre alphabet.",
-          "options": [
-            {
-              "texte": "Tu apprends à lire les plats, un mot après l’autre",
-              "plus": "Au bout de quelques mois, tu lis partout.",
-              "moins": "Il faut des mois d’efforts."
-            },
-            {
-              "texte": "Tu préfères un pays où tu lis déjà tout",
-              "plus": "Tout est lisible dès le premier jour.",
-              "moins": "Moins de choix de pays."
-            }
+          "portraitOui": "Un pays cher ne te dérange pas si les salaires suivent.",
+          "portraitNon": "Tu regardes de près le coût de la vie.",
+          "dimensions": [
+            "cout",
+            "salaire"
           ]
         },
         {
-          "id": "defi",
-          "titre": "Le défi de l’année",
-          "texte": "Une amie te lance un défi : apprendre une nouvelle langue pendant ton année.",
-          "options": [
+          "id": "S4",
+          "texte": "Je préfère une petite ville à une grande métropole.",
+          "oui": [
             {
-              "texte": "Tu relèves le défi",
-              "plus": "Tu reviens avec une langue de plus sur ton CV.",
-              "moins": "Ça demande du temps et de la patience."
-            },
-            {
-              "texte": "Tu gardes cette énergie pour ton travail",
-              "plus": "Toute ton énergie va à ta carrière.",
-              "moins": "Moins de pays possibles."
+              "mesures": [
+                "ville-moyenne"
+              ],
+              "poids": 1
             }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 1
+            }
+          ],
+          "portraitOui": "Tu préfères une ville à taille humaine.",
+          "portraitNon": "Une grande métropole t’attire plus qu’une petite ville.",
+          "dimensions": [
+            "ville"
           ]
-        }
-      ]
-    },
-    {
-      "id": "premier-mois",
-      "theme": "Langue",
-      "titre": "Réseau français ou immersion",
-      "aide": {
-        "enjeu": "Un réseau français aide à démarrer, mais peut aussi t’enfermer dans une bulle.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "On met en avant les pays où les Français sont nombreux, par rapport à la population."
-          },
-          {
-            "pastille": "B",
-            "texte": "Les Français sur place ne comptent pas plus que le reste."
-          }
-        ]
-      },
-      "options": [
+        },
         {
-          "id": "a",
-          "effets": [
+          "id": "S5",
+          "texte": "Un hiver de cinq mois ne me fait pas peur s’il y a du travail.",
+          "oui": [],
+          "non": [
+            {
+              "mesures": [
+                "hiver"
+              ],
+              "position": 4
+            }
+          ],
+          "portraitOui": "Tu acceptes plus facilement un long hiver, s’il y a du travail.",
+          "portraitNon": "Tu préfères un hiver doux.",
+          "dimensions": [
+            "climat"
+          ]
+        },
+        {
+          "id": "S6",
+          "texte": "Je veux pouvoir rentrer en France le temps d’un week-end.",
+          "oui": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir rentrer en France le temps d’un week-end.",
+          "portraitNon": "Rentrer en France le week-end n’est pas une nécessité pour toi.",
+          "dimensions": [
+            "distance"
+          ]
+        },
+        {
+          "id": "S7",
+          "texte": "Je préfère un pays stable, même s’il s’y passe moins de choses.",
+          "oui": [
+            {
+              "mesures": [
+                "stabilite"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu préfères un pays stable, même plus calme.",
+          "portraitNon": "Un pays qui bouge beaucoup ne te fait pas peur.",
+          "dimensions": [
+            "valeurs"
+          ]
+        },
+        {
+          "id": "S8",
+          "texte": "Payer une assurance santé privée chaque mois, ça me va.",
+          "oui": [],
+          "non": [
+            {
+              "mesures": [
+                "sante"
+              ],
+              "poids": 1
+            }
+          ],
+          "portraitOui": "Payer une assurance santé privée ne te gêne pas.",
+          "portraitNon": "Tu veux une couverture santé sans assurance privée à payer.",
+          "dimensions": [
+            "sante"
+          ]
+        },
+        {
+          "id": "S9",
+          "texte": "Je veux pouvoir faire du sport dehors presque toute l’année.",
+          "oui": [
+            {
+              "mesures": [
+                "doux"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir faire du sport dehors presque toute l’année.",
+          "portraitNon": "La météo ne décidera pas de ton sport.",
+          "dimensions": [
+            "climat"
+          ]
+        },
+        {
+          "id": "S10",
+          "texte": "Manger sain doit être facile au quotidien.",
+          "oui": [
+            {
+              "mesures": [
+                "manger-sain"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [],
+          "portraitOui": "Manger sain doit être facile au quotidien.",
+          "portraitNon": "Les habitudes alimentaires du pays ne décideront pas de ton choix.",
+          "dimensions": [
+            "sante"
+          ]
+        },
+        {
+          "id": "S11",
+          "texte": "Je me sens bien dans une ville où il faut rester vigilant.",
+          "oui": [],
+          "non": [
+            {
+              "mesures": [
+                "securite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portraitOui": "Tu acceptes plus facilement une ville où il faut rester vigilant.",
+          "portraitNon": "Tu veux te sentir en sécurité sans y penser.",
+          "dimensions": [
+            "securite"
+          ]
+        },
+        {
+          "id": "S12",
+          "texte": "J’aime l’idée de me faire des amis surtout par le travail.",
+          "oui": [
+            {
+              "mesures": [
+                "pro-perso"
+              ],
+              "position": 5
+            }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "pro-perso"
+              ],
+              "position": 2
+            }
+          ],
+          "portraitOui": "Te faire des amis par le travail te plaît.",
+          "portraitNon": "Tu préfères garder ta vie perso à part du travail.",
+          "dimensions": [
+            "pro-perso"
+          ]
+        },
+        {
+          "id": "S13",
+          "texte": "Un chef qui décide seul et vite me convient.",
+          "oui": [
+            {
+              "mesures": [
+                "decision"
+              ],
+              "position": 1
+            }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "decision"
+              ],
+              "position": 4
+            }
+          ],
+          "portraitOui": "Un chef qui tranche vite te convient.",
+          "portraitNon": "Tu préfères des décisions prises ensemble.",
+          "dimensions": [
+            "decision"
+          ]
+        },
+        {
+          "id": "S14",
+          "texte": "Je préfère qu’on me dise les choses franchement, même si ça pique.",
+          "oui": [
+            {
+              "mesures": [
+                "communication"
+              ],
+              "position": 1
+            }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "communication"
+              ],
+              "position": 4
+            }
+          ],
+          "portraitOui": "Tu préfères qu’on te parle franchement.",
+          "portraitNon": "Tu préfères qu’on y mette les formes.",
+          "dimensions": [
+            "communication"
+          ]
+        },
+        {
+          "id": "S15",
+          "texte": "Retrouver d’autres Français sur place me rassurerait.",
+          "oui": [
             {
               "mesures": [
                 "francais"
@@ -1699,262 +2961,18 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu aimerais trouver des Français sur place.",
-          "preference": "trouver des Français sur place"
-        },
-        {
-          "id": "b",
-          "effets": [],
-          "portrait": "Tu n’as pas besoin de Français autour de toi."
-        }
-      ],
-      "scenes": [
-        {
-          "id": "premier-mois",
-          "titre": "Ton premier mois",
-          "texte": "Tu viens d’arriver dans ta nouvelle ville.",
-          "options": [
-            {
-              "texte": "Un groupe de Français t’accueille",
-              "plus": "Logement, banque : on te donne les bons conseils.",
-              "moins": "Tu risques de rester dans une bulle française."
-            },
-            {
-              "texte": "Tu n’as aucun contact français",
-              "plus": "Tu plonges dans la vie locale.",
-              "moins": "Tu te fais des amis plus lentement."
-            }
-          ]
-        },
-        {
-          "id": "stage",
-          "titre": "La recherche de stage",
-          "texte": "Tu cherches un stage sur place.",
-          "options": [
-            {
-              "texte": "Le réseau des Français t’ouvre des portes",
-              "plus": "Une recommandation vaut mieux que cent CV.",
-              "moins": "Tu travailles souvent dans un milieu français."
-            },
-            {
-              "texte": "Tu postules comme tout le monde",
-              "plus": "Tu entres dans des équipes locales.",
-              "moins": "Plus long, sans coup de pouce."
-            }
-          ]
-        },
-        {
-          "id": "dimanche",
-          "titre": "Ton premier dimanche",
-          "texte": "C’est ton premier dimanche sur place.",
-          "options": [
-            {
-              "texte": "Brunch avec d’autres Français, dans ta langue",
-              "plus": "Tu te sens vite chez toi.",
-              "moins": "Tu progresses moins vite dans la langue du pays."
-            },
-            {
-              "texte": "Tu pars découvrir la ville par toi-même",
-              "plus": "Tout est nouveau, tu apprends vite.",
-              "moins": "Les premiers week-ends peuvent sembler longs."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "langue-bureau",
-      "theme": "Langue",
-      "titre": "Anglais ou langue du pays au bureau",
-      "afficheSi": "peut-travailler-en-anglais",
-      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
-      "aide": {
-        "enjeu": "Dans beaucoup de pays, l’anglais suffit au bureau. Dans d’autres, non.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "On met en avant les pays où l’on travaille en anglais."
-          },
-          {
-            "pastille": "B",
-            "texte": "Ta réponse ne fait reculer aucun pays."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [
-            {
-              "mesures": [
-                "anglais"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu veux pouvoir travailler en anglais.",
-          "preference": "travailler en anglais"
-        },
-        {
-          "id": "b",
-          "effets": [],
-          "portrait": "Travailler dans la langue du pays ne te fait pas peur."
-        }
-      ],
-      "scenes": [
-        {
-          "id": "reunion",
-          "titre": "Ta première réunion",
-          "texte": "Ta première réunion d’équipe commence.",
-          "options": [
-            {
-              "texte": "Tout le monde parle anglais",
-              "plus": "Tu es à l’aise dès le premier jour.",
-              "moins": "Tu progresses peu dans la langue du pays."
-            },
-            {
-              "texte": "Tout se passe dans la langue du pays",
-              "plus": "Tu apprends vite et tu t’intègres.",
-              "moins": "Les premiers mois, tu comprends la moitié."
-            }
-          ]
-        },
-        {
-          "id": "offres",
-          "titre": "Les offres d’emploi",
-          "texte": "Tu lis les offres d’emploi.",
-          "options": [
-            {
-              "texte": "La plupart sont en anglais : tu peux postuler partout",
-              "plus": "Beaucoup d’offres à ta portée.",
-              "moins": "Face à toi, des candidats du monde entier."
-            },
-            {
-              "texte": "La plupart demandent la langue du pays",
-              "plus": "Si tu l’apprends, elle te démarque.",
-              "moins": "Moins d’offres au début."
-            }
-          ]
-        },
-        {
-          "id": "pause-cafe",
-          "titre": "La pause café",
-          "texte": "C’est la pause café.",
-          "options": [
-            {
-              "texte": "On parle anglais, avec des collègues du monde entier",
-              "plus": "Une ambiance internationale.",
-              "moins": "Tu restes un peu à part de la vie locale."
-            },
-            {
-              "texte": "On parle la langue du pays, tu suis comme tu peux",
-              "plus": "Tu entres dans la culture du pays.",
-              "moins": "Les blagues t’échappent pendant des mois."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "noel",
-      "theme": "Vivre",
-      "titre": "Près ou loin de la France",
-      "echelle": true,
-      "aide": {
-        "enjeu": "La distance se ressent surtout aux grandes occasions.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "On met en avant les pays proches, avec peu de décalage horaire."
-          },
-          {
-            "pastille": "B",
-            "texte": "Ta réponse ne fait reculer aucun pays lointain."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [
-            {
-              "mesures": [
-                "vol",
-                "decalage"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu veux pouvoir rentrer vite en France.",
-          "preference": "rentrer vite en France",
-          "portraitPeu": "Tu veux pouvoir rentrer en France plusieurs fois par an.",
-          "preferencePeu": "rester à quelques heures de la France"
-        },
-        {
-          "id": "b",
-          "effets": [],
-          "portrait": "La distance avec la France ne te fait pas peur.",
-          "portraitPeu": "La distance avec la France compte peu pour toi."
-        }
-      ],
-      "scenes": [
-        {
-          "id": "noel",
-          "titre": "Noël approche",
-          "texte": "Tu veux voir ta famille pour les fêtes.",
-          "options": [
-            {
-              "texte": "2 h de vol",
-              "plus": "Tu rentres pour le réveillon et tu repars le 26.",
-              "moins": "Moins de dépaysement."
-            },
-            {
-              "texte": "12 h de vol ou plus",
-              "plus": "Un vrai changement de monde.",
-              "moins": "Tu rentres une fois par an, c’est le jeu."
-            }
-          ],
-          "exemple": true
-        },
-        {
-          "id": "mariage",
-          "titre": "Le mariage de ta cousine",
-          "texte": "Ta cousine se marie un samedi, en France.",
-          "options": [
-            {
-              "texte": "Tu pars le vendredi soir et tu reviens le dimanche",
-              "plus": "Tu ne rates aucun moment en famille.",
-              "moins": "Ton nouveau pays ressemble un peu au tien."
-            },
-            {
-              "texte": "Il te faut une semaine de congés et un billet cher",
-              "plus": "Tu vis à l’autre bout du monde, avec tout ce qu’il offre.",
-              "moins": "Tu rates souvent les fêtes de famille."
-            }
-          ]
-        },
-        {
-          "id": "appels",
-          "titre": "Les appels du dimanche",
-          "texte": "Tu appelles tes proches chaque dimanche.",
-          "options": [
-            {
-              "texte": "Même heure qu’en France : tu appelles quand tu veux",
-              "plus": "Aucun calcul de fuseau horaire.",
-              "moins": "Ton pays reste proche de ce que tu connais."
-            },
-            {
-              "texte": "Ils dorment quand tu te réveilles",
-              "plus": "Tu vis vraiment ailleurs.",
-              "moins": "Il faut caler les appels tôt le matin ou tard le soir."
-            }
+          "non": [],
+          "portraitOui": "Retrouver d’autres Français sur place te rassurerait.",
+          "portraitNon": "Tu n’as pas besoin de Français autour de toi.",
+          "dimensions": [
+            "reseau"
           ]
         }
       ]
     },
     {
       "id": "janvier",
-      "theme": "Vivre",
+      "theme": "Ton décor",
       "titre": "Vrai hiver ou hiver doux",
       "echelle": true,
       "aide": {
@@ -2056,11 +3074,16 @@
           ],
           "exemple": true
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "climat"
       ]
     },
     {
       "id": "aout",
-      "theme": "Vivre",
+      "theme": "Ton décor",
       "titre": "Été chaud ou tempéré",
       "echelle": true,
       "aide": {
@@ -2162,11 +3185,16 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "climat"
       ]
     },
     {
       "id": "saisons",
-      "theme": "Vivre",
+      "theme": "Ton décor",
       "titre": "Douceur ou saisons marquées",
       "echelle": true,
       "aide": {
@@ -2257,11 +3285,16 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "climat"
       ]
     },
     {
       "id": "appartement",
-      "theme": "Vivre",
+      "theme": "Ton décor",
       "titre": "Grande ville ou nature",
       "echelle": true,
       "aide": {
@@ -2363,106 +3396,16 @@
             }
           ]
         }
-      ]
-    },
-    {
-      "id": "nuit",
-      "theme": "Vivre",
-      "titre": "Sécurité avant tout, ou pas",
-      "echelle": true,
-      "aide": {
-        "enjeu": "Te sentir en sécurité change ta vie de tous les jours.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "On met en avant les pays les plus sûrs, ceux où il y a le moins d’homicides."
-          },
-          {
-            "pastille": "B",
-            "texte": "La sécurité ne compte pas plus que le reste."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [
-            {
-              "mesures": [
-                "securite"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu veux te sentir en sécurité partout.",
-          "preference": "pouvoir rentrer à pied sans y penser",
-          "portraitPeu": "La sécurité compte pour toi.",
-          "preferencePeu": "un pays plutôt sûr"
-        },
-        {
-          "id": "b",
-          "effets": [],
-          "portrait": "La sécurité ne décidera pas de ton choix.",
-          "portraitPeu": "La sécurité compte peu dans ton choix."
-        }
       ],
-      "scenes": [
-        {
-          "id": "une-heure",
-          "titre": "1 h du matin",
-          "texte": "Tu rentres à pied d’une soirée, sans personne avec toi.",
-          "options": [
-            {
-              "texte": "Tu veux pouvoir le faire sans y penser",
-              "plus": "Tu es libre, à toute heure.",
-              "moins": "Moins de pays possibles."
-            },
-            {
-              "texte": "Tu prendras un taxi : ce n’est pas ce qui décidera",
-              "plus": "Des pays passionnants restent possibles.",
-              "moins": "Il faudra rester sur tes gardes le soir."
-            }
-          ]
-        },
-        {
-          "id": "telephone",
-          "titre": "Ton téléphone",
-          "texte": "Tu sors ton téléphone dans le métro.",
-          "options": [
-            {
-              "texte": "Tu veux un pays où personne n’y prête attention",
-              "plus": "Tu vis sans te méfier.",
-              "moins": "Moins de pays possibles."
-            },
-            {
-              "texte": "Tu le gardes dans ta poche : c’est une habitude à prendre",
-              "plus": "Plus de pays possibles.",
-              "moins": "Une vigilance de tous les jours."
-            }
-          ]
-        },
-        {
-          "id": "quartier",
-          "titre": "Le choix du quartier",
-          "texte": "Tu cherches un logement.",
-          "options": [
-            {
-              "texte": "Tu veux pouvoir habiter n’importe où, sans te poser de question",
-              "plus": "Ton choix de logement est simple.",
-              "moins": "Moins de pays possibles."
-            },
-            {
-              "texte": "Tu te renseigneras sur les quartiers à éviter",
-              "plus": "Des pays plus animés ou moins chers restent possibles.",
-              "moins": "Il faut bien choisir où tu vis."
-            }
-          ]
-        }
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "ville"
       ]
     },
     {
       "id": "air-pur",
-      "theme": "Vivre",
+      "theme": "Ton décor",
       "titre": "Air pur ou grande métropole",
       "echelle": true,
       "aide": {
@@ -2553,11 +3496,214 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "sante"
+      ]
+    },
+    {
+      "id": "nuit",
+      "theme": "Ton quotidien",
+      "titre": "Sécurité avant tout, ou pas",
+      "echelle": true,
+      "aide": {
+        "enjeu": "Te sentir en sécurité change ta vie de tous les jours.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays les plus sûrs, ceux où il y a le moins d’homicides."
+          },
+          {
+            "pastille": "B",
+            "texte": "La sécurité ne compte pas plus que le reste."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [
+            {
+              "mesures": [
+                "securite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux te sentir en sécurité partout.",
+          "preference": "pouvoir rentrer à pied sans y penser",
+          "portraitPeu": "La sécurité compte pour toi.",
+          "preferencePeu": "un pays plutôt sûr"
+        },
+        {
+          "id": "b",
+          "effets": [],
+          "portrait": "La sécurité ne décidera pas de ton choix.",
+          "portraitPeu": "La sécurité compte peu dans ton choix."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "une-heure",
+          "titre": "1 h du matin",
+          "texte": "Tu rentres à pied d’une soirée, sans personne avec toi.",
+          "options": [
+            {
+              "texte": "Tu veux pouvoir le faire sans y penser",
+              "plus": "Tu es libre, à toute heure.",
+              "moins": "Moins de pays possibles."
+            },
+            {
+              "texte": "Tu prendras un taxi : ce n’est pas ce qui décidera",
+              "plus": "Des pays passionnants restent possibles.",
+              "moins": "Il faudra rester sur tes gardes le soir."
+            }
+          ]
+        },
+        {
+          "id": "telephone",
+          "titre": "Ton téléphone",
+          "texte": "Tu sors ton téléphone dans le métro.",
+          "options": [
+            {
+              "texte": "Tu veux un pays où personne n’y prête attention",
+              "plus": "Tu vis sans te méfier.",
+              "moins": "Moins de pays possibles."
+            },
+            {
+              "texte": "Tu le gardes dans ta poche : c’est une habitude à prendre",
+              "plus": "Plus de pays possibles.",
+              "moins": "Une vigilance de tous les jours."
+            }
+          ]
+        },
+        {
+          "id": "quartier",
+          "titre": "Le choix du quartier",
+          "texte": "Tu cherches un logement.",
+          "options": [
+            {
+              "texte": "Tu veux pouvoir habiter n’importe où, sans te poser de question",
+              "plus": "Ton choix de logement est simple.",
+              "moins": "Moins de pays possibles."
+            },
+            {
+              "texte": "Tu te renseigneras sur les quartiers à éviter",
+              "plus": "Des pays plus animés ou moins chers restent possibles.",
+              "moins": "Il faut bien choisir où tu vis."
+            }
+          ]
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "securite"
+      ]
+    },
+    {
+      "id": "poignet",
+      "theme": "Ton quotidien",
+      "titre": "Couverture publique ou assurance privée",
+      "aide": {
+        "enjeu": "Selon le pays, une personne qui arrive n’est pas toujours couverte tout de suite.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "On met en avant les pays où ta santé est bien couverte dès ton arrivée."
+          },
+          {
+            "pastille": "B",
+            "texte": "La couverture santé ne compte pas plus que le reste : tu acceptes une assurance privée."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [
+            {
+              "mesures": [
+                "sante"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu veux une couverture santé dès ton arrivée.",
+          "preference": "une couverture santé dès l’arrivée"
+        },
+        {
+          "id": "b",
+          "effets": [],
+          "portrait": "Payer une assurance santé privée ne te gêne pas."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "poignet",
+          "titre": "Le poignet cassé",
+          "texte": "Tu te casses le poignet le deuxième mois.",
+          "options": [
+            {
+              "texte": "Tout est remboursé, mais 4 h d’attente aux urgences",
+              "plus": "Tu ne paies rien.",
+              "moins": "Une longue attente."
+            },
+            {
+              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
+              "plus": "Des soins rapides.",
+              "moins": "Une dépense chaque mois, malade ou pas."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "arrivee",
+          "titre": "Le jour de ton arrivée",
+          "texte": "Tu poses tes valises dans le pays.",
+          "options": [
+            {
+              "texte": "Tu veux être couvert par le système du pays dès le premier jour",
+              "plus": "Aucune assurance à chercher.",
+              "moins": "Moins de pays possibles."
+            },
+            {
+              "texte": "Tu prends une assurance privée et tu n’y penses plus",
+              "plus": "Tous les pays restent possibles.",
+              "moins": "Un budget de plus, à trouver toi-même."
+            }
+          ]
+        },
+        {
+          "id": "grippe",
+          "titre": "La grosse grippe",
+          "texte": "Tu as une grosse grippe en plein hiver.",
+          "options": [
+            {
+              "texte": "Un médecin public, gratuit ou presque",
+              "plus": "Ça ne te coûte rien.",
+              "moins": "Il faut parfois attendre plusieurs jours."
+            },
+            {
+              "texte": "Une clinique privée, le jour même, 90 € la visite",
+              "plus": "Tu es soigné le jour même.",
+              "moins": "Tu avances les frais, puis ton assurance rembourse."
+            }
+          ],
+          "exemple": true
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "sante"
       ]
     },
     {
       "id": "repas",
-      "theme": "Vivre",
+      "theme": "Ton quotidien",
       "titre": "Cuisine maison ou repas rapides",
       "echelle": true,
       "aide": {
@@ -2648,22 +3794,28 @@
             }
           ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "sante"
       ]
     },
     {
-      "id": "poignet",
-      "theme": "Santé et visa",
-      "titre": "Couverture publique ou assurance privée",
+      "id": "noel",
+      "theme": "Ton quotidien",
+      "titre": "Près ou loin de la France",
+      "echelle": true,
       "aide": {
-        "enjeu": "Selon le pays, une personne qui arrive n’est pas toujours couverte tout de suite.",
+        "enjeu": "La distance se ressent surtout aux grandes occasions.",
         "cartes": [
           {
             "pastille": "A",
-            "texte": "On met en avant les pays où ta santé est bien couverte dès ton arrivée."
+            "texte": "On met en avant les pays proches, avec peu de décalage horaire."
           },
           {
             "pastille": "B",
-            "texte": "La couverture santé ne compte pas plus que le reste : tu acceptes une assurance privée."
+            "texte": "Ta réponse ne fait reculer aucun pays lointain."
           }
         ]
       },
@@ -2673,90 +3825,205 @@
           "effets": [
             {
               "mesures": [
-                "sante"
+                "vol",
+                "decalage"
               ],
               "poids": 1
             }
           ],
-          "portrait": "Tu veux une couverture santé dès ton arrivée.",
-          "preference": "une couverture santé dès l’arrivée"
+          "portrait": "Tu veux pouvoir rentrer vite en France.",
+          "preference": "rentrer vite en France",
+          "portraitPeu": "Tu veux pouvoir rentrer en France plusieurs fois par an.",
+          "preferencePeu": "rester à quelques heures de la France"
         },
         {
           "id": "b",
           "effets": [],
-          "portrait": "Payer une assurance santé privée ne te gêne pas."
+          "portrait": "La distance avec la France ne te fait pas peur.",
+          "portraitPeu": "La distance avec la France compte peu pour toi."
         }
       ],
       "scenes": [
         {
-          "id": "poignet",
-          "titre": "Le poignet cassé",
-          "texte": "Tu te casses le poignet le deuxième mois.",
+          "id": "noel",
+          "titre": "Noël approche",
+          "texte": "Tu veux voir ta famille pour les fêtes.",
           "options": [
             {
-              "texte": "Tout est remboursé, mais 4 h d’attente aux urgences",
-              "plus": "Tu ne paies rien.",
-              "moins": "Une longue attente."
+              "texte": "2 h de vol",
+              "plus": "Tu rentres pour le réveillon et tu repars le 26.",
+              "moins": "Moins de dépaysement."
             },
             {
-              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
-              "plus": "Des soins rapides.",
-              "moins": "Une dépense chaque mois, malade ou pas."
+              "texte": "12 h de vol ou plus",
+              "plus": "Un vrai changement de monde.",
+              "moins": "Tu rentres une fois par an, c’est le jeu."
             }
           ],
           "exemple": true
         },
         {
-          "id": "arrivee",
-          "titre": "Le jour de ton arrivée",
-          "texte": "Tu poses tes valises dans le pays.",
+          "id": "mariage",
+          "titre": "Le mariage de ta cousine",
+          "texte": "Ta cousine se marie un samedi, en France.",
           "options": [
             {
-              "texte": "Tu veux être couvert par le système du pays dès le premier jour",
-              "plus": "Aucune assurance à chercher.",
-              "moins": "Moins de pays possibles."
+              "texte": "Tu pars le vendredi soir et tu reviens le dimanche",
+              "plus": "Tu ne rates aucun moment en famille.",
+              "moins": "Ton nouveau pays ressemble un peu au tien."
             },
             {
-              "texte": "Tu prends une assurance privée et tu n’y penses plus",
-              "plus": "Tous les pays restent possibles.",
-              "moins": "Un budget de plus, à trouver toi-même."
+              "texte": "Il te faut une semaine de congés et un billet cher",
+              "plus": "Tu vis à l’autre bout du monde, avec tout ce qu’il offre.",
+              "moins": "Tu rates souvent les fêtes de famille."
             }
           ]
         },
         {
-          "id": "grippe",
-          "titre": "La grosse grippe",
-          "texte": "Tu as une grosse grippe en plein hiver.",
+          "id": "appels",
+          "titre": "Les appels du dimanche",
+          "texte": "Tu appelles tes proches chaque dimanche.",
           "options": [
             {
-              "texte": "Un médecin public, gratuit ou presque",
-              "plus": "Ça ne te coûte rien.",
-              "moins": "Il faut parfois attendre plusieurs jours."
+              "texte": "Même heure qu’en France : tu appelles quand tu veux",
+              "plus": "Aucun calcul de fuseau horaire.",
+              "moins": "Ton pays reste proche de ce que tu connais."
             },
             {
-              "texte": "Une clinique privée, le jour même, 90 € la visite",
-              "plus": "Tu es soigné le jour même.",
-              "moins": "Tu avances les frais, puis ton assurance rembourse."
+              "texte": "Ils dorment quand tu te réveilles",
+              "plus": "Tu vis vraiment ailleurs.",
+              "moins": "Il faut caler les appels tôt le matin ou tard le soir."
             }
-          ],
-          "exemple": true
+          ]
         }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "distance"
       ]
     },
     {
-      "id": "job-de-reve",
-      "theme": "Santé et visa",
-      "titre": "Visa lié à l’employeur, ou pas",
+      "id": "premier-mois",
+      "theme": "Ton quotidien",
+      "titre": "Réseau français ou immersion",
       "aide": {
-        "enjeu": "Dans beaucoup de pays, ton visa de travail est attaché à ton employeur.",
+        "enjeu": "Un réseau français aide à démarrer, mais peut aussi t’enfermer dans une bulle.",
         "cartes": [
           {
             "pastille": "A",
-            "texte": "Rien ne change au classement."
+            "texte": "On met en avant les pays où les Français sont nombreux, par rapport à la population."
           },
           {
             "pastille": "B",
-            "texte": "Les pays où ton visa dépendrait d’un employeur reculent, aussi quand ce lien n’est pas encore vérifié. Ceux où il en dépend en partie reculent moins. Aucun pays n’est écarté."
+            "texte": "Les Français sur place ne comptent pas plus que le reste."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [
+            {
+              "mesures": [
+                "francais"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu aimerais trouver des Français sur place.",
+          "preference": "trouver des Français sur place"
+        },
+        {
+          "id": "b",
+          "effets": [],
+          "portrait": "Tu n’as pas besoin de Français autour de toi."
+        }
+      ],
+      "scenes": [
+        {
+          "id": "premier-mois",
+          "titre": "Ton premier mois",
+          "texte": "Tu viens d’arriver dans ta nouvelle ville.",
+          "options": [
+            {
+              "texte": "Un groupe de Français t’accueille",
+              "plus": "Logement, banque : on te donne les bons conseils.",
+              "moins": "Tu risques de rester dans une bulle française."
+            },
+            {
+              "texte": "Tu n’as aucun contact français",
+              "plus": "Tu plonges dans la vie locale.",
+              "moins": "Tu te fais des amis plus lentement."
+            }
+          ],
+          "variantes": {
+            "stage-vie": "Tu viens d’arriver pour ta mission de VIE.",
+            "aventure": "Tu viens d’arriver pour ton année de PVT."
+          }
+        },
+        {
+          "id": "stage",
+          "titre": "La recherche de stage",
+          "texte": "Tu cherches un stage sur place.",
+          "options": [
+            {
+              "texte": "Le réseau des Français t’ouvre des portes",
+              "plus": "Une recommandation vaut mieux que cent CV.",
+              "moins": "Tu travailles souvent dans un milieu français."
+            },
+            {
+              "texte": "Tu postules comme tout le monde",
+              "plus": "Tu entres dans des équipes locales.",
+              "moins": "Plus long, sans coup de pouce."
+            }
+          ],
+          "variantes": {
+            "stage-vie": "Tu cherches ta mission de VIE sur place.",
+            "aventure": "Tu cherches un job pour ton PVT.",
+            "premier-poste": "Tu cherches ton premier poste sur place."
+          }
+        },
+        {
+          "id": "dimanche",
+          "titre": "Ton premier dimanche",
+          "texte": "C’est ton premier dimanche sur place.",
+          "options": [
+            {
+              "texte": "Brunch avec d’autres Français, dans ta langue",
+              "plus": "Tu te sens vite chez toi.",
+              "moins": "Tu progresses moins vite dans la langue du pays."
+            },
+            {
+              "texte": "Tu pars découvrir la ville par toi-même",
+              "plus": "Tout est nouveau, tu apprends vite.",
+              "moins": "Les premiers week-ends peuvent sembler longs."
+            }
+          ]
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "reseau"
+      ]
+    },
+    {
+      "id": "deux-langues",
+      "theme": "Ton quotidien",
+      "titre": "Vivre dans une langue inconnue",
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
+      "aide": {
+        "enjeu": "L’anglais au bureau ne suffit pas toujours pour vivre au quotidien.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Aucun pays ne recule."
+          },
+          {
+            "pastille": "B",
+            "texte": "On met en avant les pays où l’on vit en français, dans une langue proche du français ou dans une langue que tu parles."
           }
         ]
       },
@@ -2764,74 +4031,269 @@
         {
           "id": "a",
           "effets": [],
-          "portrait": "Dépendre d’un employeur pour ton visa ne te fait pas peur."
+          "portrait": "Une langue inconnue au quotidien ne te fait pas peur."
         },
         {
           "id": "b",
           "effets": [
             {
               "mesures": [
-                "employeur-libre"
+                "langue"
               ],
               "poids": 1
             }
           ],
-          "portrait": "Tu veux pouvoir changer d’employeur librement.",
-          "preference": "pouvoir changer d’employeur librement"
+          "portrait": "Tu veux pouvoir gérer ton quotidien sans aide.",
+          "preference": "gérer ton quotidien sans aide"
         }
       ],
       "scenes": [
         {
-          "id": "job-de-reve",
-          "titre": "Le job de rêve",
-          "texte": "On t’offre le poste de tes rêves. Seul détail : ton visa dépend de cette entreprise. Si ça tourne mal, tu as 60 jours pour retrouver un poste ou partir.",
+          "id": "deux-langues",
+          "titre": "Ta vie en deux langues",
+          "texte": "Au bureau, tout se passe en anglais. Chez le médecin ou pour signer ton bail, c’est la langue locale, que tu ne parles pas.",
           "options": [
             {
-              "texte": "Tu prends le risque",
-              "plus": "Le poste de tes rêves.",
-              "moins": "Tu dépends de ton employeur."
+              "texte": "Tu te débrouilles avec une appli de traduction",
+              "plus": "Tu découvres une langue nouvelle au quotidien.",
+              "moins": "Chaque démarche prend plus de temps."
             },
             {
-              "texte": "Tu préfères pouvoir changer d’employeur librement",
-              "plus": "Tu peux partir quand tu veux.",
-              "moins": "Tu vises peut-être moins haut."
+              "texte": "Tu veux gérer ton quotidien sans aide",
+              "plus": "Médecin, banque, bail : tout est simple.",
+              "moins": "Moins de pays possibles."
+            }
+          ]
+        },
+        {
+          "id": "banque",
+          "titre": "Le rendez-vous à la banque",
+          "texte": "Tu dois ouvrir un compte en banque.",
+          "options": [
+            {
+              "texte": "Le conseiller ne parle que la langue locale : tu sors ton téléphone",
+              "plus": "Une petite aventure, et tu apprends des mots.",
+              "moins": "Tu ne sais jamais si tu as tout compris."
+            },
+            {
+              "texte": "Tout se fait dans une langue que tu comprends",
+              "plus": "Tu signes en sachant ce que tu signes.",
+              "moins": "Moins de pays possibles."
+            }
+          ]
+        },
+        {
+          "id": "voisin",
+          "titre": "La fuite d’eau",
+          "texte": "Ton voisin frappe pour te parler d’une fuite d’eau.",
+          "options": [
+            {
+              "texte": "Vous vous comprenez avec des gestes et quelques mots",
+              "plus": "Ça crée des liens, et ça fait rire.",
+              "moins": "Les vrais problèmes sont durs à régler."
+            },
+            {
+              "texte": "Vous parlez la même langue : tout est réglé en cinq minutes",
+              "plus": "Ta vie de tous les jours est simple.",
+              "moins": "Moins de dépaysement."
+            }
+          ]
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "langue"
+      ]
+    },
+    {
+      "id": "cours-offerts",
+      "theme": "Ton quotidien",
+      "titre": "Apprendre une nouvelle langue",
+      "afficheSi": "peut-travailler-en-anglais",
+      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
+      "aide": {
+        "enjeu": "Apprendre la langue ouvre des portes, mais demande du temps.",
+        "cartes": [
+          {
+            "pastille": "A",
+            "texte": "Tous les pays restent dans la course, même avec un autre alphabet."
+          },
+          {
+            "pastille": "B",
+            "texte": "Les pays où il faut apprendre une nouvelle langue reculent, surtout avec un autre alphabet."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "effets": [],
+          "portrait": "Apprendre une langue, même avec un autre alphabet, ça te va."
+        },
+        {
+          "id": "b",
+          "effets": [
+            {
+              "mesures": [
+                "apprendre-langue"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
+          "preference": "ne pas avoir de langue à apprendre"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "cours",
+          "titre": "Les cours offerts",
+          "texte": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
+          "options": [
+            {
+              "texte": "Tu y vas",
+              "plus": "Un vrai atout, au travail comme dans la vie.",
+              "moins": "Trois soirées par semaine y passent."
+            },
+            {
+              "texte": "Tu gardes ces soirées pour toi : l’anglais te suffit",
+              "plus": "Ton temps libre reste à toi.",
+              "moins": "Tu fermes quelques portes."
             }
           ],
           "exemple": true
         },
         {
-          "id": "manager",
-          "titre": "Le manager difficile",
-          "texte": "Six mois après ton arrivée, ton manager devient insupportable.",
+          "id": "menu",
+          "titre": "Le menu",
+          "texte": "Au restaurant, le menu n’est écrit que dans la langue du pays, avec un autre alphabet.",
           "options": [
             {
-              "texte": "Ton visa est lié à l’entreprise : tu tiens bon, ou tu quittes le pays",
-              "plus": "Des pays avec de beaux postes restent possibles.",
-              "moins": "Changer de poste devient compliqué."
+              "texte": "Tu apprends à lire les plats, un mot après l’autre",
+              "plus": "Au bout de quelques mois, tu lis partout.",
+              "moins": "Il faut des mois d’efforts."
             },
             {
-              "texte": "Tu veux pouvoir démissionner et chercher ailleurs, sur place",
-              "plus": "Tu restes libre.",
-              "moins": "Moins de pays possibles."
+              "texte": "Tu préfères un pays où tu lis déjà tout",
+              "plus": "Tout est lisible dès le premier jour.",
+              "moins": "Moins de choix de pays."
             }
           ]
         },
         {
-          "id": "offre-concurrente",
-          "titre": "L’offre concurrente",
-          "texte": "Une autre entreprise te propose mieux.",
+          "id": "defi",
+          "titre": "Le défi de l’année",
+          "texte": "Une amie te lance un défi : apprendre une nouvelle langue pendant ton année.",
           "options": [
             {
-              "texte": "Il faudrait refaire ton dossier de visa : tu acceptes cette règle",
-              "plus": "Plus de pays possibles.",
-              "moins": "Saisir une meilleure offre prend du temps."
+              "texte": "Tu relèves le défi",
+              "plus": "Tu reviens avec une langue de plus sur ton CV.",
+              "moins": "Ça demande du temps et de la patience."
             },
             {
-              "texte": "Tu veux pouvoir dire oui tout de suite",
-              "plus": "Tu saisis les occasions.",
+              "texte": "Tu gardes cette énergie pour ton travail",
+              "plus": "Toute ton énergie va à ta carrière.",
               "moins": "Moins de pays possibles."
             }
           ]
+        }
+      ],
+      "type": "dilemme",
+      "chapitre": 4,
+      "dimensions": [
+        "langue"
+      ]
+    },
+    {
+      "id": "limites",
+      "type": "tri-limites",
+      "chapitre": 5,
+      "theme": "Tes limites",
+      "nombre": 6,
+      "titre": "Pour chaque situation, dis-nous ce que tu en penses",
+      "dimensions": [
+        "climat",
+        "distance",
+        "langue",
+        "sante",
+        "securite",
+        "visa",
+        "zone"
+      ],
+      "aide": {
+        "enjeu": "Une limite claire vaut mieux qu’une mauvaise surprise sur place.",
+        "cartes": [
+          {
+            "pastille": "Aucun problème",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Je préfère éviter",
+            "texte": "Les pays concernés reculent un peu (importance 1)."
+          },
+          {
+            "pastille": "Rédhibitoire",
+            "texte": "Les pays concernés passent dans « Moins adaptés pour toi ». Tu peux les remonter."
+          }
+        ]
+      },
+      "situations": [
+        {
+          "id": "hors-europe",
+          "texte": "Vivre hors d’Europe",
+          "mesure": "en-europe",
+          "raison": "Tu as dit que vivre hors d’Europe était rédhibitoire.",
+          "dimension": "zone"
+        },
+        {
+          "id": "alphabet",
+          "texte": "Apprendre une langue avec un autre alphabet",
+          "mesure": "apprendre-langue",
+          "raison": "Tu as dit qu’apprendre une langue avec un autre alphabet était rédhibitoire.",
+          "dimension": "langue"
+        },
+        {
+          "id": "visa-employeur",
+          "texte": "Un visa qui dépend de ton employeur",
+          "mesure": "employeur-libre",
+          "raison": "Tu as dit qu’un visa qui dépend de ton employeur était rédhibitoire.",
+          "dimension": "visa"
+        },
+        {
+          "id": "vol-10h",
+          "texte": "Plus de 10 h de vol pour rentrer",
+          "mesure": "vol",
+          "raison": "Tu as dit que plus de 10 h de vol pour rentrer était rédhibitoire.",
+          "dimension": "distance"
+        },
+        {
+          "id": "hiver-froid",
+          "texte": "Un hiver très froid",
+          "mesure": "hiver",
+          "raison": "Tu as dit qu’un hiver très froid était rédhibitoire.",
+          "dimension": "climat"
+        },
+        {
+          "id": "vigilance",
+          "texte": "Une ville où il faut rester vigilant",
+          "mesure": "securite",
+          "raison": "Tu as dit qu’une ville où il faut rester vigilant était rédhibitoire.",
+          "dimension": "securite"
+        },
+        {
+          "id": "ni-fr-ni-en",
+          "texte": "Ne travailler ni en français ni en anglais",
+          "mesure": "langue-travail",
+          "raison": "Tu as dit que ne travailler ni en français ni en anglais était rédhibitoire.",
+          "dimension": "langue"
+        },
+        {
+          "id": "assurance-privee",
+          "texte": "Payer une assurance santé privée",
+          "mesure": "sante",
+          "raison": "Tu as dit que payer une assurance santé privée était rédhibitoire.",
+          "dimension": "sante"
         }
       ]
     }

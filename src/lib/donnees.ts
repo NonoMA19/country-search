@@ -64,6 +64,10 @@ export type Note = {
   liens?: string[]; // témoignages : toutes les sources, au moins deux
   confiance?: Confiance;
   ancien?: { valeur: number; annee: string }; // valeur écartée (année trop éloignée des autres pays), hors calcul
+  resteSur100?: number; // salaire : ce qui reste sur 100 € bruts après impôt sur le revenu et cotisations (OCDE), hors score
+  relaye?: boolean; // donnée relayée par un site non officiel (barème VIE) : comptée, mais pas comme « vérifiée »
+  ville?: string | null; // indemnité VIE : la ville retenue pour le score
+  autres?: { ville: string; montant: number | null }[]; // indemnité VIE : les autres villes du barème
 };
 
 // « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
@@ -77,7 +81,6 @@ export type EffetDilemme = { mesures: string[]; poids?: number; position?: numbe
 export type OptionDilemme = {
   id: string;
   effets: EffetDilemme[];
-  ecart?: { regle: string; raison: string }; // fait descendre des pays dans « Moins adaptés pour toi »
   portrait: string; // la phrase du portrait si tu choisis cette option
   portraitPeu?: string; // la phrase du portrait pour « Un peu A » (dilemmes en échelle)
   preference?: string; // ce que tu préfères, pour « À savoir » (« tu préférais un hiver doux »)
@@ -92,36 +95,73 @@ export type Scene = {
   texte: string;
   exemple?: boolean; // les montants et durées sont des exemples fictifs
   options: OptionScene[]; // dans l'ordre des options du dilemme
+  variantes?: Record<string, string>; // le texte de la scène selon ton projet (« ta mission de VIE », « ton job de PVT »)
 };
-export type Dilemme = {
+
+// ---------- La banque d'éléments (prompt 3f) ----------
+// Tout ce que le quiz montre est un élément : une question du profil, une carte, un dilemme, un curseur…
+// Chaque élément a un format (« type »), un chapitre, un thème, les dimensions du profil qu'il touche,
+// et des conditions d'apparition. Un composant React par format (src/components/formats).
+export type TypeElement = "choix-cartes" | "classement" | "curseur" | "swipe" | "ambiances" | "thermometre" | "carte-monde" | "tri-limites" | "dilemme";
+type BaseElement = {
   id: string;
+  chapitre: number;
   theme: string;
-  titre: string; // le nom du dilemme (« Salaire ou coût de la vie »), pas celui d'une scène
+  titre: string;
+  texte?: string;
   aide: Aide;
+  dimensions: string[]; // les dimensions du profil touchées (salaire, climat, langue…)
+  condition?: string; // condition d'apparition (projet, secteur, langues, anglais…)
+  regleAffichage?: string;
+  dejaCouvertPar?: string[]; // si l'un de ces éléments a déjà mesuré la même chose, celui-ci n'est posé que si la certitude reste faible
+  obligatoire?: boolean; // toujours posé dans son chapitre
+};
+// Une carte (choix unique ou multiple). « profil » : la réponse remplit ce champ de ton profil (âge, projet…).
+export type OptionCarte = {
+  id: string; label: string; phrase?: string; icone?: string; plus?: string; moins?: string;
+  effets?: EffetDilemme[]; portrait?: string; sansPenalite?: string[]; citi?: string;
+  ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[];
+};
+export type ChoixCartes = BaseElement & {
+  type: "choix-cartes"; profil?: string; source?: "envies"; multiple?: boolean; nombre?: number; aucun?: string;
+  sansImage?: boolean; avecPlusMoins?: boolean; options: OptionCarte[];
+};
+export type Classement = BaseElement & { type: "classement"; source: "envies" };
+export type Pole = { label: string; effets: EffetDilemme[]; portrait: string };
+export type Curseur = BaseElement & { type: "curseur"; gauche: Pole; droite: Pole; libelles: { jusqua: number; texte: string }[] };
+export type PhraseSwipe = { id: string; texte: string; oui: EffetDilemme[]; non: EffetDilemme[]; portraitOui: string; portraitNon: string; dimensions: string[] };
+export type Swipe = BaseElement & { type: "swipe"; nombre: number; phrases: PhraseSwipe[] };
+export type Ambiances = BaseElement & { type: "ambiances"; max: number; options: (OptionCarte & { effets: EffetDilemme[] })[] };
+export type Thermometre = BaseElement & { type: "thermometre"; niveaux: string[] };
+export type Zone = { id: string; label: string; detail?: string; pays: string[] };
+export type CarteMonde = BaseElement & { type: "carte-monde"; zones: Zone[] };
+export type Situation = { id: string; texte: string; mesure: string; raison: string; dimension: string };
+export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; situations: Situation[] };
+export type Dilemme = BaseElement & {
+  type: "dilemme";
   echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B
   axe?: string; // axe du style de travail
   afficheSi?: string;
-  regleAffichage?: string;
   options: OptionDilemme[];
   scenes: Scene[];
 };
+export type Element = ChoixCartes | Classement | Curseur | Swipe | Ambiances | Thermometre | CarteMonde | TriLimites | Dilemme;
+export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curseur", "swipe", "ambiances", "thermometre", "carte-monde", "tri-limites", "dilemme"];
+
+// Le schéma de réponse commun : une valeur par élément, ou « passer ».
+// choix-cartes : un identifiant (ou une liste) ; classement et ambiances : une liste ; curseur : 0 à 100 ;
+// thermomètre : 1 à 5 ; carte : une liste de zones, ou ["aucune"] ; swipe et tri des limites : une réponse par phrase ou situation.
+export type Valeur = string | string[] | number | Record<string, string>;
+
+export type Chapitre = { numero: number; titre: string; phrase: string; adaptatif?: boolean; min?: number; max?: number };
+export type Envie = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[] };
+export type Dimension = { nom: string; mesures: string[] };
 
 // Budget : une tranche (« de 2 000 à 5 000 € ») : min et max en euros (pas de max pour « plus de 10 000 € »).
-export type OptionProfil = { id: string; label: string; ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[] };
-export type QuestionProfil = {
-  id: string;
-  question: string;
-  aide: Aide;
-  multiple?: boolean;
-  aucun?: string;
-  afficheSi?: string;
-  regleAffichage?: string;
-  options: OptionProfil[];
-};
+export type OptionProfil = OptionCarte;
+export type QuestionProfil = { id: string; question: string; aide: Aide; multiple?: boolean; aucun?: string; afficheSi?: string; regleAffichage?: string; options: OptionProfil[] };
 // Ton projet donne des poids de départ, plus légers qu'une réponse de dilemme.
 export type Objectif = { nom: string; explication: string; effets: { mesures: string[]; afficheSi?: string }[] };
-export type Priorite = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; sens: Sens };
-export type Sujet = { id: string; label: string; mesure: string };
 
 // Le visa de travail, lu sur la page officielle du pays (prompt 3c).
 // « statut » : « verifie » (pastille Officiel) ou « a-verifier » (lu sur une page officielle, pas encore vérifié en détail).
@@ -182,14 +222,27 @@ export type CasDouble = {
 
 export const criteres = criteresData as Critere[];
 export const sources = sourcesData as Record<string, Source>;
-export const quiz = quizData as unknown as {
-  profil: QuestionProfil[];
+const banque = quizData as unknown as {
+  chapitres: Chapitre[];
   objectifs: Record<string, Objectif>;
-  priorites: Priorite[];
-  sujets: Sujet[];
-  aides: { priorites: Aide; sujets: Aide };
-  dilemmes: Dilemme[];
+  envies: Envie[];
+  poidsRang: number[];
+  dimensions: Record<string, Dimension>;
+  elements: Element[];
 };
+const elementsBanque = banque.elements;
+export const quiz = {
+  ...banque,
+  dilemmes: elementsBanque.filter((e): e is Dilemme => e.type === "dilemme"),
+  // Les questions du profil (âge, projet, langues…) : les cartes qui remplissent un champ du profil.
+  profil: elementsBanque.filter((e): e is ChoixCartes => e.type === "choix-cartes" && !!e.profil).map((e) => ({
+    id: e.profil!, question: e.titre, aide: e.aide, multiple: e.multiple, aucun: e.aucun, afficheSi: e.condition, regleAffichage: e.regleAffichage, options: e.options,
+  })) as QuestionProfil[],
+};
+export const trouverElement = (id: string) => elementsBanque.find((e) => e.id === id);
+// Une mesure → sa dimension du profil.
+export const dimensionDe: Record<string, string> = Object.fromEntries(Object.entries(banque.dimensions).flatMap(([d, x]) => x.mesures.map((m) => [m, d])));
+
 const scores = scoresData as unknown as {
   genereLe: string;
   villes: Record<string, { nom: string; lat: number; lon: number; fuseau: string }>;
@@ -262,7 +315,8 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   }
   const s = sources[n.source];
   return {
-    type: s.type,
+    // Une donnée relayée (barème VIE) n'est pas lue sur le site officiel : pastille « À vérifier », source et lien gardés.
+    type: n.relaye ? "a-verifier" : s.type,
     titre: m.nom,
     // Un avis sans phrase rédigée : on affiche l'explication du niveau, jamais une fenêtre vide.
     texte: n.texte || (n.note !== null ? (m.explications?.[n.note - 1] ?? m.mots[n.note - 1]) : ""),

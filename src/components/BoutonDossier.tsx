@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { Download } from "lucide-react";
 import { useSession } from "@/lib/memoire";
-import { aplatir, calculer, pointsPays, portrait } from "@/lib/moteur";
+import { aplatir, calculer, pointsPays } from "@/lib/moteur";
+import { questionnaireFini } from "@/lib/parcours";
+import { portrait } from "@/lib/portrait";
 import { telechargerDossier } from "@/lib/pdf";
 import { trouverPays } from "@/lib/pays";
 
@@ -27,7 +29,7 @@ export default function BoutonDossier({ paysId }: { paysId: string }) {
     setEnCours(true);
     setErreur(false);
     try {
-      const fini = session && session.etat.priorites.length === 3;
+      const fini = session && questionnaireFini(session.etat);
       const ligne = fini ? (calculer(session.etat, session.reglages).find((l) => l.pays.id === paysId) ?? null) : null;
       await telechargerDossier({
         pays,

@@ -20,12 +20,14 @@ import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/
 import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurFrance, valeurLisible, verdict,
+  CATEGORIES, GROUPES, complementMesure, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { accord, trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
+import { prochainAffiner, questionnaireFini } from "@/lib/parcours";
+import { portrait, portraitComplet } from "@/lib/portrait";
 
 const STYLE_BADGE: Record<Badge, string> = {
   nationalite: "bg-bleu text-white",
@@ -85,7 +87,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   const vus = new Set<string>();
   const details = ligne.details
     .filter((d) => !d.neutre && !vus.has(d.mesure) && (vus.add(d.mesure), true))
-    .sort((a, b) => Number(b.origine.startsWith("priorite:")) - Number(a.origine.startsWith("priorite:")) || b.poids - a.poids);
+    .sort((a, b) => Number(b.origine.startsWith("envie:")) - Number(a.origine.startsWith("envie:")) || b.poids - a.poids);
   return (
     <ul className="mt-2 divide-y divide-bord">
       {details.map((d) => {
@@ -100,6 +102,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
               <Pastille preuve={preuveMesure(ligne.pays.id, d.mesure)} pays={ligne.pays.nom} contexte={m?.court ?? d.mesure} />
             </p>
             {france && <p className="text-sm text-gris">{france}</p>}
+            {complementMesure(ligne.pays.id, d.mesure) && <p className="text-sm text-gris">{complementMesure(ligne.pays.id, d.mesure)}</p>}
           </li>
         );
       })}
@@ -120,7 +123,7 @@ function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Lign
     setEnCours(true);
     setErreur(false);
     try {
-      await telechargerDossier({ pays: p, ligne, ...aplatir(points), alertes, portrait: portrait(etat, true).map((x) => x.texte) });
+      await telechargerDossier({ pays: p, ligne, ...aplatir(points), alertes, portrait: portrait(etat).map((x) => x.texte) });
     } catch {
       setErreur(true);
     } finally {
@@ -275,7 +278,7 @@ export default function Resultat() {
   if (!session) return <Chargement />;
 
   const { etat, reglages } = session;
-  if (etat.priorites.length !== 3) {
+  if (!questionnaireFini(etat)) {
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10">
         <h1 className="text-2xl font-semibold">Pas encore de résultat</h1>
@@ -304,9 +307,9 @@ export default function Resultat() {
   // Le curseur part du bas de ta tranche de budget (ou de 2 000 € si tu ne sais pas encore).
   const budget = reglages.budget ?? budgetProfil(etat.profil)?.min ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
-  const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
+  const encoreDesDilemmes = prochainAffiner(etat) !== null;
   const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
-  const affiner = () => { ecrire({ ...session, etape: { t: "dilemmes" }, proposeA: repondues(etat) }); router.push("/quiz"); };
+  const affiner = () => { ecrire({ ...session, etape: { t: "affiner" } }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
   // Si tous les curseurs retirent tout ce qui comptait, il n'y a plus rien à classer.
@@ -329,7 +332,7 @@ export default function Resultat() {
           <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
         </summary>
         <div className="px-4 pb-4">
-          <Portrait lignes={portrait(etat, true)} compact />
+          <Portrait portrait={portraitComplet(etat)} compact />
           <button type="button" onClick={revoirPortrait} className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Ce n’est pas toi ? Revoir ton portrait</button>
         </div>
       </details>

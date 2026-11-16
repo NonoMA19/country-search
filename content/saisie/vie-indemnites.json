@@ -1,0 +1,232 @@
+{
+  "_note": "Barème des indemnités VIE au 1er janvier 2026, relayé par juristique.org (fourni par Nolhan). Le barème officiel (mon-vie-via.businessfrance.fr) n’était pas lisible depuis la session : à vérifier sur le site officiel. Montants mensuels en euros, indemnité commune comprise.",
+  "indemniteCommune": 772.87,
+  "dateBareme": "2026-01-01",
+  "verifieLe": "2026-11-16",
+  "sourceCommune": "justice-vie",
+  "lienCommune": "https://www.justice.fr/fiche/volontariat-international-entreprise-vie",
+  "source": "bareme-vie-relaye",
+  "lienOfficiel": "https://mon-vie-via.businessfrance.fr/",
+  "pays": {
+    "belgique": {
+      "montant": 2950.61,
+      "ville": null,
+      "autres": []
+    },
+    "suisse": {
+      "montant": 4435.69,
+      "ville": "Zurich",
+      "autres": [
+        {
+          "ville": "Genève",
+          "montant": 4130.11
+        },
+        {
+          "ville": "autres villes",
+          "montant": 4108.38
+        }
+      ]
+    },
+    "allemagne": {
+      "montant": 3230.98,
+      "ville": "Berlin",
+      "autres": [
+        {
+          "ville": "Munich",
+          "montant": 3363.17
+        },
+        {
+          "ville": "autres villes",
+          "montant": 3011.73
+        }
+      ]
+    },
+    "irlande": {
+      "montant": 3490.13,
+      "ville": null,
+      "autres": []
+    },
+    "luxembourg": {
+      "montant": 3143.95,
+      "ville": null,
+      "autres": []
+    },
+    "espagne": {
+      "montant": 2673.49,
+      "ville": null,
+      "autres": []
+    },
+    "italie": {
+      "montant": 2994.76,
+      "ville": null,
+      "autres": []
+    },
+    "pays-bas": {
+      "montant": 3379.49,
+      "ville": null,
+      "autres": []
+    },
+    "portugal": {
+      "montant": 2670.23,
+      "ville": null,
+      "autres": []
+    },
+    "norvege": {
+      "montant": 3333.07,
+      "ville": null,
+      "autres": []
+    },
+    "suede": {
+      "montant": 3164.69,
+      "ville": null,
+      "autres": []
+    },
+    "danemark": {
+      "montant": 3672.29,
+      "ville": null,
+      "autres": []
+    },
+    "canada": {
+      "montant": 3360.25,
+      "ville": "Vancouver",
+      "autres": [
+        {
+          "ville": "Ottawa",
+          "montant": 2635.95
+        },
+        {
+          "ville": "autres villes",
+          "montant": null
+        }
+      ]
+    },
+    "australie": {
+      "montant": 3454.08,
+      "ville": "Sydney",
+      "autres": [
+        {
+          "ville": "autres villes",
+          "montant": 3224.39
+        }
+      ]
+    },
+    "japon": {
+      "montant": 2842.35,
+      "ville": "Tokyo",
+      "autres": [
+        {
+          "ville": "autres villes",
+          "montant": 2495.28
+        }
+      ]
+    },
+    "nouvelle-zelande": {
+      "montant": 2605.04,
+      "ville": null,
+      "autres": []
+    },
+    "coree-du-sud": {
+      "montant": 2583.58,
+      "ville": null,
+      "autres": []
+    },
+    "taiwan": {
+      "montant": 2375.85,
+      "ville": "Taipei",
+      "autres": []
+    },
+    "hong-kong": {
+      "montant": 3197.64,
+      "ville": null,
+      "autres": []
+    },
+    "argentine": {
+      "montant": 2741.18,
+      "ville": null,
+      "autres": []
+    },
+    "chili": {
+      "montant": 2341.15,
+      "ville": null,
+      "autres": []
+    },
+    "colombie": {
+      "montant": 2531.48,
+      "ville": null,
+      "autres": []
+    },
+    "mexique": {
+      "montant": 3066.69,
+      "ville": null,
+      "autres": []
+    },
+    "bresil": {
+      "montant": 2186.46,
+      "ville": null,
+      "autres": [
+        {
+          "ville": "São Paulo",
+          "montant": 2594.05
+        }
+      ]
+    },
+    "royaume-uni": {
+      "montant": 3816.01,
+      "ville": "Londres",
+      "autres": [
+        {
+          "ville": "autres villes",
+          "montant": 2732.43
+        }
+      ]
+    },
+    "etats-unis": {
+      "montant": 5046.14,
+      "ville": "New York",
+      "autres": [
+        {
+          "ville": "Californie",
+          "montant": 5107.94
+        },
+        {
+          "ville": "autres États",
+          "montant": null
+        }
+      ]
+    },
+    "singapour": {
+      "montant": 4054.86,
+      "ville": null,
+      "autres": []
+    },
+    "emirats-arabes-unis": {
+      "montant": 2635.44,
+      "ville": "Dubaï",
+      "autres": [
+        {
+          "ville": "Abou Dhabi",
+          "montant": 2433.98
+        }
+      ]
+    },
+    "chine": {
+      "montant": 2930.89,
+      "ville": "Shanghai",
+      "autres": [
+        {
+          "ville": "Pékin",
+          "montant": 2884.06
+        },
+        {
+          "ville": "autres villes",
+          "montant": 2660.31
+        }
+      ]
+    },
+    "maroc": {
+      "montant": 1965.76,
+      "ville": null,
+      "autres": []
+    }
+  }
+}

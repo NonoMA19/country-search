@@ -3,21 +3,22 @@
 import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
-  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene,
+  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
+  type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
+import {
+  LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesRedhibitoires, optionReponse, penalitesRetirees, profilDe, type Profil,
+} from "./elements";
+export { LIBELLE_ECHELLE, MILIEU_ECHELLE, REPONSES_ECHELLE, optionReponse, reponsesDe, type Profil } from "./elements";
 
-export type Profil = Record<string, string | string[] | undefined>;
-
+// L'état d'un parcours. « reponses » est la seule source de vérité : le profil (âge, projet, langues…) en est tiré.
 export type Etat = {
-  profil: Profil;
-  priorites: string[];
-  sujets: string[];
-  reponses: Record<string, string>; // dilemme → l'option choisie, ou "passer"
-  ordre: string[]; // dilemmes dans l'ordre où ils ont été vus
+  profil: Profil; // tiré des réponses (profilDe) : ne jamais l'écrire à la main
+  reponses: Record<string, Valeur>; // élément → la réponse (schéma commun, voir elements.ts), ou "passer"
+  ordre: string[]; // éléments dans l'ordre où ils ont été vus
   remontes: string[]; // pays remontés à la main depuis « Moins adaptés »
-  historique: string[]; // le top 3 après chaque réponse (le premier : avant les dilemmes)
-  graine: number; // tirée au hasard au début du parcours : scènes et premiers dilemmes en dépendent (stable au retour et au rechargement)
+  historique: string[]; // le top 3 après chaque réponse (le premier : avant la première réponse)
+  graine: number; // tirée au hasard au début du parcours : scènes et éléments tirés en dépendent (stable au retour et au rechargement)
   dejaVues: string[]; // scènes vues dans tes parcours précédents (« dilemme/scène ») : on ne te les repose pas
 };
 
@@ -36,10 +37,9 @@ export const GROUPES: { id: GroupeReglage; nom: string; mesures: string[]; defau
   { id: "culture", nom: "La culture au travail", mesures: ["hierarchie", "communication", "ponctualite", "decision", "pro-perso"], defaut: [] },
 ];
 
-export const ETAT_VIDE: Etat = { profil: {}, priorites: [], sujets: [], reponses: {}, ordre: [], remontes: [], historique: [], graine: 0, dejaVues: [] };
+export const ETAT_VIDE: Etat = { profil: {}, reponses: {}, ordre: [], remontes: [], historique: [], graine: 0, dejaVues: [] };
 export const REGLAGES_DEFAUT: Reglages = { niveaux: {}, budget: null };
-export const MIN_DILEMMES = 6;
-export const REPONSES_STABLES = 3;
+export const REPONSES_STABLES = 2;
 
 // ---------- Profil ----------
 const option = (question: string, id: unknown) =>
@@ -67,16 +67,40 @@ const parleLangueDe = (paysId: string, p: Profil) => {
 };
 
 export function questionProfilVisible(id: string, p: Profil): boolean {
-  const q = quiz.profil.find((x) => x.id === id);
-  if (!q?.afficheSi) return true;
-  if (q.afficheSi === "anglais-debutant-sans-autre-langue") return p.anglais === "debutant" && languesParlees(p).length === 0;
-  if (q.afficheSi === "autre-nationalite") return p.nationalite === "oui";
-  return true;
+  return conditionRemplie(quiz.profil.find((x) => x.id === id)?.afficheSi, p);
+}
+
+// ---------- Tes envies, dans l'ordre ----------
+// Le classement de tes 5 envies (ou, s'il est passé, l'ordre où tu les as choisies).
+// Rang 1 : importance 2 ; rang 2 : 1,75 ; rang 3 : 1,5 ; rang 4 : 1,25 ; rang 5 : 1,1.
+export function enviesDe(etat: Pick<Etat, "reponses">): string[] {
+  const valides = (x: Valeur | undefined) => (Array.isArray(x) ? x.filter((id) => quiz.envies.some((e) => e.id === id)) : []);
+  const choisies = valides(etat.reponses.envies);
+  const rangees = valides(etat.reponses.classement).filter((id) => choisies.includes(id));
+  return rangees.length === choisies.length ? rangees : choisies;
+}
+export const poidsRang = (rang: number) => quiz.poidsRang[rang] ?? quiz.poidsRang.at(-1) ?? 1;
+
+// Une envie n'est proposée que si au moins une de ses mesures est notée (« Évoluer dans mon secteur » : si ton secteur l'est).
+export function envieDisponible(id: string, p: Profil): boolean {
+  const en = quiz.envies.find((x) => x.id === id);
+  return !!en && en.mesures.some((m) => { const r = mesureReelle(m, p); return !!r && mesureDisponible(r); });
+}
+// Pourquoi une envie est grisée (affiché sous la carte), ou null.
+export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
+  if (id !== "secteur" || envieDisponible(id, p)) return null;
+  if (typeof p.secteur !== "string" || p.secteur === "autre") return "Choisis d’abord ton secteur, au chapitre 1.";
+  return "Pas encore assez de données pour ton secteur.";
 }
 
 // ---------- Notes ----------
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
+  if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
+  if (mesureId === "langue-travail") {
+    if (avis[paysId]?.francaisAuTravail) return 5;
+    return noteEffective(paysId, "anglais", p);
+  }
   const n = notes[paysId]?.[mesureId];
   if (!n || n.statut !== "verifie" || n.note === null) return null;
   // Si tu parles déjà la langue du pays, le quotidien est aussi simple qu'en français, et rien n'est à apprendre.
@@ -85,6 +109,8 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
 }
 
 const disponibilite: Record<string, number> = {};
+// Pour les tests : vider la mémoire des pays couverts après avoir modifié des notes.
+export const disponibiliteMemo = () => disponibilite;
 export function paysCouverts(mesureId: string): number {
   if (MESURES_CALCULEES.includes(mesureId)) return pays.length;
   disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie").length;
@@ -98,29 +124,6 @@ export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0
 export type EffetActif = { mesure: string; sens: "haut" | "position"; position?: number; poids: number; famille: FamilleScore; origine: string };
 
 export const trouverDilemme = (id: string) => quiz.dilemmes.find((x) => x.id === id);
-
-// ---------- Réponses graduées ----------
-// Un dilemme « en échelle » a 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B.
-// « Plutôt » : l'effet complet de l'option (importance 1, ou sa position).
-// « Un peu » : la moitié (importance 0,5, ou la position à mi-chemin entre celle de l'option et le milieu de l'échelle, 3).
-export const REPONSES_ECHELLE = ["a", "peu-a", "peu-b", "b"] as const;
-export const LIBELLE_ECHELLE: Record<string, string> = { a: "Plutôt A", "peu-a": "Un peu A", "peu-b": "Un peu B", b: "Plutôt B" };
-export const reponsesDe = (d: Dilemme): string[] => (d.echelle ? [...REPONSES_ECHELLE] : d.options.map((o) => o.id));
-export const MILIEU_ECHELLE = 3;
-
-export function optionReponse(d: Dilemme, reponse: string | undefined): OptionDilemme | undefined {
-  if (!reponse || reponse === "passer") return undefined;
-  if (!d.echelle || !reponse.startsWith("peu-")) return d.options.find((o) => o.id === reponse);
-  const o = d.options.find((x) => x.id === reponse.slice(4));
-  if (!o) return undefined;
-  return {
-    ...o,
-    id: reponse,
-    effets: o.effets.map((e) => (e.position !== undefined ? { ...e, position: (e.position + MILIEU_ECHELLE) / 2 } : { ...e, poids: (e.poids ?? 1) / 2 })),
-    portrait: o.portraitPeu ?? o.portrait,
-    preference: o.preferencePeu ?? o.preference,
-  };
-}
 export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined => {
   const d = trouverDilemme(id);
   return d ? optionReponse(d, etat.reponses[id]) : undefined;
@@ -138,14 +141,19 @@ export function hacher(graine: number, texte: string): number {
 // La scène montrée pour un dilemme : tirée au hasard (avec la graine) parmi celles que tu n'as pas vues
 // dans tes parcours précédents. Le même dilemme montre toujours la même scène dans un parcours.
 export const cleScene = (d: Dilemme, s: Scene) => `${d.id}/${s.id}`;
-export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> = ETAT_VIDE): Scene {
+// Le texte de la scène s'adapte à ton projet quand une variante existe (« ta mission de VIE », « ton job de PVT »).
+export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> & { profil?: Profil } = ETAT_VIDE): Scene {
   const neuves = d.scenes.filter((s) => !etat.dejaVues.includes(cleScene(d, s)));
   const liste = neuves.length ? neuves : d.scenes;
-  return liste[hacher(etat.graine, d.id) % liste.length];
+  const scene = liste[hacher(etat.graine, d.id) % liste.length];
+  const projet = etat.profil?.objectif;
+  const variante = typeof projet === "string" ? scene.variantes?.[projet] : undefined;
+  return variante ? { ...scene, texte: variante } : scene;
 }
 
 // Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».
-export function libelleReponse(d: Dilemme, reponse: string, etat?: Etat): string {
+export function libelleReponse(d: Dilemme, valeur: Valeur, etat?: Etat): string {
+  const reponse = String(valeur);
   const scene = sceneDe(d, etat);
   const i = d.options.findIndex((o) => o.id === reponse.replace(/^peu-/, ""));
   const texte = scene.options[i]?.texte ?? "";
@@ -159,36 +167,49 @@ export const dilemmeActif = (d: Dilemme) => mesuresDuDilemme(d).every((m) => pay
 
 const familleDe = (m: string) => (mesures[m]?.critere.famille ?? "vivre") as FamilleScore;
 
-// Les effets d'une option, mesure par mesure. Un effet sur deux mesures partage son poids entre elles.
-function effetsOption(o: OptionDilemme, origine: string): EffetActif[] {
-  return o.effets.flatMap((e) =>
-    e.mesures.map((m) => ({
-      mesure: m,
-      sens: e.position !== undefined ? ("position" as const) : ("haut" as const),
-      position: e.position,
-      poids: (e.position !== undefined ? 1 : (e.poids ?? 1)) / e.mesures.length,
-      famille: familleDe(m),
-      origine,
-    })),
-  );
+// Une mesure « de profil » prend sa vraie valeur : « secteur » devient la mesure de ton secteur.
+// Ton secteur : sa mesure (« secteur-finance »…), seulement si au moins 60 % des pays ont une donnée pour lui.
+// Sinon il n'agit pas sur le score, et le site le dit (« Pas encore assez de données pour ton secteur »).
+export const SEUIL_SECTEUR = 0.6;
+export function mesureSecteur(p: Profil): string | null {
+  if (typeof p.secteur !== "string" || p.secteur === "autre") return null;
+  const m = `secteur-${p.secteur}`;
+  return mesures[m] && paysCouverts(m) >= SEUIL_SECTEUR * pays.length ? m : null;
+}
+
+// Pour un stage ou un VIE, le revenu qui compte est l'indemnité VIE du pays, pas le salaire moyen.
+export function mesureReelle(m: string, p: Profil): string | null {
+  if (m === "secteur") return mesureSecteur(p);
+  if (m === "salaire" && p.objectif === "stage-vie" && mesures["indemnite-vie"]) return "indemnite-vie";
+  return m;
 }
 
 export function effetsBruts(etat: Etat): EffetActif[] {
   const res: EffetActif[] = [];
-  for (const id of etat.priorites) {
-    const pr = quiz.priorites.find((x) => x.id === id);
-    if (pr) for (const m of pr.mesures) res.push({ mesure: m, sens: "haut", poids: 2 / pr.mesures.length, famille: pr.famille, origine: `priorite:${id}` });
-  }
-  for (const id of etat.sujets) {
-    const s = quiz.sujets.find((x) => x.id === id);
-    if (s) res.push({ mesure: s.mesure, sens: "haut", poids: 1, famille: "valeurs", origine: `sujet:${id}` });
-  }
+  const ajouter = (mesuresVisees: string[], e: { poids?: number; position?: number }, origine: string, poidsTotal?: number) => {
+    const reelles = mesuresVisees.map((m) => mesureReelle(m, etat.profil)).filter((m): m is string => !!m);
+    for (const m of reelles) {
+      res.push({
+        mesure: m, sens: e.position !== undefined ? "position" : "haut", position: e.position,
+        poids: (poidsTotal ?? (e.position !== undefined ? 1 : (e.poids ?? 1))) / mesuresVisees.length, famille: familleDe(m), origine,
+      });
+    }
+  };
+  enviesDe(etat).forEach((id, rang) => {
+    const en = quiz.envies.find((x) => x.id === id);
+    if (en) ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
+  });
+  const retirees = new Set<string>();
   for (const id of etat.ordre) {
-    const o = optionChoisie(etat, id);
-    if (o) res.push(...effetsOption(o, `dilemme:${id}`));
+    const el = trouverElement(id);
+    if (!el) continue;
+    const v = etat.reponses[id];
+    for (const { effet, origine } of effetsReponse(el, v)) ajouter(effet.mesures, effet, origine);
+    for (const m of penalitesRetirees(el, v)) retirees.add(m);
   }
   res.push(...effetsObjectif(etat));
-  return res;
+  // « Installé là-bas pour de bon » : apprendre la langue n'est plus une pénalité (sauf si tu l'as dit toi-même dans tes limites).
+  return res.filter((e) => !retirees.has(e.mesure) || e.origine.startsWith("limite:") || e.origine.startsWith("envie:"));
 }
 
 // ---------- Ton projet ----------
@@ -196,7 +217,7 @@ export function effetsBruts(etat: Etat): EffetActif[] {
 // Si tu as choisi, dans un dilemme, une autre option que celle qui visait cette mesure,
 // ta réponse l'emporte : le poids de départ disparaît.
 export const POIDS_OBJECTIF = 0.5;
-const peutTravaillerEnAnglais = (p: Profil) => !(p.anglais === "debutant" && p["pret-anglais"] !== "oui");
+const peutTravaillerEnAnglais = (p: Profil) => conditionRemplie("peut-travailler-en-anglais", p);
 
 export function mesuresEcartees(etat: Etat): Set<string> {
   const res = new Set<string>();
@@ -217,25 +238,49 @@ export function effetsObjectif(etat: Etat): EffetActif[] {
   return obj.effets
     .filter((e) => e.afficheSi !== "peut-travailler-en-anglais" || peutTravaillerEnAnglais(etat.profil))
     .flatMap((e) => e.mesures)
-    .filter((m) => mesureDisponible(m) && !ecartees.has(m))
+    .map((m) => mesureReelle(m, etat.profil))
+    .filter((m): m is string => !!m && mesureDisponible(m) && !ecartees.has(m))
     .map((m) => ({ mesure: m, sens: "haut" as const, poids: POIDS_OBJECTIF, famille: familleDe(m), origine: `objectif:${etat.profil.objectif}` }));
 }
 
 // Toutes les réponses qui comptent, regroupées mesure par mesure : si plusieurs réponses visent
 // la même mesure, on garde la plus grande importance, on ne les additionne pas.
-// Seules les 3 priorités comptent double.
+// Seules tes envies comptent plus que 1 (de 2 à 1,1 selon leur rang).
+// Mémoire des calculs : un état n'est jamais modifié après sa création (on en crée toujours un nouveau).
+const memoEffets = new WeakMap<Etat, EffetActif[]>();
 export function effetsActifs(etat: Etat): EffetActif[] {
-  const groupes = new Map<string, EffetActif>();
+  const deja = memoEffets.get(etat);
+  if (deja) return deja;
+  const res = effetsActifsSansMemoire(etat);
+  memoEffets.set(etat, res);
+  return res;
+}
+// Le profil de calcul : tes réponses rangées par dimension (salaire, climat, langue…), puis mesure par mesure,
+// avec la plus grande importance donnée par une seule réponse. Le score lit ce profil, rien d'autre.
+// La couche « profil » (src/lib/profil.ts) y ajoute la source des réponses, la certitude et les contradictions.
+export type ProfilCalcul = Map<string, Map<string, EffetActif>>;
+const memoProfil = new WeakMap<Etat, ProfilCalcul>();
+export function profilCalcul(etat: Etat): ProfilCalcul {
+  const deja = memoProfil.get(etat);
+  if (deja) return deja;
+  const dims: ProfilCalcul = new Map();
   for (const e of effetsBruts(etat)) {
-    const deja = groupes.get(e.mesure);
-    if (!deja || e.poids > deja.poids) groupes.set(e.mesure, e);
+    const d = dimensionDe[e.mesure] ?? (e.mesure.startsWith("secteur-") ? "secteur" : e.mesure);
+    const m = dims.get(d) ?? new Map<string, EffetActif>();
+    const avant = m.get(e.mesure);
+    if (!avant || e.poids > avant.poids) m.set(e.mesure, e);
+    dims.set(d, m);
   }
-  return [...groupes.values()];
+  memoProfil.set(etat, dims);
+  return dims;
+}
+function effetsActifsSansMemoire(etat: Etat): EffetActif[] {
+  return [...profilCalcul(etat).values()].flatMap((m) => [...m.values()]);
 }
 
 // ---------- « Et si… ? » ----------
 // L'importance d'un groupe déduite de tes réponses : la plus forte importance qu'une seule réponse
-// donne à ce groupe (une priorité : 2 ; un dilemme : 1 ou 0,5 ; ton projet : 0,5 ; rien : 0).
+// donne à ce groupe (une envie : 2 à 1,1 ; un dilemme : 1 ou 0,5 ; ton projet : 0,5 ; rien : 0).
 export function niveauDeduit(effets: EffetActif[], g: GroupeReglage): number {
   const groupe = GROUPES.find((x) => x.id === g)!;
   const parOrigine = new Map<string, number>();
@@ -555,12 +600,37 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
 
 // Toutes les raisons qui font descendre un pays dans « Moins adaptés pour toi », dans l'ordre.
 // « age » : une règle légale (le PVT fermé à ton âge). Les autres sont tes préférences.
-export type CauseEcart = { cause: "zone" | "francais" | "age"; raison: string };
+export type CauseEcart = { cause: "francais" | "age" | "limite"; raison: string; limite?: string };
+
+// « Rédhibitoire » dans tes limites : les pays concernés passent dans « Moins adaptés pour toi ».
+// Une donnée manquante n'écarte jamais un pays (on ne sait pas).
+export function limiteTouche(situation: string, paysId: string, profil: Profil): boolean {
+  const note = (m: string) => noteEffective(paysId, m, profil);
+  const p = pays.find((x) => x.id === paysId);
+  switch (situation) {
+    case "hors-europe": return p?.zone !== "europe";
+    case "alphabet": return note("apprendre-langue") === 1;
+    case "visa-employeur": return note("employeur-libre") === 1;
+    case "vol-10h": { const n = notes[paysId]?.vol; return n?.statut === "verifie" && typeof n.valeur === "number" && n.valeur > 10; }
+    case "hiver-froid": return note("hiver") === 1;
+    case "vigilance": return note("securite") === 1;
+    case "ni-fr-ni-en": { const n = note("langue-travail"); return n !== null && n <= 2; }
+    case "assurance-privee": { const n = note("sante"); return n !== null && n <= 2; }
+    default: return false;
+  }
+}
+export const situationDe = (id: string) => {
+  const el = trouverElement("limites");
+  return el?.type === "tri-limites" ? el.situations.find((s) => s.id === id) : undefined;
+};
+
 export function causesEcart(p: Pays, etat: Etat): CauseEcart[] {
   const res: CauseEcart[] = [];
-  if (etat.profil.zone === "europe" && p.zone !== "europe") res.push({ cause: "zone", raison: "Tu as choisi de partir en Europe." });
-  if (etat.profil.zone === "hors-europe" && p.zone === "europe") res.push({ cause: "zone", raison: "Tu as choisi de partir hors d’Europe." });
   if (etat.profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) res.push({ cause: "francais", raison: "Tu veux travailler en français." });
+  for (const id of limitesRedhibitoires(etat.reponses)) {
+    const s = situationDe(id);
+    if (s && limiteTouche(id, p.id, etat.profil)) res.push({ cause: "limite", raison: s.raison, limite: id });
+  }
   const porte = evaluerPorte(p, etat.profil, null);
   if (porte.badge === "fermee") res.push({ cause: "age", raison: `Fermé à ton âge. ${porte.phrase}` });
   return res;
@@ -577,20 +647,20 @@ export function raisonsEcart(etat: Etat): Record<string, string> {
 }
 
 // Les pénalités (pas des filtres) : un pays remonté à la main ne les subit plus.
-export const PENALITES = ["apprendre-langue", "employeur-libre"];
+export const PENALITES = ["apprendre-langue", "employeur-libre", "en-europe", "langue-travail"];
 
 // ---------- Score ----------
 export type Detail = {
   mesure: string; sens: "haut" | "position"; position?: number; poids: number; accord: number; famille: FamilleScore; origine: string;
-  neutre: boolean; // donnée manquante sur une priorité : comptée à 50 %
+  neutre: boolean; // donnée manquante sur une envie : comptée à 50 %
 };
 export type Ligne = {
   pays: Pays;
   score: number;
   sansDonnees: boolean; // aucune donnée vérifiée sur tes critères : pas de pourcentage
   details: Detail[];
-  manquantes: string[]; // données « à vérifier » sur tes critères (hors priorités)
-  neutres: string[]; // données « à vérifier » sur tes priorités, comptées à 50 %
+  manquantes: string[]; // données « à vérifier » sur tes critères (hors envies)
+  neutres: string[]; // données « à vérifier » sur tes envies, comptées à 50 %
   ecart: string | null;
   porte: Porte;
   couverture: number; // part de tes critères (en nombre) pour lesquels ce pays a une donnée vérifiée
@@ -614,6 +684,8 @@ export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil):
     if (MESURES_CALCULEES.includes(m)) return TYPES_VERIFIES.includes(preuveDe(paysId, m, profil).type);
     const n = notes[paysId]?.[m];
     if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
+    // Un barème relayé (indemnité VIE), pas lu sur le site officiel, compte dans le score mais pas comme une donnée vérifiée.
+    if (n.relaye) return false;
     // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
     if ((m === "langue" || m === "apprendre-langue") && parleLangueDe(paysId, profil)) return true;
     return TYPES_VERIFIES.includes(sources[n.source]?.type);
@@ -624,12 +696,21 @@ export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil):
 
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
 export const COUVERTURE_MIN = 0.6;
-// Une donnée manquante sur une priorité compte comme une note neutre.
+// Une donnée manquante sur une envie compte comme une note neutre.
 export const ACCORD_NEUTRE = 0.5;
 
-const estPriorite = (e: EffetActif) => e.origine.startsWith("priorite:");
+const estPriorite = (e: EffetActif) => e.origine.startsWith("envie:");
 
+const memoCalcul = new WeakMap<Etat, Ligne[]>();
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
+  if (reglages !== REGLAGES_DEFAUT) return calculerSansMemoire(etat, reglages);
+  const deja = memoCalcul.get(etat);
+  if (deja) return deja;
+  const res = calculerSansMemoire(etat, reglages);
+  memoCalcul.set(etat, res);
+  return res;
+}
+function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
   const effets = effetsAjustes(etat, reglages);
   const ecarts = raisonsEcart(etat);
   const budget = budgetDe(etat, reglages);
@@ -715,14 +796,12 @@ export function avecQui(lignes: Ligne[], i: number, dansLaVue: (k: number) => bo
 }
 
 // ---------- Le pays surprise ----------
-// Un pays qu'une seule de tes préférences écarte ou fait reculer : la zone choisie (un filtre), ou une pénalité
-// (« Je préfère pouvoir changer d'employeur librement », « Je garde ces soirées pour moi »).
+// Un pays qu'une seule de tes préférences écarte ou fait reculer : une de tes limites « Rédhibitoire » (un filtre),
+// ou une pénalité (« Je préfère pouvoir changer d'employeur librement », « Je garde ces soirées pour moi »).
 // Il n'apparaît que si, sans cette préférence, son score l'aurait placé n° 1 ou n° 2 de ton classement.
 // Jamais pour une règle légale (âge) ni pour le budget. S'il te manquerait de l'argent pour ce pays, la carte le dit.
-export type Surprise = { ligne: Ligne; score: number; cause: "zone" | "employeur" | "langue"; phrase: string; argent: string | null };
+export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "langue"; phrase: string; argent: string | null };
 const PHRASE_SURPRISE = {
-  europe: "Seul ton choix de rester en Europe écarte ce pays.",
-  "hors-europe": "Seul ton choix de partir hors d’Europe écarte ce pays.",
   employeur: "Seul ton choix de pouvoir changer d’employeur librement fait reculer ce pays.",
   langue: "Seul ton choix de ne pas apprendre de nouvelle langue fait reculer ce pays.",
 };
@@ -741,19 +820,20 @@ export function paysSurprise(etat: Etat, lignes: Ligne[], top: Ligne[], reglages
   for (const l of lignes) {
     if (!l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id)) continue;
     const causes = causesEcart(l.pays, etat);
-    if (causes.length !== 1 || causes[0].cause !== "zone") continue;
-    candidats.push({ ligne: l, score: l.score, cause: "zone", phrase: PHRASE_SURPRISE[etat.profil.zone === "europe" ? "europe" : "hors-europe"], argent: phraseArgent(l) });
+    if (causes.length !== 1 || causes[0].cause !== "limite") continue;
+    const s = situationDe(causes[0].limite ?? "");
+    candidats.push({ ligne: l, score: l.score, cause: "limite", phrase: `Seule ta limite «\u00a0${s?.texte ?? ""}\u00a0» écarte ce pays.`, argent: phraseArgent(l) });
   }
   // Une pénalité : on recalcule sans cette seule réponse.
   for (const pen of PENALITES_SURPRISE) {
     if (!optionChoisie(etat, pen.dilemme)?.effets.some((e) => e.mesures.includes(pen.mesure))) continue;
-    const reponses = { ...etat.reponses };
-    delete reponses[pen.dilemme];
-    const sans = calculer({ ...etat, reponses, ordre: etat.ordre.filter((id) => id !== pen.dilemme) }, reglages);
     for (const l of lignes) {
       if (l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id) || etat.remontes.includes(l.pays.id)) continue;
-      if (!l.details.some((d) => d.mesure === pen.mesure && d.accord < 1)) continue;
-      const score = sans.find((x) => x.pays.id === l.pays.id)?.score ?? 0;
+      // Seule cette réponse fait reculer le pays : aucune autre pénalité (une limite, par exemple) ne le touche.
+      const penalites = l.details.filter((d) => PENALITES.includes(d.mesure) && d.accord < 1);
+      if (penalites.length !== 1 || penalites[0].mesure !== pen.mesure || penalites[0].origine !== `dilemme:${pen.dilemme}`) continue;
+      // Son score sans la pénalité : celui qu'il aurait une fois remonté.
+      const score = calculer({ ...etat, remontes: [...etat.remontes, l.pays.id] }, reglages).find((x) => x.pays.id === l.pays.id)?.score ?? 0;
       candidats.push({ ligne: l, score, cause: pen.cause, phrase: PHRASE_SURPRISE[pen.cause], argent: phraseArgent(l) });
     }
   }
@@ -761,26 +841,36 @@ export function paysSurprise(etat: Etat, lignes: Ligne[], top: Ligne[], reglages
   return meilleur && meilleur.score >= seuil - 1e-9 ? meilleur : null;
 }
 
-// ---------- Choix du dilemme suivant ----------
+// ---------- Départager les pays : à quel point une réponse changerait le classement ----------
 export function dilemmeVisible(d: Dilemme, etat: Etat): boolean {
   if (etat.reponses[d.id] !== undefined) return false;
   if (!dilemmeActif(d)) return false;
-  if (d.afficheSi === "peut-travailler-en-anglais" && !peutTravaillerEnAnglais(etat.profil)) return false;
-  return true;
+  return conditionRemplie(d.afficheSi ?? d.condition, etat.profil);
 }
 
-// Les mesures d'une option qui changeraient vraiment quelque chose : une option qui ne fait
-// que redonner une importance déjà atteinte (par une priorité, par exemple) ne départage rien.
-function effetsNouveaux(o: OptionDilemme, etat: Etat): EffetActif[] {
+// Les effets d'une réponse possible, mesure par mesure, comme dans le calcul.
+export function effetsPossibles(effets: EffetDilemme[], profil: Profil): EffetActif[] {
+  return effets.flatMap((e) => {
+    const reelles = e.mesures.map((m) => mesureReelle(m, profil)).filter((m): m is string => !!m);
+    return reelles.map((m) => ({
+      mesure: m, sens: e.position !== undefined ? ("position" as const) : ("haut" as const), position: e.position,
+      poids: (e.position !== undefined ? 1 : (e.poids ?? 1)) / e.mesures.length, famille: familleDe(m), origine: "",
+    }));
+  });
+}
+
+// Les mesures d'une réponse qui changeraient vraiment quelque chose : une réponse qui ne fait
+// que redonner une importance déjà atteinte (par une envie, par exemple) ne départage rien.
+export function effetsNouveaux(effets: EffetActif[], etat: Etat): EffetActif[] {
   const actuels = new Map(effetsActifs(etat).map((e) => [e.mesure, e]));
-  return effetsOption(o, "").filter((e) => {
+  return effets.filter((e) => {
     const deja = actuels.get(e.mesure);
     return !deja || e.poids > deja.poids + 1e-9 || (e.sens === "position" && deja.position !== e.position);
   });
 }
 
 // L'écart entre les pays sur ces mesures : de 0 (tous pareils) à 4 (tout le contraire).
-function etendue(effets: EffetActif[], liste: Ligne[], profil: Profil): number {
+export function etendue(effets: EffetActif[], liste: Ligne[], profil: Profil): number {
   if (effets.length === 0) return 0;
   const valeurs = liste
     .map((l) => {
@@ -797,53 +887,48 @@ function etendue(effets: EffetActif[], liste: Ligne[], profil: Profil): number {
   return Math.max(...valeurs) - Math.min(...valeurs) + ecartType / 100;
 }
 
-// À quel point un dilemme départage les pays donnés (0 : il ne change rien).
-export function utilite(d: Dilemme, etat: Etat, liste: Ligne[]): number {
-  return Math.max(0, ...d.options.map((o) => {
-    return etendue(effetsNouveaux(o, etat), liste, etat.profil);
-  }));
-}
+// À quel point des réponses possibles départagent les pays donnés (0 : elles ne changent rien).
+export const utiliteEffets = (reponsesPossibles: EffetDilemme[][], etat: Etat, liste: Ligne[]) =>
+  Math.max(0, ...reponsesPossibles.map((effets) => etendue(effetsNouveaux(effetsPossibles(effets, etat.profil), etat), liste, etat.profil)));
+export const utilite = (d: Dilemme, etat: Etat, liste: Ligne[]) => utiliteEffets(d.options.map((o) => o.effets), etat, liste);
 
-// Les 4 premiers dilemmes sont tirés au hasard (avec la graine) parmi ceux qui départagent au moins
-// 60 % autant que le meilleur : deux personnes au profil proche n'ont pas les mêmes questions.
-// Ensuite, toujours le plus utile.
-export const DEBUT_ALEATOIRE = 4;
-export const PART_UTILITE = 0.6;
-export function prochainDilemme(etat: Etat): Dilemme | null {
-  const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
-  const candidats = quiz.dilemmes.filter((d) => dilemmeVisible(d, etat)).map((d) => ({ d, u: utilite(d, etat, top) })).filter((x) => x.u > 1e-9);
-  if (!candidats.length) return null;
-  const max = Math.max(...candidats.map((x) => x.u));
-  if (etat.ordre.length < DEBUT_ALEATOIRE) {
-    const proches = candidats.filter((x) => x.u >= PART_UTILITE * max - 1e-9);
-    return proches[hacher(etat.graine, `debut:${etat.ordre.length}`) % proches.length].d;
-  }
-  return candidats.find((x) => x.u >= max - 1e-9)!.d;
-}
-
-// « Passer » ne compte ni pour le minimum de dilemmes, ni pour la stabilité du top 3.
+// « Passer » ne compte ni comme une réponse, ni pour la stabilité du top 3.
 export const repondues = (etat: Etat) => etat.ordre.filter((id) => etat.reponses[id] !== "passer").length;
 
-// Le top 3 après chaque vraie réponse (le premier : avant les dilemmes).
+// Le top 3 après chaque vraie réponse (le premier : avant la première réponse).
 function historiqueReel(etat: Etat): string[] {
   return etat.historique.filter((_, i) => i === 0 || etat.reponses[etat.ordre[i - 1]] !== "passer");
 }
 
-// Nombre de vraies réponses d'affilée sans que le top 3 bouge.
-export function reponsesStables(etat: Etat): number {
-  const h = historiqueReel(etat);
+// Nombre de vraies réponses d'affilée sans que le top 3 bouge (« dans » : seulement parmi ces éléments).
+export function reponsesStables(etat: Etat, dans?: (id: string) => boolean): number {
   let n = 0;
-  for (let i = h.length - 1; i > 0 && h[i] === h[i - 1]; i--) n++;
+  if (!dans) {
+    const h = historiqueReel(etat);
+    for (let i = h.length - 1; i > 0 && h[i] === h[i - 1]; i--) n++;
+    return n;
+  }
+  for (let i = etat.ordre.length; i > 0; i--) {
+    const id = etat.ordre[i - 1];
+    if (!dans(id)) break;
+    if (etat.reponses[id] === "passer") continue;
+    if (etat.historique[i] !== etat.historique[i - 1]) break;
+    n++;
+  }
   return n;
 }
 
-export function resultatPret(etat: Etat): boolean {
-  return repondues(etat) >= MIN_DILEMMES && reponsesStables(etat) >= REPONSES_STABLES;
-}
+// Le profil suit toujours les réponses.
+const avecProfil = (etat: Etat): Etat => ({ ...etat, profil: profilDe(etat.reponses) });
+export const etatDepart = (etat: Etat): Etat => {
+  const e = avecProfil({ ...etat, reponses: {}, ordre: [] });
+  return { ...e, historique: [cleTop3(calculer(e))] };
+};
 
-export function repondre(etat: Etat, id: string, reponse: string): Etat {
-  const suivant: Etat = { ...etat, reponses: { ...etat.reponses, [id]: reponse }, ordre: [...etat.ordre, id] };
-  return { ...suivant, historique: [...etat.historique, cleTop3(calculer(suivant))] };
+export function repondre(etat: Etat, id: string, reponse: Valeur): Etat {
+  const base = etat.historique.length ? etat : { ...etat, historique: [cleTop3(calculer(avecProfil({ ...etat, reponses: {}, ordre: [] })))] };
+  const suivant = avecProfil({ ...base, reponses: { ...base.reponses, [id]: reponse }, ordre: [...base.ordre.filter((x) => x !== id), id] });
+  return { ...suivant, historique: [...base.historique.slice(0, base.ordre.length + 1), cleTop3(calculer(suivant))] };
 }
 
 export function annulerDerniere(etat: Etat): Etat {
@@ -851,77 +936,25 @@ export function annulerDerniere(etat: Etat): Etat {
   if (!id) return etat;
   const reponses = { ...etat.reponses };
   delete reponses[id];
-  return { ...etat, reponses, ordre: etat.ordre.slice(0, -1), historique: etat.historique.slice(0, -1) };
+  return avecProfil({ ...etat, reponses, ordre: etat.ordre.slice(0, -1), historique: etat.historique.slice(0, etat.ordre.length) });
 }
 
-// Recalcule l'historique du top 3 après un changement de réponse (« Ce n'est pas moi »).
+// Recalcule le profil et l'historique du top 3 après un changement de réponse (« Ce n'est pas moi »).
 export function rejouer(etat: Etat): Etat {
-  const historique = [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))];
-  for (let k = 1; k <= etat.ordre.length; k++) {
+  const partiel = (k: number) => {
     const ordre = etat.ordre.slice(0, k);
-    historique.push(cleTop3(calculer({ ...etat, ordre, reponses: Object.fromEntries(ordre.map((id) => [id, etat.reponses[id]])) })));
-  }
-  return { ...etat, historique };
+    return avecProfil({ ...etat, ordre, reponses: Object.fromEntries(ordre.map((id) => [id, etat.reponses[id]])) });
+  };
+  const historique = Array.from({ length: etat.ordre.length + 1 }, (_, k) => cleTop3(calculer(partiel(k))));
+  return { ...avecProfil(etat), historique };
 }
 
-export function changerReponse(etat: Etat, id: string, reponse: string): Etat {
+export function changerReponse(etat: Etat, id: string, reponse: Valeur): Etat {
   if (!etat.ordre.includes(id)) return repondre(etat, id, reponse);
   return rejouer({ ...etat, reponses: { ...etat.reponses, [id]: reponse } });
 }
 
-// ---------- Ton portrait ----------
-// 4 à 6 phrases tirées de tes vraies réponses : ton projet, tes priorités, tes dilemmes.
-// Jamais une phrase sur une question passée.
-export type LignePortrait = { cle: string; texte: string; revoir: { t: "objectif" } | { t: "priorites" } | { t: "dilemme"; id: string } };
-export const MAX_PORTRAIT = 6;
-
-const minuscule = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 export const listeFr = (l: string[]) => (l.length > 1 ? `${l.slice(0, -1).join(", ")} et ${l.at(-1)}` : (l[0] ?? ""));
-
-// « regrouperStyle » (page résultat) : tes réponses sur la culture au travail tiennent en une phrase,
-// « Au travail, tu préfères qu'on te parle franchement et des horaires souples. »
-export function portrait(etat: Etat, regrouperStyle = false): LignePortrait[] {
-  const res: LignePortrait[] = [];
-  const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
-  if (obj) res.push({ cle: "objectif", texte: `Tu pars pour ${obj.nom}.`, revoir: { t: "objectif" } });
-  const prio = etat.priorites.map((id) => quiz.priorites.find((p) => p.id === id)?.label).filter((x): x is string => !!x);
-  if (prio.length) res.push({ cle: "priorites", texte: `Ce qui compte le plus pour toi\u00a0: ${listeFr(prio.map(minuscule))}.`, revoir: { t: "priorites" } });
-  // Les réponses qui changent le plus ton classement d'abord : une option avec un effet avant une option sans effet.
-  const poids = (o: OptionDilemme) => (o.ecart ? 1 : 0) + o.effets.reduce((a, e) => a + (e.position !== undefined ? 1 : (e.poids ?? 1)), 0);
-  const dilemmes = etat.ordre
-    .map((id, rang) => ({ id, rang, o: optionChoisie(etat, id) }))
-    .filter((x): x is { id: string; rang: number; o: OptionDilemme } => !!x.o?.portrait)
-    .sort((a, b) => poids(b.o) - poids(a.o) || a.rang - b.rang);
-  const vus = new Set(res.map((r) => r.texte));
-  // Une réponse qui ne vise que des mesures déjà dans tes priorités répète la phrase des priorités :
-  // on ne l'affiche pas (« Tu regardes d'abord le salaire » quand « bon salaire » est déjà cité).
-  // Deux réponses sur exactement les mêmes mesures : seule la première (la plus forte) est gardée.
-  const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
-  const cibles = (o: OptionDilemme) => o.effets.flatMap((e) => e.mesures);
-  const repetePriorite = (o: OptionDilemme) => cibles(o).length > 0 && o.effets.every((e) => e.position === undefined) && cibles(o).every((m) => mesuresPrio.has(m));
-  const mesuresVues = new Set<string>();
-  const styles = regrouperStyle ? dilemmes.filter((x) => x.o.style && trouverDilemme(x.id)?.axe) : [];
-  let styleDit = false;
-  for (const { id, o } of dilemmes) {
-    if (res.length >= MAX_PORTRAIT) break;
-    if (styles.some((s) => s.id === id)) {
-      if (styleDit) continue;
-      styleDit = true;
-      const ordre = [...styles].sort((a, b) => a.rang - b.rang);
-      res.push({ cle: "style", texte: `Au travail, tu préfères ${listeFr(ordre.map((s) => s.o.style as string))}.`, revoir: { t: "dilemme", id: ordre[0].id } });
-      continue;
-    }
-    if (vus.has(o.portrait) || repetePriorite(o)) continue;
-    const cle = [...new Set(cibles(o))].sort().join("+");
-    if (cle && !o.ecart && mesuresVues.has(cle)) continue;
-    if (cle) mesuresVues.add(cle);
-    vus.add(o.portrait);
-    res.push({ cle: `dilemme:${id}`, texte: o.portrait, revoir: { t: "dilemme", id } });
-  }
-  return res;
-}
-
-export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
 // ---------- Le départage ----------
 // Quand le n°1 et le n°2 sont à 5 points ou moins : au plus 5 dilemmes encore non répondus, tant que l'écart
@@ -1027,8 +1060,8 @@ export function faitMesure(paysId: string, mesureId: string, profil: Profil): st
   return `${m.nom}\u00a0: ${m.mots[note - 1]}`;
 }
 
-// Seules les mesures liées à une de tes réponses parlent de toi : priorité, projet, dilemme, sujet ou curseur.
-const origineQuiParle = (d: Detail) => /^(priorite|objectif|dilemme|sujet|reglage):/.test(d.origine);
+// Seules les mesures liées à une de tes réponses parlent de toi : envie, projet, dilemme, autre élément du quiz, limite ou curseur.
+const origineQuiParle = (d: Detail) => /^(envie|objectif|dilemme|element|limite|reglage):/.test(d.origine);
 const nomObjectif = (d: Detail) => quiz.objectifs[d.origine.split(":")[1]]?.nom ?? "ton projet";
 const personnel = (fait: string) => /^(Tu|Ton|Ta|Tes) /.test(fait);
 
@@ -1039,14 +1072,14 @@ function preferenceDe(d: Detail, etat: Etat): string | undefined {
 
 function phrasePour(d: Detail, fait: string): string {
   if (personnel(fait)) return `${fait}.`;
-  if (d.origine.startsWith("priorite:")) return `${fait}\u00a0: c’est une de tes priorités.`;
+  if (d.origine.startsWith("envie:")) return `${fait}\u00a0: c’est une de tes envies.`;
   if (d.origine.startsWith("objectif:")) return `${fait}, utile pour ${nomObjectif(d)}.`;
   if (d.sens === "position") return `${fait}, comme tu le préfères.`;
   return `${fait}, et c’est ce que tu as choisi.`;
 }
 
 function phraseSavoir(d: Detail, fait: string, etat: Etat): string {
-  if (d.origine.startsWith("priorite:")) return `${fait}, alors que c’est une de tes priorités.`;
+  if (d.origine.startsWith("envie:")) return `${fait}, alors que c’est une de tes envies.`;
   if (d.origine.startsWith("objectif:")) return `${fait}\u00a0: à prendre en compte pour ${nomObjectif(d)}.`;
   const pref = preferenceDe(d, etat);
   return pref ? `${fait}, et tu préférais ${pref}.` : `${fait}.`;
@@ -1101,6 +1134,21 @@ export function pointsPays(l: Ligne, etat: Etat, interdites: Set<string> = new S
     vues.add(texte);
     cat.savoir = { texte, mesure: d.mesure, preuve: preuveDe(l.pays.id, d.mesure, etat.profil) };
   }
+  // « Ton secteur » : toujours dit sous chaque pays quand ton secteur est connu et assez renseigné,
+  // dans « Pour toi » s'il y pèse beaucoup (4 ou 5 sur 5), sinon dans « À savoir ».
+  const ms = mesureSecteur(etat.profil);
+  const travail = res.travailler;
+  if (ms && !travail.pour.some((x) => x.mesure === ms) && travail.savoir?.mesure !== ms) {
+    const note = noteEffective(l.pays.id, ms, etat.profil);
+    const v = valeurLisible(l.pays.id, ms, etat.profil);
+    const fr = valeurFrance(ms);
+    const ligne: LigneResultat = {
+      mesure: ms, preuve: preuveDe(l.pays.id, ms, etat.profil),
+      texte: note === null ? `Ton secteur\u00a0: pas encore de donnée pour ${l.pays.le}.` : `${faitMesure(l.pays.id, ms, etat.profil)}${v?.valeur ? `\u00a0: ${v.valeur} ${l.pays.en}` : ""}${fr ? ` (${fr})` : ""}.`,
+    };
+    if (note !== null && note >= 4) travail.pour = [ligne, ...travail.pour].slice(0, MAX_POUR_CATEGORIE);
+    else travail.savoir = ligne;
+  }
   return res;
 }
 
@@ -1131,6 +1179,20 @@ export function valeurLisible(paysId: string, mesureId: string, profil: Profil):
   return { valeur, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
 }
 
+// Ce qui accompagne une valeur dans le détail du pays : la part qui reste après impôts (salaire, hors score),
+// ou les autres villes du barème (indemnité VIE).
+export function complementMesure(paysId: string, mesureId: string): string | null {
+  const n = notes[paysId]?.[mesureId];
+  if (mesureId === "salaire") {
+    if (typeof n?.resteSur100 === "number") return `Pour un célibataire au salaire moyen, sur 100\u00a0€ bruts, il reste environ ${Math.round(n.resteSur100)}\u00a0€ après impôt sur le revenu et cotisations salariales (OCDE, 2025).`;
+    return "Ce qui reste après impôts\u00a0: à vérifier pour ce pays.";
+  }
+  if (mesureId === "indemnite-vie" && n?.autres?.length) {
+    return `Autres villes\u00a0: ${n.autres.map((a) => `${a.ville}, ${a.montant ? `${Math.round(a.montant).toLocaleString("fr-FR")}\u00a0€` : "à vérifier"}`).join("\u00a0; ")}.`;
+  }
+  return null;
+}
+
 // La valeur de la France pour comparer à ce qu'on connaît : « France : 17,3 % ».
 // Seulement quand la même source la donne, avec les mêmes règles (années comparables pour le salaire).
 // « annee » : l'année du pays comparé ; si celle de la France en diffère, elle est dite.
@@ -1144,7 +1206,7 @@ export function valeurFrance(mesureId: string, annee?: string | null): string | 
 }
 
 // ---------- La comparaison côte à côte ----------
-// Une ligne par critère qui compte pour toi, tes priorités d'abord, puis par importance.
+// Une ligne par critère qui compte pour toi, tes envies d'abord, puis par importance.
 export type LigneComparaison = {
   mesure: string; libelle: string; theme: string; priorite: boolean; poids: number;
   a: { valeur: string | null; mot: string } | null; b: { valeur: string | null; mot: string } | null;
@@ -1159,7 +1221,7 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
       const db = lb.details.find((d) => d.mesure === e.mesure && !d.neutre);
       const m = mesures[e.mesure];
       return {
-        mesure: e.mesure, libelle: m?.court ?? m?.nom ?? e.mesure, theme: m?.theme ?? "", priorite: e.origine.startsWith("priorite:"), poids: e.poids,
+        mesure: e.mesure, libelle: m?.court ?? m?.nom ?? e.mesure, theme: m?.theme ?? "", priorite: e.origine.startsWith("envie:"), poids: e.poids,
         a: valeurLisible(la.pays.id, e.mesure, etat.profil), b: valeurLisible(lb.pays.id, e.mesure, etat.profil),
         ecart: da && db ? da.accord - db.accord : null,
         france: valeurFrance(e.mesure),
