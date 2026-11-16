@@ -22,18 +22,16 @@ export default function Accueil() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Country Search
         </h1>
-        <p className="mt-3 text-lg text-gris">
-          Choisis le pays où partir travailler. Un quiz court classe 30 pays
-          selon ce qui compte pour toi, et te dit par quelle porte entrer :
-          Europe sans visa, <Definition cle="pvt" /> ou visa de travail.
-        </p>
-        <p className="mt-2 text-gris">
-          Chaque score est expliqué, chaque information a sa source et sa date
-          de vérification.
-        </p>
+        <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi 30 pays.</p>
+        <p className="mt-1 text-lg">Tu obtiens ton top 3 et ta porte d’entrée : Europe sans visa, <Definition cle="pvt" /> ou visa de travail.</p>
+        <p className="mt-1 text-lg text-gris">Environ 5 minutes, sans compte.</p>
         <div className="mt-6">
           <BoutonCommencer />
         </div>
+        <p className="mt-6 text-gris">
+          Chaque score est expliqué, chaque information a sa source et sa date
+          de vérification. <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
+        </p>
       </header>
 
       <section className="mt-12" aria-labelledby="titre-pays">

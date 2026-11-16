@@ -6,7 +6,7 @@ import { CircleAlert, CircleCheck, CircleHelp, ShieldCheck } from "lucide-react"
 import Definition from "@/components/Definition";
 import LienOfficiel from "@/components/LienOfficiel";
 import { useSession } from "@/lib/memoire";
-import { LIBELLE_FIABILITE, budgetProfil, calculer, faisabilite, type Faisabilite, type Fiabilite, type VisaSimple } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, budgetDe, calculer, faisabilite, type Faisabilite, type Fiabilite, type VisaSimple } from "@/lib/moteur";
 import { trouverPays, type Pays } from "@/lib/pays";
 
 // Le badge de fiabilité : un toucher explique le calcul en une phrase.
@@ -90,7 +90,7 @@ export function FaisabilitePourToi({ paysId }: { paysId: string }) {
     );
   }
   const { etat, reglages } = session;
-  const budget = reglages.budget ?? budgetProfil(etat.profil);
+  const budget = budgetDe(etat, reglages);
   const ligne = calculer(etat, reglages).find((l) => l.pays.id === paysId);
   return (
     <div className="mt-3 rounded-2xl border border-bord bg-carte p-4">

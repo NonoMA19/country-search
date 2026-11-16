@@ -19,9 +19,9 @@ import { ECART_EX_AEQUO } from "@/config";
 import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/lib/donnees";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
+  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
   faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, portrait, prochainDilemme, repondues, valeurFrance, valeurLisible, verdict,
-  type Badge, type Etat, type Ligne, type PointsPays, type Surprise,
+  type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
@@ -106,7 +106,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   );
 }
 
-function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: number | null }) {
+function CartePays({ ligne, rang, egalite, etat, points, budget }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: Budget | null }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
   const score = Math.round(ligne.score);
@@ -296,7 +296,8 @@ export default function Resultat() {
   const surprise = brute && (!seulementOuvertes || brute.ligne.porte.badge === "ouverte") ? brute : null;
   // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
   const phrases = lignesTop(top, etat);
-  const budget = reglages.budget ?? budgetProfil(etat.profil) ?? 2000;
+  // Le curseur part du bas de ta tranche de budget (ou de 2 000 € si tu ne sais pas encore).
+  const budget = reglages.budget ?? budgetProfil(etat.profil)?.min ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const encoreDesDilemmes = etat.historique.length > 0 && prochainDilemme(etat) !== null;
   const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
@@ -341,7 +342,7 @@ export default function Resultat() {
           ) : (
             top.map((l, i) => (
               <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
-                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={reglages.budget ?? budgetProfil(etat.profil)} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} />
               </div>
             ))
           )}
@@ -387,7 +388,7 @@ export default function Resultat() {
               <span className="font-medium">Et si mon budget était de…</span>
               <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
             </span>
-            <input type="range" min={0} max={8000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
+            <input type="range" min={0} max={15000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
             <span className="mt-1 block text-sm text-gris">
               {sansArgent.length === 0
                 ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."

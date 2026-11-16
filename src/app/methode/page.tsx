@@ -72,7 +72,7 @@ export default function Methode() {
         <p className="mt-3">La famille Partir (visa, âge, argent) n’entre pas dans le pourcentage. Elle donne un badge : Porte ouverte, Faisable avec conditions, Difficile ou Fermé à ton âge.</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Un pays « Fermé à ton âge » ne peut pas entrer dans ton top 3 : il passe dans « Moins adaptés pour toi », avec la raison et son pourcentage inchangé. Un bouton permet de le remonter.</li>
-          <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait.</li>
+          <li>Le budget ne fait jamais descendre un pays : on t’affiche seulement ce qu’il te manquerait. Tu choisis une tranche (moins de 2 000 €, de 2 000 à 5 000 €, de 5 000 à 10 000 €, plus de 10 000 €, ou « Je ne sais pas encore »). Si le haut de ta tranche est sous la somme demandée par un visa, on dit « il te manquerait au moins » la différence. Si la somme demandée tombe dans ta tranche, on dit « il pourrait te manquer jusqu’à » la différence avec le bas de ta tranche. Sans réponse, on donne seulement la somme demandée.</li>
           <li>Si tu déclares une autre nationalité, le badge devient « Porte ouverte grâce à ta nationalité » seulement dans les cas que nous avons vérifiés : la nationalité du pays lui-même (canadienne pour le Canada, américaine pour les États-Unis) et la nationalité irlandaise pour le Royaume-Uni. Le pourcentage ne change pas. Pour toute autre nationalité, ou pour les autres pays, le résultat dit clairement que ce cas n’est pas encore couvert.</li>
         </ul>
         <p className="mt-3">

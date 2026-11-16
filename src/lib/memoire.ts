@@ -86,7 +86,7 @@ function etapeValide(x: unknown): boolean {
 function reglagesValides(x: unknown): boolean {
   if (!estObjet(x) || !estObjet(x.niveaux)) return false;
   const poidsOk = Object.entries(x.niveaux).every(([g, v]) => GROUPES_REGLAGE.has(g) && typeof v === "number" && CRANS.has(v));
-  const budgetOk = x.budget === null || (typeof x.budget === "number" && Number.isFinite(x.budget) && x.budget >= 0 && x.budget <= 8000);
+  const budgetOk = x.budget === null || (typeof x.budget === "number" && Number.isFinite(x.budget) && x.budget >= 0 && x.budget <= 15000);
   return poidsOk && budgetOk;
 }
 

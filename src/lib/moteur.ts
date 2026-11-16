@@ -46,7 +46,15 @@ const option = (question: string, id: unknown) =>
   quiz.profil.find((q) => q.id === question)?.options.find((o) => o.id === id);
 
 export const ageMax = (p: Profil) => option("age", p.age)?.ageMax ?? null;
-export const budgetProfil = (p: Profil) => option("budget", p.budget)?.euros ?? null;
+// Ton budget : une tranche tirée du profil (« de 2 000 à 5 000 € »), ou une somme exacte (curseur « Et si… ? »).
+export type Budget = { min: number; max: number | null };
+export function budgetProfil(p: Profil): Budget | null {
+  const o = option("budget", p.budget);
+  return o?.min !== undefined ? { min: o.min, max: o.max ?? null } : null;
+}
+export const budgetExact = (n: number): Budget => ({ min: n, max: n });
+export const budgetDe = (etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Budget | null =>
+  reglages.budget !== null ? budgetExact(reglages.budget) : budgetProfil(etat.profil);
 export const dureeMois = (p: Profil) => option("duree", p.duree)?.mois ?? null;
 
 export function languesParlees(p: Profil): string[] {
@@ -279,7 +287,8 @@ export type Porte = {
   type: PorteBrute["type"] | "nationalite";
   phrase: string;
   fonds: number | null;
-  manque: number | null;
+  manque: number | null; // ce qui te manque à coup sûr (au moins), selon ta tranche de budget
+  manquePossible?: number | null; // ce qui pourrait te manquer, selon ta somme exacte dans la tranche
   alertes: Alerte[];
   preuve: Preuve;
   autres: string[];
@@ -315,7 +324,7 @@ export function casNationalite(profil: Profil): CasDouble | null {
   return doubleNationalite.cas.find((c) => c.id === profil["nationalite-laquelle"]) ?? null;
 }
 
-export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Porte {
+export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Porte {
   const cas = casNationalite(profil);
   if (cas?.pays === p.id && cas.acces) {
     const preuve: Preuve = { type: cas.type, titre: cas.titre, texte: cas.texte, source: cas.source, lien: cas.lien, verifieLe: cas.verifieLe, licence: cas.licence };
@@ -370,10 +379,15 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     }
     const fonds = pvt.fonds?.euros ?? null;
     let manque: number | null = null;
-    if (fonds !== null && budget !== null && budget < fonds) {
-      manque = fonds - budget;
-      alertes.push({ texte: `Il te manquerait environ ${euros(manque)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
-    } else if (fonds === null && pvt.fonds) {
+    let manquePossible: number | null = null;
+    // Avec une tranche : ce qui manque à coup sûr (le haut de la tranche ne suffit pas), ou ce qui pourrait manquer.
+    if (fonds !== null && budget !== null && budget.max !== null && budget.max < fonds) {
+      manque = fonds - budget.max;
+      alertes.push({ texte: `Il te manquerait ${budget.min === budget.max ? "environ" : "au moins"} ${euros(manque)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
+    } else if (fonds !== null && budget !== null && budget.min < fonds) {
+      manquePossible = fonds - budget.min;
+      alertes.push({ texte: `Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(manquePossible)} : ce PVT demande ${pvt.fonds?.texte}.`, preuve: preuvePorte(pvt) });
+    } else if ((fonds === null || budget === null) && pvt.fonds) {
       alertes.push({ texte: `Ce PVT demande ${pvt.fonds.texte}.`, preuve: preuvePorte(pvt) });
     }
     if ((duree !== null && duree > 12) || profil.objectif === "carriere") {
@@ -383,7 +397,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: number | null): Po
     // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
     const sa = pvt.saison;
     const mention = sa ? { texte: sa.texte, preuve: preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
-    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
+    return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, manquePossible, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
   }
 
   // Pays « visa de travail »
@@ -406,7 +420,7 @@ export type LienEtape = { texte: string; url: string; nom: string };
 export type Faisabilite = { remplies: string[]; aRemplir: string[]; aVerifier: string[]; etape: LienEtape | null };
 const premiereSouphrase = (t: string) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
 
-export function faisabilite(p: Pays, profil: Profil, budget: number | null): Faisabilite {
+export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Faisabilite {
   const porte = evaluerPorte(p, profil, budget);
   const f: Faisabilite = { remplies: [], aRemplir: [], aVerifier: [], etape: null };
   const age = ageMax(profil);
@@ -441,8 +455,9 @@ export function faisabilite(p: Pays, profil: Profil, budget: number | null): Fai
     if (age === null) f.aVerifier.push(`Ton âge n’est pas connu : le PVT est ouvert jusqu’à ${pvt.ageMax} ans.`);
     else f.remplies.push(`Ton âge permet le PVT (jusqu’à ${pvt.ageMax} ans).`);
     const fonds = pvt.fonds?.euros ?? null;
-    if (fonds !== null && budget !== null && budget >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
-    else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait environ ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    if (fonds !== null && budget !== null && budget.min >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
+    else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait ${budget?.min === budget?.max ? "environ" : "au moins"} ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    else if (porte.manquePossible) f.aVerifier.push(`Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(porte.manquePossible)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
     else if (pvt.fonds) f.aRemplir.push(`Prévoir les ressources demandées\u00a0: ${pvt.fonds.texte}.`);
     if (pvt.invitation) f.aRemplir.push("Recevoir une invitation : rien n’est garanti.");
     else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) f.aRemplir.push(`Obtenir une des ${pvt.quota} places de l’année.`);
@@ -600,7 +615,7 @@ const estPriorite = (e: EffetActif) => e.origine.startsWith("priorite:");
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
   const effets = effetsAjustes(etat, reglages);
   const ecarts = raisonsEcart(etat);
-  const budget = reglages.budget ?? budgetProfil(etat.profil);
+  const budget = budgetDe(etat, reglages);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
   const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))];
   const lignes = pays.map((p) => {

@@ -106,7 +106,8 @@ export type Dilemme = {
   scenes: Scene[];
 };
 
-export type OptionProfil = { id: string; label: string; ageMax?: number; euros?: number; mois?: number; codes?: string[] };
+// Budget : une tranche (« de 2 000 à 5 000 € ») : min et max en euros (pas de max pour « plus de 10 000 € »).
+export type OptionProfil = { id: string; label: string; ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[] };
 export type QuestionProfil = {
   id: string;
   question: string;

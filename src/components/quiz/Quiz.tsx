@@ -60,17 +60,17 @@ function PlusMoins({ o }: { o: OptionScene }) {
 
 // Un dilemme : une scène, puis ses options. Chaque option montre son avantage et son prix.
 // Dilemme en échelle : les deux options côte à côte (A à gauche, B à droite), puis 4 réponses.
-export function CarteDilemme({ dilemme, scene, repond, titreId = "titre-ecran", choisie, passer = "Passer", niveau = "h1", avant }: {
-  dilemme: Dilemme; scene: Scene; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string; niveau?: "h1" | "h3"; avant?: ReactNode;
+export function CarteDilemme({ dilemme, scene, repond, titreId = "titre-ecran", choisie, passer = "Passer", niveau = "h1" }: {
+  dilemme: Dilemme; scene: Scene; repond: (r: string) => void; titreId?: string; choisie?: string; passer?: string; niveau?: "h1" | "h3";
 }) {
   const lettres = ["A", "B", "C"];
   const Titre = niveau;
   return (
     <>
-      <p className="text-xs font-medium tracking-wide text-gris uppercase">{dilemme.theme}</p>
-      {avant}
+      <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">{dilemme.theme}</p>
       <Titre id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{scene.titre}</Titre>
       <p className="mt-2 text-lg leading-snug">{scene.texte}</p>
+      <Pourquoi key={dilemme.id} aide={dilemme.aide} />
       {dilemme.echelle ? (
         <>
           <div className="mt-5 grid grid-cols-2 gap-2">
@@ -111,7 +111,6 @@ export function CarteDilemme({ dilemme, scene, repond, titreId = "titre-ecran", 
         </div>
       )}
       {scene.exemple && <p className="mt-3 text-xs text-gris">Les montants et les durées sont des exemples, pas les chiffres d’un pays.</p>}
-      <Pourquoi key={dilemme.id} aide={dilemme.aide} />
       <button type="button" onClick={() => repond("passer")} className="mt-2 min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre">{passer}</button>
     </>
   );
@@ -263,7 +262,8 @@ export default function Quiz() {
     const lancer = () => aller({ t: "portrait" });
     return (
       <Cadre progression={100} retour={() => aller({ t: "pret" })}>
-        <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
+        <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Valeurs</p>
+        <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl font-semibold break-words outline-none">Veux-tu aussi tenir compte de ces sujets ?</h1>
         <p className="mt-2 text-gris">C’est facultatif. Touche ceux qui comptent pour toi, ou passe.</p>
         <Pourquoi aide={quiz.aides.sujets} />
         <div className="mt-5 space-y-3">
