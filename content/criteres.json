@@ -130,25 +130,26 @@
     "numero": 5,
     "id": "salaire",
     "famille": "travailler",
-    "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
-    "definition": "Salaire mensuel brut moyen des salariés, avant impôts et cotisations, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat). Limites : c’est une moyenne nationale, tous métiers confondus, et les enquêtes nationales ne mesurent pas toutes le salaire de la même façon. Ton salaire net dépendra de ton métier et des impôts du pays. À prendre comme un ordre de grandeur. Une donnée de plus de six ans, ou d’une année trop éloignée de celle des autres pays, n’est pas comptée.",
+    "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, 2024)",
+    "definition": "Salaire annuel brut moyen d’un salarié à temps plein, tous métiers confondus, avant impôts et cotisations, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat), même année (2024) pour tous les pays. Source : OCDE (Panorama des pensions 2025, d’après Taxing Wages 2025) ; pour l’Argentine, la Chine et le Brésil, données du BIT reprises par l’OCDE dans le même tableau. Taïwan, Hong Kong, Singapour, les Émirats arabes unis et le Maroc : pas de chiffre comparable, « à vérifier ». Ton salaire net dépendra de ton métier et des impôts du pays : la part qui reste après impôts est affichée à côté (OCDE, Taxing Wages 2026), sans entrer dans le score. Pour un stage ou un VIE, le score utilise l’indemnité VIE du pays à la place.",
     "type": "donnee-ouverte",
     "sources": [
-      "oit-ilostat"
+      "ocde-salaire",
+      "ocde-impots"
     ],
     "mesures": [
       {
         "id": "salaire",
-        "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
+        "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, 2024)",
         "sens": "haut",
-        "regle": "Salaire moyen des salariés de l’OIT (indicateur EAR_EMTA_SEX_CUR_NB_A, dollars PPA). Les années doivent être comparables : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. La source visée est le salaire annuel moyen de l’OCDE (même année pour tous les pays) : pas encore récupéré.",
-        "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations. Ton salaire net dépendra de ton métier et des impôts du pays.",
-        "unite": "$ PPA par mois",
+        "regle": "Salaire annuel moyen de l’OCDE (2024, dollars PPA). Les notes suivent la répartition des 25 pays notés : les seuils sont les quintiles (20 %, 40 %, 60 % et 80 % des pays), arrondis à 500 $ : 39 000, 58 500, 73 500 et 86 500 $ par an.",
+        "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations, pour un salarié à temps plein. Ton salaire net dépendra de ton métier et des impôts du pays.",
+        "unite": "$ PPA par an",
         "bornes": [
-          2000,
-          3500,
-          5000,
-          6500
+          39000,
+          58500,
+          73500,
+          86500
         ],
         "notes": [
           1,
@@ -158,11 +159,11 @@
           5
         ],
         "echelle": [
-          "moins de 2 000 $",
-          "de 2 000 à 3 500 $",
-          "de 3 500 à 5 000 $",
-          "de 5 000 à 6 500 $",
-          "plus de 6 500 $"
+          "moins de 39 000 $",
+          "de 39 000 à 58 500 $",
+          "de 58 500 à 73 500 $",
+          "de 73 500 à 86 500 $",
+          "86 500 $ ou plus"
         ],
         "mots": [
           "très bas",
@@ -173,7 +174,7 @@
         ],
         "fait": "Le salaire brut moyen y est {mot}, une fois les prix pris en compte",
         "court": "Salaire brut moyen (pouvoir d’achat)",
-        "affichage": "{v} $ PPA brut par mois",
+        "affichage": "{v} $ PPA brut par an",
         "decimales": 0,
         "theme": "le salaire",
         "etiquettes": [
@@ -184,6 +185,54 @@
           "Salaire très élevé"
         ],
         "sujet": "le salaire brut moyen"
+      },
+      {
+        "id": "indemnite-vie",
+        "nom": "Indemnité VIE mensuelle (ville la plus probable pour un VIE)",
+        "sens": "haut",
+        "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème au 1er janvier 2026 (indemnité commune de 772,87 € comprise), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, Dubaï ; sinon le montant du pays). Seuils : quintiles des 30 pays, arrondis à 50 € : 2 600, 2 900, 3 200 et 3 450 € par mois.",
+        "avertissement": "Barème relayé par un site d’information juridique (juristique.org), pas lu sur le site officiel depuis la session : à vérifier sur mon-vie-via.businessfrance.fr. L’indemnité est révisée chaque trimestre et dépend de la ville.",
+        "unite": "€ par mois",
+        "bornes": [
+          2600,
+          2900,
+          3200,
+          3450
+        ],
+        "notes": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "echelle": [
+          "moins de 2 600 €",
+          "de 2 600 à 2 900 €",
+          "de 2 900 à 3 200 €",
+          "de 3 200 à 3 450 €",
+          "3 450 € ou plus"
+        ],
+        "mots": [
+          "très basse",
+          "basse",
+          "moyenne",
+          "élevée",
+          "très élevée"
+        ],
+        "fait": "L’indemnité VIE y est {mot}",
+        "court": "Indemnité VIE",
+        "affichage": "{v} € par mois",
+        "decimales": 0,
+        "theme": "le revenu",
+        "etiquettes": [
+          "Indemnité très basse",
+          "Indemnité basse",
+          "Indemnité moyenne",
+          "Indemnité élevée",
+          "Indemnité très élevée"
+        ],
+        "sujet": "l’indemnité VIE"
       }
     ]
   },

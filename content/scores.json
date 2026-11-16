@@ -227,12 +227,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 8077.25,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 8 077 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BEL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 86545,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 545 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 60.5,
+    "impots": {
+     "taux": 39.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -488,6 +495,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2950.61,
+    "texte": "Indemnité VIE en Belgique : 2 951 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "suisse": {
@@ -503,13 +523,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 6069.99,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 070 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHE&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 5,
+    "valeur": 102611,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 102 611 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 82 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 81.9,
+    "impots": {
+     "taux": 18.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -765,6 +792,28 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4435.69,
+    "texte": "Indemnité VIE à Zurich : 4 436 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Genève, 4 130 € ; autres villes, 4 108 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Zurich",
+    "autres": [
+     {
+      "ville": "Genève",
+      "montant": 4130.11
+     },
+     {
+      "ville": "autres villes",
+      "montant": 4108.38
+     }
+    ]
    }
   },
   "allemagne": {
@@ -779,15 +828,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 6134.91,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DEU&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 88144,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 144 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 61.3,
+    "impots": {
+     "taux": 38.7,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -1045,6 +1099,28 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3230.98,
+    "texte": "Indemnité VIE à Berlin : 3 231 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Munich, 3 363 € ; autres villes, 3 012 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Berlin",
+    "autres": [
+     {
+      "ville": "Munich",
+      "montant": 3363.17
+     },
+     {
+      "ville": "autres villes",
+      "montant": 3011.73
+     }
+    ]
    }
   },
   "irlande": {
@@ -1061,12 +1137,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 5576.85,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 577 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=IRL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 86235,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 235 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 74.9,
+    "impots": {
+     "taux": 25.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1323,6 +1406,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3490.13,
+    "texte": "Indemnité VIE en Irlande : 3 490 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "luxembourg": {
@@ -1339,12 +1435,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 9274.94,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 9 275 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=LUX&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 90384,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 90 384 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 68 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 68,
+    "impots": {
+     "taux": 32,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1600,6 +1703,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3143.95,
+    "texte": "Indemnité VIE au Luxembourg : 3 144 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "espagne": {
@@ -1615,13 +1731,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5203.46,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 203 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ESP&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 2,
+    "valeur": 53185,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 53 185 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.5,
+    "impots": {
+     "taux": 23.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -1877,6 +2000,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2673.49,
+    "texte": "Indemnité VIE en Espagne : 2 673 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "italie": {
@@ -1892,13 +2028,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5481.1,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 481 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ITA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 58772,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 772 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 71 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 71.4,
+    "impots": {
+     "taux": 28.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2155,6 +2298,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2994.76,
+    "texte": "Indemnité VIE en Italie : 2 995 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "pays-bas": {
@@ -2170,13 +2326,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 7383.4,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 7 383 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NLD&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 85877,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 85 877 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 72.1,
+    "impots": {
+     "taux": 27.9,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2433,6 +2596,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3379.49,
+    "texte": "Indemnité VIE aux Pays-Bas : 3 379 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "portugal": {
@@ -2449,12 +2625,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 2196.15,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 196 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=PRT&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 41294,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 41 294 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 75.1,
+    "impots": {
+     "taux": 24.9,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2711,6 +2894,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2670.23,
+    "texte": "Indemnité VIE au Portugal : 2 670 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "norvege": {
@@ -2726,13 +2922,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 6693.8,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 694 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NOR&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 82016,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 82 016 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 71.9,
+    "impots": {
+     "taux": 28.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -2989,6 +3192,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3333.07,
+    "texte": "Indemnité VIE en Norvège : 3 333 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "suede": {
@@ -3004,13 +3220,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 5284.05,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 5 284 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SWE&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 63934,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 63 934 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 77.4,
+    "impots": {
+     "taux": 22.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3267,6 +3490,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3164.69,
+    "texte": "Indemnité VIE en Suède : 3 165 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "danemark": {
@@ -3283,12 +3519,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 6689.19,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 689 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=DNK&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 88971,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 971 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 65 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 64.7,
+    "impots": {
+     "taux": 35.3,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3545,6 +3788,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3672.29,
+    "texte": "Indemnité VIE au Danemark : 3 672 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "canada": {
@@ -3560,13 +3816,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 4571.22,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 571 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CAN&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 75586,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 75 586 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 74 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 74.4,
+    "impots": {
+     "taux": 25.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -3823,6 +4086,28 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3360.25,
+    "texte": "Indemnité VIE à Vancouver : 3 360 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Ottawa, 2 636 € ; autres villes, à vérifier.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Vancouver",
+    "autres": [
+     {
+      "ville": "Ottawa",
+      "montant": 2635.95
+     },
+     {
+      "ville": "autres villes",
+      "montant": null
+     }
+    ]
    }
   },
   "australie": {
@@ -3837,15 +4122,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 3925.81,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=AUS&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 72330,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 72 330 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.5,
+    "impots": {
+     "taux": 23.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4098,6 +4388,24 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3454.08,
+    "texte": "Indemnité VIE à Sydney : 3 454 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 3 224 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Sydney",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 3224.39
+     }
+    ]
    }
   },
   "japon": {
@@ -4112,15 +4420,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 2808.73,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=JPN&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 58439,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 439 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 77.4,
+    "impots": {
+     "taux": 22.6,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4373,6 +4686,24 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2842.35,
+    "texte": "Indemnité VIE à Tokyo : 2 842 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 2 495 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Tokyo",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 2495.28
+     }
+    ]
    }
   },
   "nouvelle-zelande": {
@@ -4387,15 +4718,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4064.16,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=NZL&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 54733,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 54 733 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 79 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 79.2,
+    "impots": {
+     "taux": 20.8,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4648,6 +4984,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2605.04,
+    "texte": "Indemnité VIE en Nouvelle-Zélande : 2 605 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "coree-du-sud": {
@@ -4662,15 +5011,20 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4525.45,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=KOR&format=.csv",
-     "verifieLe": "2026-11-14"
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 70766,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 766 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 84 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 83.5,
+    "impots": {
+     "taux": 16.5,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
     }
    },
    "heures": {
@@ -4928,6 +5282,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2583.58,
+    "texte": "Indemnité VIE en Corée du Sud : 2 584 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "taiwan": {
@@ -4939,7 +5306,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : pas de donnée dans cette source."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -5155,6 +5522,19 @@
     "statut": "a-verifier",
     "note": null,
     "texte": "Obésité des adultes : pas de donnée dans cette source."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2375.85,
+    "texte": "Indemnité VIE à Taipei : 2 376 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Taipei",
+    "autres": []
    }
   },
   "hong-kong": {
@@ -5171,7 +5551,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : la dernière donnée date de 2016, elle est trop ancienne pour être comptée."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -5396,6 +5776,19 @@
     "statut": "a-verifier",
     "note": null,
     "texte": "Obésité des adultes : pas de donnée dans cette source."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3197.64,
+    "texte": "Indemnité VIE à Hong Kong : 3 198 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "argentine": {
@@ -5411,13 +5804,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 1,
-    "valeur": 1522.6,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 523 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ARG&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 2,
+    "valeur": 40134,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 40 134 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "verifie",
@@ -5664,6 +6057,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2741.18,
+    "texte": "Indemnité VIE en Argentine : 2 741 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "chili": {
@@ -5679,13 +6085,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 2,
-    "valeur": 2078.79,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 2 079 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2024).",
+    "note": 1,
+    "valeur": 31076,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 31 076 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 93 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
     "annee": "2024",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 92.9,
+    "impots": {
+     "taux": 7.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -5941,6 +6354,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2341.15,
+    "texte": "Indemnité VIE au Chili : 2 341 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "colombie": {
@@ -5957,12 +6383,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 1214.38,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 214 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=COL&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 20293,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 20 293 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 100 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 100,
+    "impots": {
+     "taux": 0,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -6208,6 +6641,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2531.48,
+    "texte": "Indemnité VIE en Colombie : 2 531 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "mexique": {
@@ -6224,12 +6670,19 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 938.11,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 938 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=MEX&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 19311,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 19 311 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 87 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 86.8,
+    "impots": {
+     "taux": 13.2,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -6484,6 +6937,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3066.69,
+    "texte": "Indemnité VIE au Mexique : 3 067 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "bresil": {
@@ -6500,12 +6966,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 1314.42,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 1 314 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BRA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "valeur": 16567,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 16 567 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "verifie",
@@ -6752,6 +7218,24 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2186.46,
+    "texte": "Indemnité VIE au Brésil : 2 186 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : São Paulo, 2 594 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": [
+     {
+      "ville": "São Paulo",
+      "montant": 2594.05
+     }
+    ]
    }
   },
   "royaume-uni": {
@@ -6767,13 +7251,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 4499.88,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 4 500 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=GBR&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 4,
+    "valeur": 78216,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 78 216 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 76.9,
+    "impots": {
+     "taux": 23.1,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -7029,6 +7520,24 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3816.01,
+    "texte": "Indemnité VIE à Londres : 3 816 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : autres villes, 2 732 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Londres",
+    "autres": [
+     {
+      "ville": "autres villes",
+      "montant": 2732.43
+     }
+    ]
    }
   },
   "etats-unis": {
@@ -7044,13 +7553,20 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 6272.93,
-    "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 6 273 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-    "annee": "2025",
-    "source": "oit-ilostat",
-    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=USA&format=.csv",
-    "verifieLe": "2026-11-14"
+    "note": 3,
+    "valeur": 70627,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 627 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 76 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16",
+    "resteSur100": 75.7,
+    "impots": {
+     "taux": 24.3,
+     "source": "ocde-impots",
+     "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+     "annee": "2025"
+    }
    },
    "heures": {
     "statut": "verifie",
@@ -7306,6 +7822,28 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5046.14,
+    "texte": "Indemnité VIE à New York : 5 046 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Californie, 5 108 € ; autres États, à vérifier.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "New York",
+    "autres": [
+     {
+      "ville": "Californie",
+      "montant": 5107.94
+     },
+     {
+      "ville": "autres États",
+      "montant": null
+     }
+    ]
    }
   },
   "singapour": {
@@ -7322,14 +7860,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2021, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 4419.63,
-     "annee": "2021",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SGP&format=.csv",
-     "verifieLe": "2026-11-14"
-    }
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -7581,6 +8112,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4054.86,
+    "texte": "Indemnité VIE à Singapour : 4 055 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   },
   "emirats-arabes-unis": {
@@ -7597,7 +8141,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : la dernière donnée date de 2009, elle est trop ancienne pour être comptée."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "verifie",
@@ -7844,6 +8388,24 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2635.44,
+    "texte": "Indemnité VIE à Dubaï : 2 635 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Abou Dhabi, 2 434 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Dubaï",
+    "autres": [
+     {
+      "ville": "Abou Dhabi",
+      "montant": 2433.98
+     }
+    ]
    }
   },
   "chine": {
@@ -7858,16 +8420,14 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : la donnée la plus récente de cette source date de 2022, alors que la plupart des pays ont une donnée de 2025. Des années trop différentes faussent la comparaison : on ne la compte pas.",
-    "ancien": {
-     "valeur": 1434.75,
-     "annee": "2022",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHN&format=.csv",
-     "verifieLe": "2026-11-14"
-    }
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 34890,
+    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 34 890 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2024",
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "verifieLe": "2026-11-16"
    },
    "heures": {
     "statut": "a-verifier",
@@ -8118,6 +8678,28 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2930.89,
+    "texte": "Indemnité VIE à Shanghai : 2 931 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel). Autres villes : Pékin, 2 884 € ; autres villes, 2 660 €.",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": "Shanghai",
+    "autres": [
+     {
+      "ville": "Pékin",
+      "montant": 2884.06
+     },
+     {
+      "ville": "autres villes",
+      "montant": 2660.31
+     }
+    ]
    }
   },
   "maroc": {
@@ -8134,7 +8716,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire moyen : pas de donnée dans cette source."
+    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
    },
    "heures": {
     "statut": "a-verifier",
@@ -8375,6 +8957,19 @@
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
     "verifieLe": "2026-11-16"
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1965.76,
+    "texte": "Indemnité VIE au Maroc : 1 966 € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).",
+    "annee": "2026",
+    "source": "bareme-vie-relaye",
+    "lien": "https://mon-vie-via.businessfrance.fr/",
+    "verifieLe": "2026-11-16",
+    "relaye": true,
+    "ville": null,
+    "autres": []
    }
   }
  },
@@ -8394,13 +8989,20 @@
     },
     "salaire": {
      "statut": "verifie",
-     "note": 2,
-     "valeur": 3083.59,
-     "texte": "Salaire brut moyen des salariés, avant impôts et cotisations : 3 084 $ par mois, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (2025).",
-     "annee": "2025",
-     "source": "oit-ilostat",
-     "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=FRA&format=.csv",
-     "verifieLe": "2026-11-16"
+     "note": 3,
+     "valeur": 67318,
+     "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 67 318 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+     "annee": "2024",
+     "source": "ocde-salaire",
+     "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+     "verifieLe": "2026-11-16",
+     "resteSur100": 72,
+     "impots": {
+      "taux": 28,
+      "source": "ocde-impots",
+      "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+      "annee": "2025"
+     }
     },
     "heures": {
      "statut": "verifie",

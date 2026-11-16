@@ -166,8 +166,10 @@ export const dilemmeActif = (d: Dilemme) => mesuresDuDilemme(d).every((m) => pay
 const familleDe = (m: string) => (mesures[m]?.critere.famille ?? "vivre") as FamilleScore;
 
 // Une mesure « de profil » prend sa vraie valeur : « secteur » devient la mesure de ton secteur.
+// Pour un stage ou un VIE, le revenu qui compte est l'indemnité VIE du pays, pas le salaire moyen.
 export function mesureReelle(m: string, p: Profil): string | null {
   if (m === "secteur") return typeof p.secteur === "string" && p.secteur !== "autre" && mesures[`secteur-${p.secteur}`] ? `secteur-${p.secteur}` : null;
+  if (m === "salaire" && p.objectif === "stage-vie" && mesures["indemnite-vie"]) return "indemnite-vie";
   return m;
 }
 
@@ -671,6 +673,8 @@ export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil):
     if (MESURES_CALCULEES.includes(m)) return TYPES_VERIFIES.includes(preuveDe(paysId, m, profil).type);
     const n = notes[paysId]?.[m];
     if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
+    // Un barème relayé (indemnité VIE), pas lu sur le site officiel, compte dans le score mais pas comme une donnée vérifiée.
+    if (n.relaye) return false;
     // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
     if ((m === "langue" || m === "apprendre-langue") && parleLangueDe(paysId, profil)) return true;
     return TYPES_VERIFIES.includes(sources[n.source]?.type);
@@ -1147,6 +1151,20 @@ export function valeurLisible(paysId: string, mesureId: string, profil: Profil):
   const modele = typeof v === "number" && v < 2 && m.affichageSingulier ? m.affichageSingulier : m.affichage;
   const valeur = modele && typeof v === "number" ? modele.replace("{v} ", "{v}\u00a0").replace("{v}", nombreFr(v, m.decimales ?? 0)) : null;
   return { valeur, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
+}
+
+// Ce qui accompagne une valeur dans le détail du pays : la part qui reste après impôts (salaire, hors score),
+// ou les autres villes du barème (indemnité VIE).
+export function complementMesure(paysId: string, mesureId: string): string | null {
+  const n = notes[paysId]?.[mesureId];
+  if (mesureId === "salaire") {
+    if (typeof n?.resteSur100 === "number") return `Pour un célibataire au salaire moyen, sur 100\u00a0€ bruts, il reste environ ${Math.round(n.resteSur100)}\u00a0€ après impôt sur le revenu et cotisations salariales (OCDE, 2025).`;
+    return "Ce qui reste après impôts\u00a0: à vérifier pour ce pays.";
+  }
+  if (mesureId === "indemnite-vie" && n?.autres?.length) {
+    return `Autres villes\u00a0: ${n.autres.map((a) => `${a.ville}, ${a.montant ? `${Math.round(a.montant).toLocaleString("fr-FR")}\u00a0€` : "à vérifier"}`).join("\u00a0; ")}.`;
+  }
+  return null;
 }
 
 // La valeur de la France pour comparer à ce qu'on connaît : « France : 17,3 % ».

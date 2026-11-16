@@ -20,7 +20,7 @@ import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/
 import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
+  CATEGORIES, GROUPES, complementMesure, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
   faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
@@ -87,7 +87,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   const vus = new Set<string>();
   const details = ligne.details
     .filter((d) => !d.neutre && !vus.has(d.mesure) && (vus.add(d.mesure), true))
-    .sort((a, b) => Number(b.origine.startsWith("priorite:")) - Number(a.origine.startsWith("priorite:")) || b.poids - a.poids);
+    .sort((a, b) => Number(b.origine.startsWith("envie:")) - Number(a.origine.startsWith("envie:")) || b.poids - a.poids);
   return (
     <ul className="mt-2 divide-y divide-bord">
       {details.map((d) => {
@@ -102,6 +102,7 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
               <Pastille preuve={preuveMesure(ligne.pays.id, d.mesure)} pays={ligne.pays.nom} contexte={m?.court ?? d.mesure} />
             </p>
             {france && <p className="text-sm text-gris">{france}</p>}
+            {complementMesure(ligne.pays.id, d.mesure) && <p className="text-sm text-gris">{complementMesure(ligne.pays.id, d.mesure)}</p>}
           </li>
         );
       })}

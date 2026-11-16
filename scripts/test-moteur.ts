@@ -16,6 +16,7 @@ import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
+import { complementMesure } from "@/lib/moteur";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
 
 // ---------- Compteur d'échecs ----------
@@ -425,8 +426,8 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   // Comparaison : une donnée manquante d'un côté donne « Non comparable » (null), jamais une égalité.
   const ea: Etat = construire({ envies: ["salaire", "travail", "securite"] });
   const lc = calculer(ea);
-  const c = comparer(lc.find((l) => l.pays.id === "allemagne")!, lc.find((l) => l.pays.id === "belgique")!, ea);
-  verifier(c.lignes.find((x) => x.mesure === "salaire")?.ecart === null, "comparaison : salaire manquant pour l'Allemagne, mais pas « Non comparable »");
+  const c = comparer(lc.find((l) => l.pays.id === "singapour")!, lc.find((l) => l.pays.id === "belgique")!, ea);
+  verifier(c.lignes.find((x) => x.mesure === "salaire")?.ecart === null, "comparaison : salaire manquant pour Singapour, mais pas « Non comparable »");
   console.log(`Départage : ${departages} départages, ${essais} questions, ${egalitesFinales} restés à égalité.`);
 }
 
@@ -540,7 +541,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   for (const p of pays) for (const m of Object.keys(notesPays[p.id])) {
     const n = notesPays[p.id][m];
     const f = fiabiliteDe(p.id, [m], {});
-    verifier(f.verifies === (n.statut === "verifie" && n.note !== null && !!n.source && TYPES_VERIFIES.includes(sources[n.source].type) ? 1 : 0), `fiabilité : ${m} mal compté pour ${p.nom}`);
+    verifier(f.verifies === (n.statut === "verifie" && n.note !== null && !!n.source && !n.relaye && TYPES_VERIFIES.includes(sources[n.source].type) ? 1 : 0), `fiabilité : ${m} mal compté pour ${p.nom}`);
   }
 
   // Faisabilité : seulement des données sourcées, une prochaine étape vers un site officiel, jamais « juridiquement ».
@@ -577,18 +578,34 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(vie.resume.length === 2, "VIE : le résumé n'a pas deux phrases");
 }
 
-// 2.15 Fiabilité des données (prompt 3e, lot 1).
+// 2.15 Fiabilité des données (prompt 3e, lot 1 ; salaire de l'OCDE au prompt 3f, lot 5).
 {
-  // Salaire : années comparables (au plus un an d'écart avec l'année médiane), libellé honnête.
-  const ans = pays.map((p) => notesPays[p.id].salaire).map((n) => Number(n.annee ?? n.ancien?.annee)).filter(Number.isFinite).sort((a, b) => a - b);
-  const mediane = ans[Math.floor((ans.length - 1) / 2)];
+  // Salaire : OCDE 2024 pour tous, libellé honnête, 25 pays notés, 5 « à vérifier ».
   for (const p of pays) {
     const n = notesPays[p.id].salaire;
-    if (n.statut === "verifie") verifier(Math.abs(Number(n.annee) - mediane) <= 1, `salaire : ${p.nom} compté avec une donnée de ${n.annee} (médiane ${mediane})`);
-    if (n.statut === "verifie") verifier(n.texte.includes("brut") && n.texte.includes("avant impôts"), `salaire : ${p.nom} sans « brut, avant impôts »`);
+    if (n.statut === "verifie") verifier(n.annee === "2024" && n.source === "ocde-salaire" && n.texte.includes("brut") && n.texte.includes("avant impôts"), `salaire : ${p.nom} sans la donnée OCDE 2024`);
   }
-  verifier(paysCouverts("salaire") >= 0.6 * pays.length, `salaire : seulement ${paysCouverts("salaire")} pays notés, les dilemmes du salaire ne seraient plus posés`);
+  for (const id of ["taiwan", "hong-kong", "singapour", "emirats-arabes-unis", "maroc"]) verifier(notesPays[id].salaire.statut === "a-verifier", `salaire : ${id} devrait rester à vérifier`);
+  verifier(notesPays.suisse.salaire.valeur === 102611 && notesPays.bresil.salaire.valeur === 16567 && notesFrance.salaire.valeur === 67318, "salaire : valeurs de l'OCDE changées");
+  verifier(paysCouverts("salaire") === 25, `salaire : ${paysCouverts("salaire")} pays notés au lieu de 25`);
+  // Les seuils suivent la répartition : chaque note de 1 à 5 est donnée à au moins 3 pays.
+  for (let k = 1; k <= 5; k++) verifier(pays.filter((p) => notesPays[p.id].salaire.note === k).length >= 3, `salaire : la note ${k} est presque vide`);
   verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
+  // Part qui reste après impôts : dans la preuve et le détail, jamais dans le score.
+  verifier(notesPays.belgique.salaire.resteSur100 === 60.5 && notesPays.belgique.salaire.texte.includes("il reste environ 61 €"), "impôts : la Belgique ne dit pas ce qui reste sur 100 €");
+  verifier(complementMesure("argentine", "salaire")?.includes("à vérifier") === true, "impôts : l'Argentine devrait être à vérifier");
+  const sansImpots = construire({ envies: ["salaire", "travail", "prix", "climat", "securite"] });
+  const scoreBel = calculer(sansImpots).find((l) => l.pays.id === "belgique")!.score;
+  const modifie = { ...notesPays.belgique.salaire };
+  notesPays.belgique.salaire.resteSur100 = 10;
+  verifier(Math.abs(calculer(construire({ envies: ["salaire", "travail", "prix", "climat", "securite"] })).find((l) => l.pays.id === "belgique")!.score - scoreBel) < 1e-9, "impôts : la part qui reste change le score");
+  notesPays.belgique.salaire = modifie;
+  // VIE : le profil « Stage ou VIE » utilise l'indemnité du pays, pas le salaire moyen.
+  const vieEtat = construire({ profil: { objectif: "stage-vie" }, envies: ["salaire", "travail", "prix", "climat", "securite"] });
+  verifier(effetsActifs(vieEtat).some((e) => e.mesure === "indemnite-vie") && !effetsActifs(vieEtat).some((e) => e.mesure === "salaire"), "VIE : le salaire moyen compte encore pour un VIE");
+  verifier(!effetsActifs(construire({ profil: { objectif: "premier-poste" }, envies: ["salaire", "travail", "prix", "climat", "securite"] })).some((e) => e.mesure === "indemnite-vie"), "VIE : l'indemnité compte hors VIE");
+  verifier(notesPays["royaume-uni"]["indemnite-vie"].valeur === 3816.01 && notesPays["royaume-uni"]["indemnite-vie"].ville === "Londres" && notesPays["etats-unis"]["indemnite-vie"].ville === "New York", "VIE : ville la plus probable mal choisie");
+  verifier(paysCouverts("indemnite-vie") === 30 && fiabiliteDe("suisse", ["indemnite-vie"], {}).verifies === 0, "VIE : barème relayé compté comme vérifié, ou pays manquant");
   // L'année de la donnée est dans la preuve.
   for (const p of pays) for (const [m, n] of Object.entries(notesPays[p.id])) {
     if (n.statut === "verifie" && n.annee) verifier(preuveMesure(p.id, m).annee === n.annee, `preuve : année absente pour ${m} (${p.nom})`);

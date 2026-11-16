@@ -1,0 +1,83 @@
+{
+  "_note": "Valeurs fournies par Nolhan, vérifiées hors session (le site de l’OCDE est inaccessible depuis la session). Ne pas modifier sans source.",
+  "salaire": {
+    "source": "ocde-salaire",
+    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
+    "annee": "2024",
+    "unite": "dollars à parité de pouvoir d’achat par an",
+    "verifieLe": "2026-11-16",
+    "valeurs": {
+      "suisse": 102611,
+      "luxembourg": 90384,
+      "danemark": 88971,
+      "allemagne": 88144,
+      "belgique": 86545,
+      "irlande": 86235,
+      "pays-bas": 85877,
+      "norvege": 82016,
+      "royaume-uni": 78216,
+      "canada": 75586,
+      "australie": 72330,
+      "coree-du-sud": 70766,
+      "etats-unis": 70627,
+      "suede": 63934,
+      "italie": 58772,
+      "japon": 58439,
+      "nouvelle-zelande": 54733,
+      "espagne": 53185,
+      "portugal": 41294,
+      "chili": 31076,
+      "colombie": 20293,
+      "mexique": 19311,
+      "argentine": 40134,
+      "chine": 34890,
+      "bresil": 16567
+    },
+    "france": 67318,
+    "bit": [
+      "argentine",
+      "chine",
+      "bresil"
+    ],
+    "aVerifier": [
+      "taiwan",
+      "hong-kong",
+      "singapour",
+      "emirats-arabes-unis",
+      "maroc"
+    ]
+  },
+  "impots": {
+    "source": "ocde-impots",
+    "lien": "https://www.oecd.org/en/publications/taxing-wages-2026_3a5169ef-en/full-report/overview_d93131c3.html",
+    "annee": "2025",
+    "tableau": "tableau 1.3",
+    "verifieLe": "2026-11-16",
+    "definition": "Impôt sur le revenu et cotisations salariales, en % du salaire brut, pour un célibataire sans enfant au salaire moyen.",
+    "taux": {
+      "belgique": 39.5,
+      "allemagne": 38.7,
+      "italie": 28.6,
+      "espagne": 23.5,
+      "suede": 22.6,
+      "luxembourg": 32.0,
+      "portugal": 24.9,
+      "norvege": 28.1,
+      "pays-bas": 27.9,
+      "danemark": 35.3,
+      "japon": 22.6,
+      "irlande": 25.1,
+      "royaume-uni": 23.1,
+      "canada": 25.6,
+      "etats-unis": 24.3,
+      "australie": 23.5,
+      "coree-du-sud": 16.5,
+      "suisse": 18.1,
+      "mexique": 13.2,
+      "nouvelle-zelande": 20.8,
+      "chili": 7.1,
+      "colombie": 0.0
+    },
+    "france": 28.0
+  }
+}
