@@ -15,7 +15,7 @@ export type Etape =
   | { t: "transition"; chapitre: number }
   | { t: "intuition" }
   | { t: "portrait"; fin?: boolean } // fin : « Tu as répondu à tout. Ton portrait est à jour. »
-  | { t: "revoir"; id: string }
+  | { t: "revoir"; id: string; retour?: "intuition" } // retour : l'écran où revenir après (sinon le portrait)
   | { t: "affiner" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
@@ -63,7 +63,7 @@ function etatValide(x: unknown): x is Etat {
 
 function etapeValide(x: unknown): boolean {
   if (!estObjet(x)) return false;
-  if (x.t === "revoir") return estTexte(x.id) && !!trouverElement(x.id);
+  if (x.t === "revoir") return estTexte(x.id) && !!trouverElement(x.id) && (x.retour === undefined || x.retour === "intuition");
   if (x.t === "transition") return entier(x.chapitre, 1) && (x.chapitre as number) <= quiz.chapitres.length;
   if (x.t === "portrait") return x.fin === undefined || typeof x.fin === "boolean";
   return x.t === "quiz" || x.t === "intuition" || x.t === "affiner";

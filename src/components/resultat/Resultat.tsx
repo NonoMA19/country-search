@@ -304,16 +304,20 @@ export default function Resultat() {
   const surprise = brute && (!seulementOuvertes || brute.ligne.porte.badge === "ouverte") ? brute : null;
   // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
   const phrases = lignesTop(top, etat);
-  // Le curseur part du bas de ta tranche de budget (ou de 2 000 € si tu ne sais pas encore).
-  const budget = reglages.budget ?? budgetProfil(etat.profil)?.min ?? 2000;
+  // Le curseur part de la même somme que la liste « Il te manquerait… » : le haut de ta tranche
+  // (ce qui manque « au moins »), ou son bas s'il n'y a pas de haut, ou 2 000 € si tu ne sais pas encore.
+  const tranche = budgetProfil(etat.profil);
+  const budget = reglages.budget ?? tranche?.max ?? tranche?.min ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const encoreDesDilemmes = prochainAffiner(etat) !== null;
   const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
   const affiner = () => { ecrire({ ...session, etape: { t: "affiner" } }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
-  // Si tous les curseurs retirent tout ce qui comptait, il n'y a plus rien à classer.
-  const toutAZero = effetsAjustes(etat, reglages).length === 0;
+  // Deux cas différents : tu n'as répondu à rien qui compte (rienRepondu), ou tes curseurs ont tout mis à zéro (toutAZero).
+  const rienRepondu = effetsActifs(etat).length === 0;
+  const toutAZero = rienRepondu || effetsAjustes(etat, reglages).length === 0;
+  const revoirQuestion = (id: string) => { ecrire({ ...session, etape: { t: "revoir", id } }); router.push("/quiz"); };
   const reponses = effetsActifs(etat);
   const reglagesModifies = Object.keys(reglages.niveaux).length > 0;
   const rangDe = (l: Ligne) => principaux.indexOf(l);
@@ -345,7 +349,17 @@ export default function Resultat() {
       <section aria-labelledby="titre-top" className="mt-6">
         <h2 id="titre-top" className="text-xl font-semibold">Ton top 3</h2>
         <Glissement cle={top.map((l) => l.pays.id).join(",")}>
-          {toutAZero ? (
+          {rienRepondu ? (
+            <div className="rounded-2xl border border-bord bg-carte p-4">
+              <p className="font-medium">Tu as passé toutes les questions qui comptent pour le classement : on ne peut pas encore classer les pays pour toi.</p>
+              <p className="mt-3 font-semibold">Réponds au moins à ces 3 questions, celles qui comptent le plus :</p>
+              <div className="mt-2 grid gap-2">
+                {[["envies", "Tes 5 envies"], ["objectif", "Ton projet"], ["limites", "Tes limites"]].map(([id, nom]) => (
+                  <button key={id} type="button" onClick={() => revoirQuestion(id)} className="min-h-12 rounded-2xl border border-bord px-4 text-left font-semibold hover:border-bleu">{nom}</button>
+                ))}
+              </div>
+            </div>
+          ) : toutAZero ? (
             <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Avec tes curseurs « Et si… ? », plus rien ne compte pour classer les pays. Remonte au moins un curseur.</p>
           ) : (
             top.map((l, i) => (
@@ -442,9 +456,9 @@ export default function Resultat() {
         </section>
       )}
 
-      <section aria-labelledby="titre-tous" className="mt-10">
+      {(!toutAZero && suite.length > 0) || ecartes.length > 0 ? <section aria-labelledby="titre-tous" className="mt-10">
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
-        {!toutAZero && <details className="mt-3">
+        {!toutAZero && suite.length > 0 && <details className="mt-3">
           <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
           <ol className="mt-3 space-y-2">
             {suite.map((l) => <LignePays key={l.pays.id} ligne={l} rang={rangDe(l) + 1} egalite={l.peuDeDonnees ? null : avecQui(principaux, rangDe(l), (k) => k >= top.length)} />)}
@@ -470,7 +484,7 @@ export default function Resultat() {
             ))}
           </div>
         )}
-      </section>
+      </section> : null}
 
       <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
         {encoreDesDilemmes ? (

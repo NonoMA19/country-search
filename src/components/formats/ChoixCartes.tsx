@@ -29,14 +29,14 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
           const idTitre = `${el.id}-${o.id}`;
           const opt = o as typeof o & { phrase?: string; plus?: string; moins?: string };
           return (
-            <button key={o.id} type="button" aria-pressed={actif} disabled={desactive} aria-labelledby={idTitre} aria-describedby={opt.phrase || o.indispo ? `${idTitre}-d` : undefined}
+            <button key={o.id} type="button" aria-pressed={actif} disabled={desactive} aria-labelledby={idTitre} aria-describedby={[opt.phrase || o.indispo ? `${idTitre}-d` : "", el.avecPlusMoins && opt.plus ? `${idTitre}-pm` : ""].filter(Boolean).join(" ") || undefined}
               onClick={() => (el.multiple ? basculer(o.id) : repondre(o.id))}
               className={`relative flex min-h-14 w-full min-w-0 ${grille ? "flex-col items-stretch gap-2 p-3" : "items-start gap-3 px-4 py-3"} rounded-2xl border-2 text-left transition-colors disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
               {grille && <Illustration icone={o.icone} alt={`Image provisoire : ${o.label}`} />}
               <span className="min-w-0 flex-1">
                 <span id={idTitre} className="block text-base leading-snug font-semibold break-words hyphens-auto">{o.label}</span>
                 {(opt.phrase || o.indispo) && <span id={`${idTitre}-d`} className="mt-0.5 block text-sm leading-snug text-gris">{o.indispo ?? opt.phrase}</span>}
-                {el.avecPlusMoins && opt.plus && opt.moins && <PlusMoins plus={opt.plus} moins={opt.moins} />}
+                {el.avecPlusMoins && opt.plus && opt.moins && <span id={`${idTitre}-pm`} className="block"><PlusMoins plus={opt.plus} moins={opt.moins} /></span>}
               </span>
               {actif && <Check aria-hidden="true" className="absolute top-2 right-2 h-5 w-5 text-lien" />}
             </button>

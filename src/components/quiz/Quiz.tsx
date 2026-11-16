@@ -191,8 +191,10 @@ export default function Quiz() {
 
   // ----- Ton intuition et tes réponses -----
   if (etape.t === "intuition") {
+    // Retour : rouvre tes limites. Si tu as affiné depuis, on les rouvre telles quelles, sans rien annuler.
+    const retourIntuition = () => (etat.ordre.at(-1) === "limites" ? retourQuiz() : aller({ t: "revoir", id: "limites", retour: "intuition" }));
     return (
-      <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
+      <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourIntuition}>
         <EcranIntuition etat={etat} suite={() => aller({ t: "portrait" })} />
       </Cadre>
     );
@@ -203,7 +205,7 @@ export default function Quiz() {
     const revoir = (l: LignePortrait) => { if (l.revoir) aller({ t: "revoir", id: l.revoir.id }); };
     const restants = restantsAffiner(etat);
     return (
-      <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
+      <Cadre chapitre={NB_CHAPITRES} part={1} retour={() => aller({ t: "intuition" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
         {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
@@ -224,12 +226,13 @@ export default function Quiz() {
   if (etape.t === "revoir") {
     const el = trouverElement(etape.id);
     if (!el) return <Secours chapitre={NB_CHAPITRES} texte="Cette question n’existe plus." portrait={() => aller({ t: "portrait" })} />;
+    const apres: Etape = etape.retour === "intuition" ? { t: "intuition" } : { t: "portrait" };
     {
       const F = FORMATS[el.type];
       return (
-        <Cadre chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
+        <Cadre chapitre={el.chapitre} part={1} retour={() => aller(apres)}>
           <F key={el.id} element={el} etat={etat} valeur={etat.reponses[el.id]} libellePasser="Garder ma réponse"
-            repondre={(v: Valeur) => aller({ t: "portrait" }, { etat: changerReponse(etat, el.id, v) })} passer={() => aller({ t: "portrait" })} />
+            repondre={(v: Valeur) => aller(apres, { etat: changerReponse(etat, el.id, v) })} passer={() => aller(apres)} />
         </Cadre>
       );
     }

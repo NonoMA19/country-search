@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Undo2 } from "lucide-react";
 import type { Swipe as TSwipe } from "@/lib/donnees";
 import { LIBELLE_SWIPE, type ReponseSwipe } from "@/lib/elements";
 import { phrasesSwipe } from "@/lib/parcours";
+import { clicLibre, marquerChangement } from "@/lib/clic";
 import { Actions, EnTete, FOCUS, mouvementReduitActif, type PropsFormat } from "./commun";
 
 const SEUIL = 90; // pixels à glisser pour répondre
@@ -20,11 +21,14 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
   const phrase = phrases[i];
 
   const choisir = (r: ReponseSwipe) => {
-    if (!phrase) return;
+    // Un double tap ou une touche maintenue ne répond qu'à une seule phrase (garde de 400 ms, src/lib/clic.ts).
+    if (!phrase || !clicLibre()) return;
     const suite = { ...reponses, [phrase.id]: r };
     setDx(0);
-    if (Object.keys(suite).length >= phrases.length) repondre(suite);
-    else setReponses(suite);
+    // La dernière phrase change d'écran : c'est repondre qui pose la garde (sinon il serait lui-même bloqué).
+    if (Object.keys(suite).length >= phrases.length) { repondre(suite); return; }
+    marquerChangement();
+    setReponses(suite);
     requestAnimationFrame(() => document.getElementById(`${el.id}-carte`)?.focus());
   };
   const annuler = () => {
@@ -41,6 +45,7 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
     depart.current = null;
   };
   const touche = (e: KeyboardEvent) => {
+    if (e.repeat) return;
     if (e.key === "ArrowRight") { e.preventDefault(); choisir("oui"); }
     if (e.key === "ArrowLeft") { e.preventDefault(); choisir("non"); }
   };

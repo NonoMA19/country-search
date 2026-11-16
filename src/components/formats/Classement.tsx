@@ -19,26 +19,38 @@ export default function Classement({ element: el, etat, valeur, repondre, passer
   const liste = useRef<HTMLOListElement>(null);
   const label = (id: string) => quiz.envies.find((e) => e.id === id)?.label ?? id;
 
-  const deplacer = (id: string, vers: number, focus = false) => {
-    setOrdre((o) => {
-      const i = o.indexOf(id);
-      if (vers < 0 || vers >= o.length || vers === i) return o;
-      const n = [...o];
-      n.splice(i, 1);
-      n.splice(vers, 0, id);
-      setAnnonce(`${label(id)} : position ${vers + 1} sur ${o.length}.`);
-      return n;
-    });
-    if (focus) requestAnimationFrame(() => document.getElementById(`monter-${id}`)?.focus());
+  // focus : après un déplacement au clavier, le focus reste sur la flèche utilisée, ou passe à l'autre si elle devient inactive.
+  const deplacer = (id: string, vers: number, focus?: "monter" | "descendre") => {
+    const i = ordre.indexOf(id);
+    if (vers < 0 || vers >= ordre.length || vers === i) return;
+    const n = [...ordre];
+    n.splice(i, 1);
+    n.splice(vers, 0, id);
+    setOrdre(n);
+    setAnnonce(`${label(id)} : position ${vers + 1} sur ${n.length}.`);
+    if (focus) {
+      const actif = focus === "monter" ? vers > 0 : vers < n.length - 1;
+      const cible = actif ? focus : focus === "monter" ? "descendre" : "monter";
+      requestAnimationFrame(() => document.getElementById(`${cible}-${id}`)?.focus());
+    }
   };
 
-  // Glisser : la poignée suit le doigt ; l'élément change de place quand il passe le milieu d'un voisin.
+  // Glisser : l'élément ne change de place que quand le doigt dépasse le milieu d'un voisin d'au moins ZONE_MORTE pixels.
+  // On ne compte jamais l'élément glissé lui-même.
+  const ZONE_MORTE = 12;
   const bouger = (e: PointerEvent, id: string) => {
     if (glisse !== id || !liste.current) return;
     const items = [...liste.current.querySelectorAll<HTMLElement>("[data-item]")];
-    const cible = items.findIndex((it) => { const r = it.getBoundingClientRect(); return e.clientY < r.top + r.height / 2; });
-    const vers = cible === -1 ? items.length - 1 : cible;
-    if (vers !== ordre.indexOf(id)) deplacer(id, vers);
+    const i = ordre.indexOf(id);
+    let vers = 0;
+    items.forEach((it, j) => {
+      if (j === i) return;
+      const r = it.getBoundingClientRect();
+      const milieu = r.top + r.height / 2;
+      // Un voisin du dessus reste au-dessus tant qu'on ne remonte pas assez ; un voisin du dessous passe au-dessus quand on le dépasse assez.
+      if (j < i ? e.clientY >= milieu - ZONE_MORTE : e.clientY > milieu + ZONE_MORTE) vers++;
+    });
+    if (vers !== i) deplacer(id, vers);
   };
 
   return (
@@ -64,11 +76,11 @@ export default function Classement({ element: el, etat, valeur, repondre, passer
               <span className="block leading-snug font-medium break-words">{label(id)}</span>
               <span className="block text-xs text-gris">Importance {nombreFr(poidsRang(i))}</span>
             </span>
-            <button type="button" id={`monter-${id}`} onClick={() => deplacer(id, i - 1, true)} disabled={i === 0} aria-label={`Monter ${label(id)}`}
+            <button type="button" id={`monter-${id}`} onClick={() => deplacer(id, i - 1, "monter")} disabled={i === 0} aria-label={`Monter ${label(id)}`}
               className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-bord disabled:opacity-30 ${FOCUS}`}>
               <ArrowUp aria-hidden="true" className="h-5 w-5" />
             </button>
-            <button type="button" onClick={() => deplacer(id, i + 1)} disabled={i === ordre.length - 1} aria-label={`Descendre ${label(id)}`}
+            <button type="button" id={`descendre-${id}`} onClick={() => deplacer(id, i + 1, "descendre")} disabled={i === ordre.length - 1} aria-label={`Descendre ${label(id)}`}
               className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-bord disabled:opacity-30 ${FOCUS}`}>
               <ArrowDown aria-hidden="true" className="h-5 w-5" />
             </button>
