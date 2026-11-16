@@ -121,7 +121,8 @@
           "Chômage moyen",
           "Chômage faible",
           "Chômage très faible"
-        ]
+        ],
+        "sujet": "le chômage des jeunes"
       }
     ]
   },
@@ -181,7 +182,8 @@
           "Salaire moyen",
           "Salaire élevé",
           "Salaire très élevé"
-        ]
+        ],
+        "sujet": "le salaire brut moyen"
       }
     ]
   },
@@ -229,7 +231,8 @@
           "Possible dans les grandes entreprises",
           "Très courant en entreprise",
           "Langue du bureau"
-        ]
+        ],
+        "sujet": "le travail en anglais"
       }
     ]
   },
@@ -295,7 +298,8 @@
           "Communauté moyenne",
           "Grande communauté",
           "Très grande communauté"
-        ]
+        ],
+        "sujet": "le nombre de Français sur place"
       }
     ]
   },
@@ -359,7 +363,8 @@
           "Semaines moyennes",
           "Semaines plutôt courtes",
           "Semaines courtes"
-        ]
+        ],
+        "sujet": "les heures de travail"
       }
     ]
   },
@@ -409,7 +414,8 @@
           "Hiérarchie intermédiaire",
           "Hiérarchie marquée",
           "Hiérarchie très marquée"
-        ]
+        ],
+        "sujet": "la hiérarchie"
       },
       {
         "id": "communication",
@@ -445,7 +451,8 @@
           "Communication nuancée",
           "Communication plutôt indirecte",
           "Communication très indirecte"
-        ]
+        ],
+        "sujet": "la façon de communiquer"
       },
       {
         "id": "ponctualite",
@@ -481,7 +488,8 @@
           "Ponctualité intermédiaire",
           "Ponctualité attendue",
           "Ponctualité stricte"
-        ]
+        ],
+        "sujet": "la ponctualité"
       },
       {
         "id": "decision",
@@ -516,7 +524,8 @@
           "Entre les deux",
           "Accord du groupe recherché",
           "Décision par consensus"
-        ]
+        ],
+        "sujet": "la façon de décider"
       },
       {
         "id": "pro-perso",
@@ -551,7 +560,8 @@
           "Vie pro et perso un peu mêlées",
           "Vie pro et perso souvent mêlées",
           "Vie pro et perso très mêlées"
-        ]
+        ],
+        "sujet": "le lien entre vie pro et vie perso"
       }
     ]
   },
@@ -615,7 +625,8 @@
           "Prix proches de ceux de la France",
           "Moins cher que la France",
           "Beaucoup moins cher que la France"
-        ]
+        ],
+        "sujet": "le coût de la vie"
       }
     ]
   },
@@ -673,7 +684,8 @@
           "Hiver frais",
           "Hiver doux",
           "Hiver chaud"
-        ]
+        ],
+        "sujet": "l’hiver"
       },
       {
         "id": "ete",
@@ -718,7 +730,8 @@
           "Été chaud",
           "Été très chaud",
           "Été étouffant"
-        ]
+        ],
+        "sujet": "l’été"
       },
       {
         "id": "doux",
@@ -748,7 +761,8 @@
           "Climat assez doux",
           "Climat doux",
           "Climat très doux"
-        ]
+        ],
+        "sujet": "la douceur du climat"
       }
     ]
   },
@@ -812,7 +826,8 @@
           "Assez loin",
           "Proche",
           "Très proche"
-        ]
+        ],
+        "sujet": "la distance avec la France"
       },
       {
         "id": "decalage",
@@ -863,7 +878,8 @@
           "Décalage moyen",
           "Petit décalage",
           "Presque la même heure"
-        ]
+        ],
+        "sujet": "le décalage horaire"
       }
     ]
   },
@@ -911,7 +927,8 @@
           "Anglais au quotidien",
           "Langue proche du français",
           "On parle français"
-        ]
+        ],
+        "sujet": "la langue du quotidien"
       },
       {
         "id": "apprendre-langue",
@@ -948,7 +965,8 @@
           "Une langue à apprendre",
           "Entre les deux",
           "Rien à apprendre"
-        ]
+        ],
+        "sujet": "la langue à apprendre"
       }
     ]
   },
@@ -1007,7 +1025,8 @@
           "Sûr",
           "Très sûr"
         ],
-        "affichageSingulier": "{v} homicide pour 100 000 habitants"
+        "affichageSingulier": "{v} homicide pour 100 000 habitants",
+        "sujet": "la sécurité"
       }
     ]
   },
@@ -1059,7 +1078,8 @@
           "Accord avec la France",
           "Système public accessible",
           "Carte européenne valable"
-        ]
+        ],
+        "sujet": "la couverture santé à l’arrivée"
       }
     ]
   },
@@ -1118,7 +1138,8 @@
           "Moyennement stable",
           "Stable",
           "Très stable"
-        ]
+        ],
+        "sujet": "la stabilité politique"
       },
       {
         "id": "libertes",
@@ -1163,7 +1184,8 @@
           "Moyennement respectées",
           "Respectées",
           "Très respectées"
-        ]
+        ],
+        "sujet": "les libertés"
       },
       {
         "id": "egalite",
@@ -1208,7 +1230,8 @@
           "Moyenne",
           "Plutôt égale",
           "Très égale"
-        ]
+        ],
+        "sujet": "l’égalité femmes-hommes dans la loi"
       },
       {
         "id": "air",
@@ -1253,7 +1276,8 @@
           "Moyennement pollué",
           "Peu pollué",
           "Très peu pollué"
-        ]
+        ],
+        "sujet": "la qualité de l’air"
       }
     ]
   },
@@ -1301,7 +1325,8 @@
           "Une grande ville à taille humaine",
           "Plusieurs grandes villes",
           "De très grandes métropoles"
-        ]
+        ],
+        "sujet": "les grandes villes"
       },
       {
         "id": "ville-moyenne",
@@ -1336,7 +1361,8 @@
           "Quelques villes moyennes",
           "Beaucoup de villes moyennes",
           "Un vrai réseau de villes moyennes"
-        ]
+        ],
+        "sujet": "les villes moyennes"
       },
       {
         "id": "nature",
@@ -1371,7 +1397,8 @@
           "Nature accessible",
           "Nature proche",
           "Nature aux portes des villes"
-        ]
+        ],
+        "sujet": "la nature proche"
       }
     ]
   },
@@ -1437,7 +1464,8 @@
           "Obésité peu fréquente",
           "Obésité rare"
         ],
-        "avertissement": "C’est un repère indirect : l’obésité dépend aussi du sport, des revenus et de la génétique, pas seulement de ce qu’on mange."
+        "avertissement": "C’est un repère indirect : l’obésité dépend aussi du sport, des revenus et de la génétique, pas seulement de ce qu’on mange.",
+        "sujet": "l’obésité des adultes"
       }
     ]
   }

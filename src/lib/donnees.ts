@@ -36,6 +36,7 @@ export type DefMesure = {
   theme?: string; // pour les phrases de synthèse : « la distance », « le climat »
   etiquettes?: string[]; // un mot par niveau, à côté de la valeur : « Très sûr », « Hiver doux »
   avertissement?: string; // une phrase de prudence affichée dans la fenêtre de preuve (salaire brut moyen…)
+  sujet?: string; // pour le départage : « l’Allemagne et la Belgique diffèrent surtout sur la ponctualité »
 };
 
 export type Critere = {

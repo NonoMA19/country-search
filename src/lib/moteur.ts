@@ -892,11 +892,26 @@ export function portrait(etat: Etat, regrouperStyle = false): LignePortrait[] {
 export const demarrerDilemmes = (etat: Etat): Etat => ({ ...etat, reponses: {}, ordre: [], historique: [cleTop3(calculer({ ...etat, reponses: {}, ordre: [] }))] });
 
 // ---------- Le départage ----------
-// Quand le n°1 et le n°2 sont à 5 points ou moins, au plus 3 dilemmes encore non répondus,
-// choisis parce qu'ils séparent le plus ces deux pays.
-export const MAX_DEPARTAGE = 3;
+// Quand le n°1 et le n°2 sont à 5 points ou moins : au plus 5 dilemmes encore non répondus, tant que l'écart
+// reste sous 5 points, puis la comparaison côte à côte. Seulement des dilemmes dont une mesure sépare vraiment
+// les deux pays : deux niveaux d'écart ou plus, avec une donnée vérifiée des deux côtés.
+export const MAX_DEPARTAGE = 5;
+export const ECART_NIVEAUX_DEPARTAGE = 2;
 const ecartEntre = (lignes: Ligne[], a: string, b: string) =>
   (lignes.find((l) => l.pays.id === a)?.score ?? 0) - (lignes.find((l) => l.pays.id === b)?.score ?? 0);
+const lePays = (id: string) => pays.find((p) => p.id === id)?.le ?? id;
+const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+
+// Les mesures d'un dilemme qui séparent a et b (de la plus grande différence à la plus petite).
+export function mesuresQuiSeparent(d: Dilemme, etat: Etat, a: string, b: string): { mesure: string; ecart: number }[] {
+  return mesuresDuDilemme(d)
+    .map((m) => {
+      const na = noteEffective(a, m, etat.profil), nb = noteEffective(b, m, etat.profil);
+      return na === null || nb === null ? null : { mesure: m, ecart: Math.abs(na - nb) };
+    })
+    .filter((x): x is { mesure: string; ecart: number } => !!x && x.ecart >= ECART_NIVEAUX_DEPARTAGE)
+    .sort((x, y) => y.ecart - x.ecart);
+}
 
 // De combien les options d'un dilemme font varier l'écart entre a et b (0 : il ne les sépare pas).
 export function separation(d: Dilemme, etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): number {
@@ -908,25 +923,40 @@ export function prochainDepartage(etat: Etat, a: string, b: string, reglages: Re
   let meilleur: Dilemme | null = null;
   let max = 1e-6;
   for (const d of quiz.dilemmes) {
-    if (!dilemmeVisible(d, etat)) continue;
+    if (!dilemmeVisible(d, etat) || mesuresQuiSeparent(d, etat, a, b).length === 0) continue;
     const s = separation(d, etat, a, b, reglages);
     if (s > max) { max = s; meilleur = d; }
   }
   return meilleur;
 }
 
-// La phrase de fin : la réponse qui a le plus changé l'écart, et qui est devant maintenant.
+// « On te pose cette question parce que l'Allemagne et la Belgique diffèrent surtout sur la ponctualité. »
+export function raisonDepartage(d: Dilemme, etat: Etat, a: string, b: string): string {
+  const m = mesuresQuiSeparent(d, etat, a, b)[0];
+  const sujet = m ? (mesures[m.mesure]?.sujet ?? mesures[m.mesure]?.nom.toLowerCase()) : "ce point";
+  return `On te pose cette question parce que ${lePays(a)} et ${lePays(b)} diffèrent surtout sur ${sujet}.`;
+}
+
+// L'écart entre deux pays est-il encore une égalité (5 points ou moins) ?
+export const encoreEgalite = (etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT) =>
+  Math.abs(ecartEntre(calculer(etat, reglages), a, b)) <= ECART_EX_AEQUO;
+
+// La phrase de fin. Si les deux pays restent à égalité, on ne dit pas « ce qui a fait la différence ».
 export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): string {
-  const le = (id: string) => pays.find((p) => p.id === id)?.le ?? id;
-  const Le = (id: string) => le(id).charAt(0).toUpperCase() + le(id).slice(1);
-  const pluriel = (id: string) => le(id).startsWith("les ");
+  const pluriel = (id: string) => lePays(id).startsWith("les ");
   const ids = apres.ordre.filter((id) => !avant.ordre.includes(id) && apres.reponses[id] !== "passer");
+  const debut = ecartEntre(calculer(avant, reglages), a, b);
   const fin = ecartEntre(calculer(apres, reglages), a, b);
+  const egalite = Math.abs(fin) <= ECART_EX_AEQUO;
+  const ecartFin = Math.round(Math.abs(fin));
+  const points = `${ecartFin}\u00a0point${ecartFin > 1 ? "s" : ""} d’écart`;
   const devant = fin > 0 ? a : b, derriere = fin > 0 ? b : a;
-  const issue = Math.abs(fin) <= ECART_EX_AEQUO
-    ? `${Le(a)} et ${le(b)} restent à égalité.`
-    : `${Le(devant)} ${pluriel(devant) ? "passent" : "passe"} devant ${le(derriere)}.`;
+  const egaux = `${lePays(a)} et ${lePays(b)} restent à égalité (${points}).`;
+  const issue = egalite
+    ? majuscule(egaux)
+    : `${majuscule(lePays(devant))} ${Math.sign(fin) === Math.sign(debut) && debut !== 0 ? (pluriel(devant) ? "restent" : "reste") : (pluriel(devant) ? "passent" : "passe")} devant ${lePays(derriere)}, avec ${points}.`;
   if (ids.length === 0) return `Tu as passé les questions\u00a0: rien n’a changé. ${issue}`;
+  if (egalite) return `Tes réponses n’ont pas suffi à les départager\u00a0: ${egaux}`;
   let etat = avant;
   let plusFort = { id: ids[0], effet: -1 };
   for (const id of ids) {
@@ -936,8 +966,8 @@ export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, r
     if (effet > plusFort.effet) plusFort = { id, effet };
   }
   const d = trouverDilemme(plusFort.id);
-  if (plusFort.effet < 0.05 || !d) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
-  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d, apres).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id], apres)}). ${issue}`;
+  if (!d) return issue;
+  return `${issue} Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d, apres).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id], apres)}).`;
 }
 
 // ---------- Résultat rédigé pour toi ----------
@@ -1086,7 +1116,7 @@ export function valeurFrance(mesureId: string, annee?: string | null): string | 
 export type LigneComparaison = {
   mesure: string; libelle: string; theme: string; priorite: boolean; poids: number;
   a: { valeur: string | null; mot: string } | null; b: { valeur: string | null; mot: string } | null;
-  ecart: number; // accord de a moins accord de b : de −1 à 1 (0 : égalité)
+  ecart: number | null; // accord de a moins accord de b : de −1 à 1 (0 : égalité ; null : donnée manquante d'un côté, non comparable)
   france: string | null; // « France : 17,3 % », pour comparer à ce qu'on connaît
 };
 export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = REGLAGES_DEFAUT) {
@@ -1099,7 +1129,7 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
       return {
         mesure: e.mesure, libelle: m?.court ?? m?.nom ?? e.mesure, theme: m?.theme ?? "", priorite: e.origine.startsWith("priorite:"), poids: e.poids,
         a: valeurLisible(la.pays.id, e.mesure, etat.profil), b: valeurLisible(lb.pays.id, e.mesure, etat.profil),
-        ecart: da && db ? da.accord - db.accord : 0,
+        ecart: da && db ? da.accord - db.accord : null,
         france: valeurFrance(e.mesure),
       };
     })
@@ -1107,7 +1137,7 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
     .sort((x, y) => Number(y.priorite) - Number(x.priorite) || y.poids - x.poids);
   // Par thème : qui gagne, en tenant compte de l'importance de chaque critère.
   const themes = new Map<string, number>();
-  for (const x of lignes) themes.set(x.theme, (themes.get(x.theme) ?? 0) + x.poids * x.ecart);
+  for (const x of lignes) if (x.ecart !== null) themes.set(x.theme, (themes.get(x.theme) ?? 0) + x.poids * x.ecart);
   const gagnes = (signe: number) => [...themes].filter(([, s]) => s * signe > 0.05).sort((p, q) => Math.abs(q[1]) - Math.abs(p[1])).map(([th]) => th);
   const Le = (l: Ligne) => l.pays.le.charAt(0).toUpperCase() + l.pays.le.slice(1);
   const gagne = (l: Ligne) => (l.pays.le.startsWith("les ") ? "gagnent" : "gagne");

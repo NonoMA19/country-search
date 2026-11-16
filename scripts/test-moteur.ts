@@ -5,7 +5,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, v
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -380,27 +380,50 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(prix(loyer)?.poids === 1, "aventure + « 2 400 € par mois » : la réponse ne l'emporte pas sur le poids de départ");
 }
 
-// 2.9 Départage : jamais un dilemme déjà répondu ou inactif, toujours un dilemme qui sépare les deux pays.
+// 2.9 Départage (prompt 3e, lot 4) : jamais un dilemme déjà répondu ou inactif ; seulement un dilemme dont une mesure
+// sépare vraiment les deux pays (2 niveaux d'écart ou plus, données vérifiées des deux côtés) ; une raison dite ;
+// au plus 5 questions ; un bilan cohérent (pas de « ce qui a fait la différence » si l'égalité reste).
 {
   const r3 = hasard(7);
-  let essais = 0;
-  for (let k = 0; k < 60; k++) {
+  let essais = 0, egalitesFinales = 0, departages = 0;
+  for (let k = 0; k < 80; k++) {
     let etat = quizAuHasard(r3);
     const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 2);
     if (top.length < 2) continue;
     const [a, b] = top.map((l) => l.pays.id);
     const avant = etat;
-    for (let n = 0; n < 3; n++) {
+    for (let n = 0; n < MAX_DEPARTAGE; n++) {
       const d = prochainDepartage(etat, a, b);
       if (!d) break;
       essais++;
       verifier(etat.reponses[d.id] === undefined && dilemmeActif(d), `départage : dilemme ${d.id} déjà répondu ou inactif`);
       verifier(separation(d, etat, a, b) > 0, `départage : ${d.id} ne sépare pas ${a} et ${b}`);
+      const ms = mesuresQuiSeparent(d, etat, a, b);
+      verifier(ms.length > 0, `départage : ${d.id} posé alors qu'aucune mesure ne sépare ${a} et ${b} de 2 niveaux`);
+      for (const m of ms) verifier(noteEffective(a, m.mesure, etat.profil) !== null && noteEffective(b, m.mesure, etat.profil) !== null && m.ecart >= 2, `départage : ${m.mesure} sans donnée vérifiée des deux côtés`);
+      verifier(raisonDepartage(d, etat, a, b).startsWith("On te pose cette question parce que"), "départage : raison absente");
       etat = repondre(etat, d.id, d.options[n % d.options.length].id);
+      if (!encoreEgalite(etat, a, b)) break;
     }
-    verifier(bilanDepartage(avant, etat, a, b).length > 0, "départage : bilan vide");
+    departages++;
+    const bilan = bilanDepartage(avant, etat, a, b);
+    verifier(bilan.length > 0, "départage : bilan vide");
+    if (encoreEgalite(etat, a, b)) {
+      egalitesFinales++;
+      verifier(!bilan.includes("Ce qui a fait la différence") && bilan.includes("égalité"), `départage : bilan incohérent avec l'égalité (${bilan})`);
+    } else verifier(!bilan.includes("restent à égalité"), `départage : « à égalité » alors que l'écart dépasse 5 points (${bilan})`);
   }
   verifier(essais > 0, "départage : aucun dilemme proposé, le test ne prouve rien");
+  verifier(MAX_DEPARTAGE === 5, "départage : 5 questions au plus");
+  // Deux pays avec la même couverture santé : jamais le dilemme de la santé.
+  const sante = trouverDilemme("poignet")!;
+  verifier(mesuresQuiSeparent(sante, ETAT_VIDE, "allemagne", "belgique").length === 0, "départage : la santé sépare l'Allemagne et la Belgique");
+  // Comparaison : une donnée manquante d'un côté donne « Non comparable » (null), jamais une égalité.
+  const ea: Etat = { ...ETAT_VIDE, priorites: ["salaire", "travail", "securite"] };
+  const lc = calculer(ea);
+  const c = comparer(lc.find((l) => l.pays.id === "allemagne")!, lc.find((l) => l.pays.id === "belgique")!, ea);
+  verifier(c.lignes.find((x) => x.mesure === "salaire")?.ecart === null, "comparaison : salaire manquant pour l'Allemagne, mais pas « Non comparable »");
+  console.log(`Départage : ${departages} départages, ${essais} questions, ${egalitesFinales} restés à égalité.`);
 }
 
 // 2.10 Animations : aucune quand la personne demande moins de mouvement (prefers-reduced-motion).
