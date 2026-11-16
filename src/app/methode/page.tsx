@@ -125,7 +125,7 @@ export default function Methode() {
           <li>Dans « Voir le détail », chaque critère est donné avec sa vraie valeur et un mot (« 1,6 h de vol · Très proche »), jamais avec un pourcentage. Les pourcentages restent pour le score global du pays.</li>
           <li>Si ton n°1 et ton n°2 sont à 5 points ou moins, tu peux les départager. On te pose seulement des dilemmes encore sans réponse dont une mesure sépare vraiment ces deux pays : au moins 2 niveaux d’écart sur l’échelle de 1 à 5, avec une donnée vérifiée des deux côtés. Une ligne te dit pourquoi (« On te pose cette question parce que l’Allemagne et la Belgique diffèrent surtout sur la ponctualité. »). Parmi eux, on choisit celui dont les options font le plus varier l’écart. Jusqu’à 5 questions, tant que l’écart reste de 5 points ou moins. Tes réponses comptent comme les autres. Si l’un passe devant, une phrase dit quelle réponse a fait la différence ; s’ils restent à égalité, on le dit, et on te montre la comparaison côte à côte. Cette comparaison ne refait aucun calcul : une ligne par critère qui compte pour toi (tes priorités d’abord), la vraie valeur de chaque pays, et une barre qui va vers le pays qui gagne, plus longue si l’écart de note est grand. Si une donnée manque d’un côté, la ligne dit « Non comparable ». Une phrase dit qui gagne sur quoi, en tenant compte de l’importance de chaque critère.</li>
           <li>Avant ton résultat, « Ton portrait » reprend en quelques phrases ton projet, tes priorités et tes réponses qui comptent le plus (une option qui change ton classement passe avant une option sans effet). Un dilemme passé n’y apparaît jamais, ni une réponse qui répète une de tes priorités (« Tu regardes d’abord le salaire » quand « bon salaire » est déjà cité). « Ce n’est pas moi » rouvre la question pour changer ta réponse.</li>
-          <li>Une seule option fait descendre des pays dans « Moins adaptés pour toi » : « Je préfère pouvoir changer d’employeur librement ». Elle écarte les pays où il faut un employeur, sauf quand on sait que le visa de travail n’est pas lié, ou seulement en partie, à cet employeur. La raison est écrite, et un bouton permet de les remonter. Les autres préférences, comme ne pas vouloir apprendre de langue, retirent des points mais n’écartent aucun pays : seuls ton âge et tes choix du début (zone, travail en anglais) écartent un pays. Un pays remonté à la main ne subit plus ni l’écart, ni la pénalité de langue à apprendre.</li>
+          <li>Aucune réponse de dilemme n’écarte un pays : seuls ton âge et tes choix du début (zone, travail en anglais) le font. « Je préfère pouvoir changer d’employeur librement » est une pénalité (importance 1) : un pays où ton visa dépendrait d’un employeur, ou où ce lien n’est pas encore vérifié, reçoit la note 1 ; en partie lié, 3 ; sans visa lié (Europe sans visa, PVT ouvert à ton âge, ta nationalité, ou visa non lié), 5. Comme ce point dépend de ton âge et de ta nationalité, ce sont les seuls cas où ils changent ton pourcentage. Ne pas vouloir apprendre de langue est aussi une pénalité. Un pays remonté à la main ne subit plus ces pénalités.</li>
         </ul>
       </section>
 
@@ -154,11 +154,11 @@ export default function Methode() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Le pays surprise</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
-          <li>On cherche un pays qui te correspond très bien, mais qu’une seule de tes préférences a écarté : la zone choisie (Europe ou hors d’Europe), ou le visa lié à un employeur (« Je préfère pouvoir changer d’employeur librement »). Son pourcentage reste celui calculé sur tes réponses.</li>
-          <li>La langue à apprendre (« Je garde ces soirées pour moi ») n’écarte aucun pays : c’est une pénalité. Un pays compte comme écarté par elle seulement si, sans cette réponse, il atteindrait au moins le score de ton n° 3.</li>
-          <li>On garde le meilleur, s’il atteint au moins le score de ton n° 3, ou 75 %.</li>
-          <li>Jamais pour une règle légale (ton âge, ta nationalité), ni pour le budget, ni pour un pays déjà dans ton top 3. S’il n’y en a aucun, la section n’apparaît pas.</li>
-          <li>« Le remonter » le fait revenir dans ton classement, sans l’écart ni la pénalité.</li>
+          <li>On cherche un pays qu’une seule de tes préférences met de côté : la zone choisie (Europe ou hors d’Europe), qui écarte des pays, ou une réponse qui en fait reculer : « Je préfère pouvoir changer d’employeur librement » et « Je garde ces soirées pour moi » (langue à apprendre).</li>
+          <li>Pour une réponse qui fait reculer des pays, on recalcule le score du pays sans cette seule réponse.</li>
+          <li>Il n’apparaît que si, sans cette préférence, son score l’aurait placé n° 1 ou n° 2 de ton classement (au moins le score de ton n° 2). Avant, il suffisait d’égaler ton n° 3 ou 75 % : il apparaissait dans un profil sur deux, ce n’était plus une surprise.</li>
+          <li>Jamais pour une règle légale (ton âge, ta nationalité), ni pour le budget, ni pour un pays déjà dans ton top 3. S’il te manquerait de l’argent pour ce pays, la carte le dit.</li>
+          <li>« Le remonter » le fait revenir dans ton classement, sans l’écart ni la pénalité.</li>
         </ul>
       </section>
 
@@ -203,7 +203,7 @@ export default function Methode() {
             ))}
           </ul>
         </div>
-        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Des pays à 5 points d’écart ou moins du premier de leur groupe sont affichés à égalité, avec le nom de l’autre pays (et son rang s’il est hors de ton top 3).</p>
+        <p className="mt-3 text-sm text-gris">Dernière collecte des données : {dateFr(dateDonnees)}. Deux pays voisins dans le classement, à 5 points d’écart ou moins, sont à égalité. Un groupe d’égalité est une chaîne : chaque pays est à 5 points ou moins de son voisin. « À égalité avec… » cite le voisin le plus proche, avec son rang s’il est hors de ton top 3.</p>
       </section>
 
       {familles.map((f) => (

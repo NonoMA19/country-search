@@ -483,7 +483,7 @@
     "statut": "verifie",
     "note": 3,
     "valeur": 20.85,
-    "texte": "Adultes en situation d’obésité : 20,8 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "texte": "Adultes en situation d’obésité : 20,9 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
     "annee": "2024",
     "source": "oms-gho",
     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
@@ -7686,7 +7686,7 @@
     "verifieLe": "2026-11-14",
     "annee": null,
     "note": 2,
-    "texte": "Les Émirats arabes unis ne figure pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir.",
+    "texte": "Les Émirats arabes unis ne figurent pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir.",
     "source": "cleiss-accords",
     "lien": "https://www.cleiss.fr/docs/textes/index.html"
    },

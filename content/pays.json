@@ -101,7 +101,8 @@
     "ville": "Amsterdam",
     "villeRecherche": "Amsterdam",
     "en": "aux Pays-Bas",
-    "le": "les Pays-Bas"
+    "le": "les Pays-Bas",
+    "pluriel": true
   },
   {
     "nom": "Portugal",
@@ -335,7 +336,8 @@
     "ville": "New York",
     "villeRecherche": "New York",
     "en": "aux États-Unis",
-    "le": "les États-Unis"
+    "le": "les États-Unis",
+    "pluriel": true
   },
   {
     "nom": "Singapour",
@@ -361,7 +363,8 @@
     "ville": "Dubaï",
     "villeRecherche": "Dubai",
     "en": "aux Émirats arabes unis",
-    "le": "les Émirats arabes unis"
+    "le": "les Émirats arabes unis",
+    "pluriel": true
   },
   {
     "nom": "Chine",

@@ -5,7 +5,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, v
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -68,7 +68,7 @@ function quizAuHasard(r: Alea, passerTout = false): Etat {
   return etat;
 }
 
-const budgetDe = (p: Profil) => quiz.profil.find((q) => q.id === "budget")!.options.find((o) => o.id === p.budget)?.euros ?? null;
+const budgetDe = (p: Profil) => budgetProfil(p);
 const scores = (etat: Etat) => Object.fromEntries(calculer(etat).map((l) => [l.pays.id, l.score]));
 const memesScores = (a: Record<string, number>, b: Record<string, number>) => Object.keys(a).every((k) => Math.abs(a[k] - b[k]) < 1e-9);
 
@@ -99,7 +99,10 @@ for (let i = 0; i < NB; i++) {
   }
 
   // Le score ne dépend ni de l'âge, ni du budget, ni de la durée, ni de la nationalité (l'objectif, lui, compte : lot 2).
-  for (const champ of ["age", "budget", "duree", "nationalite-laquelle"]) {
+  // Exception (prompt 3e) : avec « Je préfère pouvoir changer d'employeur librement », l'âge et la nationalité comptent,
+  // parce qu'ils décident si un visa te lie à un employeur (PVT ouvert ou fermé, nationalité du pays).
+  const d18 = (etat.reponses["job-de-reve"] ?? "").endsWith("b");
+  for (const champ of d18 ? ["budget", "duree"] : ["age", "budget", "duree", "nationalite-laquelle"]) {
     const q = quiz.profil.find((x) => x.id === champ);
     for (const o of q?.options ?? []) {
       const profil = { ...etat.profil, [champ]: o.id, ...(champ === "nationalite-laquelle" ? { nationalite: "oui" } : {}) };
@@ -157,8 +160,10 @@ for (let i = 0; i < NB; i++) {
     verifier(!top.some((l) => l.pays.id === surprise.ligne.pays.id), `quiz ${i} : pays surprise déjà dans le top 3`);
     const causes = causesEcart(surprise.ligne.pays, etat);
     verifier(!causes.some((c) => c.cause === "age" || c.cause === "francais"), `quiz ${i} : pays surprise écarté par l'âge ou la langue de travail`);
-    verifier(surprise.cause === "langue" ? causes.length === 0 : causes.length === 1, `quiz ${i} : pays surprise écarté par plusieurs raisons`);
-    verifier(surprise.score >= Math.min(top.length >= 3 ? top[2].score : Infinity, 75) - 1e-9, `quiz ${i} : pays surprise sous le seuil`);
+    verifier(surprise.cause === "zone" ? causes.length === 1 : causes.length === 0, `quiz ${i} : pays surprise écarté par plusieurs raisons`);
+    // Prompt 3e : seulement si, sans la préférence en cause, il serait n° 1 ou n° 2.
+    verifier(surprise.score >= top[Math.min(1, top.length - 1)].score - 1e-9, `quiz ${i} : pays surprise sous le score du n° 2`);
+    if (surprise.ligne.porte.manque !== null) verifier(!!surprise.argent?.startsWith("Il te manquerait"), `quiz ${i} : pays surprise sans le manque d'argent`);
     verifier(!surprise.ligne.peuDeDonnees, `quiz ${i} : pays surprise sans assez de données`);
     // Le budget ne compte jamais : même pays surprise avec un budget nul.
     const sansBudget = paysSurprise(etat, calculer(etat, { ...REGLAGES_DEFAUT, budget: 0 }), top);
@@ -189,17 +194,13 @@ for (let i = 0; i < NB; i++) {
     verifier(!(ms.length > 0 && o.effets.every((e) => e.position === undefined) && ms.every((m) => mesuresPrio.has(m))), `quiz ${i} : le portrait répète une priorité (${l.texte})`);
   }
 
-  // Égalités : dans chaque groupe à égalité, au plus 5 points entre le premier et le dernier.
+  // Égalités (prompt 3e) : une chaîne de pays dont chaque voisin est à 5 points ou moins.
   const principaux = lignes.filter((l) => !l.ecart);
   const eg = egalites(principaux);
-  let debut = -1;
-  for (let k = 0; k <= principaux.length; k++) {
-    const dansGroupe = k < principaux.length && eg[k] && (debut === -1 || principaux[debut].score - principaux[k].score <= ECART_EX_AEQUO);
-    if (dansGroupe && debut === -1) debut = k;
-    if (!dansGroupe && debut !== -1) {
-      verifier(principaux[debut].score - principaux[k - 1].score <= ECART_EX_AEQUO + 1e-9, `quiz ${i} : égalité sur plus de 5 points`);
-      debut = k < principaux.length && eg[k] ? k : -1;
-    }
+  const gr = groupesEgalite(principaux);
+  for (let k = 1; k < principaux.length; k++) {
+    const voisinsProches = !principaux[k].peuDeDonnees && !principaux[k - 1].peuDeDonnees && principaux[k - 1].score - principaux[k].score <= ECART_EX_AEQUO;
+    verifier(voisinsProches === (gr[k] >= 0 && gr[k] === gr[k - 1]), `quiz ${i} : chaîne d'égalité mal coupée entre ${principaux[k - 1].pays.nom} et ${principaux[k].pays.nom}`);
   }
   for (let k = 0; k < principaux.length; k++) if (eg[k]) verifier(!principaux[k].peuDeDonnees, `quiz ${i} : égalité affichée pour un pays sans assez de données`);
   // « À égalité avec… » : toujours dit avec qui, et le partenaire est bien à 5 points ou moins.
@@ -208,7 +209,7 @@ for (let i = 0; i < NB; i++) {
     verifier(eg[k] === (t !== null), `quiz ${i} : libellé d'égalité incohérent pour ${principaux[k].pays.nom}`);
     if (t) {
       const autre = principaux.find((x, j) => j !== k && t.includes(x.pays.le));
-      verifier(!!autre && Math.abs(autre.score - principaux[k].score) <= 2 * ECART_EX_AEQUO + 1e-9, `quiz ${i} : « ${t} » ne nomme pas un pays proche`);
+      verifier(!!autre && Math.abs(autre.score - principaux[k].score) <= ECART_EX_AEQUO + 1e-9, `quiz ${i} : « ${t} » ne nomme pas un voisin à 5 points ou moins`);
       if (!/\(n°/.test(t)) verifier(principaux.slice(0, 3).some((x, j) => j !== k && t.includes(x.pays.le)), `quiz ${i} : « ${t} » sans pays du top 3`);
     }
   }
@@ -326,14 +327,21 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const fermeAustralie = evaluerPorte(trouverPays("australie")!, { age: "36-plus" }, null);
   verifier(fermeAustralie.alertes.some((a) => a.texte.includes("Sans expérience")), "Australie : l'exigence d'expérience n'est pas dite");
   verifier(fermeAustralie.visa?.lieEmployeur === "oui", "Australie : visa non relié à l'employeur");
-  // D18 « Je préfère pouvoir changer d'employeur » : seul un visa lié à l'employeur (ou inconnu) écarte le pays.
-  const etat: Etat = { ...ETAT_VIDE, profil: { age: "36-plus" }, reponses: { "job-de-reve": "b" }, ordre: ["job-de-reve"] };
-  const ecarte = (id: string) => concerne("employeur-requis", trouverPays(id)!, etat);
-  verifier(!ecarte("chili"), "D18 : le Chili (visa non lié) est écarté");
-  verifier(!ecarte("japon") && !ecarte("argentine"), "D18 : un visa en partie lié écarte le pays");
-  verifier(ecarte("australie") && ecarte("nouvelle-zelande"), "D18 : un visa lié à l'employeur n'écarte pas le pays");
-  verifier(ecarte("etats-unis") && ecarte("mexique"), "D18 : sans donnée (ou « à vérifier »), la règle d'avant ne s'applique plus");
-  verifier(!concerne("employeur-requis", trouverPays("australie")!, { ...etat, profil: { age: "18-25" } }), "D18 : un PVT ouvert est écarté");
+  // D18 « Je préfère pouvoir changer d'employeur » (prompt 3e) : une pénalité de poids 1, plus un filtre.
+  const vieux: Profil = { age: "36-plus" };
+  const libre = (id: string, pr: Profil = vieux) => noteEmployeurLibre(id, pr);
+  verifier(libre("chili") === 5, "D18 : le Chili (visa non lié) n'a pas la note 5");
+  verifier(libre("japon") === 3 && libre("argentine") === 3, "D18 : un visa en partie lié n'a pas la note 3");
+  verifier(libre("australie") === 1 && libre("nouvelle-zelande") === 1, "D18 : un visa lié n'a pas la note 1");
+  verifier(libre("etats-unis") === 1 && libre("mexique") === 1, "D18 : un lien « à vérifier » n'a pas la note 1");
+  verifier(libre("australie", { age: "18-25" }) === 5 && libre("belgique") === 5, "D18 : un PVT ouvert ou l'Europe sans visa sont pénalisés");
+  const d18: Etat = { ...ETAT_VIDE, profil: vieux, priorites: ["salaire", "travail", "securite"], reponses: { "job-de-reve": "b" }, ordre: ["job-de-reve"] };
+  const l18 = calculer(d18);
+  for (const l of l18) verifier(!l.ecart || causesEcart(l.pays, d18).length > 0, `D18 : ${l.pays.nom} écarté sans raison du profil`);
+  verifier(!l18.find((l) => l.pays.id === "australie")!.ecart || l18.find((l) => l.pays.id === "australie")!.porte.badge === "fermee", "D18 : un pays est encore écarté par la réponse");
+  verifier(l18.find((l) => l.pays.id === "etats-unis")!.details.find((d) => d.mesure === "employeur-libre")?.accord === 0, "D18 : la pénalité ne s'applique pas");
+  verifier(PENALITES.includes("employeur-libre"), "D18 : « Le remonter » ne retire pas la pénalité");
+  verifier(!quiz.dilemmes.some((d) => d.options.some((o) => o.ecart)), "un dilemme écarte encore des pays (seuls les filtres du profil le font)");
 }
 
 // 2.6 quater Canada : saison 2026 du PVT fermée. Mention affichée, badge et score inchangés.
@@ -541,7 +549,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   }
 
   // Faisabilité : seulement des données sourcées, une prochaine étape vers un site officiel, jamais « juridiquement ».
-  const profils: Profil[] = [{}, { age: "18-25", budget: "1000", objectif: "stage-vie" }, { age: "31-35", budget: "5000", duree: "plus-2" }, { age: "36-plus", objectif: "carriere" },
+  const profils: Profil[] = [{}, { age: "18-25", budget: "moins-2000", objectif: "stage-vie" }, { age: "31-35", budget: "5000-10000", duree: "plus-2" }, { age: "26-27", budget: "2000-5000" }, { age: "26-27", budget: "inconnu" }, { age: "36-plus", objectif: "carriere" },
     { age: "26-27", nationalite: "oui", "nationalite-laquelle": "canadienne" }];
   for (const pr of profils) for (const p of pays) {
     const f = faisabilite(p, pr, budgetDe(pr));
@@ -555,8 +563,12 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const f = (id: string, pr: Profil) => faisabilite(trouverPays(id)!, pr, budgetDe(pr));
   verifier(f("belgique", {}).remplies.some((x) => x.includes("nationalité française suffit")), "faisabilité : la Belgique sans « ta nationalité suffit »");
   verifier(f("suisse", {}).aRemplir.some((x) => x.includes("permis de séjour")), "faisabilité : la Suisse sans le permis de séjour");
-  verifier(f("japon", { age: "18-25", budget: "1000" }).aRemplir.some((x) => x.startsWith("Il te manquerait environ 2")), "faisabilité : le manque d'argent n'est pas dit (Japon, 1 000 €)");
-  verifier(f("japon", { age: "18-25", budget: "5000" }).remplies.some((x) => x.includes("Ton budget couvre")), "faisabilité : le budget suffisant n'est pas dit");
+  // Budget en tranches (lot 5) : « au moins » sous la tranche, « pourrait » dans la tranche, « couvre » au-dessus.
+  verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => x.startsWith("Il te manquerait au moins 1 100")), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => x.startsWith("Selon ta somme exacte, il pourrait te manquer jusqu’à 1 100")), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "5000-10000" }).remplies.some((x) => x.includes("Ton budget couvre")), "faisabilité : le budget suffisant n'est pas dit");
+  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25", budget: "inconnu" }, budgetProfil({ budget: "inconnu" })).alertes.some((a) => a.texte.startsWith("Ce PVT demande 3")), "budget inconnu : la somme demandée n'est pas dite");
+  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25" }, { min: 2500, max: 2500 }).alertes.some((a) => a.texte.startsWith("Il te manquerait environ 600")), "curseur : somme exacte mal dite");
   verifier(f("canada", { age: "18-25" }).aVerifier.some((x) => x.includes("Saison 2026 fermée")) && f("canada", { age: "18-25" }).etape?.texte === "Créer ton profil sur le site officiel", "faisabilité : Canada sans la saison fermée ou sans « Créer ton profil »");
   verifier(f("australie", { age: "36-plus" }).aRemplir.some((x) => x.includes("1 an d’expérience")) && f("australie", { age: "36-plus" }).aVerifier.some((x) => x.includes("expérience pro")), "faisabilité : Australie sans l'expérience demandée");
   verifier(f("japon", { age: "18-25", objectif: "stage-vie" }).remplies.some((x) => x.includes("permet le VIE")) && f("japon", { age: "28-30", objectif: "stage-vie" }).aRemplir.some((x) => x.includes("VIE n’est plus possible")), "faisabilité : condition d'âge du VIE mal confrontée");
@@ -684,6 +696,9 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(vues.length === fait.ordre.length, "scènes vues : il en manque");
   verifier(nouvelleSession(vues).etat.dejaVues.length === vues.length, "recommencer : scènes déjà vues oubliées");
 }
+
+// 2.18 Accords (prompt 3e, lot 6) : un pays au pluriel (« les Pays-Bas ») accorde le verbe.
+for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord : ${p.nom} mal marqué au pluriel`);
 
 // ---------- Bilan ----------
 if (echecs.length) {

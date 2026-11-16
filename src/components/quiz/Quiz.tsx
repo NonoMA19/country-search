@@ -10,6 +10,7 @@ import Icone from "@/components/Icone";
 import Portrait from "@/components/Portrait";
 import Pourquoi from "@/components/Pourquoi";
 import { useFlip } from "@/lib/animation";
+import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
 import { quiz, type Dilemme, type OptionScene, type Scene } from "@/lib/donnees";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import {
@@ -27,7 +28,7 @@ function Cadre({ progression, retour, children }: { progression: number; retour:
     <main className="mx-auto flex w-full max-w-xl flex-1 flex-col px-5 pt-4 pb-8">
       <div className="flex items-center gap-3">
         {retour ? (
-          <button type="button" onClick={retour} className="-ml-2 inline-flex min-h-11 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
+          <button type="button" data-retour onClick={retour} className="-ml-2 inline-flex min-h-11 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
             <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Retour
           </button>
         ) : (
@@ -136,12 +137,7 @@ function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: str
   );
 }
 
-// Après un changement d'écran, les clics arrivés trop vite sont ignorés :
-// un double clic ne doit pas répondre aussi à la question suivante.
-const DELAI_CLIC = 400;
-let dernierChangement = -Infinity;
-const clicLibre = () => performance.now() - dernierChangement >= DELAI_CLIC;
-const marquerChangement = () => { dernierChangement = performance.now(); };
+// Après un changement d’écran, les clics arrivés trop vite sont ignorés (src/lib/clic.ts).
 
 export default function Quiz() {
   const session = useSession();
@@ -154,6 +150,19 @@ export default function Quiz() {
     if (premier.current) { premier.current = false; return; }
     document.getElementById("titre-ecran")?.focus({ preventScroll: false });
   }, [ecran]);
+  // Bouton Retour du navigateur et geste retour d'Android : on revient à la question précédente, sans quitter le quiz.
+  // Une entrée d'historique « tampon » (même adresse) est ajoutée ; quand elle est consommée, on clique sur le bouton
+  // Retour de l'écran et on la remet. Au premier écran (lien « Accueil »), on laisse le navigateur quitter le quiz.
+  useEffect(() => {
+    const armer = () => window.history.pushState({ ...(window.history.state ?? {}), csQuiz: true }, "");
+    armer();
+    const surRetour = () => {
+      const bouton = document.querySelector<HTMLButtonElement>("[data-retour]");
+      if (bouton) { marquerLibre(); bouton.click(); armer(); } else window.history.back();
+    };
+    window.addEventListener("popstate", surRetour);
+    return () => window.removeEventListener("popstate", surRetour);
+  }, []);
   if (!session) return <Chargement />;
 
   const { etat, etape } = session;

@@ -1,7 +1,7 @@
 "use client";
 
 import { CircleAlert, CircleCheck, CircleHelp } from "lucide-react";
-import Definition from "@/components/Definition";
+import { AvecDefinitions } from "@/components/Definition";
 import Drapeau from "@/components/Drapeau";
 import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
@@ -17,10 +17,10 @@ export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
   const I = ageOk === null ? CircleHelp : ageOk ? CircleCheck : CircleAlert;
   return (
     <section aria-labelledby="titre-vie" className="mt-10">
-      <h2 id="titre-vie" className="text-xl font-semibold">Le <Definition cle="vie" /> pour toi</h2>
+      <h2 id="titre-vie" className="text-xl font-semibold">Le VIE pour toi</h2>
       <div className="mt-3 rounded-3xl border border-bord bg-carte p-5">
         <p>
-          {vie.resume.join(" ")}
+          <AvecDefinitions texte={vie.resume.join(" ")} />
           <Pastille preuve={preuve} contexte="les règles du VIE" />
         </p>
         <p className="mt-4 text-sm font-semibold">Les conditions officielles</p>

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import { CarteDilemme } from "@/components/quiz/Quiz";
-import { AvecDefinitions } from "@/components/Definition";
 import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.
@@ -36,7 +35,7 @@ function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: E
               <div aria-hidden="true">
                 <p className="text-center text-sm font-semibold">{x.libelle}{x.priorite && <span className="font-normal text-gris"> · priorité</span>}</p>
                 <div className="mt-1.5 grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3 text-sm leading-snug">
-                  <span className="min-w-0 break-words"><AvecDefinitions texte={valeur(x.a)} /></span>
+                  <span className="min-w-0 break-words">{valeur(x.a)}</span>
                   <span className="min-w-0 text-right break-words">{valeur(x.b)}</span>
                 </div>
                 <div className="relative mt-2 h-2.5 rounded-full bg-creux">

@@ -41,7 +41,7 @@ export default function Pastille({ preuve, pays, contexte }: { preuve: Preuve; p
       <button
         type="button"
         onClick={() => setOuvert(true)}
-        className={`relative ml-1 inline-flex min-h-7 items-center rounded-full max-w-full px-2.5 text-left align-middle text-[13px] font-medium after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] ${STYLE[preuve.type]}`}
+        className={`relative ml-1 inline-flex min-h-7 items-center rounded-full max-w-full px-2.5 text-left align-middle text-[13px] font-medium after:absolute after:-inset-x-2 after:-inset-y-2 after:content-[''] ${STYLE[preuve.type]}`}
         aria-label={`${libelle(preuve)} : voir la preuve pour ${contexte ?? preuve.titre}${pays ? `, ${pays}` : ""}`}
         aria-haspopup="dialog"
       >

@@ -1468,5 +1468,58 @@
         "sujet": "l’obésité des adultes"
       }
     ]
+  },
+  {
+    "numero": 19,
+    "id": "liberte-employeur",
+    "famille": "travailler",
+    "nom": "Changer d’employeur librement",
+    "definition": "Ton visa te laisserait-il changer d’employeur ? Tiré des portes d’entrée et des visas de travail lus sur les sites officiels. Cette mesure ne compte que si tu as répondu « Je préfère pouvoir changer d’employeur librement » : c’est une pénalité, elle n’écarte aucun pays.",
+    "type": "officiel",
+    "sources": [
+      "europa-travail",
+      "diplomatie-pvt",
+      "diplomatie-expatriation"
+    ],
+    "mesures": [
+      {
+        "id": "employeur-libre",
+        "nom": "Changer d’employeur librement",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : aucun visa ne te lie à un employeur (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou le visa de travail n’est pas lié à un seul employeur. 3 : visa en partie lié à l’employeur. 1 : visa lié à l’employeur, ou lien pas encore vérifié (un employeur reste exigé).",
+        "echelle": [
+          "visa lié à l’employeur, ou lien pas encore vérifié",
+          "(niveau non utilisé)",
+          "visa en partie lié à l’employeur",
+          "(niveau non utilisé)",
+          "aucun visa lié à un employeur"
+        ],
+        "mots": [
+          "visa lié à l’employeur",
+          "visa lié à l’employeur",
+          "visa en partie lié à l’employeur",
+          "libre de changer d’employeur",
+          "libre de changer d’employeur"
+        ],
+        "fait": [
+          "Ton visa y dépendrait de ton employeur",
+          "Ton visa y dépendrait de ton employeur",
+          "Ton visa y dépendrait en partie de ton employeur",
+          "Tu pourrais y changer d’employeur librement",
+          "Tu pourrais y changer d’employeur librement"
+        ],
+        "court": "Changer d’employeur",
+        "theme": "le visa",
+        "sujet": "la liberté de changer d’employeur",
+        "etiquettes": [
+          "Visa lié à l’employeur",
+          "Visa lié à l’employeur",
+          "Visa en partie lié",
+          "Libre de changer d’employeur",
+          "Libre de changer d’employeur"
+        ]
+      }
+    ]
   }
 ]

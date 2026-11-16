@@ -352,7 +352,7 @@ function sante(p, verifieLe = AUJOURDHUI) {
     return { ...base, note: 1, texte: `France Diplomatie signale des soins très chers : « ${SOINS_TRES_CHERS[p.id]} » Une assurance privée solide est indispensable.`, source: "diplomatie-cav", lien: cavSante(p.id) };
   if (ACCORDS_CLEISS.includes(p.id))
     return { ...base, note: 3, texte: `La France a un accord de sécurité sociale en vigueur avec ${p.le}${p.id === "canada" ? " (et un accord séparé avec le Québec)" : ""}.${pvt ? " Pour un PVT, une assurance privée reste exigée pour tout le séjour." : ""}`, source: "cleiss-accords", lien: "https://www.cleiss.fr/docs/textes/index.html" };
-  return { ...base, note: 2, texte: `${majuscule(p.le)} ne figure pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir${pvt ? ", et le PVT l'exige pour tout le séjour" : ""}.`, source: "cleiss-accords", lien: "https://www.cleiss.fr/docs/textes/index.html" };
+  return { ...base, note: 2, texte: `${majuscule(p.le)} ne figure${p.pluriel ? "nt" : ""} pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir${pvt ? ", et le PVT l'exige pour tout le séjour" : ""}.`, source: "cleiss-accords", lien: "https://www.cleiss.fr/docs/textes/index.html" };
 }
 
 // ---------- Avis de la rédaction ----------

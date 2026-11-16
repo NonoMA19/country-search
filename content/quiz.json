@@ -2756,7 +2756,7 @@
           },
           {
             "pastille": "B",
-            "texte": "Les pays où ton visa dépend d’un employeur, ou où ce n’est pas encore vérifié, passent dans « Moins adaptés pour toi ». Tu peux les remonter."
+            "texte": "Les pays où ton visa dépendrait d’un employeur reculent, aussi quand ce lien n’est pas encore vérifié. Ceux où il en dépend en partie reculent moins. Aucun pays n’est écarté."
           }
         ]
       },
@@ -2768,12 +2768,16 @@
         },
         {
           "id": "b",
-          "effets": [],
+          "effets": [
+            {
+              "mesures": [
+                "employeur-libre"
+              ],
+              "poids": 1
+            }
+          ],
           "portrait": "Tu veux pouvoir changer d’employeur librement.",
-          "ecart": {
-            "regle": "employeur-requis",
-            "raison": "Tu ne veux pas dépendre d’un employeur pour ton visa."
-          }
+          "preference": "pouvoir changer d’employeur librement"
         }
       ],
       "scenes": [
