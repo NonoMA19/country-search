@@ -278,6 +278,9 @@ export function prochainElement(etat: Etat): Element | null {
 export const questionnaireFini = (etat: Etat) => etat.reponses.limites !== undefined && prochainElement(etat) === null;
 
 // « Continuer pour affiner » : un élément de plus des chapitres 3 et 4, sans limite de nombre.
+// Le nombre de questions qui restent à affiner (chapitres 3 et 4).
+export const restantsAffiner = (etat: Etat) => candidatsAdaptatifs(etat, [3, 4]).length;
+
 export function prochainAffiner(etat: Etat): Element | null {
   const restants = candidatsAdaptatifs(etat, [3, 4]);
   return tirer(etat, selection(etat, 0, restants), `affiner:${etat.ordre.length}`);

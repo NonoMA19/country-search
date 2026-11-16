@@ -16,7 +16,7 @@ import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import { annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
-import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, topCourant, vusDans } from "@/lib/parcours";
+import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
 import { portraitComplet, type LignePortrait } from "@/lib/portrait";
 
 export { BOUTON_PLEIN };
@@ -138,6 +138,21 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
   );
 }
 
+const phraseRestants = (n: number) => (n > 1 ? `Encore ${n} questions possibles` : n === 1 ? "Encore 1 question possible" : "Plus aucune question à affiner");
+
+// Un écran de secours : jamais de page vide, toujours un bouton pour continuer.
+function Secours({ chapitre, texte, portrait }: { chapitre: number; texte: string; portrait: () => void }) {
+  return (
+    <Cadre chapitre={chapitre} part={1} retour={portrait}>
+      <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold outline-none">On revient à ton portrait</h1>
+      <p className="mt-2 text-lg">{texte}</p>
+      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+        <button type="button" onClick={portrait} className={BOUTON_PLEIN}>Revenir à mon portrait</button>
+      </div>
+    </Cadre>
+  );
+}
+
 export default function Quiz() {
   const session = useSession();
   const router = useRouter();
@@ -186,15 +201,19 @@ export default function Quiz() {
   // ----- Ton portrait -----
   if (etape.t === "portrait") {
     const revoir = (l: LignePortrait) => { if (l.revoir) aller({ t: "revoir", id: l.revoir.id }); };
+    const restants = restantsAffiner(etat);
     return (
       <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
+        {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
         <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
         <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
           <button type="button" onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
-          {prochainAffiner(etat) && (
-            <button type="button" onClick={() => aller({ t: "affiner" })} className="min-h-12 w-full rounded-2xl border border-bord bg-carte text-base font-semibold hover:border-bleu">Continuer pour affiner</button>
+          {restants > 0 && prochainAffiner(etat) && (
+            <button type="button" onClick={() => aller({ t: "affiner" })} className="min-h-12 w-full rounded-2xl border border-bord bg-carte px-3 text-base font-semibold hover:border-bleu">
+              Continuer pour affiner <span className="font-normal text-gris">· {phraseRestants(restants)}</span>
+            </button>
           )}
         </div>
       </Cadre>
@@ -204,7 +223,8 @@ export default function Quiz() {
   // ----- Revoir un élément depuis le portrait -----
   if (etape.t === "revoir") {
     const el = trouverElement(etape.id);
-    if (el) {
+    if (!el) return <Secours chapitre={NB_CHAPITRES} texte="Cette question n’existe plus." portrait={() => aller({ t: "portrait" })} />;
+    {
       const F = FORMATS[el.type];
       return (
         <Cadre chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
@@ -220,15 +240,20 @@ export default function Quiz() {
     const el = prochainAffiner(etat);
     if (el) {
       const F = FORMATS[el.type];
-      const suivant = (v: Valeur) => aller({ t: "affiner" }, { etat: repondre(etat, el.id, v) });
+      // Après chaque réponse : s'il ne reste plus rien, retour au portrait avec un message.
+      const suivant = (v: Valeur) => {
+        const nouvel = repondre(etat, el.id, v);
+        aller(prochainAffiner(nouvel) ? { t: "affiner" } : { t: "portrait", fin: true }, { etat: nouvel });
+      };
       return (
         <Cadre chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
+          <p className="mb-2 text-sm font-medium text-gris">{phraseRestants(restantsAffiner(etat))}</p>
           <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
           <button type="button" onClick={() => aller({ t: "portrait" })} className="mt-3 min-h-11 text-sm font-medium text-lien underline">J’ai fini, revoir mon portrait</button>
         </Cadre>
       );
     }
-    return null;
+    return <Secours chapitre={NB_CHAPITRES} texte="Tu as répondu à toutes les questions. Ton portrait est à jour." portrait={() => aller({ t: "portrait", fin: true })} />;
   }
 
   // ----- Le parcours : l'élément suivant -----

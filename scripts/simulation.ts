@@ -4,8 +4,9 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
 import { PASSER, optionsDe } from "@/lib/elements";
-import { LIBELLE_FIABILITE, calculer, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
-import { chapitreDe, estAdaptatif, situationsLimites } from "@/lib/parcours";
+import { LIBELLE_FIABILITE, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
+import { chapitreDe, estAdaptatif, prochainAffiner, questionnaireFini, restantsAffiner, situationsLimites } from "@/lib/parcours";
+import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Repondeur } from "./hasard";
 
@@ -170,4 +171,22 @@ for (const p of PERSONAS) {
     const sans = calculer({ ...etat, profil: { ...etat.profil, secteur: "autre" } }).filter((l) => !l.ecart);
     console.log(`    sans le secteur (mêmes réponses) : Royaume-Uni n° ${sans.findIndex((l) => l.pays.id === "royaume-uni") + 1} ; top 5 : ${sans.filter((l) => !l.peuDeDonnees).slice(0, 5).map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
   }
+}
+
+// ---------- Cas limites (prompt 3g) : affiner jusqu'au bout, et tout passer ----------
+{
+  const rA = hasard(424242);
+  let etat = parcoursAuHasard(rA);
+  const avant = etat.ordre.length;
+  let affinages = 0;
+  for (; affinages < 40; affinages++) {
+    const el = prochainAffiner(etat);
+    if (!el) break;
+    etat = repondre(etat, el.id, reponseAuHasard(el, etat, rA));
+  }
+  const session = validerSession(JSON.parse(JSON.stringify({ ...SESSION_VIDE, etat, etape: { t: "affiner" } })));
+  console.log(`\nAffiner jusqu'au bout : ${avant} écrans, puis ${affinages} questions d'affinage ; il en reste ${restantsAffiner(etat)} ; une session restée sur « affiner » revient à « ${session?.etape.t} ».`);
+  const passe = parcoursAuHasard(hasard(7), { passer: 1 });
+  const top = calculer(passe).filter((l) => !l.ecart && !l.peuDeDonnees);
+  console.log(`Tout passer : ${passe.ordre.length} écrans, questionnaire fini : ${questionnaireFini(passe) ? "oui" : "non"} ; pays classés avec un pourcentage : ${top.length}.`);
 }

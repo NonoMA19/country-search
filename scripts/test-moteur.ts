@@ -9,7 +9,7 @@ import {
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
-import { chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
+import { prochainAffiner, restantsAffiner, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
@@ -939,6 +939,25 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   for (const l of top) {
     const t = pts.get(l.pays.id)!.travailler;
     verifier([...t.pour, ...(t.savoir ? [t.savoir] : [])].some((x) => x.mesure === "secteur-finance"), `secteur : pas de ligne « Ton secteur » pour ${l.pays.nom}`);
+  }
+}
+
+// 2.24 Fin d'affinage (prompt 3g, lot 1) : affiner jusqu'à épuisement finit sur le portrait, jamais sur une page vide.
+{
+  const r11 = hasard(61);
+  for (let k = 0; k < 12; k++) {
+    let etat = quizAuHasard(r11);
+    let n = 0;
+    for (; n < 40; n++) {
+      const el = prochainAffiner(etat);
+      if (!el) break;
+      verifier(restantsAffiner(etat) > 0, `affiner ${k} : un élément proposé alors qu'il n'en reste aucun`);
+      etat = repondre(etat, el.id, reponseAuHasard(el, etat, r11));
+    }
+    verifier(prochainAffiner(etat) === null && restantsAffiner(etat) === 0, `affiner ${k} : il reste des questions après ${n} réponses`);
+    // Une session restée à l'étape « affiner » sans rien à affiner revient au portrait (rechargement, « Reprendre mon quiz »).
+    const s = validerSession(JSON.parse(JSON.stringify({ ...SESSION_VIDE, etat, etape: { t: "affiner" } })));
+    verifier(s?.etape.t === "portrait" && (s.etape as { fin?: boolean }).fin === true, `affiner ${k} : la session reste sur « affiner » (page vide)`);
   }
 }
 
