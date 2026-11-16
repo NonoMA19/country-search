@@ -11,6 +11,7 @@ import {
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
 import { chapitreDe, elementVisible, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait } from "@/lib/portrait";
+import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
@@ -749,6 +750,46 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
   // Certitude : « Plutôt » est forte, « Un peu » moyenne ; un curseur au milieu est faible.
   verifier(certitudeReponse(trouverDilemme("noel")!, "a") === "forte" && certitudeReponse(trouverDilemme("noel")!, "peu-a") === "moyenne" && certitudeReponse(trouverElement("equilibre")!, 50) === "faible", "certitude mal calculée");
   verifier(dimensionsReponse(trouverElement("phrases")!, { S3: "oui", S7: "depend" }).join() === "cout,salaire", "swipe : dimensions touchées incorrectes");
+}
+
+// Aucune scène ni variante ne nomme un vrai pays (les montants et durées restent des exemples).
+for (const d of quiz.dilemmes) for (const sc of d.scenes) {
+  const textes = [sc.titre, sc.texte, ...Object.values(sc.variantes ?? {}), ...sc.options.flatMap((o) => [o.texte, o.plus, o.moins])];
+  verifier(!textes.some((t) => pays.some((p) => t.includes(p.nom))), `scène ${d.id}/${sc.id} : un vrai pays est nommé`);
+}
+
+// 2.20 Le parcours en 5 chapitres (prompt 3f, lot 2).
+{
+  // Les chapitres 1, 2 et 5 sont complets ; l'ordre des chapitres est respecté ; le questionnaire finit.
+  const r8 = hasard(28);
+  for (let k = 0; k < 40; k++) {
+    const etat = quizAuHasard(r8);
+    const chapitres = etat.ordre.map(chapitreDe);
+    verifier(chapitres.every((c, i) => i === 0 || c >= chapitres[i - 1]), `parcours ${k} : chapitres dans le désordre (${chapitres.join("")})`);
+    verifier(questionnaireFini(etat), `parcours ${k} : pas fini`);
+    for (const el of quiz.elements.filter((x) => [1, 2, 5].includes(x.chapitre))) {
+      if (elementVisible(el, etat) && etat.reponses[el.id] === undefined) verifier(false, `parcours ${k} : ${el.id} (chapitre ${el.chapitre}) jamais posé`);
+    }
+    verifier(!etat.ordre.includes("zone"), "la question de la zone existe encore");
+  }
+  // Variantes de texte selon le projet : au moins 10 dilemmes, et elles sont utilisées.
+  const avecVariantes = quiz.dilemmes.filter((d) => d.scenes.some((sc) => sc.variantes && Object.keys(sc.variantes).length));
+  verifier(avecVariantes.length >= 10, `variantes : seulement ${avecVariantes.length} dilemmes`);
+  for (const d of avecVariantes) for (const sc of d.scenes) for (const [projet, texte] of Object.entries(sc.variantes ?? {})) {
+    verifier(Object.keys(quiz.objectifs).includes(projet), `variantes : projet inconnu ${projet} (${d.id})`);
+    const e = { ...ETAT_VIDE, profil: { objectif: projet }, dejaVues: d.scenes.filter((x) => x.id !== sc.id).map((x) => cleScene(d, x)) };
+    verifier(sceneDe(d, e).texte === texte, `variantes : ${d.id}/${sc.id} n'utilise pas la variante ${projet}`);
+    verifier(!pays.some((p) => texte.includes(p.nom)), `variantes : ${d.id}/${sc.id} nomme un vrai pays`);
+  }
+  // Ton intuition : la carte ne change rien ; le cas dépend de la région du n° 1.
+  const base = construire({ envies: ["prix", "climat", "securite", "travail", "proche"] });
+  const n1 = calculer(base).filter((l) => !l.ecart && !l.peuDeDonnees)[0];
+  const zoneN1 = zoneDuPays(n1.pays.id)!;
+  verifier(intuition(repondre(base, "carte", [zoneN1.id])).cas === "bonne", "intuition : la bonne région n'est pas reconnue");
+  const autre = intuition(repondre(base, "carte", [zoneN1.id === "oceanie" ? "europe" : "oceanie"]));
+  verifier(autre.cas === "autre" && autre.phrase.startsWith("Tu pensais à") && autre.raisons.length > 0 && autre.raisons.length <= 3, `intuition : cas « autre » mal dit (${autre.phrase})`);
+  verifier(intuition(repondre(base, "carte", ["aucune"])).phrase.startsWith("Tu partais sans idée"), "intuition : « Aucune idée » mal dit");
+  verifier(memesScores(scores(base), scores(repondre(base, "carte", ["oceanie"]))), "intuition : la carte change le score");
 }
 
 // ---------- Bilan ----------

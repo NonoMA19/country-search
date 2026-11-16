@@ -139,10 +139,14 @@ export function hacher(graine: number, texte: string): number {
 // La scène montrée pour un dilemme : tirée au hasard (avec la graine) parmi celles que tu n'as pas vues
 // dans tes parcours précédents. Le même dilemme montre toujours la même scène dans un parcours.
 export const cleScene = (d: Dilemme, s: Scene) => `${d.id}/${s.id}`;
-export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> = ETAT_VIDE): Scene {
+// Le texte de la scène s'adapte à ton projet quand une variante existe (« ta mission de VIE », « ton job de PVT »).
+export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> & { profil?: Profil } = ETAT_VIDE): Scene {
   const neuves = d.scenes.filter((s) => !etat.dejaVues.includes(cleScene(d, s)));
   const liste = neuves.length ? neuves : d.scenes;
-  return liste[hacher(etat.graine, d.id) % liste.length];
+  const scene = liste[hacher(etat.graine, d.id) % liste.length];
+  const projet = etat.profil?.objectif;
+  const variante = typeof projet === "string" ? scene.variantes?.[projet] : undefined;
+  return variante ? { ...scene, texte: variante } : scene;
 }
 
 // Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».

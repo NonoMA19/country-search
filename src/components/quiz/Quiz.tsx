@@ -11,11 +11,12 @@ import { FORMATS } from "@/components/formats/registre";
 import { BOUTON_PLEIN } from "@/components/formats/commun";
 import { useFlip } from "@/lib/animation";
 import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
-import { trouverElement, type Element, type Valeur } from "@/lib/donnees";
+import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
+import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import { annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
-import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, estAdaptatif, prochainAffiner, prochainElement, topCourant, vusDans } from "@/lib/parcours";
+import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, topCourant, vusDans } from "@/lib/parcours";
 import { portrait, type LignePortrait } from "@/lib/portrait";
 
 export { BOUTON_PLEIN };
@@ -82,18 +83,66 @@ function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: str
   );
 }
 
-// L'avancement dans le chapitre de l'élément.
+// L'avancement dans le chapitre de l'élément : son rang parmi les écrans du chapitre
+// (pour les chapitres 3 et 4, sur 6 écrans environ, sans jamais atteindre la fin avant la fin).
 function partDuChapitre(etat: Session["etat"], el: Element): number {
   const c = el.chapitre;
-  if (estAdaptatif(c)) return vusDans(etat, c).length / MAX_ADAPTATIF(c);
-  return 0.5; // lot 2 : remplacé par le rang dans le chapitre
+  if (estAdaptatif(c)) return Math.min(0.9, vusDans(etat, c).length / (MAX_ADAPTATIF(c) - 1));
+  const visibles = quiz.elements.filter((x) => x.chapitre === c && (etat.reponses[x.id] !== undefined || elementVisible(x, etat)));
+  return Math.max(0, visibles.findIndex((x) => x.id === el.id)) / Math.max(1, visibles.length);
+}
+
+// L'écran d'ouverture d'un chapitre : son titre et une phrase.
+function Transition({ chapitre, continuer }: { chapitre: number; continuer: () => void }) {
+  const ch = CHAPITRES.find((c) => c.numero === chapitre)!;
+  return (
+    <div className="flex flex-1 flex-col">
+      <div className="my-auto py-8 text-center">
+        <p className="text-sm font-semibold tracking-wide text-lien uppercase">Chapitre {chapitre} sur {NB_CHAPITRES}</p>
+        <h1 id="titre-ecran" tabIndex={-1} className="mt-2 text-3xl font-bold break-words outline-none">{ch.titre}</h1>
+        <p className="mx-auto mt-3 max-w-sm text-lg leading-snug text-gris">{ch.phrase}</p>
+      </div>
+      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+        <button type="button" onClick={continuer} className={BOUTON_PLEIN}>Commencer le chapitre</button>
+      </div>
+    </div>
+  );
+}
+
+// « Ton intuition et tes réponses » : la carte du début face à ton n° 1.
+function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => void }) {
+  const i = intuition(etat);
+  return (
+    <>
+      <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Ton intuition</p>
+      <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">Ton intuition et tes réponses</h1>
+      <p className="mt-3 text-lg leading-snug">{i.phrase}</p>
+      {i.n1 && (
+        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-bord bg-carte p-4">
+          <Drapeau iso2={i.n1.pays.iso2} className="h-8 w-12" />
+          <p className="text-xl font-semibold">{i.n1.pays.nom}</p>
+          {i.cas === "autre" && i.meilleurDansZones && <p className="ml-auto text-right text-sm text-gris">Le mieux placé de ta région{"\u00a0"}: {i.meilleurDansZones.pays.nom}</p>}
+        </div>
+      )}
+      {i.raisons.length > 0 && (
+        <>
+          <p className="mt-5 font-semibold">Ce qui a compté{"\u00a0"}:</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5">{i.raisons.map((r) => <li key={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</li>)}</ul>
+        </>
+      )}
+      <p className="mt-5 text-sm text-gris">Ta carte du début ne compte pas dans le calcul. Ton résultat complet vient juste après ton portrait.</p>
+      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
+        <button type="button" onClick={suite} className={BOUTON_PLEIN}>Voir mon portrait</button>
+      </div>
+    </>
+  );
 }
 
 export default function Quiz() {
   const session = useSession();
   const router = useRouter();
   // À chaque nouvel écran, le focus va sur le titre : un lecteur d'écran lit la nouvelle question.
-  const ecran = session ? `${JSON.stringify(session.etape)}:${session.etat.ordre.length}` : "";
+  const ecran = session ? `${JSON.stringify(session.etape)}:${session.etat.ordre.length}:${session.chapitresVus.length}` : "";
   const premier = useRef(true);
   useEffect(() => {
     if (!ecran) return;
@@ -124,6 +173,15 @@ export default function Quiz() {
   };
   const allerAuResultat = () => { if (clicLibre()) { marquerChangement(); router.push("/resultat"); } };
   const retourQuiz = () => (etat.ordre.length > 0 ? aller({ t: "quiz" }, { etat: annulerDerniere(etat) }) : null);
+
+  // ----- Ton intuition et tes réponses -----
+  if (etape.t === "intuition") {
+    return (
+      <Cadre chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
+        <EcranIntuition etat={etat} suite={() => aller({ t: "portrait" })} />
+      </Cadre>
+    );
+  }
 
   // ----- Ton portrait -----
   if (etape.t === "portrait") {
@@ -176,9 +234,17 @@ export default function Quiz() {
   // ----- Le parcours : l'élément suivant -----
   const el = prochainElement(etat);
   if (!el) {
-    // Tout est répondu : le portrait.
-    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "portrait" } }));
+    // Tout est répondu : ton intuition face à tes réponses, puis le portrait.
+    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "intuition" } }));
     return <Chargement />;
+  }
+  // Un nouveau chapitre commence : son écran d'ouverture (à partir du chapitre 2).
+  if (el.chapitre > 1 && !session.chapitresVus.includes(el.chapitre) && vusDans(etat, el.chapitre).length === 0) {
+    return (
+      <Cadre chapitre={el.chapitre} part={0} retour={retourQuiz}>
+        <Transition chapitre={el.chapitre} continuer={() => aller({ t: "quiz" }, { chapitresVus: [...session.chapitresVus, el.chapitre] })} />
+      </Cadre>
+    );
   }
   const F = FORMATS[el.type];
   const suivant = (v: Valeur) => aller({ t: "quiz" }, { etat: repondre(etat, el.id, v) });

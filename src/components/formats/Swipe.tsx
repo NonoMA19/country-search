@@ -66,7 +66,7 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
             style={{ transform: dx && !mouvementReduitActif() ? `translateX(${dx}px) rotate(${dx / 30}deg)` : undefined }}
             className={`flex min-h-48 touch-pan-y items-center justify-center rounded-3xl border-2 bg-carte p-6 text-center shadow-sm ${dx > SEUIL / 2 ? "border-bleu" : dx < -SEUIL / 2 ? "border-gris" : "border-bord"} ${FOCUS}`}
           >
-            <p className="text-xl leading-snug font-semibold">« {phrase.texte} »</p>
+            <p className="text-xl leading-snug font-semibold">«{"\u00a0"}{phrase.texte}{"\u00a0"}»</p>
           </div>
           {precedente && <p className="mt-2 text-center text-sm text-gris">Ta réponse d’avant : {LIBELLE_SWIPE[precedente as ReponseSwipe]}</p>}
         </div>
