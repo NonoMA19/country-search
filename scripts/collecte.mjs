@@ -4,6 +4,7 @@
 //         node scripts/collecte.mjs --textes   (réécrit seulement les phrases, sans rien télécharger :
 //                                              les valeurs et les dates « vérifié le » restent celles du fichier)
 //         node scripts/collecte.mjs --france   (télécharge seulement les valeurs de la France, pays repère non classé)
+//         node scripts/collecte.mjs --oms      (télécharge seulement l'obésité des adultes, mesure « Manger sainement »)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
 //
 // Salaire (prompt 3e) : la source visée est le salaire annuel moyen de l'OCDE (dollars PPA, prix constants,
@@ -21,6 +22,7 @@ const UA = "country-search-bot/0.1 (projet open source non commercial)";
 const TEXTES_SEUL = process.argv.includes("--textes");
 const POPULATION_SEULE = process.argv.includes("--population");
 const FRANCE_SEULE = process.argv.includes("--france");
+const OMS_SEULE = process.argv.includes("--oms");
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
@@ -32,7 +34,7 @@ const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => 
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_"))) return null;
+  if (TEXTES_SEUL || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -91,6 +93,7 @@ const TEXTE = {
   libertes: (v, an) => `Note de la Banque mondiale pour les libertés d'expression, d'association et de la presse : ${fr(v, 0)} sur 100 (${an}). Plus la note est haute, plus ces libertés sont respectées.`,
   egalite: (v, an) => `Note de la Banque mondiale pour l'égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : ${fr(v, 0)} sur 100 (${an}). Plus la note est haute, plus la loi est égale.`,
   doux: (h, an, p, e) => `À ${p.ville}, le mois le plus froid tourne autour de ${fr(h)} °C et le mois le plus chaud autour de ${fr(e)} °C (moyennes ${an}).`,
+  "manger-sain": (v, an) => `Adultes en situation d'obésité : ${fr(v)} % (moyenne des taux des femmes et des hommes de 18 ans et plus, ${an}, estimation de l'Organisation mondiale de la santé). Plus c'est bas, plus on mange sainement en moyenne. L'alimentation n'est qu'une des causes de l'obésité : c'est un repère, pas une mesure de la cuisine du pays.`,
   air: (v, an) => `Particules fines dans l'air (PM2,5, des poussières assez petites pour entrer dans les poumons) : ${fr(v)} µg/m³ en moyenne sur l'année (${an}). Plus c'est bas, mieux c'est.`,
 };
 
@@ -132,7 +135,7 @@ function salaireCoherent(scores, mediane = anneeMediane(scores, "salaire")) {
 // Mêmes sources et mêmes règles que les 30 pays, pour comparer à ce qu'on connaît.
 // Pas de mesure « par rapport à la France » (niveau des prix), ni de mesure par ville (distance, climat).
 const FRANCE = { nom: "France", ville: "Paris", le: "la France", en: "en France", iso3: "FRA" };
-const MESURES_FRANCE = ["emploi", "salaire", "heures", "securite", "air", "stabilite", "libertes"];
+const MESURES_FRANCE = ["emploi", "salaire", "heures", "securite", "air", "stabilite", "libertes", "manger-sain"];
 
 // ---------- Banque mondiale ----------
 const ISO3 = pays.map((p) => p.iso3).join(";");
@@ -164,7 +167,35 @@ const bm = {
   libertes: banqueMondiale("GOV_WGI_VA.SC", "&source=3"),
   // Indice « Les femmes, l'entreprise et le droit » 2024, cadre juridique (base Gender Statistics).
   egalite: banqueMondiale("GD_WBL_OVL_LAW", "&source=14"),
+  // Obésité des adultes (OMS, Global Health Observatory, relayée par la base Gender Statistics de la Banque mondiale).
+  // Licence de l'OMS : CC BY-NC-SA 3.0 IGO, usage non commercial (à revoir si le site devient payant).
+  obFemmes: banqueMondiale("SH.STA.OB18.FE.ZS", "&source=14"),
+  obHommes: banqueMondiale("SH.STA.OB18.MA.ZS", "&source=14"),
 };
+// Manger sainement : la moyenne des taux d'obésité des femmes et des hommes, la dernière année où les deux existent.
+function obesite(iso3) {
+  const f = bm.obFemmes.serie[iso3], h = bm.obHommes.serie[iso3];
+  if (!f || !h) return null;
+  const an = Object.keys(f).filter((a) => h[a] !== undefined).sort().pop();
+  return an ? { annee: an, valeur: (f[an] + h[an]) / 2 } : null;
+}
+const noteObesite = (iso3) => {
+  const o = obesite(iso3);
+  return o ? verifie("manger-sain", o.valeur, TEXTE["manger-sain"](o.valeur, o.annee), "oms-gho", bm.obFemmes.url, o.annee) : aVerifier("Obésité des adultes : pas de donnée dans cette source.");
+};
+
+// ---------- Mode --oms : seulement l'obésité des adultes ----------
+if (OMS_SEULE) {
+  const actuel = lire("scores.json");
+  for (const p of pays) actuel.pays[p.id]["manger-sain"] = noteObesite(p.iso3);
+  const france = actuel.reference?.france?.notes;
+  if (france) france["manger-sain"] = noteObesite("FRA");
+  typoTextes(actuel.pays);
+  if (france) typoTextes({ france });
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const p of pays) console.log(p.nom, actuel.pays[p.id]["manger-sain"].valeur ?? "à vérifier");
+  process.exit(0);
+}
 // Niveau des prix = parité de pouvoir d'achat (consommation des ménages) ÷ taux de change.
 function niveauPrix(iso3) {
   const p = bm.ppa.serie[iso3], c = bm.change.serie[iso3];
@@ -203,6 +234,7 @@ function notesFrance(series, medianeSalaire) {
     air: note("air", series.air?.x, "bm-wdi", series.air?.url),
     stabilite: note("stabilite", series.stabilite?.x, "bm-wgi", series.stabilite?.url),
     libertes: note("libertes", series.libertes?.x, "bm-wgi", series.libertes?.url),
+    "manger-sain": series.mangerSain ?? aVerifier("Pas de donnée dans cette source."),
   };
   salaireCoherent({ france: res }, medianeSalaire);
   return res;
@@ -467,13 +499,15 @@ for (const p of pays) {
   const a = dernier(bm.air.serie[p.iso3]);
   s.air = a ? verifie("air", a.valeur, TEXTE.air(a.valeur, a.annee), "bm-wdi", lienBm(bm.air), a.annee) : aVerifier("Qualité de l'air : pas de donnée dans cette source.");
 
+  s["manger-sain"] = noteObesite(p.iso3);
+
   Object.assign(s, notesAvis(p));
   scores[p.id] = s;
 }
 
 const medianeSalaire = salaireCoherent(scores);
 const pourFrance = (k) => ({ x: dernier(bm[k].serie.FRA), url: bm[k].url });
-const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes") }, medianeSalaire);
+const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes"), mangerSain: noteObesite("FRA") }, medianeSalaire);
 typoTextes({ france });
 
 const manquantes = [];

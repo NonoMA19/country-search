@@ -117,6 +117,8 @@ export default function Methode() {
           <li>Les dilemmes qui forment une échelle (salaire et coût de la vie, salaire et temps libre, emploi et salaire, distance, hiver, été, ville et nature, sécurité…) ont 4 réponses : « Plutôt A », « Un peu A », « Un peu B », « Plutôt B ». « Plutôt » donne l’effet complet de l’option (importance 1, ou sa position). « Un peu » en donne la moitié : importance 0,5, ou une position à mi-chemin entre celle de l’option et le milieu de l’échelle (exemple : la position 4 devient 3,5). Les dilemmes de culture au travail gardent 2 options : une réponse « entre les deux » n’apprendrait rien.</li>
           <li>Après tes 3 priorités, on regarde les 5 premiers pays de ton classement.</li>
           <li>On te pose le dilemme pour lequel ces 5 pays sont les plus différents. Une option qui ne ferait que redonner une importance déjà acquise (par une de tes priorités, par exemple) ne compte pas : elle ne départagerait rien. C’est un calcul, pas une IA.</li>
+          <li>Chaque dilemme mesure une seule chose, mais il a 3 scènes de la vie réelle (par exemple « Deux offres », « Le colocataire », « La sortie du vendredi » pour le salaire face au coût de la vie). Les 3 scènes ont exactement le même effet. Le site en tire une au hasard, et ne te repose jamais une scène que tu as déjà vue dans un parcours précédent (tant qu’il en reste). Le tirage dépend d’un nombre choisi au début de ton parcours : « Retour » et le rechargement de la page te montrent la même scène.</li>
+          <li>Les 4 premiers dilemmes sont tirés au hasard parmi ceux qui départagent au moins 60 % autant que le meilleur. Deux personnes au profil proche n’ont donc pas les mêmes premières questions. Ensuite, on pose toujours le plus utile.</li>
           <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
           <li>Ton résultat est proposé quand ton top 3 n’a pas bougé pendant 3 réponses, après au moins 6 réponses. « Passer » ne compte ni dans les 6, ni dans les 3. Tu peux t’arrêter avant, ou continuer.</li>
           <li>Sous chaque pays de ton top 3, les points sont rangés en trois catégories : Travailler, Vivre, Culture au travail. Par catégorie, au plus 2 points forts (notés 4 ou 5 sur 5 dans le sens de tes réponses) et 1 point faible (2,5 sur 5 ou moins). Seulement des points liés à tes réponses : une priorité, ton projet, un dilemme, un sujet de l’écran Valeurs ou un curseur « Et si… ? ». Une catégorie sans rien à dire n’est pas affichée. Deux pays n’ont jamais exactement la même phrase : le pays mieux classé la garde.</li>
@@ -288,7 +290,7 @@ export default function Methode() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-sm text-gris">Sources écartées parce que leur licence ne permet pas la réutilisation : Numbeo, EF EPI, Hofstede.</p>
+        <p className="mt-4 text-sm text-gris">Licence à surveiller : les données de l’OMS (manger sainement) sont réutilisables seulement pour un usage non commercial (CC BY-NC-SA 3.0 IGO). Si le site devenait payant, il faudrait les retirer. Pas encore de mesure « vie active et sportive » : la part d’adultes à l’activité physique insuffisante (OMS) n’était pas téléchargeable depuis nos outils. Sources écartées parce que leur licence ne permet pas la réutilisation : Numbeo, EF EPI, Hofstede.</p>
       </section>
 
       <p className="mt-10 text-sm text-gris">Code sous licence MIT, contenu sous licence CC BY-SA 4.0.</p>

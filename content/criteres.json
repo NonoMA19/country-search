@@ -140,7 +140,7 @@
         "id": "salaire",
         "nom": "Salaire brut moyen, avant impôts, en pouvoir d’achat",
         "sens": "haut",
-        "regle": "Salaire moyen des salariés de l’OIT (indicateur EAR_EMTA_SEX_CUR_NB_A, dollars PPA). Les années doivent être comparables : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. La source visée est le salaire annuel moyen de l’OCDE (même année pour tous les pays) : pas encore récupéré.",
+        "regle": "Salaire moyen des salariés de l’OIT (indicateur EAR_EMTA_SEX_CUR_NB_A, dollars PPA). Les années doivent être comparables : un pays dont la donnée la plus récente s’écarte de plus d’un an de l’année médiane des 30 pays passe « À vérifier » et ne compte pas. La source visée est le salaire annuel moyen de l’OCDE (même année pour tous les pays) : pas encore récupéré.",
         "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations. Ton salaire net dépendra de ton métier et des impôts du pays.",
         "unite": "$ PPA par mois",
         "bornes": [
@@ -939,7 +939,7 @@
           "On peut presque y vivre en français ou en anglais",
           "On peut y vivre en français ou en anglais"
         ],
-        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre.",
+        "regle": "Tirée de la mesure « Langue du quotidien » : autre écriture = niveau 1 ; autre langue à alphabet latin, ou langue proche du français = niveau 3 ; anglais ou français au quotidien = niveau 5. Si tu parles déjà la langue du pays, niveau 5. Elle ne compte que si tu choisis « Je garde ces soirées pour moi » : c’est une pénalité, pas un filtre.",
         "court": "Langue à apprendre",
         "theme": "la langue",
         "etiquettes": [
@@ -1372,6 +1372,72 @@
           "Nature proche",
           "Nature aux portes des villes"
         ]
+      }
+    ]
+  },
+  {
+    "numero": 18,
+    "id": "alimentation",
+    "famille": "vivre",
+    "nom": "Manger sainement",
+    "definition": "Part des adultes en situation d’obésité (indice de masse corporelle de 30 ou plus), estimée par l’Organisation mondiale de la santé. C’est un repère indirect : on mange en moyenne plus sainement là où l’obésité est rare, mais l’alimentation n’est qu’une des causes (sport, revenus, génétique…). Licence de l’OMS : usage non commercial seulement.",
+    "type": "donnee-ouverte",
+    "sources": [
+      "oms-gho"
+    ],
+    "mesures": [
+      {
+        "id": "manger-sain",
+        "nom": "Obésité des adultes (manger sainement)",
+        "sens": "haut",
+        "unite": "% des adultes",
+        "bornes": [
+          10,
+          16,
+          22,
+          30
+        ],
+        "notes": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ],
+        "echelle": [
+          "30 % ou plus",
+          "de 22 à 30 %",
+          "de 16 à 22 %",
+          "de 10 à 16 %",
+          "moins de 10 %"
+        ],
+        "mots": [
+          "très fréquente",
+          "fréquente",
+          "moyenne",
+          "peu fréquente",
+          "rare"
+        ],
+        "fait": [
+          "L’obésité y touche beaucoup d’adultes",
+          "L’obésité y est fréquente",
+          "L’obésité y est dans la moyenne",
+          "L’obésité y est peu fréquente",
+          "L’obésité y est rare"
+        ],
+        "regle": "Moyenne des taux d’obésité des femmes et des hommes de 18 ans et plus (OMS, relayés par la base Gender Statistics de la Banque mondiale, indicateurs SH.STA.OB18.FE.ZS et SH.STA.OB18.MA.ZS), la dernière année où les deux existent.",
+        "court": "Manger sainement",
+        "affichage": "{v} % d’adultes obèses",
+        "decimales": 1,
+        "theme": "l’alimentation",
+        "etiquettes": [
+          "Obésité très fréquente",
+          "Obésité fréquente",
+          "Obésité moyenne",
+          "Obésité peu fréquente",
+          "Obésité rare"
+        ],
+        "avertissement": "C’est un repère indirect : l’obésité dépend aussi du sport, des revenus et de la génétique, pas seulement de ce qu’on mange."
       }
     ]
   }

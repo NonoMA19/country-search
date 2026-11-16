@@ -2,10 +2,10 @@
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
 import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, vie } from "@/lib/donnees";
-import { validerSession, SESSION_VIDE } from "@/lib/memoire";
+import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, utilite, dilemmeVisible, DEBUT_ALEATOIRE, PART_UTILITE, annulerDerniere, mesureDisponible,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -55,7 +55,7 @@ function quizAuHasard(r: Alea, passerTout = false): Etat {
     if (!priorites.includes(id)) priorites.push(id);
   }
   const sujets = quiz.sujets.filter(() => r() < 0.3).map((s) => s.id);
-  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets });
+  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets, graine: Math.floor(r() * 2 ** 31) });
   for (let n = 0; n < 30; n++) {
     const d = prochainDilemme(etat);
     if (!d) break;
@@ -604,6 +604,62 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   // Une session avec une réponse graduée est acceptée, une réponse inconnue refusée.
   verifier(validerSession({ ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "deux-offres": "peu-b" }, ordre: ["deux-offres"], historique: [] } }) !== null, "session : « peu-b » refusé");
   verifier(validerSession({ ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "reunion-9h": "peu-a" }, ordre: ["reunion-9h"], historique: [] } }) === null, "session : « peu-a » accepté sur un dilemme de culture");
+}
+
+// 2.17 Une banque de scènes plus grande (prompt 3e, lot 3).
+{
+  // 3 scènes par dilemme, identifiants uniques ; nouvelles mesures notées pour au moins 60 % des pays.
+  for (const d of quiz.dilemmes) {
+    verifier(d.scenes.length === 3, `${d.id} : ${d.scenes.length} scènes au lieu de 3`);
+    verifier(new Set(d.scenes.map((x) => x.id)).size === d.scenes.length, `${d.id} : deux scènes avec le même identifiant`);
+    verifier(dilemmeActif(d), `${d.id} : dilemme inactif`);
+  }
+  verifier(quiz.dilemmes.reduce((n, d) => n + d.scenes.length, 0) >= 50, "moins de 50 scènes");
+  for (const m of ["anglais", "doux", "air", "manger-sain"]) {
+    verifier(mesureDisponible(m) && paysCouverts(m) >= 0.6 * pays.length, `${m} : pas assez de pays notés`);
+    verifier(quiz.dilemmes.some((d) => d.options.some((o) => o.effets.some((e) => e.mesures.includes(m)))), `${m} : aucun dilemme`);
+  }
+  verifier(sources["oms-gho"]?.licence.includes("NC"), "OMS : la licence non commerciale n'est pas dite");
+  // Scène : la même pour la même graine (retour, rechargement), jamais une scène déjà vue s'il en reste.
+  const r5 = hasard(99);
+  let differentes = 0;
+  for (let k = 0; k < 200; k++) {
+    const d = choisir(r5, quiz.dilemmes);
+    const g = Math.floor(r5() * 2 ** 31);
+    const e = { ...ETAT_VIDE, graine: g };
+    verifier(sceneDe(d, e).id === sceneDe(d, { ...e }).id, `scène : pas stable pour ${d.id}`);
+    if (sceneDe(d, e).id !== sceneDe(d, { ...e, graine: g + 1 }).id) differentes++;
+    const vues = d.scenes.slice(0, 2).map((x) => cleScene(d, x));
+    verifier(sceneDe(d, { ...e, dejaVues: vues }).id === d.scenes[2].id, `scène : ${d.id} repose une scène déjà vue`);
+    verifier(!!sceneDe(d, { ...e, dejaVues: d.scenes.map((x) => cleScene(d, x)) }), `scène : ${d.id} sans scène quand tout est vu`);
+  }
+  verifier(differentes > 80, `scène : la graine ne change presque jamais la scène (${differentes} sur 200)`);
+  // Les 4 premiers dilemmes : tirés parmi ceux qui départagent au moins 60 % autant que le meilleur ; stables au retour.
+  const r6 = hasard(5);
+  for (let k = 0; k < 80; k++) {
+    let etat = quizAuHasard(r6);
+    etat = demarrerDilemmes({ ...etat, reponses: {}, ordre: [] });
+    for (let n = 0; n < DEBUT_ALEATOIRE + 2; n++) {
+      const d = prochainDilemme(etat);
+      if (!d) break;
+      const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
+      const us = quiz.dilemmes.filter((x) => dilemmeVisible(x, etat)).map((x) => utilite(x, etat, top));
+      const u = utilite(d, etat, top), max = Math.max(...us);
+      if (n < DEBUT_ALEATOIRE) verifier(u >= PART_UTILITE * max - 1e-9, `début : ${d.id} trop peu utile (${u.toFixed(2)} pour ${max.toFixed(2)})`);
+      else verifier(u >= max - 1e-9, `après le début : ${d.id} n'est pas le plus utile`);
+      const suivant = repondre(etat, d.id, choisir(r6, reponsesDe(d)));
+      verifier(prochainDilemme(annulerDerniere(suivant))?.id === d.id, `retour : ${d.id} n'est plus proposé après « Retour »`);
+      etat = suivant;
+    }
+  }
+  // Nouvelle session : graine au hasard ; « recommencer » garde les scènes déjà vues.
+  const s1 = nouvelleSession(), s2 = nouvelleSession();
+  verifier(s1.etat.graine !== s2.etat.graine, "nouvelle session : même graine deux fois");
+  verifier(validerSession(JSON.parse(JSON.stringify(s1))) !== null, "nouvelle session refusée");
+  const fait = quizAuHasard(hasard(8));
+  const vues = scenesVues(fait);
+  verifier(vues.length === fait.ordre.length, "scènes vues : il en manque");
+  verifier(nouvelleSession(vues).etat.dejaVues.length === vues.length, "recommencer : scènes déjà vues oubliées");
 }
 
 // ---------- Bilan ----------

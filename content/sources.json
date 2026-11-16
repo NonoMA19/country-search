@@ -218,5 +218,11 @@
     "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic/devenir-candidat.html",
     "licence": "Lien seulement, aucun contenu copié",
     "type": "officiel"
+  },
+  "oms-gho": {
+    "nom": "Organisation mondiale de la santé, Global Health Observatory (données relayées par la Banque mondiale, base Gender Statistics)",
+    "url": "https://www.who.int/data/gho",
+    "licence": "CC BY-NC-SA 3.0 IGO : réutilisation non commerciale seulement, en citant l’OMS",
+    "type": "donnee-ouverte"
   }
 }

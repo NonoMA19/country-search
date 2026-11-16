@@ -2,7 +2,7 @@
 // Tout s'efface quand on ferme l'onglet.
 import { useSyncExternalStore } from "react";
 import { quiz } from "./donnees";
-import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, reponsesDe, type Etat, type Reglages } from "./moteur";
+import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, cleScene, reponsesDe, sceneDe, trouverDilemme, type Etat, type Reglages } from "./moteur";
 import { pays } from "./pays";
 
 // L'ordre du parcours : profil, priorités, dilemmes, (résultat prêt), valeurs (en option), résultat.
@@ -17,7 +17,7 @@ export type Etape =
   | { t: "revoir"; id: string };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 6;
+export const VERSION_SESSION = 7;
 
 export type Session = {
   v: number;
@@ -48,6 +48,7 @@ const PRIORITES = new Set(quiz.priorites.map((p) => p.id));
 const SUJETS = new Set(quiz.sujets.map((s) => s.id));
 const DILEMMES = new Map(quiz.dilemmes.map((d) => [d.id, new Set(["passer", ...reponsesDe(d)])]));
 const PAYS = new Set(pays.map((p) => p.id));
+const SCENES = new Set(quiz.dilemmes.flatMap((d) => d.scenes.map((s) => cleScene(d, s))));
 const CRANS = new Set(NIVEAUX);
 const GROUPES_REGLAGE = new Set<string>(GROUPES.map((g) => g.id));
 
@@ -70,6 +71,7 @@ function etatValide(x: unknown): x is Etat {
   if (!Object.entries(reponses).every(([k, v]) => estTexte(v) && !!DILEMMES.get(k)?.has(v))) return false;
   if (!listeDe(x.ordre, (y) => y in reponses) || x.ordre.length !== Object.keys(reponses).length) return false;
   if (!listeDe(x.remontes, (y) => PAYS.has(y))) return false;
+  if (!entier(x.graine, 0) || !listeDe(x.dejaVues, (y) => SCENES.has(y))) return false;
   return listeDe(x.historique, () => true) && x.historique.length <= x.ordre.length + 1;
 }
 
@@ -95,13 +97,26 @@ export function validerSession(x: unknown): Session | null {
   return x as unknown as Session;
 }
 
+// Une nouvelle session : une graine tirée au hasard. « dejaVues » : les scènes des parcours précédents,
+// pour ne pas te reposer la même scène quand tu recommences (on repart de zéro quand tu les as toutes vues).
+const nouvelleGraine = () => Math.floor(Math.random() * 2 ** 31);
+export function nouvelleSession(dejaVues: string[] = []): Session {
+  const toutes = dejaVues.length >= SCENES.size ? [] : dejaVues;
+  return { ...SESSION_VIDE, etat: { ...ETAT_VIDE, graine: nouvelleGraine(), dejaVues: toutes } };
+}
+// Les scènes montrées dans ce parcours (réponses et « Passer » compris).
+export const scenesVues = (e: Etat) => e.ordre.flatMap((id) => {
+  const d = trouverDilemme(id);
+  return d ? [cleScene(d, sceneDe(d, e))] : [];
+});
+
 function lire(): Session {
   if (courant) return courant;
   try {
     const brut = window.sessionStorage.getItem(CLE);
-    courant = (brut ? validerSession(JSON.parse(brut)) : null) ?? SESSION_VIDE;
+    courant = (brut ? validerSession(JSON.parse(brut)) : null) ?? nouvelleSession();
   } catch {
-    courant = SESSION_VIDE;
+    courant = nouvelleSession();
   }
   return courant;
 }
@@ -117,7 +132,10 @@ export function ecrire(s: Session) {
 }
 
 export const modifier = (f: (s: Session) => Session) => ecrire(f(lire()));
-export const recommencer = () => ecrire(SESSION_VIDE);
+export const recommencer = () => {
+  const e = lire().etat;
+  ecrire(nouvelleSession([...new Set([...e.dejaVues, ...scenesVues(e)])]));
+};
 
 function abonner(f: () => void) {
   ecouteurs.add(f);

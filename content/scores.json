@@ -478,6 +478,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 20.85,
+    "texte": "Adultes en situation d’obésité : 20,8 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "suisse": {
@@ -745,6 +755,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 11.3,
+    "texte": "Adultes en situation d’obésité : 11,3 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "allemagne": {
@@ -1015,6 +1035,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 20.61,
+    "texte": "Adultes en situation d’obésité : 20,6 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "irlande": {
@@ -1283,6 +1313,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 27.94,
+    "texte": "Adultes en situation d’obésité : 27,9 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "luxembourg": {
@@ -1550,6 +1590,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 19.04,
+    "texte": "Adultes en situation d’obésité : 19 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "espagne": {
@@ -1817,6 +1867,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 15.26,
+    "texte": "Adultes en situation d’obésité : 15,3 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "italie": {
@@ -2085,6 +2145,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 13.92,
+    "texte": "Adultes en situation d’obésité : 13,9 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "pays-bas": {
@@ -2353,6 +2423,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 14.68,
+    "texte": "Adultes en situation d’obésité : 14,7 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "portugal": {
@@ -2621,6 +2701,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 17.98,
+    "texte": "Adultes en situation d’obésité : 18 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "norvege": {
@@ -2889,6 +2979,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 20.16,
+    "texte": "Adultes en situation d’obésité : 20,2 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "suede": {
@@ -3157,6 +3257,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 17.48,
+    "texte": "Adultes en situation d’obésité : 17,5 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "danemark": {
@@ -3425,6 +3535,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 14.33,
+    "texte": "Adultes en situation d’obésité : 14,3 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "canada": {
@@ -3693,6 +3813,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 25.99,
+    "texte": "Adultes en situation d’obésité : 26 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "australie": {
@@ -3958,6 +4088,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 30.6,
+    "texte": "Adultes en situation d’obésité : 30,6 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "japon": {
@@ -4223,6 +4363,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.86,
+    "texte": "Adultes en situation d’obésité : 5,9 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "nouvelle-zelande": {
@@ -4488,6 +4638,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 34.04,
+    "texte": "Adultes en situation d’obésité : 34 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "coree-du-sud": {
@@ -4758,6 +4918,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.23,
+    "texte": "Adultes en situation d’obésité : 8,2 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "taiwan": {
@@ -4980,6 +5150,11 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Obésité des adultes : pas de donnée dans cette source."
    }
   },
   "hong-kong": {
@@ -5216,6 +5391,11 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Obésité des adultes : pas de donnée dans cette source."
    }
   },
   "argentine": {
@@ -5474,6 +5654,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 37.17,
+    "texte": "Adultes en situation d’obésité : 37,2 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "chili": {
@@ -5741,6 +5931,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 40.42,
+    "texte": "Adultes en situation d’obésité : 40,4 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "colombie": {
@@ -5998,6 +6198,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 24.71,
+    "texte": "Adultes en situation d’obésité : 24,7 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "mexique": {
@@ -6264,6 +6474,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 37.03,
+    "texte": "Adultes en situation d’obésité : 37 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "bresil": {
@@ -6522,6 +6742,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 30,
+    "texte": "Adultes en situation d’obésité : 30 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "royaume-uni": {
@@ -6789,6 +7019,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 27.4,
+    "texte": "Adultes en situation d’obésité : 27,4 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "etats-unis": {
@@ -7056,6 +7296,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 41,
+    "texte": "Adultes en situation d’obésité : 41 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "singapour": {
@@ -7321,6 +7571,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 16.84,
+    "texte": "Adultes en situation d’obésité : 16,8 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "emirats-arabes-unis": {
@@ -7574,6 +7834,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 33.11,
+    "texte": "Adultes en situation d’obésité : 33,1 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "chine": {
@@ -7838,6 +8108,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.2,
+    "texte": "Adultes en situation d’obésité : 9,2 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   },
   "maroc": {
@@ -8085,6 +8365,16 @@
     "source": "notre-avis",
     "lien": null,
     "verifieLe": "2026-11-14"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 21.51,
+    "texte": "Adultes en situation d’obésité : 21,5 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-16"
    }
   }
  },
@@ -8160,6 +8450,16 @@
      "annee": "2025",
      "source": "bm-wgi",
      "lien": "https://api.worldbank.org/v2/country/FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+     "verifieLe": "2026-11-16"
+    },
+    "manger-sain": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 11.22,
+     "texte": "Adultes en situation d’obésité : 11,2 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+     "annee": "2024",
+     "source": "oms-gho",
+     "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
      "verifieLe": "2026-11-16"
     }
    }

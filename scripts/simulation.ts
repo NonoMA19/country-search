@@ -5,6 +5,7 @@
 import { quiz, type Dilemme } from "@/lib/donnees";
 import { ETAT_VIDE, LIBELLE_FIABILITE, calculer, cleTop3, demarrerDilemmes, paysSurprise, prochainDilemme, questionProfilVisible, repondre, reponsesDe, resultatPret, type Etat, type NiveauFiabilite, type Profil } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
+import { rapportDiversite } from "./diversite";
 
 function hasard(graine: number) {
   let a = graine >>> 0;
@@ -43,7 +44,7 @@ function quizAuHasard(r: Alea): Etat {
     if (!priorites.includes(id)) priorites.push(id);
   }
   const sujets = quiz.sujets.filter(() => r() < 0.3).map((s) => s.id);
-  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets });
+  let etat = demarrerDilemmes({ ...ETAT_VIDE, profil: profilAuHasard(r), priorites, sujets, graine: Math.floor(r() * 2 ** 31) });
   for (let n = 0; n < 30; n++) {
     const q = prochainDilemme(etat);
     if (!q) break;
@@ -151,3 +152,13 @@ for (const p of PERSONAS) {
   console.log(`  ${p.nom}\n    ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
   console.log(`    fiabilité du top 3 : ${top.slice(0, 3).map((l) => `${l.pays.nom} ${l.fiabilite.verifies}/${l.fiabilite.total}`).join(", ")} ; pays surprise : ${s ? `${s.ligne.pays.nom} ${Math.round(s.score)} % (${s.cause})` : "aucun"}`);
 }
+
+// ---------- Diversité des questions (prompt 3e, lot 3) ----------
+// Objectif : moins de 35 % de questions strictement identiques entre deux parcours.
+const prioritesAuHasard = (r2: Alea) => {
+  const dispo = quiz.priorites.map((x) => x.id);
+  const p: string[] = [];
+  while (p.length < 3) { const id = choisir(r2, dispo); if (!p.includes(id)) p.push(id); }
+  return p;
+};
+rapportDiversite(hasard(20261116), Math.min(NB, 1000), profilAuHasard, prioritesAuHasard);

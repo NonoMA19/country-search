@@ -17,6 +17,8 @@ export type Etat = {
   ordre: string[]; // dilemmes dans l'ordre où ils ont été vus
   remontes: string[]; // pays remontés à la main depuis « Moins adaptés »
   historique: string[]; // le top 3 après chaque réponse (le premier : avant les dilemmes)
+  graine: number; // tirée au hasard au début du parcours : scènes et premiers dilemmes en dépendent (stable au retour et au rechargement)
+  dejaVues: string[]; // scènes vues dans tes parcours précédents (« dilemme/scène ») : on ne te les repose pas
 };
 
 // « Et si… ? » : 4 curseurs concrets. Chacun règle l'importance d'un groupe de mesures,
@@ -34,7 +36,7 @@ export const GROUPES: { id: GroupeReglage; nom: string; mesures: string[]; defau
   { id: "culture", nom: "La culture au travail", mesures: ["hierarchie", "communication", "ponctualite", "decision", "pro-perso"], defaut: [] },
 ];
 
-export const ETAT_VIDE: Etat = { profil: {}, priorites: [], sujets: [], reponses: {}, ordre: [], remontes: [], historique: [] };
+export const ETAT_VIDE: Etat = { profil: {}, priorites: [], sujets: [], reponses: {}, ordre: [], remontes: [], historique: [], graine: 0, dejaVues: [] };
 export const REGLAGES_DEFAUT: Reglages = { niveaux: {}, budget: null };
 export const MIN_DILEMMES = 6;
 export const REPONSES_STABLES = 3;
@@ -114,14 +116,27 @@ export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined
   return d ? optionReponse(d, etat.reponses[id]) : undefined;
 };
 
-// La scène montrée pour un dilemme.
-export function sceneDe(d: Dilemme): Scene {
-  return d.scenes[0];
+// ---------- Hasard reproductible ----------
+// Un nombre tiré de la graine du parcours et d'un texte : toujours le même pour la même graine.
+export function hacher(graine: number, texte: string): number {
+  let h = (graine ^ 0x811c9dc5) >>> 0;
+  for (let i = 0; i < texte.length; i++) h = Math.imul(h ^ texte.charCodeAt(i), 0x01000193) >>> 0;
+  h ^= h >>> 15; h = Math.imul(h, 0x2c1b3c6d) >>> 0; h ^= h >>> 12;
+  return h >>> 0;
+}
+
+// La scène montrée pour un dilemme : tirée au hasard (avec la graine) parmi celles que tu n'as pas vues
+// dans tes parcours précédents. Le même dilemme montre toujours la même scène dans un parcours.
+export const cleScene = (d: Dilemme, s: Scene) => `${d.id}/${s.id}`;
+export function sceneDe(d: Dilemme, etat: Pick<Etat, "graine" | "dejaVues"> = ETAT_VIDE): Scene {
+  const neuves = d.scenes.filter((s) => !etat.dejaVues.includes(cleScene(d, s)));
+  const liste = neuves.length ? neuves : d.scenes;
+  return liste[hacher(etat.graine, d.id) % liste.length];
 }
 
 // Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».
-export function libelleReponse(d: Dilemme, reponse: string): string {
-  const scene = sceneDe(d);
+export function libelleReponse(d: Dilemme, reponse: string, etat?: Etat): string {
+  const scene = sceneDe(d, etat);
   const i = d.options.findIndex((o) => o.id === reponse.replace(/^peu-/, ""));
   const texte = scene.options[i]?.texte ?? "";
   return d.echelle ? `${LIBELLE_ECHELLE[reponse] ?? reponse} : ${texte}` : texte;
@@ -757,16 +772,21 @@ export function utilite(d: Dilemme, etat: Etat, liste: Ligne[]): number {
   }));
 }
 
+// Les 4 premiers dilemmes sont tirés au hasard (avec la graine) parmi ceux qui départagent au moins
+// 60 % autant que le meilleur : deux personnes au profil proche n'ont pas les mêmes questions.
+// Ensuite, toujours le plus utile.
+export const DEBUT_ALEATOIRE = 4;
+export const PART_UTILITE = 0.6;
 export function prochainDilemme(etat: Etat): Dilemme | null {
   const top = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
-  let meilleur: Dilemme | null = null;
-  let max = 0;
-  for (const d of quiz.dilemmes) {
-    if (!dilemmeVisible(d, etat)) continue;
-    const u = utilite(d, etat, top);
-    if (u > max + 1e-9) { max = u; meilleur = d; }
+  const candidats = quiz.dilemmes.filter((d) => dilemmeVisible(d, etat)).map((d) => ({ d, u: utilite(d, etat, top) })).filter((x) => x.u > 1e-9);
+  if (!candidats.length) return null;
+  const max = Math.max(...candidats.map((x) => x.u));
+  if (etat.ordre.length < DEBUT_ALEATOIRE) {
+    const proches = candidats.filter((x) => x.u >= PART_UTILITE * max - 1e-9);
+    return proches[hacher(etat.graine, `debut:${etat.ordre.length}`) % proches.length].d;
   }
-  return meilleur;
+  return candidats.find((x) => x.u >= max - 1e-9)!.d;
 }
 
 // « Passer » ne compte ni pour le minimum de dilemmes, ni pour la stabilité du top 3.
@@ -917,7 +937,7 @@ export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, r
   }
   const d = trouverDilemme(plusFort.id);
   if (plusFort.effet < 0.05 || !d) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
-  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id])}). ${issue}`;
+  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d, apres).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id], apres)}). ${issue}`;
 }
 
 // ---------- Résultat rédigé pour toi ----------

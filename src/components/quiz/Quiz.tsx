@@ -312,7 +312,7 @@ export default function Quiz() {
       const change = (r: string) => (r === "passer" ? aller({ t: "portrait" }) : aller({ t: "portrait" }, { etat: changerReponse(etat, d.id, r) }));
       return (
         <Cadre progression={100} retour={() => aller({ t: "portrait" })}>
-          <CarteDilemme key={d.id} dilemme={d} scene={sceneDe(d)} repond={change} choisie={etat.reponses[d.id]} passer="Garder ma réponse" />
+          <CarteDilemme key={d.id} dilemme={d} scene={sceneDe(d, etat)} repond={change} choisie={etat.reponses[d.id]} passer="Garder ma réponse" />
         </Cadre>
       );
     }
@@ -359,7 +359,7 @@ export default function Quiz() {
 
   return (
     <Cadre progression={progression} retour={retourDilemme}>
-      <CarteDilemme key={dilemme.id} dilemme={dilemme} scene={sceneDe(dilemme)} repond={repond} />
+      <CarteDilemme key={dilemme.id} dilemme={dilemme} scene={sceneDe(dilemme, etat)} repond={repond} />
       <div className="mt-6 border-t border-bord pt-4">
         <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2)} />
         <button type="button" onClick={voirResultat} className="mt-3 min-h-11 text-sm font-medium text-lien underline">
