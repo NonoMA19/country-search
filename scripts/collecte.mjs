@@ -7,6 +7,7 @@
 //         node scripts/collecte.mjs --oms      (télécharge seulement l'obésité des adultes, mesure « Manger sainement »)
 //         node scripts/collecte.mjs --ocde     (salaire moyen de l'OCDE et part qui reste après impôts, depuis content/saisie/ocde.json)
 //         node scripts/collecte.mjs --vie      (indemnité VIE par pays, depuis content/saisie/vie-indemnites.json)
+//         node scripts/collecte.mjs --secteur  (part de l'emploi par secteur, ILOSTAT, CITI rév. 4)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
 //
 // Salaire (prompt 3f) : salaire annuel moyen de l'OCDE 2024 (dollars PPA, même année pour tous), saisi dans
@@ -27,6 +28,7 @@ const FRANCE_SEULE = process.argv.includes("--france");
 const OMS_SEULE = process.argv.includes("--oms");
 const OCDE_SEULE = process.argv.includes("--ocde");
 const VIE_SEULE = process.argv.includes("--vie");
+const SECTEUR_SEUL = process.argv.includes("--secteur");
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
@@ -38,7 +40,7 @@ const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => 
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL || OCDE_SEULE || VIE_SEULE || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
+  if (TEXTES_SEUL || OCDE_SEULE || VIE_SEULE || (SECTEUR_SEUL && !nom.startsWith("ilo_eco_")) || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -203,6 +205,65 @@ if (VIE_SEULE) {
   typoTextes(actuel.pays);
   fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
   for (const p of pays) console.log(p.nom, actuel.pays[p.id]["indemnite-vie"].valeur, actuel.pays[p.id]["indemnite-vie"].note);
+  process.exit(0);
+}
+
+// ---------- Mode --secteur : la part de l'emploi du pays dans chaque secteur (ILOSTAT, CC BY 4.0) ----------
+// Emploi par activité économique, CITI rév. 4 (indicateur EMP_TEMP_SEX_ECO_NB_A), femmes et hommes.
+// Pour chaque pays : la dernière année disponible, à condition qu'elle soit 2019 ou plus récente ; part = section ÷ total,
+// même source et même année. Note de 1 à 5 selon le rapport entre la part du pays et la médiane des 30 pays :
+// moins de 0,7 → 1 ; moins de 0,9 → 2 ; moins de 1,1 → 3 ; moins de 1,3 → 4 ; 1,3 ou plus → 5.
+const SECTEURS = { finance: "K", conseil: "M", ingenierie: "C", tech: "J", commerce: "G", sante: "Q", hotellerie: "I", enseignement: "P" };
+const NOMS_SECTEURS = { finance: "la finance et la banque", conseil: "le conseil et l'audit", ingenierie: "l'ingénierie et l'industrie", tech: "la tech et la data", commerce: "le marketing et le commerce", sante: "la santé", hotellerie: "l'hôtellerie et le tourisme", enseignement: "l'enseignement et la recherche" };
+const ANNEE_MIN_SECTEUR = 2019;
+const LIEN_ILO_ECO = (iso3) => `https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=${iso3}&format=.csv`;
+function emploiParSecteur(iso3) {
+  const f = telecharger(`ilo_eco_${iso3}.csv`, LIEN_ILO_ECO(iso3));
+  if (!f) return null;
+  const lignes = fs.readFileSync(f, "utf8").replace(/^\ufeff/, "").trim().split("\n");
+  const entetes = lignes[0].split(",").map((x) => x.replace(/"/g, ""));
+  const parCle = {}; // "source|année" → { classif: valeur }
+  for (const l of lignes.slice(1)) {
+    const c = l.match(/("([^"]*)"|[^,]*)(,|$)/g).map((x) => x.replace(/,$/, "").replace(/^"|"$/g, ""));
+    const o = Object.fromEntries(entetes.map((e, i) => [e, c[i]]));
+    if (o.sex !== "SEX_T" || !o.classif1?.startsWith("ECO_ISIC4_") || o.obs_value === "" || isNaN(Number(o.obs_value))) continue;
+    if (Number(o.time) > Number(AUJOURDHUI.slice(0, 4))) continue;
+    (parCle[`${o.source}|${o.time}`] ??= {})[o.classif1.slice(10)] = Number(o.obs_value);
+  }
+  // La dernière année avec le total et les 8 sections ; à égalité d'année, la source la plus complète.
+  const ok = Object.entries(parCle).filter(([, v]) => v.TOTAL > 0 && Object.values(SECTEURS).every((s) => v[s] !== undefined));
+  ok.sort((a, b) => Number(b[0].split("|")[1]) - Number(a[0].split("|")[1]) || Object.keys(b[1]).length - Object.keys(a[1]).length);
+  if (!ok.length) return null;
+  const [cle, v] = ok[0];
+  const annee = cle.split("|")[1];
+  return { annee, parts: Object.fromEntries(Object.entries(SECTEURS).map(([id, s]) => [id, (100 * v[s]) / v.TOTAL])) };
+}
+const noteRapport = (r) => (r < 0.7 ? 1 : r < 0.9 ? 2 : r < 1.1 ? 3 : r < 1.3 ? 4 : 5);
+if (SECTEUR_SEUL) {
+  const actuel = lire("scores.json");
+  const donnees = Object.fromEntries(pays.map((p) => [p.id, emploiParSecteur(p.iso3)]));
+  const fra = emploiParSecteur("FRA");
+  for (const id of Object.keys(SECTEURS)) {
+    const valides = pays.filter((p) => donnees[p.id] && Number(donnees[p.id].annee) >= ANNEE_MIN_SECTEUR).map((p) => donnees[p.id].parts[id]).sort((a, b) => a - b);
+    const mediane = valides.length ? (valides.length % 2 ? valides[(valides.length - 1) / 2] : (valides[valides.length / 2 - 1] + valides[valides.length / 2]) / 2) : null;
+    const ref = fra && Number(fra.annee) >= ANNEE_MIN_SECTEUR ? fra.parts[id] : null;
+    for (const p of pays) {
+      const d = donnees[p.id];
+      const cle = `secteur-${id}`;
+      if (!d) { actuel.pays[p.id][cle] = aVerifier(`Emploi par secteur : pas de donnée dans cette source (ILOSTAT).`); continue; }
+      if (Number(d.annee) < ANNEE_MIN_SECTEUR) { actuel.pays[p.id][cle] = aVerifier(`Emploi par secteur : la donnée la plus récente date de ${d.annee}, avant ${ANNEE_MIN_SECTEUR}. On ne la compte pas.`); continue; }
+      const v = d.parts[id];
+      const texte = `${NOMS_SECTEURS[id].charAt(0).toUpperCase() + NOMS_SECTEURS[id].slice(1)} : ${fr(v)} % des emplois ${p.en}${ref !== null ? `, ${fr(ref)} % en France` : ""} (${d.annee}, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : ${fr(mediane)} %. C'est la part de ce secteur dans l'emploi du pays, pas le nombre d'offres ouvertes.`;
+      actuel.pays[p.id][cle] = { statut: "verifie", note: noteRapport(v / mediane), valeur: Math.round(v * 100) / 100, texte, annee: d.annee, source: "oit-ilostat", lien: LIEN_ILO_ECO(p.iso3), verifieLe: AUJOURDHUI, mediane: Math.round(mediane * 100) / 100 };
+    }
+    const france = actuel.reference?.france?.notes;
+    if (france && ref !== null) france[`secteur-${id}`] = { statut: "verifie", note: noteRapport(ref / mediane), valeur: Math.round(ref * 100) / 100, texte: `${NOMS_SECTEURS[id].charAt(0).toUpperCase() + NOMS_SECTEURS[id].slice(1)} : ${fr(ref)} % des emplois en France (${fra.annee}, ILOSTAT).`, annee: fra.annee, source: "oit-ilostat", lien: LIEN_ILO_ECO("FRA"), verifieLe: AUJOURDHUI };
+    console.log(id, "médiane", mediane && fr(mediane), "pays notés", valides.length);
+  }
+  typoTextes(actuel.pays);
+  if (actuel.reference?.france?.notes) typoTextes({ france: actuel.reference.france.notes });
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const p of pays) console.log(p.nom, donnees[p.id]?.annee ?? "—", Object.keys(SECTEURS).map((id) => actuel.pays[p.id][`secteur-${id}`].note ?? "·").join(" "));
   process.exit(0);
 }
 

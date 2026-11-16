@@ -109,6 +109,8 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
 }
 
 const disponibilite: Record<string, number> = {};
+// Pour les tests : vider la mémoire des pays couverts après avoir modifié des notes.
+export const disponibiliteMemo = () => disponibilite;
 export function paysCouverts(mesureId: string): number {
   if (MESURES_CALCULEES.includes(mesureId)) return pays.length;
   disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie").length;
@@ -166,9 +168,18 @@ export const dilemmeActif = (d: Dilemme) => mesuresDuDilemme(d).every((m) => pay
 const familleDe = (m: string) => (mesures[m]?.critere.famille ?? "vivre") as FamilleScore;
 
 // Une mesure « de profil » prend sa vraie valeur : « secteur » devient la mesure de ton secteur.
+// Ton secteur : sa mesure (« secteur-finance »…), seulement si au moins 60 % des pays ont une donnée pour lui.
+// Sinon il n'agit pas sur le score, et le site le dit (« Pas encore assez de données pour ton secteur »).
+export const SEUIL_SECTEUR = 0.6;
+export function mesureSecteur(p: Profil): string | null {
+  if (typeof p.secteur !== "string" || p.secteur === "autre") return null;
+  const m = `secteur-${p.secteur}`;
+  return mesures[m] && paysCouverts(m) >= SEUIL_SECTEUR * pays.length ? m : null;
+}
+
 // Pour un stage ou un VIE, le revenu qui compte est l'indemnité VIE du pays, pas le salaire moyen.
 export function mesureReelle(m: string, p: Profil): string | null {
-  if (m === "secteur") return typeof p.secteur === "string" && p.secteur !== "autre" && mesures[`secteur-${p.secteur}`] ? `secteur-${p.secteur}` : null;
+  if (m === "secteur") return mesureSecteur(p);
   if (m === "salaire" && p.objectif === "stage-vie" && mesures["indemnite-vie"]) return "indemnite-vie";
   return m;
 }
@@ -1122,6 +1133,21 @@ export function pointsPays(l: Ligne, etat: Etat, interdites: Set<string> = new S
     if (interdites.has(texte) || vues.has(texte)) continue;
     vues.add(texte);
     cat.savoir = { texte, mesure: d.mesure, preuve: preuveDe(l.pays.id, d.mesure, etat.profil) };
+  }
+  // « Ton secteur » : toujours dit sous chaque pays quand ton secteur est connu et assez renseigné,
+  // dans « Pour toi » s'il y pèse beaucoup (4 ou 5 sur 5), sinon dans « À savoir ».
+  const ms = mesureSecteur(etat.profil);
+  const travail = res.travailler;
+  if (ms && !travail.pour.some((x) => x.mesure === ms) && travail.savoir?.mesure !== ms) {
+    const note = noteEffective(l.pays.id, ms, etat.profil);
+    const v = valeurLisible(l.pays.id, ms, etat.profil);
+    const fr = valeurFrance(ms);
+    const ligne: LigneResultat = {
+      mesure: ms, preuve: preuveDe(l.pays.id, ms, etat.profil),
+      texte: note === null ? `Ton secteur\u00a0: pas encore de donnée pour ${l.pays.le}.` : `${faitMesure(l.pays.id, ms, etat.profil)}${v?.valeur ? `\u00a0: ${v.valeur} ${l.pays.en}` : ""}${fr ? ` (${fr})` : ""}.`,
+    };
+    if (note !== null && note >= 4) travail.pour = [ligne, ...travail.pour].slice(0, MAX_POUR_CATEGORIE);
+    else travail.savoir = ligne;
   }
   return res;
 }

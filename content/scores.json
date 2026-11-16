@@ -508,6 +508,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3.04,
+    "texte": "La finance et la banque : 3 % des emplois en Belgique, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.64,
+    "texte": "Le conseil et l’audit : 6,6 % des emplois en Belgique, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.34,
+    "texte": "L’ingénierie et l’industrie : 11,3 % des emplois en Belgique, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.27,
+    "texte": "La tech et la data : 4,3 % des emplois en Belgique, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.24,
+    "texte": "Le marketing et le commerce : 11,2 % des emplois en Belgique, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.02,
+    "texte": "La santé : 15 % des emplois en Belgique, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.07,
+    "texte": "L’hôtellerie et le tourisme : 4,1 % des emplois en Belgique, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.76,
+    "texte": "L’enseignement et la recherche : 9,8 % des emplois en Belgique, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BEL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "suisse": {
@@ -814,6 +902,94 @@
       "montant": 4108.38
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.45,
+    "texte": "La finance et la banque : 5,4 % des emplois en Suisse, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.34,
+    "texte": "Le conseil et l’audit : 9,3 % des emplois en Suisse, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.84,
+    "texte": "L’ingénierie et l’industrie : 11,8 % des emplois en Suisse, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.81,
+    "texte": "La tech et la data : 3,8 % des emplois en Suisse, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.06,
+    "texte": "Le marketing et le commerce : 11,1 % des emplois en Suisse, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.52,
+    "texte": "La santé : 15,5 % des emplois en Suisse, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.03,
+    "texte": "L’hôtellerie et le tourisme : 4 % des emplois en Suisse, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.5,
+    "texte": "L’enseignement et la recherche : 7,5 % des emplois en Suisse, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "allemagne": {
@@ -1121,6 +1297,94 @@
       "montant": 3011.73
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3.1,
+    "texte": "La finance et la banque : 3,1 % des emplois en Allemagne, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.59,
+    "texte": "Le conseil et l’audit : 5,6 % des emplois en Allemagne, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.89,
+    "texte": "L’ingénierie et l’industrie : 17,9 % des emplois en Allemagne, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.96,
+    "texte": "La tech et la data : 4 % des emplois en Allemagne, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.44,
+    "texte": "Le marketing et le commerce : 12,4 % des emplois en Allemagne, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.9,
+    "texte": "La santé : 14,9 % des emplois en Allemagne, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.69,
+    "texte": "L’hôtellerie et le tourisme : 3,7 % des emplois en Allemagne, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.9,
+    "texte": "L’enseignement et la recherche : 6,9 % des emplois en Allemagne, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DEU&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "irlande": {
@@ -1419,6 +1683,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.75,
+    "texte": "La finance et la banque : 4,8 % des emplois en Irlande, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 7.09,
+    "texte": "Le conseil et l’audit : 7,1 % des emplois en Irlande, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.79,
+    "texte": "L’ingénierie et l’industrie : 10,8 % des emplois en Irlande, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 6.39,
+    "texte": "La tech et la data : 6,4 % des emplois en Irlande, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.49,
+    "texte": "Le marketing et le commerce : 11,5 % des emplois en Irlande, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 13.66,
+    "texte": "La santé : 13,7 % des emplois en Irlande, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.58,
+    "texte": "L’hôtellerie et le tourisme : 6,6 % des emplois en Irlande, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.77,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois en Irlande, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IRL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "luxembourg": {
@@ -1716,6 +2068,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 13.5,
+    "texte": "La finance et la banque : 13,5 % des emplois au Luxembourg, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.58,
+    "texte": "Le conseil et l’audit : 8,6 % des emplois au Luxembourg, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.72,
+    "texte": "L’ingénierie et l’industrie : 2,7 % des emplois au Luxembourg, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.41,
+    "texte": "La tech et la data : 4,4 % des emplois au Luxembourg, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.77,
+    "texte": "Le marketing et le commerce : 7,8 % des emplois au Luxembourg, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 9.93,
+    "texte": "La santé : 9,9 % des emplois au Luxembourg, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.5,
+    "texte": "L’hôtellerie et le tourisme : 2,5 % des emplois au Luxembourg, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.27,
+    "texte": "L’enseignement et la recherche : 8,3 % des emplois au Luxembourg, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=LUX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "espagne": {
@@ -2013,6 +2453,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.11,
+    "texte": "La finance et la banque : 2,1 % des emplois en Espagne, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.8,
+    "texte": "Le conseil et l’audit : 5,8 % des emplois en Espagne, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 12.14,
+    "texte": "L’ingénierie et l’industrie : 12,1 % des emplois en Espagne, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.78,
+    "texte": "La tech et la data : 3,8 % des emplois en Espagne, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.5,
+    "texte": "Le marketing et le commerce : 14,5 % des emplois en Espagne, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.42,
+    "texte": "La santé : 9,4 % des emplois en Espagne, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.22,
+    "texte": "L’hôtellerie et le tourisme : 8,2 % des emplois en Espagne, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.07,
+    "texte": "L’enseignement et la recherche : 7,1 % des emplois en Espagne, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ESP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "italie": {
@@ -2311,6 +2839,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.39,
+    "texte": "La finance et la banque : 2,4 % des emplois en Italie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.77,
+    "texte": "Le conseil et l’audit : 6,8 % des emplois en Italie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.89,
+    "texte": "L’ingénierie et l’industrie : 17,9 % des emplois en Italie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.95,
+    "texte": "La tech et la data : 2,9 % des emplois en Italie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 13.69,
+    "texte": "Le marketing et le commerce : 13,7 % des emplois en Italie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.29,
+    "texte": "La santé : 8,3 % des emplois en Italie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.72,
+    "texte": "L’hôtellerie et le tourisme : 6,7 % des emplois en Italie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.09,
+    "texte": "L’enseignement et la recherche : 7,1 % des emplois en Italie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ITA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "pays-bas": {
@@ -2609,6 +3225,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.7,
+    "texte": "La finance et la banque : 2,7 % des emplois aux Pays-Bas, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.03,
+    "texte": "Le conseil et l’audit : 9 % des emplois aux Pays-Bas, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.04,
+    "texte": "L’ingénierie et l’industrie : 8 % des emplois aux Pays-Bas, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.42,
+    "texte": "La tech et la data : 4,4 % des emplois aux Pays-Bas, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.31,
+    "texte": "Le marketing et le commerce : 14,3 % des emplois aux Pays-Bas, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.34,
+    "texte": "La santé : 17,3 % des emplois aux Pays-Bas, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.8,
+    "texte": "L’hôtellerie et le tourisme : 4,8 % des emplois aux Pays-Bas, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.68,
+    "texte": "L’enseignement et la recherche : 7,7 % des emplois aux Pays-Bas, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NLD&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "portugal": {
@@ -2907,6 +3611,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.09,
+    "texte": "La finance et la banque : 2,1 % des emplois au Portugal, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.38,
+    "texte": "Le conseil et l’audit : 5,4 % des emplois au Portugal, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.88,
+    "texte": "L’ingénierie et l’industrie : 15,9 % des emplois au Portugal, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.21,
+    "texte": "La tech et la data : 4,2 % des emplois au Portugal, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.58,
+    "texte": "Le marketing et le commerce : 14,6 % des emplois au Portugal, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.13,
+    "texte": "La santé : 10,1 % des emplois au Portugal, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.46,
+    "texte": "L’hôtellerie et le tourisme : 6,5 % des emplois au Portugal, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 8,
+    "texte": "L’enseignement et la recherche : 8 % des emplois au Portugal, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PRT&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "norvege": {
@@ -3205,6 +3997,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.82,
+    "texte": "La finance et la banque : 1,8 % des emplois en Norvège, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.26,
+    "texte": "Le conseil et l’audit : 6,3 % des emplois en Norvège, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.59,
+    "texte": "L’ingénierie et l’industrie : 6,6 % des emplois en Norvège, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.62,
+    "texte": "La tech et la data : 4,6 % des emplois en Norvège, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.86,
+    "texte": "Le marketing et le commerce : 11,9 % des emplois en Norvège, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 20.14,
+    "texte": "La santé : 20,1 % des emplois en Norvège, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.75,
+    "texte": "L’hôtellerie et le tourisme : 3,8 % des emplois en Norvège, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.87,
+    "texte": "L’enseignement et la recherche : 7,9 % des emplois en Norvège, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=NOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "suede": {
@@ -3503,6 +4383,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.22,
+    "texte": "La finance et la banque : 2,2 % des emplois en Suède, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.76,
+    "texte": "Le conseil et l’audit : 10,8 % des emplois en Suède, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.38,
+    "texte": "L’ingénierie et l’industrie : 9,4 % des emplois en Suède, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.68,
+    "texte": "La tech et la data : 5,7 % des emplois en Suède, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.8,
+    "texte": "Le marketing et le commerce : 9,8 % des emplois en Suède, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.9,
+    "texte": "La santé : 14,9 % des emplois en Suède, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.09,
+    "texte": "L’hôtellerie et le tourisme : 3,1 % des emplois en Suède, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.58,
+    "texte": "L’enseignement et la recherche : 10,6 % des emplois en Suède, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SWE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "danemark": {
@@ -3801,6 +4769,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.75,
+    "texte": "La finance et la banque : 2,8 % des emplois au Danemark, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.48,
+    "texte": "Le conseil et l’audit : 6,5 % des emplois au Danemark, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.23,
+    "texte": "L’ingénierie et l’industrie : 11,2 % des emplois au Danemark, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.11,
+    "texte": "La tech et la data : 4,1 % des emplois au Danemark, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.43,
+    "texte": "Le marketing et le commerce : 14,4 % des emplois au Danemark, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.75,
+    "texte": "La santé : 18,7 % des emplois au Danemark, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.66,
+    "texte": "L’hôtellerie et le tourisme : 3,7 % des emplois au Danemark, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.38,
+    "texte": "L’enseignement et la recherche : 8,4 % des emplois au Danemark, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=DNK&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "canada": {
@@ -4108,6 +5164,46 @@
       "montant": null
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   },
   "australie": {
@@ -4406,6 +5502,94 @@
       "montant": 3224.39
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3.78,
+    "texte": "La finance et la banque : 3,8 % des emplois en Australie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.85,
+    "texte": "Le conseil et l’audit : 6,8 % des emplois en Australie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.38,
+    "texte": "L’ingénierie et l’industrie : 6,4 % des emplois en Australie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 3.52,
+    "texte": "La tech et la data : 3,5 % des emplois en Australie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.58,
+    "texte": "Le marketing et le commerce : 12,6 % des emplois en Australie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 16.16,
+    "texte": "La santé : 16,2 % des emplois en Australie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.58,
+    "texte": "L’hôtellerie et le tourisme : 6,6 % des emplois en Australie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.85,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois en Australie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=AUS&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "japon": {
@@ -4704,6 +5888,94 @@
       "montant": 2495.28
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.31,
+    "texte": "La finance et la banque : 2,3 % des emplois au Japon, 3,4 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.29,
+    "texte": "Le conseil et l’audit : 2,3 % des emplois au Japon, 6,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.53,
+    "texte": "L’ingénierie et l’industrie : 14,5 % des emplois au Japon, 11 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.64,
+    "texte": "La tech et la data : 5,6 % des emplois au Japon, 3,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 15.88,
+    "texte": "Le marketing et le commerce : 15,9 % des emplois au Japon, 13 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 13.51,
+    "texte": "La santé : 13,5 % des emplois au Japon, 13,3 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.94,
+    "texte": "L’hôtellerie et le tourisme : 5,9 % des emplois au Japon, 4,6 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 5.13,
+    "texte": "L’enseignement et la recherche : 5,1 % des emplois au Japon, 7,8 % en France (2023, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2023",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=JPN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "nouvelle-zelande": {
@@ -4997,6 +6269,46 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
    }
   },
   "coree-du-sud": {
@@ -5295,6 +6607,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.81,
+    "texte": "La finance et la banque : 2,8 % des emplois en Corée du Sud, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.11,
+    "texte": "Le conseil et l’audit : 5,1 % des emplois en Corée du Sud, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.17,
+    "texte": "L’ingénierie et l’industrie : 15,2 % des emplois en Corée du Sud, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3.94,
+    "texte": "La tech et la data : 3,9 % des emplois en Corée du Sud, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.13,
+    "texte": "Le marketing et le commerce : 11,1 % des emplois en Corée du Sud, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11,
+    "texte": "La santé : 11 % des emplois en Corée du Sud, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.03,
+    "texte": "L’hôtellerie et le tourisme : 8 % des emplois en Corée du Sud, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.73,
+    "texte": "L’enseignement et la recherche : 6,7 % des emplois en Corée du Sud, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=KOR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "taiwan": {
@@ -5535,6 +6935,94 @@
     "relaye": true,
     "ville": "Taipei",
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3.77,
+    "texte": "La finance et la banque : 3,8 % des emplois à Taïwan, 3,4 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.32,
+    "texte": "Le conseil et l’audit : 3,3 % des emplois à Taïwan, 6,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 26.43,
+    "texte": "L’ingénierie et l’industrie : 26,4 % des emplois à Taïwan, 11 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.31,
+    "texte": "La tech et la data : 2,3 % des emplois à Taïwan, 3,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 16.51,
+    "texte": "Le marketing et le commerce : 16,5 % des emplois à Taïwan, 13 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.12,
+    "texte": "La santé : 4,1 % des emplois à Taïwan, 13,3 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.42,
+    "texte": "L’hôtellerie et le tourisme : 7,4 % des emplois à Taïwan, 4,6 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 5.71,
+    "texte": "L’enseignement et la recherche : 5,7 % des emplois à Taïwan, 7,8 % en France (2020, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2020",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=TWN&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "hong-kong": {
@@ -5789,6 +7277,46 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
    }
   },
   "argentine": {
@@ -6070,6 +7598,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.11,
+    "texte": "La finance et la banque : 2,1 % des emplois en Argentine, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.01,
+    "texte": "Le conseil et l’audit : 4 % des emplois en Argentine, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.59,
+    "texte": "L’ingénierie et l’industrie : 10,6 % des emplois en Argentine, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.39,
+    "texte": "La tech et la data : 2,4 % des emplois en Argentine, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 19.07,
+    "texte": "Le marketing et le commerce : 19,1 % des emplois en Argentine, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.7,
+    "texte": "La santé : 6,7 % des emplois en Argentine, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.02,
+    "texte": "L’hôtellerie et le tourisme : 5 % des emplois en Argentine, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.44,
+    "texte": "L’enseignement et la recherche : 6,4 % des emplois en Argentine, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "chili": {
@@ -6367,6 +7983,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.18,
+    "texte": "La finance et la banque : 2,2 % des emplois au Chili, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.81,
+    "texte": "Le conseil et l’audit : 3,8 % des emplois au Chili, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.55,
+    "texte": "L’ingénierie et l’industrie : 9,5 % des emplois au Chili, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.4,
+    "texte": "La tech et la data : 2,4 % des emplois au Chili, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.53,
+    "texte": "Le marketing et le commerce : 18,5 % des emplois au Chili, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.68,
+    "texte": "La santé : 7,7 % des emplois au Chili, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.85,
+    "texte": "L’hôtellerie et le tourisme : 4,9 % des emplois au Chili, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.52,
+    "texte": "L’enseignement et la recherche : 8,5 % des emplois au Chili, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CHL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "colombie": {
@@ -6654,6 +8358,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.83,
+    "texte": "La finance et la banque : 1,8 % des emplois en Colombie, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.01,
+    "texte": "Le conseil et l’audit : 3 % des emplois en Colombie, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.95,
+    "texte": "L’ingénierie et l’industrie : 11 % des emplois en Colombie, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.7,
+    "texte": "La tech et la data : 1,7 % des emplois en Colombie, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 17.23,
+    "texte": "Le marketing et le commerce : 17,2 % des emplois en Colombie, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.32,
+    "texte": "La santé : 4,3 % des emplois en Colombie, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.7,
+    "texte": "L’hôtellerie et le tourisme : 7,7 % des emplois en Colombie, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.31,
+    "texte": "L’enseignement et la recherche : 4,3 % des emplois en Colombie, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=COL&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "mexique": {
@@ -6950,6 +8742,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.39,
+    "texte": "La finance et la banque : 1,4 % des emplois au Mexique, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.46,
+    "texte": "Le conseil et l’audit : 4,5 % des emplois au Mexique, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.98,
+    "texte": "L’ingénierie et l’industrie : 16 % des emplois au Mexique, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.87,
+    "texte": "La tech et la data : 0,9 % des emplois au Mexique, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 19.87,
+    "texte": "Le marketing et le commerce : 19,9 % des emplois au Mexique, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.34,
+    "texte": "La santé : 3,3 % des emplois au Mexique, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.36,
+    "texte": "L’hôtellerie et le tourisme : 7,4 % des emplois au Mexique, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.72,
+    "texte": "L’enseignement et la recherche : 4,7 % des emplois au Mexique, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=MEX&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "bresil": {
@@ -7236,6 +9116,94 @@
       "montant": 2594.05
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.6,
+    "texte": "La finance et la banque : 1,6 % des emplois au Brésil, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.2,
+    "texte": "Le conseil et l’audit : 4,2 % des emplois au Brésil, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.58,
+    "texte": "L’ingénierie et l’industrie : 11,6 % des emplois au Brésil, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.74,
+    "texte": "La tech et la data : 1,7 % des emplois au Brésil, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.95,
+    "texte": "Le marketing et le commerce : 18,9 % des emplois au Brésil, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.85,
+    "texte": "La santé : 6,9 % des emplois au Brésil, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.31,
+    "texte": "L’hôtellerie et le tourisme : 5,3 % des emplois au Brésil, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.5,
+    "texte": "L’enseignement et la recherche : 6,5 % des emplois au Brésil, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "royaume-uni": {
@@ -7538,6 +9506,94 @@
       "montant": 2732.43
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.05,
+    "texte": "La finance et la banque : 4 % des emplois au Royaume-Uni, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.64,
+    "texte": "Le conseil et l’audit : 8,6 % des emplois au Royaume-Uni, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 7.82,
+    "texte": "L’ingénierie et l’industrie : 7,8 % des emplois au Royaume-Uni, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 4.93,
+    "texte": "La tech et la data : 4,9 % des emplois au Royaume-Uni, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 10.69,
+    "texte": "Le marketing et le commerce : 10,7 % des emplois au Royaume-Uni, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 14.25,
+    "texte": "La santé : 14,2 % des emplois au Royaume-Uni, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.47,
+    "texte": "L’hôtellerie et le tourisme : 5,5 % des emplois au Royaume-Uni, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 10.67,
+    "texte": "L’enseignement et la recherche : 10,7 % des emplois au Royaume-Uni, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=GBR&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "etats-unis": {
@@ -7844,6 +9900,94 @@
       "montant": null
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.17,
+    "texte": "La finance et la banque : 5,2 % des emplois aux États-Unis, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.19,
+    "texte": "Le conseil et l’audit : 6,2 % des emplois aux États-Unis, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.65,
+    "texte": "L’ingénierie et l’industrie : 9,7 % des emplois aux États-Unis, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.24,
+    "texte": "La tech et la data : 4,2 % des emplois aux États-Unis, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.94,
+    "texte": "Le marketing et le commerce : 11,9 % des emplois aux États-Unis, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 14.8,
+    "texte": "La santé : 14,8 % des emplois aux États-Unis, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.09,
+    "texte": "L’hôtellerie et le tourisme : 6,1 % des emplois aux États-Unis, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 8.83,
+    "texte": "L’enseignement et la recherche : 8,8 % des emplois aux États-Unis, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=USA&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "singapour": {
@@ -8125,6 +10269,94 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 9.9,
+    "texte": "La finance et la banque : 9,9 % des emplois à Singapour, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.1,
+    "texte": "Le conseil et l’audit : 8,1 % des emplois à Singapour, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.84,
+    "texte": "L’ingénierie et l’industrie : 8,8 % des emplois à Singapour, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 5.45,
+    "texte": "La tech et la data : 5,4 % des emplois à Singapour, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.17,
+    "texte": "Le marketing et le commerce : 14,2 % des emplois à Singapour, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 7.69,
+    "texte": "La santé : 7,7 % des emplois à Singapour, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 6.14,
+    "texte": "L’hôtellerie et le tourisme : 6,1 % des emplois à Singapour, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 6.44,
+    "texte": "L’enseignement et la recherche : 6,4 % des emplois à Singapour, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "emirats-arabes-unis": {
@@ -8406,6 +10638,94 @@
       "montant": 2433.98
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.83,
+    "texte": "La finance et la banque : 2,8 % des emplois aux Émirats arabes unis, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 2.75
+   },
+   "secteur-conseil": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.78,
+    "texte": "Le conseil et l’audit : 4,8 % des emplois aux Émirats arabes unis, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 6.19
+   },
+   "secteur-ingenierie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.85,
+    "texte": "L’ingénierie et l’industrie : 10,8 % des emplois aux Émirats arabes unis, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 10.95
+   },
+   "secteur-tech": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.33,
+    "texte": "La tech et la data : 2,3 % des emplois aux Émirats arabes unis, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 3.96
+   },
+   "secteur-commerce": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 12.47,
+    "texte": "Le marketing et le commerce : 12,5 % des emplois aux Émirats arabes unis, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 13.69
+   },
+   "secteur-sante": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.11,
+    "texte": "La santé : 2,1 % des emplois aux Émirats arabes unis, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 11
+   },
+   "secteur-hotellerie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.52,
+    "texte": "L’hôtellerie et le tourisme : 5,5 % des emplois aux Émirats arabes unis, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 5.52
+   },
+   "secteur-enseignement": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.86,
+    "texte": "L’enseignement et la recherche : 2,9 % des emplois aux Émirats arabes unis, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=ARE&format=.csv",
+    "verifieLe": "2026-11-16",
+    "mediane": 7.5
    }
   },
   "chine": {
@@ -8700,6 +11020,46 @@
       "montant": 2660.31
      }
     ]
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   },
   "maroc": {
@@ -8970,6 +11330,46 @@
     "relaye": true,
     "ville": null,
     "autres": []
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
    }
   }
  },
@@ -9062,6 +11462,86 @@
      "annee": "2024",
      "source": "oms-gho",
      "lien": "https://api.worldbank.org/v2/country/BEL;CHE;DEU;IRL;LUX;ESP;ITA;NLD;PRT;NOR;SWE;DNK;CAN;AUS;JPN;NZL;KOR;TWN;HKG;ARG;CHL;COL;MEX;BRA;GBR;USA;SGP;ARE;CHN;MAR;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-finance": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 3.41,
+     "texte": "La finance et la banque : 3,4 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-conseil": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 6.84,
+     "texte": "Le conseil et l’audit : 6,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-ingenierie": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 10.98,
+     "texte": "L’ingénierie et l’industrie : 11 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-tech": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 3.8,
+     "texte": "La tech et la data : 3,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-commerce": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 12.99,
+     "texte": "Le marketing et le commerce : 13 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-sante": {
+     "statut": "verifie",
+     "note": 4,
+     "valeur": 13.31,
+     "texte": "La santé : 13,3 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-hotellerie": {
+     "statut": "verifie",
+     "note": 2,
+     "valeur": 4.6,
+     "texte": "L’hôtellerie et le tourisme : 4,6 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
+     "verifieLe": "2026-11-16"
+    },
+    "secteur-enseignement": {
+     "statut": "verifie",
+     "note": 3,
+     "valeur": 7.8,
+     "texte": "L’enseignement et la recherche : 7,8 % des emplois en France (2025, ILOSTAT).",
+     "annee": "2025",
+     "source": "oit-ilostat",
+     "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=FRA&format=.csv",
      "verifieLe": "2026-11-16"
     }
    }

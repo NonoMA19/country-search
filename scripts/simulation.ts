@@ -5,9 +5,9 @@
 import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
 import { PASSER, optionsDe } from "@/lib/elements";
 import { LIBELLE_FIABILITE, calculer, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
-import { chapitreDe, estAdaptatif, phrasesSwipe, situationsLimites } from "@/lib/parcours";
+import { chapitreDe, estAdaptatif, situationsLimites } from "@/lib/parcours";
 import { pays } from "@/lib/pays";
-import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea, type Repondeur } from "./hasard";
+import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Repondeur } from "./hasard";
 
 const NB = Number(process.argv[2] ?? 5000);
 const pct = (n: number, d = NB) => `${((100 * n) / Math.max(1, d)).toFixed(1).replace(".", ",")} %`;
@@ -137,23 +137,27 @@ const PERSONAS: Persona[] = [
   { nom: "f) Hiérarchie plate, consensus, collègues vus après le travail", graine: 6, reponses: { age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, envies: ["equilibre", "travail", "salaire", "securite", "proche"], classement: ["equilibre", "travail", "salaire", "securite", "proche"], "reunion-directeur": "a", "idee-reunion": "b", "vendredi-18h": "b" } },
   { nom: "g) Finance, anglais courant, carrière, peu importe la zone", graine: 7, reponses: { objectif: "carriere", secteur: "finance", age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, carte: ["aucune"], envies: ["secteur", "salaire", "travail", "securite", "equilibre"], classement: ["secteur", "salaire", "travail", "securite", "equilibre"], "secteur-ville": "a", ambiances: ["metropole"], "langue-bureau": "a", limites: {} } },
 ];
-const repondeurDe = (p: Persona, rr: Alea): Repondeur => (el, etat) => {
-  if (p.reponses[el.id] !== undefined) {
-    const v = p.reponses[el.id];
-    // Les limites : « Aucun problème » partout, sauf ce que le profil type dit.
-    if (el.type === "tri-limites") return Object.fromEntries(situationsLimites(el, etat).map((s) => [s.id, (v as Record<string, string>)[s.id] ?? "ok"]));
+// Un profil type répond seulement à ce qu'il dit. Le reste : « Passer » (chapitres 3 et 4), « Non » pour la nationalité,
+// « Aucune idée » sur la carte, « Aucun problème » pour les limites non citées, rien pour les langues.
+const repondeurDe = (p: Persona): Repondeur => (el, etat) => {
+  const v = p.reponses[el.id];
+  if (el.type === "tri-limites") return Object.fromEntries(situationsLimites(el, etat).map((s) => [s.id, ((v ?? {}) as Record<string, string>)[s.id] ?? "ok"]));
+  if (v !== undefined) {
     if (el.id === "envies" && Array.isArray(v)) return v.filter((id) => optionsDe(el as never).some((o: { id: string }) => o.id === id));
     return v;
   }
-  if (el.type === "tri-limites") return Object.fromEntries(situationsLimites(el, etat).map((s) => [s.id, "ok"]));
-  if (el.type === "swipe") return Object.fromEntries(phrasesSwipe(el, etat).map((ph) => [ph.id, choisir(rr, ["oui", "non", "depend"])]));
-  if (el.type === "choix-cartes" && (el.id === "nationalite")) return "non";
-  return reponseAuHasard(el, etat, rr);
+  if (el.id === "carte") return ["aucune"];
+  if (el.id === "nationalite") return "non";
+  if (el.id === "langues") return [];
+  if (el.id === "budget") return "2000-5000";
+  if (el.id === "secteur") return "autre";
+  if (el.id === "objectif") return "inconnu";
+  return PASSER;
 };
 console.log("\nProfils types : parcours des chapitres 3 et 4, puis top 5 (score)");
 for (const p of PERSONAS) {
   const rr = hasard(p.graine * 1000 + 7);
-  const etat = parcoursAuHasard(rr, { passer: 0, repondeur: repondeurDe(p, rr) });
+  const etat = parcoursAuHasard(rr, { passer: 0, repondeur: repondeurDe(p) });
   const lignes = calculer(etat);
   const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 5);
   const ru = lignes.filter((l) => !l.ecart).findIndex((l) => l.pays.id === "royaume-uni");
@@ -161,4 +165,9 @@ for (const p of PERSONAS) {
   console.log(`    ${etat.ordre.length} écrans ; chapitre 3 : ${etat.ordre.filter((id) => chapitreDe(id) === 3).join(", ")}`);
   console.log(`    chapitre 4 : ${etat.ordre.filter((id) => chapitreDe(id) === 4).join(", ")}`);
   console.log(`    top 5 : ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")} ; Royaume-Uni ${ru < 0 ? "dans « Moins adaptés »" : `n° ${ru + 1}`}`);
+  // Le profil finance : la place du Royaume-Uni sans le secteur (mêmes réponses, secteur « Autre »).
+  if (p.reponses.secteur === "finance") {
+    const sans = calculer({ ...etat, profil: { ...etat.profil, secteur: "autre" } }).filter((l) => !l.ecart);
+    console.log(`    sans le secteur (mêmes réponses) : Royaume-Uni n° ${sans.findIndex((l) => l.pays.id === "royaume-uni") + 1} ; top 5 : ${sans.filter((l) => !l.peuDeDonnees).slice(0, 5).map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
+  }
 }

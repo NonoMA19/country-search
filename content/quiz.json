@@ -228,7 +228,15 @@
     "secteur": {
       "nom": "Ton secteur",
       "mesures": [
-        "secteur"
+        "secteur",
+        "secteur-finance",
+        "secteur-conseil",
+        "secteur-ingenierie",
+        "secteur-tech",
+        "secteur-commerce",
+        "secteur-sante",
+        "secteur-hotellerie",
+        "secteur-enseignement"
       ]
     },
     "equilibre": {

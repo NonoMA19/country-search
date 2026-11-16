@@ -16,7 +16,8 @@ import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
-import { complementMesure } from "@/lib/moteur";
+import { complementMesure, disponibiliteMemo, mesureSecteur, raisonEnvieIndisponible } from "@/lib/moteur";
+import { mesures } from "@/lib/donnees";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
 
 // ---------- Compteur d'échecs ----------
@@ -126,10 +127,12 @@ for (let i = 0; i < NB; i++) {
     }
     const { pour, savoir } = aplatir(points);
     for (const a of pour) {
+      if (a.mesure.startsWith("secteur-")) { verifier((noteEffective(l.pays.id, a.mesure, etat.profil) ?? 0) >= 4, `quiz ${i} : « Ton secteur » en point fort sans note 4 ou 5`); continue; }
       const d = l.details.find((x) => x.mesure === a.mesure && !x.neutre);
       verifier(!!d && d.accord >= 0.75 && /^(envie|objectif|dilemme|element|limite|reglage):/.test(d.origine), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
     }
     for (const s of savoir) {
+      if (s.mesure.startsWith("secteur-")) continue;
       const d = l.details.find((x) => x.mesure === s.mesure && !x.neutre);
       verifier(!!d && d.accord <= 0.5, `quiz ${i} : ${l.pays.nom} « À savoir » n'est pas un point défavorable (${s.texte})`);
     }
@@ -903,6 +906,40 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   // Importance : l'envie n° 1 compte plus que le projet, qui compte plus que rien.
   const e1 = construire({ profil: { objectif: "aventure" }, envies: ["salaire", "securite", "proche", "travail", "francais"] });
   verifier(importance("salaire", e1) === 3 && importance("cout", e1) === 1.5 && importance("hierarchie", e1) === 1, "importance : envie, projet et rien mal comptés");
+}
+
+// 2.23 Le secteur (prompt 3f, lot 6).
+{
+  const SECT = ["finance", "conseil", "ingenierie", "tech", "commerce", "sante", "hotellerie", "enseignement"];
+  for (const id of SECT) {
+    const m = `secteur-${id}`;
+    verifier(!!mesures[m], `secteur : mesure ${m} absente`);
+    verifier(paysCouverts(m) >= 0.6 * pays.length, `secteur : ${id} couvert pour ${paysCouverts(m)} pays seulement`);
+    for (const p of pays) { const n = notesPays[p.id][m]; if (n?.statut === "verifie") verifier(Number(n.annee) >= 2019 && n.source === "oit-ilostat", `secteur : ${p.nom} ${id} avant 2019 ou sans source`); }
+  }
+  // La France sert de repère affiché.
+  verifier(/^France\s:/.test(valeurFrance("secteur-finance") ?? ""), "secteur : la France n'est pas affichée");
+  // Une envie « Évoluer dans mon secteur » vise la mesure du secteur choisi ; « Autre » ne vise rien.
+  const fin = construire({ profil: { secteur: "finance" }, envies: ["secteur", "salaire", "travail", "securite", "climat"] });
+  verifier(effetsActifs(fin).find((e) => e.mesure === "secteur-finance")?.poids === 2, "secteur : l'envie n° 1 ne vise pas la finance");
+  verifier(!effetsActifs(construire({ profil: { secteur: "autre" }, envies: ["secteur", "salaire", "travail", "securite", "climat"] })).some((e) => e.mesure.startsWith("secteur")), "secteur : « Autre » agit sur le score");
+  verifier(raisonEnvieIndisponible("secteur", { secteur: "autre" }) !== null && raisonEnvieIndisponible("secteur", { secteur: "finance" }) === null, "secteur : l'envie n'est pas grisée sans secteur");
+  // Un secteur sans données suffisantes n'agit pas : on retire des notes jusqu'à passer sous 60 %.
+  const sauvegarde = Object.fromEntries(pays.map((p) => [p.id, notesPays[p.id]["secteur-tech"]]));
+  for (const p of pays.slice(0, 15)) notesPays[p.id]["secteur-tech"] = { statut: "a-verifier", note: null, texte: "test" };
+  for (const k of Object.keys(disponibiliteMemo())) delete disponibiliteMemo()[k];
+  verifier(mesureSecteur({ secteur: "tech" }) === null, "secteur : un secteur couvert à moins de 60 % agit encore");
+  verifier(raisonEnvieIndisponible("secteur", { secteur: "tech" }) === "Pas encore assez de données pour ton secteur.", "secteur : le site ne dit pas qu'il manque des données");
+  verifier(!effetsActifs(construire({ profil: { secteur: "tech" }, envies: ["secteur", "salaire", "travail", "securite", "climat"] })).some((e) => e.mesure.startsWith("secteur")), "secteur : un secteur trop peu renseigné compte dans le score");
+  for (const p of pays) notesPays[p.id]["secteur-tech"] = sauvegarde[p.id];
+  for (const k of Object.keys(disponibiliteMemo())) delete disponibiliteMemo()[k];
+  // « Ton secteur » sous chaque pays du top 3.
+  const top = calculer(fin).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+  const pts = lignesTop(top, fin);
+  for (const l of top) {
+    const t = pts.get(l.pays.id)!.travailler;
+    verifier([...t.pour, ...(t.savoir ? [t.savoir] : [])].some((x) => x.mesure === "secteur-finance"), `secteur : pas de ligne « Ton secteur » pour ${l.pays.nom}`);
+  }
 }
 
 // ---------- Bilan ----------
