@@ -4,7 +4,7 @@ import { ECART_EX_AEQUO, SEUIL_SURPRISE } from "@/config";
 import { pays, type Pays } from "./pays";
 import {
   avis, dateFr, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, vie, preuveMesure, preuveSource, preuveVisa,
-  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve,
+  type CasDouble, type DetailVisa, type Dilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene,
 } from "./donnees";
 
 export type Profil = Record<string, string | string[] | undefined>;
@@ -86,7 +86,46 @@ export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0
 export type EffetActif = { mesure: string; sens: "haut" | "position"; position?: number; poids: number; famille: FamilleScore; origine: string };
 
 export const trouverDilemme = (id: string) => quiz.dilemmes.find((x) => x.id === id);
-export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined => trouverDilemme(id)?.options.find((o) => o.id === etat.reponses[id]);
+
+// ---------- Réponses graduées ----------
+// Un dilemme « en échelle » a 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B.
+// « Plutôt » : l'effet complet de l'option (importance 1, ou sa position).
+// « Un peu » : la moitié (importance 0,5, ou la position à mi-chemin entre celle de l'option et le milieu de l'échelle, 3).
+export const REPONSES_ECHELLE = ["a", "peu-a", "peu-b", "b"] as const;
+export const LIBELLE_ECHELLE: Record<string, string> = { a: "Plutôt A", "peu-a": "Un peu A", "peu-b": "Un peu B", b: "Plutôt B" };
+export const reponsesDe = (d: Dilemme): string[] => (d.echelle ? [...REPONSES_ECHELLE] : d.options.map((o) => o.id));
+export const MILIEU_ECHELLE = 3;
+
+export function optionReponse(d: Dilemme, reponse: string | undefined): OptionDilemme | undefined {
+  if (!reponse || reponse === "passer") return undefined;
+  if (!d.echelle || !reponse.startsWith("peu-")) return d.options.find((o) => o.id === reponse);
+  const o = d.options.find((x) => x.id === reponse.slice(4));
+  if (!o) return undefined;
+  return {
+    ...o,
+    id: reponse,
+    effets: o.effets.map((e) => (e.position !== undefined ? { ...e, position: (e.position + MILIEU_ECHELLE) / 2 } : { ...e, poids: (e.poids ?? 1) / 2 })),
+    portrait: o.portraitPeu ?? o.portrait,
+    preference: o.preferencePeu ?? o.preference,
+  };
+}
+export const optionChoisie = (etat: Etat, id: string): OptionDilemme | undefined => {
+  const d = trouverDilemme(id);
+  return d ? optionReponse(d, etat.reponses[id]) : undefined;
+};
+
+// La scène montrée pour un dilemme.
+export function sceneDe(d: Dilemme): Scene {
+  return d.scenes[0];
+}
+
+// Ta réponse en mots, pour le bilan du départage : « Plutôt A (3 400 € par mois, 1 500 € de loyer) ».
+export function libelleReponse(d: Dilemme, reponse: string): string {
+  const scene = sceneDe(d);
+  const i = d.options.findIndex((o) => o.id === reponse.replace(/^peu-/, ""));
+  const texte = scene.options[i]?.texte ?? "";
+  return d.echelle ? `${LIBELLE_ECHELLE[reponse] ?? reponse} : ${texte}` : texte;
+}
 
 // Un dilemme n'est jamais proposé si l'une de ses mesures est notée pour moins de 60 % des pays.
 export const SEUIL_DILEMME = 0.6;
@@ -877,9 +916,8 @@ export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, r
     if (effet > plusFort.effet) plusFort = { id, effet };
   }
   const d = trouverDilemme(plusFort.id);
-  const o = optionChoisie(apres, plusFort.id);
-  if (plusFort.effet < 0.05) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
-  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${d?.titre}\u00a0» (${o?.texte}). ${issue}`;
+  if (plusFort.effet < 0.05 || !d) return `Tes réponses n’ont presque rien changé entre ces deux pays. ${issue}`;
+  return `Ce qui a fait la différence\u00a0: ta réponse à «\u00a0${sceneDe(d).titre}\u00a0» (${libelleReponse(d, apres.reponses[plusFort.id])}). ${issue}`;
 }
 
 // ---------- Résultat rédigé pour toi ----------

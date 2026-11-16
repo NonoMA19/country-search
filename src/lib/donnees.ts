@@ -69,30 +69,40 @@ export type Note = {
 // 60 mots au maximum en tout (vérifié par npm run test:moteur).
 export type Aide = { enjeu: string; cartes: { pastille: string; texte: string }[] };
 
-// Un dilemme : une scène, 2 ou 3 options. Chaque option agit sur des mesures existantes.
-// « poids » pour une mesure « haut » (1 = normal, 0,5 = léger) ; « position » pour une mesure « position ».
+// Un dilemme : une mesure, 2 options (A et B), et plusieurs scènes de la vie réelle qui posent la même question.
+// Chaque option agit sur des mesures existantes : « poids » pour une mesure « haut » (1 = normal, 0,5 = léger),
+// « position » pour une mesure « position ». Les effets sont ceux du dilemme : la scène ne change que les mots.
 export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
 export type OptionDilemme = {
   id: string;
-  texte: string;
-  detail?: string; // la ligne grise : l'avantage ou le prix de l'option
   effets: EffetDilemme[];
   ecart?: { regle: string; raison: string }; // fait descendre des pays dans « Moins adaptés pour toi »
   portrait: string; // la phrase du portrait si tu choisis cette option
+  portraitPeu?: string; // la phrase du portrait pour « Un peu A » (dilemmes en échelle)
   preference?: string; // ce que tu préfères, pour « À savoir » (« tu préférais un hiver doux »)
-  style?: string; // pour « Ton profil de travail »
+  preferencePeu?: string;
+  style?: string; // pour la phrase de style de travail du portrait
+};
+// Une option dans une scène : son texte, son avantage (+) et son prix (−), affichés sur la carte.
+export type OptionScene = { texte: string; plus: string; moins: string };
+export type Scene = {
+  id: string;
+  titre: string;
+  texte: string;
+  exemple?: boolean; // les montants et durées sont des exemples fictifs
+  options: OptionScene[]; // dans l'ordre des options du dilemme
 };
 export type Dilemme = {
   id: string;
   theme: string;
-  titre: string;
-  scene: string;
+  titre: string; // le nom du dilemme (« Salaire ou coût de la vie »), pas celui d'une scène
   aide: Aide;
-  exemple?: boolean; // les montants et durées sont des exemples fictifs
+  echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B
   axe?: string; // axe du style de travail
   afficheSi?: string;
   regleAffichage?: string;
   options: OptionDilemme[];
+  scenes: Scene[];
 };
 
 export type OptionProfil = { id: string; label: string; ageMax?: number; euros?: number; mois?: number; codes?: string[] };

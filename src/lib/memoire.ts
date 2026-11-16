@@ -2,7 +2,7 @@
 // Tout s'efface quand on ferme l'onglet.
 import { useSyncExternalStore } from "react";
 import { quiz } from "./donnees";
-import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, type Etat, type Reglages } from "./moteur";
+import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, reponsesDe, type Etat, type Reglages } from "./moteur";
 import { pays } from "./pays";
 
 // L'ordre du parcours : profil, priorités, dilemmes, (résultat prêt), valeurs (en option), résultat.
@@ -17,7 +17,7 @@ export type Etape =
   | { t: "revoir"; id: string };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 5;
+export const VERSION_SESSION = 6;
 
 export type Session = {
   v: number;
@@ -46,7 +46,7 @@ const entier = (x: unknown, min: number) => typeof x === "number" && Number.isIn
 const QUESTIONS = new Map(quiz.profil.map((q) => [q.id, new Set(q.options.map((o) => o.id))]));
 const PRIORITES = new Set(quiz.priorites.map((p) => p.id));
 const SUJETS = new Set(quiz.sujets.map((s) => s.id));
-const DILEMMES = new Map(quiz.dilemmes.map((d) => [d.id, new Set(["passer", ...d.options.map((o) => o.id)])]));
+const DILEMMES = new Map(quiz.dilemmes.map((d) => [d.id, new Set(["passer", ...reponsesDe(d)])]));
 const PAYS = new Set(pays.map((p) => p.id));
 const CRANS = new Set(NIVEAUX);
 const GROUPES_REGLAGE = new Set<string>(GROUPES.map((g) => g.id));

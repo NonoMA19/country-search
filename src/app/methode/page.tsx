@@ -113,7 +113,8 @@ export default function Methode() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Comment les dilemmes sont choisis</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
-          <li>Un dilemme est une petite scène avec 2 ou 3 options. Chaque option a un avantage et un prix : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
+          <li>Un dilemme est une petite scène avec 2 options. Chaque option affiche son avantage (+) et son prix (−) : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
+          <li>Les dilemmes qui forment une échelle (salaire et coût de la vie, salaire et temps libre, emploi et salaire, distance, hiver, été, ville et nature, sécurité…) ont 4 réponses : « Plutôt A », « Un peu A », « Un peu B », « Plutôt B ». « Plutôt » donne l’effet complet de l’option (importance 1, ou sa position). « Un peu » en donne la moitié : importance 0,5, ou une position à mi-chemin entre celle de l’option et le milieu de l’échelle (exemple : la position 4 devient 3,5). Les dilemmes de culture au travail gardent 2 options : une réponse « entre les deux » n’apprendrait rien.</li>
           <li>Après tes 3 priorités, on regarde les 5 premiers pays de ton classement.</li>
           <li>On te pose le dilemme pour lequel ces 5 pays sont les plus différents. Une option qui ne ferait que redonner une importance déjà acquise (par une de tes priorités, par exemple) ne compte pas : elle ne départagerait rien. C’est un calcul, pas une IA.</li>
           <li>Un dilemme n’est jamais posé si l’une de ses mesures est notée pour moins de {Math.round(SEUIL_DILEMME * 100)} % des pays.</li>
@@ -257,10 +258,18 @@ export default function Methode() {
           {quiz.dilemmes.map((d) => (
             <li key={d.id} className="rounded-2xl border border-bord bg-carte p-4 text-sm">
               <p className="text-xs font-medium tracking-wide text-gris uppercase">{d.theme}</p>
-              <p className="text-base font-medium">{d.titre}</p>
-              <p className="mt-1">{d.scene}</p>
+              <p className="text-base font-medium">{d.titre}{d.echelle ? " (en échelle : 4 réponses)" : ""}</p>
               <ul className="mt-2 space-y-1 text-gris">
-                {d.options.map((o, i) => <li key={o.id}>{["A", "B", "C"][i]}. {o.texte} : {effet(o)}.</li>)}
+                {d.options.map((o, i) => <li key={o.id}>{["A", "B", "C"][i]} : {effet(o)}.</li>)}
+              </ul>
+              <p className="mt-2 font-medium">{d.scenes.length > 1 ? `Ses ${d.scenes.length} scènes` : "Sa scène"}</p>
+              <ul className="mt-1 space-y-2">
+                {d.scenes.map((sc) => (
+                  <li key={sc.id}>
+                    <span className="font-medium">{sc.titre}.</span> {sc.texte}
+                    <span className="block text-gris">{sc.options.map((o, i) => `${["A", "B", "C"][i]}. ${o.texte} (+ ${o.plus} − ${o.moins})`).join(" ")}</span>
+                  </li>
+                ))}
               </ul>
               {d.regleAffichage && <p className="mt-1 text-gris">Règle d’affichage : {d.regleAffichage}</p>}
               {!dilemmeActif(d) && <p className="mt-1 font-medium">Pas encore posé : sa mesure n’est pas assez renseignée (moins de {Math.round(SEUIL_DILEMME * 100)} % des pays).</p>}

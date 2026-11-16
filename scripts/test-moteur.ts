@@ -5,7 +5,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, v
 import { validerSession, SESSION_VIDE } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, MIN_DILEMMES, REGLAGES_DEFAUT, calculer, cleTop3, demarrerDilemmes, dilemmeActif, effetsActifs,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance,
+  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, concerne, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, portrait, prochainDepartage, separation, prochainDilemme, questionProfilVisible, categorieDe, lignesTop, repondre, repondues, resultatPret, trouverDilemme, valeurFrance, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { ECART_EX_AEQUO } from "@/config";
@@ -61,7 +61,7 @@ function quizAuHasard(r: Alea, passerTout = false): Etat {
     if (!d) break;
     // Un dilemme inactif (mesure notée pour moins de 60 % des pays) n'est jamais proposé.
     verifier(dilemmeActif(d), `dilemme inactif proposé : ${d.id}`);
-    const choix = passerTout ? ["passer"] : [...d.options.map((o) => o.id), "passer"];
+    const choix = passerTout ? ["passer"] : [...reponsesDe(d), "passer"];
     etat = repondre(etat, d.id, choisir(r, choix));
     if (!passerTout && resultatPret(etat) && r() < 0.5) break;
   }
@@ -184,7 +184,7 @@ for (let i = 0; i < NB; i++) {
   // Portrait : jamais une phrase de dilemme qui répète une priorité déjà citée.
   const mesuresPrio = new Set(etat.priorites.flatMap((id) => quiz.priorites.find((p) => p.id === id)?.mesures ?? []));
   for (const l of lignesPortrait) if (l.revoir.t === "dilemme") {
-    const o = trouverDilemme(l.revoir.id)!.options.find((x) => x.id === etat.reponses[(l.revoir as { id: string }).id])!;
+    const o = optionReponse(trouverDilemme(l.revoir.id)!, etat.reponses[l.revoir.id])!;
     const ms = o.effets.flatMap((e) => e.mesures);
     verifier(!(ms.length > 0 && o.effets.every((e) => e.position === undefined) && ms.every((m) => mesuresPrio.has(m))), `quiz ${i} : le portrait répète une priorité (${l.texte})`);
   }
@@ -569,6 +569,41 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   for (const [m, n] of Object.entries(notesFrance)) {
     if (n.statut === "verifie") verifier(!!valeurFrance(m)?.startsWith("France :"), `France : ${m} vérifiée mais non affichée`);
   }
+}
+
+// 2.16 Options équilibrées et réponses graduées (prompt 3e, lot 2).
+{
+  for (const d of quiz.dilemmes) {
+    verifier(d.options.length === 2, `${d.id} : ${d.options.length} options au lieu de 2`);
+    verifier(d.scenes.length >= 1, `${d.id} : aucune scène`);
+    for (const sc of d.scenes) {
+      verifier(sc.options.length === d.options.length, `${d.id}/${sc.id} : pas autant d'options que le dilemme`);
+      for (const o of sc.options) verifier(!!o.texte && !!o.plus && !!o.moins, `${d.id}/${sc.id} : une option sans avantage ou sans prix`);
+    }
+    // Les dilemmes de culture au travail gardent 2 options : jamais d'échelle.
+    if (d.theme === "Culture au travail") verifier(!d.echelle, `${d.id} : la culture au travail ne doit pas être en échelle`);
+  }
+  for (const id of ["deux-offres", "promotion", "sortie-ecole", "noel", "janvier", "aout", "appartement", "nuit"]) verifier(!!trouverDilemme(id)?.echelle, `${id} : pas en échelle`);
+  // « Un peu » : la moitié de l'effet (importance 0,5, ou une position à mi-chemin du milieu).
+  for (const d of quiz.dilemmes.filter((x) => x.echelle)) {
+    verifier(reponsesDe(d).join() === "a,peu-a,peu-b,b", `${d.id} : réponses de l'échelle incorrectes`);
+    for (const lettre of ["a", "b"]) {
+      const plein = optionReponse(d, lettre)!, peu = optionReponse(d, `peu-${lettre}`)!;
+      plein.effets.forEach((e, i) => {
+        const f = peu.effets[i];
+        if (e.position !== undefined) verifier(f.position === (e.position + 3) / 2, `${d.id} peu-${lettre} : position ${f.position} au lieu de ${(e.position + 3) / 2}`);
+        else verifier(f.poids === (e.poids ?? 1) / 2, `${d.id} peu-${lettre} : importance ${f.poids}`);
+      });
+      verifier(!!peu.portrait, `${d.id} peu-${lettre} : pas de phrase de portrait`);
+    }
+    verifier(Object.keys(LIBELLE_ECHELLE).length === 4, "échelle : il faut 4 libellés");
+  }
+  // Réponse « Un peu A » à « Deux offres » : salaire d'importance 0,5.
+  const peu: Etat = { ...ETAT_VIDE, priorites: ["securite", "climat", "proche"], reponses: { "deux-offres": "peu-a" }, ordre: ["deux-offres"] };
+  verifier(effetsDe(peu).find((e) => e.mesure === "salaire")?.poids === 0.5, "« Un peu A » ne donne pas l'importance 0,5");
+  // Une session avec une réponse graduée est acceptée, une réponse inconnue refusée.
+  verifier(validerSession({ ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "deux-offres": "peu-b" }, ordre: ["deux-offres"], historique: [] } }) !== null, "session : « peu-b » refusé");
+  verifier(validerSession({ ...SESSION_VIDE, etat: { ...ETAT_VIDE, reponses: { "reunion-9h": "peu-a" }, ordre: ["reunion-9h"], historique: [] } }) === null, "session : « peu-a » accepté sur un dilemme de culture");
 }
 
 // ---------- Bilan ----------

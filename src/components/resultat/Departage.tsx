@@ -5,7 +5,7 @@ import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import { CarteDilemme } from "@/components/quiz/Quiz";
 import { AvecDefinitions } from "@/components/Definition";
-import { bilanDepartage, comparer, MAX_DEPARTAGE, prochainDepartage, repondre, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
+import { bilanDepartage, comparer, MAX_DEPARTAGE, prochainDepartage, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.
 export type EtatDepartage =
@@ -105,7 +105,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
     return (
       <section aria-label={`Départage : ${nomA} ou ${nomB}`} className="mt-6 rounded-3xl border-2 border-bleu bg-carte p-4 sm:p-6">
         <p className="text-sm font-medium text-gris">{nomA} ou {nomB} ? Question {etatDep.poses.length + 1} sur {MAX_DEPARTAGE} au plus</p>
-        <div className="mt-3"><CarteDilemme key={d.id} dilemme={d} repond={repond} titreId="titre-departage" niveau="h3" /></div>
+        <div className="mt-3"><CarteDilemme key={d.id} dilemme={d} scene={sceneDe(d)} repond={repond} titreId="titre-departage" niveau="h3" /></div>
         <button type="button" onClick={() => setEtatDep({ t: "fin", a, b, message: bilanDepartage(etatDep.avant, etat, a, b, reglages) })} className="mt-1 min-h-11 w-full text-sm font-medium text-lien underline">Arrêter le départage</button>
       </section>
     );

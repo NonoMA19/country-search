@@ -2,8 +2,8 @@
 // Elle mesure les biais du classement : part de chaque pays en n°1 et dans le top 3,
 // effet du projet (objectif) sur le top 3, et sensibilité de chaque question.
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de quiz)
-import { quiz } from "@/lib/donnees";
-import { ETAT_VIDE, LIBELLE_FIABILITE, calculer, cleTop3, demarrerDilemmes, paysSurprise, prochainDilemme, questionProfilVisible, repondre, resultatPret, type Etat, type NiveauFiabilite, type Profil } from "@/lib/moteur";
+import { quiz, type Dilemme } from "@/lib/donnees";
+import { ETAT_VIDE, LIBELLE_FIABILITE, calculer, cleTop3, demarrerDilemmes, paysSurprise, prochainDilemme, questionProfilVisible, repondre, reponsesDe, resultatPret, type Etat, type NiveauFiabilite, type Profil } from "@/lib/moteur";
 import { pays } from "@/lib/pays";
 
 function hasard(graine: number) {
@@ -21,7 +21,7 @@ const choisir = <T,>(r: Alea, l: T[]): T => l[Math.floor(r() * l.length)];
 
 type Question = { id: string; options: { id: string }[] };
 // Les réponses possibles d'un dilemme, sans « passer ».
-const reponsesPossibles = (q: Question) => q.options.map((o) => o.id);
+const reponsesPossibles = (q: Question) => reponsesDe(q as Dilemme);
 const toutesLesQuestions = (): Question[] => quiz.dilemmes;
 
 function profilAuHasard(r: Alea): Profil {
