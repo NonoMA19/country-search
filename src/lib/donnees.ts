@@ -179,10 +179,12 @@ export type DetailVisa = {
   verifieLe: string;
 };
 // Le statut du moment d'une porte (exemple : saison du PVT fermée), avec sa source.
-export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string };
+export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string; statut?: "verifie" | "a-verifier" };
+// Une note sourcée attachée à une porte : changement de procédure, visa jeunes fermé, contexte de sécurité.
+export type NotePorte = { texte: string; source: string; lien: string; verifieLe: string; statut?: "verifie" | "a-verifier" };
 
 export type PorteBrute = {
-  type: "ue" | "pvt" | "vie" | "visa-travail";
+  type: "ue" | "pvt" | "vie" | "visa-travail" | "visas-jeunes";
   nom: string;
   texte: string;
   ageMax?: number;
@@ -197,6 +199,12 @@ export type PorteBrute = {
   detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
   detail?: DetailVisa;
   saison?: StatutPorte;
+  fondsAVerifier?: boolean; // les ressources demandées ne sont pas claires (pages officielles contradictoires)
+  changement?: NotePorte; // la procédure change bientôt
+  jeunes?: NotePorte; // visa jeunes : ouvert ou non aux Français
+  securite?: NotePorte; // contexte de sécurité (France Diplomatie)
+  visas?: DetailVisa[]; // « visas-jeunes » : stage, formation, premier emploi
+  datePage?: string;
   source: string | null;
   lien: string | null;
   verifieLe: string | null;
@@ -270,7 +278,7 @@ export function phraseIndemniteVie(paysId: string): string | null {
 }
 export const avis = avisData as unknown as Record<string, Avis>;
 // « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
-export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };
+export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string; court?: string; etape?: string };
 export const europe = portesToutes._europe as unknown as { texte: string; court: string; inscription: NoteSourcee; pays: Record<string, NoteSourcee> };
 export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; autresPays: string; avertissement: string };
 
@@ -337,6 +345,12 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     avertissement: m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
+}
+
+// La preuve d'une note de porte : « À vérifier » garde le lien de la page lue.
+export function preuveNote(titre: string, n: NotePorte): Preuve {
+  const p = preuveSource(titre, n.texte, n.source, n.lien, n.verifieLe);
+  return n.statut === "a-verifier" ? { ...p, type: "a-verifier" } : p;
 }
 
 export function preuveSource(titre: string, texte: string, sourceId: string | null, lien: string | null, verifieLe: string | null): Preuve {

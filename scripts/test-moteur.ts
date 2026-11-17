@@ -567,7 +567,24 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   }
   const f = (id: string, pr: Profil) => faisabilite(trouverPays(id)!, pr, budgetDe(pr));
   verifier(f("belgique", {}).remplies.some((x) => x.includes("nationalité française suffit")), "faisabilité : la Belgique sans « ta nationalité suffit »");
-  verifier(f("suisse", {}).aRemplir.some((x) => x.includes("permis de séjour")), "faisabilité : la Suisse sans le permis de séjour");
+  verifier(f("suisse", {}).aRemplir.some((x) => x.includes("Permis L") && x.includes("14 jours")), "faisabilité : la Suisse sans le permis L ou B");
+  verifier(f("norvege", {}).aRemplir.some((x) => x.includes("police")), "faisabilité : la Norvège sans l'enregistrement à la police");
+  // Visas jeunes (prompt 3h) : quotas dits « fixés chaque année », ressources à vérifier, autres visas pour les jeunes.
+  for (const pid of ["canada", "japon", "coree-du-sud", "argentine", "hong-kong", "bresil", "taiwan", "chili", "colombie", "mexique"]) {
+    const pv = portes(pid).find((x) => x.type === "pvt")!;
+    verifier(/quota fixé chaque année entre les deux pays/.test(pv.texte) && !/pour les Français\./.test(pv.texte), `PVT : quota mal dit pour ${pid}`);
+  }
+  verifier(portes("canada").find((x) => x.type === "pvt")!.ageMax === 35 && portes("argentine").find((x) => x.type === "pvt")!.ageMax === 35, "PVT : âge maximum du Canada ou de l'Argentine");
+  verifier(!/décembre/.test(portes("canada").find((x) => x.type === "pvt")!.saison!.texte), "PVT Canada : une date de 2027 non officielle");
+  verifier(f("colombie", { age: "18-25" }).aVerifier.some((x) => x.startsWith("Ressources demandées")) && f("coree-du-sud", { age: "18-25" }).aVerifier.some((x) => x.startsWith("Ressources demandées")), "PVT : ressources de la Colombie ou de la Corée pas « à vérifier »");
+  verifier(portes("nouvelle-zelande").find((x) => x.type === "pvt")!.fonds!.texte.startsWith("4 200") || portes("nouvelle-zelande").find((x) => x.type === "pvt")!.fonds!.texte.startsWith("4\u00a0200"), "PVT Nouvelle-Zélande : ressources");
+  for (const [pid, n] of [["etats-unis", 3], ["royaume-uni", 1], ["singapour", 2], ["chine", 1], ["emirats-arabes-unis", 2], ["canada", 2]] as const) {
+    verifier((portes(pid).find((x) => x.type === "visas-jeunes")?.visas ?? []).length === n, `visas jeunes : ${pid} n'a pas ${n} visas`);
+    verifier(evaluerPorte(trouverPays(pid)!, { age: "18-25" }, null).autres.some((x) => x.startsWith("Autres visas pour les jeunes")), `visas jeunes : ${pid} ne les cite pas`);
+  }
+  verifier(evaluerPorte(trouverPays("royaume-uni")!, {}, null).alertes.some((a) => a.texte.includes("Youth Mobility")), "Royaume-Uni : Youth Mobility Scheme non signalé");
+  verifier(evaluerPorte(trouverPays("emirats-arabes-unis")!, {}, null).alertes.some((a) => a.texte.includes("vigilant")), "Émirats : contexte de sécurité absent");
+  verifier(evaluerPorte(trouverPays("australie")!, { age: "18-25" }, null).alertes.some((a) => a.texte.includes("1er mars 2027") && a.preuve?.type === "a-verifier"), "Australie : changement de procédure absent ou pas « à vérifier »");
   // Budget en tranches (lot 5) : « au moins » sous la tranche, « pourrait » dans la tranche, « couvre » au-dessus.
   verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => /^Il te manquerait au moins 1\s100/.test(x)), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
   verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => /^Selon ta somme exacte, il pourrait te manquer jusqu’à 1\s100/.test(x)), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");

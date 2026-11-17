@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
+  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveNote, preuveSource, preuveVisa,
   type CarteMonde, type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
 import {
@@ -401,6 +401,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
   const liste = portes(p.id);
   const age = ageMax(profil);
   const vieOuvert = age !== null && age <= vie.ageMaxCandidature;
+  const jeunes = liste.find((x) => x.type === "visas-jeunes")?.visas ?? [];
   const veutVie = profil.objectif === "stage-vie";
   const duree = dureeMois(profil);
   const alertes: Alerte[] = [];
@@ -411,9 +412,9 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
 
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
-    // Suisse : un permis de séjour à demander au canton au-delà de trois mois (France Diplomatie).
+    // Suisse (permis L ou B, commune sous 14 jours) et Norvège (police au-delà de 3 mois) : ce qui diffère de l'Union.
     const local = europe.pays[p.id];
-    if (local) alertes.push({ texte: local.texte, preuve: preuveSource("Séjour de plus de trois mois", local.texte, local.source, local.lien, local.verifieLe) });
+    if (local) alertes.push({ texte: local.texte, preuve: preuveSource("Séjour sur place", local.texte, local.source, local.lien, local.verifieLe) });
     if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
     return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres, visa: null, mention: null };
   }
@@ -433,7 +434,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
     const quand = age !== null ? "à ton âge" : `jusqu’à ${pvt.ageMax} ans`;
     const PVT = "PVT (Programme Vacances-Travail)";
     let badge: Badge = "ouverte";
-    let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an.` : `${PVT} ouvert ${quand}, sans quota.`;
+    let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an (quota fixé chaque année entre les deux pays).` : `${PVT} ouvert ${quand}, sans quota.`;
     if (pvt.invitation) {
       badge = "difficile";
       phrase = `${PVT} ouvert ${quand}, mais il faut recevoir une invitation : rien n’est garanti.`;
@@ -456,12 +457,14 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
       alertes.push({ texte: `Ce PVT demande ${pvt.fonds.texte}.`, preuve: preuvePorte(pvt) });
     }
     if ((duree !== null && duree > 12) || profil.objectif === "carriere") {
-      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
+      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
+    if (pvt.changement) alertes.push({ texte: pvt.changement.texte, preuve: preuveNote("La procédure change", pvt.changement) });
     if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
     // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
     const sa = pvt.saison;
-    const mention = sa ? { texte: sa.texte, preuve: preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
+    const mention = sa ? { texte: sa.texte, preuve: sa.statut === "a-verifier" ? preuveNote("Saison du PVT", sa) : preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
+    if (jeunes.length) autres.push(`Autres visas pour les jeunes : ${jeunes.map((v) => v.nom).join(", ")}. Le détail est sur la fiche du pays.`);
     return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, manquePossible, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
   }
 
@@ -474,6 +477,9 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
   // Avec le détail du visa, les conditions sont dans la carte du visa ; seule l'exigence de diplôme ou d'expérience est une alerte.
   if (d) alertes.push(...alerteExperience(d));
   else for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
+  if (base.jeunes) alertes.push({ texte: base.jeunes.texte, preuve: preuveNote("Visa jeunes", base.jeunes) });
+  if (base.securite) alertes.push({ texte: base.securite.texte, preuve: preuveNote("Sécurité", base.securite) });
+  if (jeunes.length) autres.push(`Autres visas pour les jeunes : ${jeunes.map((v) => v.nom).join(", ")}. Le détail est sur la fiche du pays.`);
   if (vieOuvert) autres.push(vie.presence?.[p.id] ? "VIE : ce pays fait partie des destinations de Business France ; il faut décrocher une mission." : "VIE : pas dans les destinations de Business France.");
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null, mention: null };
 }
@@ -507,10 +513,10 @@ export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Fai
     const ue = liste.find((x) => x.type === "ue")!;
     f.remplies.unshift("Ta nationalité française suffit pour y travailler sans visa.");
     const local = europe.pays[p.id];
-    if (local) f.aRemplir.push("Au-delà de trois mois : un permis de séjour à demander au canton, avant d’arriver.");
+    if (local) f.aRemplir.push(`${local.court ?? local.texte}.`);
     f.aVerifier.push("Inscription auprès des autorités locales : elle peut être demandée dans les 3 mois après l’arrivée.");
     f.etape = local
-      ? { texte: "Lire les démarches sur le site officiel", url: local.lien, nom: "Suisse : entrée et séjour (France Diplomatie)" }
+      ? { texte: "Lire les démarches sur le site officiel", url: local.lien, nom: local.etape ?? sources[local.source]?.nom ?? "Site officiel" }
       : { texte: "Lire les démarches sur le site officiel", url: ue.lien ?? europe.inscription.lien, nom: "Travailler dans un autre pays d’Europe" };
     return f;
   }
@@ -523,7 +529,9 @@ export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Fai
     if (fonds !== null && budget !== null && budget.min >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
     else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait ${budget?.min === budget?.max ? "environ" : "au moins"} ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
     else if (porte.manquePossible) f.aVerifier.push(`Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(porte.manquePossible)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    else if (pvt.fonds && pvt.fondsAVerifier) f.aVerifier.push(`Ressources demandées\u00a0: ${pvt.fonds.texte}.`);
     else if (pvt.fonds) f.aRemplir.push(`Prévoir les ressources demandées\u00a0: ${pvt.fonds.texte}.`);
+    if (pvt.changement) f.aVerifier.push(pvt.changement.texte);
     if (pvt.invitation) f.aRemplir.push("Recevoir une invitation : rien n’est garanti.");
     else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) f.aRemplir.push(`Obtenir une des ${pvt.quota} places de l’année.`);
     if ((dureeMois(profil) ?? 0) > 12 || profil.objectif === "carriere") f.aRemplir.push("Prévoir un autre visa pour rester plus d’un an.");
@@ -566,7 +574,7 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
     const ue = liste.find((x) => x.type === "ue")!;
     return {
       nom: ue.nom, lien: ue.lien ? { url: ue.lien, nom: "Travailler dans un autre pays d’Europe" } : null,
-      points: ["Pas de visa ni de permis de travail", europe.pays[p.id] ? "Permis de séjour du canton au-delà de 3 mois" : "Inscription sur place possible"],
+      points: ["Pas de visa ni de permis de travail", europe.pays[p.id]?.court ?? "Inscription sur place possible"],
     };
   }
   const pvt = liste.find((x) => x.type === "pvt");

@@ -191,7 +191,7 @@
         "nom": "Indemnité VIE mensuelle (ville la plus probable pour un VIE)",
         "sens": "haut",
         "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème officiel en vigueur depuis le 1er octobre 2026 (Journal officiel : part fixe de 772,87 € et indemnité supplémentaire), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, São Paulo, Bombay, Dubaï ; sinon le montant du pays). Les autres villes sont dans le détail. Seuils : quintiles des 30 pays de la version 1, arrondis à 50 € : 2 650, 2 900, 3 200 et 3 550 € par mois.",
-        "avertissement": "Révisé chaque trimestre (scripts/vie.mjs). L’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge, et elle dépend de la ville.",
+        "avertissement": "Révisé chaque trimestre (scripts/vie.mjs). L’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge, et elle dépend de la ville.",
         "unite": "€ par mois",
         "bornes": [
           2650,
@@ -207,11 +207,11 @@
           5
         ],
         "echelle": [
-          "moins de 2 650 €",
-          "de 2 650 à 2 900 €",
-          "de 2 900 à 3 200 €",
-          "de 3 200 à 3 550 €",
-          "3 550 € ou plus"
+          "moins de 2 650 €",
+          "de 2 650 à 2 900 €",
+          "de 2 900 à 3 200 €",
+          "de 3 200 à 3 550 €",
+          "3 550 € ou plus"
         ],
         "mots": [
           "très basse",
@@ -1012,7 +1012,7 @@
     "id": "langue-quotidien",
     "famille": "vivre",
     "nom": "Langue du quotidien",
-    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays. La mesure « Une langue que tu parles » est un bonus modéré (importance 1) aux pays où une langue que tu as cochée au chapitre 1 est officielle ou très parlée. Un pays qui ne la parle pas ne perd rien.",
+    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays. La mesure « Une langue que tu parles » est un bonus modéré (importance 1) aux pays où une langue que tu as cochée au chapitre 1 est officielle ou très parlée. Un pays qui ne la parle pas ne perd rien.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"
@@ -1689,7 +1689,7 @@
     "id": "zone",
     "famille": "vivre",
     "nom": "En Europe ou plus loin, et ta carte du début",
-    "definition": "Le pays est-il en Europe ? Tiré de la liste des 30 pays. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
+    "definition": "Le pays est-il en Europe ? Tiré de la liste des 30 pays. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
     "type": "donnee-ouverte",
     "sources": [
       "geonames"

@@ -372,7 +372,7 @@
       "chapitre": 1,
       "theme": "Ton intuition",
       "titre": "Avant de commencer : où pensais-tu partir ?",
-      "texte": "Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.",
+      "texte": "Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.",
       "dimensions": [],
       "aide": {
         "enjeu": "Ta carte compte un peu dans le calcul, et on compare ton intuition à ce que tes réponses diront.",
@@ -383,7 +383,7 @@
           },
           {
             "pastille": "Aucune idée",
-            "texte": "C’est une réponse comme une autre : rien ne change."
+            "texte": "C’est une réponse comme une autre : rien ne change."
           }
         ]
       },
