@@ -131,7 +131,7 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
           <ul className="mt-2 list-disc space-y-1 pl-5">{i.raisons.map((r) => <li key={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</li>)}</ul>
         </>
       )}
-      <p className="mt-5 text-sm text-gris">Ta carte du début ne compte pas dans le calcul. Ton résultat complet vient juste après ton portrait.</p>
+      <p className="mt-5 text-sm text-gris">Ta carte du début compte un peu : un petit bonus aux pays des régions cochées, rien de retiré aux autres. Ton résultat complet vient juste après ton portrait.</p>
       <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
         <button type="button" onClick={suite} className={BOUTON_PLEIN}>Voir mon portrait</button>
       </div>

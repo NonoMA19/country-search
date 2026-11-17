@@ -14,7 +14,7 @@ export default function CarteVisa({ visa, pays, titre }: { visa: DetailVisa; pay
       {titre && <p className="text-sm font-medium text-gris">{titre}</p>}
       <p className="font-semibold break-words">
         {visa.nom}
-        <Pastille preuve={preuveVisa(visa)} pays={pays} contexte={`le visa de travail (${visa.nom})`} />
+        <Pastille preuve={preuveVisa(visa)} pays={pays} contexte={`le visa (${visa.nom})`} />
       </p>
       <p className="mt-2 flex flex-wrap gap-2 text-sm">
         {visa.employeurRequis && <span className="rounded-full bg-creux px-2.5 py-1">Employeur obligatoire</span>}

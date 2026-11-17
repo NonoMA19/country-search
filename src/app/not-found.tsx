@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Page introuvable | Country Search",
-  description: "Cette page n’existe pas sur Country Search.",
+  title: "Page introuvable | Orizo",
+  description: "Cette page n’existe pas sur Orizo.",
 };
 
 export default function PageIntrouvable() {

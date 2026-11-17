@@ -12,7 +12,7 @@ import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { FaisabilitePourToi } from "@/components/resultat/Faisabilite";
 import { paysCouverts, valeurFrance } from "@/lib/moteur";
-import { criteres, dateFr, europe, notes, portes, preuveMesure, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
+import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, portes, preuveMesure, preuveNote, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
@@ -22,14 +22,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const p = trouverPays((await params).id);
-  if (!p) return { title: "Pays introuvable | Country Search" };
+  if (!p) return { title: "Pays introuvable | Orizo" };
   return {
-    title: `${p.nom} | Country Search`,
+    title: `${p.nom} | Orizo`,
     description: `Travailler ${p.en} : porte d’entrée (${p.famille}), emploi, salaires, coût de la vie, climat et liens officiels, chaque donnée avec sa source.`,
   };
 }
 
-// Le VIE : les règles sont officielles, mais la présence de missions dans ce pays n'est pas vérifiée.
+// Le VIE : les règles (service-public.gouv.fr), les destinations (Business France) et l'indemnité du pays (Journal officiel).
 function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
   const presence = vie.presence?.[paysId];
   return (
@@ -39,8 +39,14 @@ function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
         {vie.texte}
         <Pastille preuve={preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe)} pays={nomPays} contexte="les règles du VIE" />
       </p>
+      {phraseIndemniteVie(paysId) && (
+        <p className="mt-2 text-sm">
+          <span className="font-medium">{phraseIndemniteVie(paysId)}</span> {RAPPEL_VIE}
+          <Pastille preuve={preuveMesure(paysId, "indemnite-vie")} pays={nomPays} contexte="le barème des indemnités VIE" />
+        </p>
+      )}
       <p className="mt-2 text-sm">
-        {presence ? presence.texte : "Y a-t-il des missions VIE dans ce pays ? Ce n’est pas encore vérifié."}
+        {presence ? presence.texte : "VIE : pas dans les destinations de Business France."}
         <Pastille preuve={presence ? preuveSource("Missions VIE dans ce pays", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE dans ce pays", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={nomPays} contexte="les missions VIE" />
       </p>
     </li>
@@ -206,12 +212,19 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
               <p className="font-semibold">{b.nom}</p>
               <p className="mt-1">
                 {b.texte}
-                <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} contexte={b.nom} />
+                {b.type !== "visas-jeunes" && <Pastille preuve={preuveSource(b.nom, b.texte, b.statut === "verifie" ? b.source : null, b.lien, b.verifieLe)} pays={p.nom} contexte={b.nom} />}
               </p>
+              {[b.changement, b.jeunes, b.securite].filter((n) => !!n).map((n) => (
+                <p key={n!.texte} className="mt-2 font-medium">
+                  {n!.texte}
+                  <Pastille preuve={preuveNote(b.nom, n!)} pays={p.nom} contexte={b.nom} />
+                </p>
+              ))}
+              {(b.visas ?? []).map((v) => <CarteVisa key={v.nom} visa={v} pays={p.nom} />)}
               {b.saison && (
                 <p className="mt-2 font-medium">
                   {b.saison.texte}
-                  <Pastille preuve={preuveSource("Saison du PVT", `Phrase officielle : « ${b.saison.citation} » (page mise à jour le ${dateFr(b.saison.datePage)}).`, b.saison.source, b.saison.lien, b.saison.verifieLe)} pays={p.nom} contexte="la saison du PVT" />
+                  <Pastille preuve={b.saison.statut === "a-verifier" ? preuveNote("Saison du PVT", b.saison) : preuveSource("Saison du PVT", `Phrase officielle : « ${b.saison.citation} » (page mise à jour le ${dateFr(b.saison.datePage)}).`, b.saison.source, b.saison.lien, b.saison.verifieLe)} pays={p.nom} contexte="la saison du PVT" />
                 </p>
               )}
               {b.invitationTexte && b.invitationSource && (
@@ -224,7 +237,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
                 <>
                   <p className="mt-2 text-sm text-gris">{europe.texte}</p>
                   <NoteEurope note={europe.inscription} titre="Inscription sur place" pays={p.nom} />
-                  {europe.pays[p.id] && <NoteEurope note={europe.pays[p.id]} titre="Séjour de plus de trois mois" pays={p.nom} />}
+                  {europe.pays[p.id] && <NoteEurope note={europe.pays[p.id]} titre="Séjour sur place" pays={p.nom} />}
                 </>
               )}
               {b.detailsAVerifier && <p className="mt-2 text-sm text-gris">Les conditions détaillées du visa de travail (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.</p>}

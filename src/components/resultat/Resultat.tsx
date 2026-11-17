@@ -350,11 +350,6 @@ export default function Resultat() {
         </div>
       </details>
 
-      <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4 py-2">
-        <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 shrink-0 accent-bleu" />
-        <span className="font-medium">Montrer seulement les portes ouvertes</span>
-      </label>
-
       <section aria-labelledby="titre-top" className="mt-6">
         <h2 id="titre-top" className="text-xl font-semibold">Ton top 3</h2>
         <Glissement cle={top.map((l) => l.pays.id).join(",")}>
@@ -384,6 +379,16 @@ export default function Resultat() {
         )}
         {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
           <Departage etat={etat} reglages={reglages} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
+        )}
+        {/* Sous le top 3, au-dessus de la liste complète : le filtre agit sur les deux, et le dit. */}
+        {!rienRepondu && (
+          <label className="mt-5 flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border border-bord bg-carte px-4 py-2">
+            <input type="checkbox" checked={seulementOuvertes} onChange={(e) => setSeulementOuvertes(e.target.checked)} className="h-5 w-5 shrink-0 accent-bleu" aria-describedby="aide-ouvertes" />
+            <span className="min-w-0">
+              <span className="block font-medium">Montrer seulement les portes ouvertes</span>
+              <span id="aide-ouvertes" className="block text-sm text-gris">Ton top 3 et la liste de tous les pays se mettent à jour.</span>
+            </span>
+          </label>
         )}
       </section>
 

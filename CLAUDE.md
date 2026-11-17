@@ -1,4 +1,4 @@
-# Country Search (nom de code)
+# Orizo
 
 ## Mission
 Aider les étudiants et jeunes diplômés francophones à choisir le pays où partir travailler, puis à arriver prêts le jour J : visa, banque, carte SIM, santé, logement, CV local, codes culturels.
@@ -10,15 +10,15 @@ Aider les étudiants et jeunes diplômés francophones à choisir le pays où pa
 
 ## Version 1 (ce qu'on construit maintenant)
 - Quiz en 5 chapitres (prompt 3f) : point de départ, envies, travail, vie, limites ; 9 formats (cartes, classement, curseur, swipe, ambiances, thermomètre, carte du monde, tri des limites, dilemme) ; chaque option garde son avantage et son prix ; sans compte.
-- Classement des 30 pays par un calcul transparent (pas d'IA), avec le « pourquoi » de chaque score et une méthode publiée.
+- Classement des 38 pays par un calcul transparent (pas d'IA), avec le « pourquoi » de chaque score et une méthode publiée.
 - Top 3 pays, fiches pays, checklist Jour J de J-90 à J+30.
-- 10 fiches complètes, 20 fiches courtes.
+- 10 fiches complètes, 28 fiches courtes.
 - Pas de compte, pas d'IA en direct, pas de témoignages (prévus en version 2).
 
-## Les 30 pays (★ = fiche complète)
-Europe sans visa : Belgique★, Suisse★, Allemagne★, Irlande★, Luxembourg, Espagne, Italie, Pays-Bas, Portugal, Norvège, Suède, Danemark.
-PVT : Canada★, Australie★, Japon★, Nouvelle-Zélande, Corée du Sud, Taïwan, Hong Kong, Argentine, Chili, Colombie, Mexique, Brésil.
-Visa de travail : Royaume-Uni★, États-Unis★, Singapour★, Émirats arabes unis, Chine, Maroc.
+## Les 38 pays (★ = fiche complète)
+Europe sans visa : Belgique★, Suisse★, Allemagne★, Irlande★, Luxembourg, Espagne, Italie, Pays-Bas, Portugal, Norvège, Suède, Danemark, Autriche.
+PVT : Canada★, Australie★, Japon★, Nouvelle-Zélande, Corée du Sud, Taïwan, Hong Kong, Argentine, Chili, Colombie, Mexique, Brésil, Pérou, Uruguay.
+Visa de travail : Royaume-Uni★, États-Unis★, Singapour★, Émirats arabes unis, Chine, Maroc, Thaïlande, Vietnam, Inde, Côte d'Ivoire, Sénégal.
 
 ## Règles d'or
 1. L'IA parle, le calcul classe, la base de fiches fournit les faits. Rien n'est inventé.
@@ -54,19 +54,20 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Parcours (diplôme et expériences), reconversion.
 - Croisement avec les offres d'emploi par secteur.
 - Signalements par e-mail : remplir `CONTACT_EMAIL` dans `src/config.ts` (le bouton reste désactivé tant qu'il est vide).
-- Biais de classement (remesuré au prompt 3g, `npm run simulation`, 5 000 parcours) : n° 1 européen 95,5 % → 84,8 % depuis la mesure « Dépaysement » ; Allemagne 27,4 % (seul pays au-dessus de 20 % : meilleure note moyenne sur les mesures les plus demandées, sans donnée manquante), Suisse 19,9 % ; États-Unis, Chili, Colombie, Chine et Brésil jamais n° 1. Les parcours tirés au hasard ne représentent pas de vraies personnes : à remesurer avec des testeurs.
+- Biais de classement (remesuré au prompt 3h, 5 000 parcours, 38 pays) : n° 1 européen 84,8 % → 86,8 % (le correctif de la pénalité « hors d'Europe » la fait monter, la carte et les langues la font peu baisser) ; Suisse 25,2 % et Allemagne 22,2 % au-dessus de 20 % (meilleures notes moyennes sur les mesures les plus demandées) ; Chili, Colombie, États-Unis, Chine, Brésil, Inde et Thaïlande jamais n° 1 (notes basses sur salaire, sécurité, santé et distance, PVT fermés après 30 ans ; pas un manque de données). Le salaire OCDE des États-Unis (70 627 $) passe sous l'Allemagne (88 144 $) : à revérifier dans le tableau saisi.
 - Restes du prompt 3c : visas de travail « à vérifier » (Corée du Sud, Colombie, Brésil, Chine, Maroc), lien avec l'employeur inconnu (Mexique, Corée du Sud, Colombie, Brésil, Maroc) ; culture au travail « à vérifier » : décision (Hong Kong, Brésil), vie pro et vie perso (Argentine, Colombie, Émirats arabes unis, Maroc) ; Alliance française par pays ; population de Taïwan (absente de la Banque mondiale) pour le réseau français.
 - Question facultative sur l'expérience pro (aucune, moins de 2 ans, 2 ans ou plus) et le diplôme. Depuis le prompt 3d, la fiche de faisabilité affiche « Ton expérience pro n'est pas connue du site » : elle permettrait de changer le badge des visas qui exigent de l'expérience (Australie : 1 an ; Nouvelle-Zélande : 2 ans ou une licence ; Taïwan : master, ou licence et 2 ans ; Japon : diplôme universitaire). Pour l'instant, la condition est seulement affichée dans la carte du visa.
 - Témoignages de confiance « moyenne » : ils comptent comme les autres. Piste proposée, non appliquée : les compter à 75 % de leur importance.
 - Simulateur « Ta vie là-bas » (prompt 6) : salaire net (la part après impôts de l'OCDE est déjà affichée), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
 - Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
-- Décisions en attente (prompts 3d à 3g) : (1) badge de fiabilité : « Notre avis » n'y compte pas, mais la règle des 60 % du calcul le compte encore : choisir une seule règle ; (2) pays surprise : 5,5 % des parcours ; (3) « Montrer seulement les portes ouvertes » est resté au-dessus du top 3 ; (4) ambiances et phrases à glisser restent obligatoires ; (5) la carte du monde reste sans effet sur le calcul (elle ne fait qu'ajouter la phrase « vie très différente »).
+- Décisions en attente (prompt 3h) : (1) une donnée « à vérifier » sur une envie compte 50 % : avec les 8 nouveaux pays, 62 % de leurs places dans un top 3 en dépendent (Sénégal et Côte d'Ivoire en tête du profil « aventure » sans salaire ni Français inscrits connus) ; (2) Abidjan est en vigilance renforcée d'après France Diplomatie (pas normale) ; (3) pays surprise : 5,6 % des parcours.
+- Décisions validées au prompt 3h : carte = bonus de rang 5 (1,1), sans malus ; langue parlée = bonus modéré (1), sans malus ; une seule règle « données disponibles » (Notre avis compte, « à vérifier » jamais) ; ambiances et phrases obligatoires ; « Montrer seulement les portes ouvertes » sous le top 3.
 - Décisions validées au prompt 3g : « Je préfère éviter » = importance 1 ; Rédhibitoire aux seuils de 10 homicides pour 100 000, −5 °C en janvier, santé notée 1 ou 2 ; « Pas vraiment » = position modérée ; 2,5 = moyen ; deux thèmes au plus dans le chapitre 4 ; données de secteur de 2019 ou après.
 - Regarder comment les concurrents présentent leurs résultats (classement, comparaison, fiches) avant la refonte du prompt 5.
 - Secteurs et stages : le poids du secteur dans l'emploi est fait (prompt 3f, ILOSTAT) ; reste à croiser avec les offres ouvertes et les stages (sources ouvertes à trouver), et les salaires par secteur.
 - Couleurs par pays : à décider avec la direction artistique (prompt 5), pas avant.
 - Écran Valeurs : revenu au prompt 3g, facultatif, en fin de chapitre 5 (libertés, stabilité). L'égalité femmes-hommes dans la loi reste masquée (donnée non téléchargée).
-- Nom Orizo, mascotte caméléon, direction artistique « Atlas pop », illustrations finales des cartes (aujourd'hui des icônes Lucide sur fond uni, avec texte alternatif) : au prompt 5, pas avant.
+- Nom Orizo (texte en place depuis le prompt 3h), mascotte caméléon, direction artistique « Atlas pop », logo, couleurs, illustrations finales des cartes (aujourd'hui des icônes Lucide sur fond uni, avec texte alternatif) : au prompt 5, pas avant.
 - Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page pour ordinateur (le site reste pensé d'abord pour le téléphone), mise en page du PDF, couleurs par pays, carte du monde dessinée.
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).
@@ -230,3 +231,17 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Profil « parle espagnol, chaleur, vie moins chère » : Japon et Corée du Sud en tête, aucun pays hispanophone avant l'Argentine (n° 4) ; parler espagnol ne compte toujours que si la langue du quotidien entre dans le calcul.
 - Allemagne encore au-dessus de 20 % de n° 1.
 - Tests avec de vraies personnes (équilibre des scènes, blind test).
+
+### 17 novembre 2026 : décisions, VIE officiel, visas jeunes, 38 pays, nom Orizo (prompt 3h)
+**Ce qui est fait** (une pull request, un commit par lot)
+- Lot 1 : carte du début = bonus de rang 5 aux pays des régions cochées (mesure interne `region-carte`), langue parlée = bonus de 1 (`langue-parlee`), sans malus ni effet sur la couverture ; badge « Données disponibles (n sur N) » avec le détail par niveau de preuve, même règle que les 60 % ; filtre des portes ouvertes sous le top 3. Correctif : « Je préfère éviter » hors d'Europe et « ni français ni anglais » n'avaient aucun effet (mesures calculées vues comme sans données).
+- Lot 2 : barème VIE officiel du 1er octobre 2026 (Journal officiel, 36 destinations), `content/saisie/vie-bareme.json` et `scripts/vie.mjs` (base de janvier et taux trimestriels quand ils seront saisis, contrôle, arrondi au centime par trimestre, option `--essai`) ; Pérou et Uruguay hors des destinations de Business France ; seuils 2 650, 2 900, 3 200, 3 550 €.
+- Lot 3 : quotas PVT « fixés chaque année entre les deux pays » ; Australie 417 ; Nouvelle-Zélande 4 200 NZD ; Canada 2027 sans date, Jeunes professionnels et Stage coop ; ressources Colombie et Corée « à vérifier » ; J-1, H-1B, GAE, Youth Mobility fermé aux Français, WHP et TEP de Singapour, visa Z, visas des Émirats et sécurité ; Suisse (permis L ou B, 14 jours) et Norvège (police) ; porte « Autres visas pour les jeunes ».
+- Lot 4 : Autriche, Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d'Ivoire, Sénégal (`collecte.mjs --ajout`, `dossiers.mjs --pays`), carte à 9 régions, vigilance de la capitale.
+- Lot 5 : tests (254 000 vérifications), simulation, navigateur à 375 et 1440 px (toucher et clavier), /methode.
+- Lot 6 : nom Orizo dans les textes (clé de stockage `country-search:quiz` gardée pour ne pas perdre les quiz en cours).
+- Simulation (5 000 parcours) : n° 1 européen 84,8 % → 86,8 % ; Suisse 25,2 %, Allemagne 22,2 % ; nouveaux pays en n° 1 : Autriche 3,1 %, Sénégal 1,5 %, Côte d'Ivoire 0,3 %, Vietnam, Pérou, Uruguay 0,1 %, Inde et Thaïlande 0 % ; contenu lu identique 20,8 %.
+
+**Ce qui reste à faire**
+- Saisir : salaire OCDE 2024 de l'Autriche, base de janvier et taux trimestriels VIE de 2026 (Legifrance bloqué depuis la session), Français inscrits des 8 pays (Rapport du Gouvernement 2025), Notre avis (anglais au travail, culture, villes) des 8 pays, emploi par secteur (OIT injoignable).
+- Vérifier : Dakar et New Delhi (niveau de vigilance sur la carte), visas de travail des 7 nouveaux pays hors Europe, Stavanger, reste de la Suisse et de la Chine pour le VIE.

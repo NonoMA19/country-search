@@ -3,8 +3,8 @@
 import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
-  type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
+  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveNote, preuveSource, preuveVisa,
+  type CarteMonde, type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
 import {
   LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesRedhibitoires, optionReponse, penalitesRetirees, profilDe, type Profil,
@@ -61,7 +61,7 @@ export function languesParlees(p: Profil): string[] {
   const choix = Array.isArray(p.langues) ? p.langues : [];
   return choix.flatMap((id) => option("langues", id)?.codes ?? []);
 }
-const parleLangueDe = (paysId: string, p: Profil) => {
+export const parleLangueDe = (paysId: string, p: Profil) => {
   const parlees = languesParlees(p);
   return (avis[paysId]?.langues ?? []).some((l) => parlees.includes(l));
 };
@@ -96,6 +96,9 @@ export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
 // ---------- Notes ----------
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
+  // Les bonus : 5 si le pays est dans une région de ta carte, ou s'il parle une langue que tu parles ; sinon rien (jamais de malus).
+  if (mesureId === "region-carte") { const z = zoneCarte(paysId); return z && Array.isArray(p.regions) && p.regions.includes(z) ? 5 : null; }
+  if (mesureId === "langue-parlee") return parleLangueDe(paysId, p) ? 5 : null;
   if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
   // Dépaysement : l'inverse de la proximité (temps de vol et décalage horaire), sans nouvelle donnée.
   if (mesureId === "depaysement") {
@@ -118,7 +121,8 @@ const disponibilite: Record<string, number> = {};
 export const disponibiliteMemo = () => disponibilite;
 export function paysCouverts(mesureId: string): number {
   if (MESURES_CALCULEES.includes(mesureId)) return pays.length;
-  disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie").length;
+  // Un pays compte s'il a une note : « vérifié » sans note (le VIE hors des destinations de Business France) ne compte pas.
+  disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie" && notes[x.id][mesureId].note !== null).length;
   return disponibilite[mesureId];
 }
 export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0;
@@ -205,6 +209,15 @@ export function effetsBruts(etat: Etat): EffetActif[] {
     const en = quiz.envies.find((x) => x.id === id);
     if (en) ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
   });
+  // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays des régions cochées.
+  if (Array.isArray(etat.profil.regions) && etat.profil.regions.length) {
+    res.push({ mesure: "region-carte", sens: "haut", poids: POIDS_CARTE, famille: "vivre", origine: "carte" });
+  }
+  // Une langue que tu parles compte toujours : un bonus modéré aux pays où elle est officielle ou très parlée.
+  // Le dilemme sur la langue du quotidien peut le renforcer (mesure « langue »).
+  if (languesParlees(etat.profil).length) {
+    res.push({ mesure: "langue-parlee", sens: "haut", poids: POIDS_LANGUE_PARLEE, famille: "vivre", origine: "langues" });
+  }
   const retirees = new Set<string>();
   for (const id of etat.ordre) {
     const el = trouverElement(id);
@@ -389,6 +402,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
   const liste = portes(p.id);
   const age = ageMax(profil);
   const vieOuvert = age !== null && age <= vie.ageMaxCandidature;
+  const jeunes = liste.find((x) => x.type === "visas-jeunes")?.visas ?? [];
   const veutVie = profil.objectif === "stage-vie";
   const duree = dureeMois(profil);
   const alertes: Alerte[] = [];
@@ -399,9 +413,9 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
 
   const ue = liste.find((x) => x.type === "ue");
   if (ue) {
-    // Suisse : un permis de séjour à demander au canton au-delà de trois mois (France Diplomatie).
+    // Suisse (permis L ou B, commune sous 14 jours) et Norvège (police au-delà de 3 mois) : ce qui diffère de l'Union.
     const local = europe.pays[p.id];
-    if (local) alertes.push({ texte: local.texte, preuve: preuveSource("Séjour de plus de trois mois", local.texte, local.source, local.lien, local.verifieLe) });
+    if (local) alertes.push({ texte: local.texte, preuve: preuveSource("Séjour sur place", local.texte, local.source, local.lien, local.verifieLe) });
     if (veutVie && vieOuvert) autres.push("Un VIE est aussi possible si tu décroches une mission auprès d’une entreprise.");
     return { badge: "ouverte", nom: ue.nom, type: "ue", phrase: "Tu peux y vivre et y travailler sans visa.", fonds: null, manque: null, alertes, preuve: preuvePorte(ue), autres, visa: null, mention: null };
   }
@@ -421,7 +435,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
     const quand = age !== null ? "à ton âge" : `jusqu’à ${pvt.ageMax} ans`;
     const PVT = "PVT (Programme Vacances-Travail)";
     let badge: Badge = "ouverte";
-    let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an.` : `${PVT} ouvert ${quand}, sans quota.`;
+    let phrase = pvt.quota ? `${PVT} ouvert ${quand} : ${pvt.quota.toLocaleString("fr-FR")} places par an (quota fixé chaque année entre les deux pays).` : `${PVT} ouvert ${quand}, sans quota.`;
     if (pvt.invitation) {
       badge = "difficile";
       phrase = `${PVT} ouvert ${quand}, mais il faut recevoir une invitation : rien n’est garanti.`;
@@ -444,25 +458,31 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
       alertes.push({ texte: `Ce PVT demande ${pvt.fonds.texte}.`, preuve: preuvePorte(pvt) });
     }
     if ((duree !== null && duree > 12) || profil.objectif === "carriere") {
-      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
+      alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
+    if (pvt.changement) alertes.push({ texte: pvt.changement.texte, preuve: preuveNote("La procédure change", pvt.changement) });
+    if (visa?.securite) alertes.push({ texte: visa.securite.texte, preuve: preuveNote("Sécurité", visa.securite) });
     if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
     // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
     const sa = pvt.saison;
-    const mention = sa ? { texte: sa.texte, preuve: preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
+    const mention = sa ? { texte: sa.texte, preuve: sa.statut === "a-verifier" ? preuveNote("Saison du PVT", sa) : preuveSource("Saison du PVT", `Phrase officielle : « ${sa.citation} » (page mise à jour le ${dateFr(sa.datePage)}).`, sa.source, sa.lien, sa.verifieLe) } : null;
+    if (jeunes.length) autres.push(`Autres visas pour les jeunes : ${jeunes.map((v) => v.nom).join(", ")}. Le détail est sur la fiche du pays.`);
     return { badge, nom: pvt.nom, type: "pvt", phrase, fonds, manque, manquePossible, alertes, preuve: preuvePorte(pvt), autres, visa: visa?.detail ?? null, mention };
   }
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
-  let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
+  let phrase = vieOuvert && vie.presence?.[p.id] ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
   const d = base.detail;
   if (d) phrase += PHRASE_LIE[d.lieEmployeur];
   if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
   // Avec le détail du visa, les conditions sont dans la carte du visa ; seule l'exigence de diplôme ou d'expérience est une alerte.
   if (d) alertes.push(...alerteExperience(d));
   else for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
-  if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n’est pas encore vérifiée.");
+  if (base.jeunes) alertes.push({ texte: base.jeunes.texte, preuve: preuveNote("Visa jeunes", base.jeunes) });
+  if (base.securite) alertes.push({ texte: base.securite.texte, preuve: preuveNote("Sécurité", base.securite) });
+  if (jeunes.length) autres.push(`Autres visas pour les jeunes : ${jeunes.map((v) => v.nom).join(", ")}. Le détail est sur la fiche du pays.`);
+  if (vieOuvert) autres.push(vie.presence?.[p.id] ? "VIE : ce pays fait partie des destinations de Business France ; il faut décrocher une mission." : "VIE : pas dans les destinations de Business France.");
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null, mention: null };
 }
 
@@ -495,10 +515,10 @@ export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Fai
     const ue = liste.find((x) => x.type === "ue")!;
     f.remplies.unshift("Ta nationalité française suffit pour y travailler sans visa.");
     const local = europe.pays[p.id];
-    if (local) f.aRemplir.push("Au-delà de trois mois : un permis de séjour à demander au canton, avant d’arriver.");
+    if (local) f.aRemplir.push(`${local.court ?? local.texte}.`);
     f.aVerifier.push("Inscription auprès des autorités locales : elle peut être demandée dans les 3 mois après l’arrivée.");
     f.etape = local
-      ? { texte: "Lire les démarches sur le site officiel", url: local.lien, nom: "Suisse : entrée et séjour (France Diplomatie)" }
+      ? { texte: "Lire les démarches sur le site officiel", url: local.lien, nom: local.etape ?? sources[local.source]?.nom ?? "Site officiel" }
       : { texte: "Lire les démarches sur le site officiel", url: ue.lien ?? europe.inscription.lien, nom: "Travailler dans un autre pays d’Europe" };
     return f;
   }
@@ -511,7 +531,9 @@ export function faisabilite(p: Pays, profil: Profil, budget: Budget | null): Fai
     if (fonds !== null && budget !== null && budget.min >= fonds) f.remplies.push(`Ton budget couvre les ressources demandées (${euros(fonds)}).`);
     else if (porte.manque !== null) f.aRemplir.push(`Il te manquerait ${budget?.min === budget?.max ? "environ" : "au moins"} ${euros(porte.manque)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
     else if (porte.manquePossible) f.aVerifier.push(`Selon ta somme exacte, il pourrait te manquer jusqu’à ${euros(porte.manquePossible)} (ressources demandées\u00a0: ${pvt.fonds?.texte}).`);
+    else if (pvt.fonds && pvt.fondsAVerifier) f.aVerifier.push(`Ressources demandées\u00a0: ${pvt.fonds.texte}.`);
     else if (pvt.fonds) f.aRemplir.push(`Prévoir les ressources demandées\u00a0: ${pvt.fonds.texte}.`);
+    if (pvt.changement) f.aVerifier.push(pvt.changement.texte);
     if (pvt.invitation) f.aRemplir.push("Recevoir une invitation : rien n’est garanti.");
     else if (pvt.quota !== null && pvt.quota !== undefined && pvt.quota <= 500) f.aRemplir.push(`Obtenir une des ${pvt.quota} places de l’année.`);
     if ((dureeMois(profil) ?? 0) > 12 || profil.objectif === "carriere") f.aRemplir.push("Prévoir un autre visa pour rester plus d’un an.");
@@ -554,7 +576,7 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
     const ue = liste.find((x) => x.type === "ue")!;
     return {
       nom: ue.nom, lien: ue.lien ? { url: ue.lien, nom: "Travailler dans un autre pays d’Europe" } : null,
-      points: ["Pas de visa ni de permis de travail", europe.pays[p.id] ? "Permis de séjour du canton au-delà de 3 mois" : "Inscription sur place possible"],
+      points: ["Pas de visa ni de permis de travail", europe.pays[p.id]?.court ?? "Inscription sur place possible"],
     };
   }
   const pvt = liste.find((x) => x.type === "pvt");
@@ -576,7 +598,14 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
 // La note dit si ton visa te laisserait changer d'employeur : 5 si aucun visa ne te lie à un employeur
 // (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
 // 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
-export const MESURES_CALCULEES = ["employeur-libre", "depaysement"];
+// Les mesures calculées : toujours disponibles pour tous les pays (leur note se calcule, elle n'est pas lue dans scores.json).
+export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe", "langue-travail", "region-carte", "langue-parlee"];
+// Les bonus : un pays hors de ta carte ou qui ne parle pas tes langues n'a pas de note, et n'en est pas pénalisé.
+// Ils ne comptent ni dans la couverture (règle des 60 %) ni dans le badge « données disponibles ».
+export const MESURES_BONUS = ["region-carte", "langue-parlee"];
+export const POIDS_CARTE = quiz.poidsRang[4] ?? 1.1;
+export const POIDS_LANGUE_PARLEE = 1;
+export const zoneCarte = (paysId: string) => (trouverElement("carte") as CarteMonde | undefined)?.zones.find((z) => z.pays.includes(paysId))?.id ?? null;
 const cacheLibre = new Map<string, number>();
 export function noteEmployeurLibre(paysId: string, profil: Profil): number | null {
   const p = pays.find((x) => x.id === paysId);
@@ -601,6 +630,21 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
   if (mesureId === "depaysement") {
     const vol = preuveMesure(paysId, "vol"), dec = notes[paysId]?.decalage;
     return { ...vol, titre: "Dépaysement", texte: `${vol.texte}${dec?.texte ? ` ${dec.texte}` : ""} Le dépaysement est l’inverse de cette proximité.` };
+  }
+  // Les bonus et « En Europe » viennent de la liste des pays et de tes réponses ; le travail en anglais, de la note d'anglais.
+  if (mesureId === "region-carte" || mesureId === "en-europe") {
+    const m = mesures[mesureId], p = pays.find((x) => x.id === paysId);
+    const z = (trouverElement("carte") as CarteMonde | undefined)?.zones.find((x) => x.id === zoneCarte(paysId));
+    const texte = mesureId === "en-europe" ? (p?.zone === "europe" ? "Ce pays est en Europe." : "Ce pays est hors d’Europe.") : `Ce pays est dans la région « ${z?.label ?? ""} », que tu as cochée sur la carte du début.`;
+    return { ...preuveSource(m?.nom ?? mesureId, texte, m?.critere.sources[0] ?? null, null, null), type: "donnee-ouverte" };
+  }
+  if (mesureId === "langue-parlee") {
+    const a = preuveMesure(paysId, "langue");
+    return { ...a, titre: mesures[mesureId]?.nom ?? mesureId, texte: `Tu as dit parler une langue officielle ou très parlée dans ce pays. ${a.texte}`.trim() };
+  }
+  if (mesureId === "langue-travail") {
+    if (avis[paysId]?.francaisAuTravail) return { ...preuveMesure(paysId, "langue"), titre: mesures[mesureId]?.nom ?? mesureId };
+    return { ...preuveMesure(paysId, "anglais"), titre: mesures[mesureId]?.nom ?? mesureId };
   }
   if (mesureId !== "employeur-libre") return preuveMesure(paysId, mesureId);
   const p = pays.find((x) => x.id === paysId)!;
@@ -679,30 +723,36 @@ export type Ligne = {
   fiabilite: Fiabilite;
 };
 
-// ---------- Fiabilité des données ----------
-// Part de tes critères qui ont, pour ce pays, une donnée vérifiée par une source Officiel, Donnée ouverte
-// ou Témoignages. « Notre avis » (un jugement de la rédaction) et « À vérifier » ne comptent pas.
+// ---------- Données disponibles ----------
+// Une seule règle, partout (badge, règle des 60 %, fiche pays) : une mesure compte si elle a une valeur,
+// quel que soit son niveau de preuve (Officiel, Donnée ouverte, Témoignages ou Notre avis). « À vérifier » ne compte jamais.
+// Le détail montre la part de chaque niveau de preuve.
 export type NiveauFiabilite = "complete" | "partielle" | "faible";
-export type Fiabilite = { verifies: number; total: number; niveau: NiveauFiabilite };
-export const TYPES_VERIFIES = ["officiel", "donnee-ouverte", "temoignages"];
+export type NiveauPreuve = "officiel" | "donnee-ouverte" | "temoignages" | "notre-avis";
+export type Fiabilite = { disponibles: number; total: number; niveau: NiveauFiabilite; parNiveau: Record<NiveauPreuve, number> };
+export const NIVEAUX_PREUVE: NiveauPreuve[] = ["officiel", "donnee-ouverte", "temoignages", "notre-avis"];
 export const LIBELLE_FIABILITE: Record<NiveauFiabilite, string> = {
-  complete: "Données complètes",
-  partielle: "Données partielles",
-  faible: "Peu de données vérifiées",
+  complete: "Données disponibles : complètes",
+  partielle: "Données disponibles : partielles",
+  faible: "Peu de données disponibles",
 };
+// Le niveau de preuve d'une mesure qui a une valeur (une mesure calculée prend celui de son critère).
+export function niveauPreuve(paysId: string, m: string, profil: Profil): NiveauPreuve {
+  const t = preuveDe(paysId, m, profil).type;
+  if (t !== "a-verifier") return t;
+  return mesures[m]?.critere.type ?? "notre-avis";
+}
 export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil): Fiabilite {
-  const verifies = criteres.filter((m) => {
-    if (MESURES_CALCULEES.includes(m)) return TYPES_VERIFIES.includes(preuveDe(paysId, m, profil).type);
-    const n = notes[paysId]?.[m];
-    if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
-    // Un barème relayé (indemnité VIE), pas lu sur le site officiel, compte dans le score mais pas comme une donnée vérifiée.
-    if (n.relaye) return false;
-    // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
-    if ((m === "langue" || m === "apprendre-langue") && parleLangueDe(paysId, profil)) return true;
-    return TYPES_VERIFIES.includes(sources[n.source]?.type);
-  }).length;
-  const part = criteres.length ? verifies / criteres.length : 1;
-  return { verifies, total: criteres.length, niveau: part >= 0.9 ? "complete" : part >= 0.6 ? "partielle" : "faible" };
+  const parNiveau: Record<NiveauPreuve, number> = { officiel: 0, "donnee-ouverte": 0, temoignages: 0, "notre-avis": 0 };
+  const liste = criteres.filter((m) => !MESURES_BONUS.includes(m));
+  let disponibles = 0;
+  for (const m of liste) {
+    if (noteEffective(paysId, m, profil) === null) continue;
+    disponibles++;
+    parNiveau[niveauPreuve(paysId, m, profil)]++;
+  }
+  const part = liste.length ? disponibles / liste.length : 1;
+  return { disponibles, total: liste.length, niveau: part >= 0.9 ? "complete" : part >= COUVERTURE_MIN ? "partielle" : "faible", parNiveau };
 }
 
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
@@ -726,7 +776,7 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
   const ecarts = raisonsEcart(etat);
   const budget = budgetDe(etat, reglages);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
-  const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))];
+  const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))].filter((m) => !MESURES_BONUS.includes(m));
   const lignes = pays.map((p) => {
     const remonte = etat.remontes.includes(p.id);
     const details: Detail[] = [];
@@ -737,6 +787,8 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
       if (!mesureDisponible(e.mesure)) continue;
       if (remonte && PENALITES.includes(e.mesure)) continue;
       const note = noteEffective(p.id, e.mesure, etat.profil);
+      // Un bonus qui ne s'applique pas à ce pays : rien (ni malus, ni donnée manquante).
+      if (note === null && MESURES_BONUS.includes(e.mesure)) continue;
       const priorite = estPriorite(e);
       // Priorité : la mesure compte, notée ou neutre. Sinon : seules les mesures notées comptent.
       if (note === null) {

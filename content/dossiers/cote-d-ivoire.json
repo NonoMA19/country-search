@@ -1,0 +1,43 @@
+{
+  "pays": "cote-d-ivoire",
+  "verifieLe": "2026-11-17",
+  "liens": [
+    {
+      "id": "visa",
+      "titre": "Entrée et séjour : informations générales",
+      "nom": "Entrée et séjour (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/conseils-aux-voyageurs-entree-sejour",
+      "statut": "verifie"
+    },
+    {
+      "id": "conseils",
+      "titre": "Conseils aux voyageurs",
+      "nom": "Conseils aux voyageurs (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/dernieres-minutes-et-alertes",
+      "statut": "verifie"
+    },
+    {
+      "id": "consulat",
+      "titre": "Ambassade ou consulat de France",
+      "nom": "Contacts utiles : ambassade et consulats (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/conseils-aux-voyageurs-contacts-utiles",
+      "statut": "verifie"
+    },
+    {
+      "id": "registre",
+      "titre": "Inscription au registre des Français établis hors de France",
+      "nom": "S’inscrire au registre (France Diplomatie)",
+      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/formalites-avant-le-depart/sinscrire-au-registre-des-francais-etablis-hors-de-france",
+      "statut": "verifie"
+    }
+  ],
+  "associations": [
+    {
+      "id": "cci",
+      "titre": "Chambre de commerce française",
+      "nom": "CCI France Côte d’Ivoire",
+      "url": "https://www.ccifrance-international.org/notre-reseau/les-cci-fi/afrique/exporter-s-implanter-cote-ivoire.html",
+      "statut": "verifie"
+    }
+  ]
+}

@@ -1002,5 +1002,92 @@
    "ville-moyenne": 3,
    "nature": 4
   }
+ },
+ "autriche": {
+  "langues": [
+   "de"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": false,
+  "langue": {
+   "note": 2,
+   "texte": "La vie quotidienne se passe en allemand, une langue à alphabet latin mais éloignée du français."
+  }
+ },
+ "perou": {
+  "langues": [
+   "es",
+   "qu"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": false,
+  "langue": {
+   "note": 4,
+   "texte": "On parle espagnol, une langue latine proche du français. Le quechua et l’aymara sont aussi officiels là où ils sont majoritaires."
+  }
+ },
+ "uruguay": {
+  "langues": [
+   "es"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": false,
+  "langue": {
+   "note": 4,
+   "texte": "On parle espagnol, une langue latine proche du français."
+  }
+ },
+ "thailande": {
+  "langues": [
+   "th"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": true,
+  "langue": {
+   "note": 1,
+   "texte": "La vie quotidienne se passe en thaï, une langue qui s’écrit avec un autre alphabet."
+  }
+ },
+ "vietnam": {
+  "langues": [
+   "vi"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": false,
+  "langue": {
+   "note": 2,
+   "texte": "La vie quotidienne se passe en vietnamien, écrit avec l’alphabet latin et beaucoup d’accents, mais très éloigné du français."
+  }
+ },
+ "inde": {
+  "langues": [
+   "hi",
+   "en"
+  ],
+  "francaisAuTravail": false,
+  "autreEcriture": true
+ },
+ "cote-d-ivoire": {
+  "langues": [
+   "fr"
+  ],
+  "francaisAuTravail": true,
+  "autreEcriture": false,
+  "langue": {
+   "note": 5,
+   "texte": "Le français est la langue officielle : on vit et on travaille en français."
+  }
+ },
+ "senegal": {
+  "langues": [
+   "fr",
+   "wo"
+  ],
+  "francaisAuTravail": true,
+  "autreEcriture": false,
+  "langue": {
+   "note": 5,
+   "texte": "Le français est la langue officielle, au travail comme dans les administrations ; dans la rue, on parle beaucoup wolof."
+  }
  }
 }

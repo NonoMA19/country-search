@@ -7,23 +7,40 @@ import { CircleAlert, CircleCheck, CircleHelp, ShieldCheck } from "lucide-react"
 import Definition from "@/components/Definition";
 import LienOfficiel from "@/components/LienOfficiel";
 import { useSession } from "@/lib/memoire";
-import { LIBELLE_FIABILITE, budgetDe, calculer, faisabilite, type Faisabilite, type Fiabilite, type VisaSimple } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, NIVEAUX_PREUVE, budgetDe, calculer, faisabilite, type Faisabilite, type Fiabilite, type NiveauPreuve, type VisaSimple } from "@/lib/moteur";
 import { trouverPays, type Pays } from "@/lib/pays";
 
-// Le badge de fiabilité : un toucher explique le calcul en une phrase.
+const MOT_NIVEAU: Record<NiveauPreuve, [string, string]> = {
+  officiel: ["officielle", "officielles"],
+  "donnee-ouverte": ["donnée ouverte", "données ouvertes"],
+  temoignages: ["témoignages recoupés", "témoignages recoupés"],
+  "notre-avis": ["« Notre avis »", "« Notre avis »"],
+};
+
+// Le badge « Données disponibles » : un toucher montre la règle et la part de chaque niveau de preuve.
 export function BadgeFiabilite({ f }: { f: Fiabilite }) {
   const [ouvert, setOuvert] = useState(false);
   const id = useId();
   const style = f.niveau === "complete" ? "bg-bleu-doux text-encre" : f.niveau === "partielle" ? "border border-bord bg-carte text-encre" : "border border-dashed border-gris text-gris";
+  const niveaux = NIVEAUX_PREUVE.filter((n) => f.parNiveau[n] > 0);
   return (
     <div className="mt-3">
       <button type="button" aria-expanded={ouvert} aria-controls={id} onClick={() => setOuvert(!ouvert)} className={`relative inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 text-sm font-medium after:absolute after:-inset-x-1 after:-inset-y-1.5 after:content-[''] ${style}`}>
-        <ShieldCheck aria-hidden="true" className="h-4 w-4" /> {LIBELLE_FIABILITE[f.niveau]}
-        <span className="sr-only"> : voir comment on le calcule</span>
+        <ShieldCheck aria-hidden="true" className="h-4 w-4" /> {LIBELLE_FIABILITE[f.niveau]}{f.total > 0 && <span className="tabular-nums">{"\u00a0"}({f.disponibles}{"\u00a0"}sur{"\u00a0"}{f.total})</span>}
+        <span className="sr-only"> : voir le détail</span>
       </button>
-      <p id={id} hidden={!ouvert} className="mt-2 rounded-xl bg-creux px-3 py-2 text-sm">
-        {f.verifies} de tes {f.total} critères ont, pour ce pays, une donnée <Definition cle="officiel">officielle</Definition>, une <Definition cle="donnee-ouverte">donnée ouverte</Definition> ou des <Definition cle="temoignages">témoignages</Definition> recoupés. « Notre avis » et « À vérifier » ne comptent pas. 90{" "}% ou plus : données complètes ; de 60 à 89{" "}% : partielles.
-      </p>
+      <div id={id} hidden={!ouvert} className="mt-2 rounded-xl bg-creux px-3 py-2 text-sm">
+        <p>{f.disponibles} de tes {f.total} critères ont une valeur pour ce pays. « À vérifier » ne compte jamais. 90{"\u00a0"}% ou plus : complètes ; de 60 à 89{"\u00a0"}% : partielles ; sous 60{"\u00a0"}%, le pays ne peut pas entrer dans ton top 3.</p>
+        {niveaux.length > 0 && (
+          <ul className="mt-1.5 space-y-0.5">
+            {niveaux.map((n) => {
+              const k = f.parNiveau[n];
+              const mot = MOT_NIVEAU[n][k > 1 ? 1 : 0];
+              return <li key={n}><span className="font-semibold tabular-nums">{k}</span> <Definition cle={n}>{mot}</Definition></li>;
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

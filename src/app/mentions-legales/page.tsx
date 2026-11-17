@@ -4,8 +4,8 @@ import PiedDePage from "@/components/PiedDePage";
 import { sources } from "@/lib/donnees";
 
 export const metadata: Metadata = {
-  title: "Mentions légales | Country Search",
-  description: "Qui édite Country Search, ce que valent ses informations, ses sources et ses licences, et pourquoi aucune donnée personnelle n’est collectée.",
+  title: "Mentions légales | Orizo",
+  description: "Qui édite Orizo, ce que valent ses informations, ses sources et ses licences, et pourquoi aucune donnée personnelle n’est collectée.",
 };
 
 export default function MentionsLegales() {
@@ -17,7 +17,7 @@ export default function MentionsLegales() {
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Ce n’est pas un conseil juridique</h2>
         <p className="mt-3">
-          Country Search n’est pas un site officiel. Les informations sur les visas, les impôts et la protection sociale
+          Orizo n’est pas un site officiel. Les informations sur les visas, les impôts et la protection sociale
           sont données à titre indicatif et ne constituent pas un conseil juridique. Les règles changent souvent :
           vérifie toujours sur les sites officiels avant de décider ou de faire une démarche.
         </p>

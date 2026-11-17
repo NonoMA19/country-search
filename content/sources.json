@@ -118,7 +118,7 @@
     "type": "officiel"
   },
   "notre-avis": {
-    "nom": "Country Search, avis de la rédaction",
+    "nom": "Orizo, avis de la rédaction",
     "url": "/methode",
     "licence": "CC BY-SA 4.0",
     "type": "notre-avis"
@@ -243,10 +243,82 @@
     "licence": "Licence Ouverte 2.0",
     "type": "officiel"
   },
-  "bareme-vie-relaye": {
-    "nom": "Barème des indemnités VIE au 1er janvier 2026 (relayé par juristique.org, à vérifier sur mon-vie-via.businessfrance.fr)",
-    "url": "https://mon-vie-via.businessfrance.fr/",
-    "licence": "Montants officiels, cités sans copie du site",
+  "jorf-vie": {
+    "nom": "Journal officiel (Legifrance), barème de l’indemnité supplémentaire VIE et VIA : arrêtés du 18 et du 23 décembre 2025, ajustés par les arrêtés du 9 mars, du 10 juin et du 15 septembre 2026",
+    "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "licence": "Textes officiels, réutilisation libre (Licence Ouverte 2.0)",
+    "type": "officiel"
+  },
+  "businessfrance-destinations": {
+    "nom": "Business France, Mon Volontariat International : les destinations",
+    "url": "https://mon-vie-via.businessfrance.fr/pays",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "gov-uk-gae": {
+    "nom": "GOV.UK, Government Authorised Exchange visa (Temporary Work)",
+    "url": "https://www.gov.uk/government-authorised-exchange",
+    "licence": "Open Government Licence v3.0",
+    "type": "officiel"
+  },
+  "gov-uk-yms": {
+    "nom": "GOV.UK, Youth Mobility Scheme visa : eligibility",
+    "url": "https://www.gov.uk/youth-mobility/eligibility",
+    "licence": "Open Government Licence v3.0",
+    "type": "officiel"
+  },
+  "j1-state": {
+    "nom": "U.S. Department of State, J-1 Visa Exchange Visitor Program (Intern et Trainee)",
+    "url": "https://j1visa.state.gov/programs/intern",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "uscis-h1b": {
+    "nom": "U.S. Citizenship and Immigration Services, H-1B Specialty Occupations",
+    "url": "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "canada-eic-jp": {
+    "nom": "Canada.ca, Expérience internationale Canada : Jeunes professionnels et Stage coop international",
+    "url": "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/travailler-canada/eic.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "cn-ambafrance": {
+    "nom": "Ambassade de France en Chine, programme « 1000 stagiaires »",
+    "url": "https://cn.ambafrance.org/",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "uae-gov": {
+    "nom": "u.ae, portail officiel des Émirats arabes unis : visas de résidence",
+    "url": "https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "uae-icp": {
+    "nom": "ICP, autorité fédérale de l’identité, de la citoyenneté, des douanes et de la sécurité des ports (Émirats)",
+    "url": "https://icp.gov.ae/en/",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "ch-sem": {
+    "nom": "Secrétariat d’État aux migrations (Suisse), ressortissants de l’UE et de l’AELE",
+    "url": "https://www.sem.admin.ch/sem/fr/home/themen/aufenthalt/eu_efta.html",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "no-udi": {
+    "nom": "UDI (Direction norvégienne de l’immigration), ressortissants de l’UE et de l’EEE",
+    "url": "https://www.udi.no/en/want-to-apply/",
+    "licence": "Lien seulement, aucun contenu copié",
+    "type": "officiel"
+  },
+  "jp-ambassade": {
+    "nom": "Ambassade du Japon en France (visas vacances-travail)",
+    "url": "https://www.fr.emb-japan.go.jp/",
+    "licence": "Lien seulement, aucun contenu copié",
     "type": "officiel"
   }
 }

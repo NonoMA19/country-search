@@ -65,7 +65,6 @@ export type Note = {
   confiance?: Confiance;
   ancien?: { valeur: number; annee: string }; // valeur écartée (année trop éloignée des autres pays), hors calcul
   resteSur100?: number; // salaire : ce qui reste sur 100 € bruts après impôt sur le revenu et cotisations (OCDE), hors score
-  relaye?: boolean; // donnée relayée par un site non officiel (barème VIE) : comptée, mais pas comme « vérifiée »
   ville?: string | null; // indemnité VIE : la ville retenue pour le score
   autres?: { ville: string; montant: number | null }[]; // indemnité VIE : les autres villes du barème
 };
@@ -180,10 +179,12 @@ export type DetailVisa = {
   verifieLe: string;
 };
 // Le statut du moment d'une porte (exemple : saison du PVT fermée), avec sa source.
-export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string };
+export type StatutPorte = { texte: string; citation: string; source: string; lien: string; datePage: string; verifieLe: string; statut?: "verifie" | "a-verifier" };
+// Une note sourcée attachée à une porte : changement de procédure, visa jeunes fermé, contexte de sécurité.
+export type NotePorte = { texte: string; source: string; lien: string; verifieLe: string; statut?: "verifie" | "a-verifier" };
 
 export type PorteBrute = {
-  type: "ue" | "pvt" | "vie" | "visa-travail";
+  type: "ue" | "pvt" | "vie" | "visa-travail" | "visas-jeunes";
   nom: string;
   texte: string;
   ageMax?: number;
@@ -198,6 +199,12 @@ export type PorteBrute = {
   detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
   detail?: DetailVisa;
   saison?: StatutPorte;
+  fondsAVerifier?: boolean; // les ressources demandées ne sont pas claires (pages officielles contradictoires)
+  changement?: NotePorte; // la procédure change bientôt
+  jeunes?: NotePorte; // visa jeunes : ouvert ou non aux Français
+  securite?: NotePorte; // contexte de sécurité (France Diplomatie)
+  visas?: DetailVisa[]; // « visas-jeunes » : stage, formation, premier emploi
+  datePage?: string;
   source: string | null;
   lien: string | null;
   verifieLe: string | null;
@@ -252,7 +259,7 @@ const scores = scoresData as unknown as {
 };
 export const dateDonnees = scores.genereLe;
 export const notes = scores.pays;
-// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les 30 pays.
+// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les pays classés.
 export const notesFrance: Record<string, Note> = scores.reference?.france?.notes ?? {};
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];
@@ -261,9 +268,17 @@ export const vie = portesToutes._vie as unknown as PorteBrute & {
   ageMaxCandidature: number; dureeMoisMin: number; dureeMoisMax: number; presence?: Record<string, PresenceVie>;
   resume: string[]; offres: { url: string; nom: string; source: string; verifieLe: string };
 };
+// L'indemnité VIE d'un pays en une phrase (barème officiel, voir scripts/vie.mjs), ou null.
+export const RAPPEL_VIE = "Barème du 1er octobre 2026 : révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.";
+export function phraseIndemniteVie(paysId: string): string | null {
+  const n = notes[paysId]?.["indemnite-vie"];
+  if (!n || n.statut !== "verifie" || typeof n.valeur !== "number") return null;
+  const euro = (x: number) => `${Math.round(x).toLocaleString("fr-FR")}\u00a0€`;
+  return `Indemnité VIE${n.ville ? ` (${n.ville})` : ""}\u00a0: ${euro(n.valeur)} par mois${n.autres?.length ? ` ; ${n.autres.map((a) => `${a.ville}\u00a0: ${a.montant ? euro(a.montant) : "à vérifier"}`).join("\u00a0; ")}` : ""}.`;
+}
 export const avis = avisData as unknown as Record<string, Avis>;
 // « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
-export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };
+export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string; court?: string; etape?: string };
 export const europe = portesToutes._europe as unknown as { texte: string; court: string; inscription: NoteSourcee; pays: Record<string, NoteSourcee> };
 export const doubleNationalite = doubleData as unknown as { cas: CasDouble[]; autre: string; autresPays: string; avertissement: string };
 
@@ -316,8 +331,7 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   }
   const s = sources[n.source];
   return {
-    // Une donnée relayée (barème VIE) n'est pas lue sur le site officiel : pastille « À vérifier », source et lien gardés.
-    type: n.relaye ? "a-verifier" : s.type,
+    type: s.type,
     titre: m.nom,
     // Un avis sans phrase rédigée : on affiche l'explication du niveau, jamais une fenêtre vide.
     texte: n.texte || (n.note !== null ? (m.explications?.[n.note - 1] ?? m.mots[n.note - 1]) : ""),
@@ -331,6 +345,12 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     avertissement: m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
+}
+
+// La preuve d'une note de porte : « À vérifier » garde le lien de la page lue.
+export function preuveNote(titre: string, n: NotePorte): Preuve {
+  const p = preuveSource(titre, n.texte, n.source, n.lien, n.verifieLe);
+  return n.statut === "a-verifier" ? { ...p, type: "a-verifier" } : p;
 }
 
 export function preuveSource(titre: string, texte: string, sourceId: string | null, lien: string | null, verifieLe: string | null): Preuve {

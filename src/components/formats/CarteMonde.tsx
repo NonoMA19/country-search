@@ -9,7 +9,7 @@ import { Actions, BOUTON_PLEIN, EnTete, FOCUS, type PropsFormat } from "./commun
 
 const DESSIN = carte as { largeur: number; hauteur: number; zones: Record<string, string> };
 
-// Une carte du monde simplifiée (Natural Earth, domaine public), découpée en 7 zones, à choix multiple.
+// Une carte du monde simplifiée (Natural Earth, domaine public), découpée en 9 zones, à choix multiple.
 // La carte se touche ; la liste de boutons dessous fait la même chose (clavier, lecteur d'écran, petites zones).
 export default function CarteMonde({ element: el, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TCarte>) {
   const [zones, setZones] = useState<string[]>(Array.isArray(valeur) ? valeur.filter((z) => z !== AUCUNE_ZONE) : []);

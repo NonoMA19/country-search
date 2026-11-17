@@ -46,7 +46,7 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
   };
 
   ecrire(`Mon dossier : ${pays.nom}`, { taille: 22, gras: true, apres: 2 });
-  ecrire(`Country Search - dossier créé le ${dateFr(new Date().toISOString().slice(0, 10))}`, { taille: 10, gris: true, apres: 10 });
+  ecrire(`Orizo - dossier créé le ${dateFr(new Date().toISOString().slice(0, 10))}`, { taille: 10, gris: true, apres: 10 });
 
   if (portrait?.length) {
     titre("Ton portrait");

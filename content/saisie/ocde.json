@@ -44,8 +44,26 @@
       "hong-kong",
       "singapour",
       "emirats-arabes-unis",
-      "maroc"
-    ]
+      "maroc",
+      "autriche",
+      "thailande",
+      "vietnam",
+      "inde",
+      "cote-d-ivoire",
+      "senegal",
+      "perou",
+      "uruguay"
+    ],
+    "textesAVerifier": {
+      "autriche": "Salaire brut moyen : l’OCDE couvre l’Autriche, mais son chiffre 2024 n’est pas encore saisi (le site de l’OCDE n’est pas lisible depuis la session). À saisir dans content/saisie/ocde.json.",
+      "thailande": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "vietnam": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "inde": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "cote-d-ivoire": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "senegal": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "perou": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif.",
+      "uruguay": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    }
   },
   "impots": {
     "source": "ocde-impots",

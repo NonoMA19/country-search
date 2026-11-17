@@ -190,14 +190,14 @@
         "id": "indemnite-vie",
         "nom": "Indemnité VIE mensuelle (ville la plus probable pour un VIE)",
         "sens": "haut",
-        "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème au 1er janvier 2026 (indemnité commune de 772,87 € comprise), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, Dubaï ; sinon le montant du pays). Seuils : quintiles des 30 pays, arrondis à 50 € : 2 600, 2 900, 3 200 et 3 450 € par mois.",
-        "avertissement": "Barème relayé par un site d’information juridique (juristique.org), pas lu sur le site officiel depuis la session : à vérifier sur mon-vie-via.businessfrance.fr. L’indemnité est révisée chaque trimestre et dépend de la ville.",
+        "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème officiel en vigueur depuis le 1er octobre 2026 (Journal officiel : part fixe de 772,87 € et indemnité supplémentaire), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, São Paulo, Bombay, Dubaï ; sinon le montant du pays). Les autres villes sont dans le détail. Seuils : quintiles des 30 pays de la version 1, arrondis à 50 € : 2 650, 2 900, 3 200 et 3 550 € par mois.",
+        "avertissement": "Révisé chaque trimestre (scripts/vie.mjs). L’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge, et elle dépend de la ville.",
         "unite": "€ par mois",
         "bornes": [
-          2600,
+          2650,
           2900,
           3200,
-          3450
+          3550
         ],
         "notes": [
           1,
@@ -207,11 +207,11 @@
           5
         ],
         "echelle": [
-          "moins de 2 600 €",
-          "de 2 600 à 2 900 €",
+          "moins de 2 650 €",
+          "de 2 650 à 2 900 €",
           "de 2 900 à 3 200 €",
-          "de 3 200 à 3 450 €",
-          "3 450 € ou plus"
+          "de 3 200 à 3 550 €",
+          "3 550 € ou plus"
         ],
         "mots": [
           "très basse",
@@ -1012,7 +1012,7 @@
     "id": "langue-quotidien",
     "famille": "vivre",
     "nom": "Langue du quotidien",
-    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays.",
+    "definition": "La langue de tous les jours est-elle le français, une langue proche, ou une langue très éloignée ? Notre avis, justifié pays par pays. La mesure « Une langue que tu parles » est un bonus modéré (importance 1) aux pays où une langue que tu as cochée au chapitre 1 est officielle ou très parlée. Un pays qui ne la parle pas ne perd rien.",
     "type": "notre-avis",
     "sources": [
       "notre-avis"
@@ -1091,6 +1091,44 @@
           "Rien à apprendre"
         ],
         "sujet": "la langue à apprendre"
+      },
+      {
+        "id": "langue-parlee",
+        "nom": "Une langue que tu parles y est officielle ou très parlée",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : une langue que tu as cochée au chapitre 1 est officielle ou très parlée dans le pays (liste des langues de « Notre avis »). Sinon, pas de note : un bonus, jamais un malus.",
+        "echelle": [
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "on y parle une de tes langues"
+        ],
+        "mots": [
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "une de tes langues"
+        ],
+        "fait": [
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On y parle une langue que tu parles déjà"
+        ],
+        "court": "Une langue que tu parles",
+        "theme": "la langue",
+        "sujet": "les langues que tu parles",
+        "etiquettes": [
+          "Pas tes langues",
+          "Pas tes langues",
+          "Pas tes langues",
+          "Pas tes langues",
+          "Tu parles la langue"
+        ]
       }
     ]
   },
@@ -1650,8 +1688,8 @@
     "numero": 20,
     "id": "zone",
     "famille": "vivre",
-    "nom": "En Europe ou plus loin",
-    "definition": "Le pays est-il en Europe ? Tiré de la liste des 30 pays. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité.",
+    "nom": "En Europe ou plus loin, et ta carte du début",
+    "definition": "Le pays est-il en Europe ? Tiré de la liste des pays du site. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
     "type": "donnee-ouverte",
     "sources": [
       "geonames"
@@ -1693,6 +1731,44 @@
           "Hors d’Europe",
           "En Europe",
           "En Europe"
+        ]
+      },
+      {
+        "id": "region-carte",
+        "nom": "Dans une région de ta carte du début",
+        "sens": "haut",
+        "interne": true,
+        "regle": "5 : le pays est dans une région que tu as cochée sur la carte du début. Sinon, pas de note : un bonus, jamais un malus.",
+        "echelle": [
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "dans une région de ta carte"
+        ],
+        "mots": [
+          "hors de ta carte",
+          "hors de ta carte",
+          "hors de ta carte",
+          "hors de ta carte",
+          "dans ta carte"
+        ],
+        "fait": [
+          "Il est hors des régions de ta carte",
+          "Il est hors des régions de ta carte",
+          "Il est hors des régions de ta carte",
+          "Il est hors des régions de ta carte",
+          "Il est dans une région que tu as cochée sur la carte"
+        ],
+        "court": "Ta carte du début",
+        "theme": "ton intuition",
+        "sujet": "ta carte du début",
+        "etiquettes": [
+          "Hors de ta carte",
+          "Hors de ta carte",
+          "Hors de ta carte",
+          "Hors de ta carte",
+          "Dans ta carte"
         ]
       }
     ]

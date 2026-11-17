@@ -1,5 +1,5 @@
 // « Ton intuition et tes réponses » : l'écran de fin, avant le portrait.
-// On compare les régions cochées sur la carte du début (sans effet sur le calcul) à ton n° 1,
+// On compare les régions cochées sur la carte du début (un petit bonus dans le calcul, voir moteur.ts) à ton n° 1,
 // et on dit les 2 ou 3 réponses qui ont le plus pesé. Aucun calcul nouveau : on relit les points du classement.
 import { quiz, trouverElement, type CarteMonde, type Valeur } from "./donnees";
 import { AUCUNE_ZONE, PASSER } from "./elements";
@@ -19,7 +19,8 @@ const carte = () => trouverElement("carte") as CarteMonde;
 // « Tu pensais à l'Europe », « au Moyen-Orient et à l'Afrique du Nord ».
 const A_LA_ZONE: Record<string, string> = {
   europe: "à l’Europe", "amerique-nord": "à l’Amérique du Nord", "amerique-latine": "à l’Amérique latine", "asie-est": "à l’Asie de l’Est",
-  "asie-sud-est": "à l’Asie du Sud-Est", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
+  "asie-sud-est": "à l’Asie du Sud-Est", "asie-sud": "à l’Asie du Sud", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
+  afrique: "à l’Afrique subsaharienne",
 };
 const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
@@ -32,6 +33,8 @@ export const zoneDuPays = (paysId: string) => carte().zones.find((z) => z.pays.i
 export function origineEnMots(origine: string, etat: Etat): string | null {
   const [type, reste = ""] = origine.split(":");
   const [id, sous] = reste.split("/");
+  if (origine === "carte") return "ta carte du début";
+  if (origine === "langues") return "les langues que tu parles";
   if (type === "envie") return `ton envie « ${quiz.envies.find((e) => e.id === id)?.label ?? id} »`;
   if (type === "objectif") return `ton projet (${quiz.objectifs[id]?.nom ?? id})`;
   if (type === "limite") {
