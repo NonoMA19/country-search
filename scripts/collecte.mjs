@@ -61,6 +61,8 @@ const json = (nom, url) => {
   try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch { return null; }
 };
 
+// « 2026-10-01 » → « 1er octobre 2026 ».
+const dateLongue = (iso) => { const [a, m, j] = iso.split("-").map(Number); return `${j === 1 ? "1er" : j} ${["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"][m - 1]} ${a}`; };
 const fr = (n, d = 1) => n.toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: d });
 function noter(idMesure, valeur) {
   const m = mesures[idMesure];
@@ -84,7 +86,7 @@ const pluriel = (n, mot) => `${mot}${Math.round(n * 10) / 10 >= 2 ? "s" : ""}`;
 const TEXTE = {
   emploi: (v, an) => `Parmi les 15-24 ans qui travaillent ou cherchent un emploi, ${fr(v)} % sont au chômage (${an}, estimation de l'Organisation internationale du travail).`,
   salaire: (v, an, p, reste, bit) => `Salaire brut moyen d'un salarié à temps plein, tous métiers, avant impôts et cotisations : ${fr(v, 0)} $ par an, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (OCDE, ${an}${bit ? " ; donnée du Bureau international du travail reprise par l'OCDE dans le même tableau" : ""}). ${reste === null || reste === undefined ? "La part qui reste après impôts n'est pas encore connue pour ce pays : à vérifier." : `Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ ${fr(reste, 0)} € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).`}`,
-  "indemnite-vie": (v, an, p, ville, autres) => `Indemnité VIE ${ville ? `à ${ville}` : `${p.en}`} : ${fr(v, 0)} € par mois, indemnité commune de 772,87 € comprise (barème au 1er janvier 2026, à vérifier sur le site officiel).${autres?.length ? ` Autres villes : ${autres.map((a) => `${a.ville}, ${a.montant ? `${fr(a.montant, 0)} €` : "à vérifier"}`).join(" ; ")}.` : ""}`,
+  "indemnite-vie": (v, an, p, ville, autres, bareme) => `Indemnité VIE ${p.en}${ville ? ` (${ville})` : ""} : ${fr(v, 0)} € par mois, soit ${fr(bareme.partFixe, 2)} € de part fixe et ${fr(v - bareme.partFixe, 0)} € d'indemnité supplémentaire (barème du ${dateLongue(bareme.dateBareme)}, ${bareme.arrete.charAt(0).toLowerCase()}${bareme.arrete.slice(1)}). Révisé chaque trimestre ; l'indemnité supplémentaire est réduite de 20 % si l'entreprise te loge.${autres?.length ? ` ${autres.map((a, i) => `${i ? a.ville : a.ville.charAt(0).toUpperCase() + a.ville.slice(1)} : ${a.montant ? `${fr(a.montant, 0)} €` : "à vérifier"}`).join(" ; ")}.` : ""}`,
   heures: (v, an) => `${fr(v)} heures réellement travaillées par semaine en moyenne (${an}).`,
   francais: (v, an, p, inscrits) => `${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020, soit ${fr(v, v < 10 ? 1 : 0)} pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
   prix: (v, an) => {
@@ -191,13 +193,16 @@ if (OCDE_SEULE) {
   process.exit(0);
 }
 
-// ---------- Mode --vie : indemnité VIE (barème au 1er janvier 2026, relayé, à vérifier sur le site officiel) ----------
+// ---------- Mode --vie : indemnité VIE (barème officiel, écrit par scripts/vie.mjs) ----------
 const VIE = lire("saisie/vie-indemnites.json");
 function noteVie(p) {
+  if (VIE.destinations.horsListe.includes(p.id)) {
+    return { statut: "verifie", note: null, texte: "VIE : pas dans les destinations de Business France.", source: VIE.destinations.source, lien: VIE.destinations.lien, verifieLe: VIE.destinations.verifieLe, annee: null };
+  }
   const x = VIE.pays[p.id];
   if (!x) return aVerifier("Indemnité VIE : pas encore dans le barème saisi.");
-  const n = verifie("indemnite-vie", x.montant, TEXTE["indemnite-vie"](x.montant, null, p, x.ville, x.autres), VIE.source, VIE.lienOfficiel, VIE.dateBareme.slice(0, 4));
-  return { ...n, verifieLe: VIE.verifieLe, relaye: true, ville: x.ville, autres: x.autres };
+  const n = verifie("indemnite-vie", x.montant, TEXTE["indemnite-vie"](x.montant, null, p, x.ville, x.autres, VIE), VIE.source, VIE.lien, VIE.dateBareme.slice(0, 4));
+  return { ...n, verifieLe: VIE.verifieLe, ville: x.ville, autres: x.autres };
 }
 if (VIE_SEULE) {
   const actuel = lire("scores.json");

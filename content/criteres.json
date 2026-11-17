@@ -190,14 +190,14 @@
         "id": "indemnite-vie",
         "nom": "Indemnité VIE mensuelle (ville la plus probable pour un VIE)",
         "sens": "haut",
-        "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème au 1er janvier 2026 (indemnité commune de 772,87 € comprise), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, Dubaï ; sinon le montant du pays). Seuils : quintiles des 30 pays, arrondis à 50 € : 2 600, 2 900, 3 200 et 3 450 € par mois.",
-        "avertissement": "Barème relayé par un site d’information juridique (juristique.org), pas lu sur le site officiel depuis la session : à vérifier sur mon-vie-via.businessfrance.fr. L’indemnité est révisée chaque trimestre et dépend de la ville.",
+        "regle": "Pour le projet « Stage ou VIE », cette mesure remplace le salaire dans le score. Montant mensuel du barème officiel en vigueur depuis le 1er octobre 2026 (Journal officiel : part fixe de 772,87 € et indemnité supplémentaire), pour la ville la plus probable d’un VIE (Londres, New York, Sydney, Tokyo, Berlin, Zurich, Vancouver, Shanghai, São Paulo, Bombay, Dubaï ; sinon le montant du pays). Les autres villes sont dans le détail. Seuils : quintiles des 30 pays de la version 1, arrondis à 50 € : 2 650, 2 900, 3 200 et 3 550 € par mois.",
+        "avertissement": "Révisé chaque trimestre (scripts/vie.mjs). L’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge, et elle dépend de la ville.",
         "unite": "€ par mois",
         "bornes": [
-          2600,
+          2650,
           2900,
           3200,
-          3450
+          3550
         ],
         "notes": [
           1,
@@ -207,11 +207,11 @@
           5
         ],
         "echelle": [
-          "moins de 2 600 €",
-          "de 2 600 à 2 900 €",
-          "de 2 900 à 3 200 €",
-          "de 3 200 à 3 450 €",
-          "3 450 € ou plus"
+          "moins de 2 650 €",
+          "de 2 650 à 2 900 €",
+          "de 2 900 à 3 200 €",
+          "de 3 200 à 3 550 €",
+          "3 550 € ou plus"
         ],
         "mots": [
           "très basse",

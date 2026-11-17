@@ -467,14 +467,14 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
 
   // Pays « visa de travail »
   const base = visa ?? ({ type: "visa-travail", nom: "Visa de travail", texte: "Conditions pas encore vérifiées.", source: null, lien: null, verifieLe: null, statut: "a-verifier" } as PorteBrute);
-  let phrase = vieOuvert ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
+  let phrase = vieOuvert && vie.presence?.[p.id] ? "Il faut un employeur sur place, ou une mission en VIE (volontariat international en entreprise)." : "Il faut un employeur qui te fait venir.";
   const d = base.detail;
   if (d) phrase += PHRASE_LIE[d.lieEmployeur];
   if (base.statut !== "verifie" || base.detailsAVerifier) phrase += " Les conditions détaillées (employeur, salaire, diplôme) restent à vérifier sur le site officiel du pays.";
   // Avec le détail du visa, les conditions sont dans la carte du visa ; seule l'exigence de diplôme ou d'expérience est une alerte.
   if (d) alertes.push(...alerteExperience(d));
   else for (const c of base.conditions ?? []) alertes.push({ texte: c, preuve: preuvePorte(base) });
-  if (vieOuvert) autres.push("VIE : la présence de missions dans ce pays n’est pas encore vérifiée.");
+  if (vieOuvert) autres.push(vie.presence?.[p.id] ? "VIE : ce pays fait partie des destinations de Business France ; il faut décrocher une mission." : "VIE : pas dans les destinations de Business France.");
   return { badge: "conditions", nom: vieOuvert ? "Visa de travail ou VIE" : base.nom, type: "visa-travail", phrase, fonds: null, manque: null, alertes, preuve: preuvePorte(base), autres, visa: d ?? null, mention: null };
 }
 

@@ -613,8 +613,14 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const vieEtat = construire({ profil: { objectif: "stage-vie" }, envies: ["salaire", "travail", "prix", "climat", "securite"] });
   verifier(effetsActifs(vieEtat).some((e) => e.mesure === "indemnite-vie") && !effetsActifs(vieEtat).some((e) => e.mesure === "salaire"), "VIE : le salaire moyen compte encore pour un VIE");
   verifier(!effetsActifs(construire({ profil: { objectif: "premier-poste" }, envies: ["salaire", "travail", "prix", "climat", "securite"] })).some((e) => e.mesure === "indemnite-vie"), "VIE : l'indemnité compte hors VIE");
-  verifier(notesPays["royaume-uni"]["indemnite-vie"].valeur === 3816.01 && notesPays["royaume-uni"]["indemnite-vie"].ville === "Londres" && notesPays["etats-unis"]["indemnite-vie"].ville === "New York", "VIE : ville la plus probable mal choisie");
+  verifier(notesPays["royaume-uni"]["indemnite-vie"].valeur === 3815.77 && notesPays["royaume-uni"]["indemnite-vie"].ville === "Londres" && notesPays["etats-unis"]["indemnite-vie"].ville === "New York", "VIE : ville la plus probable mal choisie");
   verifier(paysCouverts("indemnite-vie") === 30, "VIE : pays manquant");
+  // Barème officiel du 1er octobre 2026 (Journal officiel) : niveau « Officiel », rappel du trimestre et des 20 %.
+  for (const p of pays) {
+    const n = notesPays[p.id]["indemnite-vie"];
+    if (n.note === null) continue;
+    verifier(n.source === "jorf-vie" && preuveMesure(p.id, "indemnite-vie").type === "officiel" && /1er octobre 2026/.test(n.texte) && /20\s%/.test(n.texte), `VIE : barème officiel mal repris pour ${p.nom}`);
+  }
   // L'année de la donnée est dans la preuve.
   for (const p of pays) for (const [m, n] of Object.entries(notesPays[p.id])) {
     if (n.statut === "verifie" && n.annee) verifier(preuveMesure(p.id, m).annee === n.annee, `preuve : année absente pour ${m} (${p.nom})`);

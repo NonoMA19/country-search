@@ -243,10 +243,16 @@
     "licence": "Licence Ouverte 2.0",
     "type": "officiel"
   },
-  "bareme-vie-relaye": {
-    "nom": "Barème des indemnités VIE au 1er janvier 2026 (relayé par juristique.org, à vérifier sur mon-vie-via.businessfrance.fr)",
-    "url": "https://mon-vie-via.businessfrance.fr/",
-    "licence": "Montants officiels, cités sans copie du site",
+  "jorf-vie": {
+    "nom": "Journal officiel (Legifrance), barème de l’indemnité supplémentaire VIE et VIA : arrêtés du 18 et du 23 décembre 2025, ajustés par les arrêtés du 9 mars, du 10 juin et du 15 septembre 2026",
+    "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "licence": "Textes officiels, réutilisation libre (Licence Ouverte 2.0)",
+    "type": "officiel"
+  },
+  "businessfrance-destinations": {
+    "nom": "Business France, Mon Volontariat International : les destinations",
+    "url": "https://mon-vie-via.businessfrance.fr/pays",
+    "licence": "Lien seulement, aucun contenu copié",
     "type": "officiel"
   }
 }

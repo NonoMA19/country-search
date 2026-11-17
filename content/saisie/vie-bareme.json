@@ -1,0 +1,492 @@
+{
+  "_note": "Barème des indemnités VIE. Total mensuel = part fixe (772,87 €, service-public.gouv.fr F10040) + indemnité supplémentaire. L'indemnité supplémentaire suit le barème des VIA (arrêté du 18 décembre 2025), sauf pour les pays dérogatoires (arrêté du 23 décembre 2025), puis elle est ajustée chaque trimestre. Les montants du 1er octobre 2026 ont été lus au Journal officiel par Nolhan (Legifrance n'est pas lisible depuis la session). Pour un nouveau trimestre : ajouter une entrée dans « trimestres » avec les taux de l'arrêté, puis lancer node scripts/vie.mjs.",
+  "partFixe": 772.87,
+  "sourcePartFixe": {
+    "source": "service-public-vie",
+    "lien": "https://www.service-public.gouv.fr/particuliers/vosdroits/F10040",
+    "verifieLe": "2026-11-17",
+    "phrase": "Si votre entreprise d’accueil prend en charge tout ou partie de votre logement, l’indemnité est réduite de 20 %."
+  },
+  "arretesDeBase": [
+    {
+      "titre": "Arrêté du 18 décembre 2025 (barème des VIA, suivi par le VIE)",
+      "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053177500"
+    },
+    {
+      "titre": "Arrêté du 23 décembre 2025 (pays dérogatoires)",
+      "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053202216",
+      "pays": "Corée du Sud, Émirats arabes unis, Espagne, États-Unis hors New York, Japon, Tunisie"
+    }
+  ],
+  "base": {
+    "_note": "Indemnité supplémentaire au 1er janvier 2026, pays par pays (et ville par ville), d'après les arrêtés de décembre 2025. Pas encore saisie : Legifrance n'est pas lisible depuis la session. Une fois saisie avec les taux des trimestres de 2026, le script vérifie qu'il retrouve le barème du 1er octobre 2026.",
+    "date": "2026-01-01",
+    "supplements": null
+  },
+  "trimestres": [
+    {
+      "arrete": "Arrêté du 9 mars 2026",
+      "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053717229",
+      "taux": null
+    },
+    {
+      "arrete": "Arrêté du 10 juin 2026",
+      "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054264026",
+      "taux": null
+    },
+    {
+      "arrete": "Arrêté du 15 septembre 2026",
+      "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+      "enVigueur": "2026-10-01",
+      "taux": null
+    }
+  ],
+  "reference": {
+    "_note": "Le barème en vigueur depuis le 1er octobre 2026 (totaux mensuels, part fixe comprise), lu au Journal officiel. Point de départ du calcul tant que la base de janvier et les taux de 2026 ne sont pas saisis ; sinon, contrôle.",
+    "date": "2026-10-01",
+    "arrete": "Arrêté du 15 septembre 2026",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "pays": {
+      "belgique": {
+        "villes": [
+          {
+            "ville": "Bruxelles",
+            "total": 2978.54,
+            "principale": true
+          }
+        ]
+      },
+      "suisse": {
+        "villes": [
+          {
+            "ville": "Zurich",
+            "total": 4465.76,
+            "principale": true
+          },
+          {
+            "ville": "Genève",
+            "total": 4157.67,
+            "principale": false
+          },
+          {
+            "ville": "reste du pays",
+            "total": null
+          }
+        ]
+      },
+      "allemagne": {
+        "villes": [
+          {
+            "ville": "Berlin",
+            "total": 3248.45,
+            "principale": true
+          },
+          {
+            "ville": "Munich",
+            "total": 3381.58,
+            "principale": false
+          },
+          {
+            "ville": "autres villes",
+            "total": 3027.64,
+            "principale": false
+          }
+        ]
+      },
+      "irlande": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3520.4,
+            "principale": true
+          }
+        ]
+      },
+      "luxembourg": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3152.7,
+            "principale": true
+          }
+        ]
+      },
+      "espagne": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2688.87,
+            "principale": true
+          }
+        ]
+      },
+      "italie": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3003.88,
+            "principale": true
+          }
+        ]
+      },
+      "pays-bas": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3395.61,
+            "principale": true
+          }
+        ]
+      },
+      "portugal": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2677.45,
+            "principale": true
+          }
+        ]
+      },
+      "norvege": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3493.12,
+            "principale": true
+          },
+          {
+            "ville": "Stavanger",
+            "total": null
+          }
+        ]
+      },
+      "suede": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3172.74,
+            "principale": true
+          }
+        ]
+      },
+      "danemark": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3662.66,
+            "principale": true
+          }
+        ]
+      },
+      "royaume-uni": {
+        "villes": [
+          {
+            "ville": "Londres",
+            "total": 3815.77,
+            "principale": true
+          },
+          {
+            "ville": "autres villes",
+            "total": 2732.27,
+            "principale": false
+          }
+        ]
+      },
+      "autriche": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3024.48,
+            "principale": true
+          }
+        ]
+      },
+      "canada": {
+        "villes": [
+          {
+            "ville": "Montréal et autres villes",
+            "total": 2649.31,
+            "principale": false
+          },
+          {
+            "ville": "Toronto",
+            "total": 3265.76,
+            "principale": false
+          },
+          {
+            "ville": "Vancouver",
+            "total": 3378.8,
+            "principale": true
+          }
+        ]
+      },
+      "etats-unis": {
+        "villes": [
+          {
+            "ville": "New York",
+            "total": 5088.87,
+            "principale": true
+          },
+          {
+            "ville": "Californie",
+            "total": 5151.29,
+            "principale": false
+          },
+          {
+            "ville": "Texas, Illinois, Michigan",
+            "total": 3813.79,
+            "principale": false
+          }
+        ]
+      },
+      "mexique": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3221.56,
+            "principale": true
+          }
+        ]
+      },
+      "colombie": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2764.55,
+            "principale": true
+          }
+        ]
+      },
+      "bresil": {
+        "villes": [
+          {
+            "ville": "São Paulo",
+            "total": 2743.3,
+            "principale": true
+          },
+          {
+            "ville": "Rio de Janeiro",
+            "total": 2478.67,
+            "principale": false
+          }
+        ]
+      },
+      "argentine": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2837.99,
+            "principale": true
+          }
+        ]
+      },
+      "chili": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2458.59,
+            "principale": true
+          }
+        ]
+      },
+      "perou": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2440.63,
+            "principale": true
+          }
+        ]
+      },
+      "uruguay": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2526.51,
+            "principale": true
+          }
+        ]
+      },
+      "australie": {
+        "villes": [
+          {
+            "ville": "Sydney",
+            "total": 3684.84,
+            "principale": true
+          },
+          {
+            "ville": "autres villes",
+            "total": 3435.38,
+            "principale": false
+          }
+        ]
+      },
+      "nouvelle-zelande": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2614.53,
+            "principale": true
+          }
+        ]
+      },
+      "japon": {
+        "villes": [
+          {
+            "ville": "Tokyo",
+            "total": 2704.48,
+            "principale": true
+          },
+          {
+            "ville": "autres villes",
+            "total": 2380.54,
+            "principale": false
+          }
+        ]
+      },
+      "coree-du-sud": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2500.39,
+            "principale": true
+          }
+        ]
+      },
+      "taiwan": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2315.83,
+            "principale": true
+          }
+        ]
+      },
+      "hong-kong": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 3196.82,
+            "principale": true
+          }
+        ]
+      },
+      "chine": {
+        "villes": [
+          {
+            "ville": "Shanghai",
+            "total": 3003.54,
+            "principale": true
+          },
+          {
+            "ville": "Pékin",
+            "total": 2955.13,
+            "principale": false
+          },
+          {
+            "ville": "reste du pays",
+            "total": null
+          }
+        ]
+      },
+      "singapour": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 4063.9,
+            "principale": true
+          }
+        ]
+      },
+      "thailande": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2426.21,
+            "principale": true
+          }
+        ]
+      },
+      "vietnam": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2162.3,
+            "principale": true
+          }
+        ]
+      },
+      "inde": {
+        "villes": [
+          {
+            "ville": "Bombay",
+            "total": 3128.65,
+            "principale": true
+          },
+          {
+            "ville": "New Delhi",
+            "total": 3098.36,
+            "principale": false
+          },
+          {
+            "ville": "Bangalore et autres villes",
+            "total": 2592.74,
+            "principale": false
+          }
+        ]
+      },
+      "maroc": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 1962.72,
+            "principale": true
+          }
+        ]
+      },
+      "emirats-arabes-unis": {
+        "villes": [
+          {
+            "ville": "Dubaï et autres villes",
+            "total": 2641.76,
+            "principale": true
+          },
+          {
+            "ville": "Abou Dabi",
+            "total": 2439.62,
+            "principale": false
+          }
+        ]
+      },
+      "cote-d-ivoire": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2541.93,
+            "principale": true
+          }
+        ]
+      },
+      "senegal": {
+        "villes": [
+          {
+            "ville": null,
+            "total": 2629.82,
+            "principale": true
+          }
+        ]
+      }
+    }
+  },
+  "destinations": {
+    "_note": "Liste officielle des destinations du VIE, Business France, lue par Nolhan le 17 novembre 2026 (la liste se charge depuis un service bloqué depuis la session).",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17",
+    "horsListe": [
+      "perou",
+      "uruguay"
+    ]
+  }
+}

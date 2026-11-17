@@ -12,7 +12,7 @@ import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { FaisabilitePourToi } from "@/components/resultat/Faisabilite";
 import { paysCouverts, valeurFrance } from "@/lib/moteur";
-import { criteres, dateFr, europe, notes, portes, preuveMesure, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
+import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, portes, preuveMesure, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-// Le VIE : les règles sont officielles, mais la présence de missions dans ce pays n'est pas vérifiée.
+// Le VIE : les règles (service-public.gouv.fr), les destinations (Business France) et l'indemnité du pays (Journal officiel).
 function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
   const presence = vie.presence?.[paysId];
   return (
@@ -39,8 +39,14 @@ function CarteVie({ paysId, nomPays }: { paysId: string; nomPays: string }) {
         {vie.texte}
         <Pastille preuve={preuveSource(vie.nom, vie.texte, vie.source, vie.lien, vie.verifieLe)} pays={nomPays} contexte="les règles du VIE" />
       </p>
+      {phraseIndemniteVie(paysId) && (
+        <p className="mt-2 text-sm">
+          <span className="font-medium">{phraseIndemniteVie(paysId)}</span> {RAPPEL_VIE}
+          <Pastille preuve={preuveMesure(paysId, "indemnite-vie")} pays={nomPays} contexte="le barème des indemnités VIE" />
+        </p>
+      )}
       <p className="mt-2 text-sm">
-        {presence ? presence.texte : "Y a-t-il des missions VIE dans ce pays ? Ce n’est pas encore vérifié."}
+        {presence ? presence.texte : "VIE : pas dans les destinations de Business France."}
         <Pastille preuve={presence ? preuveSource("Missions VIE dans ce pays", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE dans ce pays", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={nomPays} contexte="les missions VIE" />
       </p>
     </li>

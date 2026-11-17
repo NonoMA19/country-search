@@ -65,7 +65,6 @@ export type Note = {
   confiance?: Confiance;
   ancien?: { valeur: number; annee: string }; // valeur écartée (année trop éloignée des autres pays), hors calcul
   resteSur100?: number; // salaire : ce qui reste sur 100 € bruts après impôt sur le revenu et cotisations (OCDE), hors score
-  relaye?: boolean; // donnée relayée par un site non officiel (barème VIE) : comptée, mais pas comme « vérifiée »
   ville?: string | null; // indemnité VIE : la ville retenue pour le score
   autres?: { ville: string; montant: number | null }[]; // indemnité VIE : les autres villes du barème
 };
@@ -261,6 +260,14 @@ export const vie = portesToutes._vie as unknown as PorteBrute & {
   ageMaxCandidature: number; dureeMoisMin: number; dureeMoisMax: number; presence?: Record<string, PresenceVie>;
   resume: string[]; offres: { url: string; nom: string; source: string; verifieLe: string };
 };
+// L'indemnité VIE d'un pays en une phrase (barème officiel, voir scripts/vie.mjs), ou null.
+export const RAPPEL_VIE = "Barème du 1er octobre 2026 : révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.";
+export function phraseIndemniteVie(paysId: string): string | null {
+  const n = notes[paysId]?.["indemnite-vie"];
+  if (!n || n.statut !== "verifie" || typeof n.valeur !== "number") return null;
+  const euro = (x: number) => `${Math.round(x).toLocaleString("fr-FR")}\u00a0€`;
+  return `Indemnité VIE${n.ville ? ` (${n.ville})` : ""}\u00a0: ${euro(n.valeur)} par mois${n.autres?.length ? ` ; ${n.autres.map((a) => `${a.ville}\u00a0: ${a.montant ? euro(a.montant) : "à vérifier"}`).join("\u00a0; ")}` : ""}.`;
+}
 export const avis = avisData as unknown as Record<string, Avis>;
 // « Europe sans visa » : ce qui diffère entre l'Union, la Norvège et la Suisse, avec ses sources.
 export type NoteSourcee = { texte: string; source: string; lien: string; verifieLe: string; datePage?: string };
@@ -316,8 +323,7 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
   }
   const s = sources[n.source];
   return {
-    // Une donnée relayée (barème VIE) n'est pas lue sur le site officiel : pastille « À vérifier », source et lien gardés.
-    type: n.relaye ? "a-verifier" : s.type,
+    type: s.type,
     titre: m.nom,
     // Un avis sans phrase rédigée : on affiche l'explication du niveau, jamais une fenêtre vide.
     texte: n.texte || (n.note !== null ? (m.explications?.[n.note - 1] ?? m.mots[n.note - 1]) : ""),
