@@ -8,16 +8,18 @@ _Ton projet, ton secteur, tes langues : de quoi poser le décor._
 
 ### carte · CarteMonde · thème « Ton intuition »
 
-**Avant de commencer : où pensais-tu partir ?** Coche une ou plusieurs régions. Ta réponse ne change pas ton classement : on la garde pour la fin.
+**Avant de commencer : où pensais-tu partir ?** Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.
 
 - Dimensions : aucune
 - Europe
 - Amérique du Nord (Canada, États-Unis)
 - Amérique latine
 - Asie de l’Est (Japon, Corée du Sud, Taïwan, Hong Kong, Chine)
-- Asie du Sud-Est (Singapour)
+- Asie du Sud-Est (Singapour, Thaïlande, Vietnam)
+- Asie du Sud (Inde)
 - Océanie
 - Moyen-Orient et Afrique du Nord (Émirats arabes unis, Maroc)
+- Afrique subsaharienne (Côte d’Ivoire, Sénégal)
 - « Aucune idée pour l’instant » ; aucun effet sur le score
 
 ### objectif · ChoixCartes · thème « Ton projet »
