@@ -2,6 +2,7 @@
 // Règle absolue : aucune adresse devinée. Chaque lien vient d'une page officielle
 // et il est ouvert ici, un par un. S'il ne répond pas, le lien reste « à vérifier » et n'est pas affiché.
 // Usage : node scripts/dossiers.mjs
+//         node scripts/dossiers.mjs --pays id1,id2   (seulement ces pays : les autres dossiers ne changent pas)
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
@@ -9,7 +10,8 @@ import path from "node:path";
 const RACINE = path.resolve(import.meta.dirname, "..");
 const AUJOURDHUI = new Date().toISOString().slice(0, 10);
 const UA = "country-search-bot/0.1 (projet open source non commercial)";
-const pays = JSON.parse(fs.readFileSync(path.join(RACINE, "content", "pays.json"), "utf8"));
+const SEULS = process.argv.includes("--pays") ? process.argv[process.argv.indexOf("--pays") + 1].split(",") : null;
+const pays = JSON.parse(fs.readFileSync(path.join(RACINE, "content", "pays.json"), "utf8")).filter((p) => !SEULS || SEULS.includes(p.id));
 
 const dejaVus = new Map();
 function ouvre(url) {
@@ -68,7 +70,7 @@ const ADFE = ["Trouver une section Français du monde", "https://francais-du-mon
 
 // Chambres de commerce françaises : pages lues dans l'annuaire officiel de CCI France International.
 const ANNUAIRE_CCI = "https://www.ccifrance-international.org/notre-reseau/les-cci-fi.html";
-const NOMS_CCI = { "royaume-uni": ["Grande-Bretagne", "Royaume-Uni"], "etats-unis": ["USA | New York"], canada: ["Canada | Montréal"], "coree-du-sud": ["Corée"], "emirats-arabes-unis": ["Emirats", "Émirats"], "hong-kong": ["Hong Kong", "Hong-Kong"], taiwan: ["Taiwan", "Taïwan"], bresil: ["Brésil"], "nouvelle-zelande": ["Nouvelle-Zélande"], "pays-bas": ["Pays-Bas"], belgique: ["Belgique"] };
+const NOMS_CCI = { "royaume-uni": ["Grande-Bretagne", "Royaume-Uni"], "etats-unis": ["USA | New York"], canada: ["Canada | Montréal"], "coree-du-sud": ["Corée"], "emirats-arabes-unis": ["Emirats", "Émirats"], "hong-kong": ["Hong Kong", "Hong-Kong"], taiwan: ["Taiwan", "Taïwan"], bresil: ["Brésil"], "nouvelle-zelande": ["Nouvelle-Zélande"], "pays-bas": ["Pays-Bas"], belgique: ["Belgique"], "cote-d-ivoire": ["Côte d'Ivoire", "Côte d’Ivoire", "Cote d'Ivoire"], vietnam: ["Vietnam", "Viêt Nam", "Viet Nam"], thailande: ["Thaïlande", "Thailande"], perou: ["Pérou", "Perou"], senegal: ["Sénégal", "Senegal"] };
 let annuaire = [];
 try {
   const html = execFileSync("curl", ["-sS", "-L", "-m", "60", "-A", UA, ANNUAIRE_CCI], { maxBuffer: 2e7 }).toString("utf8");

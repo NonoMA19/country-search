@@ -26,7 +26,7 @@ function Type({ type }: { type: TypeSource }) {
 
 const nombre = (n: number) => n.toLocaleString("fr-FR");
 
-// Pour chaque mesure datée : la plus ancienne et la plus récente année parmi les notes vérifiées des 30 pays.
+// Pour chaque mesure datée : la plus ancienne et la plus récente année parmi les notes vérifiées des pays.
 function anneesParMesure() {
   return Object.values(mesures).flatMap((m) => {
     const ans = pays.map((p) => notes[p.id]?.[m.id]).filter((n) => n?.statut === "verifie" && n.annee && /^\d{4}$/.test(n.annee)).map((n) => Number(n!.annee));
@@ -158,7 +158,7 @@ export default function Methode() {
           <li>Sous chaque pays de ton top 3, et dans le dossier du pays si tu as fait le quiz, trois listes courtes : les conditions remplies, celles à remplir (ou non remplies), et ce qui reste à vérifier, puis la prochaine étape avec le lien officiel. Elles viennent seulement de tes réponses (âge, budget, nationalité, projet) et des données sourcées des visas. On n’écrit jamais qu’un pays est « juridiquement accessible ».</li>
           <li>Si ton projet est « Stage ou VIE », un bloc « Le VIE pour toi » reprend les conditions officielles déjà vérifiées (âge à la candidature, âge au départ, durée), les confronte à ton âge et donne le lien vers les offres de Business France. La présence de missions dans chaque pays de ton top 3 reste « à vérifier » tant qu’elle n’est pas sourcée. La condition de nationalité n’est pas encore vérifiée, elle n’est donc pas affichée.</li>
           <li>Une seule règle, partout : une mesure compte comme disponible si elle a une valeur, quel que soit son niveau de preuve (Officiel, Donnée ouverte, Témoignages ou Notre avis). « À vérifier » ne compte jamais. Le badge « Données disponibles » donne la part de tes critères qui ont une valeur pour ce pays : 90 % ou plus, « complètes » ; de 60 à 89 %, « partielles » ; moins de 60 %, « Peu de données disponibles », et le pays ne peut pas entrer dans ton top 3. Le détail du badge montre combien de ces valeurs viennent de chaque niveau de preuve. Les bonus de la carte et des langues n’y comptent pas.</li>
-          <li>« Notre avis » ne compte pas dans ce badge : c’est un jugement de la rédaction, pas une donnée vérifiée. Il compte en revanche dans la règle des 60 % du calcul (point 7 plus haut) : un pays peut donc être dans ton top 3 avec « Peu de données vérifiées » si beaucoup de tes critères reposent sur notre avis (culture au travail, langue, taille des villes).</li>
+          <li id="nouveaux-pays">Huit pays ont été ajoutés le 17 novembre 2026 (Autriche, Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d’Ivoire, Sénégal), avec les mêmes sources et les mêmes règles que les autres. Ce qui manque reste « à vérifier » : le salaire (pas de chiffre comparable de l’OCDE, sauf pour l’Autriche, pas encore saisi), les Français inscrits (source prévue : le Rapport du Gouvernement 2025, pas encore saisi), l’emploi par secteur, « Notre avis » (anglais au travail, culture au travail, taille des villes) et les témoignages. Pour ne pas déplacer les autres pays, les seuils restent ceux calculés sur les 30 premiers. Le niveau de vigilance de la capitale vient de France Diplomatie.</li>
         </ul>
       </section>
 
@@ -194,7 +194,7 @@ export default function Methode() {
           <ul className="mt-2 list-disc space-y-2 pl-5">
             <li>Ce sont des tendances générales, à l’échelle d’un pays. Une start-up et une grande banque du même pays peuvent fonctionner tout à fait autrement : ton entreprise peut être très différente.</li>
             <li>Les témoignages viennent surtout d’expatriés, souvent dans de grandes villes et dans des entreprises internationales.</li>
-            <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans les 30 pays.</li>
+            <li>Ce n’est pas une mesure officielle : aucune enquête publique et réutilisable ne compare ces deux points dans tous ces pays.</li>
           </ul>
         </div>
         <div id="annees" className="mt-4 scroll-mt-4 rounded-2xl border border-bord bg-carte p-4">

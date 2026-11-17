@@ -1689,7 +1689,7 @@
     "id": "zone",
     "famille": "vivre",
     "nom": "En Europe ou plus loin, et ta carte du début",
-    "definition": "Le pays est-il en Europe ? Tiré de la liste des 30 pays. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
+    "definition": "Le pays est-il en Europe ? Tiré de la liste des pays du site. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
     "type": "donnee-ouverte",
     "sources": [
       "geonames"

@@ -121,7 +121,8 @@ const disponibilite: Record<string, number> = {};
 export const disponibiliteMemo = () => disponibilite;
 export function paysCouverts(mesureId: string): number {
   if (MESURES_CALCULEES.includes(mesureId)) return pays.length;
-  disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie").length;
+  // Un pays compte s'il a une note : « vérifié » sans note (le VIE hors des destinations de Business France) ne compte pas.
+  disponibilite[mesureId] ??= pays.filter((x) => notes[x.id]?.[mesureId]?.statut === "verifie" && notes[x.id][mesureId].note !== null).length;
   return disponibilite[mesureId];
 }
 export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0;
@@ -460,6 +461,7 @@ export function evaluerPorte(p: Pays, profil: Profil, budget: Budget | null): Po
       alertes.push({ texte: "Le PVT dure un an maximum : pour rester plus longtemps, il faudra un autre visa.", preuve: preuvePorte(pvt) });
     }
     if (pvt.changement) alertes.push({ texte: pvt.changement.texte, preuve: preuveNote("La procédure change", pvt.changement) });
+    if (visa?.securite) alertes.push({ texte: visa.securite.texte, preuve: preuveNote("Sécurité", visa.securite) });
     if (veutVie && vieOuvert) autres.push("Pour un VIE, il faut décrocher une mission auprès d’une entreprise.");
     // Saison fermée (Canada) : le badge reste celui de la porte, avec cette mention.
     const sa = pvt.saison;
@@ -596,7 +598,7 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
 // La note dit si ton visa te laisserait changer d'employeur : 5 si aucun visa ne te lie à un employeur
 // (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
 // 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
-// Les mesures calculées : toujours disponibles pour les 30 pays (leur note se calcule, elle n'est pas lue dans scores.json).
+// Les mesures calculées : toujours disponibles pour tous les pays (leur note se calcule, elle n'est pas lue dans scores.json).
 export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe", "langue-travail", "region-carte", "langue-parlee"];
 // Les bonus : un pays hors de ta carte ou qui ne parle pas tes langues n'a pas de note, et n'en est pas pénalisé.
 // Ils ne comptent ni dans la couverture (règle des 60 %) ni dans le badge « données disponibles ».

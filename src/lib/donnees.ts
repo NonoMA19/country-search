@@ -259,7 +259,7 @@ const scores = scoresData as unknown as {
 };
 export const dateDonnees = scores.genereLe;
 export const notes = scores.pays;
-// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les 30 pays.
+// La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les pays classés.
 export const notesFrance: Record<string, Note> = scores.reference?.france?.notes ?? {};
 const portesToutes = portesData as unknown as Record<string, PorteBrute[] | Record<string, unknown>>;
 export const portes = (id: string) => (portesToutes[id] as PorteBrute[]) ?? [];

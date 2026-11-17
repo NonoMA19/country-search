@@ -157,6 +157,19 @@
     "le": "le Danemark"
   },
   {
+    "nom": "Autriche",
+    "id": "autriche",
+    "famille": "Europe sans visa",
+    "ficheComplete": false,
+    "iso2": "AT",
+    "iso3": "AUT",
+    "zone": "europe",
+    "ville": "Vienne",
+    "villeRecherche": "Vienna",
+    "en": "en Autriche",
+    "le": "l’Autriche"
+  },
+  {
     "nom": "Canada",
     "id": "canada",
     "famille": "PVT",
@@ -313,6 +326,32 @@
     "le": "le Brésil"
   },
   {
+    "nom": "Pérou",
+    "id": "perou",
+    "famille": "PVT",
+    "ficheComplete": false,
+    "iso2": "PE",
+    "iso3": "PER",
+    "zone": "hors-europe",
+    "ville": "Lima",
+    "villeRecherche": "Lima",
+    "en": "au Pérou",
+    "le": "le Pérou"
+  },
+  {
+    "nom": "Uruguay",
+    "id": "uruguay",
+    "famille": "PVT",
+    "ficheComplete": false,
+    "iso2": "UY",
+    "iso3": "URY",
+    "zone": "hors-europe",
+    "ville": "Montevideo",
+    "villeRecherche": "Montevideo",
+    "en": "en Uruguay",
+    "le": "l’Uruguay"
+  },
+  {
     "nom": "Royaume‑Uni",
     "id": "royaume-uni",
     "famille": "Visa de travail",
@@ -391,5 +430,70 @@
     "villeRecherche": "Casablanca",
     "en": "au Maroc",
     "le": "le Maroc"
+  },
+  {
+    "nom": "Thaïlande",
+    "id": "thailande",
+    "famille": "Visa de travail",
+    "ficheComplete": false,
+    "iso2": "TH",
+    "iso3": "THA",
+    "zone": "hors-europe",
+    "ville": "Bangkok",
+    "villeRecherche": "Bangkok",
+    "en": "en Thaïlande",
+    "le": "la Thaïlande"
+  },
+  {
+    "nom": "Vietnam",
+    "id": "vietnam",
+    "famille": "Visa de travail",
+    "ficheComplete": false,
+    "iso2": "VN",
+    "iso3": "VNM",
+    "zone": "hors-europe",
+    "ville": "Hô Chi Minh‑Ville",
+    "villeRecherche": "Ho Chi Minh City",
+    "en": "au Vietnam",
+    "le": "le Vietnam"
+  },
+  {
+    "nom": "Inde",
+    "id": "inde",
+    "famille": "Visa de travail",
+    "ficheComplete": false,
+    "iso2": "IN",
+    "iso3": "IND",
+    "zone": "hors-europe",
+    "ville": "Bombay",
+    "villeRecherche": "Mumbai",
+    "en": "en Inde",
+    "le": "l’Inde"
+  },
+  {
+    "nom": "Côte d’Ivoire",
+    "id": "cote-d-ivoire",
+    "famille": "Visa de travail",
+    "ficheComplete": false,
+    "iso2": "CI",
+    "iso3": "CIV",
+    "zone": "hors-europe",
+    "ville": "Abidjan",
+    "villeRecherche": "Abidjan",
+    "en": "en Côte d’Ivoire",
+    "le": "la Côte d’Ivoire"
+  },
+  {
+    "nom": "Sénégal",
+    "id": "senegal",
+    "famille": "Visa de travail",
+    "ficheComplete": false,
+    "iso2": "SN",
+    "iso3": "SEN",
+    "zone": "hors-europe",
+    "ville": "Dakar",
+    "villeRecherche": "Dakar",
+    "en": "au Sénégal",
+    "le": "le Sénégal"
   }
 ]

@@ -210,6 +210,62 @@
    "lon": -7.61138,
    "fuseau": "Africa/Casablanca",
    "population": 3665954
+  },
+  "autriche": {
+   "nom": "Vienne",
+   "lat": 48.20849,
+   "lon": 16.37208,
+   "fuseau": "Europe/Vienna",
+   "population": 1691468
+  },
+  "perou": {
+   "nom": "Lima",
+   "lat": -12.04318,
+   "lon": -77.02824,
+   "fuseau": "America/Lima",
+   "population": 7737002
+  },
+  "uruguay": {
+   "nom": "Montevideo",
+   "lat": -34.90328,
+   "lon": -56.18816,
+   "fuseau": "America/Montevideo",
+   "population": 1270737
+  },
+  "thailande": {
+   "nom": "Bangkok",
+   "lat": 13.75398,
+   "lon": 100.50144,
+   "fuseau": "Asia/Bangkok",
+   "population": 5104476
+  },
+  "vietnam": {
+   "nom": "Hô Chi Minh‑Ville",
+   "lat": 10.82302,
+   "lon": 106.62965,
+   "fuseau": "Asia/Ho_Chi_Minh",
+   "population": 14002598
+  },
+  "inde": {
+   "nom": "Bombay",
+   "lat": 19.07283,
+   "lon": 72.88261,
+   "fuseau": "Asia/Kolkata",
+   "population": 12691836
+  },
+  "cote-d-ivoire": {
+   "nom": "Abidjan",
+   "lat": 5.35444,
+   "lon": -4.00167,
+   "fuseau": "Africa/Abidjan",
+   "population": 6321017
+  },
+  "senegal": {
+   "nom": "Dakar",
+   "lat": 14.6937,
+   "lon": -17.44406,
+   "fuseau": "Africa/Dakar",
+   "population": 2646503
   }
  },
  "pays": {
@@ -11345,6 +11401,2186 @@
     "statut": "a-verifier",
     "note": null,
     "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+   }
+  },
+  "autriche": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 11 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : l’OCDE couvre l’Autriche, mais son chiffre 2024 n’est pas encore saisi (le site de l’OCDE n’est pas lisible depuis la session). À saisir dans content/saisie/ocde.json."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3024.48,
+    "texte": "Indemnité VIE en Autriche : 3 024 € par mois, soit 772,87 € de part fixe et 2 252 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": null,
+    "autres": []
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 33.46,
+    "texte": "33,5 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=AUT&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 102.44,
+    "texte": "Niveau des prix : 102 pour 100 en France (2025). La vie y coûte à peu près comme en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 0.88,
+    "texte": "0,9 homicide pour 100 000 habitants (2023).",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 1.79,
+    "texte": "Vienne est à environ 1 050 km de Paris : compte au moins 2 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Vienna&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 0,
+    "texte": "Décalage avec Paris à Vienne : aucun décalage en janvier, aucun décalage en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 0.04,
+    "texte": "À Vienne, le mois le plus froid tourne autour de 0 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=48.20849&longitude=16.37208&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 21.19,
+    "texte": "À Vienne, le mois le plus chaud tourne autour de 21,2 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=48.20849&longitude=16.37208&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Vienne, le mois le plus froid tourne autour de 0 °C et le mois le plus chaud autour de 21,2 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=48.20849&longitude=16.37208&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 5,
+    "texte": "La carte européenne d’assurance maladie est valable en Autriche pendant un séjour temporaire, recherche d’emploi comprise. Une fois embauché sur place, tu dépends du système de santé du pays.",
+    "source": "service-public-soins",
+    "lien": "https://www.service-public.gouv.fr/particuliers/vosdroits/F213"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 74.92,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 75 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 83.77,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 84 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 90.88,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 91 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.03,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 10 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 16.51,
+    "texte": "Adultes en situation d’obésité : 16,5 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "La vie quotidienne se passe en allemand, une langue à alphabet latin mais éloignée du français.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "Pour vivre ici sans aide, il faut apprendre une autre langue, avec le même alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "perou": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 9.45,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 9,5 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": null,
+    "texte": "VIE : pas dans les destinations de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17",
+    "annee": null
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 39.67,
+    "texte": "39,7 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 65.27,
+    "texte": "Niveau des prix : 65 pour 100 en France (2025). La vie y coûte environ 35 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.6,
+    "texte": "8,6 homicides pour 100 000 habitants (2021).",
+    "annee": "2021",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 13.32,
+    "texte": "Lima est à environ 10 250 km de Paris : compte au moins 13,5 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Lima&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6,
+    "texte": "Décalage avec Paris à Lima : −6 h en janvier, −7 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 17.37,
+    "texte": "À Lima, le mois le plus froid tourne autour de 17,4 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-12.04318&longitude=-77.02824&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 23.11,
+    "texte": "À Lima, le mois le plus chaud tourne autour de 23,1 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-12.04318&longitude=-77.02824&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "À Lima, le mois le plus froid tourne autour de 17,4 °C et le mois le plus chaud autour de 23,1 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-12.04318&longitude=-77.02824&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 2,
+    "texte": "Le Pérou ne figure pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir, et le PVT l’exige pour tout le séjour.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 56.91,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 57 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 56.73,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 57 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 88.65,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 89 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 31.09,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 31,1 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 29.1,
+    "texte": "Adultes en situation d’obésité : 29,1 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "On parle espagnol, une langue latine proche du français. Le quechua et l’aymara sont aussi officiels là où ils sont majoritaires.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "Pour vivre ici sans aide, il faut apprendre une autre langue, avec le même alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "uruguay": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 25.15,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 25,1 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": null,
+    "texte": "VIE : pas dans les destinations de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17",
+    "annee": null
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 36.11,
+    "texte": "36,1 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 87.57,
+    "texte": "Niveau des prix : 88 pour 100 en France (2025). La vie y coûte environ 12 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 11.25,
+    "texte": "11,2 homicides pour 100 000 habitants (2023).",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 14.2,
+    "texte": "Montevideo est à environ 10 950 km de Paris : compte au moins 14 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Montevideo&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4,
+    "texte": "Décalage avec Paris à Montevideo : −4 h en janvier, −5 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 10.6,
+    "texte": "À Montevideo, le mois le plus froid tourne autour de 10,6 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-34.90328&longitude=-56.18816&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 22.47,
+    "texte": "À Montevideo, le mois le plus chaud tourne autour de 22,5 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-34.90328&longitude=-56.18816&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "À Montevideo, le mois le plus froid tourne autour de 10,6 °C et le mois le plus chaud autour de 22,5 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=-34.90328&longitude=-56.18816&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 3,
+    "texte": "La France a un accord de sécurité sociale en vigueur avec l’Uruguay. Pour un PVT, une assurance privée reste exigée pour tout le séjour.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 88.39,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 88 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 80.01,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 80 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 82.93,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 83 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 10.85,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 10,9 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 34.74,
+    "texte": "Adultes en situation d’obésité : 34,7 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/URY;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 4,
+    "texte": "On parle espagnol, une langue latine proche du français.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "Pour vivre ici sans aide, il faut apprendre une autre langue, avec le même alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "thailande": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.53,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 4,5 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2426.21,
+    "texte": "Indemnité VIE en Thaïlande : 2 426 € par mois, soit 772,87 € de part fixe et 1 653 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": null,
+    "autres": []
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 42.41,
+    "texte": "42,4 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 38.97,
+    "texte": "Niveau des prix : 39 pour 100 en France (2025). La vie y coûte environ 61 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Homicides : pas de donnée dans cette source."
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 12.3,
+    "texte": "Bangkok est à environ 9 450 km de Paris : compte au moins 12,5 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Bangkok&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6,
+    "texte": "Décalage avec Paris à Bangkok : +6 h en janvier, +5 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 25.96,
+    "texte": "À Bangkok, le mois le plus froid tourne autour de 26 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=13.75398&longitude=100.50144&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 30.05,
+    "texte": "À Bangkok, le mois le plus chaud tourne autour de 30,1 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=13.75398&longitude=100.50144&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 1,
+    "texte": "À Bangkok, le mois le plus froid tourne autour de 26 °C et le mois le plus chaud autour de 30,1 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=13.75398&longitude=100.50144&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 2,
+    "texte": "La Thaïlande ne figure pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 55.8,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 56 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 48.23,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 48 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 69.4,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 69 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 23.49,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 23,5 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 16.25,
+    "texte": "Adultes en situation d’obésité : 16,3 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 1,
+    "texte": "La vie quotidienne se passe en thaï, une langue qui s’écrit avec un autre alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 1,
+    "texte": "Pour vivre ici sans aide, il faut apprendre une langue qui s’écrit avec un autre alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "vietnam": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 6.17,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 6,2 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2162.3,
+    "texte": "Indemnité VIE au Vietnam : 2 162 € par mois, soit 772,87 € de part fixe et 1 389 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": null,
+    "autres": []
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 41.85,
+    "texte": "41,9 heures réellement travaillées par semaine en moyenne (2024).",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 35.8,
+    "texte": "Niveau des prix : 36 pour 100 en France (2024). La vie y coûte environ 64 % moins cher qu’en France.",
+    "annee": "2024",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Homicides : pas de donnée dans cette source."
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 13.15,
+    "texte": "Hô Chi Minh‑Ville est à environ 10 100 km de Paris : compte au moins 13 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Ho%20Chi%20Minh%20City&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6,
+    "texte": "Décalage avec Paris à Hô Chi Minh‑Ville : +6 h en janvier, +5 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 26.09,
+    "texte": "À Hô Chi Minh‑Ville, le mois le plus froid tourne autour de 26,1 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=10.82302&longitude=106.62965&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 28.99,
+    "texte": "À Hô Chi Minh‑Ville, le mois le plus chaud tourne autour de 29 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=10.82302&longitude=106.62965&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Hô Chi Minh‑Ville, le mois le plus froid tourne autour de 26,1 °C et le mois le plus chaud autour de 29 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=10.82302&longitude=106.62965&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 2,
+    "texte": "Le Vietnam ne figure pas dans la liste des accords de sécurité sociale en vigueur avec la France : une assurance privée est à prévoir.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 67.66,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 68 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 34.48,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 34 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 86.73,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 87 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 24.78,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 24,8 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 2.34,
+    "texte": "Adultes en situation d’obésité : 2,3 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "La vie quotidienne se passe en vietnamien, écrit avec l’alphabet latin et beaucoup d’accents, mais très éloigné du français.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "Pour vivre ici sans aide, il faut apprendre une autre langue, avec le même alphabet.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "inde": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 16.02,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 16 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 3128.65,
+    "texte": "Indemnité VIE en Inde (Bombay) : 3 129 € par mois, soit 772,87 € de part fixe et 2 356 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge. New Delhi : 3 098 € ; Bangalore et autres villes : 2 593 €.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": "Bombay",
+    "autres": [
+     {
+      "ville": "New Delhi",
+      "montant": 3098.36
+     },
+     {
+      "ville": "Bangalore et autres villes",
+      "montant": 2592.74
+     }
+    ]
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 45.45,
+    "texte": "45,5 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 27.5,
+    "texte": "Niveau des prix : 27 pour 100 en France (2025). La vie y coûte environ 73 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 2.82,
+    "texte": "2,8 homicides pour 100 000 habitants (2022).",
+    "annee": "2022",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 9.26,
+    "texte": "Bombay est à environ 7 000 km de Paris : compte au moins 9,5 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Mumbai&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 4.5,
+    "texte": "Décalage avec Paris à Bombay : +4,5 h en janvier, +3,5 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 23.77,
+    "texte": "À Bombay, le mois le plus froid tourne autour de 23,8 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=19.07283&longitude=72.88261&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 29.26,
+    "texte": "À Bombay, le mois le plus chaud tourne autour de 29,3 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=19.07283&longitude=72.88261&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 1,
+    "texte": "À Bombay, le mois le plus froid tourne autour de 23,8 °C et le mois le plus chaud autour de 29,3 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=19.07283&longitude=72.88261&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 3,
+    "texte": "La France a un accord de sécurité sociale en vigueur avec l’Inde.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 54.96,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 55 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 54.93,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 55 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 57.93,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 58 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 54.05,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 54,1 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.06,
+    "texte": "Adultes en situation d’obésité : 8,1 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/URY;IND;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "cote-d-ivoire": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 4.01,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 4 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2541.93,
+    "texte": "Indemnité VIE en Côte d’Ivoire : 2 542 € par mois, soit 772,87 € de part fixe et 1 769 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": null,
+    "autres": []
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 42.61,
+    "texte": "42,6 heures réellement travaillées par semaine en moyenne (2019).",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 47.39,
+    "texte": "Niveau des prix : 47 pour 100 en France (2025). La vie y coûte environ 53 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Homicides : pas de donnée dans cette source."
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.59,
+    "texte": "Abidjan est à environ 4 850 km de Paris : compte au moins 6,5 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Abidjan&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 1,
+    "texte": "Décalage avec Paris à Abidjan : −1 h en janvier, −2 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 24.02,
+    "texte": "À Abidjan, le mois le plus froid tourne autour de 24 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=5.35444&longitude=-4.00167&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 26.92,
+    "texte": "À Abidjan, le mois le plus chaud tourne autour de 26,9 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=5.35444&longitude=-4.00167&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 3,
+    "texte": "À Abidjan, le mois le plus froid tourne autour de 24 °C et le mois le plus chaud autour de 26,9 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=5.35444&longitude=-4.00167&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 3,
+    "texte": "La France a un accord de sécurité sociale en vigueur avec la Côte d’Ivoire.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 53.07,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 53 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 47.76,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 48 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 78.25,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 78 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 20.39,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 20,4 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 12.92,
+    "texte": "Adultes en situation d’obésité : 12,9 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "Le français est la langue officielle : on vit et on travaille en français.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "Le français ou l’anglais suffisent au quotidien : pas de nouvelle langue à apprendre.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   }
+  },
+  "senegal": {
+   "emploi": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 3.62,
+    "texte": "Parmi les 15-24 ans qui travaillent ou cherchent un emploi, 3,6 % sont au chômage (2025, estimation de l’Organisation internationale du travail).",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SL.UEM.1524.ZS?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "salaire": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+   },
+   "indemnite-vie": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2629.82,
+    "texte": "Indemnité VIE au Sénégal : 2 630 € par mois, soit 772,87 € de part fixe et 1 857 € d’indemnité supplémentaire (barème du 1er octobre 2026, arrêté du 15 septembre 2026). Révisé chaque trimestre ; l’indemnité supplémentaire est réduite de 20 % si l’entreprise te loge.",
+    "annee": "2026",
+    "source": "jorf-vie",
+    "lien": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054855141",
+    "verifieLe": "2026-11-17",
+    "ville": null,
+    "autres": []
+   },
+   "heures": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 47.3,
+    "texte": "47,3 heures réellement travaillées par semaine en moyenne (2025).",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-17"
+   },
+   "francais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi."
+   },
+   "prix": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 47.03,
+    "texte": "Niveau des prix : 47 pour 100 en France (2025). La vie y coûte environ 53 % moins cher qu’en France.",
+    "annee": "2025",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/PA.NUS.PRVT.PP?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "securite": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 0.27,
+    "texte": "0,3 homicide pour 100 000 habitants (2015).",
+    "annee": "2015",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "vol": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 5.76,
+    "texte": "Dakar est à environ 4 200 km de Paris : compte au moins 6 h de vol (estimation du temps en l’air, sans les escales).",
+    "annee": null,
+    "source": "geonames",
+    "lien": "https://geocoding-api.open-meteo.com/v1/search?name=Dakar&count=10&language=fr&format=json",
+    "verifieLe": "2026-11-17"
+   },
+   "decalage": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 1,
+    "texte": "Décalage avec Paris à Dakar : −1 h en janvier, −2 h en juillet.",
+    "annee": null,
+    "source": "geonames",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hiver": {
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 21.9,
+    "texte": "À Dakar, le mois le plus froid tourne autour de 21,9 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=14.6937&longitude=-17.44406&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "ete": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 27.77,
+    "texte": "À Dakar, le mois le plus chaud tourne autour de 27,8 °C en moyenne (1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=14.6937&longitude=-17.44406&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "doux": {
+    "statut": "verifie",
+    "note": 2,
+    "texte": "À Dakar, le mois le plus froid tourne autour de 21,9 °C et le mois le plus chaud autour de 27,8 °C (moyennes 1991-2020).",
+    "annee": "1991-2020",
+    "source": "open-meteo",
+    "lien": "https://archive-api.open-meteo.com/v1/archive?latitude=14.6937&longitude=-17.44406&start_date=1991-01-01&end_date=2020-12-31&daily=temperature_2m_mean&timezone=GMT",
+    "verifieLe": "2026-11-17"
+   },
+   "sante": {
+    "statut": "verifie",
+    "verifieLe": "2026-11-17",
+    "annee": null,
+    "note": 3,
+    "texte": "La France a un accord de sécurité sociale en vigueur avec le Sénégal.",
+    "source": "cleiss-accords",
+    "lien": "https://www.cleiss.fr/docs/textes/index.html"
+   },
+   "stabilite": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 62.69,
+    "texte": "Note de la Banque mondiale pour la stabilité politique et l’absence de violence : 63 sur 100 (2025). Plus la note est haute, plus le pays est stable.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_PV.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "libertes": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 60.67,
+    "texte": "Note de la Banque mondiale pour les libertés d’expression, d’association et de la presse : 61 sur 100 (2025). Plus la note est haute, plus ces libertés sont respectées.",
+    "annee": "2025",
+    "source": "bm-wgi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GOV_WGI_VA.SC?format=json&per_page=1000&date=2015:2026&source=3",
+    "verifieLe": "2026-11-17"
+   },
+   "egalite": {
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 52.9,
+    "texte": "Note de la Banque mondiale pour l’égalité entre femmes et hommes dans les lois (travail, salaire, mariage, sécurité…) : 53 sur 100 (2025). Plus la note est haute, plus la loi est égale.",
+    "annee": "2025",
+    "source": "bm-wbl",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/GD_WBL_OVL_LAW?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "air": {
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 41.65,
+    "texte": "Particules fines dans l’air (PM2,5, des poussières assez petites pour entrer dans les poumons) : 41,6 µg/m³ en moyenne sur l’année (2023). Plus c’est bas, mieux c’est.",
+    "annee": "2023",
+    "source": "bm-wdi",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/EN.ATM.PM25.MC.M3?format=json&per_page=1000&date=2015:2026",
+    "verifieLe": "2026-11-17"
+   },
+   "manger-sain": {
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 11.55,
+    "texte": "Adultes en situation d’obésité : 11,5 % (moyenne des taux des femmes et des hommes de 18 ans et plus, 2024, estimation de l’Organisation mondiale de la santé). Plus c’est bas, plus on mange sainement en moyenne. L’alimentation n’est qu’une des causes de l’obésité : c’est un repère, pas une mesure de la cuisine du pays.",
+    "annee": "2024",
+    "source": "oms-gho",
+    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/SH.STA.OB18.FE.ZS?format=json&per_page=1000&date=2015:2026&source=14",
+    "verifieLe": "2026-11-17"
+   },
+   "anglais": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "langue": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "Le français est la langue officielle, au travail comme dans les administrations ; dans la rue, on parle beaucoup wolof.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "hierarchie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "communication": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ponctualite": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "decision": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "pro-perso": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore assez de témoignages concordants pour donner une note."
+   },
+   "apprendre-langue": {
+    "statut": "verifie",
+    "note": 5,
+    "texte": "Le français ou l’anglais suffisent au quotidien : pas de nouvelle langue à apprendre.",
+    "annee": null,
+    "source": "notre-avis",
+    "lien": null,
+    "verifieLe": "2026-11-17"
+   },
+   "grande-ville": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "ville-moyenne": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "nature": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Pas encore d’avis rédigé."
+   },
+   "secteur-finance": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-conseil": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-ingenierie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-tech": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-commerce": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-sante": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-hotellerie": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+   },
+   "secteur-enseignement": {
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
    }
   }
  },

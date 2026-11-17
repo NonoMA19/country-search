@@ -1,6 +1,8 @@
 // Test du moteur de calcul : rejoue des quiz tirés au hasard (toujours les mêmes, graine fixe)
 // et vérifie les règles publiées sur /methode.
 // Usage : npm run test:moteur
+import fs from "node:fs";
+import path from "node:path";
 import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, trouverElement, vie, type Valeur } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
@@ -631,7 +633,18 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(effetsActifs(vieEtat).some((e) => e.mesure === "indemnite-vie") && !effetsActifs(vieEtat).some((e) => e.mesure === "salaire"), "VIE : le salaire moyen compte encore pour un VIE");
   verifier(!effetsActifs(construire({ profil: { objectif: "premier-poste" }, envies: ["salaire", "travail", "prix", "climat", "securite"] })).some((e) => e.mesure === "indemnite-vie"), "VIE : l'indemnité compte hors VIE");
   verifier(notesPays["royaume-uni"]["indemnite-vie"].valeur === 3815.77 && notesPays["royaume-uni"]["indemnite-vie"].ville === "Londres" && notesPays["etats-unis"]["indemnite-vie"].ville === "New York", "VIE : ville la plus probable mal choisie");
-  verifier(paysCouverts("indemnite-vie") === 30, "VIE : pays manquant");
+  verifier(paysCouverts("indemnite-vie") === 36, "VIE : pays manquant (36 destinations de Business France)");
+  // Huit nouveaux pays (prompt 3h) : chacun a une porte d'entrée, un dossier de liens, un avis, une région de la carte et sa ville.
+  verifier(pays.length === 38, `pays : ${pays.length} au lieu de 38`);
+  for (const x of pays) {
+    verifier(portes(x.id).some((b) => ["ue", "pvt", "visa-travail"].includes(b.type)), `pays : ${x.nom} sans porte d'entrée`);
+    verifier(fs.existsSync(path.join("content", "dossiers", `${x.id}.json`)), `pays : ${x.nom} sans dossier de liens`);
+    verifier(!!zoneDuPays(x.id), `pays : ${x.nom} hors de la carte du début`);
+    verifier(Object.keys(notesPays[x.id] ?? {}).length >= 30, `pays : ${x.nom} sans notes`);
+  }
+  // Destinations du VIE : les 36 pays du barème, et eux seuls (Pérou et Uruguay n'y sont pas).
+  verifier(pays.every((x) => !!vie.presence?.[x.id] === (notesPays[x.id]["indemnite-vie"].note !== null)), "VIE : destinations et barème ne concordent pas");
+  verifier(["perou", "uruguay"].every((id) => notesPays[id]["indemnite-vie"].note === null && /pas dans les destinations de Business France/.test(notesPays[id]["indemnite-vie"].texte)), "VIE : Pérou ou Uruguay sans la mention « pas dans les destinations »");
   // Barème officiel du 1er octobre 2026 (Journal officiel) : niveau « Officiel », rappel du trimestre et des 20 %.
   for (const p of pays) {
     const n = notesPays[p.id]["indemnite-vie"];
@@ -794,7 +807,7 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
     verifier(effetsActifs(avec).find((e) => e.mesure === "langue-parlee")?.poids === 1, "langues : le bonus ne vaut pas 1");
     const a = scores(sans), b = scores(avec);
     for (const p of pays) {
-      const parle = ["espagne", "argentine", "chili", "colombie", "mexique"].includes(p.id);
+      const parle = ["espagne", "argentine", "chili", "colombie", "mexique", "perou", "uruguay"].includes(p.id);
       verifier(parle ? b[p.id] > a[p.id] || a[p.id] >= 100 - 1e-9 : Math.abs(b[p.id] - a[p.id]) < 1e-9, `langues : ${p.nom} ${parle ? "ne gagne rien" : "change de score"}`);
     }
   }

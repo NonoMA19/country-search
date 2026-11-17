@@ -200,6 +200,42 @@
     "source": "businessfrance-destinations",
     "lien": "https://mon-vie-via.businessfrance.fr/pays",
     "verifieLe": "2026-11-17"
+   },
+   "autriche": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
+   },
+   "thailande": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
+   },
+   "vietnam": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
+   },
+   "inde": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
+   },
+   "cote-d-ivoire": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
+   },
+   "senegal": {
+    "texte": "VIE possible : ce pays fait partie des destinations du VIE de Business France.",
+    "source": "businessfrance-destinations",
+    "lien": "https://mon-vie-via.businessfrance.fr/pays",
+    "verifieLe": "2026-11-17"
    }
   }
  },
@@ -1397,6 +1433,205 @@
     "verifieLe": "2026-11-17"
    },
    "detailsAVerifier": true
+  }
+ ],
+ "autriche": [
+  {
+   "type": "ue",
+   "nom": "Libre circulation en Europe",
+   "texte": "Avec un passeport français, tu peux y vivre et y travailler sans visa ni permis de travail. La règle européenne couvre les 27 pays de l’Union, l’Islande, le Liechtenstein, la Norvège et la Suisse.",
+   "source": "europa-travail",
+   "lien": "https://europa.eu/youreurope/citizens/work/work-abroad/index_fr.htm",
+   "verifieLe": "2026-11-14",
+   "statut": "verifie",
+   "securite": {
+    "texte": "Vienne et tout le pays sont en vigilance normale (France Diplomatie, page mise à jour le 10 septembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/autriche/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "perou": [
+  {
+   "type": "pvt",
+   "nom": "PVT (Programme Vacances-Travail)",
+   "ageMax": 30,
+   "quota": 300,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 300 places par an (quota fixé chaque année entre les deux pays). Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "datePage": "2026-10-16"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Sans visa, un séjour touristique est possible. Pour travailler hors PVT, il faut un visa de travail. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Lima est en vigilance renforcée, avec des quartiers à éviter, surtout la nuit (France Diplomatie, page mise à jour le 21 septembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "uruguay": [
+  {
+   "type": "pvt",
+   "nom": "PVT (Programme Vacances-Travail)",
+   "ageMax": 30,
+   "quota": 300,
+   "fonds": {
+    "texte": "2 500 €",
+    "euros": 2500
+   },
+   "dureeMois": 12,
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 300 places par an (quota fixé chaque année entre les deux pays). Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "source": "diplomatie-pvt",
+   "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "datePage": "2026-10-16"
+  },
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Le PVT se demande à la section consulaire de l’ambassade d’Uruguay à Paris. Pour travailler hors PVT, il faut un visa de travail. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/uruguay/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Les départements de Montevideo et de Canelones sont en vigilance renforcée ; le reste du pays est en vigilance normale (France Diplomatie, page mise à jour le 10 septembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/uruguay/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "thailande": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Travailler sans permis de travail peut conduire à une expulsion rapide (règlement en vigueur depuis le 28 août 2026). Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/thailande/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Bangkok est en vigilance renforcée ; certaines provinces du sud et les zones frontalières sont déconseillées (France Diplomatie, page mise à jour le 9 novembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/thailande/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "vietnam": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Sans visa, un séjour est limité à 45 jours. Au-delà, un visa est obligatoire ; l’e-visa ne couvre que 90 jours au plus. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/vietnam/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Tout le pays, Hanoï et Hô Chi Minh-Ville compris, est en vigilance renforcée (France Diplomatie, page mise à jour le 16 novembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/vietnam/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "inde": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "L’e-visa ne peut être ni renouvelé ni transformé en un autre visa : pour travailler, il faut un visa adapté, demandé avant le départ. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/inde/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "L’Inde est dans son ensemble un pays relativement sûr ; le Cachemire et la frontière avec le Pakistan sont formellement déconseillés. Le niveau de vigilance de New Delhi et de Bombay est à vérifier sur la carte de France Diplomatie.",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/inde/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "a-verifier"
+   }
+  }
+ ],
+ "cote-d-ivoire": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Un visa biométrique est nécessaire ; il peut être demandé en ligne. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Abidjan, comme le reste du pays hors zones frontalières, est en vigilance renforcée ; la frontière avec le Mali et le Burkina Faso est formellement déconseillée (France Diplomatie, page mise à jour le 10 septembre 2026).",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "verifie"
+   }
+  }
+ ],
+ "senegal": [
+  {
+   "type": "visa-travail",
+   "nom": "Visa de travail",
+   "employeur": true,
+   "texte": "Pour un séjour de moins de 3 mois, les Français n’ont pas besoin de visa. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "conditions": [],
+   "source": "diplomatie-cav",
+   "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/senegal/conseils-aux-voyageurs-entree-sejour",
+   "verifieLe": "2026-11-17",
+   "statut": "verifie",
+   "detailsAVerifier": true,
+   "securite": {
+    "texte": "Certaines parties de la Casamance et les zones frontalières avec le Mali et la Mauritanie sont déconseillées sauf raison impérative ; la Casamance est en vigilance renforcée. Le niveau de Dakar est à vérifier sur la carte de France Diplomatie.",
+    "source": "diplomatie-cav",
+    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/senegal/conseils-aux-voyageurs-securite",
+    "verifieLe": "2026-11-17",
+    "statut": "a-verifier"
+   }
   }
  ]
 }

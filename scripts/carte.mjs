@@ -14,7 +14,7 @@ const fichier = path.join(CACHE, "ne_110m_admin_0_countries.geojson");
 if (!fs.existsSync(fichier)) execFileSync("curl", ["-sS", "-L", "--fail", "-m", "300", "-o", fichier, SOURCE]);
 const geo = JSON.parse(fs.readFileSync(fichier, "utf8"));
 
-// Les 7 zones du quiz (codes ISO à 3 lettres). Les autres pays restent en fond, non cliquables.
+// Les 9 zones du quiz (codes ISO à 3 lettres). Les autres pays restent en fond, non cliquables.
 const ZONES = {
   europe: "ALB AND AUT BEL BGR BIH BLR CHE CYP CZE DEU DNK ESP EST FIN FRA GBR GRC HRV HUN IRL ISL ITA KOS LTU LUX LVA MDA MKD MNE NLD NOR POL PRT ROU SRB SVK SVN SWE UKR".split(" "),
   "amerique-nord": "CAN USA GRL".split(" "),
@@ -23,6 +23,8 @@ const ZONES = {
   "asie-sud-est": "MMR THA LAO KHM VNM MYS SGP IDN PHL BRN TLS PNG".split(" "),
   oceanie: "AUS NZL FJI NCL SLB VUT".split(" "),
   "moyen-orient": "MAR DZA TUN LBY EGY ESH SAU ARE OMN YEM QAT KWT BHR IRQ IRN JOR SYR LBN ISR PSE TUR".split(" "),
+  "asie-sud": "IND PAK BGD LKA NPL BTN".split(" "),
+  afrique: "SEN GMB GNB GIN SLE LBR CIV GHA TGO BEN BFA MLI NER NGA MRT CMR TCD CAF GAB GNQ COG COD AGO SDN SSD ETH ERI DJI SOM SOL KEN UGA RWA BDI TZA ZMB MWI MOZ ZWE BWA NAM ZAF LSO SWZ MDG".split(" "),
 };
 const zoneDe = Object.fromEntries(Object.entries(ZONES).flatMap(([z, l]) => l.map((c) => [c, z])));
 const codeDe = (p) => (p.ISO_A3 && p.ISO_A3 !== "-99" ? p.ISO_A3 : p.ADM0_A3);

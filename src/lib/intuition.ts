@@ -19,7 +19,8 @@ const carte = () => trouverElement("carte") as CarteMonde;
 // « Tu pensais à l'Europe », « au Moyen-Orient et à l'Afrique du Nord ».
 const A_LA_ZONE: Record<string, string> = {
   europe: "à l’Europe", "amerique-nord": "à l’Amérique du Nord", "amerique-latine": "à l’Amérique latine", "asie-est": "à l’Asie de l’Est",
-  "asie-sud-est": "à l’Asie du Sud-Est", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
+  "asie-sud-est": "à l’Asie du Sud-Est", "asie-sud": "à l’Asie du Sud", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
+  afrique: "à l’Afrique subsaharienne",
 };
 const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 

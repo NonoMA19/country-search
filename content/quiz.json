@@ -404,7 +404,8 @@
             "norvege",
             "suede",
             "danemark",
-            "royaume-uni"
+            "royaume-uni",
+            "autriche"
           ]
         },
         {
@@ -424,7 +425,9 @@
             "chili",
             "colombie",
             "mexique",
-            "bresil"
+            "bresil",
+            "perou",
+            "uruguay"
           ]
         },
         {
@@ -442,9 +445,19 @@
         {
           "id": "asie-sud-est",
           "label": "Asie du Sud-Est",
-          "detail": "Singapour",
+          "detail": "Singapour, Thaïlande, Vietnam",
           "pays": [
-            "singapour"
+            "singapour",
+            "thailande",
+            "vietnam"
+          ]
+        },
+        {
+          "id": "asie-sud",
+          "label": "Asie du Sud",
+          "detail": "Inde",
+          "pays": [
+            "inde"
           ]
         },
         {
@@ -462,6 +475,15 @@
           "pays": [
             "emirats-arabes-unis",
             "maroc"
+          ]
+        },
+        {
+          "id": "afrique",
+          "label": "Afrique subsaharienne",
+          "detail": "Côte d’Ivoire, Sénégal",
+          "pays": [
+            "cote-d-ivoire",
+            "senegal"
           ]
         }
       ]

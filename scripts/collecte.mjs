@@ -8,6 +8,8 @@
 //         node scripts/collecte.mjs --ocde     (salaire moyen de l'OCDE et part qui reste après impôts, depuis content/saisie/ocde.json)
 //         node scripts/collecte.mjs --vie      (indemnité VIE par pays, depuis content/saisie/vie-indemnites.json)
 //         node scripts/collecte.mjs --secteur  (part de l'emploi par secteur, ILOSTAT, CITI rév. 4)
+//         node scripts/collecte.mjs --ajout id1,id2   (collecte seulement ces pays, ajoutés à pays.json, et les ajoute à scores.json :
+//                                                     les autres pays ne changent pas. Puis lancer node scripts/vie.mjs.)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
 //
 // Salaire (prompt 3f) : salaire annuel moyen de l'OCDE 2024 (dollars PPA, même année pour tous), saisi dans
@@ -29,6 +31,7 @@ const OMS_SEULE = process.argv.includes("--oms");
 const OCDE_SEULE = process.argv.includes("--ocde");
 const VIE_SEULE = process.argv.includes("--vie");
 const SECTEUR_SEUL = process.argv.includes("--secteur");
+const AJOUT = process.argv.includes("--ajout") ? process.argv[process.argv.indexOf("--ajout") + 1].split(",") : null;
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
 const pays = lire("pays.json");
@@ -125,10 +128,10 @@ const FRANCE = { nom: "France", ville: "Paris", le: "la France", en: "en France"
 const MESURES_FRANCE = ["emploi", "salaire", "heures", "securite", "air", "stabilite", "libertes", "manger-sain"];
 
 // ---------- Banque mondiale ----------
-const ISO3 = pays.map((p) => p.iso3).join(";");
+const ISO3 = (AJOUT ? pays.filter((p) => AJOUT.includes(p.id)) : pays).map((p) => p.iso3).join(";");
 function banqueMondiale(indicateur, extra = "") {
   const url = `https://api.worldbank.org/v2/country/${ISO3};FRA/indicator/${indicateur}?format=json&per_page=1000&date=2015:2026${extra}`;
-  const d = json(`bm_${indicateur}.json`, url);
+  const d = json(`${AJOUT ? `ajout_${AJOUT.join("_")}_` : ""}bm_${indicateur}.json`, url);
   const serie = {};
   if (!d || !Array.isArray(d[1])) return { serie, url };
   for (const l of d[1]) {
@@ -177,7 +180,7 @@ function noteSalaire(id, p) {
   const v = id === "france" ? OCDE.salaire.france : OCDE.salaire.valeurs[id];
   const taux = id === "france" ? OCDE.impots.france : OCDE.impots.taux[id];
   const reste = typeof taux === "number" ? Math.round((100 - taux) * 10) / 10 : null;
-  if (typeof v !== "number") return { ...aVerifier("Salaire brut moyen : pas de chiffre comparable dans le tableau de l'OCDE pour ce pays (2024)."), ...(reste !== null ? { resteSur100: reste } : {}) };
+  if (typeof v !== "number") return { ...aVerifier(OCDE.salaire.textesAVerifier?.[id] ?? "Salaire brut moyen : pas de chiffre comparable dans le tableau de l'OCDE pour ce pays (2024)."), ...(reste !== null ? { resteSur100: reste } : {}) };
   const n = verifie("salaire", v, TEXTE.salaire(v, OCDE.salaire.annee, p, reste, OCDE.salaire.bit.includes(id)), OCDE.salaire.source, OCDE.salaire.lien, OCDE.salaire.annee);
   return { ...n, verifieLe: OCDE.salaire.verifieLe, ...(reste !== null ? { resteSur100: reste, impots: { taux, source: OCDE.impots.source, lien: OCDE.impots.lien, annee: OCDE.impots.annee } } : {}) };
 }
@@ -419,7 +422,8 @@ function climat(p, v) {
 }
 
 // ---------- Santé : grille fixe appliquée à des faits officiels ----------
-const ACCORDS_CLEISS = ["argentine", "bresil", "canada", "chili", "coree-du-sud", "etats-unis", "japon", "maroc"];
+// Accords de sécurité sociale en vigueur avec la France (liste du Cleiss, relue le 17 novembre 2026).
+const ACCORDS_CLEISS = ["argentine", "bresil", "canada", "chili", "coree-du-sud", "etats-unis", "japon", "maroc", "cote-d-ivoire", "inde", "senegal", "uruguay"];
 const SOINS_TRES_CHERS = {
   argentine: "Les frais d'hospitalisation et de soins médicaux sont extrêmement élevés en Argentine.",
   chili: "Les frais médicaux y sont toutefois très élevés et des garanties de paiement sont exigées à l'admission.",
@@ -522,10 +526,8 @@ if (TEXTES_SEUL) {
 }
 
 // ---------- Assemblage ----------
-const inscrits = registre();
-const scores = {};
-const villes = {};
-for (const p of pays) {
+// Un pays, toutes ses mesures. « inscrits » : le registre des Français (null pour un pays ajouté : voir --ajout).
+function assembler(p, inscrits, villes) {
   console.log(p.nom, "…");
   const s = {};
   const lienBm = (b) => b.url;
@@ -539,7 +541,7 @@ for (const p of pays) {
   const h = oit("HOW_TEMP_SEX_NB_A", p.iso3, () => true);
   s.heures = h ? verifie("heures", h.valeur, TEXTE.heures(h.valeur, h.annee), "oit-ilostat", `https://rplumber.ilo.org/data/indicator/?id=HOW_TEMP_SEX_NB_A&ref_area=${p.iso3}&format=.csv`, h.annee) : aVerifier("Heures travaillées : pas de donnée dans cette source.");
 
-  s.francais = reseauFrancais(p, inscrits[p.iso2], AUJOURDHUI);
+  s.francais = inscrits ? reseauFrancais(p, inscrits[p.iso2], AUJOURDHUI) : aVerifier("Français inscrits : la source à utiliser pour ce pays est le Rapport du Gouvernement 2025 sur les Français établis hors de France (inscrits au 31 décembre 2025). Pas encore saisi.");
 
   const px = niveauPrix(p.iso3);
   if (px && prixFrance) {
@@ -588,8 +590,34 @@ for (const p of pays) {
   s["manger-sain"] = noteObesite(p.iso3);
 
   Object.assign(s, notesAvis(p));
-  scores[p.id] = s;
+  return s;
 }
+
+// ---------- Mode --ajout : seulement les pays nommés, ajoutés à scores.json ----------
+if (AJOUT) {
+  const actuel = lire("scores.json");
+  for (const id of AJOUT) {
+    const p = pays.find((x) => x.id === id);
+    if (!p) throw new Error(`--ajout : ${id} n'est pas dans pays.json`);
+    const s = assembler(p, null, actuel.villes);
+    // Heures et secteurs viennent de l'OIT : sans donnée téléchargée, ils restent « à vérifier » (jamais un chiffre inventé).
+    for (const sect of Object.keys(SECTEURS)) s[`secteur-${sect}`] = aVerifier("Emploi par secteur : pas encore de donnée de l'Organisation internationale du travail pour ce pays (source injoignable depuis la session).");
+    actuel.pays[id] = s;
+  }
+  typoTextes(actuel.pays);
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  for (const id of AJOUT) {
+    const s = actuel.pays[id];
+    const ok = Object.entries(s).filter(([, m]) => m.statut === "verifie" && m.note !== null);
+    console.log(`${id} : ${ok.length} mesures notées ; à vérifier : ${Object.entries(s).filter(([, m]) => m.statut !== "verifie").map(([k]) => k).join(", ")}`);
+  }
+  process.exit(0);
+}
+
+const inscrits = registre();
+const scores = {};
+const villes = {};
+for (const p of pays) scores[p.id] = assembler(p, inscrits, villes);
 
 const pourFrance = (k) => ({ x: dernier(bm[k].serie.FRA), url: bm[k].url });
 const france = notesFrance({ emploi: pourFrance("emploi"), homicides: pourFrance("homicides"), air: pourFrance("air"), stabilite: pourFrance("stabilite"), libertes: pourFrance("libertes"), mangerSain: noteObesite("FRA") });

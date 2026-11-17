@@ -4,12 +4,12 @@ import BoutonCommencer from "@/components/BoutonCommencer";
 import Definition from "@/components/Definition";
 import PiedDePage from "@/components/PiedDePage";
 import { europe } from "@/lib/donnees";
-import { FAMILLES, NOM_FAMILLE, paysParFamille } from "@/lib/pays";
+import { FAMILLES, NOM_FAMILLE, pays, paysParFamille } from "@/lib/pays";
 
 export const metadata: Metadata = {
   title: "Country Search : choisis le pays où partir travailler",
   description:
-    "Un quiz gratuit, sans compte, pour classer 30 pays selon ce qui compte pour toi. Chaque score est expliqué, chaque information a sa source.",
+    `Un quiz gratuit, sans compte, pour classer ${pays.length} pays selon ce qui compte pour toi. Chaque score est expliqué, chaque information a sa source.`,
 };
 
 export default function Accueil() {
@@ -22,7 +22,7 @@ export default function Accueil() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Country Search
         </h1>
-        <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi 30 pays.</p>
+        <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi {pays.length} pays.</p>
         <p className="mt-1 text-lg">Tu obtiens ton top 3 et ta porte d’entrée : Europe sans visa, <Definition cle="pvt" /> ou visa de travail.</p>
         <p className="mt-1 text-lg text-gris">Environ 8 minutes, sans compte.</p>
         <div className="mt-6">
@@ -36,7 +36,7 @@ export default function Accueil() {
 
       <section className="mt-12" aria-labelledby="titre-pays">
         <h2 id="titre-pays" className="text-xl font-semibold">
-          30 pays, 3 familles
+          {pays.length} pays, 3 familles
         </h2>
 
         {FAMILLES.map((famille) => (
