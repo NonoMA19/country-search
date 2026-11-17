@@ -8,8 +8,8 @@ import {
   GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
-import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
-import { chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
+import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
+import { prochainAffiner, restantsAffiner, resultatProvisoire, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, phrasesSwipe, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
 import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
@@ -563,11 +563,11 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(f("belgique", {}).remplies.some((x) => x.includes("nationalité française suffit")), "faisabilité : la Belgique sans « ta nationalité suffit »");
   verifier(f("suisse", {}).aRemplir.some((x) => x.includes("permis de séjour")), "faisabilité : la Suisse sans le permis de séjour");
   // Budget en tranches (lot 5) : « au moins » sous la tranche, « pourrait » dans la tranche, « couvre » au-dessus.
-  verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => x.startsWith("Il te manquerait au moins 1 100")), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
-  verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => x.startsWith("Selon ta somme exacte, il pourrait te manquer jusqu’à 1 100")), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "moins-2000" }).aRemplir.some((x) => /^Il te manquerait au moins 1\s100/.test(x)), "faisabilité : le manque d'argent n'est pas dit (Japon, moins de 2 000 €)");
+  verifier(f("japon", { age: "18-25", budget: "2000-5000" }).aVerifier.some((x) => /^Selon ta somme exacte, il pourrait te manquer jusqu’à 1\s100/.test(x)), "faisabilité : le manque possible n'est pas dit (Japon, 2 000 à 5 000 €)");
   verifier(f("japon", { age: "18-25", budget: "5000-10000" }).remplies.some((x) => x.includes("Ton budget couvre")), "faisabilité : le budget suffisant n'est pas dit");
   verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25", budget: "inconnu" }, budgetProfil({ budget: "inconnu" })).alertes.some((a) => a.texte.startsWith("Ce PVT demande 3")), "budget inconnu : la somme demandée n'est pas dite");
-  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25" }, { min: 2500, max: 2500 }).alertes.some((a) => a.texte.startsWith("Il te manquerait environ 600")), "curseur : somme exacte mal dite");
+  verifier(evaluerPorte(trouverPays("japon")!, { age: "18-25" }, { min: 2500, max: 2500 }).alertes.some((a) => /^Il te manquerait environ 600/.test(a.texte)), "curseur : somme exacte mal dite");
   verifier(f("canada", { age: "18-25" }).aVerifier.some((x) => x.includes("Saison 2026 fermée")) && f("canada", { age: "18-25" }).etape?.texte === "Créer ton profil sur le site officiel", "faisabilité : Canada sans la saison fermée ou sans « Créer ton profil »");
   verifier(f("australie", { age: "36-plus" }).aRemplir.some((x) => x.includes("1 an d’expérience")) && f("australie", { age: "36-plus" }).aVerifier.some((x) => x.includes("expérience pro")), "faisabilité : Australie sans l'expérience demandée");
   verifier(f("japon", { age: "18-25", objectif: "stage-vie" }).remplies.some((x) => x.includes("permet le VIE")) && f("japon", { age: "28-30", objectif: "stage-vie" }).aRemplir.some((x) => x.includes("VIE n’est plus possible")), "faisabilité : condition d'âge du VIE mal confrontée");
@@ -595,7 +595,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   for (let k = 1; k <= 5; k++) verifier(pays.filter((p) => notesPays[p.id].salaire.note === k).length >= 3, `salaire : la note ${k} est presque vide`);
   verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
   // Part qui reste après impôts : dans la preuve et le détail, jamais dans le score.
-  verifier(notesPays.belgique.salaire.resteSur100 === 60.5 && notesPays.belgique.salaire.texte.includes("il reste environ 61 €"), "impôts : la Belgique ne dit pas ce qui reste sur 100 €");
+  verifier(notesPays.belgique.salaire.resteSur100 === 60.5 && /il reste environ 61\s€/.test(notesPays.belgique.salaire.texte), "impôts : la Belgique ne dit pas ce qui reste sur 100 €");
   verifier(complementMesure("argentine", "salaire")?.includes("à vérifier") === true, "impôts : l'Argentine devrait être à vérifier");
   const sansImpots = construire({ envies: ["salaire", "travail", "prix", "climat", "securite"] });
   const scoreBel = calculer(sansImpots).find((l) => l.pays.id === "belgique")!.score;
@@ -624,7 +624,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 // 2.16 Options équilibrées et réponses graduées (prompt 3e, lot 2).
 {
   for (const d of quiz.dilemmes) {
-    verifier(d.options.length === 2, `${d.id} : ${d.options.length} options au lieu de 2`);
+    verifier(d.options.length === (d.id === "noel" ? 3 : 2), `${d.id} : ${d.options.length} options`);
     verifier(d.scenes.length >= 1, `${d.id} : aucune scène`);
     for (const sc of d.scenes) {
       verifier(sc.options.length === d.options.length, `${d.id}/${sc.id} : pas autant d'options que le dilemme`);
@@ -633,7 +633,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     // Les dilemmes de culture au travail gardent 2 options : jamais d'échelle.
     if (d.theme === "Culture au travail") verifier(!d.echelle, `${d.id} : la culture au travail ne doit pas être en échelle`);
   }
-  for (const id of ["deux-offres", "promotion", "sortie-ecole", "noel", "janvier", "aout", "appartement", "nuit"]) verifier(!!trouverDilemme(id)?.echelle, `${id} : pas en échelle`);
+  for (const id of ["deux-offres", "promotion", "sortie-ecole", "janvier", "aout", "appartement", "nuit"]) verifier(!!trouverDilemme(id)?.echelle, `${id} : pas en échelle`);
   // « Un peu » : la moitié de l'effet (importance 0,5, ou une position à mi-chemin du milieu).
   for (const d of quiz.dilemmes.filter((x) => x.echelle)) {
     verifier(reponsesDe(d).join() === "a,peu-a,peu-b,b", `${d.id} : réponses de l'échelle incorrectes`);
@@ -812,7 +812,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   const avecVariantes = quiz.dilemmes.filter((d) => d.scenes.some((sc) => sc.variantes && Object.keys(sc.variantes).length));
   verifier(avecVariantes.length >= 10, `variantes : seulement ${avecVariantes.length} dilemmes`);
   for (const d of avecVariantes) for (const sc of d.scenes) for (const [projet, texte] of Object.entries(sc.variantes ?? {})) {
-    verifier(Object.keys(quiz.objectifs).includes(projet), `variantes : projet inconnu ${projet} (${d.id})`);
+    verifier(Object.keys(quiz.objectifs).includes(projet) || projet === "inconnu", `variantes : projet inconnu ${projet} (${d.id})`);
     const e = { ...ETAT_VIDE, profil: { objectif: projet }, dejaVues: d.scenes.filter((x) => x.id !== sc.id).map((x) => cleScene(d, x)) };
     verifier(sceneDe(d, e).texte === texte, `variantes : ${d.id}/${sc.id} n'utilise pas la variante ${projet}`);
     verifier(!pays.some((p) => texte.includes(p.nom)), `variantes : ${d.id}/${sc.id} nomme un vrai pays`);
@@ -940,6 +940,89 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     const t = pts.get(l.pays.id)!.travailler;
     verifier([...t.pour, ...(t.savoir ? [t.savoir] : [])].some((x) => x.mesure === "secteur-finance"), `secteur : pas de ligne « Ton secteur » pour ${l.pays.nom}`);
   }
+}
+
+// 2.24 Fin d'affinage (prompt 3g, lot 1) : affiner jusqu'à épuisement finit sur le portrait, jamais sur une page vide.
+{
+  const r11 = hasard(61);
+  for (let k = 0; k < 12; k++) {
+    let etat = quizAuHasard(r11);
+    let n = 0;
+    for (; n < 40; n++) {
+      const el = prochainAffiner(etat);
+      if (!el) break;
+      verifier(restantsAffiner(etat) > 0, `affiner ${k} : un élément proposé alors qu'il n'en reste aucun`);
+      etat = repondre(etat, el.id, reponseAuHasard(el, etat, r11));
+    }
+    verifier(prochainAffiner(etat) === null && restantsAffiner(etat) === 0, `affiner ${k} : il reste des questions après ${n} réponses`);
+    // Une session restée à l'étape « affiner » sans rien à affiner revient au portrait (rechargement, « Reprendre mon quiz »).
+    const s = validerSession(JSON.parse(JSON.stringify({ ...SESSION_VIDE, etat, etape: { t: "affiner" } })));
+    verifier(s?.etape.t === "portrait" && (s.etape as { fin?: boolean }).fin === true, `affiner ${k} : la session reste sur « affiner » (page vide)`);
+  }
+}
+
+// 2.25 Proche ou loin (prompt 3g, lot 3) : le dépaysement est l'inverse exact de la proximité, sans nouvelle donnée.
+{
+  for (const p of pays) {
+    const v = noteEffective(p.id, "vol", {}), d = noteEffective(p.id, "decalage", {}), dep = noteEffective(p.id, "depaysement", {});
+    if (v !== null && d !== null) verifier(dep === Math.round((12 - v - d) / 2), `dépaysement : ${p.nom} = ${dep} (vol ${v}, décalage ${d})`);
+  }
+  verifier(noteEffective("australie", "depaysement", {})! > noteEffective("belgique", "depaysement", {})!, "dépaysement : l'Australie moins dépaysante que la Belgique");
+  verifier(quiz.envies.length === 10 && quiz.envies.some((e) => e.id === "depaysement"), "dépaysement : l'envie manque (10 envies)");
+  const loin = construire({ envies: ["depaysement", "salaire", "travail", "securite", "climat"] });
+  verifier(effetsActifs(loin).find((e) => e.mesure === "depaysement")?.poids === 2, "dépaysement : l'envie n° 1 ne compte pas 2");
+  // Phrase S16, Noël C et S2.
+  const sw = (x: Record<string, string>) => effetsActifs(repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "phrases", x));
+  verifier(sw({ S16: "oui" }).find((e) => e.mesure === "depaysement")?.poids === 1, "S16 « Ça me correspond » : pas 1 sur le dépaysement");
+  verifier(sw({ S16: "non" }).find((e) => e.mesure === "vol")?.poids === 0.25 && sw({ S16: "non" }).find((e) => e.mesure === "decalage")?.poids === 0.25, "S16 « Pas vraiment » : pas 0,5 sur la proximité");
+  verifier(sw({ S2: "oui" }).find((e) => e.mesure === "depaysement")?.poids === 0.5, "S2 « Ça me correspond » : pas 0,5 sur le dépaysement");
+  verifier(effetsActifs(repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "noel", "c")).find((e) => e.mesure === "depaysement")?.poids === 0.5, "Noël C : pas 0,5 sur le dépaysement");
+  // La carte hors d'Europe fait entrer la phrase S16 dans la série, sans changer le score.
+  const phr = trouverElement("phrases");
+  if (phr?.type === "swipe") {
+    const avecCarte = repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "carte", ["oceanie", "asie-est"]);
+    verifier(phrasesSwipe(phr, avecCarte).some((p) => p.id === "S16") && phrasesSwipe(phr, avecCarte).length === 5, "carte hors d'Europe : la phrase « dépaysement » n'est pas dans la série");
+    verifier(memesScores(scores(avecCarte), scores(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }))), "carte hors d'Europe : le score change");
+  }
+}
+
+// 2.26 Ce qui revient (prompt 3g, lot 4) : la durée au chapitre 1, l'écran Valeurs facultatif au chapitre 5.
+{
+  const duree = trouverElement("duree");
+  verifier(duree?.chapitre === 1 && duree.type === "choix-cartes" && duree.profil === "duree", "durée : la question n'est pas au chapitre 1");
+  const pvt = evaluerPorte(trouverPays("australie")!, { age: "18-25", duree: "1-2" }, null);
+  verifier(pvt.alertes.some((a) => a.texte.includes("un an maximum")), "durée : l'alerte « le PVT dure un an » n'apparaît pas");
+  const val = trouverElement("valeurs");
+  verifier(val?.chapitre === 5 && val.type === "choix-cartes" && !!val.multiple, "valeurs : l'écran n'est pas au chapitre 5");
+  if (val?.type === "choix-cartes") {
+    const ids = optionsDe(val).map((o) => o.id);
+    verifier(ids.includes("stabilite") && ids.includes("air") && ids.includes("libertes"), "valeurs : stabilité, libertés ou air manquent");
+    verifier(ids.includes("egalite") === pays.some((p) => notesPays[p.id].egalite?.statut === "verifie"), "valeurs : l'égalité est proposée sans donnée (ou cachée avec)");
+    const e = repondre(construire({ envies: ["salaire", "travail", "prix", "climat", "proche"] }), "valeurs", ["stabilite", "air"]);
+    verifier(effetsActifs(e).find((x) => x.mesure === "stabilite")?.poids === 1 && effetsActifs(e).find((x) => x.mesure === "air")?.poids === 1, "valeurs : importance 1 non donnée");
+    verifier(valeurValide(val, []) && valeurValide(val, "passer"), "valeurs : rien cocher ou passer refusé");
+  }
+}
+
+// 2.27 Petits correctifs (prompt 3g, lot 6).
+{
+  // Le titre de la scène suit aussi le projet.
+  const d = trouverDilemme("premier-mois")!;
+  const sc = d.scenes.find((x) => x.id === "stage")!;
+  const e = { ...ETAT_VIDE, profil: { objectif: "carriere" }, dejaVues: d.scenes.filter((x) => x.id !== "stage").map((x) => cleScene(d, x)) };
+  verifier(sceneDe(d, e).titre === "La recherche de poste" && sceneDe(d, e).texte === sc.variantes!.carriere, "variantes : « La recherche de stage » montrée à une carrière longue");
+  // Le portrait d'un PVT qui veut surtout trouver du travail ne parle pas de carrière.
+  const pvt = portraitComplet(construire({ profil: { objectif: "aventure" }, envies: ["travail", "salaire", "prix", "climat", "securite"], reponses: { "pvt-boulots": "a" } }));
+  verifier(!pvt.titre.includes("carrière"), `portrait PVT : « ${pvt.titre} »`);
+  // Résultat provisoire : sans envies, ou avec moins de 3 vraies réponses aux chapitres 3 et 4.
+  const toutPasse = quizAuHasard(hasard(77), true);
+  verifier(resultatProvisoire(toutPasse), "provisoire : tout passer donne un résultat définitif");
+  const complet = quizAuHasard(hasard(78));
+  verifier(!resultatProvisoire(complet) || complet.ordre.filter((id) => [3, 4].includes(chapitreDe(id)) && complet.reponses[id] !== PASSER).length < 3, "provisoire : un parcours complet est provisoire");
+  // Hong Kong : la porte et son détail ont le même statut.
+  for (const p of pays) for (const b of portes(p.id)) if (b.detail?.statut === "verifie") verifier(b.statut === "verifie", `${p.nom} : porte « ${b.statut} » mais détail vérifié`);
+  // Un seul lien de visa vers une ambassade hors de France : aucun.
+  for (const p of pays) for (const b of portes(p.id)) for (const l of b.detail?.liens ?? []) verifier(!/\/fi-en\//.test(l.url), `${p.nom} : lien vers une ambassade en Finlande`);
 }
 
 // ---------- Bilan ----------

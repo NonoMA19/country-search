@@ -22,7 +22,7 @@
           "montant": 4130.11
         },
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 4108.38
         }
       ]
@@ -36,7 +36,7 @@
           "montant": 3363.17
         },
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 3011.73
         }
       ]
@@ -95,7 +95,7 @@
           "montant": 2635.95
         },
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": null
         }
       ]
@@ -105,7 +105,7 @@
       "ville": "Sydney",
       "autres": [
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 3224.39
         }
       ]
@@ -115,7 +115,7 @@
       "ville": "Tokyo",
       "autres": [
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 2495.28
         }
       ]
@@ -175,7 +175,7 @@
       "ville": "Londres",
       "autres": [
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 2732.43
         }
       ]
@@ -218,7 +218,7 @@
           "montant": 2884.06
         },
         {
-          "ville": "autres villes",
+          "ville": "reste du pays",
           "montant": 2660.31
         }
       ]

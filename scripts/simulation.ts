@@ -4,8 +4,9 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
 import { PASSER, optionsDe } from "@/lib/elements";
-import { LIBELLE_FIABILITE, calculer, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
-import { chapitreDe, estAdaptatif, situationsLimites } from "@/lib/parcours";
+import { LIBELLE_FIABILITE, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
+import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner, situationsLimites } from "@/lib/parcours";
+import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Repondeur } from "./hasard";
 
@@ -79,6 +80,9 @@ console.log("Pays : part en n° 1 | part dans le top 3");
 for (const p of [...pays].sort((a, b) => (enN1[b.id] ?? 0) - (enN1[a.id] ?? 0) || (enTop3[b.id] ?? 0) - (enTop3[a.id] ?? 0))) {
   console.log(`  ${p.nom.padEnd(22)} ${pct(enN1[p.id] ?? 0).padStart(7)} | ${pct(enTop3[p.id] ?? 0).padStart(7)}`);
 }
+// Part des pays européens en n° 1, et les pays qui dépassent 20 % de n° 1.
+const europeN1 = pays.filter((p) => p.zone === "europe").reduce((t, p) => t + (enN1[p.id] ?? 0), 0);
+console.log(`\nPart des pays européens en n° 1 : ${pct(europeN1)} ; pays au-dessus de 20 % de n° 1 : ${pays.filter((p) => (enN1[p.id] ?? 0) > 0.2 * NB).map((p) => `${p.nom} ${pct(enN1[p.id])}`).join(", ") || "aucun"}.`);
 console.log(`\nTop 3 différent selon le projet (mêmes réponses, 1 000 parcours) : ${pct(changeAvecObjectif, Math.min(NB, 1000))}.`);
 const tri = [...ecrans].sort((a, b) => a - b);
 console.log(`\nDurée : ${nombre(ecrans.reduce((a, b) => a + b, 0) / NB)} écrans en moyenne (min ${tri[0]}, max ${tri.at(-1)}, médiane ${tri[Math.floor(NB / 2)]}) ; moins de 18 écrans : ${pct(ecrans.filter((x) => x < 18).length)}.`);
@@ -97,17 +101,27 @@ const jaccard = (a: string[], b: string[]) => {
   return union ? inter / union : 1;
 };
 const adaptatifs = (e: Etat) => e.ordre.filter((id) => estAdaptatif(chapitreDe(id)));
+// Ce que la personne lit vraiment dans les chapitres 3 et 4 : la scène d'un dilemme, chacune des 5 phrases à glisser,
+// le texte d'une question (curseur, ambiances, question du projet).
+const contenusLus = (e: Etat) => adaptatifs(e).flatMap((id) => {
+  const el = trouverElement(id)!;
+  if (el.type === "dilemme") return [`${id}/${sceneDe(el, etatAvant(e, id)).id}`];
+  if (el.type === "swipe") return phrasesSwipe(el, e).map((p) => `phrase/${p.id}`);
+  return [id];
+});
 const r2 = hasard(20261116);
-let jEl = 0, jEcran = 0, jTout = 0;
+let jEl = 0, jEcran = 0, jTout = 0, jLu = 0;
 const PAIRES = 3000;
 for (let k = 0; k < PAIRES; k++) {
   const a = choisir(r2, parcoursListe), b = choisir(r2, parcoursListe);
   jEl += jaccard(adaptatifs(a), adaptatifs(b));
+  jLu += jaccard(contenusLus(a), contenusLus(b));
   jEcran += jaccard(adaptatifs(a).map((id) => cleEcran(id, a)), adaptatifs(b).map((id) => cleEcran(id, b)));
   jTout += jaccard(a.ordre.map((id) => cleEcran(id, a)), b.ordre.map((id) => cleEcran(id, b)));
 }
 const modal = (m: Record<string, number>) => Object.entries(m).sort((a, b) => b[1] - a[1])[0] ?? ["", 0];
 console.log(`\nDiversité (${PAIRES} paires de parcours) :`);
+console.log(`  Contenu lu identique dans les chapitres 3 et 4 (scènes, phrases à glisser, questions ; Jaccard) : ${pct(jLu, PAIRES)} (objectif : moins de 30 %)`);
 console.log(`  Éléments en commun dans les chapitres 3 et 4 (Jaccard) : ${pct(jEl, PAIRES)} ; écrans identiques (même scène) : ${pct(jEcran, PAIRES)}`);
 console.log(`  Écrans identiques sur tout le parcours (chapitres 1, 2 et 5 compris, communs à tous) : ${pct(jTout, PAIRES)}`);
 const [m3, n3] = modal(debut3), [m4, n4] = modal(debut4);
@@ -135,6 +149,7 @@ const PERSONAS: Persona[] = [
   { nom: "d) Carrière longue, apprendre une langue lui va, sécurité et équilibre", graine: 4, reponses: { objectif: "carriere", age: "26-27", "anglais-reunion": 5, "anglais-vie": 4, envies: ["securite", "equilibre", "salaire", "travail", "climat"], classement: ["securite", "equilibre", "salaire", "travail", "climat"], "cours-offerts": "a", "deux-langues": "a" } },
   { nom: "e) Parle espagnol, aime la chaleur, vie moins chère", graine: 5, reponses: { age: "18-25", "anglais-reunion": 3, "anglais-vie": 3, langues: ["es"], envies: ["prix", "climat", "travail", "securite", "equilibre"], classement: ["prix", "climat", "travail", "securite", "equilibre"], aout: "a", janvier: "b", ambiances: ["soleil"] } },
   { nom: "f) Hiérarchie plate, consensus, collègues vus après le travail", graine: 6, reponses: { age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, envies: ["equilibre", "travail", "salaire", "securite", "proche"], classement: ["equilibre", "travail", "salaire", "securite", "proche"], "reunion-directeur": "a", "idee-reunion": "b", "vendredi-18h": "b" } },
+  { nom: "k) Karim : Océanie et Asie de l’Est, « Climat doux » n° 1, soleil, 10 h de vol sans problème", graine: 11, reponses: { age: "18-25", "anglais-reunion": 4, "anglais-vie": 4, carte: ["oceanie", "asie-est"], envies: ["climat", "travail", "salaire", "securite", "prix"], classement: ["climat", "travail", "salaire", "securite", "prix"], ambiances: ["soleil"], limites: { "vol-10h": "ok" } } },
   { nom: "g) Finance, anglais courant, carrière, peu importe la zone", graine: 7, reponses: { objectif: "carriere", secteur: "finance", age: "26-27", "anglais-reunion": 5, "anglais-vie": 5, carte: ["aucune"], envies: ["secteur", "salaire", "travail", "securite", "equilibre"], classement: ["secteur", "salaire", "travail", "securite", "equilibre"], "secteur-ville": "a", ambiances: ["metropole"], "langue-bureau": "a", limites: {} } },
 ];
 // Un profil type répond seulement à ce qu'il dit. Le reste : « Passer » (chapitres 3 et 4), « Non » pour la nationalité,
@@ -170,4 +185,22 @@ for (const p of PERSONAS) {
     const sans = calculer({ ...etat, profil: { ...etat.profil, secteur: "autre" } }).filter((l) => !l.ecart);
     console.log(`    sans le secteur (mêmes réponses) : Royaume-Uni n° ${sans.findIndex((l) => l.pays.id === "royaume-uni") + 1} ; top 5 : ${sans.filter((l) => !l.peuDeDonnees).slice(0, 5).map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
   }
+}
+
+// ---------- Cas limites (prompt 3g) : affiner jusqu'au bout, et tout passer ----------
+{
+  const rA = hasard(424242);
+  let etat = parcoursAuHasard(rA);
+  const avant = etat.ordre.length;
+  let affinages = 0;
+  for (; affinages < 40; affinages++) {
+    const el = prochainAffiner(etat);
+    if (!el) break;
+    etat = repondre(etat, el.id, reponseAuHasard(el, etat, rA));
+  }
+  const session = validerSession(JSON.parse(JSON.stringify({ ...SESSION_VIDE, etat, etape: { t: "affiner" } })));
+  console.log(`\nAffiner jusqu'au bout : ${avant} écrans, puis ${affinages} questions d'affinage ; il en reste ${restantsAffiner(etat)} ; une session restée sur « affiner » revient à « ${session?.etape.t} ».`);
+  const passe = parcoursAuHasard(hasard(7), { passer: 1 });
+  const top = calculer(passe).filter((l) => !l.ecart && !l.peuDeDonnees);
+  console.log(`Tout passer : ${passe.ordre.length} écrans, questionnaire fini : ${questionnaireFini(passe) ? "oui" : "non"} ; pays classés avec un pourcentage : ${top.length}.`);
 }

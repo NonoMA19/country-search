@@ -45,9 +45,9 @@ export function Illustration({ icone, alt, petite = false }: { icone?: string; a
 // La barre du bas, collée à l'écran : le bouton principal, puis « Passer ».
 export function Actions({ children, passer, libellePasser = "Passer" }: { children?: ReactNode; passer: () => void; libellePasser?: string }) {
   return (
-    <div className="sticky bottom-0 -mx-5 mt-auto space-y-1 border-t border-bord bg-fond/95 px-5 pt-3 pb-3 backdrop-blur">
+    <div className="sticky bottom-0 -mx-5 mt-auto space-y-0.5 border-t border-bord bg-fond/95 px-5 pt-2 pb-1.5 backdrop-blur">
       {children}
-      <button type="button" onClick={passer} className={`min-h-12 w-full rounded-2xl text-base font-medium text-gris hover:text-encre ${FOCUS}`}>{libellePasser}</button>
+      <button type="button" onClick={passer} className={`min-h-11 w-full rounded-2xl text-base font-medium text-gris hover:text-encre ${FOCUS}`}>{libellePasser}</button>
     </div>
   );
 }

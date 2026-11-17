@@ -91,7 +91,7 @@
     "le": "l’Italie"
   },
   {
-    "nom": "Pays-Bas",
+    "nom": "Pays‑Bas",
     "id": "pays-bas",
     "famille": "Europe sans visa",
     "ficheComplete": false,
@@ -100,8 +100,8 @@
     "zone": "europe",
     "ville": "Amsterdam",
     "villeRecherche": "Amsterdam",
-    "en": "aux Pays-Bas",
-    "le": "les Pays-Bas",
+    "en": "aux Pays‑Bas",
+    "le": "les Pays‑Bas",
     "pluriel": true
   },
   {
@@ -196,7 +196,7 @@
     "le": "le Japon"
   },
   {
-    "nom": "Nouvelle-Zélande",
+    "nom": "Nouvelle‑Zélande",
     "id": "nouvelle-zelande",
     "famille": "PVT",
     "ficheComplete": false,
@@ -205,8 +205,8 @@
     "zone": "hors-europe",
     "ville": "Auckland",
     "villeRecherche": "Auckland",
-    "en": "en Nouvelle-Zélande",
-    "le": "la Nouvelle-Zélande"
+    "en": "en Nouvelle‑Zélande",
+    "le": "la Nouvelle‑Zélande"
   },
   {
     "nom": "Corée du Sud",
@@ -313,7 +313,7 @@
     "le": "le Brésil"
   },
   {
-    "nom": "Royaume-Uni",
+    "nom": "Royaume‑Uni",
     "id": "royaume-uni",
     "famille": "Visa de travail",
     "ficheComplete": true,
@@ -322,11 +322,11 @@
     "zone": "europe",
     "ville": "Londres",
     "villeRecherche": "London",
-    "en": "au Royaume-Uni",
-    "le": "le Royaume-Uni"
+    "en": "au Royaume‑Uni",
+    "le": "le Royaume‑Uni"
   },
   {
-    "nom": "États-Unis",
+    "nom": "États‑Unis",
     "id": "etats-unis",
     "famille": "Visa de travail",
     "ficheComplete": true,
@@ -335,8 +335,8 @@
     "zone": "hors-europe",
     "ville": "New York",
     "villeRecherche": "New York",
-    "en": "aux États-Unis",
-    "le": "les États-Unis",
+    "en": "aux États‑Unis",
+    "le": "les États‑Unis",
     "pluriel": true
   },
   {

@@ -24,7 +24,7 @@ export default function Accueil() {
         </h1>
         <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi 30 pays.</p>
         <p className="mt-1 text-lg">Tu obtiens ton top 3 et ta porte d’entrée : Europe sans visa, <Definition cle="pvt" /> ou visa de travail.</p>
-        <p className="mt-1 text-lg text-gris">Environ 5 minutes, sans compte.</p>
+        <p className="mt-1 text-lg text-gris">Environ 8 minutes, sans compte.</p>
         <div className="mt-6">
           <BoutonCommencer />
         </div>

@@ -150,7 +150,7 @@ export function contradictions(etat: Etat): Contradiction[] {
   const cheres = [rep(etat, "deux-offres") === "a" ? "deux-offres" : "", swipe(etat, "S3") === "oui" ? "phrases" : "", rep(etat, "mission-vie") === "a" ? "mission-vie" : ""].filter(Boolean);
   if (rangEnvie(etat, "prix") <= 2 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "classement", texte: "Tu as classé « Vie pas chère » tout en haut, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
   // 2. « Proche de la France », mais 12 h de vol pour Noël, c'est le jeu.
-  const loin = [rep(etat, "noel") === "b" ? "noel" : "", swipe(etat, "S6") === "non" ? "phrases" : ""].filter(Boolean);
+  const loin = [rep(etat, "noel") === "b" || rep(etat, "noel") === "c" ? "noel" : "", swipe(etat, "S6") === "non" ? "phrases" : ""].filter(Boolean);
   if (rangEnvie(etat, "proche") <= 3 && loin.length >= 1) res.push({ id: "proche", reponses: ["envie:proche", ...loin], revoir: loin[0], texte: "Tu as choisi « Proche de la France » parmi tes envies, mais un long vol pour rentrer ne te gêne pas vraiment. On garde la distance dans ton calcul, avec son rang." });
   // 3. « Sécurité », mais une ville où il faut rester vigilant te va.
   const vigilant = [swipe(etat, "S11") === "oui" ? "phrases" : "", rep(etat, "nuit") === "b" ? "nuit" : ""].filter(Boolean);
@@ -191,6 +191,12 @@ const TITRES: Record<string, string> = {
   sante: "Tu cherches avant tout un pays où tu te sens protégé au quotidien",
   valeurs: "Tu cherches avant tout un pays sûr et stable",
   langue: "Tu cherches avant tout un pays où la langue ne sera pas un mur",
+};
+const TITRE_TRAVAIL: Record<string, string> = {
+  carriere: "Tu cherches avant tout une expérience qui fait avancer ta carrière",
+  "premier-poste": "Tu cherches avant tout un premier poste qui lance ta vie pro",
+  "stage-vie": "Tu cherches avant tout une première expérience qui compte sur ton CV",
+  aventure: "Tu cherches avant tout une année d’aventure où le travail se trouve facilement",
 };
 const CULTURE = ["hierarchie", "communication", "ponctualite", "decision", "pro-perso"];
 
@@ -237,6 +243,9 @@ export function portraitComplet(etat: Etat): Portrait {
   const obj = typeof etat.profil.objectif === "string" ? etat.profil.objectif : undefined;
   let titre = premiere ? TITRES[premiere.id] : CULTURE.some((c) => profil[c]?.poids) ? "Tu cherches avant tout une culture de travail qui te ressemble" : "Tu cherches un pays qui te ressemble";
   if (obj === "aventure" && premiere && ["cout", "climat", "ville"].includes(premiere.id)) titre = "Tu cherches avant tout une aventure qui te ressemble, sans te ruiner";
+  // Le travail en tête : la phrase suit ton projet (un PVT de petits boulots ne parle pas de « carrière »).
+  if (premiere && ["salaire", "emploi", "secteur"].includes(premiere.id)) titre = TITRE_TRAVAIL[obj ?? ""] ?? "Tu cherches avant tout un pays où le travail ne manque pas";
+  if (premiere?.id === "depaysement") titre = obj === "aventure" ? "Tu cherches avant tout une aventure loin de tes repères" : "Tu cherches avant tout un vrai dépaysement";
 
   const lignes: LignePortrait[] = [];
   const projet = obj ? quiz.objectifs[obj] : undefined;

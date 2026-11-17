@@ -25,7 +25,7 @@ export default function TriLimites({ element: el, etat, valeur, repondre, passer
                 const actif = choix[s.id] === r;
                 return (
                   <button key={r} type="button" aria-pressed={actif} onClick={() => setChoix({ ...choix, [s.id]: r })}
-                    className={`min-h-12 rounded-xl border-2 px-1 text-center text-sm leading-tight font-semibold ${actif ? STYLE[r] : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
+                    lang="fr" className={`min-h-12 min-w-0 rounded-xl border-2 px-0.5 text-center text-[13px] leading-tight font-semibold hyphens-auto min-[360px]:px-1 min-[360px]:text-sm ${actif ? STYLE[r] : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
                     {LIBELLE_LIMITE[r]}
                   </button>
                 );

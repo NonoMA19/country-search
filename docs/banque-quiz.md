@@ -66,11 +66,22 @@ _Ton projet, ton secteur, tes langues : de quoi poser le décor._
 
 - Dimensions : aucune
 - Remplit le profil : budget
-- Moins de 2 000 €
-- De 2 000 à 5 000 €
-- De 5 000 à 10 000 €
-- Plus de 10 000 €
+- Moins de 2 000 €
+- De 2 000 à 5 000 €
+- De 5 000 à 10 000 €
+- Plus de 10 000 €
 - Je ne sais pas encore
+
+### duree · ChoixCartes · thème « Ton profil »
+
+**Tu pars pour combien de temps ?**
+
+- Dimensions : aucune
+- Remplit le profil : duree
+- Moins de 6 mois
+- 6 à 12 mois
+- 1 à 2 ans
+- Plus de 2 ans
 
 ### anglais-reunion · Thermomètre · thème « Ton anglais »
 
@@ -140,7 +151,7 @@ _Cinq envies, puis leur ordre : c’est le cœur de ton classement._
 
 ### envies · ChoixCartes · thème « Tes envies »
 
-**Choisis 5 envies** Les cinq qui comptent le plus pour ton départ.
+**Choisis 5 envies** Les cinq qui comptent le plus pour ton départ, parmi dix.
 
 - Dimensions : aucune
 - Bon salaire : Salaire brut moyen (pouvoir d’achat)
@@ -152,6 +163,7 @@ _Cinq envies, puis leur ordre : c’est le cœur de ton classement._
 - Français sur place : Français sur place
 - Équilibre vie pro et vie perso : Heures de travail
 - Évoluer dans mon secteur : ton secteur
+- Vivre un vrai dépaysement : Dépaysement
 - Exactement 5 choix
 
 ### classement · Classement · thème « Tes envies »
@@ -203,17 +215,17 @@ _Quelques scènes de la vie au bureau. Il n’y a pas de bonne réponse._
 - Dimensions : cout, salaire
 - Échelle : Plutôt A, Un peu A, Un peu B, Plutôt B ; A → Salaire brut moyen (pouvoir d’achat) (importance 1) ; B → Coût de la vie (importance 1)
 - Scène « Deux offres » : Pour le même poste, on te propose deux contrats.
-  - A. 3 400 € par mois, 1 500 € de loyer · + Plus d’argent à mettre de côté, si tu tiens ton budget. · − Tout coûte cher autour de toi : sorties, transports, courses.
-  - B. 2 300 € par mois, 650 € de loyer · + La vie est simple et pas chère, même avec un petit salaire. · − Tu mets moins de côté, et un billet pour la France pèse plus lourd.
+  - A. 3 400 € par mois, 1 500 € de loyer · + Plus d’argent à mettre de côté, si tu tiens ton budget. · − Tout coûte cher autour de toi : sorties, transports, courses.
+  - B. 2 300 € par mois, 650 € de loyer · + La vie est simple et pas chère, même avec un petit salaire. · − Tu mets moins de côté, et un billet pour la France pèse plus lourd.
   - Variante un stage ou un VIE : Pour la même mission de VIE, deux villes te sont proposées.
   - Variante une année d’aventure : Pour ton job de PVT, deux villes te tentent.
   - Variante une carrière longue : Pour le même poste, deux villes te proposent un contrat de longue durée.
-- Scène « Le colocataire » : Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.
+- Scène « Le colocataire » : Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.
   - A. Tu préfères sa situation · + Un salaire plus haut, qui compte pour la suite. · − Une grosse part de sa paie part dans le loyer.
   - B. Tu préfères la tienne · + Ton loyer léger te laisse respirer. · − Ton salaire progresse moins vite.
 - Scène « La sortie du vendredi » : Ce soir, ton équipe dîne au restaurant.
-  - A. Le repas coûte 45 €, et les salaires sont hauts · + Tu suis sans problème, et ta paie grimpe vite. · − Chaque sortie pèse dans ton budget.
-  - B. Le repas coûte 12 €, et les salaires sont modestes · + Tu sors autant que tu veux, sans compter. · − Ton salaire vaut peu une fois converti en euros.
+  - A. Le repas coûte 45 €, et les salaires sont hauts · + Tu suis sans problème, et ta paie grimpe vite. · − Chaque sortie pèse dans ton budget.
+  - B. Le repas coûte 12 €, et les salaires sont modestes · + Tu sors autant que tu veux, sans compter. · − Ton salaire vaut peu une fois converti en euros.
   - Variante un stage ou un VIE : Ce soir, l’équipe de ta mission de VIE dîne au restaurant.
   - Variante une année d’aventure : Ce soir, tes collègues de PVT dînent au restaurant.
 
@@ -240,6 +252,8 @@ _Quelques scènes de la vie au bureau. Il n’y a pas de bonne réponse._
   - B. Tu refuses pour viser un poste mieux payé ailleurs · + Tu peux décrocher bien mieux. · − Tu repars de zéro, sans garantie.
   - Variante un stage ou un VIE : Ta mission de VIE se termine.
   - Variante une année d’aventure : Ton premier job de PVT se termine.
+  - Variante un premier poste : Ta période d’essai se termine.
+  - Variante une carrière longue : Ton premier contrat sur place se termine.
 
 ### langue-bureau · Dilemme · thème « Ton poste »
 
@@ -433,10 +447,10 @@ _Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part._
 
 **Ça te correspond ?** Glisse la carte à droite si la phrase te correspond, à gauche sinon. Ou utilise les boutons.
 
-- Dimensions : climat, communication, cout, decision, distance, langue, pro-perso, reseau, salaire, sante, securite, valeurs, ville
+- Dimensions : climat, communication, cout, decision, depaysement, distance, langue, pro-perso, reseau, salaire, sante, securite, valeurs, ville
 - Toujours posé dans son chapitre
 - S1 « Je pourrais vivre dans un pays dont je ne parle pas la langue. » · Ça me correspond → aucun effet · Pas vraiment → Langue du quotidien (importance 1)
-- S2 « Je pourrais m’éloigner de ma famille plusieurs années. » · Ça me correspond → aucun effet · Pas vraiment → Distance et Décalage horaire (importance 0,5)
+- S2 « Je pourrais m’éloigner de ma famille plusieurs années. » · Ça me correspond → Dépaysement (importance 0,5) · Pas vraiment → Distance et Décalage horaire (importance 0,5)
 - S3 « Un pays cher ne me dérange pas si les salaires suivent. » · Ça me correspond → Salaire brut moyen (pouvoir d’achat) (importance 1) · Pas vraiment → Coût de la vie (importance 1)
 - S4 « Je préfère une petite ville à une grande métropole. » · Ça me correspond → Villes moyennes (importance 1) · Pas vraiment → Grandes villes (importance 1)
 - S5 « Un hiver de cinq mois ne me fait pas peur s’il y a du travail. » · Ça me correspond → aucun effet · Pas vraiment → Hiver (position 4)
@@ -450,7 +464,8 @@ _Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part._
 - S13 « Un chef qui décide seul et vite me convient. » · Ça me correspond → Prise de décision (position 1) · Pas vraiment → Prise de décision (position 4)
 - S14 « Je préfère qu’on me dise les choses franchement, même si ça pique. » · Ça me correspond → Communication (position 1) · Pas vraiment → Communication (position 4)
 - S15 « Retrouver d’autres Français sur place me rassurerait. » · Ça me correspond → Français sur place (importance 1) · Pas vraiment → aucun effet
-- 5 phrases tirées parmi 15 ; « Ça dépend » ne compte pas
+- S16 « J’ai envie d’une vie très différente de celle que je connais en France. » · Ça me correspond → Dépaysement (importance 1) · Pas vraiment → Distance et Décalage horaire (importance 0,5)
+- 5 phrases tirées parmi 16 ; « Ça dépend » ne compte pas
 
 ### janvier · Dilemme · thème « Ton décor »
 
@@ -556,13 +571,13 @@ _Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part._
 - 2 options ; A → Santé à l’arrivée (importance 1) ; B → aucun effet
 - Scène « Le poignet cassé » : Tu te casses le poignet le deuxième mois.
   - A. Tout est remboursé, mais 4 h d’attente aux urgences · + Tu ne paies rien. · − Une longue attente.
-  - B. Soigné en 30 minutes, avec ton assurance privée à 120 € par mois · + Des soins rapides. · − Une dépense chaque mois, malade ou pas.
+  - B. Soigné en 30 minutes, avec ton assurance privée à 120 € par mois · + Des soins rapides. · − Une dépense chaque mois, malade ou pas.
 - Scène « Le jour de ton arrivée » : Tu poses tes valises dans le pays.
   - A. Tu veux être couvert par le système du pays dès le premier jour · + Aucune assurance à chercher. · − Moins de pays possibles.
   - B. Tu prends une assurance privée et tu n’y penses plus · + Tous les pays restent possibles. · − Un budget de plus, à trouver toi-même.
 - Scène « La grosse grippe » : Tu as une grosse grippe en plein hiver.
   - A. Un médecin public, gratuit ou presque · + Ça ne te coûte rien. · − Il faut parfois attendre plusieurs jours.
-  - B. Une clinique privée, le jour même, 90 € la visite · + Tu es soigné le jour même. · − Tu avances les frais, puis ton assurance rembourse.
+  - B. Une clinique privée, le jour même, 90 € la visite · + Tu es soigné le jour même. · − Tu avances les frais, puis ton assurance rembourse.
 
 ### repas · Dilemme · thème « Ton quotidien »
 
@@ -584,17 +599,20 @@ _Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part._
 
 **Près ou loin de la France**
 
-- Dimensions : distance
-- Échelle : Plutôt A, Un peu A, Un peu B, Plutôt B ; A → Distance et Décalage horaire (importance 1) ; B → aucun effet
+- Dimensions : depaysement, distance
+- 2 options ; A → Distance et Décalage horaire (importance 1) ; B → aucun effet
 - Scène « Noël approche » : Tu veux voir ta famille pour les fêtes.
   - A. 2 h de vol · + Tu rentres pour le réveillon et tu repars le 26. · − Moins de dépaysement.
   - B. 12 h de vol ou plus · + Un vrai changement de monde. · − Tu rentres une fois par an, c’est le jeu.
+  - undefined. Tu fêtes Noël sur place, à la mode du pays · + Une fête que tu n’oublieras pas. · − Ta famille te manque ce soir-là.
 - Scène « Le mariage de ta cousine » : Ta cousine se marie un samedi, en France.
   - A. Tu pars le vendredi soir et tu reviens le dimanche · + Tu ne rates aucun moment en famille. · − Ton nouveau pays ressemble un peu au tien.
   - B. Il te faut une semaine de congés et un billet cher · + Tu vis à l’autre bout du monde, avec tout ce qu’il offre. · − Tu rates souvent les fêtes de famille.
+  - undefined. Tu suis le mariage en vidéo, depuis l’autre bout du monde · + Tu vis pleinement ta nouvelle vie. · − Tu rates un moment de famille.
 - Scène « Les appels du dimanche » : Tu appelles tes proches chaque dimanche.
   - A. Même heure qu’en France : tu appelles quand tu veux · + Aucun calcul de fuseau horaire. · − Ton pays reste proche de ce que tu connais.
   - B. Ils dorment quand tu te réveilles · + Tu vis vraiment ailleurs. · − Il faut caler les appels tôt le matin ou tard le soir.
+  - undefined. Vous vous écrivez surtout : tu vis à un tout autre rythme · + Tu te sens vraiment ailleurs, et ça te plaît. · − Les appels en direct se font rares.
 
 ### premier-mois · Dilemme · thème « Ton quotidien »
 
@@ -613,6 +631,8 @@ _Ton décor, ton quotidien, ce qui fait qu’on se sent bien quelque part._
   - Variante un stage ou un VIE : Tu cherches ta mission de VIE sur place.
   - Variante une année d’aventure : Tu cherches un job pour ton PVT.
   - Variante un premier poste : Tu cherches ton premier poste sur place.
+  - Variante une carrière longue : Tu cherches ton poste sur place.
+  - Variante inconnu : Tu cherches tes premières pistes de travail sur place.
 - Scène « Ton premier dimanche » : C’est ton premier dimanche sur place.
   - A. Brunch avec d’autres Français, dans ta langue · + Tu te sens vite chez toi. · − Tu progresses moins vite dans la langue du pays.
   - B. Tu pars découvrir la ville par toi-même · + Tout est nouveau, tu apprends vite. · − Les premiers week-ends peuvent sembler longs.
@@ -667,4 +687,14 @@ _Ce qui ne te gêne pas, ce que tu préfères éviter, et ce qui est hors de que
 - Ne travailler ni en français ni en anglais · Je préfère éviter → Travailler en français ou en anglais (importance 1) · Rédhibitoire → « Moins adaptés pour toi »
 - Payer une assurance santé privée · Je préfère éviter → Santé à l’arrivée (importance 1) · Rédhibitoire → « Moins adaptés pour toi »
 - 6 situations tirées parmi 8
+
+### valeurs · ChoixCartes · thème « Tes valeurs »
+
+**Tes valeurs, si tu veux aller plus loin** C’est facultatif. Coche ce qui compte pour toi, ou passe.
+
+- Dimensions : sante, valeurs
+- Stabilité politique → Stabilité politique (importance 1)
+- Libertés d’expression et de la presse → Libertés (importance 1)
+- Égalité femmes-hommes dans la loi → Égalité femmes-hommes (importance 1)
+- Qualité de l’air → Qualité de l’air (importance 1)
 

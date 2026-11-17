@@ -53,11 +53,15 @@ const scorePhrase = (p: PhraseSwipe, etat: Etat, top: Ligne[]) =>
 export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const deja = etat.reponses[el.id];
   if (deja && typeof deja === "object" && !Array.isArray(deja)) {
-    const ids = Object.keys(deja);
-    return el.phrases.filter((p) => ids.includes(p.id));
+    // Dans l'ordre où elles ont été vues (l'ordre des réponses), pour les revoir à l'identique.
+    return Object.keys(deja).map((id) => el.phrases.find((p) => p.id === id)).filter((p): p is PhraseSwipe => !!p);
   }
   // Passée : les phrases montrées à ce moment-là (l'état d'avant).
   if (deja !== undefined) return phrasesSwipe(el, etatAvant(etat, el.id));
+  // Ta carte ne coche que des régions hors d'Europe : la phrase « dépaysement » entre dans la série (sans effet de la carte sur le score).
+  const carte = etat.reponses.carte;
+  const horsEurope = Array.isArray(carte) && carte.length > 0 && !carte.includes("europe") && !carte.includes("aucune");
+  const imposee = horsEurope ? el.phrases.find((p) => p.id === "S16") : undefined;
   const precedent = dimensionsPrecedentes(etat, el.id);
   const top = topCourant(etat);
   const notes = el.phrases
@@ -65,11 +69,11 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
     .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.75 + 0.5 * ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
     .sort((a, b) => b.s - a.s);
   // Pas deux phrases sur exactement les mêmes dimensions quand on peut l'éviter.
-  const res: PhraseSwipe[] = [];
-  const vues = new Set<string>();
+  const res: PhraseSwipe[] = imposee ? [imposee] : [];
+  const vues = new Set<string>(imposee ? [imposee.dimensions.join("+")] : []);
   for (const { p } of notes) {
     const cle = p.dimensions.join("+");
-    if (vues.has(cle)) continue;
+    if (vues.has(cle) || res.includes(p)) continue;
     vues.add(cle); res.push(p);
     if (res.length === el.nombre) return res;
   }
@@ -278,9 +282,19 @@ export function prochainElement(etat: Etat): Element | null {
 export const questionnaireFini = (etat: Etat) => etat.reponses.limites !== undefined && prochainElement(etat) === null;
 
 // « Continuer pour affiner » : un élément de plus des chapitres 3 et 4, sans limite de nombre.
+// Le nombre de questions qui restent à affiner (chapitres 3 et 4).
+export const restantsAffiner = (etat: Etat) => candidatsAdaptatifs(etat, [3, 4]).length;
+
 export function prochainAffiner(etat: Etat): Element | null {
   const restants = candidatsAdaptatifs(etat, [3, 4]);
   return tirer(etat, selection(etat, 0, restants), `affiner:${etat.ordre.length}`);
+}
+
+// Résultat provisoire : tant que tes envies manquent, ou que moins de 3 écrans des chapitres 3 et 4 ont une vraie réponse.
+export const RESULTAT_PROVISOIRE_MIN = 3;
+export function resultatProvisoire(etat: Etat): boolean {
+  if (enviesDe(etat).length === 0) return true;
+  return etat.ordre.filter((id) => estAdaptatif(chapitreDe(id)) && etat.reponses[id] !== PASSER).length < RESULTAT_PROVISOIRE_MIN;
 }
 
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).

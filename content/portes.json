@@ -176,15 +176,15 @@
  "canada": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 35,
    "quota": 7000,
    "fonds": {
-    "texte": "2 500 dollars canadiens, soit environ 1 700 €",
+    "texte": "2 500 dollars canadiens, soit environ 1 700 €",
     "euros": 1700
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 7 000 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 dollars canadiens, soit environ 1 700 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 7 000 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 dollars canadiens, soit environ 1 700 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -220,15 +220,15 @@
  "australie": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 35,
    "quota": null,
    "fonds": {
-    "texte": "5 000 dollars australiens, soit environ 3 000 €",
+    "texte": "5 000 dollars australiens, soit environ 3 000 €",
     "euros": 3000
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 35 ans à la date de la demande. Il n’y a pas de quota. Séjour d’un an maximum. Ressources demandées : 5 000 dollars australiens, soit environ 3 000 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. Il n’y a pas de quota. Séjour d’un an maximum. Ressources demandées : 5 000 dollars australiens, soit environ 3 000 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -272,15 +272,15 @@
  "japon": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 1800,
    "fonds": {
-    "texte": "3 100 €",
+    "texte": "3 100 €",
     "euros": 3100
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 1 800 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 3 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 1 800 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 3 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -322,15 +322,15 @@
  "nouvelle-zelande": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": null,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. Il n’y a pas de quota. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. Il n’y a pas de quota. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -373,15 +373,15 @@
  "coree-du-sud": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 2000,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 2 000 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 2 000 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -409,8 +409,8 @@
     ],
     "liens": [
      {
-      "url": "https://overseas.mofa.go.kr/fi-en/brd/m_20979/view.do?seq=5",
-      "libelle": "Page officielle du visa (ambassade de Corée en Finlande)"
+      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/coree-du-sud/conseils-aux-voyageurs-entree-sejour",
+      "libelle": "Entrée et séjour en Corée du Sud (France Diplomatie) ; page de l’ambassade de Corée en France : à vérifier"
      }
     ],
     "source": "kr-mofa",
@@ -422,15 +422,15 @@
  "taiwan": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 500,
    "fonds": {
-    "texte": "2 100 €",
+    "texte": "2 100 €",
     "euros": 2100
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 100 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -473,15 +473,15 @@
  "hong-kong": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 750,
    "fonds": {
-    "texte": "25 000 dollars de Hong Kong, soit environ 2 900 €",
+    "texte": "25 000 dollars de Hong Kong, soit environ 2 900 €",
     "euros": 2900
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 750 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 25 000 dollars de Hong Kong, soit environ 2 900 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 750 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 25 000 dollars de Hong Kong, soit environ 2 900 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -493,10 +493,10 @@
    "employeur": true,
    "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier",
+   "source": "hk-immd",
+   "lien": "https://www.immd.gov.hk/eng/services/visas/GEP.html",
+   "verifieLe": "2026-11-15",
+   "statut": "verifie",
    "detail": {
     "nom": "General Employment Policy (GEP), le visa de travail général",
     "employeurRequis": true,
@@ -522,15 +522,15 @@
  "argentine": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 35,
    "quota": 1500,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 1 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 35 ans à la date de la demande. 1 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -574,15 +574,15 @@
  "chili": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 400,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -623,15 +623,15 @@
  "colombie": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 400,
    "fonds": {
-    "texte": "des revenus bancaires moyens d’environ 750 € par mois sur les 3 derniers mois (ce n’est pas un montant d’épargne)",
+    "texte": "des revenus bancaires moyens d’environ 750 € par mois sur les 3 derniers mois (ce n’est pas un montant d’épargne)",
     "euros": null
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : des revenus bancaires moyens d’environ 750 € par mois sur les 3 derniers mois (ce n’est pas un montant d’épargne). Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 400 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : des revenus bancaires moyens d’environ 750 € par mois sur les 3 derniers mois (ce n’est pas un montant d’épargne). Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -673,15 +673,15 @@
  "mexique": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 300,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 300 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 300 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",
@@ -722,15 +722,15 @@
  "bresil": [
   {
    "type": "pvt",
-   "nom": "PVT (programme vacances-travail)",
+   "nom": "PVT (Programme Vacances-Travail)",
    "ageMax": 30,
    "quota": 500,
    "fonds": {
-    "texte": "2 500 €",
+    "texte": "2 500 €",
     "euros": 2500
    },
    "dureeMois": 12,
-   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
+   "texte": "Ouvert de 18 à 30 ans à la date de la demande. 500 places par an pour les Français. Séjour d’un an maximum. Ressources demandées : 2 500 €. Une assurance privée est exigée pour toute la durée du séjour.",
    "source": "diplomatie-pvt",
    "lien": "https://www.diplomatie.gouv.fr/fr/services-aux-francaises-et-aux-francais/preparer-son-expatriation/programme-vacances-travail-pvt",
    "verifieLe": "2026-11-14",

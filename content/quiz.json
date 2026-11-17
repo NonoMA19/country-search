@@ -196,6 +196,15 @@
       "mesures": [
         "secteur"
       ]
+    },
+    {
+      "id": "depaysement",
+      "label": "Vivre un vrai dépaysement",
+      "icone": "globe",
+      "famille": "vivre",
+      "mesures": [
+        "depaysement"
+      ]
     }
   ],
   "poidsRang": [
@@ -345,6 +354,12 @@
       "nom": "L’Europe ou plus loin",
       "mesures": [
         "en-europe"
+      ]
+    },
+    "depaysement": {
+      "nom": "Le dépaysement",
+      "mesures": [
+        "depaysement"
       ]
     }
   },
@@ -678,30 +693,75 @@
       "options": [
         {
           "id": "moins-2000",
-          "label": "Moins de 2 000 €",
+          "label": "Moins de 2 000 €",
           "min": 0,
           "max": 2000
         },
         {
           "id": "2000-5000",
-          "label": "De 2 000 à 5 000 €",
+          "label": "De 2 000 à 5 000 €",
           "min": 2000,
           "max": 5000
         },
         {
           "id": "5000-10000",
-          "label": "De 5 000 à 10 000 €",
+          "label": "De 5 000 à 10 000 €",
           "min": 5000,
           "max": 10000
         },
         {
           "id": "plus-10000",
-          "label": "Plus de 10 000 €",
+          "label": "Plus de 10 000 €",
           "min": 10000
         },
         {
           "id": "inconnu",
           "label": "Je ne sais pas encore"
+        }
+      ]
+    },
+    {
+      "id": "duree",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "duree",
+      "titre": "Tu pars pour combien de temps ?",
+      "dimensions": [],
+      "sansImage": true,
+      "aide": {
+        "enjeu": "Un PVT dure un an au plus.",
+        "cartes": [
+          {
+            "pastille": "Jusqu’à 12 mois",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Plus d’un an",
+            "texte": "On te prévient que le PVT ne suffira pas : il faudra un autre visa ensuite. Ton classement ne change pas."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "moins-6",
+          "label": "Moins de 6 mois",
+          "mois": 5
+        },
+        {
+          "id": "6-12",
+          "label": "6 à 12 mois",
+          "mois": 12
+        },
+        {
+          "id": "1-2",
+          "label": "1 à 2 ans",
+          "mois": 24
+        },
+        {
+          "id": "plus-2",
+          "label": "Plus de 2 ans",
+          "mois": 36
         }
       ]
     },
@@ -866,7 +926,7 @@
         }
       ],
       "multiple": true,
-      "aucun": "Aucune autre"
+      "aucun": "Je ne parle que français et anglais"
     },
     {
       "id": "pret-anglais",
@@ -998,7 +1058,7 @@
       "multiple": true,
       "nombre": 5,
       "titre": "Choisis 5 envies",
-      "texte": "Les cinq qui comptent le plus pour ton départ.",
+      "texte": "Les cinq qui comptent le plus pour ton départ, parmi dix.",
       "dimensions": [],
       "aide": {
         "enjeu": "Tes envies sont le cœur de ton classement.",
@@ -1299,12 +1359,12 @@
           "texte": "Pour le même poste, on te propose deux contrats.",
           "options": [
             {
-              "texte": "3 400 € par mois, 1 500 € de loyer",
+              "texte": "3 400 € par mois, 1 500 € de loyer",
               "plus": "Plus d’argent à mettre de côté, si tu tiens ton budget.",
               "moins": "Tout coûte cher autour de toi : sorties, transports, courses."
             },
             {
-              "texte": "2 300 € par mois, 650 € de loyer",
+              "texte": "2 300 € par mois, 650 € de loyer",
               "plus": "La vie est simple et pas chère, même avec un petit salaire.",
               "moins": "Tu mets moins de côté, et un billet pour la France pèse plus lourd."
             }
@@ -1319,7 +1379,7 @@
         {
           "id": "colocataire",
           "titre": "Le colocataire",
-          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
+          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
           "options": [
             {
               "texte": "Tu préfères sa situation",
@@ -1340,12 +1400,12 @@
           "texte": "Ce soir, ton équipe dîne au restaurant.",
           "options": [
             {
-              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
+              "texte": "Le repas coûte 45 €, et les salaires sont hauts",
               "plus": "Tu suis sans problème, et ta paie grimpe vite.",
               "moins": "Chaque sortie pèse dans ton budget."
             },
             {
-              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
+              "texte": "Le repas coûte 12 €, et les salaires sont modestes",
               "plus": "Tu sors autant que tu veux, sans compter.",
               "moins": "Ton salaire vaut peu une fois converti en euros."
             }
@@ -1477,7 +1537,15 @@
           ],
           "variantes": {
             "stage-vie": "Ta mission de VIE se termine.",
-            "aventure": "Ton premier job de PVT se termine."
+            "aventure": "Ton premier job de PVT se termine.",
+            "premier-poste": "Ta période d’essai se termine.",
+            "carriere": "Ton premier contrat sur place se termine."
+          },
+          "variantesTitre": {
+            "stage-vie": "La fin de la mission",
+            "aventure": "La fin du job",
+            "premier-poste": "La fin de la période d’essai",
+            "carriere": "La fin du premier contrat"
           }
         }
       ],
@@ -2633,6 +2701,7 @@
         "communication",
         "cout",
         "decision",
+        "depaysement",
         "distance",
         "langue",
         "pro-perso",
@@ -2682,7 +2751,14 @@
         {
           "id": "S2",
           "texte": "Je pourrais m’éloigner de ma famille plusieurs années.",
-          "oui": [],
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
           "non": [
             {
               "mesures": [
@@ -2695,6 +2771,7 @@
           "portraitOui": "Tu acceptes plus facilement d’être loin de ta famille.",
           "portraitNon": "Rester pas trop loin de ta famille compte pour toi.",
           "dimensions": [
+            "depaysement",
             "distance"
           ]
         },
@@ -2966,6 +3043,33 @@
           "portraitNon": "Tu n’as pas besoin de Français autour de toi.",
           "dimensions": [
             "reseau"
+          ]
+        },
+        {
+          "id": "S16",
+          "texte": "J’ai envie d’une vie très différente de celle que je connais en France.",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 1
+            }
+          ],
+          "non": [
+            {
+              "mesures": [
+                "vol",
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portraitOui": "Tu as envie d’une vie très différente de celle que tu connais en France.",
+          "portraitNon": "Tu préfères garder des repères proches de ta vie en France.",
+          "dimensions": [
+            "depaysement",
+            "distance"
           ]
         }
       ]
@@ -3652,7 +3756,7 @@
               "moins": "Une longue attente."
             },
             {
-              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
+              "texte": "Soigné en 30 minutes, avec ton assurance privée à 120 € par mois",
               "plus": "Des soins rapides.",
               "moins": "Une dépense chaque mois, malade ou pas."
             }
@@ -3687,7 +3791,7 @@
               "moins": "Il faut parfois attendre plusieurs jours."
             },
             {
-              "texte": "Une clinique privée, le jour même, 90 € la visite",
+              "texte": "Une clinique privée, le jour même, 90 € la visite",
               "plus": "Tu es soigné le jour même.",
               "moins": "Tu avances les frais, puis ton assurance rembourse."
             }
@@ -3805,17 +3909,21 @@
       "id": "noel",
       "theme": "Ton quotidien",
       "titre": "Près ou loin de la France",
-      "echelle": true,
+      "echelle": false,
       "aide": {
-        "enjeu": "La distance se ressent surtout aux grandes occasions.",
+        "enjeu": "Être loin de ta famille, ça se vit tous les jours.",
         "cartes": [
           {
             "pastille": "A",
-            "texte": "On met en avant les pays proches, avec peu de décalage horaire."
+            "texte": "On met en avant les pays proches de la France, en vol et en décalage horaire."
           },
           {
             "pastille": "B",
-            "texte": "Ta réponse ne fait reculer aucun pays lointain."
+            "texte": "Rien ne change : la distance ne compte pas pour toi."
+          },
+          {
+            "pastille": "C",
+            "texte": "On met un peu en avant les pays loin de la France (dépaysement, importance 0,5)."
           }
         ]
       },
@@ -3841,6 +3949,19 @@
           "effets": [],
           "portrait": "La distance avec la France ne te fait pas peur.",
           "portraitPeu": "La distance avec la France compte peu pour toi."
+        },
+        {
+          "id": "c",
+          "effets": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "portrait": "Tu cherches à vivre vraiment ailleurs, même pour les fêtes.",
+          "preference": "un vrai dépaysement"
         }
       ],
       "scenes": [
@@ -3858,6 +3979,11 @@
               "texte": "12 h de vol ou plus",
               "plus": "Un vrai changement de monde.",
               "moins": "Tu rentres une fois par an, c’est le jeu."
+            },
+            {
+              "texte": "Tu fêtes Noël sur place, à la mode du pays",
+              "plus": "Une fête que tu n’oublieras pas.",
+              "moins": "Ta famille te manque ce soir-là."
             }
           ],
           "exemple": true
@@ -3876,6 +4002,11 @@
               "texte": "Il te faut une semaine de congés et un billet cher",
               "plus": "Tu vis à l’autre bout du monde, avec tout ce qu’il offre.",
               "moins": "Tu rates souvent les fêtes de famille."
+            },
+            {
+              "texte": "Tu suis le mariage en vidéo, depuis l’autre bout du monde",
+              "plus": "Tu vis pleinement ta nouvelle vie.",
+              "moins": "Tu rates un moment de famille."
             }
           ]
         },
@@ -3893,6 +4024,11 @@
               "texte": "Ils dorment quand tu te réveilles",
               "plus": "Tu vis vraiment ailleurs.",
               "moins": "Il faut caler les appels tôt le matin ou tard le soir."
+            },
+            {
+              "texte": "Vous vous écrivez surtout : tu vis à un tout autre rythme",
+              "plus": "Tu te sens vraiment ailleurs, et ça te plaît.",
+              "moins": "Les appels en direct se font rares."
             }
           ]
         }
@@ -3900,6 +4036,7 @@
       "type": "dilemme",
       "chapitre": 4,
       "dimensions": [
+        "depaysement",
         "distance"
       ]
     },
@@ -3981,7 +4118,16 @@
           "variantes": {
             "stage-vie": "Tu cherches ta mission de VIE sur place.",
             "aventure": "Tu cherches un job pour ton PVT.",
-            "premier-poste": "Tu cherches ton premier poste sur place."
+            "premier-poste": "Tu cherches ton premier poste sur place.",
+            "carriere": "Tu cherches ton poste sur place.",
+            "inconnu": "Tu cherches tes premières pistes de travail sur place."
+          },
+          "variantesTitre": {
+            "stage-vie": "La recherche de mission",
+            "aventure": "La recherche de job",
+            "premier-poste": "La recherche de poste",
+            "carriere": "La recherche de poste",
+            "inconnu": "Tes premières recherches"
           }
         },
         {
@@ -4294,6 +4440,89 @@
           "mesure": "sante",
           "raison": "Tu as dit que payer une assurance santé privée était rédhibitoire.",
           "dimension": "sante"
+        }
+      ]
+    },
+    {
+      "id": "valeurs",
+      "type": "choix-cartes",
+      "chapitre": 5,
+      "theme": "Tes valeurs",
+      "multiple": true,
+      "sansImage": true,
+      "facultatif": true,
+      "titre": "Tes valeurs, si tu veux aller plus loin",
+      "texte": "C’est facultatif. Coche ce qui compte pour toi, ou passe.",
+      "aucun": "Rien de plus pour moi",
+      "dimensions": [
+        "sante",
+        "valeurs"
+      ],
+      "aide": {
+        "enjeu": "Ces sujets parlent moins du travail que de ta vie sur place.",
+        "cartes": [
+          {
+            "pastille": "Coché",
+            "texte": "Le sujet compte dans ton pourcentage, autant qu’une réponse de dilemme (importance 1)."
+          },
+          {
+            "pastille": "Pas coché",
+            "texte": "Il ne compte pas. Rien n’écarte un pays ici."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "stabilite",
+          "label": "Stabilité politique",
+          "effets": [
+            {
+              "mesures": [
+                "stabilite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "La stabilité politique du pays compte pour toi."
+        },
+        {
+          "id": "libertes",
+          "label": "Libertés d’expression et de la presse",
+          "effets": [
+            {
+              "mesures": [
+                "libertes"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "Les libertés d’expression et de la presse comptent pour toi."
+        },
+        {
+          "id": "egalite",
+          "label": "Égalité femmes-hommes dans la loi",
+          "effets": [
+            {
+              "mesures": [
+                "egalite"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "L’égalité femmes-hommes dans la loi compte pour toi."
+        },
+        {
+          "id": "air",
+          "label": "Qualité de l’air",
+          "effets": [
+            {
+              "mesures": [
+                "air"
+              ],
+              "poids": 1
+            }
+          ],
+          "portrait": "La qualité de l’air compte pour toi."
         }
       ]
     }
