@@ -1,4 +1,4 @@
-# Country Search (nom de code)
+# Orizo
 
 ## Mission
 Aider les étudiants et jeunes diplômés francophones à choisir le pays où partir travailler, puis à arriver prêts le jour J : visa, banque, carte SIM, santé, logement, CV local, codes culturels.
@@ -67,7 +67,7 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Secteurs et stages : le poids du secteur dans l'emploi est fait (prompt 3f, ILOSTAT) ; reste à croiser avec les offres ouvertes et les stages (sources ouvertes à trouver), et les salaires par secteur.
 - Couleurs par pays : à décider avec la direction artistique (prompt 5), pas avant.
 - Écran Valeurs : revenu au prompt 3g, facultatif, en fin de chapitre 5 (libertés, stabilité). L'égalité femmes-hommes dans la loi reste masquée (donnée non téléchargée).
-- Nom Orizo, mascotte caméléon, direction artistique « Atlas pop », illustrations finales des cartes (aujourd'hui des icônes Lucide sur fond uni, avec texte alternatif) : au prompt 5, pas avant.
+- Nom Orizo (texte en place depuis le prompt 3h), mascotte caméléon, direction artistique « Atlas pop », logo, couleurs, illustrations finales des cartes (aujourd'hui des icônes Lucide sur fond uni, avec texte alternatif) : au prompt 5, pas avant.
 - Prompt 5 : refonte visuelle et animations (vitesse et ambiance du top 3 animé à revoir), mise en page pour ordinateur (le site reste pensé d'abord pour le téléphone), mise en page du PDF, couleurs par pays, carte du monde dessinée.
 - Budget sur 3 mois.
 - Checklist Jour J (J-90 à J+30).

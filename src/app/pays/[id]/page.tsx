@@ -22,9 +22,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const p = trouverPays((await params).id);
-  if (!p) return { title: "Pays introuvable | Country Search" };
+  if (!p) return { title: "Pays introuvable | Orizo" };
   return {
-    title: `${p.nom} | Country Search`,
+    title: `${p.nom} | Orizo`,
     description: `Travailler ${p.en} : porte d’entrée (${p.famille}), emploi, salaires, coût de la vie, climat et liens officiels, chaque donnée avec sa source.`,
   };
 }

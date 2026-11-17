@@ -9,7 +9,7 @@ import path from "node:path";
 
 const RACINE = path.resolve(import.meta.dirname, "..");
 const AUJOURDHUI = new Date().toISOString().slice(0, 10);
-const UA = "country-search-bot/0.1 (projet open source non commercial)";
+const UA = "orizo-bot/0.1 (projet open source non commercial)";
 const SEULS = process.argv.includes("--pays") ? process.argv[process.argv.indexOf("--pays") + 1].split(",") : null;
 const pays = JSON.parse(fs.readFileSync(path.join(RACINE, "content", "pays.json"), "utf8")).filter((p) => !SEULS || SEULS.includes(p.id));
 

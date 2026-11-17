@@ -7,7 +7,7 @@ import { europe } from "@/lib/donnees";
 import { FAMILLES, NOM_FAMILLE, pays, paysParFamille } from "@/lib/pays";
 
 export const metadata: Metadata = {
-  title: "Country Search : choisis le pays où partir travailler",
+  title: "Orizo : choisis le pays où partir travailler",
   description:
     `Un quiz gratuit, sans compte, pour classer ${pays.length} pays selon ce qui compte pour toi. Chaque score est expliqué, chaque information a sa source.`,
 };
@@ -20,7 +20,7 @@ export default function Accueil() {
         <div aria-hidden="true" className="mb-6 h-16 w-16" />
 
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Country Search
+          Orizo
         </h1>
         <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi {pays.length} pays.</p>
         <p className="mt-1 text-lg">Tu obtiens ton top 3 et ta porte d’entrée : Europe sans visa, <Definition cle="pvt" /> ou visa de travail.</p>

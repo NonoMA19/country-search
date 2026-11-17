@@ -8,8 +8,8 @@ import { POIDS_OBJECTIF, SEUIL_DILEMME, dilemmeActif, paysCouverts } from "@/lib
 import { pays } from "@/lib/pays";
 
 export const metadata: Metadata = {
-  title: "La méthode | Country Search",
-  description: "Comment Country Search calcule ton résultat : ce qu’on mesure, l’importance de chaque réponse, les sources et leurs limites.",
+  title: "La méthode | Orizo",
+  description: "Comment Orizo calcule ton résultat : ce qu’on mesure, l’importance de chaque réponse, les sources et leurs limites.",
 };
 
 const NOMS_FAMILLES: Record<string, string> = { partir: "Partir", travailler: "Travailler", vivre: "Vivre", valeurs: "Valeurs (en option)" };

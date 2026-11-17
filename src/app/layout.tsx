@@ -8,7 +8,7 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Country Search",
+  title: "Orizo",
   description:
     "Un quiz gratuit, sans compte, pour choisir le pays où partir travailler. Chaque score est expliqué, chaque information a sa source.",
 };

@@ -32,6 +32,7 @@ export type Session = {
 
 export const SESSION_VIDE: Session = { v: VERSION_SESSION, etat: ETAT_VIDE, etape: { t: "quiz" }, reglages: REGLAGES_DEFAUT, ouvertes: false, chapitresVus: [] };
 
+// Ancien nom de code gardé exprès : changer la clé ferait perdre les quiz en cours.
 const CLE = "country-search:quiz";
 let courant: Session | null = null;
 const ecouteurs = new Set<() => void>();

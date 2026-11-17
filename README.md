@@ -1,8 +1,8 @@
-# Country Search
+# Orizo
 
-> **Statut : en construction.** Le site n'est pas encore utilisable. Pour l'instant, il n'y a qu'une page d'accueil provisoire.
+> **Statut : en construction.** Le quiz, le résultat et les pages pays sont utilisables ; les fiches détaillées et la checklist Jour J sont à venir.
 
-Country Search aide les étudiants et jeunes diplômés francophones à choisir le pays où partir travailler, puis à arriver prêts le jour J : visa, banque, carte SIM, santé, logement, CV local, codes culturels.
+Orizo aide les étudiants et jeunes diplômés francophones à choisir le pays où partir travailler, puis à arriver prêts le jour J : visa, banque, carte SIM, santé, logement, CV local, codes culturels.
 
 - Site en français, pour les titulaires d'un passeport français.
 - Gratuit et open source. Aucune publicité, aucune affiliation.

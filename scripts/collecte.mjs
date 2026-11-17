@@ -23,7 +23,7 @@ const RACINE = path.resolve(import.meta.dirname, "..");
 const CACHE = path.join(RACINE, "scripts", ".cache");
 fs.mkdirSync(CACHE, { recursive: true });
 const AUJOURDHUI = new Date().toISOString().slice(0, 10);
-const UA = "country-search-bot/0.1 (projet open source non commercial)";
+const UA = "orizo-bot/0.1 (projet open source non commercial)";
 const TEXTES_SEUL = process.argv.includes("--textes");
 const POPULATION_SEULE = process.argv.includes("--population");
 const FRANCE_SEULE = process.argv.includes("--france");
