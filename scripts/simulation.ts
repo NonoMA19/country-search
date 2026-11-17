@@ -136,7 +136,7 @@ for (const el of quiz.elements.filter((x) => estAdaptatif(x.chapitre))) {
 const nbSurprises = Object.values(surprises).reduce((a, b) => a + b, 0);
 console.log(`\nPays surprise : ${pct(nbSurprises)} des parcours (${Object.entries(surprises).map(([c, n]) => `${c} ${n}`).join(", ") || "aucun"}).`);
 const nbTop = fiab.complete + fiab.partielle + fiab.faible;
-console.log(`Fiabilité des pays du top 3 : ${(Object.keys(fiab) as NiveauFiabilite[]).map((k) => `${LIBELLE_FIABILITE[k]} ${pct(fiab[k], nbTop)}`).join(" ; ")}.`);
+console.log(`Données disponibles des pays du top 3 : ${(Object.keys(fiab) as NiveauFiabilite[]).map((k) => `${LIBELLE_FIABILITE[k]} ${pct(fiab[k], nbTop)}`).join(" ; ")}.`);
 
 // ---------- 3. Profils types ----------
 // Chaque profil type répond comme il le dit ; pour le reste, il répond au hasard (toujours le même hasard).

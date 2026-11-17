@@ -195,5 +195,8 @@ export function profilDe(reponses: Record<string, Valeur>): Profil {
     if (!conditionRemplie(el.condition, p)) continue;
     p[el.profil] = v;
   }
+  // Les régions cochées sur la carte du début : un bonus léger aux pays de ces régions (voir moteur.ts).
+  const carte = reponses.carte;
+  if (Array.isArray(carte)) { const r = carte.filter((z) => z !== AUCUNE_ZONE); if (r.length) p.regions = r; }
   return p;
 }

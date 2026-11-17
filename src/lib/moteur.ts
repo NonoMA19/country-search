@@ -4,7 +4,7 @@ import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
   avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveSource, preuveVisa,
-  type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
+  type CarteMonde, type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
 import {
   LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesRedhibitoires, optionReponse, penalitesRetirees, profilDe, type Profil,
@@ -61,7 +61,7 @@ export function languesParlees(p: Profil): string[] {
   const choix = Array.isArray(p.langues) ? p.langues : [];
   return choix.flatMap((id) => option("langues", id)?.codes ?? []);
 }
-const parleLangueDe = (paysId: string, p: Profil) => {
+export const parleLangueDe = (paysId: string, p: Profil) => {
   const parlees = languesParlees(p);
   return (avis[paysId]?.langues ?? []).some((l) => parlees.includes(l));
 };
@@ -96,6 +96,9 @@ export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
 // ---------- Notes ----------
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
+  // Les bonus : 5 si le pays est dans une région de ta carte, ou s'il parle une langue que tu parles ; sinon rien (jamais de malus).
+  if (mesureId === "region-carte") { const z = zoneCarte(paysId); return z && Array.isArray(p.regions) && p.regions.includes(z) ? 5 : null; }
+  if (mesureId === "langue-parlee") return parleLangueDe(paysId, p) ? 5 : null;
   if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
   // Dépaysement : l'inverse de la proximité (temps de vol et décalage horaire), sans nouvelle donnée.
   if (mesureId === "depaysement") {
@@ -205,6 +208,15 @@ export function effetsBruts(etat: Etat): EffetActif[] {
     const en = quiz.envies.find((x) => x.id === id);
     if (en) ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
   });
+  // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays des régions cochées.
+  if (Array.isArray(etat.profil.regions) && etat.profil.regions.length) {
+    res.push({ mesure: "region-carte", sens: "haut", poids: POIDS_CARTE, famille: "vivre", origine: "carte" });
+  }
+  // Une langue que tu parles compte toujours : un bonus modéré aux pays où elle est officielle ou très parlée.
+  // Le dilemme sur la langue du quotidien peut le renforcer (mesure « langue »).
+  if (languesParlees(etat.profil).length) {
+    res.push({ mesure: "langue-parlee", sens: "haut", poids: POIDS_LANGUE_PARLEE, famille: "vivre", origine: "langues" });
+  }
   const retirees = new Set<string>();
   for (const id of etat.ordre) {
     const el = trouverElement(id);
@@ -576,7 +588,14 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
 // La note dit si ton visa te laisserait changer d'employeur : 5 si aucun visa ne te lie à un employeur
 // (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
 // 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
-export const MESURES_CALCULEES = ["employeur-libre", "depaysement"];
+// Les mesures calculées : toujours disponibles pour les 30 pays (leur note se calcule, elle n'est pas lue dans scores.json).
+export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe", "langue-travail", "region-carte", "langue-parlee"];
+// Les bonus : un pays hors de ta carte ou qui ne parle pas tes langues n'a pas de note, et n'en est pas pénalisé.
+// Ils ne comptent ni dans la couverture (règle des 60 %) ni dans le badge « données disponibles ».
+export const MESURES_BONUS = ["region-carte", "langue-parlee"];
+export const POIDS_CARTE = quiz.poidsRang[4] ?? 1.1;
+export const POIDS_LANGUE_PARLEE = 1;
+export const zoneCarte = (paysId: string) => (trouverElement("carte") as CarteMonde | undefined)?.zones.find((z) => z.pays.includes(paysId))?.id ?? null;
 const cacheLibre = new Map<string, number>();
 export function noteEmployeurLibre(paysId: string, profil: Profil): number | null {
   const p = pays.find((x) => x.id === paysId);
@@ -601,6 +620,21 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
   if (mesureId === "depaysement") {
     const vol = preuveMesure(paysId, "vol"), dec = notes[paysId]?.decalage;
     return { ...vol, titre: "Dépaysement", texte: `${vol.texte}${dec?.texte ? ` ${dec.texte}` : ""} Le dépaysement est l’inverse de cette proximité.` };
+  }
+  // Les bonus et « En Europe » viennent de la liste des pays et de tes réponses ; le travail en anglais, de la note d'anglais.
+  if (mesureId === "region-carte" || mesureId === "en-europe") {
+    const m = mesures[mesureId], p = pays.find((x) => x.id === paysId);
+    const z = (trouverElement("carte") as CarteMonde | undefined)?.zones.find((x) => x.id === zoneCarte(paysId));
+    const texte = mesureId === "en-europe" ? (p?.zone === "europe" ? "Ce pays est en Europe." : "Ce pays est hors d’Europe.") : `Ce pays est dans la région « ${z?.label ?? ""} », que tu as cochée sur la carte du début.`;
+    return { ...preuveSource(m?.nom ?? mesureId, texte, m?.critere.sources[0] ?? null, null, null), type: "donnee-ouverte" };
+  }
+  if (mesureId === "langue-parlee") {
+    const a = preuveMesure(paysId, "langue");
+    return { ...a, titre: mesures[mesureId]?.nom ?? mesureId, texte: `Tu as dit parler une langue officielle ou très parlée dans ce pays. ${a.texte}`.trim() };
+  }
+  if (mesureId === "langue-travail") {
+    if (avis[paysId]?.francaisAuTravail) return { ...preuveMesure(paysId, "langue"), titre: mesures[mesureId]?.nom ?? mesureId };
+    return { ...preuveMesure(paysId, "anglais"), titre: mesures[mesureId]?.nom ?? mesureId };
   }
   if (mesureId !== "employeur-libre") return preuveMesure(paysId, mesureId);
   const p = pays.find((x) => x.id === paysId)!;
@@ -679,30 +713,36 @@ export type Ligne = {
   fiabilite: Fiabilite;
 };
 
-// ---------- Fiabilité des données ----------
-// Part de tes critères qui ont, pour ce pays, une donnée vérifiée par une source Officiel, Donnée ouverte
-// ou Témoignages. « Notre avis » (un jugement de la rédaction) et « À vérifier » ne comptent pas.
+// ---------- Données disponibles ----------
+// Une seule règle, partout (badge, règle des 60 %, fiche pays) : une mesure compte si elle a une valeur,
+// quel que soit son niveau de preuve (Officiel, Donnée ouverte, Témoignages ou Notre avis). « À vérifier » ne compte jamais.
+// Le détail montre la part de chaque niveau de preuve.
 export type NiveauFiabilite = "complete" | "partielle" | "faible";
-export type Fiabilite = { verifies: number; total: number; niveau: NiveauFiabilite };
-export const TYPES_VERIFIES = ["officiel", "donnee-ouverte", "temoignages"];
+export type NiveauPreuve = "officiel" | "donnee-ouverte" | "temoignages" | "notre-avis";
+export type Fiabilite = { disponibles: number; total: number; niveau: NiveauFiabilite; parNiveau: Record<NiveauPreuve, number> };
+export const NIVEAUX_PREUVE: NiveauPreuve[] = ["officiel", "donnee-ouverte", "temoignages", "notre-avis"];
 export const LIBELLE_FIABILITE: Record<NiveauFiabilite, string> = {
-  complete: "Données complètes",
-  partielle: "Données partielles",
-  faible: "Peu de données vérifiées",
+  complete: "Données disponibles : complètes",
+  partielle: "Données disponibles : partielles",
+  faible: "Peu de données disponibles",
 };
+// Le niveau de preuve d'une mesure qui a une valeur (une mesure calculée prend celui de son critère).
+export function niveauPreuve(paysId: string, m: string, profil: Profil): NiveauPreuve {
+  const t = preuveDe(paysId, m, profil).type;
+  if (t !== "a-verifier") return t;
+  return mesures[m]?.critere.type ?? "notre-avis";
+}
 export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil): Fiabilite {
-  const verifies = criteres.filter((m) => {
-    if (MESURES_CALCULEES.includes(m)) return TYPES_VERIFIES.includes(preuveDe(paysId, m, profil).type);
-    const n = notes[paysId]?.[m];
-    if (!n || n.statut !== "verifie" || n.note === null || !n.source) return false;
-    // Un barème relayé (indemnité VIE), pas lu sur le site officiel, compte dans le score mais pas comme une donnée vérifiée.
-    if (n.relaye) return false;
-    // Tu parles la langue du pays : la note vient de ta réponse, pas d'une source.
-    if ((m === "langue" || m === "apprendre-langue") && parleLangueDe(paysId, profil)) return true;
-    return TYPES_VERIFIES.includes(sources[n.source]?.type);
-  }).length;
-  const part = criteres.length ? verifies / criteres.length : 1;
-  return { verifies, total: criteres.length, niveau: part >= 0.9 ? "complete" : part >= 0.6 ? "partielle" : "faible" };
+  const parNiveau: Record<NiveauPreuve, number> = { officiel: 0, "donnee-ouverte": 0, temoignages: 0, "notre-avis": 0 };
+  const liste = criteres.filter((m) => !MESURES_BONUS.includes(m));
+  let disponibles = 0;
+  for (const m of liste) {
+    if (noteEffective(paysId, m, profil) === null) continue;
+    disponibles++;
+    parNiveau[niveauPreuve(paysId, m, profil)]++;
+  }
+  const part = liste.length ? disponibles / liste.length : 1;
+  return { disponibles, total: liste.length, niveau: part >= 0.9 ? "complete" : part >= COUVERTURE_MIN ? "partielle" : "faible", parNiveau };
 }
 
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
@@ -726,7 +766,7 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
   const ecarts = raisonsEcart(etat);
   const budget = budgetDe(etat, reglages);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
-  const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))];
+  const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))].filter((m) => !MESURES_BONUS.includes(m));
   const lignes = pays.map((p) => {
     const remonte = etat.remontes.includes(p.id);
     const details: Detail[] = [];
@@ -737,6 +777,8 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
       if (!mesureDisponible(e.mesure)) continue;
       if (remonte && PENALITES.includes(e.mesure)) continue;
       const note = noteEffective(p.id, e.mesure, etat.profil);
+      // Un bonus qui ne s'applique pas à ce pays : rien (ni malus, ni donnée manquante).
+      if (note === null && MESURES_BONUS.includes(e.mesure)) continue;
       const priorite = estPriorite(e);
       // Priorité : la mesure compte, notée ou neutre. Sinon : seules les mesures notées comptent.
       if (note === null) {

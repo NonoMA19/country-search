@@ -297,7 +297,8 @@
         "langue",
         "apprendre-langue",
         "anglais",
-        "langue-travail"
+        "langue-travail",
+        "langue-parlee"
       ]
     },
     "reseau": {
@@ -353,7 +354,8 @@
     "zone": {
       "nom": "L’Europe ou plus loin",
       "mesures": [
-        "en-europe"
+        "en-europe",
+        "region-carte"
       ]
     },
     "depaysement": {
@@ -370,18 +372,18 @@
       "chapitre": 1,
       "theme": "Ton intuition",
       "titre": "Avant de commencer : où pensais-tu partir ?",
-      "texte": "Coche une ou plusieurs régions. Ta réponse ne change pas ton classement : on la garde pour la fin.",
+      "texte": "Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.",
       "dimensions": [],
       "aide": {
-        "enjeu": "On compare ton intuition à ce que tes réponses diront.",
+        "enjeu": "Ta carte compte un peu dans le calcul, et on compare ton intuition à ce que tes réponses diront.",
         "cartes": [
           {
-            "pastille": "Ta réponse",
-            "texte": "Elle ne compte pas dans le calcul. À la fin, on te dit si tes réponses te mènent au même endroit."
+            "pastille": "Une région cochée",
+            "texte": "Ses pays reçoivent un petit bonus, comme une envie classée en 5e. Les autres pays ne perdent rien."
           },
           {
             "pastille": "Aucune idée",
-            "texte": "C’est une réponse comme une autre."
+            "texte": "C’est une réponse comme une autre : rien ne change."
           }
         ]
       },
@@ -842,7 +844,7 @@
         "cartes": [
           {
             "pastille": "Une langue cochée",
-            "texte": "Dans les pays qui la parlent, la vie au quotidien compte comme en français, et il n’y a rien à apprendre."
+            "texte": "Les pays qui la parlent reçoivent un bonus modéré, même sans autre question. Et si tu dis que la langue du quotidien compte, ils comptent comme s’ils parlaient français."
           },
           {
             "pastille": "Aucune autre",

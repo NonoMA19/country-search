@@ -5,7 +5,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, t
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
-  GROUPES, NIVEAUX, TYPES_VERIFIES, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
+  GROUPES, NIVEAUX, MESURES_BONUS, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
@@ -533,18 +533,24 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.13 Fiabilité des données et fiche de faisabilité (prompt 3d, lot 3).
 {
-  // Fiabilité : « Notre avis » ne compte pas comme une donnée vérifiée ; seuils 90 % et 60 %.
+  // Données disponibles (prompt 3h) : une seule règle, la même que la règle des 60 %. Une valeur compte, quel que soit
+  // son niveau de preuve (« Notre avis » compris) ; « À vérifier » ne compte jamais. Seuils 90 % et 60 %.
   const avisSeul = fiabiliteDe("allemagne", ["hierarchie"], {});
-  verifier(sources[notesPays.allemagne.hierarchie.source!].type === "notre-avis" && avisSeul.verifies === 0 && avisSeul.niveau === "faible", "fiabilité : « Notre avis » compté comme vérifié");
+  verifier(sources[notesPays.allemagne.hierarchie.source!].type === "notre-avis" && avisSeul.disponibles === 1 && avisSeul.parNiveau["notre-avis"] === 1 && avisSeul.niveau === "complete", "disponibles : « Notre avis » ne compte pas");
   const ouvertes = fiabiliteDe("pays-bas", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "doux", "prix", "air"], {});
-  verifier(ouvertes.niveau === "complete" && ouvertes.verifies === 10, "fiabilité : 10 données ouvertes sur 10 ne donnent pas « Données complètes »");
-  const partielle = fiabiliteDe("pays-bas", ["emploi", "salaire", "securite", "vol", "decalage", "hiver", "ete", "hierarchie", "communication", "ponctualite"], {});
-  verifier(partielle.niveau === "partielle", `fiabilité : 7 sur 10 donne ${partielle.niveau}`);
-  verifier(fiabiliteDe("japon", ["langue"], { langues: ["ja"] }).verifies === 1, "fiabilité : la langue que tu parles ne compte pas");
+  verifier(ouvertes.niveau === "complete" && ouvertes.disponibles === 10, "disponibles : 10 sur 10 ne donnent pas « complètes »");
+  verifier(fiabiliteDe("japon", ["langue"], { langues: ["ja"] }).disponibles === 1, "disponibles : la langue que tu parles ne compte pas");
+  verifier(fiabiliteDe("japon", ["region-carte", "langue-parlee", "langue"], { regions: ["europe"] }).total === 1, "disponibles : un bonus compte dans le badge");
   for (const p of pays) for (const m of Object.keys(notesPays[p.id])) {
-    const n = notesPays[p.id][m];
     const f = fiabiliteDe(p.id, [m], {});
-    verifier(f.verifies === (n.statut === "verifie" && n.note !== null && !!n.source && !n.relaye && TYPES_VERIFIES.includes(sources[n.source].type) ? 1 : 0), `fiabilité : ${m} mal compté pour ${p.nom}`);
+    const attendu = noteEffective(p.id, m, {}) !== null ? 1 : 0;
+    verifier(f.disponibles === attendu && Object.values(f.parNiveau).reduce((a, b) => a + b, 0) === attendu, `disponibles : ${m} mal compté pour ${p.nom}`);
+  }
+  // Même règle que la couverture du calcul : pour un parcours, la part disponible du badge est la couverture.
+  const rDispo = hasard(3108);
+  for (let k = 0; k < 40; k++) {
+    const e = quizAuHasard(rDispo);
+    for (const l of calculer(e)) verifier(Math.abs(l.fiabilite.disponibles / Math.max(1, l.fiabilite.total) - (l.fiabilite.total ? l.couverture : 1)) < 1e-9, `disponibles : badge et règle des 60 % diffèrent pour ${l.pays.nom}`);
   }
 
   // Faisabilité : seulement des données sourcées, une prochaine étape vers un site officiel, jamais « juridiquement ».
@@ -608,7 +614,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(effetsActifs(vieEtat).some((e) => e.mesure === "indemnite-vie") && !effetsActifs(vieEtat).some((e) => e.mesure === "salaire"), "VIE : le salaire moyen compte encore pour un VIE");
   verifier(!effetsActifs(construire({ profil: { objectif: "premier-poste" }, envies: ["salaire", "travail", "prix", "climat", "securite"] })).some((e) => e.mesure === "indemnite-vie"), "VIE : l'indemnité compte hors VIE");
   verifier(notesPays["royaume-uni"]["indemnite-vie"].valeur === 3816.01 && notesPays["royaume-uni"]["indemnite-vie"].ville === "Londres" && notesPays["etats-unis"]["indemnite-vie"].ville === "New York", "VIE : ville la plus probable mal choisie");
-  verifier(paysCouverts("indemnite-vie") === 30 && fiabiliteDe("suisse", ["indemnite-vie"], {}).verifies === 0, "VIE : barème relayé compté comme vérifié, ou pays manquant");
+  verifier(paysCouverts("indemnite-vie") === 30, "VIE : pays manquant");
   // L'année de la donnée est dans la preuve.
   for (const p of pays) for (const [m, n] of Object.entries(notesPays[p.id])) {
     if (n.statut === "verifie" && n.annee) verifier(preuveMesure(p.id, m).annee === n.annee, `preuve : année absente pour ${m} (${p.nom})`);
@@ -744,9 +750,40 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
   // Classement passé : l'ordre du choix des envies sert de classement.
   const sansClassement = rejouer({ ...ETAT_VIDE, reponses: { envies: cinq, classement: PASSER }, ordre: ["envies", "classement"] });
   verifier(enviesDe(sansClassement).join() === cinq.join(), "envies : classement passé mal lu");
-  // La carte du monde n'a aucun effet sur le score.
+  // La carte du monde (prompt 3h) : un bonus de 1,1 aux pays des régions cochées, rien pour les autres.
   const avecCarte = repondre(e5, "carte", ["asie-est", "oceanie"]);
-  verifier(memesScores(scores(e5), scores(avecCarte)) && effetsActifs(avecCarte).length === effetsActifs(e5).length, "carte : elle change le score");
+  verifier(effetsActifs(avecCarte).find((e) => e.mesure === "region-carte")?.poids === 1.1, "carte : le bonus ne vaut pas 1,1");
+  verifier(MESURES_BONUS.every((m) => mesures[m]?.interne), "bonus : une mesure de bonus a une carte dans la fiche pays");
+  {
+    const a = scores(e5), b = scores(avecCarte);
+    for (const p of pays) {
+      const dedans = ["asie-est", "oceanie"].includes(zoneDuPays(p.id)?.id ?? "");
+      verifier(dedans ? b[p.id] >= a[p.id] - 1e-9 : Math.abs(b[p.id] - a[p.id]) < 1e-9, `carte : ${p.nom} ${dedans ? "perd des points" : "change de score hors de la carte"}`);
+    }
+    const avant = calculer(e5).find((l) => l.pays.id === "japon")!, apres = calculer(avecCarte).find((l) => l.pays.id === "japon")!;
+    verifier(avant.couverture === apres.couverture && avant.manquantes.length === apres.manquantes.length, "carte : le bonus change la couverture");
+    verifier(effetsActifs(repondre(e5, "carte", ["aucune"])).every((e) => e.mesure !== "region-carte"), "carte : « Aucune idée » donne un bonus");
+  }
+  // Une langue parlée compte toujours (bonus de 1, sans malus), même sans le dilemme de la langue.
+  {
+    const sans = construire({ envies: ["salaire", "travail", "securite", "climat", "prix"] });
+    const avec = construire({ profil: { langues: ["es"] }, envies: ["salaire", "travail", "securite", "climat", "prix"] });
+    verifier(effetsActifs(avec).find((e) => e.mesure === "langue-parlee")?.poids === 1, "langues : le bonus ne vaut pas 1");
+    const a = scores(sans), b = scores(avec);
+    for (const p of pays) {
+      const parle = ["espagne", "argentine", "chili", "colombie", "mexique"].includes(p.id);
+      verifier(parle ? b[p.id] > a[p.id] || a[p.id] >= 100 - 1e-9 : Math.abs(b[p.id] - a[p.id]) < 1e-9, `langues : ${p.nom} ${parle ? "ne gagne rien" : "change de score"}`);
+    }
+  }
+  // « Je préfère éviter » sur « Vivre hors d'Europe » et « Ni français ni anglais » : la pénalité compte vraiment.
+  {
+    const base = construire({ envies: ["salaire", "travail", "securite", "climat", "prix"] });
+    const evite = repondre(base, "limites", { "hors-europe": "eviter" });
+    verifier(scores(evite).japon < scores(base).japon && scores(evite).allemagne >= scores(base).allemagne, "limites : « Je préfère éviter » hors d'Europe sans effet");
+    verifier(calculer(evite).find((l) => l.pays.id === "japon")!.details.some((d) => d.mesure === "en-europe"), "limites : la pénalité « en Europe » n'est pas dans le calcul");
+    const langue = repondre(base, "limites", { "ni-fr-ni-en": "eviter" });
+    verifier(calculer(langue).find((l) => l.pays.id === "japon")!.details.some((d) => d.mesure === "langue-travail"), "limites : la pénalité « ni français ni anglais » n'est pas dans le calcul");
+  }
   // Curseur : continu, 0 = temps libre seulement, 100 = salaire seulement, 50 = les deux à 0,5.
   const curseur = (v: number) => effetsActifs(repondre(construire({ envies: ["securite", "prix", "travail", "climat", "francais"] }), "equilibre", v));
   verifier(curseur(0).find((e) => e.mesure === "heures")?.poids === 1 && !curseur(0).some((e) => e.mesure === "salaire"), "curseur : 0 ne donne pas le temps libre seul");
@@ -825,7 +862,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   const autre = intuition(repondre(base, "carte", [zoneN1.id === "oceanie" ? "europe" : "oceanie"]));
   verifier(autre.cas === "autre" && autre.phrase.startsWith("Tu pensais à") && autre.raisons.length > 0 && autre.raisons.length <= 3, `intuition : cas « autre » mal dit (${autre.phrase})`);
   verifier(intuition(repondre(base, "carte", ["aucune"])).phrase.startsWith("Tu partais sans idée"), "intuition : « Aucune idée » mal dit");
-  verifier(memesScores(scores(base), scores(repondre(base, "carte", ["oceanie"]))), "intuition : la carte change le score");
+  verifier(cleTop3(calculer(base)) === cleTop3(calculer(repondre(base, "carte", ["aucune"]))), "intuition : « Aucune idée » change le top 3");
 }
 
 // 2.21 Profil et contradictions (prompt 3f, lot 3).
@@ -982,7 +1019,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   if (phr?.type === "swipe") {
     const avecCarte = repondre(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }), "carte", ["oceanie", "asie-est"]);
     verifier(phrasesSwipe(phr, avecCarte).some((p) => p.id === "S16") && phrasesSwipe(phr, avecCarte).length === 5, "carte hors d'Europe : la phrase « dépaysement » n'est pas dans la série");
-    verifier(memesScores(scores(avecCarte), scores(construire({ envies: ["salaire", "travail", "securite", "climat", "francais"] }))), "carte hors d'Europe : le score change");
+    verifier(effetsActifs(avecCarte).some((e) => e.mesure === "region-carte"), "carte hors d'Europe : pas de bonus");
   }
 }
 

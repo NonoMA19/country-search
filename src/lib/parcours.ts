@@ -58,7 +58,7 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   }
   // Passée : les phrases montrées à ce moment-là (l'état d'avant).
   if (deja !== undefined) return phrasesSwipe(el, etatAvant(etat, el.id));
-  // Ta carte ne coche que des régions hors d'Europe : la phrase « dépaysement » entre dans la série (sans effet de la carte sur le score).
+  // Ta carte ne coche que des régions hors d'Europe : la phrase « dépaysement » entre dans la série (en plus du petit bonus de la carte).
   const carte = etat.reponses.carte;
   const horsEurope = Array.isArray(carte) && carte.length > 0 && !carte.includes("europe") && !carte.includes("aucune");
   const imposee = horsEurope ? el.phrases.find((p) => p.id === "S16") : undefined;
