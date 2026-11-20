@@ -283,12 +283,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 86545,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 545 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 80009,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 80 009 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 60.5,
     "impots": {
      "taux": 39.5,
@@ -667,12 +667,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 102611,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 102 611 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 82 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 92285,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 92 285 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 82 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 81.9,
     "impots": {
      "taux": 18.1,
@@ -1059,13 +1059,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 88144,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 144 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 4,
+    "valeur": 76285,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 76 285 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 61 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 61.3,
     "impots": {
      "taux": 38.7,
@@ -1453,13 +1453,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 86235,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 235 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 3,
+    "valeur": 70113,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 113 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 74.9,
     "impots": {
      "taux": 25.1,
@@ -1839,12 +1839,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 90384,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 90 384 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 68 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 98530,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 98 530 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 68 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 68,
     "impots": {
      "taux": 32,
@@ -2223,12 +2223,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 53185,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 53 185 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 57779,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 57 779 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 76.5,
     "impots": {
      "taux": 23.5,
@@ -2606,13 +2606,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 58772,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 772 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 71 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 2,
+    "valeur": 53864,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 53 864 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 71 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 71.4,
     "impots": {
      "taux": 28.6,
@@ -2991,13 +2991,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 85877,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 85 877 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 5,
+    "valeur": 80136,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 80 136 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 72.1,
     "impots": {
      "taux": 27.9,
@@ -3376,13 +3376,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 2,
-    "valeur": 41294,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 41 294 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 1,
+    "valeur": 44937,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 44 937 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 75 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 75.1,
     "impots": {
      "taux": 24.9,
@@ -3762,12 +3762,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 82016,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 82 016 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 73462,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 73 462 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 71.9,
     "impots": {
      "taux": 28.1,
@@ -4151,13 +4151,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 63934,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 63 934 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 2,
+    "valeur": 61443,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 61 443 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 77.4,
     "impots": {
      "taux": 22.6,
@@ -4536,13 +4536,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 5,
-    "valeur": 88971,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 88 971 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 65 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 4,
+    "valeur": 78090,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 78 090 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 65 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 64.7,
     "impots": {
      "taux": 35.3,
@@ -4921,13 +4921,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 75586,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 75 586 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 74 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 3,
+    "valeur": 67901,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 67 901 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 74 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 74.4,
     "impots": {
      "taux": 25.6,
@@ -5216,42 +5216,50 @@
    "secteur-finance": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-conseil": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-ingenierie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-tech": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-commerce": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-sante": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-hotellerie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "secteur-enseignement": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : l’OIT ne renvoie rien ; Statistique Canada classe les emplois avec une autre nomenclature (le SCIAN, où « information, culture et loisirs » ne correspond pas à la tech), donc pas le même concept. À vérifier.",
+    "verifieLe": "2026-11-20"
    }
   },
   "australie": {
@@ -5268,12 +5276,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 72330,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 72 330 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 72018,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 72 018 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 76.5,
     "impots": {
      "taux": 23.5,
@@ -5285,7 +5293,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : l’OIT ne renvoie rien ; le Bureau australien des statistiques publie des chiffres mensuels, sans moyenne annuelle lue avec le même concept (heures réellement travaillées par semaine). À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "francais": {
     "statut": "verifie",
@@ -5652,13 +5661,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 2,
-    "valeur": 58439,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 58 439 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 1,
+    "valeur": 50183,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 50 183 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 77.4,
     "impots": {
      "taux": 22.6,
@@ -5670,7 +5679,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : l’OIT ne renvoie rien par son interface ; sa page pays donne 36,6 h pour 2020, trop ancienne pour être comparée aux autres pays. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "francais": {
     "statut": "verifie",
@@ -6038,12 +6048,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 54733,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 54 733 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 79 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 60896,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 60 896 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 79 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 79.2,
     "impots": {
      "taux": 20.8,
@@ -6369,13 +6379,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 70766,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 766 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 84 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 2,
+    "valeur": 61259,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 61 259 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 84 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 83.5,
     "impots": {
      "taux": 16.5,
@@ -6750,7 +6760,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -7082,7 +7092,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -7373,14 +7383,9 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 2,
-    "valeur": 40134,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 40 134 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
-    "annee": "2024",
-    "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "verifie",
@@ -7743,12 +7748,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 31076,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 31 076 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 93 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 40626,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 40 626 $ par an en 2023, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 93 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2023",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 92.9,
     "impots": {
      "taux": 7.1,
@@ -8127,12 +8132,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 20293,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 20 293 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 100 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "valeur": 30133,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 30 133 $ par an en 2024, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 100 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
     "annee": "2024",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 100,
     "impots": {
      "taux": 0,
@@ -8501,12 +8506,12 @@
    "salaire": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 19311,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 19 311 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 87 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "valeur": 24463,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 24 463 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 87 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 86.8,
     "impots": {
      "taux": 13.2,
@@ -8882,14 +8887,9 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 1,
-    "valeur": 16567,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 16 567 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
-    "annee": "2024",
-    "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "verifie",
@@ -9256,13 +9256,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 4,
-    "valeur": 78216,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 78 216 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 3,
+    "valeur": 66299,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 66 299 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 77 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 76.9,
     "impots": {
      "taux": 23.1,
@@ -9645,13 +9645,13 @@
    },
    "salaire": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 70627,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 70 627 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 76 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-    "annee": "2024",
+    "note": 5,
+    "valeur": 86977,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 86 977 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 76 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+    "annee": "2025",
     "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20",
     "resteSur100": 75.7,
     "impots": {
      "taux": 24.3,
@@ -10039,12 +10039,13 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : le ministère du Travail de Singapour publie des heures payées par salarié (enquête auprès des entreprises), un autre concept que les heures réellement travaillées par personne en emploi. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "francais": {
     "statut": "verifie",
@@ -10407,7 +10408,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "verifie",
@@ -10773,14 +10774,9 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "verifie",
-    "note": 1,
-    "valeur": 34890,
-    "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 34 890 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024 ; donnée du Bureau international du travail reprise par l’OCDE dans le même tableau). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
-    "annee": "2024",
-    "source": "ocde-salaire",
-    "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-    "verifieLe": "2026-11-16"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -11108,12 +11104,13 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable dans le tableau de l’OCDE pour ce pays (2024)."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : l’OIT ne renvoie rien, et le rapport 2024 du Haut-Commissariat au Plan lu ne donne pas de durée hebdomadaire moyenne. À vérifier.",
+    "verifieLe": "2026-11-20"
    },
    "francais": {
     "statut": "verifie",
@@ -11415,9 +11412,14 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : l’OCDE couvre l’Autriche, mais son chiffre 2024 n’est pas encore saisi (le site de l’OCDE n’est pas lisible depuis la session). À saisir dans content/saisie/ocde.json."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 78301,
+    "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 78 301 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). La part qui reste après impôts n’est pas encore connue pour ce pays : à vérifier.",
+    "annee": "2025",
+    "source": "ocde-salaire",
+    "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+    "verifieLe": "2026-11-20"
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -11645,44 +11647,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 3.24,
+    "texte": "La finance et la banque : 3,2 % des emplois en Autriche, 3,4 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 6.62,
+    "texte": "Le conseil et l’audit : 6,6 % des emplois en Autriche, 6,8 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 15.86,
+    "texte": "L’ingénierie et l’industrie : 15,9 % des emplois en Autriche, 11 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 10,9 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 3.54,
+    "texte": "La tech et la data : 3,5 % des emplois en Autriche, 3,8 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 4,0 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 13.93,
+    "texte": "Le marketing et le commerce : 13,9 % des emplois en Autriche, 13 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 11.19,
+    "texte": "La santé : 11,2 % des emplois en Autriche, 13,3 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 11,0 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.42,
+    "texte": "L’hôtellerie et le tourisme : 5,4 % des emplois en Autriche, 4,6 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.22,
+    "texte": "L’enseignement et la recherche : 7,2 % des emplois en Autriche, 7,8 % en France (2024, Eurostat, enquête sur les forces de travail ; même nomenclature que l’OIT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "eurostat-lfs",
+    "lien": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsa_egan2?geo=AT&sex=T&age=Y15-74&unit=THS_PER&time=2024&lang=EN",
+    "verifieLe": "2026-11-20",
+    "mediane": 7.5
    }
   },
   "perou": {
@@ -11699,7 +11749,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -11978,7 +12028,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -12257,7 +12307,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -12306,7 +12356,8 @@
    "securite": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Homicides : pas de donnée dans cette source."
+    "texte": "Homicides : la donnée la plus récente de l’ONUDC (relayée par la Banque mondiale) date de 2011, trop ancienne pour être comparée aux autres pays.",
+    "verifieLe": "2026-11-20"
    },
    "vol": {
     "statut": "verifie",
@@ -12534,7 +12585,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -12583,7 +12634,8 @@
    "securite": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Homicides : pas de donnée dans cette source."
+    "texte": "Homicides : la donnée la plus récente de l’ONUDC (relayée par la Banque mondiale) date de 2011, trop ancienne pour être comparée aux autres pays.",
+    "verifieLe": "2026-11-20"
    },
    "vol": {
     "statut": "verifie",
@@ -12811,7 +12863,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -13094,7 +13146,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -13143,7 +13195,8 @@
    "securite": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Homicides : pas de donnée dans cette source."
+    "texte": "Homicides : aucune donnée de l’ONUDC dans la base de la Banque mondiale, et le portail de l’ONUDC n’est pas lisible automatiquement.",
+    "verifieLe": "2026-11-20"
    },
    "vol": {
     "statut": "verifie",
@@ -13371,7 +13424,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : pas de chiffre comparable de l’OCDE pour ce pays. L’Organisation internationale du travail mesure autrement (tous les salariés, temps partiel compris, autre base de prix) et ses chiffres ont déjà faussé la comparaison (Belgique et Luxembourg au-dessus de l’Allemagne) : à vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -13418,13 +13471,14 @@
     "verifieLe": "2026-11-17"
    },
    "securite": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Homicides : la donnée la plus récente date de 2015, trop ancienne pour être comparée aux autres pays.",
     "ancien": {
      "valeur": 0.27,
      "annee": "2015"
-    }
+    },
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Homicides : la donnée la plus récente de l’ONUDC (relayée par la Banque mondiale) date de 2015, trop ancienne pour être comparée aux autres pays.",
+    "verifieLe": "2026-11-20"
    },
    "vol": {
     "statut": "verifie",
@@ -13655,13 +13709,13 @@
     },
     "salaire": {
      "statut": "verifie",
-     "note": 3,
-     "valeur": 67318,
-     "texte": "Salaire brut moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 67 318 $ par an, en dollars « à pouvoir d’achat égal », qui tiennent compte des prix du pays (OCDE, 2024). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
-     "annee": "2024",
+     "note": 2,
+     "valeur": 60483,
+     "texte": "Salaire annuel moyen d’un salarié à temps plein, tous métiers, avant impôts et cotisations : 60 483 $ par an en 2025, en dollars à parité de pouvoir d’achat (USD PPA, des dollars « à pouvoir d’achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ 72 € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).",
+     "annee": "2025",
      "source": "ocde-salaire",
-     "lien": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/average-wage_da2c17cc.html",
-     "verifieLe": "2026-11-16",
+     "lien": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_EARNINGS@AV_AN_WAGE,1.0/all?startPeriod=2022&format=csvfilewithlabels",
+     "verifieLe": "2026-11-20",
      "resteSur100": 72,
      "impots": {
       "taux": 28,

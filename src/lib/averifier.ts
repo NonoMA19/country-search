@@ -15,10 +15,11 @@ export function listeAVerifier(): PointAVerifier[] {
     if (n.securite?.statut !== "verifie") res.push({ categorie: "Homicides (sécurité)", pays: p.nom, detail: n.securite?.texte ?? "Pas de donnée." });
     const sect = SECTEURS(p.id);
     if (sect.length && sect.every((m) => n[m]?.statut !== "verifie")) res.push({ categorie: "Emploi par secteur", pays: p.nom, detail: n[sect[0]]?.texte ?? "Pas de donnée." });
+    if (n.heures?.statut !== "verifie") res.push({ categorie: "Heures travaillées", pays: p.nom, detail: n.heures?.texte ?? "Pas de donnée." });
     if (n.francais?.statut !== "verifie") res.push({ categorie: "Français inscrits", pays: p.nom, detail: n.francais?.texte ?? "Pas de donnée." });
     for (const b of portes(p.id)) {
       if (b.type === "visa-travail" && (b.statut !== "verifie" || b.detailsAVerifier || (b.detail && b.detail.statut !== "verifie"))) {
-        res.push({ categorie: "Visa de travail", pays: p.nom, detail: b.detail ? `${b.detail.nom} : conditions détaillées à vérifier sur le site officiel du pays.` : "Conditions détaillées (employeur, salaire, diplôme) à vérifier sur le site officiel du pays." });
+        res.push({ categorie: "Visa de travail", pays: p.nom, detail: b.raisonAVerifier ?? (b.detail ? `${b.detail.nom} : conditions détaillées à vérifier sur le site officiel du pays.` : "Conditions détaillées (employeur, salaire, diplôme) à vérifier sur le site officiel du pays.") });
       }
       if (b.type === "pvt" && b.fondsAVerifier) res.push({ categorie: "Ressources du PVT", pays: p.nom, detail: b.fonds?.texte ?? "Montant à vérifier." });
       if (b.type === "pvt" && b.changement?.statut === "a-verifier") res.push({ categorie: "Procédure du PVT", pays: p.nom, detail: b.changement.texte });

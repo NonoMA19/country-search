@@ -91,7 +91,7 @@ const typoTextes = (scores) => {
 const pluriel = (n, mot) => `${mot}${Math.round(n * 10) / 10 >= 2 ? "s" : ""}`;
 const TEXTE = {
   emploi: (v, an) => `Parmi les 15-24 ans qui travaillent ou cherchent un emploi, ${fr(v)} % sont au chômage (${an}, estimation de l'Organisation internationale du travail).`,
-  salaire: (v, an, p, reste, bit) => `Salaire brut moyen d'un salarié à temps plein, tous métiers, avant impôts et cotisations : ${fr(v, 0)} $ par an, en dollars « à pouvoir d'achat égal », qui tiennent compte des prix du pays (OCDE, ${an}${bit ? " ; donnée du Bureau international du travail reprise par l'OCDE dans le même tableau" : ""}). ${reste === null || reste === undefined ? "La part qui reste après impôts n'est pas encore connue pour ce pays : à vérifier." : `Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ ${fr(reste, 0)} € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).`}`,
+  salaire: (v, an, p, reste) => `Salaire annuel moyen d'un salarié à temps plein, tous métiers, avant impôts et cotisations : ${fr(v, 0)} $ par an en ${an}, en dollars à parité de pouvoir d'achat (USD PPA, des dollars « à pouvoir d'achat égal » qui tiennent compte des prix du pays), à prix constants de 2025 (OCDE, Average annual wages). ${reste === null || reste === undefined ? "La part qui reste après impôts n'est pas encore connue pour ce pays : à vérifier." : `Pour un célibataire au salaire moyen, sur 100 € bruts, il reste environ ${fr(reste, 0)} € après impôt sur le revenu et cotisations salariales (OCDE, Taxing Wages 2026, données 2025).`}`,
   "indemnite-vie": (v, an, p, ville, autres, bareme) => `Indemnité VIE ${p.en}${ville ? ` (${ville})` : ""} : ${fr(v, 0)} € par mois, soit ${fr(bareme.partFixe, 2)} € de part fixe et ${fr(v - bareme.partFixe, 0)} € d'indemnité supplémentaire (barème du ${dateLongue(bareme.dateBareme)}, ${bareme.arrete.charAt(0).toLowerCase()}${bareme.arrete.slice(1)}). Révisé chaque trimestre ; l'indemnité supplémentaire est réduite de 20 % si l'entreprise te loge.${autres?.length ? ` ${autres.map((a, i) => `${i ? a.ville : a.ville.charAt(0).toUpperCase() + a.ville.slice(1)} : ${a.montant ? `${fr(a.montant, 0)} €` : "à vérifier"}`).join(" ; ")}.` : ""}`,
   heures: (v, an) => `${fr(v)} heures réellement travaillées par semaine en moyenne (${an}).`,
   francais: (v, an, p, inscrits) => `${fr(inscrits, 0)} Français inscrits au registre consulaire fin 2020, soit ${fr(v, v < 10 ? 1 : 0)} pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C'est la donnée la plus récente publiée, mais elle est ancienne. L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`,
@@ -184,7 +184,8 @@ function noteSalaire(id, p) {
   const taux = id === "france" ? OCDE.impots.france : OCDE.impots.taux[id];
   const reste = typeof taux === "number" ? Math.round((100 - taux) * 10) / 10 : null;
   if (typeof v !== "number") return { ...aVerifier(OCDE.salaire.textesAVerifier?.[id] ?? "Salaire brut moyen : pas de chiffre comparable dans le tableau de l'OCDE pour ce pays (2024)."), ...(reste !== null ? { resteSur100: reste } : {}) };
-  const n = verifie("salaire", v, TEXTE.salaire(v, OCDE.salaire.annee, p, reste, OCDE.salaire.bit.includes(id)), OCDE.salaire.source, OCDE.salaire.lien, OCDE.salaire.annee);
+  const an = id === "france" ? OCDE.salaire.annee : (OCDE.salaire.annees?.[id] ?? OCDE.salaire.annee);
+  const n = verifie("salaire", v, TEXTE.salaire(v, an, p, reste), OCDE.salaire.source, OCDE.salaire.lien, an);
   return { ...n, verifieLe: OCDE.salaire.verifieLe, ...(reste !== null ? { resteSur100: reste, impots: { taux, source: OCDE.impots.source, lien: OCDE.impots.lien, annee: OCDE.impots.annee } } : {}) };
 }
 if (OCDE_SEULE) {

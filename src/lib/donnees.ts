@@ -7,6 +7,7 @@ import portesData from "../../content/portes.json";
 import avisData from "../../content/saisie/avis.json";
 import doubleData from "../../content/double-nationalite.json";
 import glossaireData from "../../content/glossaire.json";
+import revenuData from "../../content/saisie/revenu-bm.json";
 
 export type TypeSource = "officiel" | "donnee-ouverte" | "notre-avis" | "temoignages";
 // Confiance d'une note tirée de témoignages : « bonne » (sources nombreuses et concordantes) ou « moyenne ».
@@ -154,7 +155,7 @@ export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curs
 export type Valeur = string | string[] | number | Record<string, string>;
 
 export type Chapitre = { numero: number; titre: string; phrase: string; adaptatif?: boolean; min?: number; max?: number };
-export type Envie = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[] };
+export type Envie = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; parts?: number[] }; // parts : la part de chaque mesure (sinon, à parts égales)
 export type Dimension = { nom: string; mesures: string[] };
 
 // Budget : une tranche (« de 2 000 à 5 000 € ») : min et max en euros (pas de max pour « plus de 10 000 € »).
@@ -197,6 +198,7 @@ export type PorteBrute = {
   employeur?: boolean;
   conditions?: string[];
   detailsAVerifier?: boolean; // l'entrée est vérifiée, mais pas les conditions détaillées du visa de travail
+  raisonAVerifier?: string; // pourquoi ce visa reste « à vérifier » (recherche faite, rien d'officiel trouvé)
   detail?: DetailVisa;
   saison?: StatutPorte;
   fondsAVerifier?: boolean; // les ressources demandées ne sont pas claires (pages officielles contradictoires)
@@ -323,6 +325,14 @@ export type Preuve = {
   avertissement?: string | null; // une phrase de prudence propre à la mesure
 };
 
+// « Économie informelle » : dans les pays à revenu faible ou intermédiaire (Banque mondiale), beaucoup d'emplois sont informels.
+// Un chômage des jeunes bas n'y veut pas dire que les emplois déclarés sont faciles à trouver.
+const revenu = revenuData as { intermediaireOuFaible: Record<string, string> };
+export function mentionInformelle(paysId: string): string | null {
+  const niveau = revenu.intermediaireOuFaible[paysId];
+  return niveau ? `Économie informelle : ce pays est classé « ${niveau} » par la Banque mondiale. Beaucoup d’emplois y sont informels, sans contrat ni protection : un chômage des jeunes bas ne veut pas dire que les emplois déclarés sont faciles à trouver.` : null;
+}
+
 export function preuveMesure(paysId: string, mesureId: string): Preuve {
   const n = notes[paysId]?.[mesureId];
   const m = mesures[mesureId];
@@ -342,7 +352,7 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
     annee: n.annee ?? null,
-    avertissement: m.avertissement ?? null,
+    avertissement: (mesureId === "emploi" ? mentionInformelle(paysId) : null) ?? m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }

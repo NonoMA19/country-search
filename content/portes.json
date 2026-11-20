@@ -693,25 +693,24 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/coree-du-sud/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "detail": {
     "nom": "Visa E-7 (activités désignées)",
     "employeurRequis": true,
-    "lieEmployeur": "a-verifier",
+    "lieEmployeur": "oui",
     "conditions": [
-     "Un organisme coréen, public ou privé, t’invite pour un métier fixé par le ministère de la Justice.",
-     "L’employeur dépose le dossier au ministère de la Justice. Une fois le dossier accepté, tu reçois un numéro et tu demandes le visa à l’ambassade ou au consulat.",
-     "Un contrat de travail signé, et des justificatifs de diplôme ou d’expérience."
+     "Un contrat avec un organisme coréen, public ou privé, pour un métier désigné par le ministère de la Justice.",
+     "L’employeur dépose le dossier au ministère de la Justice ; une fois accepté, tu reçois un numéro de délivrance du visa.",
+     "Un contrat de travail signé est exigé."
     ],
     "liens": [
      {
-      "url": "https://www.diplomatie.gouv.fr/fr/information-par-pays/coree-du-sud/conseils-aux-voyageurs-entree-sejour",
-      "libelle": "Entrée et séjour en Corée du Sud (France Diplomatie) ; page de l’ambassade de Corée en France : à vérifier"
+      "url": "https://overseas.mofa.go.kr/ca-en/brd/m_5238/view.do?seq=727689",
+      "libelle": "Visa E-7 (ministère coréen des Affaires étrangères)"
      }
     ],
     "source": "kr-mofa",
-    "statut": "a-verifier",
-    "verifieLe": "2026-11-15"
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -949,26 +948,25 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/colombie/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "detail": {
-    "nom": "Visa M de travailleur (Temporary Worker’s Visa)",
+    "nom": "Visa M de travailleur",
     "employeurRequis": true,
-    "lieEmployeur": "a-verifier",
+    "lieEmployeur": "oui",
     "conditions": [
-     "Un emploi dans une entreprise ou une institution colombienne, ou une mutation vers un poste précis en Colombie.",
-     "Un résumé du contrat signé et authentifié devant notaire ou consul, et un certificat d’existence de l’employeur de moins de 3 mois.",
-     "Pour un métier réglementé, une licence. Sinon, un diplôme légalisé et validé par le ministère de l’Éducation, ou une lettre de l’employeur sur ton expérience.",
-     "50 dollars américains pour l’étude du dossier, 205 pour le visa. La première demande se fait dans un consulat colombien à l’étranger."
+     "Un contrat de travail avec une entreprise colombienne, et le formulaire de résumé du contrat signé par les deux parties.",
+     "Une lettre de l’employeur qui explique le poste, la formation et pourquoi il n’embauche pas un Colombien.",
+     "L’employeur doit justifier de revenus moyens d’au moins 100 salaires minimums par mois sur 4 mois.",
+     "Le permis vaut seulement pour le poste et l’entreprise pour lesquels il est donné."
     ],
     "liens": [
      {
-      "url": "https://www.cancilleria.gov.co/en/temporary-workers-visa",
-      "libelle": "Page officielle du visa"
+      "url": "https://www.cancilleria.gov.co/node/26973",
+      "libelle": "Visa M travailleur (Cancillería)"
      }
     ],
     "source": "co-cancilleria",
-    "statut": "a-verifier",
-    "verifieLe": "2026-11-15"
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -1044,32 +1042,31 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Pour travailler au Brésil depuis l’étranger, il faut d’abord une autorisation de résidence pour le travail, puis un visa temporaire délivré par le consulat.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier",
+   "source": "br-mj",
+   "lien": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/autorizacao-de-residencia-laboral-1",
+   "verifieLe": "2026-11-20",
+   "statut": "verifie",
    "detail": {
-    "nom": "Autorisation de résidence pour travailler avec un contrat de travail",
+    "nom": "Visa temporaire V (travail), après une autorisation de résidence",
     "employeurRequis": true,
-    "lieEmployeur": "a-verifier",
+    "lieEmployeur": "partiellement",
     "conditions": [
-     "Un contrat de travail de droit brésilien. C’est l’entreprise brésilienne qui fait la demande.",
-     "La demande se fait en ligne (MigranteWeb) et elle est examinée par le ministère de la Justice.",
-     "Durée : jusqu’à 2 ans."
+     "Depuis l’étranger, il faut d’abord une autorisation de résidence pour le travail, demandée au ministère de la Justice (MigranteWeb), sur la base d’un emploi ou d’une offre.",
+     "Une fois l’autorisation publiée, le consulat délivre le visa temporaire.",
+     "À l’arrivée, inscription auprès de la police fédérale (carte RNM)."
     ],
     "liens": [
      {
-      "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/navegacao-guiada-1/possui-autorizacao-de-residencia/o-que-deseja/qual-a-finalidade-desejada-1/trabalho-com-contrato-de-trabalho-no-brasil",
-      "libelle": "Page officielle du visa"
+      "url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/autorizacao-de-residencia-laboral-1",
+      "libelle": "Autorisation de résidence pour le travail (ministère de la Justice)"
      }
     ],
     "source": "br-mj",
-    "statut": "a-verifier",
-    "verifieLe": "2026-11-15"
-   },
-   "detailsAVerifier": true
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
+   }
   }
  ],
  "royaume-uni": [
@@ -1352,25 +1349,24 @@
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/chine/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-14",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "detail": {
     "nom": "Visa Z (travail)",
     "employeurRequis": true,
     "lieEmployeur": "oui",
     "conditions": [
-     "Il faut la notification de permis de travail pour étrangers, délivrée par l’administration chinoise du travail, ou un autre document de la liste officielle.",
-     "Dans les 30 jours après ton arrivée, tu demandes un titre de séjour à la police des étrangers.",
-     "D’après une ancienne version du règlement (avant 2017, à revérifier) : avoir 18 ans ou plus, être en bonne santé, avoir les compétences et l’expérience du poste, ne pas avoir de casier judiciaire, et un employeur bien identifié."
+     "Pour travailler plus de 90 jours : la notification de permis de travail pour étrangers (plus de 90 jours), ou un autre document de la liste officielle.",
+     "Pour 90 jours au plus : la notification de permis de travail de courte durée.",
+     "Sauf pour un travail de 30 jours au plus, il faut demander un titre de séjour dans les 30 jours après l’arrivée."
     ],
     "liens": [
      {
-      "url": "https://cs.mfa.gov.cn/lh/lhqz_149493/qzxz/202608/t20260806_11999100.html",
-      "libelle": "Page officielle du visa"
+      "url": "https://pg.china-embassy.gov.cn/eng/lsyw/zjfw/202412/t20241223_11515014.htm",
+      "libelle": "Visa Z (ambassade de Chine, réseau du ministère des Affaires étrangères)"
      }
     ],
     "source": "cn-mfa",
-    "statut": "a-verifier",
-    "verifieLe": "2026-11-15"
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   },
   {
@@ -1409,30 +1405,31 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Les conditions du visa de travail ne sont pas encore vérifiées sur un site officiel.",
+   "texte": "Pour travailler au Maroc, le contrat de travail d’un étranger doit être visé par l’autorité chargée du travail.",
    "conditions": [],
-   "source": null,
-   "lien": null,
-   "verifieLe": null,
-   "statut": "a-verifier",
+   "source": "ma-emploi",
+   "lien": "https://miepeec.gov.ma/wp-content/uploads/2019/06/Procedure-Emploi-des-salaries-etrangers-au-Maroc.pdf",
+   "verifieLe": "2026-11-20",
+   "statut": "verifie",
    "detail": {
-    "nom": "Contrat de travail pour étranger, visé par le ministère chargé de l’emploi, puis titre de séjour",
+    "nom": "Contrat de travail d’étranger visé par l’autorité chargée du travail",
     "employeurRequis": true,
-    "lieEmployeur": "a-verifier",
+    "lieEmployeur": "oui",
     "conditions": [
-     "Piste à vérifier : d’après l’article 516 du Code du travail marocain, le contrat de travail d’un étranger doit être visé par l’autorité chargée du travail."
+     "L’employeur doit obtenir une autorisation de l’autorité gouvernementale chargée du travail.",
+     "Cette autorisation prend la forme d’un visa apposé sur le contrat de travail du salarié étranger.",
+     "C’est l’employeur qui dépose la demande ; la procédure vise aussi à protéger la main-d’œuvre nationale."
     ],
     "liens": [
      {
-      "url": "https://www.diplomatie.gouv.fr/fr/services-aux-francais/preparer-son-expatriation/dossiers-pays-de-l-expatriation/maroc/emploi-stage/article/reglementation-du-travail",
-      "libelle": "Fiche Maroc de France Diplomatie (réglementation du travail)"
+      "url": "https://miepeec.gov.ma/wp-content/uploads/2019/06/Procedure-Emploi-des-salaries-etrangers-au-Maroc.pdf",
+      "libelle": "Procédure d’emploi des salariés étrangers (ministère de l’Emploi)"
      }
     ],
-    "source": "diplomatie-expatriation",
-    "statut": "a-verifier",
-    "verifieLe": "2026-11-17"
-   },
-   "detailsAVerifier": true
+    "source": "ma-emploi",
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
+   }
   }
  ],
  "autriche": [
@@ -1475,19 +1472,37 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Sans visa, un séjour touristique est possible. Pour travailler hors PVT, il faut un visa de travail. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "texte": "Sans visa, un séjour touristique est possible. Pour travailler hors PVT, il faut un visa de travail.",
    "conditions": [],
    "source": "diplomatie-cav",
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-17",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "securite": {
     "texte": "Lima est en vigilance renforcée, avec des quartiers à éviter, surtout la nuit (France Diplomatie, page mise à jour le 21 septembre 2026).",
     "source": "diplomatie-cav",
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/perou/conseils-aux-voyageurs-securite",
     "verifieLe": "2026-11-17",
     "statut": "verifie"
+   },
+   "detail": {
+    "nom": "Qualité migratoire « travailleur résident »",
+    "employeurRequis": true,
+    "lieEmployeur": "partiellement",
+    "conditions": [
+     "Un contrat de travail, une relation administrative ou un contrat de service au Pérou.",
+     "Le contrat doit dater de moins de 30 jours et être approuvé par l’autorité du travail (sauf exceptions) ; signé à l’étranger, il doit être authentifié.",
+     "Un contrat d’au moins un an ; plus court, la demande est traitée comme « travailleur temporaire »."
+    ],
+    "liens": [
+     {
+      "url": "https://www.gob.pe/12877-solicitar-calidad-migratoria-para-trabajador-residente",
+      "libelle": "Travailleur résident (gob.pe)"
+     }
+    ],
+    "source": "pe-gob",
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -1513,19 +1528,37 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Le PVT se demande à la section consulaire de l’ambassade d’Uruguay à Paris. Pour travailler hors PVT, il faut un visa de travail. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "texte": "Le PVT se demande à la section consulaire de l’ambassade d’Uruguay à Paris. Pour travailler hors PVT, il faut un visa de travail.",
    "conditions": [],
    "source": "diplomatie-cav",
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/uruguay/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-17",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "securite": {
     "texte": "Les départements de Montevideo et de Canelones sont en vigilance renforcée ; le reste du pays est en vigilance normale (France Diplomatie, page mise à jour le 10 septembre 2026).",
     "source": "diplomatie-cav",
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/uruguay/conseils-aux-voyageurs-securite",
     "verifieLe": "2026-11-17",
     "statut": "verifie"
+   },
+   "detail": {
+    "nom": "Résidence légale temporaire (pas de permis de travail séparé)",
+    "employeurRequis": false,
+    "lieEmployeur": "non",
+    "conditions": [
+     "La résidence temporaire, de 6 mois à 2 ans renouvelables, est ouverte à qui s’installe pour travailler.",
+     "Un employeur peut t’embaucher si tu prouves que ta demande de résidence est en cours.",
+     "L’Uruguay ne délivre pas de « permis de travail » : c’est le statut de résident qui autorise à travailler."
+    ],
+    "liens": [
+     {
+      "url": "https://www.gub.uy/ministerio-trabajo-seguridad-social/politicas-y-gestion/contratacion-trabajadores-extranjeros-bajo-regimen-dependencia-laboral",
+      "libelle": "Embauche de travailleurs étrangers (ministère du Travail)"
+     }
+    ],
+    "source": "uy-mtss",
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -1534,19 +1567,37 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "Travailler sans permis de travail peut conduire à une expulsion rapide (règlement en vigueur depuis le 28 août 2026). Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "texte": "Travailler sans permis de travail peut conduire à une expulsion rapide (règlement en vigueur depuis le 28 août 2026).",
    "conditions": [],
    "source": "diplomatie-cav",
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/thailande/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-17",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "securite": {
     "texte": "Bangkok est en vigilance renforcée ; certaines provinces du sud et les zones frontalières sont déconseillées (France Diplomatie, page mise à jour le 9 novembre 2026).",
     "source": "diplomatie-cav",
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/thailande/conseils-aux-voyageurs-securite",
     "verifieLe": "2026-11-17",
     "statut": "verifie"
+   },
+   "detail": {
+    "nom": "Visa Non-Immigrant B (affaires et travail), puis permis de travail",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "conditions": [
+     "Il faut un visa Non-Immigrant et un permis de travail avant de commencer à travailler.",
+     "L’employeur thaïlandais dépose le formulaire WP3 pour obtenir l’accord du ministère du Travail.",
+     "Les documents de l’entreprise qui embauche sont demandés."
+    ],
+    "liens": [
+     {
+      "url": "https://www.mfa.go.th/en/page/non-immigrant-visa-b?menu=5e1ff6f857b01e00a84023d4",
+      "libelle": "Visa Non-Immigrant B (ministère thaïlandais des Affaires étrangères)"
+     }
+    ],
+    "source": "th-mfa",
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -1568,7 +1619,8 @@
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/vietnam/conseils-aux-voyageurs-securite",
     "verifieLe": "2026-11-17",
     "statut": "verifie"
-   }
+   },
+   "raisonAVerifier": "Aucune page officielle vietnamienne (immigration, ministère ou ambassade) lisible ne donne les conditions du permis de travail : seuls des résumés de cabinets privés, écartés. (Recherche du 20 novembre 2026.)"
   }
  ],
  "inde": [
@@ -1576,19 +1628,37 @@
    "type": "visa-travail",
    "nom": "Visa de travail",
    "employeur": true,
-   "texte": "L’e-visa ne peut être ni renouvelé ni transformé en un autre visa : pour travailler, il faut un visa adapté, demandé avant le départ. Les conditions du visa de travail (employeur, salaire, diplôme) ne sont pas encore vérifiées sur un site officiel du pays.",
+   "texte": "L’e-visa ne peut être ni renouvelé ni transformé en un autre visa : pour travailler, il faut un visa adapté, demandé avant le départ.",
    "conditions": [],
    "source": "diplomatie-cav",
    "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/inde/conseils-aux-voyageurs-entree-sejour",
    "verifieLe": "2026-11-17",
    "statut": "verifie",
-   "detailsAVerifier": true,
    "securite": {
-    "texte": "L’Inde est dans son ensemble un pays relativement sûr ; le Cachemire et la frontière avec le Pakistan sont formellement déconseillés. Le niveau de vigilance de New Delhi et de Bombay est à vérifier sur la carte de France Diplomatie.",
+    "texte": "Le Cachemire et la frontière avec le Pakistan sont formellement déconseillés ; à New Delhi, la page cite des quartiers à éviter (Paharganj, Nabi Karim). Le texte de la page (mise à jour le 5 novembre 2026) ne donne pas de niveau pour New Delhi ni Bombay : il n’est indiqué que sur la carte. À vérifier.",
     "source": "diplomatie-cav",
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/inde/conseils-aux-voyageurs-securite",
-    "verifieLe": "2026-11-17",
+    "verifieLe": "2026-11-20",
     "statut": "a-verifier"
+   },
+   "detail": {
+    "nom": "Visa d’emploi (Employment Visa)",
+    "employeurRequis": true,
+    "lieEmployeur": "oui",
+    "conditions": [
+     "Accordé pour un an ou pour la durée du contrat.",
+     "Il faut une preuve d’emploi (lettre d’embauche) et les conditions du contrat.",
+     "Au-delà de 180 jours, inscription obligatoire dans les 14 jours après l’arrivée."
+    ],
+    "liens": [
+     {
+      "url": "https://indianvisaonline.gov.in/visa/visa-provision.html",
+      "libelle": "Visa d’emploi (Indian Visa Online)"
+     }
+    ],
+    "source": "in-visa",
+    "statut": "verifie",
+    "verifieLe": "2026-11-20"
    }
   }
  ],
@@ -1610,7 +1680,8 @@
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/cote-d-ivoire/conseils-aux-voyageurs-securite",
     "verifieLe": "2026-11-17",
     "statut": "verifie"
-   }
+   },
+   "raisonAVerifier": "Aucune page officielle ivoirienne (immigration, ministère ou ambassade) ne donne le régime du permis de travail des salariés étrangers. (Recherche du 20 novembre 2026.)"
   }
  ],
  "senegal": [
@@ -1626,12 +1697,13 @@
    "statut": "verifie",
    "detailsAVerifier": true,
    "securite": {
-    "texte": "Certaines parties de la Casamance et les zones frontalières avec le Mali et la Mauritanie sont déconseillées sauf raison impérative ; la Casamance est en vigilance renforcée. Le niveau de Dakar est à vérifier sur la carte de France Diplomatie.",
+    "texte": "Certaines parties de la Casamance et les zones frontalières avec le Mali et la Mauritanie sont déconseillées sauf raison impérative ; la Casamance est en vigilance renforcée. Pour Dakar, le texte de la page (mise à jour le 29 octobre 2026) ne donne pas de niveau : il n’est indiqué que sur la carte. À vérifier.",
     "source": "diplomatie-cav",
     "lien": "https://www.diplomatie.gouv.fr/fr/information-par-pays/senegal/conseils-aux-voyageurs-securite",
-    "verifieLe": "2026-11-17",
+    "verifieLe": "2026-11-20",
     "statut": "a-verifier"
-   }
+   },
+   "raisonAVerifier": "La page officielle des visas du Sénégal (diplomatie.gouv.sn) ne traite que de l’entrée (pas de visa sous 3 mois pour les Français), pas du permis de travail. (Recherche du 20 novembre 2026.)"
   }
  ]
 }
