@@ -481,11 +481,12 @@ function notesAvis(p, verifieLe = AUJOURDHUI) {
   return res;
 }
 
-// ---------- Mode --inscrits2025 : Français inscrits fin 2025 (Rapport du Gouvernement), pays ajoutés seulement ----------
-// Même échelle que les autres pays : inscrits pour 100 000 habitants, mêmes seuils. Population : la dernière année de la Banque mondiale.
+// ---------- Mode --inscrits2025 : Français inscrits fin 2025 (Rapport du Gouvernement) ----------
+// Tous les pays (prompt 3j) : inscrits pour 100 000 habitants, mêmes seuils qu'avant. Population : la dernière année de la Banque mondiale.
 if (INSCRITS_2025) {
   const R = lire("saisie/inscrits-2025.json");
   const actuel = lire("scores.json");
+  for (const [id, texte] of Object.entries(R.absents ?? {})) actuel.pays[id].francais = aVerifier(`Français inscrits : ${texte}`);
   for (const [id, n] of Object.entries(R.inscrits)) {
     const p = pays.find((x) => x.id === id);
     const d = json(`bm_poprecente_${p.iso3}.json`, `https://api.worldbank.org/v2/country/${p.iso3}/indicator/SP.POP.TOTL?format=json&date=2020:2026`);
@@ -573,7 +574,10 @@ function assembler(p, inscrits, villes) {
   } else s.prix = aVerifier("Niveau des prix : pas de donnée dans cette source.");
 
   const ho = dernier(bm.homicides.serie[p.iso3]);
-  s.securite = ho ? verifie("securite", ho.valeur, TEXTE.securite(ho.valeur, ho.annee), "bm-wdi", lienBm(bm.homicides), ho.annee) : aVerifier("Homicides : pas de donnée dans cette source.");
+  // Une donnée d'avant 2019 est trop ancienne pour être comparée aux autres pays (2020 à 2023) : « à vérifier », la valeur reste dans « ancien ».
+  s.securite = !ho ? aVerifier("Homicides : pas de donnée dans cette source.")
+    : Number(ho.annee) < 2019 ? { ...aVerifier(`Homicides : la donnée la plus récente date de ${ho.annee}, trop ancienne pour être comparée aux autres pays.`), ancien: { valeur: ho.valeur, annee: ho.annee } }
+    : verifie("securite", ho.valeur, TEXTE.securite(ho.valeur, ho.annee), "bm-wdi", lienBm(bm.homicides), ho.annee);
 
   const v = ville(p);
   if (v) {

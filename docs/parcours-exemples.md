@@ -42,7 +42,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 
 ### Parcours 2 : année d’aventure (PVT), 24 ans, anglais débutant, sans secteur
 
-25 écrans (sans compter les écrans d’ouverture de chapitre ni le portrait).
+24 écrans (sans compter les écrans d’ouverture de chapitre ni le portrait).
 
 - **Chapitre 1 : Ton point de départ**
   1. [carte-monde] Avant de commencer : où pensais-tu partir ? → Océanie, Moyen-Orient et Afrique du Nord
@@ -64,19 +64,18 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
   15. [choix-cartes] Pendant ton PVT, tu veux surtout enchaîner les petits boulots pour voyager, ou trouver un poste dans ton domaine ? → Un poste dans mon domaine
   16. [curseur] Ton équilibre idéal : plus de temps libre ou plus de salaire ? → 89 sur 100 (« Plutôt le salaire »)
 - **Chapitre 4 : Ta vie**
-  17. [dilemme] Un week-end de février — Tu as un week-end libre en février. → Plutôt B : Terrasse au soleil, à 14 °C
-  18. [swipe] Ça te correspond ? → Passer
-  19. [dilemme] Ton premier mois — Tu viens d’arriver pour ton année de PVT. → Tu n’as aucun contact français
-  20. [ambiances] Dans quel décor imagines-tu ton quotidien ? → Une grande métropole, Du soleil toute l’année
-  21. [dilemme] La grosse grippe — Tu as une grosse grippe en plein hiver. → Un médecin public, gratuit ou presque
-  22. [dilemme] Ton appartement — Pour le même loyer, on te propose deux appartements. → Un peu A : 25 m² en plein centre d’une capitale
-  23. [dilemme] Tes repas — Tu découvres comment on mange dans ton nouveau pays. → Un peu A : Produits frais et cuisine maison
+  17. [ambiances] Dans quel décor imagines-tu ton quotidien ? → Une ville à taille humaine
+  18. [dilemme] Tes repas — Tu découvres comment on mange dans ton nouveau pays. → Plutôt B : Tout est rapide et pas cher, partout
+  19. [swipe] Ça te correspond ? → « J’ai envie d’une vie très différente de celle que je connais en France. » → Ça me correspond ; « Un pays cher ne me dérange pas si les salaires suivent. » → Ça dépend ; « Je veux pouvoir faire du sport dehors presque toute l’année. » → Pas vraiment ; « Un chef qui décide seul et vite me convient. » → Ça dépend ; « Je veux pouvoir rentrer en France le temps d’un week-end. » → Ça me correspond
+  20. [dilemme] Ton appartement — Pour le même loyer, on te propose deux appartements. → Plutôt B : 60 m² dans une ville moyenne, à 15 minutes de la nature
+  21. [dilemme] Ton footing — Tu cours le matin. → Plutôt B : Une appli te dit si l’air est assez bon pour courir
+  22. [dilemme] Le sport dehors — Tu fais du sport dehors. → Plutôt B : Ski l’hiver, mer l’été
 - **Chapitre 5 : Tes limites**
-  24. [tri-limites] Pour chaque situation, dis-nous ce que tu en penses → Vivre hors d’Europe → Rédhibitoire ; Un visa qui dépend de ton employeur → Rédhibitoire ; Plus de 10 h de vol pour rentrer → Je préfère éviter ; Une ville où il faut rester vigilant → Aucun problème ; Ne travailler ni en français ni en anglais → Je préfère éviter ; Payer une assurance santé privée → Je préfère éviter
-  25. [choix-cartes] Tes valeurs, si tu veux aller plus loin → Rien de plus pour moi
-- **Ton intuition** : Tu pensais à l’Océanie et au Moyen-Orient et à l’Afrique du Nord. Tes réponses te mènent vers l’Espagne. Ce qui a compté : les langues que tu parles ; ta réponse à « La grosse grippe » ; ton envie « Sécurité ».
-- **Portrait** : Tu cherches avant tout un pays sûr et stable. Tu pars pour une année d’aventure. Tes réponses montrent que le dépaysement, la sécurité et le coût de la vie comptent beaucoup pour toi. Au travail, tu préfères qu’on te parle franchement. Pendant ton PVT, tu vises un poste dans ton domaine. Tu préfères un hiver doux. Tu préfères éviter : plus de 10 h de vol pour rentrer, ne travailler ni en français ni en anglais et payer une assurance santé privée. Hors de question pour toi : vivre hors d’Europe et un visa qui dépend de ton employeur. Hésitation : Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe sont dans « Moins adaptés pour toi » : tu peux les remonter. Ce qu’on va chercher : Dépaysement, Sécurité, Coût de la vie.
-- **Top 3** : Espagne 67 %, Portugal 66 %, Pays‑Bas 66 %
+  23. [tri-limites] Pour chaque situation, dis-nous ce que tu en penses → Vivre hors d’Europe → Rédhibitoire ; Un visa qui dépend de ton employeur → Je préfère éviter ; Plus de 10 h de vol pour rentrer → Aucun problème ; Une ville où il faut rester vigilant → Je préfère éviter ; Ne travailler ni en français ni en anglais → Je préfère éviter ; Payer une assurance santé privée → Rédhibitoire
+  24. [choix-cartes] Tes valeurs, si tu veux aller plus loin → Libertés d’expression et de la presse
+- **Ton intuition** : Tu pensais à l’Océanie et au Moyen-Orient et à l’Afrique du Nord. Tes réponses te mènent vers la Suisse. Ce qui a compté : « Je veux pouvoir rentrer en France le temps d’un week-end. » ; le décor « Une ville à taille humaine » ; ton envie « Proche de la France ».
+- **Portrait** : Tu cherches avant tout un pays sûr et stable. Tu pars pour une année d’aventure. Tes réponses montrent que le dépaysement, la sécurité et le coût de la vie comptent beaucoup pour toi. Au travail, tu préfères qu’on te parle franchement. Pendant ton PVT, tu vises un poste dans ton domaine. Tu préfères une ville moyenne, près de la nature. Tu préfères éviter : un visa qui dépend de ton employeur, une ville où il faut rester vigilant et ne travailler ni en français ni en anglais. Hors de question pour toi : vivre hors d’Europe et payer une assurance santé privée. Hésitation : Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe sont dans « Moins adaptés pour toi » : tu peux les remonter. Ce qu’on va chercher : Dépaysement, Sécurité, Coût de la vie.
+- **Top 3** : Suisse 74 %, Pays‑Bas 73 %, Allemagne 72 %
 
 ### Parcours 3 : carrière longue, 29 ans, anglais courant, tech et data
 
@@ -106,11 +105,11 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
   18. [ambiances] Dans quel décor imagines-tu ton quotidien ? → La nature à portée de main
   19. [dilemme] Tes repas — Tu découvres comment on mange dans ton nouveau pays. → Un peu B : Tout est rapide et pas cher, partout
   20. [swipe] Ça te correspond ? → « J’ai envie d’une vie très différente de celle que je connais en France. » → Pas vraiment ; « Je préfère une petite ville à une grande métropole. » → Ça me correspond ; « J’aime l’idée de me faire des amis surtout par le travail. » → Ça dépend ; « Un pays cher ne me dérange pas si les salaires suivent. » → Pas vraiment ; « Je veux pouvoir faire du sport dehors presque toute l’année. » → Pas vraiment
-  21. [dilemme] Ton premier mois — Tu viens d’arriver dans ta nouvelle ville. → Tu n’as aucun contact français
+  21. [dilemme] Ta vie en deux langues — Au bureau, tout se passe en anglais. Chez le médecin ou pour signer ton bail, c’est la langue locale, que tu ne parles pas. → Tu veux gérer ton quotidien sans aide
 - **Chapitre 5 : Tes limites**
   22. [tri-limites] Pour chaque situation, dis-nous ce que tu en penses → Passer
   23. [choix-cartes] Tes valeurs, si tu veux aller plus loin → Rien de plus pour moi
 - **Ton intuition** : Tu pensais à l’Asie du Sud-Est et à l’Asie du Sud. Tes réponses te mènent vers la Suisse.
-- **Portrait** : Tu cherches avant tout une expérience qui fait avancer ta carrière. Tu pars pour une carrière longue. Tes réponses montrent que le salaire, le dépaysement et la sécurité comptent beaucoup pour toi. Au travail, tu préfères qu’on y mette les formes et des décisions prises ensemble. Tu veux la nature à portée de main. Tu te vois rentrer en France avec une belle expérience. Ce qu’on va chercher : Salaire brut moyen (pouvoir d’achat), Dépaysement, Sécurité.
-- **Top 3** : Suisse 72 %, Belgique 67 %, Norvège 65 %
+- **Portrait** : Tu cherches avant tout une expérience qui fait avancer ta carrière. Tu pars pour une carrière longue. Tes réponses montrent que le salaire, le dépaysement et la sécurité comptent beaucoup pour toi. Au travail, tu préfères qu’on y mette les formes et des décisions prises ensemble. Tu veux pouvoir gérer ton quotidien sans aide. Tu veux la nature à portée de main. Ce qu’on va chercher : Salaire brut moyen (pouvoir d’achat), Dépaysement, Sécurité.
+- **Top 3** : Suisse 74 %, Belgique 70 %, Pays‑Bas 69 %
 

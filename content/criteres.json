@@ -374,7 +374,7 @@
           "La communauté française y est grande, par rapport à la population",
           "La communauté française y est très grande, par rapport à la population"
         ],
-        "regle": "Français inscrits au registre consulaire fin 2020, divisés par la population du pays en 2020 (Banque mondiale, indicateur SP.POP.TOTL), pour 100 000 habitants. Le nombre total reste affiché dans la fiche pays. Pour les 8 pays ajoutés au prompt 3h (Autriche, Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d’Ivoire, Sénégal) : inscrits au 31 décembre 2025 (Rapport du Gouvernement 2025), divisés par la population 2025 de la Banque mondiale. Même échelle et mêmes seuils ; les 30 autres pays gardent la donnée de fin 2020, plus ancienne.",
+        "regle": "Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025 sur les Français établis hors de France), divisés par la population 2025 du pays (Banque mondiale, indicateur SP.POP.TOTL), pour 100 000 habitants. Mêmes seuils qu’avant. Hong Kong n’a pas de ligne à part dans le rapport, et la population de Taïwan n’est pas dans la base de la Banque mondiale : « à vérifier ». Le nombre total reste affiché dans la fiche pays.",
         "court": "Français sur place",
         "affichage": "{v} pour 100 000 habitants",
         "decimales": 0,

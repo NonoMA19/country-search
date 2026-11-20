@@ -1,3 +1,4 @@
+import { aVerifierParCategorie } from "@/lib/averifier";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, notes, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
@@ -158,7 +159,7 @@ export default function Methode() {
           <li>Sous chaque pays de ton top 3, et dans le dossier du pays si tu as fait le quiz, trois listes courtes : les conditions remplies, celles à remplir (ou non remplies), et ce qui reste à vérifier, puis la prochaine étape avec le lien officiel. Elles viennent seulement de tes réponses (âge, budget, nationalité, projet) et des données sourcées des visas. On n’écrit jamais qu’un pays est « juridiquement accessible ».</li>
           <li>Si ton projet est « Stage ou VIE », un bloc « Le VIE pour toi » reprend les conditions officielles déjà vérifiées (âge à la candidature, âge au départ, durée), les confronte à ton âge et donne le lien vers les offres de Business France. La présence de missions dans chaque pays de ton top 3 reste « à vérifier » tant qu’elle n’est pas sourcée. La condition de nationalité n’est pas encore vérifiée, elle n’est donc pas affichée.</li>
           <li>Une seule règle, partout : une mesure compte comme disponible si elle a une valeur, quel que soit son niveau de preuve (Officiel, Donnée ouverte, Témoignages ou Notre avis). « À vérifier » ne compte jamais. Le badge « Données disponibles » donne la part de tes critères qui ont une valeur pour ce pays : 90 % ou plus, « complètes » ; de 60 à 89 %, « partielles » ; moins de 60 %, « Peu de données disponibles », et le pays ne peut pas entrer dans ton top 3. Le détail du badge montre combien de ces valeurs viennent de chaque niveau de preuve. Les bonus de la carte et des langues n’y comptent pas.</li>
-          <li id="nouveaux-pays">Huit pays ont été ajoutés le 17 novembre 2026 (Autriche, Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d’Ivoire, Sénégal), avec les mêmes sources et les mêmes règles que les autres. Ce qui manque reste « à vérifier » : le salaire (pas de chiffre comparable de l’OCDE, sauf pour l’Autriche, pas encore saisi), l’emploi par secteur, « Notre avis » (anglais au travail, culture au travail, taille des villes) et les témoignages. Pour ne pas déplacer les autres pays, les seuils restent ceux calculés sur les 30 premiers. Le niveau de vigilance de la capitale vient de France Diplomatie. Échelle de vigilance de France Diplomatie : vert, vigilance normale ; jaune, vigilance renforcée ; orange, déconseillé sauf raison impérative ; rouge, formellement déconseillé. Les Français inscrits de ces 8 pays viennent du Rapport du Gouvernement 2025 (au 31 décembre 2025), ceux des 30 autres du registre de fin 2020, plus ancien.</li>
+          <li id="nouveaux-pays">Huit pays ont été ajoutés le 17 novembre 2026 (Autriche, Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d’Ivoire, Sénégal), avec les mêmes sources et les mêmes règles que les autres. Ce qui manque reste « à vérifier » : le salaire (pas de chiffre comparable de l’OCDE, sauf pour l’Autriche, pas encore saisi), l’emploi par secteur, « Notre avis » (anglais au travail, culture au travail, taille des villes) et les témoignages. Pour ne pas déplacer les autres pays, les seuils restent ceux calculés sur les 30 premiers. Le niveau de vigilance de la capitale vient de France Diplomatie. Échelle de vigilance de France Diplomatie : vert, vigilance normale ; jaune, vigilance renforcée ; orange, déconseillé sauf raison impérative ; rouge, formellement déconseillé. Les Français inscrits de tous les pays viennent du Rapport du Gouvernement 2025 (au 31 décembre 2025), sauf Hong Kong (pas de ligne à part) et Taïwan (population inconnue de la Banque mondiale) : « à vérifier ».</li>
         </ul>
       </section>
 
@@ -292,6 +293,19 @@ export default function Methode() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section id="a-verifier" className="mt-8 scroll-mt-4">
+        <h2 className="text-xl font-semibold">Ce qui reste à vérifier</h2>
+        <p className="mt-2 text-gris">Liste tirée des données elles-mêmes. Chacun de ces points est marqué « à vérifier » dans le site : jamais une valeur ferme. Une donnée « à vérifier » ne compte pas dans « Données disponibles ».</p>
+        {aVerifierParCategorie().map(([cat, points]) => (
+          <details key={cat} className="mt-3 rounded-2xl border border-bord bg-carte">
+            <summary className="flex min-h-12 cursor-pointer items-center px-4 font-medium">{cat} ({points.length})</summary>
+            <ul className="list-disc space-y-1 px-4 pb-3 pl-9 text-sm">
+              {points.map((x) => <li key={x.pays + x.detail}><span className="font-medium">{x.pays}</span> : {x.detail}</li>)}
+            </ul>
+          </details>
+        ))}
       </section>
 
       <section className="mt-8">

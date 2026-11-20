@@ -7,7 +7,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, t
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
-  GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
+  GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
@@ -18,6 +18,7 @@ import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
 import { pays, trouverPays } from "@/lib/pays";
+import { listeAVerifier } from "@/lib/averifier";
 import { complementMesure, disponibiliteMemo, mesureSecteur, raisonEnvieIndisponible } from "@/lib/moteur";
 import { mesures } from "@/lib/donnees";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
@@ -645,6 +646,24 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   }
   // Barème VIE recalculé depuis la base de janvier : les villes sans montant d'octobre sont affichées.
   verifier(["norvege/Stavanger", "suisse/autres villes", "chine/autres villes"].every((k) => { const [id, v] = k.split("/"); return notesPays[id]["indemnite-vie"].autres?.some((a) => a.ville === v && typeof a.montant === "number"); }), "VIE : Stavanger, Suisse ou Chine « autres villes » sans montant");
+  // Prompt 3j : inscrits 2025 pour tous les pays (sauf Hong Kong, sans ligne, et Taïwan, sans population) ; homicides d'avant 2019 « à vérifier ».
+  for (const x of pays) {
+    const fr = notesPays[x.id].francais;
+    if (x.id === "hong-kong" || x.id === "taiwan") verifier(fr.statut !== "verifie", `inscrits : ${x.nom} devrait être « à vérifier »`);
+    else verifier(fr.statut === "verifie" && fr.annee === "2025" && fr.source === "rapport-francais-etranger-2025", `inscrits : ${x.nom} pas sur le rapport 2025`);
+    const s = notesPays[x.id].securite;
+    if (s.statut === "verifie") verifier(Number(s.annee) >= 2019, `homicides : ${x.nom} avec une donnée de ${s.annee}`);
+  }
+  verifier(notesPays.senegal.securite.statut === "a-verifier", "homicides : le Sénégal (2015) n'est pas « à vérifier »");
+  // La liste « à vérifier » ne contient que des données qui ne sont pas fermes.
+  for (const pt of listeAVerifier()) {
+    const id = pays.find((x) => x.nom === pt.pays)!.id;
+    if (pt.categorie === "Salaire") verifier(notesPays[id].salaire.statut !== "verifie", `à vérifier : salaire ferme pour ${pt.pays}`);
+    if (pt.categorie === "Homicides (sécurité)") verifier(notesPays[id].securite.statut !== "verifie", `à vérifier : homicides fermes pour ${pt.pays}`);
+  }
+  for (const id of ["thailande", "vietnam", "cote-d-ivoire"]) verifier(listeAVerifier().some((x) => x.categorie === "Homicides (sécurité)" && x.pays === trouverPays(id)!.nom), `à vérifier : homicides de ${id} absents de la liste`);
+  // Complétude d'un pays : entre 0 et 1, la même pour tous les profils.
+  for (const x of pays) { const c = completudePays(x.id); verifier(c.part >= 0 && c.part <= 1 && c.disponibles <= c.total, `complétude : ${x.nom}`); }
   // Destinations du VIE : les 36 pays du barème, et eux seuls (Pérou et Uruguay n'y sont pas).
   verifier(pays.every((x) => !!vie.presence?.[x.id] === (notesPays[x.id]["indemnite-vie"].note !== null)), "VIE : destinations et barème ne concordent pas");
   verifier(["perou", "uruguay"].every((id) => notesPays[id]["indemnite-vie"].note === null && /pas dans les destinations de Business France/.test(notesPays[id]["indemnite-vie"].texte)), "VIE : Pérou ou Uruguay sans la mention « pas dans les destinations »");

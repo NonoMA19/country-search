@@ -147,7 +147,7 @@ function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = fa
           </p>
         </div>
       </div>
-      <BadgeFiabilite f={ligne.fiabilite} />
+      <BadgeFiabilite f={ligne.fiabilite} paysId={ligne.pays.id} />
 
       <PointsParCategorie points={points} pays={p.nom} />
 

@@ -756,6 +756,17 @@ export function fiabiliteDe(paysId: string, criteres: string[], profil: Profil):
   return { disponibles, total: liste.length, niveau: part >= 0.9 ? "complete" : part >= COUVERTURE_MIN ? "partielle" : "faible", parNiveau };
 }
 
+// La complétude des données d'un pays, toutes mesures du site comprises (hors mesures internes et secteurs) :
+// la part qui a une valeur. Affichée sous chaque pays recommandé, indépendamment de tes réponses.
+export const MESURES_COMPLETUDE = Object.keys(mesures).filter((m) => !mesures[m].interne && !m.startsWith("secteur-") && m !== "indemnite-vie" && mesureDisponible(m));
+export function completudePays(paysId: string): { disponibles: number; total: number; part: number } {
+  const disponibles = MESURES_COMPLETUDE.filter((m) => noteEffective(paysId, m, {}) !== null).length;
+  return { disponibles, total: MESURES_COMPLETUDE.length, part: MESURES_COMPLETUDE.length ? disponibles / MESURES_COMPLETUDE.length : 1 };
+}
+// Ce que la règle des 3 premières envies change : le top 3 qu'on aurait sans elle (même calcul, seule la règle est levée).
+export const topSansRegle = (lignes: Ligne[], n = 3) =>
+  lignes.filter((l) => !l.ecart && l.couverture >= COUVERTURE_MIN && !l.sansDonnees).sort((a, b) => b.score - a.score || a.pays.nom.localeCompare(b.pays.nom, "fr")).slice(0, n);
+
 // En dessous de cette part de critères notés, un pays ne peut pas entrer dans le top 3.
 export const COUVERTURE_MIN = 0.6;
 // Une donnée manquante sur une envie compte comme une note neutre.
