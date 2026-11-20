@@ -10,6 +10,7 @@
     "test:moteur": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/test-moteur.ts",
     "simulation": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/simulation.ts",
     "banque": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/banque.ts",
+    "donnees": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/donnees.ts",
     "exemples": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/exemples.ts"
   },
   "dependencies": {

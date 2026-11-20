@@ -7,7 +7,7 @@ import { CircleAlert, CircleCheck, CircleHelp, ShieldCheck } from "lucide-react"
 import Definition from "@/components/Definition";
 import LienOfficiel from "@/components/LienOfficiel";
 import { useSession } from "@/lib/memoire";
-import { LIBELLE_FIABILITE, NIVEAUX_PREUVE, budgetDe, calculer, faisabilite, type Faisabilite, type Fiabilite, type NiveauPreuve, type VisaSimple } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, NIVEAUX_PREUVE, budgetDe, completudePays, calculer, faisabilite, type Faisabilite, type Fiabilite, type NiveauPreuve, type VisaSimple } from "@/lib/moteur";
 import { trouverPays, type Pays } from "@/lib/pays";
 
 const MOT_NIVEAU: Record<NiveauPreuve, [string, string]> = {
@@ -18,7 +18,8 @@ const MOT_NIVEAU: Record<NiveauPreuve, [string, string]> = {
 };
 
 // Le badge « Données disponibles » : un toucher montre la règle et la part de chaque niveau de preuve.
-export function BadgeFiabilite({ f }: { f: Fiabilite }) {
+export function BadgeFiabilite({ f, paysId }: { f: Fiabilite; paysId?: string }) {
+  const c = paysId ? completudePays(paysId) : null;
   const [ouvert, setOuvert] = useState(false);
   const id = useId();
   const style = f.niveau === "complete" ? "bg-bleu-doux text-encre" : f.niveau === "partielle" ? "border border-bord bg-carte text-encre" : "border border-dashed border-gris text-gris";
@@ -29,6 +30,7 @@ export function BadgeFiabilite({ f }: { f: Fiabilite }) {
         <ShieldCheck aria-hidden="true" className="h-4 w-4" /> {LIBELLE_FIABILITE[f.niveau]}{f.total > 0 && <span className="tabular-nums">{"\u00a0"}({f.disponibles}{"\u00a0"}sur{"\u00a0"}{f.total})</span>}
         <span className="sr-only"> : voir le détail</span>
       </button>
+      {c && <p className="mt-1 text-sm text-gris">Complétude des données du pays : {Math.round(c.part * 100)}{"\u00a0"}% ({c.disponibles} mesures sur {c.total})</p>}
       <div id={id} hidden={!ouvert} className="mt-2 rounded-xl bg-creux px-3 py-2 text-sm">
         <p>{f.disponibles} de tes {f.total} critères ont une valeur pour ce pays. « À vérifier » ne compte jamais. 90{"\u00a0"}% ou plus : complètes ; de 60 à 89{"\u00a0"}% : partielles ; sous 60{"\u00a0"}%, le pays ne peut pas entrer dans ton top 3.</p>
         {niveaux.length > 0 && (
@@ -113,7 +115,7 @@ export function FaisabilitePourToi({ paysId }: { paysId: string }) {
   return (
     <div className="mt-3 rounded-2xl border border-bord bg-carte p-4">
       <p className="font-semibold">D’après tes réponses au quiz</p>
-      {ligne && questionnaireFini(etat) && <BadgeFiabilite f={ligne.fiabilite} />}
+      {ligne && questionnaireFini(etat) && <BadgeFiabilite f={ligne.fiabilite} paysId={ligne.pays.id} />}
       <FicheFaisabilite f={faisabilite(p, etat.profil, budget)} />
     </div>
   );

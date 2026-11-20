@@ -310,14 +310,14 @@
    "francais": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 952.32,
-    "texte": "109 885 Français inscrits au registre consulaire fin 2020, soit 952 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 109885,
-    "population": 11538604
+    "valeur": 1058.9,
+    "texte": "126 452 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 1 059 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 126452,
+    "population": 11941781
    },
    "prix": {
     "statut": "verifie",
@@ -694,14 +694,14 @@
    "francais": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 2042.39,
-    "texte": "176 425 Français inscrits au registre consulaire fin 2020, soit 2 042 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 176425,
-    "population": 8638167
+    "valeur": 1857.38,
+    "texte": "168 881 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 1 857 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 168881,
+    "population": 9092436
    },
    "prix": {
     "statut": "verifie",
@@ -1087,14 +1087,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 121.51,
-    "texte": "101 048 Français inscrits au registre consulaire fin 2020, soit 122 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 101048,
-    "population": 83160871
+    "valeur": 111.73,
+    "texte": "93 281 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 112 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 93281,
+    "population": 83491249
    },
    "prix": {
     "statut": "verifie",
@@ -1481,14 +1481,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 206.7,
-    "texte": "10 417 Français inscrits au registre consulaire fin 2020, soit 207 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 10417,
-    "population": 5039747
+    "valeur": 217.56,
+    "texte": "11 932 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 218 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 11932,
+    "population": 5484367
    },
    "prix": {
     "statut": "verifie",
@@ -1866,14 +1866,14 @@
    "francais": {
     "statut": "verifie",
     "note": 5,
-    "valeur": 5296.79,
-    "texte": "33 392 Français inscrits au registre consulaire fin 2020, soit 5 297 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 33392,
-    "population": 630419
+    "valeur": 4612.14,
+    "texte": "31 684 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 4 612 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 31684,
+    "population": 686970
    },
    "prix": {
     "statut": "verifie",
@@ -2250,14 +2250,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 170.81,
-    "texte": "80 894 Français inscrits au registre consulaire fin 2020, soit 171 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 80894,
-    "population": 47359424
+    "valeur": 172.63,
+    "texte": "85 201 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 173 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 85201,
+    "population": 49355143
    },
    "prix": {
     "statut": "verifie",
@@ -2634,14 +2634,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 61.65,
-    "texte": "36 646 Français inscrits au registre consulaire fin 2020, soit 62 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 36646,
-    "population": 59438851
+    "valeur": 60.14,
+    "texte": "35 432 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 60 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 35432,
+    "population": 58915656
    },
    "prix": {
     "statut": "verifie",
@@ -3018,15 +3018,15 @@
    },
    "francais": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 128.37,
-    "texte": "22 389 Français inscrits au registre consulaire fin 2020, soit 128 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 22389,
-    "population": 17441500
+    "note": 4,
+    "valeur": 165.23,
+    "texte": "29 886 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 165 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 29886,
+    "population": 18087633
    },
    "prix": {
     "statut": "verifie",
@@ -3404,14 +3404,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 163.01,
-    "texte": "16 785 Français inscrits au registre consulaire fin 2020, soit 163 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 16785,
-    "population": 10297081
+    "valeur": 194.57,
+    "texte": "21 023 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 195 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 21023,
+    "population": 10804871
    },
    "prix": {
     "statut": "verifie",
@@ -3789,14 +3789,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 102.5,
-    "texte": "5 514 Français inscrits au registre consulaire fin 2020, soit 103 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 5514,
-    "population": 5379475
+    "valeur": 94.57,
+    "texte": "5 306 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 95 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 5306,
+    "population": 5610870
    },
    "prix": {
     "statut": "verifie",
@@ -4179,14 +4179,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 81.56,
-    "texte": "8 444 Français inscrits au registre consulaire fin 2020, soit 82 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 8444,
-    "population": 10353442
+    "valeur": 88.5,
+    "texte": "9 378 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 88 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 9378,
+    "population": 10596620
    },
    "prix": {
     "statut": "verifie",
@@ -4564,14 +4564,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 91.25,
-    "texte": "5 321 Français inscrits au registre consulaire fin 2020, soit 91 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 5321,
-    "population": 5831404
+    "valeur": 116.39,
+    "texte": "6 994 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 116 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 6994,
+    "population": 6009169
    },
    "prix": {
     "statut": "verifie",
@@ -4949,14 +4949,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 260.05,
-    "texte": "98 894 Français inscrits au registre consulaire fin 2020, soit 260 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 98894,
-    "population": 38028638
+    "valeur": 287.01,
+    "texte": "119 545 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 287 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 119545,
+    "population": 41651653
    },
    "prix": {
     "statut": "verifie",
@@ -5290,14 +5290,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 90.83,
-    "texte": "23 298 Français inscrits au registre consulaire fin 2020, soit 91 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 23298,
-    "population": 25649248
+    "valeur": 100,
+    "texte": "27 614 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 100 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 27614,
+    "population": 27614411
    },
    "prix": {
     "statut": "verifie",
@@ -5674,15 +5674,15 @@
    },
    "francais": {
     "statut": "verifie",
-    "note": 1,
-    "valeur": 8.12,
-    "texte": "10 250 Français inscrits au registre consulaire fin 2020, soit 8,1 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 10250,
-    "population": 126261000
+    "note": 2,
+    "valeur": 10.64,
+    "texte": "13 125 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 11 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 13125,
+    "population": 123366734
    },
    "prix": {
     "statut": "verifie",
@@ -6060,14 +6060,14 @@
    "francais": {
     "statut": "verifie",
     "note": 3,
-    "valeur": 107.7,
-    "texte": "5 463 Français inscrits au registre consulaire fin 2020, soit 108 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 5463,
-    "population": 5072400
+    "valeur": 110.69,
+    "texte": "5 894 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 111 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 5894,
+    "population": 5324700
    },
    "prix": {
     "statut": "verifie",
@@ -6397,14 +6397,14 @@
    "francais": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 5.89,
-    "texte": "3 053 Français inscrits au registre consulaire fin 2020, soit 5,9 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 3053,
-    "population": 51836239
+    "valeur": 6.69,
+    "texte": "3 458 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 6,7 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 3458,
+    "population": 51684564
    },
    "prix": {
     "statut": "verifie",
@@ -6760,8 +6760,8 @@
    "francais": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "2 310 Français inscrits au registre consulaire fin 2020. La population du pays n’est pas dans la base de la Banque mondiale : la part pour 100 000 habitants reste à vérifier.",
-    "inscrits": 2310
+    "texte": "2 897 Français inscrits au registre au 31 décembre 2025. La population du pays n’a pas pu être téléchargée : la part pour 100 000 habitants reste à vérifier.",
+    "inscrits": 2897
    },
    "prix": {
     "statut": "a-verifier",
@@ -7092,7 +7092,7 @@
    "francais": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Français inscrits : pas de donnée dans cette source."
+    "texte": "Français inscrits : Pas de ligne Hong Kong dans le tableau du rapport 2025 (les inscrits de Hong Kong ne sont pas donnés à part)."
    },
    "prix": {
     "statut": "verifie",
@@ -7395,14 +7395,14 @@
    "francais": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 23.67,
-    "texte": "10 695 Français inscrits au registre consulaire fin 2020, soit 24 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 10695,
-    "population": 45191965
+    "valeur": 27.48,
+    "texte": "12 600 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 27 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 12600,
+    "population": 45851378
    },
    "prix": {
     "statut": "verifie",
@@ -7769,15 +7769,15 @@
    },
    "francais": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 65.07,
-    "texte": "12 604 Français inscrits au registre consulaire fin 2020, soit 65 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 12604,
-    "population": 19370624
+    "note": 2,
+    "valeur": 47.92,
+    "texte": "9 516 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 48 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 9516,
+    "population": 19859921
    },
    "prix": {
     "statut": "verifie",
@@ -8153,15 +8153,15 @@
    },
    "francais": {
     "statut": "verifie",
-    "note": 2,
-    "valeur": 10.94,
-    "texte": "5 538 Français inscrits au registre consulaire fin 2020, soit 11 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 5538,
-    "population": 50629997
+    "note": 1,
+    "valeur": 9.94,
+    "texte": "5 310 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 9,9 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 5310,
+    "population": 53425635
    },
    "prix": {
     "statut": "verifie",
@@ -8528,14 +8528,14 @@
    "francais": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 16.67,
-    "texte": "21 136 Français inscrits au registre consulaire fin 2020, soit 17 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 21136,
-    "population": 126799054
+    "valeur": 15.64,
+    "texte": "20 643 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 16 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 20643,
+    "population": 131946900
    },
    "prix": {
     "statut": "verifie",
@@ -8904,14 +8904,14 @@
    "francais": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 7.02,
-    "texte": "14 652 Français inscrits au registre consulaire fin 2020, soit 7 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 14652,
-    "population": 208660842
+    "valeur": 9.56,
+    "texte": "20 345 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 9,6 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 20345,
+    "population": 212812405
    },
    "prix": {
     "statut": "verifie",
@@ -9284,14 +9284,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 215.89,
-    "texte": "144 084 Français inscrits au registre consulaire fin 2020, soit 216 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 144084,
-    "population": 66740000
+    "valeur": 203.26,
+    "texte": "141 242 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 203 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 141242,
+    "population": 69487000
    },
    "prix": {
     "statut": "verifie",
@@ -9673,14 +9673,14 @@
    "francais": {
     "statut": "verifie",
     "note": 2,
-    "valeur": 44.78,
-    "texte": "148 468 Français inscrits au registre consulaire fin 2020, soit 45 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 148468,
-    "population": 331578104
+    "valeur": 49.31,
+    "texte": "168 529 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 49 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 168529,
+    "population": 341784857
    },
    "prix": {
     "statut": "verifie",
@@ -10049,14 +10049,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 248.94,
-    "texte": "14 154 Français inscrits au registre consulaire fin 2020, soit 249 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 14154,
-    "population": 5685807
+    "valeur": 188.15,
+    "texte": "11 498 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 188 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 11498,
+    "population": 6111175
    },
    "prix": {
     "statut": "verifie",
@@ -10422,14 +10422,14 @@
    "francais": {
     "statut": "verifie",
     "note": 4,
-    "valeur": 255.2,
-    "texte": "23 991 Français inscrits au registre consulaire fin 2020, soit 255 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 23991,
-    "population": 9401038
+    "valeur": 290.43,
+    "texte": "33 438 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 290 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 33438,
+    "population": 11513149
    },
    "prix": {
     "statut": "verifie",
@@ -10790,14 +10790,14 @@
    "francais": {
     "statut": "verifie",
     "note": 1,
-    "valeur": 1.93,
-    "texte": "27 216 Français inscrits au registre consulaire fin 2020, soit 1,9 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 27216,
-    "population": 1411100000
+    "valeur": 1.49,
+    "texte": "20 940 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 1,5 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 20940,
+    "population": 1406585000
    },
    "prix": {
     "statut": "verifie",
@@ -11117,15 +11117,15 @@
    },
    "francais": {
     "statut": "verifie",
-    "note": 3,
-    "valeur": 140.83,
-    "texte": "51 521 Français inscrits au registre consulaire fin 2020, soit 141 pour 100 000 habitants (population 2020 : Banque mondiale, CC BY 4.0). C’est la donnée la plus récente publiée, mais elle est ancienne. L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
-    "annee": "2020",
-    "source": "meae-registre",
-    "lien": "https://www.data.gouv.fr/datasets/5c5d559c8b4c4178380e6da7/",
-    "verifieLe": "2026-11-15",
-    "inscrits": 51521,
-    "population": 36584208
+    "note": 4,
+    "valeur": 150.96,
+    "texte": "58 016 Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit 151 pour 100 000 habitants (population 2025 : Banque mondiale, CC BY 4.0). L’inscription n’est pas obligatoire : le vrai nombre est plus élevé.",
+    "annee": "2025",
+    "source": "rapport-francais-etranger-2025",
+    "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "verifieLe": "2026-11-20",
+    "inscrits": 58016,
+    "population": 38430770
    },
    "prix": {
     "statut": "verifie",
@@ -13418,14 +13418,13 @@
     "verifieLe": "2026-11-17"
    },
    "securite": {
-    "statut": "verifie",
-    "note": 5,
-    "valeur": 0.27,
-    "texte": "0,3 homicide pour 100 000 habitants (2015).",
-    "annee": "2015",
-    "source": "bm-wdi",
-    "lien": "https://api.worldbank.org/v2/country/AUT;PER;URY;THA;VNM;IND;CIV;SEN;FRA/indicator/VC.IHR.PSRC.P5?format=json&per_page=1000&date=2015:2026",
-    "verifieLe": "2026-11-17"
+    "statut": "a-verifier",
+    "note": null,
+    "texte": "Homicides : la donnée la plus récente date de 2015, trop ancienne pour être comparée aux autres pays.",
+    "ancien": {
+     "valeur": 0.27,
+     "annee": "2015"
+    }
    },
    "vol": {
     "statut": "verifie",
