@@ -55,10 +55,15 @@ let depart = supplementsRef;
 let date = ref.date;
 if (baseComplete) {
   const calcules = appliquer(B.base.supplements, avant);
-  const ecarts = Object.entries(supplementsRef).filter(([k, v]) => v !== null && Math.abs((calcules[k] ?? NaN) - v) > 0.005);
-  console.log(ecarts.length ? `Contrôle : ${ecarts.length} écart(s) avec le barème du ${ref.date} :` : `Contrôle : la base de janvier et les taux retrouvent le barème du ${ref.date}.`);
-  for (const [k, v] of ecarts) console.log(`  ${k} : calculé ${calcules[k]}, Journal officiel ${v}`);
-  depart = calcules;
+  // Un centime d'écart au plus est admis (arrondis) ; au-delà, la saisie est fausse et rien n'est écrit.
+  const verifiees = Object.entries(supplementsRef).filter(([, v]) => v !== null);
+  const ecart = ([k, v]) => Math.round(Math.abs((calcules[k] ?? NaN) - v) * 100);
+  const unCentime = verifiees.filter((x) => ecart(x) === 1), graves = verifiees.filter((x) => !(ecart(x) <= 1));
+  console.log(`Contrôle avec le barème du ${ref.date} : ${verifiees.length - unCentime.length - graves.length} montants identiques, ${unCentime.length} à 1 centime près, ${graves.length} écart(s) de plus d'un centime.`);
+  for (const [k, v] of [...unCentime, ...graves]) console.log(`  ${k} : calculé ${calcules[k]}, Journal officiel ${v}`);
+  if (graves.length) { console.error("Écart de plus d'un centime : vérifie la saisie. Rien n'est écrit."); process.exit(1); }
+  // On garde le montant du Journal officiel quand il existe ; le calcul complète les villes sans montant de référence.
+  depart = Object.fromEntries(Object.keys(calcules).map((k) => [k, supplementsRef[k] ?? calcules[k]]));
 } else {
   console.log(`Base de janvier ou taux de 2026 non saisis : départ du barème du ${ref.date} (Journal officiel).`);
 }
@@ -85,7 +90,7 @@ for (const [id, p] of Object.entries(ref.pays)) {
   const princ = p.villes.find((v) => v.principale) ?? p.villes[0];
   sortie.pays[id] = {
     montant: total(cle(id, princ.ville)),
-    ville: princ.ville,
+    ville: princ.ville === "autres villes" ? null : princ.ville,
     autres: p.villes.filter((v) => v !== princ).map((v) => ({ ville: v.ville, montant: total(cle(id, v.ville)) })),
   };
 }

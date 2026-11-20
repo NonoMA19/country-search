@@ -7,7 +7,7 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, t
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
-  GROUPES, NIVEAUX, MESURES_BONUS, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
+  GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsRang, limiteTouche,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, optionsDe, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
@@ -106,6 +106,7 @@ for (let i = 0; i < NB; i++) {
     verifier(l.couverture >= COUVERTURE_MIN, `quiz ${i} : ${l.pays.nom} dans le top 3 avec ${Math.round(l.couverture * 100)} % de couverture`);
     verifier(l.porte.badge !== "fermee", `quiz ${i} : ${l.pays.nom} « Fermé à ton âge » dans le top 3`);
     verifier(!l.sansDonnees, `quiz ${i} : ${l.pays.nom} sans donnée dans le top 3`);
+    verifier(!l.details.some((d) => d.neutre && mesuresPrincipales(etat).includes(d.mesure)), `quiz ${i} : ${l.pays.nom} dans le top 3 avec une donnée manquante sur une des 3 premières envies`);
   }
 
   // Une donnée manquante sur une priorité compte exactement 50 %, jamais plus.
@@ -642,6 +643,8 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     verifier(!!zoneDuPays(x.id), `pays : ${x.nom} hors de la carte du début`);
     verifier(Object.keys(notesPays[x.id] ?? {}).length >= 30, `pays : ${x.nom} sans notes`);
   }
+  // Barème VIE recalculé depuis la base de janvier : les villes sans montant d'octobre sont affichées.
+  verifier(["norvege/Stavanger", "suisse/autres villes", "chine/autres villes"].every((k) => { const [id, v] = k.split("/"); return notesPays[id]["indemnite-vie"].autres?.some((a) => a.ville === v && typeof a.montant === "number"); }), "VIE : Stavanger, Suisse ou Chine « autres villes » sans montant");
   // Destinations du VIE : les 36 pays du barème, et eux seuls (Pérou et Uruguay n'y sont pas).
   verifier(pays.every((x) => !!vie.presence?.[x.id] === (notesPays[x.id]["indemnite-vie"].note !== null)), "VIE : destinations et barème ne concordent pas");
   verifier(["perou", "uruguay"].every((id) => notesPays[id]["indemnite-vie"].note === null && /pas dans les destinations de Business France/.test(notesPays[id]["indemnite-vie"].texte)), "VIE : Pérou ou Uruguay sans la mention « pas dans les destinations »");

@@ -110,7 +110,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 - **Chapitre 5 : Tes limites**
   22. [tri-limites] Pour chaque situation, dis-nous ce que tu en penses → Passer
   23. [choix-cartes] Tes valeurs, si tu veux aller plus loin → Rien de plus pour moi
-- **Ton intuition** : Tu pensais à l’Asie du Sud-Est et à l’Asie du Sud. Tes réponses te mènent vers la Suisse. Ce qui a compté : ton envie « Bon salaire » ; « Je préfère une petite ville à une grande métropole. » ; ton envie « Proche de la France ».
+- **Ton intuition** : Tu pensais à l’Asie du Sud-Est et à l’Asie du Sud. Tes réponses te mènent vers la Suisse.
 - **Portrait** : Tu cherches avant tout une expérience qui fait avancer ta carrière. Tu pars pour une carrière longue. Tes réponses montrent que le salaire, le dépaysement et la sécurité comptent beaucoup pour toi. Au travail, tu préfères qu’on y mette les formes et des décisions prises ensemble. Tu veux la nature à portée de main. Tu te vois rentrer en France avec une belle expérience. Ce qu’on va chercher : Salaire brut moyen (pouvoir d’achat), Dépaysement, Sécurité.
 - **Top 3** : Suisse 72 %, Belgique 67 %, Norvège 65 %
 

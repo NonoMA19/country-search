@@ -320,5 +320,11 @@
     "url": "https://www.fr.emb-japan.go.jp/",
     "licence": "Lien seulement, aucun contenu copié",
     "type": "officiel"
+  },
+  "rapport-francais-etranger-2025": {
+    "nom": "Rapport du Gouvernement sur la situation des Français établis hors de France en 2025 (inscrits au registre au 31 décembre 2025)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+    "licence": "Rapport public, chiffres cités sans copie",
+    "type": "officiel"
   }
 }

@@ -4,7 +4,7 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
 import { PASSER, optionsDe } from "@/lib/elements";
-import { LIBELLE_FIABILITE, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, mesuresPrincipales, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
 import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner, situationsLimites } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
@@ -30,6 +30,7 @@ const posee: Record<string, number> = {}, sensible: Record<string, number> = {};
 const surprises: Record<string, number> = {};
 const fiab: Record<NiveauFiabilite, number> = { complete: 0, partielle: 0, faible: 0 };
 const ecrans: number[] = [];
+let topTotal = 0, topManquant = 0;
 const parcoursListe: Etat[] = [];
 const formats: Record<string, number> = {};
 const debut3: Record<string, number> = {}, debut4: Record<string, number> = {};
@@ -40,6 +41,8 @@ for (let i = 0; i < NB; i++) {
   ecrans.push(etat.ordre.length);
   const top = top3(etat);
   for (const l of top) fiab[l.fiabilite.niveau]++;
+  const princ = mesuresPrincipales(etat);
+  for (const l of top) { topTotal++; if (l.details.some((d) => d.neutre && princ.includes(d.mesure))) topManquant++; }
   if (top[0]) enN1[top[0].pays.id] = (enN1[top[0].pays.id] ?? 0) + 1;
   for (const l of top) enTop3[l.pays.id] = (enTop3[l.pays.id] ?? 0) + 1;
   const s = paysSurprise(etat, calculer(etat), top);
@@ -136,6 +139,7 @@ for (const el of quiz.elements.filter((x) => estAdaptatif(x.chapitre))) {
 const nbSurprises = Object.values(surprises).reduce((a, b) => a + b, 0);
 console.log(`\nPays surprise : ${pct(nbSurprises)} des parcours (${Object.entries(surprises).map(([c, n]) => `${c} ${n}`).join(", ") || "aucun"}).`);
 const nbTop = fiab.complete + fiab.partielle + fiab.faible;
+console.log(`Places du top 3 qui tiennent à une donnée manquante sur une des 3 premières envies : ${topManquant} sur ${topTotal} (${pct(topManquant, topTotal)}).`);
 console.log(`Données disponibles des pays du top 3 : ${(Object.keys(fiab) as NiveauFiabilite[]).map((k) => `${LIBELLE_FIABILITE[k]} ${pct(fiab[k], nbTop)}`).join(" ; ")}.`);
 
 // ---------- 3. Profils types ----------
@@ -185,6 +189,26 @@ for (const p of PERSONAS) {
     const sans = calculer({ ...etat, profil: { ...etat.profil, secteur: "autre" } }).filter((l) => !l.ecart);
     console.log(`    sans le secteur (mêmes réponses) : Royaume-Uni n° ${sans.findIndex((l) => l.pays.id === "royaume-uni") + 1} ; top 5 : ${sans.filter((l) => !l.peuDeDonnees).slice(0, 5).map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}`);
   }
+}
+
+// ---------- Profils fixes (prompt 3h) : six personnes types, leur top 3 ----------
+const KARIM = PERSONAS.find((p) => p.nom.startsWith("k)"))!;
+const ESPAGNOL = PERSONAS.find((p) => p.nom.startsWith("e)"))!;
+const FIXES: Persona[] = [
+  { nom: "a) Finance, 23 ans, VIE, bon salaire en n° 1", graine: 21, reponses: { objectif: "stage-vie", secteur: "finance", age: "18-25", "anglais-reunion": 4, "anglais-vie": 4, envies: ["salaire", "secteur", "travail", "securite", "equilibre"], classement: ["salaire", "secteur", "travail", "securite", "equilibre"], ambiances: ["metropole"] } },
+  { nom: "b) Qualité de vie, 29 ans, installation durable", graine: 22, reponses: { objectif: "carriere", age: "28-30", duree: "plus-2", "anglais-reunion": 4, "anglais-vie": 4, envies: ["equilibre", "securite", "climat", "prix", "travail"], classement: ["equilibre", "securite", "climat", "prix", "travail"], "cours-offerts": "a" } },
+  { ...KARIM, nom: "c) Karim : Océanie et Asie de l’Est, « Climat doux » n° 1, soleil, 10 h de vol sans problème" },
+  { ...ESPAGNOL, nom: "d) Parle espagnol, aime la chaleur, vie moins chère" },
+  { nom: "e) PVT, 25 ans, attiré par le Japon, refuse d’apprendre le japonais", graine: 25, reponses: { objectif: "aventure", age: "18-25", duree: "6-12", "anglais-reunion": 3, "anglais-vie": 3, carte: ["asie-est"], envies: ["depaysement", "prix", "climat", "travail", "securite"], classement: ["depaysement", "prix", "climat", "travail", "securite"], "cours-offerts": "b", limites: { alphabet: "redhibitoire" } } },
+  { nom: "f) Reste proche de la France, budget faible", graine: 26, reponses: { objectif: "premier-poste", age: "18-25", budget: "moins-2000", "anglais-reunion": 3, "anglais-vie": 3, envies: ["proche", "prix", "francais", "travail", "securite"], classement: ["proche", "prix", "francais", "travail", "securite"], noel: "a" } },
+];
+console.log("\nProfils fixes (prompt 3h) : top 3, puis les pays écartés du top 3 pour une donnée manquante sur une des 3 premières envies");
+for (const p of FIXES) {
+  const etat = parcoursAuHasard(hasard(p.graine * 1000 + 7), { passer: 0, repondeur: repondeurDe(p) });
+  const lignes = calculer(etat);
+  const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+  const manquants = lignes.filter((l) => !l.ecart && l.manquePrincipal.length && l.score > (top[2]?.score ?? 0)).map((l) => `${l.pays.nom} ${Math.round(l.score)} (${l.manquePrincipal.join(", ")})`);
+  console.log(`  ${p.nom}\n    top 3 : ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}${manquants.length ? `\n    au-dessus du n° 3 mais écartés (donnée manquante) : ${manquants.join(" ; ")}` : ""}`);
 }
 
 // ---------- Cas limites (prompt 3g) : affiner jusqu'au bout, et tout passer ----------

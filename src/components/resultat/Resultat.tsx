@@ -244,7 +244,7 @@ function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; ran
         {rang !== undefined && <span className="w-6 text-sm font-semibold text-gris tabular-nums">{rang}</span>}
         <Drapeau iso2={ligne.pays.iso2} className="h-5 w-7.5" />
         <Link href={`/pays/${ligne.pays.id}`} className="inline-flex min-h-11 min-w-0 flex-1 items-center font-medium break-words underline-offset-2 hover:underline">{ligne.pays.nom}</Link>
-        {ligne.peuDeDonnees ? (
+        {ligne.peuDeDonnees && !ligne.manquePrincipal.length ? (
           <span className="min-w-0 text-right text-sm text-gris">pas assez de données</span>
         ) : (
           <span className="font-semibold whitespace-nowrap tabular-nums">{Math.round(ligne.score)} %</span>
@@ -255,7 +255,8 @@ function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; ran
         {egalite && <span className="text-xs text-gris">{egalite}</span>}
       </div>
       {raison !== undefined ? raison && <p className="mt-2 pl-9 text-sm text-gris">{raison}</p> : ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
-      {ligne.peuDeDonnees && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
+      {ligne.manquePrincipal.length > 0 && <p className="mt-2 pl-9 text-sm text-gris">Donnée manquante{ligne.manquePrincipal.length > 1 ? "s" : ""}{"\u00a0"}: {ligne.manquePrincipal.join(", ")}. Elle porte sur une de tes 3 premières envies : ce pays ne peut pas entrer dans ton top 3 tant qu’elle n’est pas vérifiée.</p>}
+      {ligne.peuDeDonnees && !ligne.manquePrincipal.length && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
   );

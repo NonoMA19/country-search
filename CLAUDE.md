@@ -60,7 +60,7 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Témoignages de confiance « moyenne » : ils comptent comme les autres. Piste proposée, non appliquée : les compter à 75 % de leur importance.
 - Simulateur « Ta vie là-bas » (prompt 6) : salaire net (la part après impôts de l'OCDE est déjà affichée), loyer, coût de la vie comparés à la France ; puis un profil enregistré dans le navigateur, sans compte (ville, métier, salaire) ; plus tard, entreprises à viser.
 - Accompagner les dilemmes entre pays : quand le choix oppose un meilleur cadre de vie à une culture de travail plus adaptée, l'expliquer.
-- Décisions en attente (prompt 3h) : (1) une donnée « à vérifier » sur une envie compte 50 % : avec les 8 nouveaux pays, 62 % de leurs places dans un top 3 en dépendent (Sénégal et Côte d'Ivoire en tête du profil « aventure » sans salaire ni Français inscrits connus) ; (2) Abidjan est en vigilance renforcée d'après France Diplomatie (pas normale) ; (3) pays surprise : 5,6 % des parcours.
+- Décisions en attente (prompt 3i) : (1) salaire : passer à la série OCDE « Average annual wages » (DSD_EARNINGS@AV_AN_WAGE) ; l'OCDE n'est pas joignable depuis la session, rien n'est changé, chiffres à fournir par Nolhan ; (2) la règle des 3 premières envies écarte aussi l'Australie, le Japon, Singapour, Hong Kong, la Nouvelle-Zélande, la Chine et le Maroc quand « Équilibre » est dans le top 3 des envies (heures travaillées absentes de l'OIT) ; (3) profil « reste proche, budget faible » : Sénégal n° 1, Émirats n° 2.
 - Décisions validées au prompt 3h : carte = bonus de rang 5 (1,1), sans malus ; langue parlée = bonus modéré (1), sans malus ; une seule règle « données disponibles » (Notre avis compte, « à vérifier » jamais) ; ambiances et phrases obligatoires ; « Montrer seulement les portes ouvertes » sous le top 3.
 - Décisions validées au prompt 3g : « Je préfère éviter » = importance 1 ; Rédhibitoire aux seuils de 10 homicides pour 100 000, −5 °C en janvier, santé notée 1 ou 2 ; « Pas vraiment » = position modérée ; 2,5 = moyen ; deux thèmes au plus dans le chapitre 4 ; données de secteur de 2019 ou après.
 - Regarder comment les concurrents présentent leurs résultats (classement, comparaison, fiches) avant la refonte du prompt 5.
@@ -245,3 +245,11 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 **Ce qui reste à faire**
 - Saisir : salaire OCDE 2024 de l'Autriche, base de janvier et taux trimestriels VIE de 2026 (Legifrance bloqué depuis la session), Français inscrits des 8 pays (Rapport du Gouvernement 2025), Notre avis (anglais au travail, culture, villes) des 8 pays, emploi par secteur (OIT injoignable).
 - Vérifier : Dakar et New Delhi (niveau de vigilance sur la carte), visas de travail des 7 nouveaux pays hors Europe, Stavanger, reste de la Suisse et de la Chine pour le VIE.
+
+### 20 novembre 2026 : données manquantes, inscrits 2025, VIE recalculé, profils fixes (prompt 3i)
+**Ce qui est fait** (une pull request après la fusion de la n° 12)
+- Un pays à qui il manque une donnée sur une des 3 premières envies ne peut pas entrer dans le top 3 (`mesuresPrincipales`, champ `manquePrincipal` des lignes) ; il reste dans la liste avec son pourcentage et « Donnée manquante : … ». /methode corrigé. Simulation : 0 place du top 3 sur 15 000 ne tient à une donnée manquante sur ces envies ; la règle retire au moins un pays dans 14,3 % des parcours.
+- Français inscrits des 8 pays ajoutés : Rapport du Gouvernement 2025 (au 31 décembre 2025, `content/saisie/inscrits-2025.json`, `collecte.mjs --inscrits2025`), population 2025 de la Banque mondiale, même échelle ; les 30 autres gardent le registre de fin 2020.
+- VIE : base du 1er janvier 2026 et taux d'avril, juillet et octobre saisis ; le script retrouve les montants du Journal officiel (38 identiques, 15 à un centime près) et affiche Stavanger, Suisse et Chine « autres villes ».
+- Simulation : 6 profils fixes (top 3) en plus des parcours au hasard ; /methode : échelle de vigilance de France Diplomatie.
+- Salaire : non changé, l'OCDE est injoignable depuis la session.
