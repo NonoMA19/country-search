@@ -719,7 +719,8 @@ export type Ligne = {
   ecart: string | null;
   porte: Porte;
   couverture: number; // part de tes critères (en nombre) pour lesquels ce pays a une donnée vérifiée
-  peuDeDonnees: boolean;
+  peuDeDonnees: boolean; // vrai aussi quand une donnée manque sur une de tes 3 premières envies : jamais dans le top 3
+  manquePrincipal: string[]; // les mesures « à vérifier » sur tes 3 premières envies (libellés courts), ou []
   fiabilite: Fiabilite;
 };
 
@@ -761,6 +762,14 @@ export const COUVERTURE_MIN = 0.6;
 export const ACCORD_NEUTRE = 0.5;
 
 const estPriorite = (e: EffetActif) => e.origine.startsWith("envie:");
+export const NB_ENVIES_PRINCIPALES = 3;
+// Les mesures de tes 3 premières envies (leur vraie mesure : l'indemnité VIE pour un VIE, la mesure de ton secteur…).
+export function mesuresPrincipales(etat: Etat): string[] {
+  return [...new Set(enviesDe(etat).slice(0, NB_ENVIES_PRINCIPALES).flatMap((id) => quiz.envies.find((x) => x.id === id)?.mesures ?? [])
+    .map((m) => mesureReelle(m, etat.profil)).filter((m): m is string => !!m && mesureDisponible(m) && !MESURES_BONUS.includes(m)))];
+}
+// « Salaire brut moyen (pouvoir d'achat) » → « salaire brut moyen » : la mention reste courte.
+const libelleCourt = (m: string) => (mesures[m]?.court ?? mesures[m]?.nom ?? m).replace(/\s*\(pouvoir[^)]*\)/, "").toLowerCase();
 
 const memoCalcul = new WeakMap<Etat, Ligne[]>();
 export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Ligne[] {
@@ -777,6 +786,8 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
   const budget = budgetDe(etat, reglages);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
   const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))].filter((m) => !MESURES_BONUS.includes(m));
+  // Tes 3 premières envies : une donnée manquante sur l'une d'elles empêche d'entrer dans le top 3.
+  const principales = mesuresPrincipales(etat);
   const lignes = pays.map((p) => {
     const remonte = etat.remontes.includes(p.id);
     const details: Detail[] = [];
@@ -805,10 +816,12 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
     const couverture = tesCriteres.length > 0 ? notes / tesCriteres.length : 1;
     const reelles = details.filter((d) => !d.neutre).length;
     const porte = evaluerPorte(p, etat.profil, budget);
+    const manquePrincipal = principales.filter((m) => noteEffective(p.id, m, etat.profil) === null).map(libelleCourt);
     return {
       fiabilite: fiabiliteDe(p.id, tesCriteres, etat.profil),
       couverture,
-      peuDeDonnees: couverture < COUVERTURE_MIN || reelles === 0,
+      manquePrincipal,
+      peuDeDonnees: couverture < COUVERTURE_MIN || reelles === 0 || manquePrincipal.length > 0,
       sansDonnees: reelles === 0,
       pays: p,
       score: pct(total) ?? 0,

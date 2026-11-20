@@ -8,6 +8,8 @@
 //         node scripts/collecte.mjs --ocde     (salaire moyen de l'OCDE et part qui reste après impôts, depuis content/saisie/ocde.json)
 //         node scripts/collecte.mjs --vie      (indemnité VIE par pays, depuis content/saisie/vie-indemnites.json)
 //         node scripts/collecte.mjs --secteur  (part de l'emploi par secteur, ILOSTAT, CITI rév. 4)
+//         node scripts/collecte.mjs --inscrits2025   (Français inscrits au 31 décembre 2025, depuis content/saisie/inscrits-2025.json,
+//                                                     rapportés à la population la plus récente de la Banque mondiale)
 //         node scripts/collecte.mjs --ajout id1,id2   (collecte seulement ces pays, ajoutés à pays.json, et les ajoute à scores.json :
 //                                                     les autres pays ne changent pas. Puis lancer node scripts/vie.mjs.)
 // Rien n'est inventé : une donnée absente devient « à vérifier » et reste hors calcul.
@@ -31,6 +33,7 @@ const OMS_SEULE = process.argv.includes("--oms");
 const OCDE_SEULE = process.argv.includes("--ocde");
 const VIE_SEULE = process.argv.includes("--vie");
 const SECTEUR_SEUL = process.argv.includes("--secteur");
+const INSCRITS_2025 = process.argv.includes("--inscrits2025");
 const AJOUT = process.argv.includes("--ajout") ? process.argv[process.argv.indexOf("--ajout") + 1].split(",") : null;
 
 const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "content", f), "utf8"));
@@ -43,7 +46,7 @@ const mesures = Object.fromEntries(criteres.flatMap((c) => c.mesures.map((m) => 
 
 // curl plutôt que fetch : il respecte le proxy de la machine sans réglage.
 function telecharger(nom, url) {
-  if (TEXTES_SEUL || OCDE_SEULE || VIE_SEULE || (SECTEUR_SEUL && !nom.startsWith("ilo_eco_")) || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
+  if (TEXTES_SEUL || OCDE_SEULE || VIE_SEULE || (INSCRITS_2025 && !nom.startsWith("bm_poprecente_")) || (SECTEUR_SEUL && !nom.startsWith("ilo_eco_")) || (POPULATION_SEULE && !nom.startsWith("bm_pop_")) || (FRANCE_SEULE && !nom.startsWith("fr_")) || (OMS_SEULE && !nom.startsWith("bm_SH.STA.OB18"))) return null;
   const fichier = path.join(CACHE, nom);
   if (fs.existsSync(fichier) && fs.statSync(fichier).size > 0) return fichier;
   for (let essai = 1; essai <= 4; essai++) {
@@ -476,6 +479,26 @@ function notesAvis(p, verifieLe = AUJOURDHUI) {
     res[id] = av?.villes?.[id] ? note(av.villes[id], av.villes.texte) : aVerifier("Pas encore d'avis rédigé.");
   }
   return res;
+}
+
+// ---------- Mode --inscrits2025 : Français inscrits fin 2025 (Rapport du Gouvernement), pays ajoutés seulement ----------
+// Même échelle que les autres pays : inscrits pour 100 000 habitants, mêmes seuils. Population : la dernière année de la Banque mondiale.
+if (INSCRITS_2025) {
+  const R = lire("saisie/inscrits-2025.json");
+  const actuel = lire("scores.json");
+  for (const [id, n] of Object.entries(R.inscrits)) {
+    const p = pays.find((x) => x.id === id);
+    const d = json(`bm_poprecente_${p.iso3}.json`, `https://api.worldbank.org/v2/country/${p.iso3}/indicator/SP.POP.TOTL?format=json&date=2020:2026`);
+    const l = (Array.isArray(d?.[1]) ? d[1] : []).filter((x) => typeof x.value === "number").sort((a, b) => b.date.localeCompare(a.date))[0];
+    if (!l) { actuel.pays[id].francais = { ...aVerifier(`${fr(n, 0)} Français inscrits au registre au 31 décembre 2025. La population du pays n'a pas pu être téléchargée : la part pour 100 000 habitants reste à vérifier.`), inscrits: n }; continue; }
+    const ratio = (n / l.value) * 100000;
+    const texte = `${fr(n, 0)} Français inscrits au registre consulaire au 31 décembre 2025 (Rapport du Gouvernement 2025), soit ${fr(ratio, ratio < 10 ? 1 : 0)} pour 100 000 habitants (population ${l.date} : Banque mondiale, CC BY 4.0). L'inscription n'est pas obligatoire : le vrai nombre est plus élevé.`;
+    actuel.pays[id].francais = { ...verifie("francais", ratio, texte, R.source, R.lien, "2025"), inscrits: n, population: l.value, verifieLe: R.verifieLe };
+    console.log(p.nom, n, l.date, l.value, fr(ratio), actuel.pays[id].francais.note);
+  }
+  typoTextes(actuel.pays);
+  fs.writeFileSync(path.join(RACINE, "content", "scores.json"), JSON.stringify(actuel, null, 1) + "\n");
+  process.exit(0);
 }
 
 // ---------- Mode --population : télécharger la population et recalculer le réseau français ----------

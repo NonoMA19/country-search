@@ -32,8 +32,8 @@
           "montant": 4157.67
         },
         {
-          "ville": "reste du pays",
-          "montant": null
+          "ville": "autres villes",
+          "montant": 4135.76
         }
       ]
     },
@@ -87,7 +87,7 @@
       "autres": [
         {
           "ville": "Stavanger",
-          "montant": null
+          "montant": 3280.77
         }
       ]
     },
@@ -223,8 +223,8 @@
           "montant": 2955.13
         },
         {
-          "ville": "reste du pays",
-          "montant": null
+          "ville": "autres villes",
+          "montant": 2723.85
         }
       ]
     },

@@ -1,0 +1,17 @@
+{
+  "_note": "Français inscrits au registre au 31 décembre 2025, d'après le Rapport du Gouvernement sur la situation des Français établis hors de France en 2025 (tableau des inscrits par pays). Chiffres relevés par Nolhan : le PDF n'est pas lisible depuis la session. Seulement les 8 pays ajoutés au prompt 3h ; les 30 autres gardent le registre de fin 2020 (data.gouv.fr).",
+  "source": "rapport-francais-etranger-2025",
+  "lien": "https://www.vie-publique.fr/files/rapport/pdf/304379.pdf",
+  "date": "2025-12-31",
+  "verifieLe": "2026-11-20",
+  "inscrits": {
+    "autriche": 11520,
+    "senegal": 19966,
+    "cote-d-ivoire": 19346,
+    "thailande": 16070,
+    "vietnam": 6957,
+    "inde": 6893,
+    "perou": 3823,
+    "uruguay": 2377
+  }
+}
