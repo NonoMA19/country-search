@@ -14,7 +14,7 @@ export default function Thermometre({ element: el, valeur, repondre, passer, lib
         {[...el.niveaux].map((texte, i) => ({ texte, niveau: i + 1 })).reverse().map(({ texte, niveau }) => {
           const actif = valeur === niveau;
           return (
-            <button key={niveau} type="button" aria-pressed={actif} onClick={() => repondre(niveau)}
+            <button key={niveau} type="button" data-option aria-pressed={actif} onClick={() => repondre(niveau)}
               className={`flex min-h-14 w-full items-center gap-3 rounded-2xl border-2 px-4 py-2 text-left transition-colors ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
               <span aria-hidden="true" className="flex h-8 w-24 shrink-0 items-end gap-1">
                 {Array.from({ length: n }, (_, k) => (

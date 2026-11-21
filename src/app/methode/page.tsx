@@ -50,15 +50,43 @@ function effet(o: OptionDilemme): string {
   return morceaux.length ? morceaux.join(" ; ") : "rien ne change";
 }
 
+// Le sommaire, collé à gauche sur ordinateur (1024 px et plus) ; caché sur téléphone et tablette, où la page se lit d'un trait.
+const SOMMAIRE: [string, string][] = [
+  ["le-calcul-en-7", "Le calcul en 7 points"],
+  ["ton-projet-fixe-les", "Ton projet"],
+  ["un-exemple-chiffre", "Un exemple chiffré"],
+  ["comment-les-questions-sont", "Le choix des questions"],
+  ["ton-profil-ses-certitudes", "Ton profil"],
+  ["les-curseurs-et-si", "Les curseurs « Et si… ? »"],
+  ["faisabilite-et-fiabilite", "Faisabilité et fiabilité"],
+  ["le-pays-surprise", "Le pays surprise"],
+  ["quatre-sortes-de-sources", "Quatre sortes de sources"],
+  ["famille-partir", "Les mesures, famille par famille"],
+  ["les-envies-et-leur", "Les envies"],
+  ["tous-les-dilemmes-et", "Les dilemmes"],
+  ["a-verifier", "Ce qui reste à vérifier"],
+  ["toutes-les-sources", "Toutes les sources"],
+];
+
 export default function Methode() {
   const familles = ["partir", "travailler", "vivre", "valeurs"];
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
-      <Link href="/" className="-ml-2 inline-flex min-h-11 items-center px-2 text-sm font-medium text-lien underline">Accueil</Link>
-      <h1 className="mt-3 text-3xl font-bold tracking-tight">La méthode</h1>
+    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8 lg:grid lg:max-w-6xl lg:grid-cols-[15rem_minmax(0,46rem)] lg:items-start lg:justify-center lg:gap-12 lg:px-8 lg:py-12">
+      <nav aria-labelledby="titre-sommaire" className="hidden lg:sticky lg:top-8 lg:block">
+        <Link href="/" className="-ml-2 inline-flex min-h-11 items-center px-2 text-sm font-medium text-lien underline">Accueil</Link>
+        <h2 id="titre-sommaire" className="mt-4 text-xs font-medium tracking-wide text-gris uppercase">Sommaire</h2>
+        <ol className="mt-2 max-h-[calc(100dvh-10rem)] space-y-0.5 overflow-y-auto border-l border-bord">
+          {SOMMAIRE.map(([id, titre]) => (
+            <li key={id}><a href={`#${id}`} className="-ml-px flex min-h-9 items-center border-l-2 border-transparent py-1 pl-3 text-sm text-gris hover:border-bleu hover:text-encre focus-visible:outline-2 focus-visible:outline-bleu">{titre}</a></li>
+          ))}
+        </ol>
+      </nav>
+      <div className="min-w-0">
+      <Link href="/" className="-ml-2 inline-flex min-h-11 items-center px-2 text-sm font-medium text-lien underline lg:hidden">Accueil</Link>
+      <h1 className="mt-3 text-3xl font-bold tracking-tight lg:mt-0 lg:text-4xl">La méthode</h1>
       <p className="mt-3 text-lg text-gris">Un simple calcul classe les pays. Aucune intelligence artificielle ne décide, et rien n’est inventé.</p>
 
-      <section className="mt-8">
+      <section id="le-calcul-en-7" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Le calcul en 7 points</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
@@ -84,7 +112,7 @@ export default function Methode() {
         <p className="mt-3 text-sm text-gris">Touche un mot souligné en pointillé pour lire sa définition : <Definition cle="pvt" />, <Definition cle="vie" />.</p>
       </section>
 
-      <section className="mt-8">
+      <section id="ton-projet-fixe-les" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Ton projet fixe les règles de départ</h2>
         <p className="mt-3">Le projet que tu choisis au début donne des poids de départ, avant même tes envies. « Je ne sais pas encore » n’en donne aucun. Ils sont légers : importance {nombre(POIDS_OBJECTIF)}, moins qu’une réponse de dilemme (importance 1).</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -94,7 +122,7 @@ export default function Methode() {
         <p className="mt-3">Le badge de visa ne dépend pas de ce calcul : ton projet change seulement la porte d’entrée proposée (PVT, VIE ou visa de travail), comme avant.</p>
       </section>
 
-      <section className="mt-8">
+      <section id="un-exemple-chiffre" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Un exemple chiffré</h2>
         <p className="mt-3">Pour simplifier, deux envies seulement, de même importance (2) : le travail facile à trouver et un climat doux. Au dilemme « Ta vie en deux langues », tu choisis « Je veux gérer mon quotidien sans aide » (importance 1).</p>
         <p className="mt-3 text-sm text-gris sm:hidden" aria-hidden="true">Fais glisser le tableau sur le côté pour tout voir.</p>
@@ -112,7 +140,7 @@ export default function Methode() {
         </div>
       </section>
 
-      <section className="mt-8">
+      <section id="comment-les-questions-sont" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Comment les questions sont choisies</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Un dilemme est une petite scène avec 2 options. Chaque option affiche son avantage (+) et son prix (−) : il n’y a pas de bonne réponse. Les montants et les durées des scènes sont des exemples, pas les chiffres d’un pays.</li>
@@ -131,7 +159,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="ton-profil-ses-certitudes" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Ton profil, ses certitudes et ses hésitations</h2>
         <p className="mt-3">Tes réponses sont rangées par dimension : le salaire, le coût de la vie, trouver du travail, ton secteur, l’équilibre, la distance, le climat, la ville, la sécurité, la santé, la langue, les Français sur place, la culture au travail (hiérarchie, communication, ponctualité, décision, vie pro et vie perso), les valeurs, ton visa. Le calcul lit ce profil : pour chaque mesure, la plus grande importance donnée par une seule réponse.</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -142,7 +170,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="les-curseurs-et-si" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Les curseurs « Et si… ? »</h2>
         <p className="mt-3">Quatre curseurs, chacun sur un groupe de mesures : la distance avec la France (temps de vol, décalage horaire), le climat (hiver, été, climat doux), le salaire face au coût de la vie (salaire brut moyen en pouvoir d’achat, niveau des prix) et la culture au travail (hiérarchie, communication, ponctualité, prise de décision, vie pro et vie perso).</p>
         <ul className="mt-3 list-disc space-y-2 pl-5">
@@ -154,7 +182,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="faisabilite-et-fiabilite" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Faisabilité et fiabilité</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>Sous chaque pays de ton top 3, et dans le dossier du pays si tu as fait le quiz, trois listes courtes : les conditions remplies, celles à remplir (ou non remplies), et ce qui reste à vérifier, puis la prochaine étape avec le lien officiel. Elles viennent seulement de tes réponses (âge, budget, nationalité, projet) et des données sourcées des visas. On n’écrit jamais qu’un pays est « juridiquement accessible ».</li>
@@ -164,7 +192,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="le-pays-surprise" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Le pays surprise</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5">
           <li>On cherche un pays qu’une seule de tes préférences met de côté : une de tes limites « Rédhibitoire », qui écarte des pays, ou une réponse qui en fait reculer : « Je préfère pouvoir changer d’employeur librement » et « Je garde ces soirées pour moi » (langue à apprendre).</li>
@@ -175,7 +203,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="quatre-sortes-de-sources" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Quatre sortes de sources</h2>
         <ul className="mt-3 space-y-3">
           <li><Type type="officiel" /> Un site d’État ou d’organisme public (France Diplomatie, Service-Public, GOV.UK…).</li>
@@ -223,7 +251,7 @@ export default function Methode() {
       </section>
 
       {familles.map((f) => (
-        <section key={f} className="mt-8">
+        <section key={f} id={`famille-${f}`} className="mt-8 scroll-mt-6">
           <h2 className="text-xl font-semibold">Famille {NOMS_FAMILLES[f]}</h2>
           <div className="mt-3 space-y-4">
             {criteres.filter((c) => c.famille === f).map((c) => (
@@ -263,14 +291,14 @@ export default function Methode() {
         </section>
       ))}
 
-      <section className="mt-8">
+      <section id="les-envies-et-leur" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Les envies et leur importance</h2>
         <ul className="mt-3 list-disc space-y-1 pl-5">
           {quiz.envies.map((p) => <li key={p.id}>{p.label} : {p.mesures.filter((m) => mesures[m]).map((m) => mesures[m].nom).join(" et ") || "la part des emplois de ton secteur"}.</li>)}
         </ul>
       </section>
 
-      <section className="mt-8">
+      <section id="tous-les-dilemmes-et" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Tous les dilemmes et leur effet</h2>
         <ul className="mt-3 space-y-3">
           {quiz.dilemmes.map((d) => (
@@ -296,7 +324,7 @@ export default function Methode() {
         </ul>
       </section>
 
-      <section id="a-verifier" className="mt-8 scroll-mt-4">
+      <section id="a-verifier" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Ce qui reste à vérifier</h2>
         <p className="mt-2 text-gris">Liste tirée des données elles-mêmes. Chacun de ces points est marqué « à vérifier » dans le site : jamais une valeur ferme. Une donnée « à vérifier » ne compte pas dans « Données disponibles ».</p>
         {aVerifierParCategorie().map(([cat, points]) => (
@@ -309,7 +337,7 @@ export default function Methode() {
         ))}
       </section>
 
-      <section className="mt-8">
+      <section id="toutes-les-sources" className="mt-8 scroll-mt-6">
         <h2 className="text-xl font-semibold">Toutes les sources</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {Object.entries(sources).map(([id, s]) => (
@@ -324,6 +352,7 @@ export default function Methode() {
 
       <p className="mt-10 text-sm text-gris">Code sous licence MIT, contenu sous licence CC BY-SA 4.0.</p>
       <PiedDePage />
+      </div>
     </main>
   );
 }

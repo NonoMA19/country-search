@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ChevronLeft } from "lucide-react";
+import { Check, ChevronLeft } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
 import Portrait from "@/components/Portrait";
+import { ContenuAide } from "@/components/Pourquoi";
 import { FORMATS } from "@/components/formats/registre";
-import { BOUTON_PLEIN } from "@/components/formats/commun";
+import { BARRE_BAS, BOUTON_PLEIN, PanneauContexte } from "@/components/formats/commun";
 import { useFlip } from "@/lib/animation";
 import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
-import { quiz, trouverElement, type Element, type Valeur } from "@/lib/donnees";
+import { quiz, trouverElement, type Aide, type Element, type Valeur } from "@/lib/donnees";
 import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
@@ -39,24 +40,98 @@ function Progression({ chapitre, part }: { chapitre: number; part: number }) {
   );
 }
 
-// « cle » change à chaque écran : l'écran entre en fondu avec un léger glissement (un simple fondu en mouvement réduit).
-function Cadre({ chapitre, part, retour, children, cle = "" }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode; cle?: string }) {
+// L'avancement détaillé, dans le panneau de droite sur ordinateur : les 5 chapitres, faits, en cours ou à venir.
+function ProgressionDetaillee({ chapitre, part }: { chapitre: number; part: number }) {
   return (
-    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col overflow-x-clip px-5 pt-4 pb-6">
-      <div className="flex items-center gap-3">
-        {retour ? (
-          <button type="button" data-retour onClick={retour} className="-ml-2 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
-            <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Retour
-          </button>
-        ) : (
-          <Link href="/" className="-ml-2 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:text-encre">
-            <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Accueil
-          </Link>
-        )}
-        <Progression chapitre={chapitre} part={part} />
+    <ol className="space-y-1.5" aria-label="Les chapitres du quiz">
+      {CHAPITRES.map((c) => {
+        const fait = c.numero < chapitre, enCours = c.numero === chapitre;
+        return (
+          <li key={c.numero} className={`flex items-center gap-3 text-sm ${enCours ? "font-semibold text-encre" : fait ? "text-encre" : "text-gris"}`} aria-current={enCours ? "step" : undefined}>
+            <span aria-hidden="true" className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold ${fait ? "bg-bleu text-white" : enCours ? "border-2 border-bleu text-lien" : "border-2 border-bord"}`}>
+              {fait ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : c.numero}
+            </span>
+            <span className="min-w-0 flex-1">
+              {c.titre}
+              <span className="sr-only">{fait ? " : fait" : enCours ? " : en cours" : " : à venir"}</span>
+              {enCours && (
+                <span aria-hidden="true" className="mt-1 block h-1.5 overflow-hidden rounded-full bg-bord">
+                  <span className="block h-full rounded-full bg-bleu transition-all" style={{ width: `${Math.round(Math.min(1, part) * 100)}%` }} />
+                </span>
+              )}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+// Les raccourcis clavier, rappelés dans le panneau (seulement avec une souris ou un pavé tactile).
+function T({ children }: { children: ReactNode }) {
+  return <kbd className="inline-flex min-w-6 items-center justify-center rounded-md border border-bord bg-carte px-1.5 font-sans text-xs font-semibold text-encre">{children}</kbd>;
+}
+function Raccourcis() {
+  return (
+    <section aria-labelledby="titre-raccourcis" className="hidden border-t border-bord pt-4 pointeur-fin:block">
+      <h2 id="titre-raccourcis" className="text-xs font-medium tracking-wide text-gris uppercase">Raccourcis clavier</h2>
+      <ul className="mt-2 space-y-1.5 text-sm text-gris">
+        <li><T>1</T> à <T>9</T> : choisir une option</li>
+        <li><T>Entrée</T> : valider</li>
+        <li><T>⌫</T> : revenir en arrière</li>
+        <li><T>Tab</T> : passer d’un bouton à l’autre</li>
+      </ul>
+    </section>
+  );
+}
+
+type Panneau = { aide?: Aide; top?: { id: string; nom: string; iso2: string }[]; change?: boolean; attente?: string };
+
+// « cle » change à chaque écran : l'écran entre en fondu avec un léger glissement (un simple fondu en mouvement réduit).
+// Téléphone et tablette : une seule colonne, l'avancement en haut, compact. Ordinateur (1024 px et plus) : deux colonnes,
+// la question à gauche, un panneau à droite (avancement, « Pourquoi on te demande ça ? », aperçu du top, raccourcis).
+function Cadre({ chapitre, part, retour, children, cle = "", panneau = {} }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode; cle?: string; panneau?: Panneau }) {
+  return (
+    <main className="mx-auto flex w-full max-w-xl flex-1 flex-col overflow-x-clip px-5 pt-4 pb-6 md:max-w-2xl lg:max-w-6xl lg:px-8 lg:pt-8">
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-12 xl:grid-cols-[minmax(0,44rem)_22rem] xl:justify-center">
+        <div className="flex min-w-0 flex-1 flex-col lg:min-h-[calc(100dvh-8rem)]">
+          <div className="flex items-center gap-3">
+            {retour ? (
+              <button type="button" data-retour onClick={retour} className="-ml-2 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:bg-creux hover:text-encre focus-visible:outline-2 focus-visible:outline-bleu">
+                <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Retour
+              </button>
+            ) : (
+              <Link href="/" className="-ml-2 inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-2 text-sm font-medium text-gris hover:bg-creux hover:text-encre">
+                <ChevronLeft aria-hidden="true" className="h-5 w-5" /> Accueil
+              </Link>
+            )}
+            <div className="flex min-w-0 flex-1 lg:hidden"><Progression chapitre={chapitre} part={part} /></div>
+            <p className="hidden min-w-0 flex-1 truncate text-right text-sm font-medium text-gris lg:block">Chapitre {chapitre} sur {NB_CHAPITRES}</p>
+          </div>
+          <PanneauContexte.Provider value={true}>
+            <div key={cle} className="ecran-entree flex flex-1 flex-col pt-5 lg:pt-8">{children}</div>
+          </PanneauContexte.Provider>
+        </div>
+        <aside className="hidden space-y-6 rounded-3xl border border-bord bg-carte p-6 lg:sticky lg:top-8 lg:block" aria-label="Ton avancement et l’aide">
+          <section aria-labelledby="titre-avancement">
+            <h2 id="titre-avancement" className="text-xs font-medium tracking-wide text-gris uppercase">Ton avancement</h2>
+            <div className="mt-3"><ProgressionDetaillee chapitre={chapitre} part={part} /></div>
+          </section>
+          {panneau.aide && (
+            <section aria-labelledby="titre-aide-panneau" className="border-t border-bord pt-4">
+              <h2 id="titre-aide-panneau" className="text-xs font-medium tracking-wide text-gris uppercase">Pourquoi on te demande ça{"\u00a0"}?</h2>
+              <div className="mt-2"><ContenuAide aide={panneau.aide} /></div>
+            </section>
+          )}
+          {panneau.top && panneau.top.length > 0 ? (
+            <TopEnCours top={panneau.top} change={!!panneau.change} panneau />
+          ) : panneau.attente ? (
+            <p className="border-t border-bord pt-4 text-sm text-gris">{panneau.attente}</p>
+          ) : null}
+          <Raccourcis />
+        </aside>
       </div>
-      <div key={cle} className="ecran-entree flex flex-1 flex-col pt-5">{children}</div>
-      <p className="mt-6 text-xs text-gris">
+      <p className="mt-6 text-xs text-gris lg:mt-10">
         Les informations sur les visas et les impôts ne constituent pas un conseil juridique. Vérifie toujours auprès des sources officielles.{" "}
         <Link href="/mentions-legales" className="text-lien underline">Mentions légales</Link>
       </p>
@@ -65,21 +140,23 @@ function Cadre({ chapitre, part, retour, children, cle = "" }: { chapitre: numbe
 }
 
 // « Ton top 3 pour l'instant » : les drapeaux glissent vers leur nouvelle place quand le classement change.
-function TopEnCours({ top, change }: { top: { id: string; nom: string; iso2: string }[]; change: boolean }) {
+function TopEnCours({ top, change, panneau = false }: { top: { id: string; nom: string; iso2: string }[]; change: boolean; panneau?: boolean }) {
   const cle = top.map((p) => p.id).join(",");
-  const ref = useFlip<HTMLUListElement>(cle);
+  const ref = useFlip<HTMLOListElement>(cle);
   const noms = top.map((p) => p.nom).join(", ");
   return (
-    <div className="mt-5 border-t border-bord pt-4">
-      <p className="text-xs font-medium tracking-wide text-gris uppercase">Ton top 3 pour l’instant</p>
-      <p className="sr-only" aria-live="polite">{change ? `Ton top 3 a changé : ${noms}.` : `Ton top 3 pour l’instant : ${noms}.`}</p>
-      <ul ref={ref} className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
-        {top.map((p) => (
+    <div className={panneau ? "border-t border-bord pt-4" : "mt-5 border-t border-bord pt-4"}>
+      <p className="text-xs font-medium tracking-wide text-gris uppercase">{panneau ? `Ton top ${top.length} pour l’instant` : "Ton top 3 pour l’instant"}</p>
+      <p className="sr-only" aria-live="polite">{change ? `Ton top a changé : ${noms}.` : `Ton top pour l’instant : ${noms}.`}</p>
+      <ol ref={ref} className={panneau ? "mt-2 space-y-1.5" : "mt-2 flex flex-wrap gap-x-4 gap-y-2"}>
+        {top.map((p, i) => (
           <li key={p.id} data-flip={p.id} className="flex items-center gap-2 text-sm font-medium">
+            {panneau && <span className="w-4 text-right text-xs text-gris tabular-nums">{i + 1}</span>}
             <Drapeau iso2={p.iso2} className="h-4 w-6" /> {p.nom}
           </li>
         ))}
-      </ul>
+      </ol>
+      {panneau && <p className="mt-2 text-xs text-gris">Il bouge à chaque réponse. Ton résultat complet vient à la fin.</p>}
     </div>
   );
 }
@@ -103,8 +180,8 @@ function Transition({ chapitre, continuer }: { chapitre: number; continuer: () =
         <h1 id="titre-ecran" tabIndex={-1} className="mt-2 text-3xl font-bold break-words outline-none">{ch.titre}</h1>
         <p className="mx-auto mt-3 max-w-sm text-lg leading-snug text-gris">{ch.phrase}</p>
       </div>
-      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
-        <button type="button" onClick={continuer} className={BOUTON_PLEIN}>Commencer le chapitre</button>
+      <div className={`${BARRE_BAS} pt-3 pb-4 lg:justify-center lg:py-0`}>
+        <button type="button" data-valider onClick={continuer} className={BOUTON_PLEIN}>Commencer le chapitre</button>
       </div>
     </div>
   );
@@ -132,8 +209,8 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
         </>
       )}
       <p className="mt-5 text-sm text-gris">Ta carte du début compte un peu : un petit bonus aux pays des régions cochées, rien de retiré aux autres. Ton résultat complet vient juste après ton portrait.</p>
-      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
-        <button type="button" onClick={suite} className={BOUTON_PLEIN}>Voir mon portrait</button>
+      <div className={`${BARRE_BAS} pt-3 pb-4 lg:py-0`}>
+        <button type="button" data-valider onClick={suite} className={BOUTON_PLEIN}>Voir mon portrait</button>
       </div>
     </>
   );
@@ -147,8 +224,8 @@ function Secours({ chapitre, texte, portrait }: { chapitre: number; texte: strin
     <Cadre chapitre={chapitre} part={1} retour={portrait}>
       <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold outline-none">On revient à ton portrait</h1>
       <p className="mt-2 text-lg">{texte}</p>
-      <div className="sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
-        <button type="button" onClick={portrait} className={BOUTON_PLEIN}>Revenir à mon portrait</button>
+      <div className={`${BARRE_BAS} pt-3 pb-4 lg:py-0`}>
+        <button type="button" data-valider onClick={portrait} className={BOUTON_PLEIN}>Revenir à mon portrait</button>
       </div>
     </Cadre>
   );
@@ -180,9 +257,39 @@ export default function Quiz() {
     window.addEventListener("popstate", surRetour);
     return () => window.removeEventListener("popstate", surRetour);
   }, []);
+  // Raccourcis clavier (ordinateur) : 1 à 9 choisissent une option, Entrée valide, Retour arrière revient.
+  // Jamais quand on écrit dans un champ, règle un curseur, ou tient une ligne du classement.
+  useEffect(() => {
+    const surTouche = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
+      const cible = e.target instanceof HTMLElement ? e.target : null;
+      if (cible?.closest("input, textarea, select, [contenteditable='true'], [role='slider'], dialog")) return;
+      if (document.querySelector("[data-copie]")) return;
+      const visibles = (sel: string) => [...document.querySelectorAll<HTMLButtonElement>(sel)].filter((b) => b.offsetParent !== null && !b.disabled);
+      if (/^[1-9]$/.test(e.key)) {
+        const b = visibles("main [data-option]")[Number(e.key) - 1];
+        if (b) { e.preventDefault(); b.click(); }
+      } else if (e.key === "Enter") {
+        // Entrée sur un bouton ou un lien garde son sens habituel ; ailleurs (titre, page), elle valide l'écran.
+        if (cible && cible !== document.body && !cible.matches("h1, main")) return;
+        const b = visibles("main [data-valider]")[0];
+        if (b) { e.preventDefault(); b.click(); }
+      } else if (e.key === "Backspace") {
+        const b = document.querySelector<HTMLButtonElement>("[data-retour]");
+        if (b) { e.preventDefault(); b.click(); }
+      }
+    };
+    window.addEventListener("keydown", surTouche);
+    return () => window.removeEventListener("keydown", surTouche);
+  }, []);
   if (!session) return <Chargement />;
 
   const { etat, etape } = session;
+  // L'aperçu du top dans le panneau (ordinateur) : dès que tes envies sont choisies, les 5 premiers pays.
+  const envies = Array.isArray(etat.reponses.envies) && (etat.reponses.envies as string[]).length > 0;
+  const apercu: Panneau = envies
+    ? { top: topCourant(etat, 5).map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 })) }
+    : { attente: "Ton top apparaîtra ici dès que tu auras choisi tes envies." };
   const aller = (e: Etape, autres: Partial<Session> = {}) => {
     if (!clicLibre()) return;
     marquerChangement();
@@ -218,11 +325,11 @@ export default function Quiz() {
         {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
         <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
         <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
-        <div className="sticky bottom-0 -mx-5 mt-auto space-y-2 border-t border-bord bg-fond/95 px-5 pt-3 pb-4 backdrop-blur">
-          {horsLigne && <p role="alert" className="rounded-2xl bg-creux px-4 py-3 text-sm font-medium">Tu sembles hors ligne : ton résultat ne peut pas s’ouvrir pour l’instant. Tes réponses sont gardées. Réessaie quand la connexion revient.</p>}
-          <button type="button" onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
+        <div className={`${BARRE_BAS} space-y-2 pt-3 pb-4 lg:space-y-0 lg:py-0`}>
+          {horsLigne && <p role="alert" className="rounded-2xl bg-creux px-4 py-3 text-sm font-medium lg:basis-full">Tu sembles hors ligne : ton résultat ne peut pas s’ouvrir pour l’instant. Tes réponses sont gardées. Réessaie quand la connexion revient.</p>}
+          <button type="button" data-valider onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
           {restants > 0 && prochainAffiner(etat) && (
-            <button type="button" onClick={() => aller({ t: "affiner" })} className="min-h-12 w-full rounded-2xl border border-bord bg-carte px-3 text-base font-semibold hover:border-bleu">
+            <button type="button" onClick={() => aller({ t: "affiner" })} className="min-h-12 w-full rounded-2xl border border-bord bg-carte px-3 text-base font-semibold hover:border-bleu lg:min-h-14 lg:w-auto lg:px-6">
               Continuer pour affiner <span className="font-normal text-gris">· {phraseRestants(restants)}</span>
             </button>
           )}
@@ -239,7 +346,7 @@ export default function Quiz() {
     {
       const F = FORMATS[el.type];
       return (
-        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller(apres)}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller(apres)} panneau={{ aide: el.aide, ...apercu }}>
           <F key={el.id} element={el} etat={etat} valeur={etat.reponses[el.id]} libellePasser="Garder ma réponse"
             repondre={(v: Valeur) => aller(apres, { etat: changerReponse(etat, el.id, v) })} passer={() => aller(apres)} />
         </Cadre>
@@ -258,7 +365,7 @@ export default function Quiz() {
         aller(prochainAffiner(nouvel) ? { t: "affiner" } : { t: "portrait", fin: true }, { etat: nouvel });
       };
       return (
-        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })} panneau={{ aide: el.aide, ...apercu }}>
           <p className="mb-2 text-sm font-medium text-gris">{phraseRestants(restantsAffiner(etat))}</p>
           <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
           <button type="button" onClick={() => aller({ t: "portrait" })} className="mt-3 min-h-11 text-sm font-medium text-lien underline">J’ai fini, revoir mon portrait</button>
@@ -278,7 +385,7 @@ export default function Quiz() {
   // Un nouveau chapitre commence : son écran d'ouverture (à partir du chapitre 2).
   if (el.chapitre > 1 && !session.chapitresVus.includes(el.chapitre) && vusDans(etat, el.chapitre).length === 0) {
     return (
-      <Cadre cle={ecran} chapitre={el.chapitre} part={0} retour={retourQuiz}>
+      <Cadre cle={ecran} chapitre={el.chapitre} part={0} retour={retourQuiz} panneau={apercu}>
         <Transition chapitre={el.chapitre} continuer={() => aller({ t: "quiz" }, { chapitresVus: [...session.chapitresVus, el.chapitre] })} />
       </Cadre>
     );
@@ -287,11 +394,13 @@ export default function Quiz() {
   const suivant = (v: Valeur) => aller({ t: "quiz" }, { etat: repondre(etat, el.id, v) });
   const adaptatif = estAdaptatif(el.chapitre);
   const top = adaptatif ? topCourant(etat, 3) : [];
+  const change = etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre;
   return (
-    <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null}>
+    <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null} panneau={{ aide: el.aide, ...apercu, change }}>
       <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
+      {/* Téléphone et tablette : le top 3 sous la question (chapitres 3 et 4). Sur ordinateur, il est dans le panneau. */}
       {adaptatif && top.length > 0 && (
-        <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre} />
+        <div className="lg:hidden"><TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={change} /></div>
       )}
     </Cadre>
   );

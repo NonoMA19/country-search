@@ -12,7 +12,7 @@ export type EtatDepartage =
   | { t: "fin"; a: string; b: string; message: string; egalite: boolean }
   | { t: "comparaison"; a: string; b: string };
 
-const BOUTON = "inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl px-4 text-center font-semibold";
+const BOUTON = "inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl px-4 text-center font-semibold lg:w-auto lg:px-6";
 
 // Les deux pays côte à côte, sans nouveau calcul : une ligne par critère qui compte pour toi,
 // la vraie valeur de chaque pays, et au centre une barre qui part du milieu vers le pays qui gagne.
@@ -113,7 +113,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
         <p className="text-sm font-medium text-gris">{nomA} ou {nomB} ? Question {etatDep.poses.length + 1} sur {MAX_DEPARTAGE} au plus</p>
         <p className="mt-2 rounded-xl bg-creux px-3 py-2 text-sm leading-snug">{raisonDepartage(d, etat, a, b)}</p>
         <div className="mt-3"><CarteDilemme key={d.id} dilemme={d} scene={sceneDe(d, etat)} repond={repond} titreId="titre-departage" niveau="h3" /></div>
-        <button type="button" onClick={() => finir(etatDep.avant, etat)} className="mt-1 min-h-11 w-full text-sm font-medium text-lien underline">Arrêter le départage</button>
+        <button type="button" onClick={() => finir(etatDep.avant, etat)} className="mt-1 min-h-11 w-full text-sm font-medium text-lien underline lg:w-auto">Arrêter le départage</button>
       </section>
     );
   }
@@ -144,8 +144,10 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
       ) : (
         <>
           <p className="mt-1 text-gris">Ils sont à égalité. Jusqu’à 5 questions pour trancher, choisies parce que ces deux pays y diffèrent vraiment.</p>
-          <button type="button" onClick={lancer} className={`${BOUTON} mt-3 bg-bleu text-white hover:bg-blue-700`}>Trancher entre les deux</button>
-          <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-2 border border-bord bg-carte hover:border-bleu`}>Les comparer côte à côte</button>
+          <div className="lg:mt-3 lg:flex lg:flex-wrap lg:gap-3">
+            <button type="button" onClick={lancer} className={`${BOUTON} mt-3 bg-bleu text-white hover:bg-blue-700 lg:mt-0`}>Trancher entre les deux</button>
+            <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-2 border border-bord bg-carte hover:border-bleu lg:mt-0`}>Les comparer côte à côte</button>
+          </div>
         </>
       )}
     </section>

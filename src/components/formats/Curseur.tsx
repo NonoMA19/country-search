@@ -27,7 +27,7 @@ export default function Curseur({ element: el, valeur, repondre, passer, libelle
         </p>
       </div>
       <Actions passer={passer} libellePasser={libellePasser}>
-        <button type="button" onClick={() => repondre(v)} className={BOUTON_PLEIN}>Valider</button>
+        <button type="button" onClick={() => repondre(v)} data-valider className={BOUTON_PLEIN}>Valider</button>
       </Actions>
     </>
   );

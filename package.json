@@ -12,7 +12,8 @@
     "banque": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/banque.ts",
     "donnees": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/donnees.ts",
     "exemples": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./scripts/chargeur.mjs scripts/exemples.ts",
-    "e2e:classement": "node scripts/e2e/classement.mjs"
+    "e2e:classement": "node scripts/e2e/classement.mjs",
+    "e2e:ordinateur": "node scripts/e2e/ordinateur.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",

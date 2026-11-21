@@ -14,12 +14,14 @@ export const metadata: Metadata = {
 
 export default function Accueil() {
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10 sm:py-16">
-      <header>
+    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10 sm:py-16 lg:max-w-6xl lg:px-8">
+      {/* Ordinateur : la présentation à gauche (collée en haut), les pays à droite. */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:items-start lg:gap-16 xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]">
+      <header className="lg:sticky lg:top-16">
         {/* Emplacement réservé à la mascotte (pas encore choisie). */}
         <div aria-hidden="true" className="mb-6 h-16 w-16" />
 
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
           Orizo
         </h1>
         <p className="mt-3 text-lg">Trouve le pays où partir travailler, parmi {pays.length} pays.</p>
@@ -34,7 +36,7 @@ export default function Accueil() {
         </p>
       </header>
 
-      <section className="mt-12" aria-labelledby="titre-pays">
+      <section className="mt-12 lg:mt-0 lg:rounded-3xl lg:border lg:border-bord lg:bg-carte lg:p-8" aria-labelledby="titre-pays">
         <h2 id="titre-pays" className="text-xl font-semibold">
           {pays.length} pays, 3 familles
         </h2>
@@ -70,6 +72,7 @@ export default function Accueil() {
           pays réunit les données vérifiées et les liens officiels.
         </p>
       </section>
+      </div>
 
       <PiedDePage liens={[{ href: "/methode", texte: "Comment on calcule" }]} />
       <p className="mt-2 text-sm text-gris">

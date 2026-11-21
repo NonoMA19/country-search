@@ -40,7 +40,7 @@ export default function CarteMonde({ element: el, valeur, repondre, passer, libe
       {/* « Aucune idée » rejoint la liste des régions : la barre du bas ne garde que « Continuer » et « Passer ». */}
       <button type="button" onClick={() => repondre([AUCUNE_ZONE])} className={`mt-2 inline-flex min-h-12 items-center self-start rounded-full border border-dashed border-gris px-4 text-base font-medium hover:border-bleu ${FOCUS}`}>Aucune idée pour l’instant</button>
       <Actions passer={passer} libellePasser={libellePasser}>
-        <button type="button" disabled={zones.length === 0} onClick={() => repondre(zones)} className={BOUTON_PLEIN}>{zones.length ? `Continuer (${zones.length})` : "Continuer"}</button>
+        <button type="button" disabled={zones.length === 0} onClick={() => repondre(zones)} data-valider className={BOUTON_PLEIN}>{zones.length ? `Continuer (${zones.length})` : "Continuer"}</button>
       </Actions>
     </>
   );

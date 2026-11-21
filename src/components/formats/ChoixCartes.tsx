@@ -16,7 +16,7 @@ type Opt = ReturnType<typeof optionsDe>[number] & { indispo: string | null; phra
 // Une tuile horizontale de 64 px : une pastille ronde (l'image provisoire, avec son texte alternatif) et le libellé.
 function Tuile({ o, actif, desactive, onClick, idBase, classe = "" }: { o: Opt; actif: boolean; desactive: boolean; onClick: () => void; idBase: string; classe?: string }) {
   return (
-    <button type="button" aria-pressed={actif} disabled={desactive} aria-labelledby={idBase} aria-describedby={o.phrase || o.indispo ? `${idBase}-d` : undefined} onClick={onClick}
+    <button type="button" data-option aria-pressed={actif} disabled={desactive} aria-labelledby={idBase} aria-describedby={o.phrase || o.indispo ? `${idBase}-d` : undefined} onClick={onClick}
       className={`relative flex h-full min-h-16 w-full min-w-0 items-center gap-2.5 rounded-2xl border-2 py-2 pr-5 pl-2.5 text-left transition-colors disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS} ${classe}`}>
       <span role="img" aria-label={`Image provisoire : ${o.label}`} className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors ${actif ? "bg-bleu" : "bg-bleu-doux"}`}>
         <Icone nom={o.icone ?? "circle-help"} className={`h-5 w-5 ${actif ? "text-white" : "text-lien"}`} />
@@ -74,7 +74,7 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
             {options.map((o) => {
               const actif = choisies.includes(o.id);
               return (
-                <button key={o.id} type="button" role="checkbox" aria-checked={actif} onClick={() => basculer(o.id)}
+                <button key={o.id} type="button" data-option role="checkbox" aria-checked={actif} onClick={() => basculer(o.id)}
                   className={`inline-flex min-h-11 items-center gap-2 rounded-full border-2 py-1.5 pr-4 pl-2.5 text-base font-medium transition-colors ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
                   <span aria-hidden="true" className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 ${actif ? "border-bleu bg-bleu" : "border-gris bg-carte"}`}>
                     {actif && <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />}
@@ -91,7 +91,7 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
             const actif = valeur === o.id;
             const idBase = `${el.id}-${o.id}`;
             return (
-              <button key={o.id} type="button" aria-pressed={actif} aria-labelledby={idBase} aria-describedby={[o.phrase ? `${idBase}-d` : "", el.avecPlusMoins && o.plus ? `${idBase}-pm` : ""].filter(Boolean).join(" ") || undefined}
+              <button key={o.id} type="button" data-option aria-pressed={actif} aria-labelledby={idBase} aria-describedby={[o.phrase ? `${idBase}-d` : "", el.avecPlusMoins && o.plus ? `${idBase}-pm` : ""].filter(Boolean).join(" ") || undefined}
                 onClick={() => repondre(o.id)}
                 className={`relative flex min-h-14 w-full min-w-0 items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
                 <span className="min-w-0 flex-1">
@@ -110,14 +110,14 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
           {nombre !== undefined ? (
             <>
               <p className="pb-1 text-center text-sm text-gris" aria-live="polite">{choisies.length === nombre ? `${nombre} choisies.` : `${choisies.length} sur ${nombre}`}</p>
-              <button type="button" disabled={choisies.length !== nombre} onClick={() => repondre(choisies)} className={BOUTON_PLEIN}>
+              <button type="button" disabled={choisies.length !== nombre} onClick={() => repondre(choisies)} data-valider className={BOUTON_PLEIN}>
                 {choisies.length === nombre ? "Continuer" : `Encore ${nombre - choisies.length} à choisir`}
               </button>
             </>
           ) : choisies.length > 0 ? (
-            <button type="button" onClick={() => repondre(choisies)} className={BOUTON_PLEIN}>Continuer ({choisies.length})</button>
+            <button type="button" onClick={() => repondre(choisies)} data-valider className={BOUTON_PLEIN}>Continuer ({choisies.length})</button>
           ) : (
-            <button type="button" onClick={() => repondre([])} className={`min-h-14 w-full rounded-2xl border-2 border-bord bg-carte px-5 text-lg font-semibold hover:border-bleu ${FOCUS}`}>{el.aucun ?? "Aucune"}</button>
+            <button type="button" data-valider onClick={() => repondre([])} className={`min-h-14 w-full rounded-2xl border-2 border-bord bg-carte px-5 text-lg font-semibold hover:border-bleu lg:w-auto lg:min-w-64 ${FOCUS}`}>{el.aucun ?? "Aucune"}</button>
           )}
         </Actions>
       ) : (
