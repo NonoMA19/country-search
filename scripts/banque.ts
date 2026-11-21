@@ -38,7 +38,12 @@ function element(el: Element) {
       ecrire(`- Libellés : ${el.libelles.map((l) => `jusqu’à ${l.jusqua} « ${l.texte} »`).join(" ; ")}`);
       break;
     case "thermometre": ecrire(`- Niveaux : ${el.niveaux.join(" · ")}`); break;
-    case "carte-monde": for (const z of el.zones) ecrire(`- ${z.label}${z.detail ? ` (${z.detail})` : ""}`); ecrire("- « Aucune idée pour l’instant » ; aucun effet sur le score"); break;
+    case "carte-monde":
+      ecrire("- Jusqu’à 3 zones : un centre et un rayon réel (500 à 10 000 km, distance sur la sphère) ; bonus 1,1 aux pays dont la ville de référence est dedans");
+      for (const g of el.groupes) ecrire(`- Groupe « ${g.label} » : ${g.pays.length} pays`);
+      ecrire("- « Je n’ai pas de zone précise » : aucun effet sur le score");
+      ecrire("- Avec l’envie « Proche de la France », une zone qui contient la France ne donne pas de bonus (pas de double comptage)");
+      break;
     case "ambiances": for (const o of el.options) ecrire(`- ${o.label} (${o.phrase}) → ${effet(o.effets)}`); ecrire(`- ${el.max} choix au plus`); break;
     case "swipe": for (const p of el.phrases) ecrire(`- ${p.id} « ${p.texte} » · Ça me correspond → ${effet(p.oui)} · Pas vraiment → ${effet(p.non)}`); ecrire(`- ${el.nombre} phrases tirées parmi ${el.phrases.length} ; « Ça dépend » ne compte pas`); break;
     case "tri-limites": for (const s of el.situations) ecrire(`- ${s.texte} · Je préfère éviter → ${mesures[s.mesure]?.court ?? s.mesure} (importance 1) · Rédhibitoire → « Moins adaptés pour toi »`); ecrire(`- ${el.nombre} situations tirées parmi ${el.situations.length}`); break;

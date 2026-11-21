@@ -194,7 +194,9 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
               <g key={`p${i}`}>
                 <circle cx={cx} cy={cy} r={3 / echelle} className="pointer-events-none fill-carte stroke-bleu" strokeWidth={1.5 / echelle} />
                 <g data-bord={i} style={{ cursor: "ew-resize" }}>
-                  <circle cx={px} cy={py} r={22 / echelle} fill="transparent" />
+                  {/* Zone de prise : 44 px au doigt, 24 px avec une souris (plus précise : la carte reste cliquable autour). */}
+                  <circle cx={px} cy={py} r={22 / echelle} fill="transparent" className="pointeur-fin:hidden" />
+                  <circle cx={px} cy={py} r={12 / echelle} fill="transparent" className="hidden pointeur-fin:inline" />
                   <circle cx={px} cy={py} r={(i === actif ? 6 : 4.5) / echelle} className="fill-carte stroke-bleu" strokeWidth={2 / echelle} />
                 </g>
               </g>

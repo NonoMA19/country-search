@@ -1,7 +1,8 @@
 import { aVerifierParCategorie } from "@/lib/averifier";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, notes, preuveSource, quiz, sources, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import { LIBELLE_TYPE, criteres, dateDonnees, dateFr, europe, mesures, notes, preuveSource, quiz, sources, villes, type OptionDilemme, type TypeSource } from "@/lib/donnees";
+import { MAX_CERCLES, RAYONS, RAYON_TERRE } from "@/lib/zones";
 import Definition, { AvecDefinitions } from "@/components/Definition";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
@@ -53,6 +54,7 @@ function effet(o: OptionDilemme): string {
 // Le sommaire, collé à gauche sur ordinateur (1024 px et plus) ; caché sur téléphone et tablette, où la page se lit d'un trait.
 const SOMMAIRE: [string, string][] = [
   ["le-calcul-en-7", "Le calcul en 7 points"],
+  ["ta-zone-sur-la-carte", "Ta zone sur la carte"],
   ["ton-projet-fixe-les", "Ton projet"],
   ["un-exemple-chiffre", "Un exemple chiffré"],
   ["comment-les-questions-sont", "Le choix des questions"],
@@ -90,7 +92,7 @@ export default function Methode() {
         <h2 className="text-xl font-semibold">Le calcul en 7 points</h2>
         <ol className="mt-3 list-decimal space-y-2 pl-5">
           <li>Pour chaque chose qu’on mesure (le chômage des jeunes, l’hiver, la langue…), chaque pays reçoit une place sur une échelle à 5 niveaux. Le niveau le plus bas vaut 0 %, puis 25 %, 50 %, 75 % et 100 %.</li>
-          <li>Seules tes réponses comptent. Un écran auquel tu réponds « Passer » ne change rien. La carte du début (« où pensais-tu partir ? ») compte un peu : chaque pays d’une région cochée reçoit un bonus, comme une envie classée en 5e (importance 1,1). Un pays hors de ces régions ne perd rien. On la garde aussi pour la comparer à ton résultat.</li>
+          <li>Seules tes réponses comptent. Un écran auquel tu réponds « Passer » ne change rien. La carte du début (« où te vois-tu vivre ? ») compte un peu : chaque pays de ta zone reçoit un bonus, comme une envie classée en 5e (importance 1,1). Un pays hors de ta zone ne perd rien. On la garde aussi pour la comparer à ton résultat (<a href="#ta-zone-sur-la-carte" className="text-lien underline">ta zone sur la carte</a>).</li>
           <li id="langues-parlees">Une langue que tu parles (chapitre 1) compte toujours : les pays où elle est langue officielle ou très parlée reçoivent un bonus modéré (importance 1, comme une réponse de dilemme). Un pays qui ne la parle pas ne perd rien. Si tu dis en plus que la langue du quotidien compte, ces pays y ont la meilleure note, comme s’ils parlaient français.</li>
           <li>Tu choisis 5 envies, puis tu les ranges. Leur rang donne leur importance : n° 1 = 2 ; n° 2 = 1,75 ; n° 3 = 1,5 ; n° 4 = 1,25 ; n° 5 = 1,1. Une envie qui vise deux mesures partage son importance entre elles : « Proche de la France » donne 2/3 au temps de vol et 1/3 au décalage horaire (un pays à 6 h de vol mais à la même heure n’est pas « proche »). Une option de dilemme, une phrase « Ça me correspond », une ambiance ou une limite « Je préfère éviter » compte simple (importance 1) ou à moitié (0,5). Le curseur « temps libre ou salaire » donne à chaque côté sa part, de 0 à 1, de façon continue : tout à gauche, le temps libre compte 1 et le salaire 0 ; au milieu, 0,5 chacun. Ton projet donne des poids de départ, plus légers (importance 0,5). Si plusieurs réponses visent la même mesure, on garde la plus grande importance, sans les additionner.</li>
           <li>Certaines mesures ne sont ni bonnes ni mauvaises : la hiérarchie, la façon de communiquer, la ponctualité, la prise de décision, le lien entre vie pro et vie perso, l’hiver, l’été. Pour elles, ton option fixe une position préférée. Un pays à cette position gagne 100 %, un niveau plus loin 75 %, deux niveaux 50 %, et ainsi de suite.</li>
@@ -110,6 +112,24 @@ export default function Methode() {
           <Pastille preuve={preuveSource("Inscription sur place", europe.inscription.texte, europe.inscription.source, europe.inscription.lien, europe.inscription.verifieLe)} contexte="l’inscription sur place en Europe" />
         </p>
         <p className="mt-3 text-sm text-gris">Touche un mot souligné en pointillé pour lire sa définition : <Definition cle="pvt" />, <Definition cle="vie" />.</p>
+      </section>
+
+      <section id="ta-zone-sur-la-carte" className="mt-8 scroll-mt-6">
+        <h2 className="text-xl font-semibold">Ta zone sur la carte</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5">
+          <li>Au début du quiz, tu peux tracer jusqu’à {MAX_CERCLES} zones sur un planisphère : un centre et un rayon réel, de {nombre(RAYONS[0])} à {nombre(RAYONS.at(-1)!)} km. La distance se mesure à vol d’oiseau sur la Terre (le plus court chemin sur la sphère, rayon moyen de {nombre(RAYON_TERRE)} km), pas sur la carte à plat : un cercle près des pôles paraît plus grand, et un cercle autour de la Nouvelle-Zélande peut passer de l’autre côté de la carte. Tu peux aussi choisir une ou plusieurs régions (6 boutons) ou placer une zone autour d’une ville dans une liste, au clavier.</li>
+          <li>Un pays est dans ta zone si sa <strong>ville de référence</strong> est dans un de tes cercles, ou s’il fait partie d’une région choisie. Limite : une seule ville par pays. Un cercle qui touche un pays sans contenir sa ville ne le compte pas.</li>
+          <li>Effet sur le calcul : la mesure « Ta zone sur la carte » donne la note maximale aux pays de ta zone, avec l’importance d’une envie classée en 5e (1,1). Les autres pays n’ont pas de note pour cette mesure : ils ne perdent rien, et elle ne compte ni dans la règle des 60 % ni dans le badge « Données disponibles ». Aucun pays n’est écarté. Sans zone (« Je n’ai pas de zone précise », ou « Passer ») : aucun effet.</li>
+          <li>Ordre de grandeur, mesuré sur 392 parcours tirés au hasard : un pays placé dans ta zone gagne environ 2 points de pourcentage (de 1,8 à 2,7 pour 8 parcours sur 10). Un pays classé n° 10 remonte en général au n° 8, et entre dans le top 3 dans moins de 2 % des parcours. C’est un coup de pouce, pas un filtre.</li>
+          <li id="double-comptage">Pas de double comptage avec l’envie « Proche de la France » : si tu l’as choisie, une zone qui contient la France (un cercle qui contient Paris, ou la région Europe) ne donne pas de bonus en plus. La proximité compte déjà, par le temps de vol et le décalage horaire, avec l’importance de ton envie (jusqu’à 2). Tes autres zones comptent normalement. Sans cette règle, vouloir rester près de la France compterait deux fois et pousserait encore plus haut les pays européens, déjà n° 1 dans la plupart des parcours simulés.</li>
+          <li>Les cercles se placent sur une carte à plat (projection équirectangulaire, Natural Earth, domaine public). Les coordonnées des villes viennent de GeoNames, via le géocodage Open-Meteo (CC BY 4.0).</li>
+        </ul>
+        <details className="mt-3 rounded-2xl border border-bord bg-carte">
+          <summary className="flex min-h-12 cursor-pointer items-center px-4 font-medium">Les {pays.length} villes de référence</summary>
+          <ul className="grid gap-x-6 gap-y-1 px-4 pb-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+            {pays.map((p) => <li key={p.id}>{p.nom}{"\u00a0"}: {villes[p.id]?.nom ?? "à vérifier"}</li>)}
+          </ul>
+        </details>
       </section>
 
       <section id="ton-projet-fixe-les" className="mt-8 scroll-mt-6">

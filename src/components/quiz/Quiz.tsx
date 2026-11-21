@@ -199,7 +199,7 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
         <div className="mt-4 flex items-center gap-3 rounded-2xl border border-bord bg-carte p-4">
           <Drapeau iso2={i.n1.pays.iso2} className="h-8 w-12" />
           <p className="text-xl font-semibold">{i.n1.pays.nom}</p>
-          {i.cas === "autre" && i.meilleurDansZones && <p className="ml-auto text-right text-sm text-gris">Le mieux placé de ta région{"\u00a0"}: {i.meilleurDansZones.pays.nom}</p>}
+          {i.cas === "autre" && i.meilleurDansZones && <p className="ml-auto text-right text-sm text-gris">Le mieux placé de ta zone{"\u00a0"}: {i.meilleurDansZones.pays.nom}</p>}
         </div>
       )}
       {i.raisons.length > 0 && (
@@ -208,7 +208,7 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
           <ul className="mt-2 list-disc space-y-1 pl-5">{i.raisons.map((r) => <li key={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</li>)}</ul>
         </>
       )}
-      <p className="mt-5 text-sm text-gris">Ta carte du début compte un peu : un petit bonus aux pays des régions cochées, rien de retiré aux autres. Ton résultat complet vient juste après ton portrait.</p>
+      <p className="mt-5 text-sm text-gris">Ta carte du début compte un peu : un petit bonus aux pays de ta zone, rien de retiré aux autres. Ton résultat complet vient juste après ton portrait.</p>
       <div className={`${BARRE_BAS} pt-3 pb-4 lg:py-0`}>
         <button type="button" data-valider onClick={suite} className={BOUTON_PLEIN}>Voir mon portrait</button>
       </div>
