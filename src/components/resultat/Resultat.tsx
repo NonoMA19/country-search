@@ -181,11 +181,11 @@ function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = fa
         </div>
       </details>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <Link href={`/pays/${p.id}`} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl bg-bleu px-3 text-center font-semibold break-words text-white hover:bg-blue-700">
+      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:flex lg:flex-wrap">
+        <Link href={`/pays/${p.id}`} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl bg-bleu px-3 text-center font-semibold break-words text-white hover:bg-blue-700 lg:px-6">
           <FolderOpen aria-hidden="true" className="h-5 w-5" /> Ouvrir le dossier
         </Link>
-        <button type="button" onClick={pdf} disabled={enCours} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold break-words hover:border-bleu disabled:opacity-50">
+        <button type="button" onClick={pdf} disabled={enCours} className="inline-flex min-h-13 min-w-0 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold break-words hover:border-bleu disabled:opacity-50 lg:px-6">
           <Download aria-hidden="true" className="h-5 w-5" /> {enCours ? "Préparation…" : "Télécharger le PDF"}
         </button>
       </div>
@@ -221,7 +221,7 @@ function CarteSurprise({ s, remonter }: { s: Surprise; remonter: () => void }) {
 // Le top 3 : quand un curseur « Et si… ? » change l'ordre, les cartes glissent vers leur nouvelle place.
 function Glissement({ cle, children }: { cle: string; children: ReactNode }) {
   const ref = useFlip<HTMLDivElement>(cle);
-  return <div ref={ref} className="mt-4 space-y-5">{children}</div>;
+  return <div ref={ref} className="mt-4 space-y-5 lg:mt-0 lg:space-y-0">{children}</div>;
 }
 
 // « Moins adaptés pour toi » : une seule phrase par raison, en tête de groupe.
@@ -262,12 +262,40 @@ function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; ran
   );
 }
 
+// Ordinateur : le classement à gauche, une ligne par pays ; un clic affiche sa fiche à droite.
+function ListeClassement({ lignes, top, choisi, choisir }: { lignes: Ligne[]; top: Ligne[]; choisi: string | undefined; choisir: (id: string) => void }) {
+  return (
+    <nav aria-labelledby="titre-classement" className="hidden lg:sticky lg:top-6 lg:block">
+      <h3 id="titre-classement" className="text-sm font-semibold tracking-wide text-gris uppercase">Ton classement</h3>
+      <ol className="mt-3 max-h-[calc(100dvh-8rem)] space-y-1 overflow-y-auto rounded-2xl border border-bord bg-carte p-2">
+        {lignes.map((l, i) => {
+          const actif = l.pays.id === choisi;
+          return (
+            <li key={l.pays.id}>
+              {i === top.length && top.length > 0 && <p className="mx-2 mt-2 mb-1 border-t border-bord pt-2 text-xs font-medium text-gris">La suite du classement</p>}
+              <button type="button" onClick={() => choisir(l.pays.id)} aria-current={actif ? "true" : undefined}
+                className={`flex min-h-11 w-full items-center gap-3 rounded-xl px-2 text-left transition-colors focus-visible:outline-2 focus-visible:outline-bleu ${actif ? "bg-bleu-doux font-semibold" : "hover:bg-creux"}`}>
+                <span className="w-5 text-right text-sm text-gris tabular-nums">{i + 1}</span>
+                <Drapeau iso2={l.pays.iso2} className="h-4 w-6" />
+                <span className="min-w-0 flex-1 truncate">{l.pays.nom}</span>
+                <span className="text-sm whitespace-nowrap text-gris tabular-nums">{l.peuDeDonnees ? "—" : `${Math.round(l.score)} %`}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
 export default function Resultat() {
   const session = useSession();
   const router = useRouter();
   const [departage, setDepartage] = useState<EtatDepartage | null>(null);
   // Révélation du n°1 : seulement au premier affichage de la page.
   const [arrivee, setArrivee] = useState(true);
+  // Ordinateur : le pays dont la fiche est affichée à droite (par défaut, ton n° 1).
+  const [choisi, setChoisi] = useState<string | null>(null);
   const charge = session !== null;
   useEffect(() => {
     if (!charge) return;
@@ -328,9 +356,20 @@ export default function Resultat() {
   const groupes = groupesEgalite(principaux);
   const tailleGroupe = (k: number) => (groupes[k] < 0 ? 1 : groupes.filter((g) => g === groupes[k]).length);
   const grandGroupe = (k: number) => tailleGroupe(k) >= 6;
+  // Ordinateur : la fiche affichée. Un pays hors du top 3 a ses phrases « Pour toi » et « À savoir » calculées à part.
+  const idChoisi = choisi && principaux.some((l) => l.pays.id === choisi) ? choisi : top[0]?.pays.id;
+  const ligneChoisie = principaux.find((l) => l.pays.id === idChoisi);
+  const choisieHorsTop = ligneChoisie && !top.includes(ligneChoisie) && !ligneChoisie.peuDeDonnees ? ligneChoisie : null;
+  const choisir = (id: string) => {
+    setChoisi(id);
+    requestAnimationFrame(() => {
+      const fiche = document.getElementById("fiche-choisie");
+      if (fiche && fiche.getBoundingClientRect().top < 0) fiche.scrollIntoView({ block: "start" });
+    });
+  };
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5">
+    <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5 lg:max-w-6xl lg:px-8 lg:py-10">
       <h1 id="titre-resultat" tabIndex={-1} className="text-3xl font-bold tracking-tight outline-none">Ton résultat</h1>
       <p className="mt-2 text-gris">
         Le pourcentage dit à quel point un pays te ressemble, d’après tes réponses. C’est un indicateur, pas une vérité.{" "}
@@ -351,14 +390,18 @@ export default function Resultat() {
         </div>
       </details>
 
-      <section aria-labelledby="titre-top" className="mt-6">
-        <h2 id="titre-top" className="text-xl font-semibold">Ton top 3</h2>
+      <section aria-labelledby="titre-top" className="mt-6 lg:mt-8">
+        <h2 id="titre-top" className="text-xl font-semibold lg:sr-only">Ton top 3</h2>
+        <div className="lg:mt-0 lg:grid lg:grid-cols-[20rem_minmax(0,1fr)] lg:items-start lg:gap-8">
+        {!toutAZero && <ListeClassement lignes={principaux} top={top} choisi={idChoisi} choisir={choisir} />}
+        <div id="fiche-choisie" className="min-w-0 scroll-mt-4">
+        <p className="sr-only" aria-live="polite">{choisi && ligneChoisie ? `Fiche affichée : ${ligneChoisie.pays.nom}.` : ""}</p>
         <Glissement cle={top.map((l) => l.pays.id).join(",")}>
           {rienRepondu ? (
             <div className="rounded-2xl border border-bord bg-carte p-4">
               <p className="font-medium">Tu as passé toutes les questions qui comptent pour le classement : on ne peut pas encore classer les pays pour toi.</p>
               <p className="mt-3 font-semibold">Réponds au moins à ces 3 questions, celles qui comptent le plus :</p>
-              <div className="mt-2 grid gap-2">
+              <div className="mt-2 grid gap-2 lg:flex lg:flex-wrap">
                 {[["envies", "Tes 5 envies"], ["objectif", "Ton projet"], ["limites", "Tes limites"]].map(([id, nom]) => (
                   <button key={id} type="button" onClick={() => revoirQuestion(id)} className="min-h-12 rounded-2xl border border-bord px-4 text-left font-semibold hover:border-bleu">{nom}</button>
                 ))}
@@ -368,13 +411,19 @@ export default function Resultat() {
             <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Avec tes curseurs « Et si… ? », plus rien ne compte pour classer les pays. Remonte au moins un curseur.</p>
           ) : (
             top.map((l, i) => (
-              <div key={l.pays.id} data-flip={l.pays.id} className={i === 0 && arrivee ? "revelation" : undefined}>
+              // Téléphone et tablette : les 3 cartes l'une sous l'autre. Ordinateur : seulement celle du pays choisi à gauche.
+              <div key={l.pays.id} data-flip={l.pays.id} className={`${i === 0 && arrivee ? "revelation" : ""} ${l.pays.id === idChoisi ? "" : "lg:hidden"}`}>
                 <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} provisoire={provisoire} />
               </div>
             ))
           )}
           {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </Glissement>
+        {choisieHorsTop && !toutAZero && (
+          <div className="hidden lg:block">
+            <CartePays ligne={choisieHorsTop} rang={rangDe(choisieHorsTop) + 1} egalite={avecQui(principaux, rangDe(choisieHorsTop))} etat={etat} points={lignesTop([choisieHorsTop], etat).get(choisieHorsTop.pays.id)!} budget={budgetDe(etat, reglages)} provisoire={provisoire} />
+          </div>
+        )}
         {!toutAZero && top.some((l) => avecQui(principaux, rangDe(l))) && (
           <p className="mt-3 text-sm text-gris">Deux pays voisins à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
@@ -391,8 +440,11 @@ export default function Resultat() {
             </span>
           </label>
         )}
+        </div>
+        </div>
       </section>
 
+      <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
       <section aria-labelledby="titre-etsi" className="mt-10">
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
         <p className="mt-1 text-sm text-gris">Chaque curseur part de ce que tu as répondu. Bouge-le : ton top 3 se met à jour juste au-dessus.</p>
@@ -471,9 +523,11 @@ export default function Resultat() {
         </section>
       )}
 
+      </div>
+
       {(!toutAZero && suite.length > 0) || ecartes.length > 0 ? <section aria-labelledby="titre-tous" className="mt-10">
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
-        {!toutAZero && suite.length > 0 && <details className="mt-3">
+        {!toutAZero && suite.length > 0 && <details className="mt-3 lg:hidden">
           <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
           {suite.some((l) => grandGroupe(rangDe(l))) && <p className="mt-3 text-sm text-gris">Beaucoup de ces pays sont à 5 points ou moins les uns des autres : leur ordre compte peu. Réponds à plus de questions pour les départager.</p>}
           <ol className="mt-3 space-y-2">
@@ -487,7 +541,7 @@ export default function Resultat() {
             {groupesEcart(ecartes).map((g) => (
               <div key={g.raison} className="mt-4">
                 <p className="font-medium">{g.raison}</p>
-                <ul className="mt-2 space-y-2">
+                <ul className="mt-2 grid gap-2 lg:grid-cols-2 xl:grid-cols-3">
                   {g.lignes.map(({ ligne: l, detail }) => (
                     <LignePays key={l.pays.id} ligne={l} raison={detail} action={
                       <button type="button" onClick={() => remonter(l.pays.id)} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
@@ -502,13 +556,13 @@ export default function Resultat() {
         )}
       </section> : null}
 
-      <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
+      <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:flex lg:flex-wrap lg:items-center">
         {encoreDesDilemmes ? (
-          <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu"><span className="min-w-0 hyphens-auto">Continuer pour affiner</span></button>
+          <button type="button" onClick={affiner} className="inline-flex min-h-14 items-center justify-center rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu lg:px-6"><span className="min-w-0 hyphens-auto">Continuer pour affiner</span></button>
         ) : (
           <p className="flex min-h-14 items-center text-sm text-gris">Tu as répondu à tous les dilemmes utiles : ton classement ne peut plus s’affiner.</p>
         )}
-        <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu">
+        <button type="button" onClick={() => { recommencer(); router.push("/quiz"); }} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-bord bg-carte px-3 text-center font-semibold hover:border-bleu lg:px-6">
           <RotateCcw aria-hidden="true" className="hidden h-5 w-5 shrink-0 min-[240px]:block" /> <span className="min-w-0 hyphens-auto">Recommencer</span>
         </button>
       </div>

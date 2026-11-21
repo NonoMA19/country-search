@@ -185,7 +185,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
   const associations = dossier ? liensVerifies(dossier.associations) : [];
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8">
+    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8 lg:max-w-6xl lg:px-8 lg:py-10">
       <Link href="/" className="-ml-2 inline-flex min-h-11 items-center px-2 text-sm font-medium text-lien underline">Accueil</Link>
       <header className="mt-2 flex flex-wrap items-center gap-4">
         <Drapeau iso2={p.iso2} className="h-12 w-18" />
@@ -194,7 +194,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
           <h1 className="text-3xl font-bold tracking-tight break-words sm:text-4xl">{p.nom}</h1>
         </div>
       </header>
-      <p className="mt-4 rounded-2xl border border-dashed border-bord p-4 text-gris">
+      <p className="mt-4 rounded-2xl border border-dashed border-bord p-4 text-gris lg:max-w-3xl">
         {p.ficheComplete
           ? "★ Ce pays aura en priorité une fiche détaillée. Pour l’instant, cette page réunit les données vérifiées et les liens officiels utiles."
           : "Pour l’instant, cette page réunit les données vérifiées et les liens officiels utiles."}
@@ -207,7 +207,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Les portes d’entrée</h2>
-        <ul className="mt-3 space-y-3">
+        <ul className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
           {lesPortes.map((b) => (
             <li key={b.type} className="rounded-2xl border border-bord bg-carte p-4">
               <p className="font-semibold">{b.nom}</p>
@@ -257,7 +257,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
       {FAMILLES.map((f) => (
         <section key={f.id} className="mt-8">
           <h2 className="flex items-center gap-2 text-xl font-semibold"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</h2>
-          <ul className="mt-3 space-y-3">
+          <ul className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
             {criteres.filter((c) => c.famille === f.id).map((c) => <CarteCritere key={c.id} c={c} paysId={p.id} nomPays={p.nom} />)}
           </ul>
         </section>
@@ -265,14 +265,14 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Liens officiels</h2>
-        <ul className="mt-3 space-y-3">
+        <ul className="mt-3 grid gap-3 lg:grid-cols-2">
           {liens.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} officiel />)}
         </ul>
         {associations.length > 0 && (
           <>
             <h3 className="mt-6 font-semibold">Associations et réseaux</h3>
             <p className="mt-1 text-sm text-gris">Seulement des organismes publics ou des associations à but non lucratif.</p>
-            <ul className="mt-3 space-y-3">
+            <ul className="mt-3 grid gap-3 lg:grid-cols-2">
               {associations.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} />)}
             </ul>
           </>

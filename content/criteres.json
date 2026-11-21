@@ -1689,7 +1689,7 @@
     "id": "zone",
     "famille": "vivre",
     "nom": "En Europe ou plus loin, et ta carte du début",
-    "definition": "Le pays est-il en Europe ? Tiré de la liste des pays du site. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta carte du début » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays des régions que tu as cochées sur la carte du début. Un pays hors de ces régions ne perd rien.",
+    "definition": "Le pays est-il en Europe ? Tiré de la liste des pays du site. Cette mesure ne compte que si tu dis préférer éviter de vivre hors d’Europe : c’est une pénalité. La mesure « Ta zone sur la carte » est un bonus léger (importance 1,1, comme une envie de rang 5) aux pays dont la ville de référence est dans la zone que tu as tracée sur la carte du début (cercles de rayon réel, ou régions). Un pays hors de ta zone ne perd rien.",
     "type": "donnee-ouverte",
     "sources": [
       "geonames"
@@ -1735,40 +1735,40 @@
       },
       {
         "id": "region-carte",
-        "nom": "Dans une région de ta carte du début",
+        "nom": "Dans ta zone de la carte du début",
         "sens": "haut",
         "interne": true,
-        "regle": "5 : le pays est dans une région que tu as cochée sur la carte du début. Sinon, pas de note : un bonus, jamais un malus.",
+        "regle": "5 : la ville de référence du pays est dans ta zone (un cercle tracé sur la carte du début, à vol d’oiseau, ou une région choisie). Sinon, pas de note : un bonus, jamais un malus. Avec l’envie « Proche de la France », une zone qui contient la France ne donne pas ce bonus.",
         "echelle": [
           "(niveau non utilisé)",
           "(niveau non utilisé)",
           "(niveau non utilisé)",
           "(niveau non utilisé)",
-          "dans une région de ta carte"
+          "dans ta zone"
         ],
         "mots": [
-          "hors de ta carte",
-          "hors de ta carte",
-          "hors de ta carte",
-          "hors de ta carte",
-          "dans ta carte"
+          "hors de ta zone",
+          "hors de ta zone",
+          "hors de ta zone",
+          "hors de ta zone",
+          "dans ta zone"
         ],
         "fait": [
-          "Il est hors des régions de ta carte",
-          "Il est hors des régions de ta carte",
-          "Il est hors des régions de ta carte",
-          "Il est hors des régions de ta carte",
-          "Il est dans une région que tu as cochée sur la carte"
+          "Il est hors de ta zone",
+          "Il est hors de ta zone",
+          "Il est hors de ta zone",
+          "Il est hors de ta zone",
+          "Sa ville de référence est dans ta zone de la carte"
         ],
-        "court": "Ta carte du début",
+        "court": "Ta zone sur la carte",
         "theme": "ton intuition",
-        "sujet": "ta carte du début",
+        "sujet": "ta zone sur la carte",
         "etiquettes": [
-          "Hors de ta carte",
-          "Hors de ta carte",
-          "Hors de ta carte",
-          "Hors de ta carte",
-          "Dans ta carte"
+          "Hors de ta zone",
+          "Hors de ta zone",
+          "Hors de ta zone",
+          "Hors de ta zone",
+          "Dans ta zone"
         ]
       }
     ]

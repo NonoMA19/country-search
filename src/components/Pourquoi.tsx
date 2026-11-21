@@ -18,6 +18,16 @@ export default function Pourquoi({ aide }: { aide: Aide }) {
         <span>Pourquoi on te demande ça{"\u00a0"}?</span>
       </button>
       <div id={id} hidden={!ouvert} className="mt-1 rounded-2xl bg-creux p-3">
+        <ContenuAide aide={aide} />
+      </div>
+    </div>
+  );
+}
+
+// Le contenu de l'aide : l'enjeu en gras, puis une mini-carte par option. Aussi affiché déplié dans le panneau du quiz sur ordinateur.
+export function ContenuAide({ aide }: { aide: Aide }) {
+  return (
+    <>
         <p className="font-semibold leading-snug"><AvecDefinitions texte={aide.enjeu} /></p>
         <ul className="mt-2 space-y-2">
           {aide.cartes.map((c) => (
@@ -30,7 +40,6 @@ export default function Pourquoi({ aide }: { aide: Aide }) {
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+    </>
   );
 }

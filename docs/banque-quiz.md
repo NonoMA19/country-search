@@ -8,19 +8,18 @@ _Ton projet, ton secteur, tes langues : de quoi poser le décor._
 
 ### carte · CarteMonde · thème « Ton intuition »
 
-**Avant de commencer : où pensais-tu partir ?** Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.
+**Avant de commencer : où te vois-tu vivre ?** Touche la carte pour placer le centre de ta zone, puis règle son rayon. Jusqu’à 3 zones. Les pays de notre base dans ta zone reçoivent un petit bonus ; rien n’est retiré aux autres.
 
 - Dimensions : aucune
-- Europe
-- Amérique du Nord (Canada, États-Unis)
-- Amérique latine
-- Asie de l’Est (Japon, Corée du Sud, Taïwan, Hong Kong, Chine)
-- Asie du Sud-Est (Singapour, Thaïlande, Vietnam)
-- Asie du Sud (Inde)
-- Océanie
-- Moyen-Orient et Afrique du Nord (Émirats arabes unis, Maroc)
-- Afrique subsaharienne (Côte d’Ivoire, Sénégal)
-- « Aucune idée pour l’instant » ; aucun effet sur le score
+- Jusqu’à 3 zones : un centre et un rayon réel (500 à 10 000 km, distance sur la sphère) ; bonus 1,1 aux pays dont la ville de référence est dedans
+- Groupe « Europe » : 14 pays
+- Groupe « Maghreb et Afrique de l’Ouest » : 3 pays
+- Groupe « Amériques » : 9 pays
+- Groupe « Asie » : 9 pays
+- Groupe « Océanie » : 2 pays
+- Groupe « Moyen-Orient » : 1 pays
+- « Je n’ai pas de zone précise » : aucun effet sur le score
+- Avec l’envie « Proche de la France », une zone qui contient la France ne donne pas de bonus (pas de double comptage)
 
 ### objectif · ChoixCartes · thème « Ton projet »
 

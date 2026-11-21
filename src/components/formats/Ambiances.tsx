@@ -12,11 +12,11 @@ export default function Ambiances({ element: el, valeur, repondre, passer, libel
   return (
     <>
       <EnTete element={el} titreId={titreId} />
-      <div className="mt-5 grid grid-cols-2 gap-3" role="group" aria-labelledby={titreId ?? "titre-ecran"}>
+      <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4" role="group" aria-labelledby={titreId ?? "titre-ecran"}>
         {el.options.map((o) => {
           const actif = choisies.includes(o.id);
           return (
-            <button key={o.id} type="button" aria-pressed={actif} disabled={!actif && plein} aria-labelledby={`${el.id}-${o.id}`} aria-describedby={`${el.id}-${o.id}-d`}
+            <button key={o.id} type="button" data-option aria-pressed={actif} disabled={!actif && plein} aria-labelledby={`${el.id}-${o.id}`} aria-describedby={`${el.id}-${o.id}-d`}
               onClick={() => setChoisies((c) => (actif ? c.filter((x) => x !== o.id) : [...c, o.id]))}
               className={`relative flex min-w-0 flex-col gap-2 rounded-2xl border-2 p-3 text-left disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
               <Illustration icone={o.icone} alt={`Image provisoire : ${o.label}`} />
@@ -29,7 +29,7 @@ export default function Ambiances({ element: el, valeur, repondre, passer, libel
       </div>
       <Actions passer={passer} libellePasser={libellePasser}>
         <p className="pb-1 text-center text-sm text-gris" aria-live="polite">{plein ? `${el.max} choisies : c’est le maximum.` : `${choisies.length} sur ${el.max} au plus`}</p>
-        <button type="button" disabled={choisies.length === 0} onClick={() => repondre(choisies)} className={BOUTON_PLEIN}>Continuer</button>
+        <button type="button" disabled={choisies.length === 0} onClick={() => repondre(choisies)} data-valider className={BOUTON_PLEIN}>Continuer</button>
       </Actions>
     </>
   );

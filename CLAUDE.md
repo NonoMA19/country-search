@@ -10,6 +10,7 @@ Aider les étudiants et jeunes diplômés francophones à choisir le pays où pa
 
 ## Version 1 (ce qu'on construit maintenant)
 - Quiz en 5 chapitres (prompt 3f) : point de départ, envies, travail, vie, limites ; 9 formats (cartes, classement, curseur, swipe, ambiances, thermomètre, carte du monde, tri des limites, dilemme) ; chaque option garde son avantage et son prix ; sans compte.
+- Trois modes d'affichage, détectés par CSS seulement : téléphone (moins de 768 px), tablette, ordinateur (1024 px et plus, variante `lg:`). `pointeur-fin:` = souris ou pavé tactile (`src/app/globals.css`).
 - Classement des 38 pays par un calcul transparent (pas d'IA), avec le « pourquoi » de chaque score et une méthode publiée.
 - Top 3 pays, fiches pays, checklist Jour J de J-90 à J+30.
 - 10 fiches complètes, 28 fiches courtes.
@@ -84,6 +85,7 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 
 - Données par ville : climat, loyer, qualité de l'air, indemnité VIE par ville (déjà dans le détail) ; choisir sa ville dans le pays.
 - Portrait rédigé par une IA (plus tard, version 2) : aujourd'hui le portrait est calculé, sans IA.
+- Carte « Où te vois-tu vivre ? » (prompt 4) : petite au téléphone (335 px de large) ; un zoom ou une carte plus haute à étudier au prompt 5. La simulation et le test du moteur tirent encore les anciennes régions (`scripts/hasard.ts`, gardé pour comparer avant / après) : mesurer l'effet des cercles dans `npm run simulation` plus tard.
 - Blind test : faire passer le quiz à des testeurs sans leur montrer le nom des pays, puis comparer leur intuition (carte du début) et leur résultat.
 - Salaires par secteur (OCDE ou ILOSTAT), pour remplacer le salaire moyen tous métiers quand le secteur est connu.
 
@@ -271,3 +273,14 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Visas de travail lus sur les sites officiels : Maroc, Corée du Sud, Chine, Colombie, Brésil, Thaïlande, Inde, Pérou, Uruguay ; Vietnam, Côte d'Ivoire et Sénégal « à vérifier » (aucune page officielle avec les conditions).
 - « Proche de la France » : 2/3 vol, 1/3 décalage (`parts` dans `quiz.json`). Mention « Économie informelle » sous le chômage des jeunes de 12 pays (classement de revenu de la Banque mondiale, `content/saisie/revenu-bm.json`).
 - Simulation : n° 1 européen 89,0 % → 90,1 % ; Pays-Bas 30,5 %, Suisse 21,7 %, Allemagne 10,3 %, Autriche 10,1 % ; la règle des 3 premières envies change le top 3 dans 11,3 % des parcours.
+
+### 21 novembre 2026 : classement réparé, site ordinateur, carte des zones (prompt 4)
+**Ce qui est fait** (une pull request, un commit par lot ; aucun changement des poids ni des formules du calcul)
+- Lot A, classement des envies : cause du bug reproduite avec Playwright (doigt à 375 px, souris à 1440 px). À chaque échange de place, React déplaçait la ligne tenue dans la page : la capture du pointeur était perdue (`lostpointercapture` au premier échange), la position de départ était lue dans un état périmé (saut d'une hauteur de ligne, environ 90 px) et les voisins étaient mesurés en pleine animation. Résultat : la ligne s'éloignait du doigt et l'ordre final était faux (1re → 5e finissait 3e au doigt). Correction : dnd-kit (MIT), capteurs souris, doigt (appui de 120 ms), clavier ; une copie fixe suit le pointeur même si la page défile ; l'ordre ne change qu'au relâchement ; poignée de 44 px en `touch-action: none` ; flèches gardées ; mouvement réduit respecté. `npm run e2e:classement` (50 vérifications).
+- Lot B, ordinateur : quiz en deux colonnes (question à gauche ; avancement, « Pourquoi on te demande ça ? » déplié, top 5 qui bouge, raccourcis à droite) ; raccourcis 1 à 9, Entrée, Retour arrière ; résultat avec le classement à gauche et la fiche du pays choisi à droite ; accueil en deux colonnes ; sommaire collé sur /methode ; page pays en grille ; boutons à leur taille naturelle ; focus visible partout. Drapeaux des 8 pays du prompt 3h ajoutés (ils étaient vides). `npm run e2e:ordinateur` (56 vérifications, aucun défilement horizontal de 320 à 1920 px).
+- Lot C, carte : jusqu'à 3 zones (centre et rayon réel, distance sur la sphère, `src/lib/zones.ts`), dessin avec d3-geo (antiméridien géré), rayon par le bord ou un curseur gradué (500 à 10 000 km), fantôme à la souris, aperçu au doigt, 6 régions en boutons (`groupes` dans `content/quiz.json`) et une liste de villes. Calcul : même bonus qu'avant (importance 1,1) aux pays dont la ville de référence est dans la zone (`paysCarte` du profil), jamais de malus ; avec l'envie « Proche de la France », une zone qui contient la France ne donne pas de bonus. Mesure : environ +2 points pour un pays de la zone ; un n° 10 passe en général n° 8. /methode : section « Ta zone sur la carte ». `npm run test:zones` (40), `npm run e2e:carte` (30).
+- Captures avant / après à 375, 768, 1024, 1440 et 1920 px (accueil, 9 formats, résultat, /methode), hors du dépôt.
+
+**Ce qui reste à faire**
+- Voir les idées : carte petite au téléphone, simulation avec des cercles.
+- Les tests navigateur (`scripts/e2e`) ont besoin d'un site lancé (`npm run build && npm start`, puis `BASE=http://localhost:3000`).

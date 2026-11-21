@@ -136,14 +136,14 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
         </div>
       )}
       <div className="mt-6 grid grid-cols-3 items-start gap-2">
-        <button type="button" onClick={() => choisir("non")} aria-pressed={precedente ? precedente === "non" : undefined} className={`flex flex-col items-center gap-1 rounded-2xl p-1 text-sm font-semibold ${FOCUS}`}>
+        <button type="button" data-option onClick={() => choisir("non")} aria-pressed={precedente ? precedente === "non" : undefined} className={`flex flex-col items-center gap-1 rounded-2xl p-1 text-sm font-semibold ${FOCUS}`}>
           <span className={`flex h-14 w-14 items-center justify-center rounded-full border-2 ${etatBouton("non")}`}><X aria-hidden="true" className="h-6 w-6" /></span>
           {LIBELLE_SWIPE.non}
         </button>
-        <button type="button" onClick={() => choisir("depend")} aria-pressed={precedente ? precedente === "depend" : undefined} className={`mt-1.5 min-h-11 rounded-full border-2 px-2 text-sm font-semibold ${etatBouton("depend")} ${FOCUS}`}>
+        <button type="button" data-option onClick={() => choisir("depend")} aria-pressed={precedente ? precedente === "depend" : undefined} className={`mt-1.5 min-h-11 rounded-full border-2 px-2 text-sm font-semibold ${etatBouton("depend")} ${FOCUS}`}>
           {LIBELLE_SWIPE.depend}
         </button>
-        <button type="button" onClick={() => choisir("oui")} aria-pressed={precedente ? precedente === "oui" : undefined} className={`flex flex-col items-center gap-1 rounded-2xl p-1 text-sm font-semibold ${FOCUS}`}>
+        <button type="button" data-option onClick={() => choisir("oui")} aria-pressed={precedente ? precedente === "oui" : undefined} className={`flex flex-col items-center gap-1 rounded-2xl p-1 text-sm font-semibold ${FOCUS}`}>
           <span className={`flex h-14 w-14 items-center justify-center rounded-full border-2 ${etatBouton("oui")}`}><Check aria-hidden="true" className="h-6 w-6" /></span>
           {LIBELLE_SWIPE.oui}
         </button>

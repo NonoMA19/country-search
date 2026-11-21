@@ -375,19 +375,23 @@
       "type": "carte-monde",
       "chapitre": 1,
       "theme": "Ton intuition",
-      "titre": "Avant de commencer : où pensais-tu partir ?",
-      "texte": "Coche une ou plusieurs régions. Ta carte compte un peu : un petit bonus aux pays de ces régions, rien de retiré aux autres.",
+      "titre": "Avant de commencer : où te vois-tu vivre ?",
+      "texte": "Touche la carte pour placer le centre de ta zone, puis règle son rayon. Jusqu’à 3 zones. Les pays de notre base dans ta zone reçoivent un petit bonus ; rien n’est retiré aux autres.",
       "dimensions": [],
       "aide": {
-        "enjeu": "Ta carte compte un peu dans le calcul, et on compare ton intuition à ce que tes réponses diront.",
+        "enjeu": "Ta zone compte un peu dans le calcul, et on la compare à ton résultat.",
         "cartes": [
           {
-            "pastille": "Une région cochée",
-            "texte": "Ses pays reçoivent un petit bonus, comme une envie classée en 5e. Les autres pays ne perdent rien."
+            "pastille": "Un pays dans ta zone",
+            "texte": "Petit bonus, comme une envie classée en 5e. Les autres ne perdent rien."
           },
           {
-            "pastille": "Aucune idée",
-            "texte": "C’est une réponse comme une autre : rien ne change."
+            "pastille": "Zone autour de la France",
+            "texte": "Avec l’envie « Proche de la France », pas de bonus en plus : la proximité compte déjà."
+          },
+          {
+            "pastille": "Pas de zone précise",
+            "texte": "Rien ne change."
           }
         ]
       },
@@ -488,6 +492,82 @@
           "pays": [
             "cote-d-ivoire",
             "senegal"
+          ]
+        }
+      ],
+      "groupes": [
+        {
+          "id": "g-europe",
+          "label": "Europe",
+          "pays": [
+            "belgique",
+            "suisse",
+            "allemagne",
+            "irlande",
+            "luxembourg",
+            "espagne",
+            "italie",
+            "pays-bas",
+            "portugal",
+            "norvege",
+            "suede",
+            "danemark",
+            "royaume-uni",
+            "autriche"
+          ]
+        },
+        {
+          "id": "g-maghreb-afrique-ouest",
+          "label": "Maghreb et Afrique de l’Ouest",
+          "pays": [
+            "maroc",
+            "cote-d-ivoire",
+            "senegal"
+          ]
+        },
+        {
+          "id": "g-ameriques",
+          "label": "Amériques",
+          "pays": [
+            "canada",
+            "etats-unis",
+            "mexique",
+            "colombie",
+            "perou",
+            "bresil",
+            "chili",
+            "argentine",
+            "uruguay"
+          ]
+        },
+        {
+          "id": "g-asie",
+          "label": "Asie",
+          "pays": [
+            "japon",
+            "coree-du-sud",
+            "chine",
+            "taiwan",
+            "hong-kong",
+            "vietnam",
+            "thailande",
+            "singapour",
+            "inde"
+          ]
+        },
+        {
+          "id": "g-oceanie",
+          "label": "Océanie",
+          "pays": [
+            "australie",
+            "nouvelle-zelande"
+          ]
+        },
+        {
+          "id": "g-moyen-orient",
+          "label": "Moyen-Orient",
+          "pays": [
+            "emirats-arabes-unis"
           ]
         }
       ]

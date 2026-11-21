@@ -3,8 +3,9 @@
 // Ce fichier ne calcule aucun score : il traduit les réponses en effets, mesure par mesure (voir moteur.ts).
 import {
   dimensionDe, notes, quiz, trouverElement,
-  type ChoixCartes, type Curseur, type Dilemme, type EffetDilemme, type Element, type OptionDilemme, type TypeElement, type Valeur,
+  type CarteMonde, type ChoixCartes, type Curseur, type Dilemme, type EffetDilemme, type Element, type OptionDilemme, type TypeElement, type Valeur,
 } from "./donnees";
+import { lireCarte, reponseCarteValide } from "./zones";
 
 export const PASSER = "passer";
 export type Profil = Record<string, string | string[] | undefined>;
@@ -15,7 +16,7 @@ export const REPONSES_SWIPE: ReponseSwipe[] = ["non", "depend", "oui"];
 export const REPONSES_LIMITE: ReponseLimite[] = ["ok", "eviter", "redhibitoire"];
 export const LIBELLE_SWIPE: Record<ReponseSwipe, string> = { oui: "Ça me correspond", non: "Pas vraiment", depend: "Ça dépend" };
 export const LIBELLE_LIMITE: Record<ReponseLimite, string> = { ok: "Aucun problème", eviter: "Je préfère éviter", redhibitoire: "Rédhibitoire" };
-export const AUCUNE_ZONE = "aucune";
+export { AUCUNE_ZONE } from "./zones";
 
 // ---------- Réponses graduées des dilemmes ----------
 // Un dilemme « en échelle » a 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B.
@@ -59,7 +60,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
     case "curseur": return typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 100;
     case "thermometre": return typeof v === "number" && Number.isInteger(v) && v >= 1 && v <= el.niveaux.length;
     case "ambiances": return listeDe(v, (y) => el.options.some((o) => o.id === y)) && (v as string[]).length <= el.max;
-    case "carte-monde": return listeDe(v, (y) => y === AUCUNE_ZONE || el.zones.some((z) => z.id === y));
+    case "carte-monde": return listeDe(v, () => true) && reponseCarteValide(el, v as string[]);
     case "swipe": return objetDe(v, new Set(el.phrases.map((p) => p.id)), REPONSES_SWIPE);
     case "tri-limites": return objetDe(v, new Set(el.situations.map((s) => s.id)), REPONSES_LIMITE);
   }
@@ -195,8 +196,14 @@ export function profilDe(reponses: Record<string, Valeur>): Profil {
     if (!conditionRemplie(el.condition, p)) continue;
     p[el.profil] = v;
   }
-  // Les régions cochées sur la carte du début : un bonus léger aux pays de ces régions (voir moteur.ts).
+  // Ta zone sur la carte du début : un bonus léger aux pays dont la ville de référence est dedans (voir moteur.ts et zones.ts).
+  // « paysCarte » : les pays qui reçoivent ce bonus (cercles et groupes, après la règle contre le double comptage
+  // avec « Proche de la France »). « regions » : les anciennes régions, gardées pour les parcours d'avant.
   const carte = reponses.carte;
-  if (Array.isArray(carte)) { const r = carte.filter((z) => z !== AUCUNE_ZONE); if (r.length) p.regions = r; }
+  if (Array.isArray(carte)) {
+    const lecture = lireCarte(trouverElement("carte") as CarteMonde | undefined, carte, Array.isArray(reponses.envies) && reponses.envies.includes("proche"));
+    if (lecture.regions.length) p.regions = lecture.regions;
+    if (lecture.bonus.length) p.paysCarte = lecture.bonus;
+  }
   return p;
 }

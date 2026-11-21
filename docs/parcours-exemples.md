@@ -7,7 +7,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 25 écrans (sans compter les écrans d’ouverture de chapitre ni le portrait).
 
 - **Chapitre 1 : Ton point de départ**
-  1. [carte-monde] Avant de commencer : où pensais-tu partir ? → Asie du Sud, Océanie
+  1. [carte-monde] Avant de commencer : où te vois-tu vivre ? → Asie du Sud, Océanie
   2. [choix-cartes] Quel est ton projet ? → Un stage ou un VIE
   3. [choix-cartes] Ton secteur ? → Marketing et commerce
   4. [choix-cartes] Quel âge as-tu ? → 18 à 25 ans
@@ -45,7 +45,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 27 écrans (sans compter les écrans d’ouverture de chapitre ni le portrait).
 
 - **Chapitre 1 : Ton point de départ**
-  1. [carte-monde] Avant de commencer : où pensais-tu partir ? → Océanie, Moyen-Orient et Afrique du Nord
+  1. [carte-monde] Avant de commencer : où te vois-tu vivre ? → Océanie, Moyen-Orient et Afrique du Nord
   2. [choix-cartes] Quel est ton projet ? → Une année d’aventure (PVT)
   3. [choix-cartes] Ton secteur ? → Autre ou je ne sais pas
   4. [choix-cartes] Quel âge as-tu ? → 18 à 25 ans
@@ -76,7 +76,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 - **Chapitre 5 : Tes limites**
   26. [tri-limites] Pour chaque situation, dis-nous ce que tu en penses → Vivre hors d’Europe → Aucun problème ; Apprendre une langue avec un autre alphabet → Je préfère éviter ; Plus de 10 h de vol pour rentrer → Je préfère éviter ; Une ville où il faut rester vigilant → Rédhibitoire ; Ne travailler ni en français ni en anglais → Aucun problème ; Payer une assurance santé privée → Je préfère éviter
   27. [choix-cartes] Tes valeurs, si tu veux aller plus loin → Libertés d’expression et de la presse
-- **Ton intuition** : Ton intuition était bonne : l’Australie, en Océanie, arrive n° 1. Ce qui a compté : ton envie « Vivre un vrai dépaysement » ; ta carte du début ; « Je veux pouvoir faire du sport dehors presque toute l’année. ».
+- **Ton intuition** : Ton intuition était bonne : l’Australie, en Océanie, arrive n° 1. Ce qui a compté : ton envie « Vivre un vrai dépaysement » ; ta carte du début ; « Je veux pouvoir faire du sport dehors presque toute l’année. ».
 - **Portrait** : Tu cherches avant tout un pays sûr et stable. Tu pars pour une année d’aventure. Tes réponses montrent que le dépaysement, la sécurité et le coût de la vie comptent beaucoup pour toi. Au travail, tu préfères des horaires souples et une hiérarchie marquée. Pendant ton PVT, tu veux trouver du travail facilement, pour voyager. Tu veux pouvoir changer d’employeur librement. Tu préfères éviter : apprendre une langue avec un autre alphabet, plus de 10 h de vol pour rentrer et payer une assurance santé privée. Hors de question pour toi : une ville où il faut rester vigilant. Ce qu’on va chercher : Dépaysement, Sécurité, Coût de la vie.
 - **Top 3** : Australie 69 %, Espagne 68 %, Portugal 67 %
 
@@ -85,7 +85,7 @@ Générés par `npm run exemples`. Les réponses non imposées sont tirées au h
 25 écrans (sans compter les écrans d’ouverture de chapitre ni le portrait).
 
 - **Chapitre 1 : Ton point de départ**
-  1. [carte-monde] Avant de commencer : où pensais-tu partir ? → Asie du Sud, Asie du Sud-Est
+  1. [carte-monde] Avant de commencer : où te vois-tu vivre ? → Asie du Sud, Asie du Sud-Est
   2. [choix-cartes] Quel est ton projet ? → Une carrière longue
   3. [choix-cartes] Ton secteur ? → Tech et data
   4. [choix-cartes] Quel âge as-tu ? → Passer

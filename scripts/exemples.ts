@@ -5,8 +5,9 @@ import { quiz, trouverElement, type Valeur } from "@/lib/donnees";
 import { LIBELLE_LIMITE, LIBELLE_SWIPE, libelleCurseur, optionsDe } from "@/lib/elements";
 import { calculer, libelleReponse, sceneDe, type Etat } from "@/lib/moteur";
 import { chapitreDe, etatAvant } from "@/lib/parcours";
-import { intuition } from "@/lib/intuition";
+import { intuition, nomCercle } from "@/lib/intuition";
 import { portraitComplet } from "@/lib/portrait";
+import { lireCercle } from "@/lib/zones";
 import { hasard, parcoursAuHasard, reponseAuHasard } from "./hasard";
 
 function enMots(id: string, v: Valeur, etat: Etat): string {
@@ -18,7 +19,7 @@ function enMots(id: string, v: Valeur, etat: Etat): string {
     case "classement": return (v as string[]).map((x, i) => `${i + 1}. ${quiz.envies.find((e) => e.id === x)?.label}`).join(" ; ");
     case "curseur": return `${v} sur 100 (« ${libelleCurseur(el, v as number)} »)`;
     case "thermometre": return el.niveaux[(v as number) - 1];
-    case "carte-monde": return (v as string[]).map((z) => z === "aucune" ? "Aucune idée pour l’instant" : el.zones.find((x) => x.id === z)?.label).join(", ");
+    case "carte-monde": return (v as string[]).map((z) => z === "aucune" ? "Pas de zone précise" : lireCercle(z) ? `${nomCercle(lireCercle(z)!)} (${lireCercle(z)!.km} km)` : (el.zones.find((x) => x.id === z) ?? el.groupes.find((x) => x.id === z))?.label).join(", ");
     case "ambiances": return (v as string[]).map((x) => el.options.find((o) => o.id === x)?.label).join(", ");
     case "swipe": return Object.entries(v as Record<string, string>).map(([p, r]) => `« ${el.phrases.find((x) => x.id === p)?.texte} » → ${LIBELLE_SWIPE[r as "oui"]}`).join(" ; ");
     case "tri-limites": return Object.entries(v as Record<string, string>).map(([s, r]) => `${el.situations.find((x) => x.id === s)?.texte} → ${LIBELLE_LIMITE[r as "ok"]}`).join(" ; ");

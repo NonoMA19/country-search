@@ -135,7 +135,9 @@ export type Swipe = BaseElement & { type: "swipe"; nombre: number; phrases: Phra
 export type Ambiances = BaseElement & { type: "ambiances"; max: number; options: (OptionCarte & { effets: EffetDilemme[] })[] };
 export type Thermometre = BaseElement & { type: "thermometre"; niveaux: string[] };
 export type Zone = { id: string; label: string; detail?: string; pays: string[] };
-export type CarteMonde = BaseElement & { type: "carte-monde"; zones: Zone[] };
+// zones : les 9 anciennes régions (réponses des parcours d'avant le prompt 4, simulation, tests) ;
+// groupes : les 6 boutons, alternative à la carte au clavier et au lecteur d'écran.
+export type CarteMonde = BaseElement & { type: "carte-monde"; zones: Zone[]; groupes: Zone[] };
 export type Situation = { id: string; texte: string; mesure: string; raison: string; dimension: string };
 export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; situations: Situation[] };
 export type Dilemme = BaseElement & {
@@ -151,7 +153,7 @@ export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curs
 
 // Le schéma de réponse commun : une valeur par élément, ou « passer ».
 // choix-cartes : un identifiant (ou une liste) ; classement et ambiances : une liste ; curseur : 0 à 100 ;
-// thermomètre : 1 à 5 ; carte : une liste de zones, ou ["aucune"] ; swipe et tri des limites : une réponse par phrase ou situation.
+// thermomètre : 1 à 5 ; carte : une liste de zones (cercles « c:lat,lon,km », groupes « g-… », anciennes régions), ou ["aucune"] ; swipe et tri des limites : une réponse par phrase ou situation.
 export type Valeur = string | string[] | number | Record<string, string>;
 
 export type Chapitre = { numero: number; titre: string; phrase: string; adaptatif?: boolean; min?: number; max?: number };
@@ -260,6 +262,8 @@ const scores = scoresData as unknown as {
   reference?: { france?: { nom: string; notes: Record<string, Note> } };
 };
 export const dateDonnees = scores.genereLe;
+// La ville de référence de chaque pays (une seule par pays), avec ses coordonnées (GeoNames, via Open-Meteo).
+export const villes = scores.villes;
 export const notes = scores.pays;
 // La France : pays repère, jamais classé. Mêmes sources et mêmes règles que les pays classés.
 export const notesFrance: Record<string, Note> = scores.reference?.france?.notes ?? {};

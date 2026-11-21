@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Trois modes, détectés par CSS uniquement (jamais par le navigateur annoncé) :
+   mobile sous 768 px, tablette de 768 à 1023 px (md:), ordinateur à 1024 px et plus (lg:).
+   « pointeur-fin » : une souris ou un pavé tactile (survol possible) ; le reste du temps, un doigt. */
+@custom-variant pointeur-fin (@media (hover: hover) and (pointer: fine));
+
 /* Palette Ardoise et bleu (provisoire), avec un mode sombre. */
 :root {
   --fond: #f8fafc;
@@ -150,5 +155,14 @@ input[type="range"] {
   }
   dialog {
     border: 2px solid CanvasText;
+  }
+}
+
+/* Focus visible partout (clavier) : un contour bleu, même là où un composant n'en déclare pas.
+   Dans la couche « base » : une classe d'un composant (outline-none sur les titres qui reçoivent le focus) garde le dernier mot. */
+@layer base {
+  :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import Icone from "@/components/Icone";
 import Pourquoi from "@/components/Pourquoi";
 import type { Element, Valeur } from "@/lib/donnees";
@@ -18,8 +18,20 @@ export type PropsFormat<E extends Element = Element> = {
   titreId?: string;
 };
 
-export const BOUTON_PLEIN = "min-h-14 w-full rounded-2xl bg-bleu px-5 py-3 text-lg font-semibold text-white hover:bg-blue-700 disabled:bg-bord disabled:text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
+// Sur téléphone et tablette, le bouton principal prend toute la largeur (zone du pouce) ; sur ordinateur, sa taille naturelle.
+export const BOUTON_PLEIN = "min-h-14 w-full rounded-2xl bg-bleu px-5 py-3 text-lg font-semibold text-white hover:bg-blue-700 disabled:bg-bord disabled:text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu lg:w-auto lg:min-w-64 lg:px-8";
 export const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu";
+// La barre d'action : collée en bas de l'écran sur téléphone et tablette (à portée du pouce) ;
+// sur ordinateur, à la suite de la question, boutons alignés à gauche.
+export const BARRE_BAS = "sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 backdrop-blur lg:static lg:mx-0 lg:mt-8 lg:flex lg:flex-wrap lg:items-center lg:gap-x-4 lg:gap-y-2 lg:border-t-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none";
+
+// Sur ordinateur, le quiz a un panneau à droite qui montre déjà « Pourquoi on te demande ça ? ».
+// Les écrans du quiz le disent avec ce contexte : leur bouton « Pourquoi » se cache alors à partir de 1024 px.
+export const PanneauContexte = createContext(false);
+export function PourquoiEcran({ aide, id }: { aide: Element["aide"]; id: string }) {
+  const panneau = useContext(PanneauContexte);
+  return <div className={panneau ? "lg:hidden" : undefined}><Pourquoi key={id} aide={aide} /></div>;
+}
 
 // Le haut de chaque écran : le thème en pastille, la question (titre de l'écran, reçoit le focus), une phrase, « Pourquoi ».
 export function EnTete({ element, titreId = "titre-ecran", titre, texte }: { element: Element; titreId?: string; titre?: string; texte?: string }) {
@@ -28,7 +40,7 @@ export function EnTete({ element, titreId = "titre-ecran", titre, texte }: { ele
       <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">{element.theme}</p>
       <h1 id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{titre ?? element.titre}</h1>
       {(texte ?? element.texte) && <p className="mt-2 text-lg leading-snug">{texte ?? element.texte}</p>}
-      <Pourquoi key={element.id} aide={element.aide} />
+      <PourquoiEcran id={element.id} aide={element.aide} />
     </>
   );
 }
@@ -45,9 +57,9 @@ export function Illustration({ icone, alt, petite = false }: { icone?: string; a
 // La barre du bas, collée à l'écran : le bouton principal, puis « Passer ».
 export function Actions({ children, passer, libellePasser = "Passer" }: { children?: ReactNode; passer: () => void; libellePasser?: string }) {
   return (
-    <div className="sticky bottom-0 -mx-5 mt-auto space-y-0.5 border-t border-bord bg-fond/95 px-5 pt-2 pb-1.5 backdrop-blur">
+    <div className={`${BARRE_BAS} space-y-0.5 pt-2 pb-1.5 lg:space-y-0 lg:py-0 [&>p]:lg:pb-0 [&>p]:lg:text-left`}>
       {children}
-      <button type="button" onClick={passer} className={`min-h-11 w-full rounded-2xl text-base font-medium text-gris hover:text-encre ${FOCUS}`}>{libellePasser}</button>
+      <button type="button" onClick={passer} className={`min-h-11 w-full rounded-2xl text-base font-medium text-gris hover:text-encre lg:w-auto lg:px-4 lg:hover:bg-creux ${FOCUS}`}>{libellePasser}</button>
     </div>
   );
 }

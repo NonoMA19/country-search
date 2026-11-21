@@ -3,9 +3,11 @@
 // la source des réponses (déclaré : envies, limites, thermomètres, secteur ; déduit : dilemmes, curseur,
 // phrases, ambiances), et une certitude (faible, moyenne, forte) selon le nombre de réponses et leur cohérence.
 // Le calcul des scores lit la partie « importance » (profilCalcul, dans moteur.ts). Aucune IA.
-import { dimensionDe, mesures, quiz, trouverElement, type EffetDilemme, type Element, type Valeur } from "./donnees";
+import { dimensionDe, mesures, quiz, trouverElement, type CarteMonde, type EffetDilemme, type Element, type Valeur } from "./donnees";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, optionReponse, type Certitude } from "./elements";
 import { enviesDe, listeFr, profilCalcul, type Etat } from "./moteur";
+import { pays } from "./pays";
+import { lireCarte } from "./zones";
 
 export type Signal = { element: string; declare: boolean; certitude: Certitude; sens: 1 | -1 | 0; position?: number };
 export type DimensionProfil = {
@@ -160,10 +162,11 @@ export function contradictions(etat: Etat): Contradiction[] {
   if (rangEnvie(etat, "salaire") === 1 && cur !== null && cur <= 25) res.push({ id: "salaire", reponses: ["envie:salaire", "equilibre"], revoir: "equilibre", texte: "Ton envie n° 1 est un bon salaire, mais ton curseur penche nettement vers le temps libre." });
   // 5. « Équilibre » n° 1 ou 2, mais le curseur tout près du salaire.
   if (rangEnvie(etat, "equilibre") <= 2 && cur !== null && cur >= 75) res.push({ id: "equilibre", reponses: ["envie:equilibre", "equilibre"], revoir: "equilibre", texte: "Tu as classé l’équilibre vie pro et vie perso tout en haut, mais ton curseur penche nettement vers le salaire." });
-  // 6. « Vivre hors d'Europe » rédhibitoire, alors que la carte ne cochait que des régions hors d'Europe.
-  const carte = rep(etat, "carte");
-  const zones = Array.isArray(carte) ? carte.filter((z) => z !== "aucune") : [];
-  if (limite(etat, "hors-europe") === "redhibitoire" && zones.length > 0 && !zones.includes("europe")) res.push({ id: "europe", reponses: ["limites", "carte"], revoir: "limites", texte: "Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe sont dans « Moins adaptés pour toi » : tu peux les remonter." });
+  // 6. « Vivre hors d'Europe » rédhibitoire, alors que ta zone sur la carte ne contenait aucun pays européen.
+  const carte = lireCarte(trouverElement("carte") as CarteMonde | undefined, rep(etat, "carte"), false);
+  const aUneZone = carte.regions.length + carte.cercles.length + carte.groupes.length > 0;
+  const zoneEuropeenne = carte.regions.includes("europe") || carte.dansZone.some((id) => pays.find((p) => p.id === id)?.zone === "europe");
+  if (limite(etat, "hors-europe") === "redhibitoire" && aUneZone && !zoneEuropeenne) res.push({ id: "europe", reponses: ["limites", "carte"], revoir: "limites", texte: "Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe sont dans « Moins adaptés pour toi » : tu peux les remonter." });
   // 7. Un autre alphabet rédhibitoire, mais « Tu y vas » aux cours de langue.
   if (limite(etat, "alphabet") === "redhibitoire" && rep(etat, "cours-offerts") === "a") res.push({ id: "alphabet", reponses: ["limites", "cours-offerts"], revoir: "limites", texte: "Tu as dit qu’apprendre un autre alphabet était rédhibitoire, mais tu irais aux cours de langue offerts." });
   return res;

@@ -3,7 +3,7 @@
 import { ECART_EX_AEQUO } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
-  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, preuveMesure, preuveNote, preuveSource, preuveVisa,
+  avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, villes, preuveMesure, preuveNote, preuveSource, preuveVisa,
   type CarteMonde, type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
 } from "./donnees";
 import {
@@ -96,8 +96,13 @@ export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
 // ---------- Notes ----------
 export function noteEffective(paysId: string, mesureId: string, p: Profil): number | null {
   if (mesureId === "employeur-libre") return noteEmployeurLibre(paysId, p);
-  // Les bonus : 5 si le pays est dans une région de ta carte, ou s'il parle une langue que tu parles ; sinon rien (jamais de malus).
-  if (mesureId === "region-carte") { const z = zoneCarte(paysId); return z && Array.isArray(p.regions) && p.regions.includes(z) ? 5 : null; }
+  // Les bonus : 5 si le pays est dans ta zone de la carte (cercle ou groupe, ou ancienne région), ou s'il parle une langue
+  // que tu parles ; sinon rien (jamais de malus). Qui est dans ta zone : voir profilDe (elements.ts) et zones.ts.
+  if (mesureId === "region-carte") {
+    const z = zoneCarte(paysId);
+    const dansRegion = !!z && Array.isArray(p.regions) && p.regions.includes(z);
+    return dansRegion || (Array.isArray(p.paysCarte) && p.paysCarte.includes(paysId)) ? 5 : null;
+  }
   if (mesureId === "langue-parlee") return parleLangueDe(paysId, p) ? 5 : null;
   if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
   // Dépaysement : l'inverse de la proximité (temps de vol et décalage horaire), sans nouvelle donnée.
@@ -214,8 +219,8 @@ export function effetsBruts(etat: Etat): EffetActif[] {
       en.mesures.forEach((m, k) => ajouter([m], {}, `envie:${id}`, (poidsRang(rang) * en.parts![k]) / somme));
     } else ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
   });
-  // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays des régions cochées.
-  if (Array.isArray(etat.profil.regions) && etat.profil.regions.length) {
+  // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays de ta zone.
+  if ((Array.isArray(etat.profil.regions) && etat.profil.regions.length) || (Array.isArray(etat.profil.paysCarte) && etat.profil.paysCarte.length)) {
     res.push({ mesure: "region-carte", sens: "haut", poids: POIDS_CARTE, famille: "vivre", origine: "carte" });
   }
   // Une langue que tu parles compte toujours : un bonus modéré aux pays où elle est officielle ou très parlée.
@@ -640,7 +645,10 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
   if (mesureId === "region-carte" || mesureId === "en-europe") {
     const m = mesures[mesureId], p = pays.find((x) => x.id === paysId);
     const z = (trouverElement("carte") as CarteMonde | undefined)?.zones.find((x) => x.id === zoneCarte(paysId));
-    const texte = mesureId === "en-europe" ? (p?.zone === "europe" ? "Ce pays est en Europe." : "Ce pays est hors d’Europe.") : `Ce pays est dans la région « ${z?.label ?? ""} », que tu as cochée sur la carte du début.`;
+    const ville = villes[paysId]?.nom;
+    const texte = mesureId === "en-europe" ? (p?.zone === "europe" ? "Ce pays est en Europe." : "Ce pays est hors d’Europe.")
+      : Array.isArray(profil.paysCarte) && profil.paysCarte.includes(paysId) ? `La ville de référence de ce pays${ville ? ` (${ville})` : ""} est dans ta zone de la carte du début.`
+      : `Ce pays est dans la région « ${z?.label ?? ""} », que tu as cochée sur la carte du début.`;
     return { ...preuveSource(m?.nom ?? mesureId, texte, m?.critere.sources[0] ?? null, null, null), type: "donnee-ouverte" };
   }
   if (mesureId === "langue-parlee") {

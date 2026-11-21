@@ -1,15 +1,16 @@
 // « Ton intuition et tes réponses » : l'écran de fin, avant le portrait.
-// On compare les régions cochées sur la carte du début (un petit bonus dans le calcul, voir moteur.ts) à ton n° 1,
+// On compare ta zone sur la carte du début (un petit bonus dans le calcul, voir moteur.ts et zones.ts) à ton n° 1,
 // et on dit les 2 ou 3 réponses qui ont le plus pesé. Aucun calcul nouveau : on relit les points du classement.
 import { quiz, trouverElement, type CarteMonde, type Valeur } from "./donnees";
 import { AUCUNE_ZONE, PASSER } from "./elements";
 import { calculer, listeFr, sceneDe, type Etat, type Ligne } from "./moteur";
 import { pays } from "./pays";
+import { PARIS, distanceKm, lireCarte, villeLaPlusProche, type Cercle } from "./zones";
 
 export type Intuition = {
   cas: "bonne" | "autre" | "sans-idee";
   n1: Ligne | null;
-  zones: string[]; // les noms des régions cochées
+  zones: string[]; // les noms de tes zones (« autour de Tokyo », « Europe »…)
   meilleurDansZones: Ligne | null; // le mieux classé des pays de tes régions
   raisons: string[]; // « ton envie « Bon salaire » », « ta réponse à « Deux offres » »…
   phrase: string;
@@ -21,6 +22,17 @@ const A_LA_ZONE: Record<string, string> = {
   europe: "à l’Europe", "amerique-nord": "à l’Amérique du Nord", "amerique-latine": "à l’Amérique latine", "asie-est": "à l’Asie de l’Est",
   "asie-sud-est": "à l’Asie du Sud-Est", "asie-sud": "à l’Asie du Sud", oceanie: "à l’Océanie", "moyen-orient": "au Moyen-Orient et à l’Afrique du Nord",
   afrique: "à l’Afrique subsaharienne",
+};
+const A_GROUPE: Record<string, string> = {
+  "g-europe": "à l’Europe", "g-maghreb-afrique-ouest": "au Maghreb et à l’Afrique de l’Ouest", "g-ameriques": "aux Amériques",
+  "g-asie": "à l’Asie", "g-oceanie": "à l’Océanie", "g-moyen-orient": "au Moyen-Orient",
+};
+// Un cercle se nomme par la ville de référence la plus proche de son centre : « autour de Tokyo ».
+// Paris compte aussi comme repère pour le nom (un cercle posé sur la France s'appelle « autour de Paris »).
+export const nomCercle = (c: Cercle) => {
+  const proche = villeLaPlusProche(c);
+  const v = distanceKm(c, PARIS) < proche.km ? "Paris" : proche.ville;
+  return `autour ${/^[AEIOUYÂÉÈÊÎÔÛHaeiouyh]/.test(v) ? "d’" : "de "}${v}`;
 };
 const majuscule = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
 
@@ -81,24 +93,29 @@ export function intuition(etat: Etat): Intuition {
   const classes = lignes.filter((l) => !l.ecart && !l.peuDeDonnees);
   const n1 = classes[0] ?? null;
   const v = etat.reponses.carte;
-  const ids = zonesCochees(v);
-  const zones = carte().zones.filter((z) => ids.includes(z.id));
-  const noms = zones.map((z) => z.label);
+  const el = carte();
+  const lecture = lireCarte(el, v, false);
+  const regions = el.zones.filter((z) => lecture.regions.includes(z.id));
+  const groupes = el.groupes.filter((g) => lecture.groupes.includes(g.id));
+  const noms = [...regions.map((z) => z.label), ...groupes.map((g) => g.label), ...lecture.cercles.map(nomCercle)];
+  const vers = [...regions.map((z) => A_LA_ZONE[z.id] ?? `à ${z.label}`), ...groupes.map((g) => A_GROUPE[g.id] ?? `à ${g.label}`), ...lecture.cercles.map(nomCercle)];
   if (!n1) return { cas: "sans-idee", n1, zones: noms, meilleurDansZones: null, raisons: [], phrase: "Tes réponses ne permettent pas encore de classer les pays." };
   const Le = majuscule(n1.pays.le);
-  if (!zones.length || v === PASSER) {
+  if (!noms.length || v === PASSER) {
     const raisons = raisonsAvance(etat, n1, classes.slice(1, 10), 3);
-    return { cas: "sans-idee", n1, zones: [], meilleurDansZones: null, raisons, phrase: `Tu partais sans idée : voici où tes réponses te mènent. ${Le}, en n° 1.` };
+    return { cas: "sans-idee", n1, zones: [], meilleurDansZones: null, raisons, phrase: `Tu partais sans idée : voici où tes réponses te mènent. ${Le}, en n° 1.` };
   }
-  const zoneN1 = zoneDuPays(n1.pays.id);
-  if (zoneN1 && ids.includes(zoneN1.id)) {
+  const paysZones = new Set([...regions.flatMap((z) => z.pays), ...lecture.dansZone]);
+  const accorde = n1.pays.pluriel ? "arrivent" : "arrive";
+  if (paysZones.has(n1.pays.id)) {
     const raisons = raisonsAvance(etat, n1, classes.slice(1, 10), 3);
-    return { cas: "bonne", n1, zones: noms, meilleurDansZones: n1, raisons, phrase: `Ton intuition était bonne : ${n1.pays.le}, ${zoneN1.id === "moyen-orient" ? "au Moyen-Orient et en Afrique du Nord" : `en ${zoneN1.label}`}, ${n1.pays.pluriel ? "arrivent" : "arrive"} n° 1.` };
+    const zoneN1 = regions.find((z) => z.pays.includes(n1.pays.id));
+    const ou = zoneN1 ? (zoneN1.id === "moyen-orient" ? "au Moyen-Orient et en Afrique du Nord" : `en ${zoneN1.label}`) : "dans ta zone";
+    return { cas: "bonne", n1, zones: noms, meilleurDansZones: n1, raisons, phrase: `Ton intuition était bonne : ${n1.pays.le}, ${ou}, ${accorde} n° 1.` };
   }
-  const paysZones = new Set(zones.flatMap((z) => z.pays));
   const meilleur = lignes.find((l) => paysZones.has(l.pays.id) && !l.peuDeDonnees) ?? null;
   const raisons = meilleur ? raisonsAvance(etat, n1, [meilleur], 3) : [];
-  return { cas: "autre", n1, zones: noms, meilleurDansZones: meilleur, raisons, phrase: `Tu pensais ${listeFr(zones.map((z) => A_LA_ZONE[z.id] ?? `à ${z.label}`))}. Tes réponses te mènent vers ${n1.pays.le}.` };
+  return { cas: "autre", n1, zones: noms, meilleurDansZones: meilleur, raisons, phrase: `Tu pensais ${listeFr(vers)}. Tes réponses te mènent vers ${n1.pays.le}.` };
 }
 
 export const nomsPays = (ids: string[]) => ids.map((id) => pays.find((p) => p.id === id)?.nom ?? id);
