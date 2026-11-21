@@ -12,7 +12,7 @@ import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { FaisabilitePourToi } from "@/components/resultat/Faisabilite";
 import { paysCouverts, valeurFrance } from "@/lib/moteur";
-import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, portes, preuveMesure, preuveNote, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
+import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, mentionInformelle, portes, preuveMesure, preuveNote, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
 import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
@@ -168,6 +168,7 @@ function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomP
             <Pastille preuve={preuveMesure(paysId, m.id)} pays={nomPays} contexte={m.nom} />
           </p>
           {ok && valeurFrance(m.id, n?.annee) && <p className="mt-1 text-sm text-gris">Pour comparer, {valeurFrance(m.id, n?.annee)}</p>}
+          {m.id === "emploi" && mentionInformelle(paysId) && <p className="mt-2 rounded-xl border border-bord bg-creux px-3 py-2 text-sm">{mentionInformelle(paysId)}</p>}
         </li>
       ))}
     </>

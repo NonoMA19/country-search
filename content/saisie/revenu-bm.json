@@ -1,0 +1,20 @@
+{
+  "_note": "Classement des pays par niveau de revenu de la Banque mondiale (API pays, lue le 20 novembre 2026). Sert seulement à la mention « économie informelle » sous le chômage des jeunes, pour les pays à revenu faible ou intermédiaire.",
+  "source": "bm-revenu",
+  "lien": "https://api.worldbank.org/v2/country?format=json&per_page=400",
+  "verifieLe": "2026-11-20",
+  "intermediaireOuFaible": {
+    "argentine": "Revenu intermédiaire supérieur",
+    "colombie": "Revenu intermédiaire supérieur",
+    "mexique": "Revenu intermédiaire supérieur",
+    "bresil": "Revenu intermédiaire supérieur",
+    "perou": "Revenu intermédiaire supérieur",
+    "chine": "Revenu intermédiaire supérieur",
+    "thailande": "Revenu intermédiaire supérieur",
+    "vietnam": "Revenu intermédiaire supérieur",
+    "maroc": "Revenu intermédiaire inférieur",
+    "inde": "Revenu intermédiaire inférieur",
+    "cote-d-ivoire": "Revenu intermédiaire inférieur",
+    "senegal": "Revenu intermédiaire inférieur"
+  }
+}

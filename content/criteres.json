@@ -130,7 +130,7 @@
     "numero": 5,
     "id": "salaire",
     "famille": "travailler",
-    "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, 2024)",
+    "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, dollars PPA à prix constants 2025)",
     "definition": "Salaire annuel brut moyen d’un salarié à temps plein, tous métiers confondus, avant impôts et cotisations, converti en pouvoir d’achat (dollars à parité de pouvoir d’achat), même année (2024) pour tous les pays. Source : OCDE (Panorama des pensions 2025, d’après Taxing Wages 2025) ; pour l’Argentine, la Chine et le Brésil, données du BIT reprises par l’OCDE dans le même tableau. Taïwan, Hong Kong, Singapour, les Émirats arabes unis et le Maroc : pas de chiffre comparable, « à vérifier ». Ton salaire net dépendra de ton métier et des impôts du pays : la part qui reste après impôts est affichée à côté (OCDE, Taxing Wages 2026), sans entrer dans le score. Pour un stage ou un VIE, le score utilise l’indemnité VIE du pays à la place.",
     "type": "donnee-ouverte",
     "sources": [
@@ -140,16 +140,16 @@
     "mesures": [
       {
         "id": "salaire",
-        "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, 2024)",
+        "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, dollars PPA à prix constants 2025)",
         "sens": "haut",
-        "regle": "Salaire annuel moyen de l’OCDE (2024, dollars PPA). Les notes suivent la répartition des 25 pays notés : les seuils sont les quintiles (20 %, 40 %, 60 % et 80 % des pays), arrondis à 500 $ : 39 000, 58 500, 73 500 et 86 500 $ par an.",
+        "regle": "Salaire annuel moyen d’un salarié à temps plein (OCDE, série « Average annual wages », toute l’économie), en dollars à parité de pouvoir d’achat (USD PPA), à prix constants de 2025, dernière année disponible (2025 ; 2024 pour la Colombie ; 2023 pour le Chili). Les notes suivent la répartition des 23 pays de l’OCDE du site : les seuils sont les quintiles, arrondis à 500 $ : 51 500, 61 500, 72 500 et 79 500 $ par an. Pays hors OCDE : « à vérifier », faute de source officielle avec le même concept.",
         "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations, pour un salarié à temps plein. Ton salaire net dépendra de ton métier et des impôts du pays.",
-        "unite": "$ PPA par an",
+        "unite": "$ PPA par an (prix constants 2025)",
         "bornes": [
-          39000,
-          58500,
-          73500,
-          86500
+          51500,
+          61500,
+          72500,
+          79500
         ],
         "notes": [
           1,
@@ -159,11 +159,11 @@
           5
         ],
         "echelle": [
-          "moins de 39 000 $",
-          "de 39 000 à 58 500 $",
-          "de 58 500 à 73 500 $",
-          "de 73 500 à 86 500 $",
-          "86 500 $ ou plus"
+          "moins de 51 500 $",
+          "de 51 500 à 61 500 $",
+          "de 61 500 à 72 500 $",
+          "de 72 500 à 79 500 $",
+          "79 500 $ ou plus"
         ],
         "mots": [
           "très bas",
@@ -174,7 +174,7 @@
         ],
         "fait": "Le salaire brut moyen y est {mot}, une fois les prix pris en compte",
         "court": "Salaire brut moyen (pouvoir d’achat)",
-        "affichage": "{v} $ PPA brut par an",
+        "affichage": "{v} $ PPA brut par an (prix 2025)",
         "decimales": 0,
         "theme": "le salaire",
         "etiquettes": [

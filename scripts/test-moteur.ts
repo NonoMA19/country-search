@@ -521,7 +521,8 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const proche: Etat = construire({ envies: ["proche", "travail", "securite"] });
   verifier(niveauDeduit(effetsActifs(proche), "distance") === 2, "curseur : l’envie Proche n° 1 ne donne pas le niveau 2");
   const peu = effetsAjustes(proche, { ...REGLAGES_DEFAUT, niveaux: { distance: 0.5 } }).filter((e) => e.mesure === "vol" || e.mesure === "decalage");
-  verifier(peu.length === 2 && peu.every((e) => Math.abs(e.poids - 0.25) < 1e-9), "curseur : « Compte un peu » mal appliqué à la priorité Proche");
+  // Proche = 2/3 vol, 1/3 décalage (prompt 3k) : « Compte un peu » (0,5 au lieu de 2) donne 1/3 et 1/6.
+  verifier(peu.length === 2 && Math.abs(peu.find((e) => e.mesure === "vol")!.poids - 1 / 3) < 1e-9 && Math.abs(peu.find((e) => e.mesure === "decalage")!.poids - 1 / 6) < 1e-9, "curseur : « Compte un peu » mal appliqué à la priorité Proche");
   // Culture : sans réponse, rien à ajouter (on ne sait pas dans quel sens aller).
   verifier(effetsAjustes(sansDistance, { ...REGLAGES_DEFAUT, niveaux: { culture: 2 } }).length === effetsActifs(sansDistance).length, "curseur : la culture ajoute des mesures sans réponse");
 
@@ -610,14 +611,14 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 
 // 2.15 Fiabilité des données (prompt 3e, lot 1 ; salaire de l'OCDE au prompt 3f, lot 5).
 {
-  // Salaire : OCDE 2024 pour tous, libellé honnête, 25 pays notés, 5 « à vérifier ».
+  // Salaire (prompt 3k) : OCDE « Average annual wages », USD PPA à prix constants 2025, 23 pays de l'OCDE notés, les autres « à vérifier ».
   for (const p of pays) {
     const n = notesPays[p.id].salaire;
-    if (n.statut === "verifie") verifier(n.annee === "2024" && n.source === "ocde-salaire" && n.texte.includes("brut") && n.texte.includes("avant impôts"), `salaire : ${p.nom} sans la donnée OCDE 2024`);
+    if (n.statut === "verifie") verifier(["2023", "2024", "2025"].includes(n.annee ?? "") && n.source === "ocde-salaire" && /USD PPA/.test(n.texte) && /prix constants de 2025/.test(n.texte), `salaire : ${p.nom} sans la série OCDE Average annual wages`);
   }
-  for (const id of ["taiwan", "hong-kong", "singapour", "emirats-arabes-unis", "maroc"]) verifier(notesPays[id].salaire.statut === "a-verifier", `salaire : ${id} devrait rester à vérifier`);
-  verifier(notesPays.suisse.salaire.valeur === 102611 && notesPays.bresil.salaire.valeur === 16567 && notesFrance.salaire.valeur === 67318, "salaire : valeurs de l'OCDE changées");
-  verifier(paysCouverts("salaire") === 25, `salaire : ${paysCouverts("salaire")} pays notés au lieu de 25`);
+  for (const id of ["taiwan", "hong-kong", "singapour", "emirats-arabes-unis", "maroc", "chine", "bresil", "argentine", "senegal", "cote-d-ivoire"]) verifier(notesPays[id].salaire.statut === "a-verifier", `salaire : ${id} devrait rester à vérifier`);
+  verifier(notesPays["etats-unis"].salaire.valeur === 86977 && notesPays.suisse.salaire.valeur === 92285 && notesFrance.salaire.valeur === 60483, "salaire : valeurs de l'OCDE changées");
+  verifier(paysCouverts("salaire") === 23, `salaire : ${paysCouverts("salaire")} pays notés au lieu de 23`);
   // Les seuils suivent la répartition : chaque note de 1 à 5 est donnée à au moins 3 pays.
   for (let k = 1; k <= 5; k++) verifier(pays.filter((p) => notesPays[p.id].salaire.note === k).length >= 3, `salaire : la note ${k} est presque vide`);
   verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
@@ -804,7 +805,7 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
   const poidsDe = (e: Etat, m: string) => effetsActifs(e).find((x) => x.mesure === m)?.poids;
   verifier(poidsDe(e5, "securite") === 2 && poidsDe(e5, "salaire") === 1.75 && poidsDe(e5, "prix") === 1.5 && poidsDe(e5, "emploi") === 1.25 && poidsDe(e5, "doux") === 1.1, "envies : importances du classement mal appliquées");
   const proche = construire({ envies: ["proche", "salaire", "prix", "travail", "climat"] });
-  verifier(poidsDe(proche, "vol") === 1 && poidsDe(proche, "decalage") === 1, "envies : « Proche de la France » n° 1 ne partage pas 2 entre vol et décalage");
+  verifier(Math.abs(poidsDe(proche, "vol")! - 4 / 3) < 1e-9 && Math.abs(poidsDe(proche, "decalage")! - 2 / 3) < 1e-9, "envies : « Proche de la France » n° 1 ne donne pas 2/3 au vol et 1/3 au décalage");
   // Classement passé : l'ordre du choix des envies sert de classement.
   const sansClassement = rejouer({ ...ETAT_VIDE, reponses: { envies: cinq, classement: PASSER }, ordre: ["envies", "classement"] });
   verifier(enviesDe(sansClassement).join() === cinq.join(), "envies : classement passé mal lu");
@@ -1010,7 +1011,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     const m = `secteur-${id}`;
     verifier(!!mesures[m], `secteur : mesure ${m} absente`);
     verifier(paysCouverts(m) >= 0.6 * pays.length, `secteur : ${id} couvert pour ${paysCouverts(m)} pays seulement`);
-    for (const p of pays) { const n = notesPays[p.id][m]; if (n?.statut === "verifie") verifier(Number(n.annee) >= 2019 && n.source === "oit-ilostat", `secteur : ${p.nom} ${id} avant 2019 ou sans source`); }
+    for (const p of pays) { const n = notesPays[p.id][m]; if (n?.statut === "verifie") verifier(Number(n.annee) >= 2019 && ["oit-ilostat", "eurostat-lfs"].includes(n.source ?? ""), `secteur : ${p.nom} ${id} avant 2019 ou sans source`); }
   }
   // La France sert de repère affiché.
   verifier(/^France\s:/.test(valeurFrance("secteur-finance") ?? ""), "secteur : la France n'est pas affichée");

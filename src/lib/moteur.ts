@@ -207,7 +207,12 @@ export function effetsBruts(etat: Etat): EffetActif[] {
   };
   enviesDe(etat).forEach((id, rang) => {
     const en = quiz.envies.find((x) => x.id === id);
-    if (en) ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
+    if (!en) return;
+    // « Proche de la France » : 2/3 pour le temps de vol, 1/3 pour le décalage horaire (champ « parts »).
+    if (en.parts) {
+      const somme = en.parts.reduce((a, b) => a + b, 0);
+      en.mesures.forEach((m, k) => ajouter([m], {}, `envie:${id}`, (poidsRang(rang) * en.parts![k]) / somme));
+    } else ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
   });
   // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays des régions cochées.
   if (Array.isArray(etat.profil.regions) && etat.profil.regions.length) {
