@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Trois modes, détectés par CSS uniquement (jamais par le navigateur annoncé) :
+   mobile sous 768 px, tablette de 768 à 1023 px (md:), ordinateur à 1024 px et plus (lg:).
+   « pointeur-fin » : une souris ou un pavé tactile (survol possible) ; le reste du temps, un doigt. */
+@custom-variant pointeur-fin (@media (hover: hover) and (pointer: fine));
+
 /* Palette Ardoise et bleu (provisoire), avec un mode sombre. */
 :root {
   --fond: #f8fafc;
