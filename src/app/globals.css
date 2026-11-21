@@ -158,8 +158,11 @@ input[type="range"] {
   }
 }
 
-/* Focus visible partout (clavier) : un contour bleu, même là où un composant n'en déclare pas. */
-:where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
+/* Focus visible partout (clavier) : un contour bleu, même là où un composant n'en déclare pas.
+   Dans la couche « base » : une classe d'un composant (outline-none sur les titres qui reçoivent le focus) garde le dernier mot. */
+@layer base {
+  :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
 }
