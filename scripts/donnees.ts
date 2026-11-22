@@ -83,4 +83,28 @@ const md = [
   }),
 ].join("\n").replace(/ /g, " ");
 fs.writeFileSync(path.join(DOSSIER, "donnees-manquantes.md"), md);
+// ---------- data/a-verifier-par-impact.md ----------
+// Chaque point « à vérifier », classé par son effet sur le top 3 : le nombre de parcours simulés où le pays
+// en est écarté à cause de cette donnée manquante (règle des 3 premières envies). Un visa, une procédure ou une
+// vigilance ne changent pas le pourcentage : impact 0 sur le classement (mais utile à la personne).
+{
+  const MESURE: Record<string, (m: string) => boolean> = {
+    "Salaire": (m) => m === "salaire", "Homicides (sécurité)": (m) => m === "securite", "Heures travaillées": (m) => m === "heures",
+    "Français inscrits": (m) => m === "francais", "Emploi par secteur": (m) => m.startsWith("secteur-"),
+  };
+  const idDe = (nom: string) => pays.find((p) => p.nom === nom)?.id ?? nom;
+  const points = aVerifierParCategorie().flatMap(([cat, ps]) => ps.map((p) => {
+    const test = MESURE[cat];
+    const impact = test ? Object.entries(matrice[idDe(p.pays)] ?? {}).filter(([m]) => test(m)).reduce((t, [, k]) => t + k, 0) : 0;
+    return { ...p, cat, impact, classement: !!test };
+  })).sort((a, b) => b.impact - a.impact || Number(b.classement) - Number(a.classement) || a.cat.localeCompare(b.cat, "fr"));
+  const lignes2 = [
+    `# Ce qui reste « à vérifier », classé par impact sur le top 3`, ``,
+    `Simulation de ${NB} parcours tirés au hasard (graine 20261115), le ${date} (\`npm run donnees\`).`,
+    `Impact = nombre de parcours où le pays aurait été dans le top 3 sans la règle des 3 premières envies, à cause de cette donnée manquante. « 0 (hors calcul) » : le point ne change pas le pourcentage (visa, procédure, vigilance), mais reste utile à la personne.`, ``,
+    `| Impact | Pays | Sujet | Raison exacte |`, `| --- | --- | --- | --- |`,
+    ...points.map((p) => `| ${p.classement ? `${p.impact} (${pct(p.impact)})` : "0 (hors calcul)"} | ${p.pays} | ${p.cat} | ${p.detail.replace(/\|/g, "/")} |`),
+  ];
+  fs.writeFileSync(path.join(DOSSIER, "a-verifier-par-impact.md"), lignes2.join("\n").replace(/ /g, " ") + "\n");
+}
 console.log(`data/a-verifier.md et data/donnees-manquantes.md écrits. Top 3 changé par la règle : ${pct(change)} ; pays écartés : ${tries.map(([id, n]) => `${nomPays(id)} ${n}`).join(", ")}.`);

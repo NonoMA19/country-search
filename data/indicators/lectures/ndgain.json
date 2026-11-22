@@ -1,0 +1,876 @@
+{
+ "source": "Notre Dame Global Adaptation Initiative (ND-GAIN), ND-GAIN Country Index. Pages : https://gain.nd.edu/our-work/country-index/rankings/ et https://gain-new.crc.nd.edu/ranking (classement) ; https://gain-new.crc.nd.edu/country/<pays> (sous-scores). Lecture sur les pages elles-mêmes (HTML brut), pas de miroir.",
+ "indicateur": "ND-GAIN Country Index : score global (« Score »), rang (« ND-GAIN Country Index rank »), sous-scores « Vulnerability » et « Readiness » (encadré d'en-tête de la page pays)",
+ "unite_echelle": "Score global : 0 à 100, plus haut = mieux (la page indique « higher scores are better »). Vulnerability et Readiness : décimaux affichés sur la page pays, échelle non indiquée sur la page (valeurs observées de 0,263 à 0,529 pour Vulnerability, de 0,307 à 0,749 pour Readiness). Rang : 1 = meilleur.",
+ "edition_la_plus_recente": "2024. Établi : les pages /ranking et /country/<pays> affichent « Scores for 2024 » et currentYear 2024 ; la page de téléchargement indique des données « between 2005 and 2024 » (fichier mis à jour le 14 août 2026).",
+ "lu_le": "2026-11-21",
+ "licence_citations": [
+  {
+   "url": "https://gain-new.crc.nd.edu/about/download",
+   "phrases": [
+    "Terms of use:",
+    "Attribution 3.0 Unported",
+    "Download Data under a creative commons licence"
+   ],
+   "lien_licence": "http://creativecommons.org/licenses/by/3.0/",
+   "note": "« Terms of use: » est un titre suivi du badge « Attribution 3.0 Unported » (lien vers la licence). La phrase « Download Data under a creative commons licence » est dans le pied de page de la même page."
+  },
+  {
+   "url": "https://gain.nd.edu/our-work/country-index/rankings/",
+   "phrases": [
+    "Download Data under a creative commons licence"
+   ],
+   "lien_licence": "http://creativecommons.org/licenses/by/3.0",
+   "note": "Pied de page de la page de classement (même formulation)."
+  }
+ ],
+ "methode": "Deux lectures indépendantes : un agent Haiku, puis un agent Sonnet sans voir la première ; comparées par script, aucun écart.",
+ "lectures": [
+  {
+   "modele": "haiku",
+   "pays": [
+    {
+     "id": "belgique",
+     "nom_dans_source": "Belgium",
+     "valeur": 62,
+     "rang": 28,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/belgium",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-BEL\"> ... Belgium ... <td>62.0</td> (rang 28). Page pays : Score: <span class=\"score\">62.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.366</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.605</span> ; <span class=\"value\">28</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "suisse",
+     "nom_dans_source": "Switzerland",
+     "valeur": 68.9,
+     "rang": 4,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/switzerland",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-CHE\"> ... Switzerland ... <td>68.9</td> (rang 4). Page pays : Score: <span class=\"score\">68.9</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.296</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.674</span> ; <span class=\"value\">4</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "allemagne",
+     "nom_dans_source": "Germany",
+     "valeur": 69.2,
+     "rang": 3,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/germany",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-DEU\"> ... Germany ... <td>69.2</td> (rang 3). Page pays : Score: <span class=\"score\">69.2</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.296</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.680</span> ; <span class=\"value\">3</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "irlande",
+     "nom_dans_source": "Ireland",
+     "valeur": 64.4,
+     "rang": 21,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/ireland",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-IRL\"> ... Ireland ... <td>64.4</td> (rang 21). Page pays : Score: <span class=\"score\">64.4</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.317</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.605</span> ; <span class=\"value\">21</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "luxembourg",
+     "nom_dans_source": "Luxembourg",
+     "valeur": 66,
+     "rang": 15,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/luxembourg",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-LUX\"> ... Luxembourg ... <td>66.0</td> (rang 15). Page pays : Score: <span class=\"score\">66.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.341</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.661</span> ; <span class=\"value\">15</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "espagne",
+     "nom_dans_source": "Spain",
+     "valeur": 61.7,
+     "rang": 29,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/spain",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-ESP\"> ... Spain ... <td>61.7</td> (rang 29). Page pays : Score: <span class=\"score\">61.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.323</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.557</span> ; <span class=\"value\">29</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "italie",
+     "nom_dans_source": "Italy",
+     "valeur": 62.2,
+     "rang": 27,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/italy",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-ITA\"> ... Italy ... <td>62.2</td> (rang 27). Page pays : Score: <span class=\"score\">62.2</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.357</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.601</span> ; <span class=\"value\">27</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "pays-bas",
+     "nom_dans_source": "Netherlands",
+     "valeur": 64.4,
+     "rang": 21,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/netherlands",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-NLD\"> ... Netherlands ... <td>64.4</td> (rang 21). Page pays : Score: <span class=\"score\">64.4</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.371</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.659</span> ; <span class=\"value\">21</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "portugal",
+     "nom_dans_source": "Portugal",
+     "valeur": 61,
+     "rang": 30,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/portugal",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-PRT\"> ... Portugal ... <td>61.0</td> (rang 30). Page pays : Score: <span class=\"score\">61.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.352</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.572</span> ; <span class=\"value\">30</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "norvege",
+     "nom_dans_source": "Norway",
+     "valeur": 71.8,
+     "rang": 1,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/norway",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-NOR\"> ... Norway ... <td>71.8</td> (rang 1). Page pays : Score: <span class=\"score\">71.8</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.263</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.700</span> ; <span class=\"value\">1</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "suede",
+     "nom_dans_source": "Sweden",
+     "valeur": 67.9,
+     "rang": 10,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/sweden",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-SWE\"> ... Sweden ... <td>67.9</td> (rang 10). Page pays : Score: <span class=\"score\">67.9</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.323</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.681</span> ; <span class=\"value\">10</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "danemark",
+     "nom_dans_source": "Denmark",
+     "valeur": 68.3,
+     "rang": 7,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/denmark",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-DNK\"> ... Denmark ... <td>68.3</td> (rang 7). Page pays : Score: <span class=\"score\">68.3</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.342</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.707</span> ; <span class=\"value\">7</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "autriche",
+     "nom_dans_source": "Austria",
+     "valeur": 67.8,
+     "rang": 12,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/austria",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-AUT\"> ... Austria ... <td>67.8</td> (rang 12). Page pays : Score: <span class=\"score\">67.8</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.323</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.679</span> ; <span class=\"value\">12</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "canada",
+     "nom_dans_source": "Canada",
+     "valeur": 68,
+     "rang": 9,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/canada",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-CAN\"> ... Canada ... <td>68.0</td> (rang 9). Page pays : Score: <span class=\"score\">68.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.282</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.643</span> ; <span class=\"value\">9</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "australie",
+     "nom_dans_source": "Australia",
+     "valeur": 67.9,
+     "rang": 10,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/australia",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-AUS\"> ... Australia ... <td>67.9</td> (rang 10). Page pays : Score: <span class=\"score\">67.9</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.300</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.658</span> ; <span class=\"value\">10</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "japon",
+     "nom_dans_source": "Japan",
+     "valeur": 65.7,
+     "rang": 17,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/japan",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-JPN\"> ... Japan ... <td>65.7</td> (rang 17). Page pays : Score: <span class=\"score\">65.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.353</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.667</span> ; <span class=\"value\">17</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "nouvelle-zelande",
+     "nom_dans_source": "New Zealand",
+     "valeur": 66.2,
+     "rang": 13,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/new-zealand",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-NZL\"> ... New Zealand ... <td>66.2</td> (rang 13). Page pays : Score: <span class=\"score\">66.2</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.297</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.622</span> ; <span class=\"value\">13</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "coree-du-sud",
+     "nom_dans_source": "Republic of Korea",
+     "valeur": 68.3,
+     "rang": 7,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/republic-of-korea",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-KOR\"> ... Republic of Korea ... <td>68.3</td> (rang 7). Page pays : Score: <span class=\"score\">68.3</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.356</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.722</span> ; <span class=\"value\">7</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "taiwan",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": null,
+     "url": null,
+     "preuve": null,
+     "raison": "Non couvert : le classement ND-GAIN 2024 (https://gain-new.crc.nd.edu/ranking, « Scores for 2024 ») liste 192 pays et ne contient pas Taïwan (aucune ligne id=\"country-TWN\", pas de page pays). Aucune valeur saisie."
+    },
+    {
+     "id": "hong-kong",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": null,
+     "url": null,
+     "preuve": null,
+     "raison": "Non couvert : le classement ND-GAIN 2024 (https://gain-new.crc.nd.edu/ranking, « Scores for 2024 ») liste 192 pays et ne contient pas Hong Kong (aucune ligne id=\"country-HKG\", pas de page pays). Aucune valeur saisie."
+    },
+    {
+     "id": "argentine",
+     "nom_dans_source": "Argentina",
+     "valeur": 50.4,
+     "rang": 75,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/argentina",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-ARG\"> ... Argentina ... <td>50.4</td> (rang 75). Page pays : Score: <span class=\"score\">50.4</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.408</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.415</span> ; <span class=\"value\">75</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "chili",
+     "nom_dans_source": "Chile",
+     "valeur": 60.1,
+     "rang": 33,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/chile",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-CHL\"> ... Chile ... <td>60.1</td> (rang 33). Page pays : Score: <span class=\"score\">60.1</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.347</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.548</span> ; <span class=\"value\">33</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "colombie",
+     "nom_dans_source": "Colombia",
+     "valeur": 50.5,
+     "rang": 73,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/colombia",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-COL\"> ... Colombia ... <td>50.5</td> (rang 73). Page pays : Score: <span class=\"score\">50.5</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.407</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.416</span> ; <span class=\"value\">73</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "mexique",
+     "nom_dans_source": "Mexico",
+     "valeur": 47.6,
+     "rang": 91,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/mexico",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-MEX\"> ... Mexico ... <td>47.6</td> (rang 91). Page pays : Score: <span class=\"score\">47.6</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.412</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.364</span> ; <span class=\"value\">91</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "bresil",
+     "nom_dans_source": "Brazil",
+     "valeur": 50.7,
+     "rang": 72,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/brazil",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-BRA\"> ... Brazil ... <td>50.7</td> (rang 72). Page pays : Score: <span class=\"score\">50.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.366</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.381</span> ; <span class=\"value\">72</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "perou",
+     "nom_dans_source": "Peru",
+     "valeur": 48.3,
+     "rang": 85,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/peru",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-PER\"> ... Peru ... <td>48.3</td> (rang 85). Page pays : Score: <span class=\"score\">48.3</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.418</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.383</span> ; <span class=\"value\">85</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "uruguay",
+     "nom_dans_source": "Uruguay",
+     "valeur": 54.7,
+     "rang": 52,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/uruguay",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-URY\"> ... Uruguay ... <td>54.7</td> (rang 52). Page pays : Score: <span class=\"score\">54.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.394</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.488</span> ; <span class=\"value\">52</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "royaume-uni",
+     "nom_dans_source": "United Kingdom",
+     "valeur": 68.6,
+     "rang": 5,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/united-kingdom",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-GBR\"> ... United Kingdom ... <td>68.6</td> (rang 5). Page pays : Score: <span class=\"score\">68.6</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.282</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.653</span> ; <span class=\"value\">5</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "etats-unis",
+     "nom_dans_source": "United States",
+     "valeur": 65.7,
+     "rang": 17,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/united-states",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-USA\"> ... United States ... <td>65.7</td> (rang 17). Page pays : Score: <span class=\"score\">65.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.317</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.632</span> ; <span class=\"value\">17</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "singapour",
+     "nom_dans_source": "Singapore",
+     "valeur": 68.5,
+     "rang": 6,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/singapore",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-SGP\"> ... Singapore ... <td>68.5</td> (rang 6). Page pays : Score: <span class=\"score\">68.5</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.379</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.749</span> ; <span class=\"value\">6</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "emirats-arabes-unis",
+     "nom_dans_source": "United Arab Emirates",
+     "valeur": 53.7,
+     "rang": 56,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/united-arab-emirates",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-ARE\"> ... United Arab Emirates ... <td>53.7</td> (rang 56). Page pays : Score: <span class=\"score\">53.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.416</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.490</span> ; <span class=\"value\">56</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "chine",
+     "nom_dans_source": "China",
+     "valeur": 53,
+     "rang": 61,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/china",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-CHN\"> ... China ... <td>53.0</td> (rang 61). Page pays : Score: <span class=\"score\">53.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.394</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.455</span> ; <span class=\"value\">61</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "maroc",
+     "nom_dans_source": "Morocco",
+     "valeur": 47.7,
+     "rang": 90,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/morocco",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-MAR\"> ... Morocco ... <td>47.7</td> (rang 90). Page pays : Score: <span class=\"score\">47.7</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.450</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.403</span> ; <span class=\"value\">90</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "thailande",
+     "nom_dans_source": "Thailand",
+     "valeur": 45.4,
+     "rang": 106,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/thailand",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-THA\"> ... Thailand ... <td>45.4</td> (rang 106). Page pays : Score: <span class=\"score\">45.4</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.443</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.351</span> ; <span class=\"value\">106</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "vietnam",
+     "nom_dans_source": "Viet Nam",
+     "valeur": 45.9,
+     "rang": 103,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/viet-nam",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-VNM\"> ... Viet Nam ... <td>45.9</td> (rang 103). Page pays : Score: <span class=\"score\">45.9</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.499</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.417</span> ; <span class=\"value\">103</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "inde",
+     "nom_dans_source": "India",
+     "valeur": 44.4,
+     "rang": 112,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/india",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-IND\"> ... India ... <td>44.4</td> (rang 112). Page pays : Score: <span class=\"score\">44.4</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.475</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.362</span> ; <span class=\"value\">112</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "cote-d-ivoire",
+     "nom_dans_source": "Côte d'Ivoire",
+     "valeur": 41,
+     "rang": 138,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/c-te-d-ivoire",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-CIV\"> ... Côte d'Ivoire ... <td>41.0</td> (rang 138). Page pays : Score: <span class=\"score\">41.0</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.488</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.307</span> ; <span class=\"value\">138</span> (rang)",
+     "raison": null
+    },
+    {
+     "id": "senegal",
+     "nom_dans_source": "Senegal",
+     "valeur": 42.3,
+     "rang": 129,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, édition 2024 (données 2005 à 2024)",
+     "url": "https://gain-new.crc.nd.edu/country/senegal",
+     "preuve": "Classement https://gain-new.crc.nd.edu/ranking : <tr id=\"country-SEN\"> ... Senegal ... <td>42.3</td> (rang 129). Page pays : Score: <span class=\"score\">42.3</span> ; <span class=\"name\">Vulnerability</span><span class=\"value\">0.529</span> ; <span class=\"name\">Readiness</span><span class=\"value\">0.376</span> ; <span class=\"value\">129</span> (rang)",
+     "raison": null
+    }
+   ]
+  },
+  {
+   "modele": "sonnet",
+   "pays": [
+    {
+     "id": "belgique",
+     "nom_dans_source": "Belgium",
+     "valeur": "62.0",
+     "rang": 28,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-BEL\"> rang 28 | Belgium | score 62.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "suisse",
+     "nom_dans_source": "Switzerland",
+     "valeur": "68.9",
+     "rang": 4,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-CHE\"> rang 4 | Switzerland | score 68.9 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "allemagne",
+     "nom_dans_source": "Germany",
+     "valeur": "69.2",
+     "rang": 3,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-DEU\"> rang 3 | Germany | score 69.2 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "irlande",
+     "nom_dans_source": "Ireland",
+     "valeur": "64.4",
+     "rang": 21,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-IRL\"> rang 21 | Ireland | score 64.4 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "luxembourg",
+     "nom_dans_source": "Luxembourg",
+     "valeur": "66.0",
+     "rang": 15,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-LUX\"> rang 15 | Luxembourg | score 66.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "espagne",
+     "nom_dans_source": "Spain",
+     "valeur": "61.7",
+     "rang": 29,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-ESP\"> rang 29 | Spain | score 61.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "italie",
+     "nom_dans_source": "Italy",
+     "valeur": "62.2",
+     "rang": 27,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-ITA\"> rang 27 | Italy | score 62.2 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "pays-bas",
+     "nom_dans_source": "Netherlands",
+     "valeur": "64.4",
+     "rang": 21,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-NLD\"> rang 21 | Netherlands | score 64.4 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "portugal",
+     "nom_dans_source": "Portugal",
+     "valeur": "61.0",
+     "rang": 30,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-PRT\"> rang 30 | Portugal | score 61.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "norvege",
+     "nom_dans_source": "Norway",
+     "valeur": "71.8",
+     "rang": 1,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-NOR\"> rang 1 | Norway | score 71.8 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "suede",
+     "nom_dans_source": "Sweden",
+     "valeur": "67.9",
+     "rang": 10,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-SWE\"> rang 10 | Sweden | score 67.9 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "danemark",
+     "nom_dans_source": "Denmark",
+     "valeur": "68.3",
+     "rang": 7,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-DNK\"> rang 7 | Denmark | score 68.3 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "autriche",
+     "nom_dans_source": "Austria",
+     "valeur": "67.8",
+     "rang": 12,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-AUT\"> rang 12 | Austria | score 67.8 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "canada",
+     "nom_dans_source": "Canada",
+     "valeur": "68.0",
+     "rang": 9,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-CAN\"> rang 9 | Canada | score 68.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "australie",
+     "nom_dans_source": "Australia",
+     "valeur": "67.9",
+     "rang": 10,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-AUS\"> rang 10 | Australia | score 67.9 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "japon",
+     "nom_dans_source": "Japan",
+     "valeur": "65.7",
+     "rang": 17,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-JPN\"> rang 17 | Japan | score 65.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "nouvelle-zelande",
+     "nom_dans_source": "New Zealand",
+     "valeur": "66.2",
+     "rang": 13,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-NZL\"> rang 13 | New Zealand | score 66.2 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "coree-du-sud",
+     "nom_dans_source": "Republic of Korea",
+     "valeur": "68.3",
+     "rang": 7,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-KOR\"> rang 7 | Republic of Korea | score 68.3 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "taiwan",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": null,
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": null,
+     "raison": "Absent du tableau de classement (190 pays listés) : ni 'Taiwan' ni code TWN ne figurent dans la page."
+    },
+    {
+     "id": "hong-kong",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": null,
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": null,
+     "raison": "Absent du tableau de classement (190 pays listés) : ni 'Hong Kong' ni code HKG ne figurent dans la page."
+    },
+    {
+     "id": "argentine",
+     "nom_dans_source": "Argentina",
+     "valeur": "50.4",
+     "rang": 75,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-ARG\"> rang 75 | Argentina | score 50.4 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "chili",
+     "nom_dans_source": "Chile",
+     "valeur": "60.1",
+     "rang": 33,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-CHL\"> rang 33 | Chile | score 60.1 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "colombie",
+     "nom_dans_source": "Colombia",
+     "valeur": "50.5",
+     "rang": 73,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-COL\"> rang 73 | Colombia | score 50.5 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "mexique",
+     "nom_dans_source": "Mexico",
+     "valeur": "47.6",
+     "rang": 91,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-MEX\"> rang 91 | Mexico | score 47.6 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "bresil",
+     "nom_dans_source": "Brazil",
+     "valeur": "50.7",
+     "rang": 72,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-BRA\"> rang 72 | Brazil | score 50.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "perou",
+     "nom_dans_source": "Peru",
+     "valeur": "48.3",
+     "rang": 85,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-PER\"> rang 85 | Peru | score 48.3 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "uruguay",
+     "nom_dans_source": "Uruguay",
+     "valeur": "54.7",
+     "rang": 52,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-URY\"> rang 52 | Uruguay | score 54.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "royaume-uni",
+     "nom_dans_source": "United Kingdom",
+     "valeur": "68.6",
+     "rang": 5,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-GBR\"> rang 5 | United Kingdom | score 68.6 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "etats-unis",
+     "nom_dans_source": "United States",
+     "valeur": "65.7",
+     "rang": 17,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-USA\"> rang 17 | United States | score 65.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "singapour",
+     "nom_dans_source": "Singapore",
+     "valeur": "68.5",
+     "rang": 6,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-SGP\"> rang 6 | Singapore | score 68.5 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "emirats-arabes-unis",
+     "nom_dans_source": "United Arab Emirates",
+     "valeur": "53.7",
+     "rang": 56,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-ARE\"> rang 56 | United Arab Emirates | score 53.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "chine",
+     "nom_dans_source": "China",
+     "valeur": "53.0",
+     "rang": 61,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-CHN\"> rang 61 | China | score 53.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "maroc",
+     "nom_dans_source": "Morocco",
+     "valeur": "47.7",
+     "rang": 90,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-MAR\"> rang 90 | Morocco | score 47.7 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "thailande",
+     "nom_dans_source": "Thailand",
+     "valeur": "45.4",
+     "rang": 106,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-THA\"> rang 106 | Thailand | score 45.4 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "vietnam",
+     "nom_dans_source": "Viet Nam",
+     "valeur": "45.9",
+     "rang": 103,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-VNM\"> rang 103 | Viet Nam | score 45.9 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "inde",
+     "nom_dans_source": "India",
+     "valeur": "44.4",
+     "rang": 112,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-IND\"> rang 112 | India | score 44.4 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "cote-d-ivoire",
+     "nom_dans_source": "Côte d'Ivoire",
+     "valeur": "41.0",
+     "rang": 138,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-CIV\"> rang 138 | Côte d'Ivoire | score 41.0 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    },
+    {
+     "id": "senegal",
+     "nom_dans_source": "Senegal",
+     "valeur": "42.3",
+     "rang": 129,
+     "annee_donnee": 2024,
+     "edition": "ND-GAIN Country Index, données 2005 à 2024",
+     "url": "https://gain-new.crc.nd.edu/ranking",
+     "preuve": "<tr id=\"country-SEN\"> rang 129 | Senegal | score 42.3 (ligne du tableau HTML de /ranking)",
+     "raison": null
+    }
+   ]
+  }
+ ]
+}

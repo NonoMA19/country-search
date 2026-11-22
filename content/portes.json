@@ -709,9 +709,10 @@
      }
     ],
     "source": "kr-mofa",
-    "statut": "verifie",
+    "statut": "a-verifier",
     "verifieLe": "2026-11-20"
-   }
+   },
+   "raisonAVerifier": "La page officielle du ministère coréen des Affaires étrangères (overseas.mofa.go.kr) n’a pas pu être relue le 22 novembre 2026 : la connexion chiffrée échoue depuis la session. Les conditions affichées viennent d’une lecture automatique du 20 novembre, pas encore relue."
   }
  ],
  "taiwan": [
@@ -965,9 +966,10 @@
      }
     ],
     "source": "co-cancilleria",
-    "statut": "verifie",
+    "statut": "a-verifier",
     "verifieLe": "2026-11-20"
-   }
+   },
+   "raisonAVerifier": "La page officielle de la Cancillería (cancilleria.gov.co) a refusé la lecture automatique le 22 novembre 2026 (erreur 403). Les conditions affichées viennent d’une lecture automatique du 20 novembre, pas encore relue."
   }
  ],
  "mexique": [
@@ -1051,11 +1053,11 @@
    "detail": {
     "nom": "Visa temporaire V (travail), après une autorisation de résidence",
     "employeurRequis": true,
-    "lieEmployeur": "partiellement",
+    "lieEmployeur": "a-verifier",
     "conditions": [
-     "Depuis l’étranger, il faut d’abord une autorisation de résidence pour le travail, demandée au ministère de la Justice (MigranteWeb), sur la base d’un emploi ou d’une offre.",
+     "Depuis l’étranger, il faut d’abord, sauf exceptions, une autorisation de résidence pour le travail, demandée au ministère de la Justice (MigranteWeb), sur la base d’un emploi ou d’une offre.",
      "Une fois l’autorisation publiée, le consulat délivre le visa temporaire.",
-     "À l’arrivée, inscription auprès de la police fédérale (carte RNM)."
+     "La Police fédérale fait l’enregistrement (numéro et carte RNM)."
     ],
     "liens": [
      {
@@ -1065,7 +1067,7 @@
     ],
     "source": "br-mj",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   }
  ],
@@ -1352,7 +1354,7 @@
    "detail": {
     "nom": "Visa Z (travail)",
     "employeurRequis": true,
-    "lieEmployeur": "oui",
+    "lieEmployeur": "a-verifier",
     "conditions": [
      "Pour travailler plus de 90 jours : la notification de permis de travail pour étrangers (plus de 90 jours), ou un autre document de la liste officielle.",
      "Pour 90 jours au plus : la notification de permis de travail de courte durée.",
@@ -1361,12 +1363,12 @@
     "liens": [
      {
       "url": "https://pg.china-embassy.gov.cn/eng/lsyw/zjfw/202412/t20241223_11515014.htm",
-      "libelle": "Visa Z (ambassade de Chine, réseau du ministère des Affaires étrangères)"
+      "libelle": "Visa Z (ambassade de Chine en Papouasie-Nouvelle-Guinée : règles nationales, à confirmer auprès de l’ambassade en France)"
      }
     ],
     "source": "cn-mfa",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   },
   {
@@ -1427,9 +1429,10 @@
      }
     ],
     "source": "ma-emploi",
-    "statut": "verifie",
+    "statut": "a-verifier",
     "verifieLe": "2026-11-20"
-   }
+   },
+   "raisonAVerifier": "La page officielle du ministère de l’Emploi (miepeec.gov.ma) n’a pas pu être relue le 22 novembre 2026 : la connexion chiffrée échoue depuis la session. Les conditions affichées viennent d’une lecture automatique du 20 novembre, pas encore relue."
   }
  ],
  "autriche": [
@@ -1488,10 +1491,10 @@
    "detail": {
     "nom": "Qualité migratoire « travailleur résident »",
     "employeurRequis": true,
-    "lieEmployeur": "partiellement",
+    "lieEmployeur": "a-verifier",
     "conditions": [
-     "Un contrat de travail, une relation administrative ou un contrat de service au Pérou.",
-     "Le contrat doit dater de moins de 30 jours et être approuvé par l’autorité du travail (sauf exceptions) ; signé à l’étranger, il doit être authentifié.",
+     "Un contrat de travail, une relation administrative ou un contrat de service au Pérou ; il faut se trouver hors du Pérou pour obtenir ce statut.",
+     "Le contrat doit dater de moins de 30 jours et être approuvé par l’autorité du travail (sauf exceptions).",
      "Un contrat d’au moins un an ; plus court, la demande est traitée comme « travailleur temporaire »."
     ],
     "liens": [
@@ -1502,7 +1505,7 @@
     ],
     "source": "pe-gob",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   }
  ],
@@ -1546,8 +1549,8 @@
     "employeurRequis": false,
     "lieEmployeur": "non",
     "conditions": [
-     "La résidence temporaire, de 6 mois à 2 ans renouvelables, est ouverte à qui s’installe pour travailler.",
-     "Un employeur peut t’embaucher si tu prouves que ta demande de résidence est en cours.",
+     "Le statut de résident, temporaire ou définitif, autorise à travailler, comme salarié ou à son compte.",
+     "Un employeur peut t’embaucher si tu prouves que ta demande de résidence est en cours (attestation valable 6 mois).",
      "L’Uruguay ne délivre pas de « permis de travail » : c’est le statut de résident qui autorise à travailler."
     ],
     "liens": [
@@ -1558,7 +1561,7 @@
     ],
     "source": "uy-mtss",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   }
  ],
@@ -1583,7 +1586,7 @@
    "detail": {
     "nom": "Visa Non-Immigrant B (affaires et travail), puis permis de travail",
     "employeurRequis": true,
-    "lieEmployeur": "oui",
+    "lieEmployeur": "a-verifier",
     "conditions": [
      "Il faut un visa Non-Immigrant et un permis de travail avant de commencer à travailler.",
      "L’employeur thaïlandais dépose le formulaire WP3 pour obtenir l’accord du ministère du Travail.",
@@ -1597,7 +1600,7 @@
     ],
     "source": "th-mfa",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   }
  ],
@@ -1644,7 +1647,7 @@
    "detail": {
     "nom": "Visa d’emploi (Employment Visa)",
     "employeurRequis": true,
-    "lieEmployeur": "oui",
+    "lieEmployeur": "a-verifier",
     "conditions": [
      "Accordé pour un an ou pour la durée du contrat.",
      "Il faut une preuve d’emploi (lettre d’embauche) et les conditions du contrat.",
@@ -1658,7 +1661,7 @@
     ],
     "source": "in-visa",
     "statut": "verifie",
-    "verifieLe": "2026-11-20"
+    "verifieLe": "2026-11-21"
    }
   }
  ],
