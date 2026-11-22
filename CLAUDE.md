@@ -86,6 +86,9 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 - Données par ville : climat, loyer, qualité de l'air, indemnité VIE par ville (déjà dans le détail) ; choisir sa ville dans le pays.
 - Portrait rédigé par une IA (plus tard, version 2) : aujourd'hui le portrait est calculé, sans IA.
 - Carte « Où te vois-tu vivre ? » (prompt 4) : petite au téléphone (335 px de large) ; un zoom ou une carte plus haute à étudier au prompt 5. La simulation et le test du moteur tirent encore les anciennes régions (`scripts/hasard.ts`, gardé pour comparer avant / après) : mesurer l'effet des cercles dans `npm run simulation` plus tard.
+- Indicateurs collectés au prompt 5a, hors calcul (`data/indicators`, `data/couverture.md`) : décider lesquels entrent dans le classement. Avant : licences « pas de modification » de RSF et de Transparency International (une transformation en note demande leur accord) ; Freedom House à demander (https://freedomhouse.org/data-request) ; WJP sans licence trouvée (remplacé par la Banque mondiale).
+- À relire quand Firecrawl aura des crédits : visas du Maroc, de la Corée du Sud et de la Colombie (pages illisibles par script) ; seconde lecture de NORMLEX et du WEF ; durée d'ensoleillement Open-Meteo (quota épuisé) ; transports ONU-Habitat ODD 11.2.1 (couverture des 38 villes et licence) ; logement OCDE HC1.2 (22 pays) et Eurostat (13 pays).
+- Chine : la page du visa Z citée est celle de l'ambassade en Papouasie-Nouvelle-Guinée ; trouver la page de l'ambassade ou du centre de visas en France.
 - Blind test : faire passer le quiz à des testeurs sans leur montrer le nom des pays, puis comparer leur intuition (carte du début) et leur résultat.
 - Salaires par secteur (OCDE ou ILOSTAT), pour remplacer le salaire moyen tous métiers quand le secteur est connu.
 
@@ -284,3 +287,15 @@ Données de l'OMS (obésité des adultes, mesure « Manger sainement ») : CC BY
 **Ce qui reste à faire**
 - Voir les idées : carte petite au téléphone, simulation avec des cercles.
 - Les tests navigateur (`scripts/e2e`) ont besoin d'un site lancé (`npm run build && npm start`, puis `BASE=http://localhost:3000`).
+
+### 22 novembre 2026 : indicateurs, seconde lecture des visas, « à vérifier » par impact (prompt 5a)
+**Ce qui est fait** (une pull request ; aucun changement d'interface ni du calcul, seulement des données et leur documentation)
+- 13 fichiers CSV dans `data/indicators` (`node scripts/indicateurs.mjs`) : RSF 2026 (38), V-Dem v16 (38), Transparency International CPI 2025 (38), NASA POWER ensoleillement (38), Yale EPI 2026 (37), Banque mondiale État de droit (37), OMS PM2,5 2023 (36), OMS couverture santé 2023 (36), ND-GAIN 2024 (36), WEF 2026 (36), OIT conventions fondamentales (36) ; Freedom House et WJP : liens seulement (licence). Extraction par des agents Haiku, seconde lecture indépendante par des agents Sonnet, comparaison par script ; lecture par script dès que le fichier officiel était joignable. Niveaux de preuve et licences : `data/indicators/README.md`.
+- `data/couverture.md` : couverture, pays manquants et raison, sources remplacées (WJP par la Banque mondiale), propositions pour le logement (OCDE HC1.2, 22 pays), les transports (ONU-Habitat ODD 11.2.1) et l'ensoleillement.
+- Visas : seconde lecture de 6 pages officielles sur 9 (`data/visas-relecture.md`, phrases exactes) ; 4 conditions corrigées (Brésil, Pérou, Uruguay), 5 liens avec l'employeur passés « à vérifier » (Chine, Brésil, Pérou, Inde, Thaïlande), libellé de la page chinoise corrigé ; Maroc, Corée du Sud et Colombie illisibles : passés « à vérifier » avec la raison.
+- Emploi par secteur de 7 pays de plus (Pérou, Uruguay, Thaïlande, Vietnam, Inde, Côte d'Ivoire, Sénégal), OIT 2019 à 2025, même médiane des 30 pays (`scripts/secteurs-complement.mjs`) ; raisons exactes des heures travaillées (l'OIT a 2020 ou 2022 : trop ancien).
+- `data/a-verifier-par-impact.md` (`npm run donnees`) : chaque point classé par nombre de parcours simulés touchés. La règle des 3 premières envies change le top 3 dans 11,0 % des parcours (11,3 % avant).
+- Réseau : 20 sites officiels ajoutés à la liste autorisée de l'environnement.
+
+**Ce qui reste à faire**
+- Voir les idées (« Indicateurs collectés au prompt 5a », « À relire quand Firecrawl aura des crédits »).

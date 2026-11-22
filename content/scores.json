@@ -5293,8 +5293,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : l’OIT ne renvoie rien ; le Bureau australien des statistiques publie des chiffres mensuels, sans moyenne annuelle lue avec le même concept (heures réellement travaillées par semaine). À vérifier.",
-    "verifieLe": "2026-11-20"
+    "texte": "Heures travaillées : l’OIT donne 32,29 heures réellement travaillées par semaine en 2020 (série par activité économique, total ; enquête sur la main-d’œuvre), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). Le Bureau australien des statistiques n’est pas lisible depuis la session. À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -5679,8 +5679,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : l’OIT ne renvoie rien par son interface ; sa page pays donne 36,6 h pour 2020, trop ancienne pour être comparée aux autres pays. À vérifier.",
-    "verifieLe": "2026-11-20"
+    "texte": "Heures travaillées : l’OIT donne 36,6 heures réellement travaillées par semaine en 2020 (série par activité économique, total), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -6065,7 +6065,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : l’OIT donne 33 heures réellement travaillées par semaine en 2020 (série par activité économique, total), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -6328,42 +6329,50 @@
    "secteur-finance": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-conseil": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-ingenierie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-tech": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-commerce": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-sante": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-hotellerie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-enseignement": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2015, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    }
   },
   "coree-du-sud": {
@@ -6765,7 +6774,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : Taïwan n’est pas couvert par l’OIT. À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "a-verifier",
@@ -7097,7 +7107,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : la donnée la plus récente de l’OIT date de 2016 (43 heures par semaine), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "a-verifier",
@@ -7333,42 +7344,50 @@
    "secteur-finance": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-conseil": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-ingenierie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-tech": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-commerce": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-sante": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-hotellerie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    },
    "secteur-enseignement": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas."
+    "texte": "Emploi par secteur : la donnée la plus récente date de 2009, avant 2019. On ne la compte pas.",
+    "verifieLe": "2026-11-22"
    }
   },
   "argentine": {
@@ -10044,8 +10063,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : le ministère du Travail de Singapour publie des heures payées par salarié (enquête auprès des entreprises), un autre concept que les heures réellement travaillées par personne en emploi. À vérifier.",
-    "verifieLe": "2026-11-20"
+    "texte": "Heures travaillées : l’OIT donne 42,6 heures réellement travaillées par semaine en 2020 (série par activité économique, total), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). Le ministère du Travail de Singapour publie des heures payées par salarié, un autre concept. À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -10781,7 +10800,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : pas de donnée dans cette source."
+    "texte": "Heures travaillées : l’OIT n’a pas de série d’heures réellement travaillées par personne en emploi pour la Chine (seulement des heures des salariés en 2008, un autre concept et une année trop ancienne). À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -11052,42 +11072,50 @@
    "secteur-finance": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-conseil": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-ingenierie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-tech": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-commerce": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-sante": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-hotellerie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-enseignement": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    }
   },
   "maroc": {
@@ -11109,8 +11137,8 @@
    "heures": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Heures travaillées : l’OIT ne renvoie rien, et le rapport 2024 du Haut-Commissariat au Plan lu ne donne pas de durée hebdomadaire moyenne. À vérifier.",
-    "verifieLe": "2026-11-20"
+    "texte": "Heures travaillées : l’OIT donne 44 heures réellement travaillées par semaine en 2022 (série par activité économique, total), trop ancienne face aux autres pays (2024 et 2025 ; règle : un an d’écart au plus avec l’année médiane, 2025). Le rapport 2024 du Haut-Commissariat au Plan lu ne donne pas de durée hebdomadaire moyenne. À vérifier.",
+    "verifieLe": "2026-11-22"
    },
    "francais": {
     "statut": "verifie",
@@ -11362,42 +11390,50 @@
    "secteur-finance": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-conseil": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-ingenierie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-tech": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-commerce": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-sante": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-hotellerie": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    },
    "secteur-enseignement": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Emploi par secteur : pas de donnée dans cette source (ILOSTAT)."
+    "texte": "Emploi par secteur : aucune année avec le total et les 8 sections en CITI rév. 4 dans cette source (ILOSTAT).",
+    "verifieLe": "2026-11-22"
    }
   },
   "autriche": {
@@ -11974,44 +12010,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.95,
+    "texte": "La finance et la banque : 1 % des emplois au Pérou, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.57,
+    "texte": "Le conseil et l’audit : 2,6 % des emplois au Pérou, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.58,
+    "texte": "L’ingénierie et l’industrie : 8,6 % des emplois au Pérou, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.76,
+    "texte": "La tech et la data : 0,8 % des emplois au Pérou, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 18.94,
+    "texte": "Le marketing et le commerce : 18,9 % des emplois au Pérou, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.13,
+    "texte": "La santé : 3,1 % des emplois au Pérou, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 7.46,
+    "texte": "L’hôtellerie et le tourisme : 7,5 % des emplois au Pérou, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 4.67,
+    "texte": "L’enseignement et la recherche : 4,7 % des emplois au Pérou, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "uruguay": {
@@ -12253,44 +12337,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.62,
+    "texte": "La finance et la banque : 1,6 % des emplois en Uruguay, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 4.42,
+    "texte": "Le conseil et l’audit : 4,4 % des emplois en Uruguay, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 9.63,
+    "texte": "L’ingénierie et l’industrie : 9,6 % des emplois en Uruguay, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 2.88,
+    "texte": "La tech et la data : 2,9 % des emplois en Uruguay, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 17.14,
+    "texte": "Le marketing et le commerce : 17,1 % des emplois en Uruguay, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 8.9,
+    "texte": "La santé : 8,9 % des emplois en Uruguay, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 3.95,
+    "texte": "L’hôtellerie et le tourisme : 4 % des emplois en Uruguay, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 7.04,
+    "texte": "L’enseignement et la recherche : 7 % des emplois en Uruguay, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "thailande": {
@@ -12531,44 +12663,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.12,
+    "texte": "La finance et la banque : 1,1 % des emplois en Thaïlande, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.12,
+    "texte": "Le conseil et l’audit : 1,1 % des emplois en Thaïlande, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 16,
+    "texte": "L’ingénierie et l’industrie : 16 % des emplois en Thaïlande, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.48,
+    "texte": "La tech et la data : 0,5 % des emplois en Thaïlande, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 17.12,
+    "texte": "Le marketing et le commerce : 17,1 % des emplois en Thaïlande, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.09,
+    "texte": "La santé : 2,1 % des emplois en Thaïlande, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 8.73,
+    "texte": "L’hôtellerie et le tourisme : 8,7 % des emplois en Thaïlande, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.86,
+    "texte": "L’enseignement et la recherche : 2,9 % des emplois en Thaïlande, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "vietnam": {
@@ -12809,44 +12989,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.9,
+    "texte": "La finance et la banque : 0,9 % des emplois au Vietnam, 3,4 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.75,
+    "texte": "Le conseil et l’audit : 0,8 % des emplois au Vietnam, 6,8 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 21.97,
+    "texte": "L’ingénierie et l’industrie : 22 % des emplois au Vietnam, 11 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.61,
+    "texte": "La tech et la data : 0,6 % des emplois au Vietnam, 3,8 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 14.05,
+    "texte": "Le marketing et le commerce : 14,1 % des emplois au Vietnam, 13 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.17,
+    "texte": "La santé : 1,2 % des emplois au Vietnam, 13,3 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.62,
+    "texte": "L’hôtellerie et le tourisme : 5,6 % des emplois au Vietnam, 4,6 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.54,
+    "texte": "L’enseignement et la recherche : 3,5 % des emplois au Vietnam, 7,8 % en France (2024, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2024",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "inde": {
@@ -13092,44 +13320,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.24,
+    "texte": "La finance et la banque : 1,2 % des emplois en Inde, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.91,
+    "texte": "Le conseil et l’audit : 0,9 % des emplois en Inde, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 12.49,
+    "texte": "L’ingénierie et l’industrie : 12,5 % des emplois en Inde, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.42,
+    "texte": "La tech et la data : 1,4 % des emplois en Inde, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 11.16,
+    "texte": "Le marketing et le commerce : 11,2 % des emplois en Inde, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.64,
+    "texte": "La santé : 1,6 % des emplois en Inde, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.28,
+    "texte": "L’hôtellerie et le tourisme : 2,3 % des emplois en Inde, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.42,
+    "texte": "L’enseignement et la recherche : 3,4 % des emplois en Inde, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "cote-d-ivoire": {
@@ -13370,44 +13646,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.38,
+    "texte": "La finance et la banque : 0,4 % des emplois en Côte d’Ivoire, 3,4 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.51,
+    "texte": "Le conseil et l’audit : 0,5 % des emplois en Côte d’Ivoire, 6,8 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6.91,
+    "texte": "L’ingénierie et l’industrie : 6,9 % des emplois en Côte d’Ivoire, 11 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.92,
+    "texte": "La tech et la data : 0,9 % des emplois en Côte d’Ivoire, 3,8 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 21.56,
+    "texte": "Le marketing et le commerce : 21,6 % des emplois en Côte d’Ivoire, 13 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.89,
+    "texte": "La santé : 0,9 % des emplois en Côte d’Ivoire, 13,3 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 3,
+    "valeur": 5.26,
+    "texte": "L’hôtellerie et le tourisme : 5,3 % des emplois en Côte d’Ivoire, 4,6 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.74,
+    "texte": "L’enseignement et la recherche : 2,7 % des emplois en Côte d’Ivoire, 7,8 % en France (2019, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2019",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   },
   "senegal": {
@@ -13652,44 +13976,92 @@
     "texte": "Pas encore d’avis rédigé."
    },
    "secteur-finance": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.67,
+    "texte": "La finance et la banque : 0,7 % des emplois au Sénégal, 3,4 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 2,8 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 2.75
    },
    "secteur-conseil": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.38,
+    "texte": "Le conseil et l’audit : 0,4 % des emplois au Sénégal, 6,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 6,2 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 6.19
    },
    "secteur-ingenierie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 4,
+    "valeur": 12.13,
+    "texte": "L’ingénierie et l’industrie : 12,1 % des emplois au Sénégal, 11 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 10.95
    },
    "secteur-tech": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 0.53,
+    "texte": "La tech et la data : 0,5 % des emplois au Sénégal, 3,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 4 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 3.96
    },
    "secteur-commerce": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 5,
+    "valeur": 23.84,
+    "texte": "Le marketing et le commerce : 23,8 % des emplois au Sénégal, 13 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 13,7 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 13.69
    },
    "secteur-sante": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 1.19,
+    "texte": "La santé : 1,2 % des emplois au Sénégal, 13,3 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 11 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 11
    },
    "secteur-hotellerie": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 2.38,
+    "texte": "L’hôtellerie et le tourisme : 2,4 % des emplois au Sénégal, 4,6 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 5,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 5.52
    },
    "secteur-enseignement": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Emploi par secteur : pas encore de donnée de l’Organisation internationale du travail pour ce pays (source injoignable depuis la session)."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 3.18,
+    "texte": "L’enseignement et la recherche : 3,2 % des emplois au Sénégal, 7,8 % en France (2025, Organisation internationale du travail, ILOSTAT). Médiane des 30 pays : 7,5 %. C’est la part de ce secteur dans l’emploi du pays, pas le nombre d’offres ouvertes.",
+    "annee": "2025",
+    "source": "oit-ilostat",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EMP_TEMP_SEX_ECO_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-22",
+    "mediane": 7.5
    }
   }
  },
