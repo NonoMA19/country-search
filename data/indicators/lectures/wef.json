@@ -1,0 +1,455 @@
+{
+ "source": "World Economic Forum (Forum économique mondial), Global Gender Gap Report 2026 (PDF : https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf)",
+ "indicateur": "Global Gender Gap Index : score global (Score (0–1, 1=parity)) et rang (Rank) du tableau à 145 économies",
+ "unite_echelle": "Score de 0 à 1 (1 = parité, plus haut = mieux, écrit avec 3 décimales dans la source). Rang : 1 = meilleur, 145 économies classées.",
+ "edition_la_plus_recente": "2026. La page du rapport 2026 indique « Published Sep 16, 2026 » (https://www.weforum.org/publications/global-gender-gap-report-2026/) ; l'édition 2025 est datée du 11 juin 2025. Le PDF 2026 (« INSIGHT REPORT, SEPTEMBER 2026 ») a été lu directement.",
+ "lu_le": "2026-11-21",
+ "licence_citations": [
+  {
+   "url": "https://www.weforum.org/publications/global-gender-gap-report-2026/",
+   "passage": "World Economic Forum articles may be republished in accordance with the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License, and in accordance with our Terms of Use. The views expressed in this article are those of the author alone and not the World Economic Forum."
+  },
+  {
+   "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf (page de droits, après « Copyright © 2026 by the World Economic Forum »)",
+   "passage": "All rights reserved. No part of this publication may be reproduced, stored in a retrieval system, or transmitted, in any form or by any means, electronic, mechanical, photocopying, or otherwise without the prior permission of the World Economic Forum."
+  },
+  {
+   "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf (« Terms of use and disclaimer », début du rapport)",
+   "passage": "If the Data is materially transformed by the user, this must be stated explicitly along with the required source citation. For Data compiled by parties other than the World Economic Forum, users must refer to these parties’ terms of use, in particular concerning the attribution, distribution, and reproduction of the Data. When Data for which the World Economic Forum is the source (herein “World Economic Forum”), is distributed or reproduced, it must appear accurately and be attributed to the World Economic Forum. This source attribution requirement is attached to any use of Data, whether obtained directly from the World Economic Forum or from a user. Users who intend to sell World Economic Forum Data as part of a database or as a stand-alone product must first obtain the permission from the World Economic Forum (CNES@weforum.org)."
+  },
+  {
+   "url": "https://www.weforum.org/about/licence-terms-on-the-use-of-forum-publications-and-materials (extrait de recherche)",
+   "passage": "Unless otherwise indicated, use of the Forum’s Material is Licensed to you under the terms of Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public Licence (“CCPL”), which can be viewed here. Visitors are not permitted to use the Forum’s name, logo, acronym, or likeness, or any identifying symbol in any way; nor are Visitors allowed to use third-party trademarks (such as name and logo) without first acquiring permission from such third party."
+  },
+  {
+   "url": "https://www.weforum.org/about/terms-of-use (extrait de recherche ; la version complète n'a pas été ouverte)",
+   "passage": "Visitors may make use of the content of the Articles published to this particular feed only: https://www.weforum.org/agenda/channels/website/feed/ (the « Feed ») under the terms of Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License (« CCPL »). Noncommercial: Visitor may not use this work for commercial purposes. This CCPL shall not apply to the Forum name and logo, third-party materials, trademarks, names and logos, Website interface elements, graphic files and source code, photographs and videos."
+  }
+ ],
+ "methode": "Une seule lecture par un agent Haiku (seconde lecture impossible : crédits de lecture épuisés, site refusé aux scripts).",
+ "lectures": [
+  {
+   "modele": "haiku",
+   "pays": [
+    {
+     "id": "belgique",
+     "nom_dans_source": "Belgium",
+     "valeur": "0.762",
+     "rang": 33,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 33 | Belgium | 0.762 | -0.011 | -6 |",
+     "raison": null
+    },
+    {
+     "id": "suisse",
+     "nom_dans_source": "Switzerland",
+     "valeur": "0.771",
+     "rang": 27,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 27 | Switzerland | 0.771 | -0.014 | -10 |",
+     "raison": null
+    },
+    {
+     "id": "allemagne",
+     "nom_dans_source": "Germany",
+     "valeur": "0.817",
+     "rang": 9,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 9 | Germany | 0.817 | 0.013 | - |",
+     "raison": null
+    },
+    {
+     "id": "irlande",
+     "nom_dans_source": "Ireland",
+     "valeur": "0.814",
+     "rang": 10,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 10 | Ireland | 0.814 | 0.013 | - |",
+     "raison": null
+    },
+    {
+     "id": "luxembourg",
+     "nom_dans_source": "Luxembourg",
+     "valeur": "0.752",
+     "rang": 42,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 42 | Luxembourg | 0.752 | 0.007 | +8 |",
+     "raison": null
+    },
+    {
+     "id": "espagne",
+     "nom_dans_source": "Spain",
+     "valeur": "0.796",
+     "rang": 12,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 12 | Spain | 0.796 | -0.001 | - |",
+     "raison": null
+    },
+    {
+     "id": "italie",
+     "nom_dans_source": "Italy",
+     "valeur": "0.708",
+     "rang": 83,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 83 | Italy | 0.708 | 0.004 | +2 |",
+     "raison": null
+    },
+    {
+     "id": "pays-bas",
+     "nom_dans_source": "Netherlands",
+     "valeur": "0.750",
+     "rang": 46,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 46 | Netherlands | 0.750 | -0.007 | -3 |",
+     "raison": null
+    },
+    {
+     "id": "portugal",
+     "nom_dans_source": "Portugal",
+     "valeur": "0.763",
+     "rang": 32,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 32 | Portugal | 0.763 | -0.003 | +2 |",
+     "raison": null
+    },
+    {
+     "id": "norvege",
+     "nom_dans_source": "Norway",
+     "valeur": "0.857",
+     "rang": 3,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 3 | Norway | 0.857 | -0.006 | - |",
+     "raison": null
+    },
+    {
+     "id": "suede",
+     "nom_dans_source": "Sweden",
+     "valeur": "0.823",
+     "rang": 7,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 7 | Sweden | 0.823 | 0.006 | -1 |",
+     "raison": null
+    },
+    {
+     "id": "danemark",
+     "nom_dans_source": "Denmark",
+     "valeur": "0.810",
+     "rang": 11,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 11 | Denmark | 0.810 | 0.019 | +3 |",
+     "raison": null
+    },
+    {
+     "id": "autriche",
+     "nom_dans_source": "Austria",
+     "valeur": "0.753",
+     "rang": 40,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 40 | Austria | 0.753 | 0.018 | +16 |",
+     "raison": null
+    },
+    {
+     "id": "canada",
+     "nom_dans_source": "Canada",
+     "valeur": "0.777",
+     "rang": 24,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 24 | Canada | 0.777 | 0.010 | +8 |",
+     "raison": null
+    },
+    {
+     "id": "australie",
+     "nom_dans_source": "Australia",
+     "valeur": "0.819",
+     "rang": 8,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 8 | Australia | 0.819 | 0.027 | +5 |",
+     "raison": null
+    },
+    {
+     "id": "japon",
+     "nom_dans_source": "Japan",
+     "valeur": "0.670",
+     "rang": 117,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 117 | Japan | 0.670 | 0.004 | +1 |",
+     "raison": null
+    },
+    {
+     "id": "nouvelle-zelande",
+     "nom_dans_source": "New Zealand",
+     "valeur": "0.828",
+     "rang": 6,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 6 | New Zealand | 0.828 | 0.001 | -1 |",
+     "raison": null
+    },
+    {
+     "id": "coree-du-sud",
+     "nom_dans_source": "South Korea",
+     "valeur": "0.693",
+     "rang": 101,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 101 | South Korea | 0.693 | 0.006 | - |",
+     "raison": null
+    },
+    {
+     "id": "taiwan",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": null,
+     "raison": "Taïwan absent du tableau des 145 économies de l'édition 2026 (aucune ligne « Taiwan » dans le tableau à scores du PDF)."
+    },
+    {
+     "id": "hong-kong",
+     "nom_dans_source": null,
+     "valeur": null,
+     "rang": null,
+     "annee_donnee": null,
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": null,
+     "raison": "Hong Kong absent du tableau des 145 économies (« Hong Kong SAR, China » n'apparaît que dans des sections d'enquête et de sous-indices, sans score global)."
+    },
+    {
+     "id": "argentine",
+     "nom_dans_source": "Argentina",
+     "valeur": "0.751",
+     "rang": 45,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 45 | Argentina | 0.751 | -0.011 | -8 |",
+     "raison": null
+    },
+    {
+     "id": "chili",
+     "nom_dans_source": "Chile",
+     "valeur": "0.769",
+     "rang": 29,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 29 | Chile | 0.769 | -0.008 | -7 |",
+     "raison": null
+    },
+    {
+     "id": "colombie",
+     "nom_dans_source": "Colombia",
+     "valeur": "0.761",
+     "rang": 34,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 34 | Colombia | 0.761 | 0.003 | +7 |",
+     "raison": null
+    },
+    {
+     "id": "mexique",
+     "nom_dans_source": "Mexico",
+     "valeur": "0.787",
+     "rang": 18,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 18 | Mexico | 0.787 | 0.011 | +5 |",
+     "raison": null
+    },
+    {
+     "id": "bresil",
+     "nom_dans_source": "Brazil",
+     "valeur": "0.715",
+     "rang": 72,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 72 | Brazil | 0.715 | -0.004 | - |",
+     "raison": null
+    },
+    {
+     "id": "perou",
+     "nom_dans_source": "Peru",
+     "valeur": "0.700",
+     "rang": 94,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 94 | Peru | 0.700 | -0.034 | -37 |",
+     "raison": null
+    },
+    {
+     "id": "uruguay",
+     "nom_dans_source": "Uruguay",
+     "valeur": "0.740",
+     "rang": 53,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 53 | Uruguay | 0.740 | 0.020 | +18 |",
+     "raison": null
+    },
+    {
+     "id": "royaume-uni",
+     "nom_dans_source": "United Kingdom",
+     "valeur": "0.842",
+     "rang": 5,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 5 | United Kingdom | 0.842 | 0.004 | -1 |",
+     "raison": null
+    },
+    {
+     "id": "etats-unis",
+     "nom_dans_source": "United States of America",
+     "valeur": "0.749",
+     "rang": 47,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 47 | United States of America | 0.749 | -0.008 | -5 |",
+     "raison": null
+    },
+    {
+     "id": "singapour",
+     "nom_dans_source": "Singapore",
+     "valeur": "0.764",
+     "rang": 31,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 31 | Singapore | 0.764 | 0.015 | +16 |",
+     "raison": null
+    },
+    {
+     "id": "emirats-arabes-unis",
+     "nom_dans_source": "United Arab Emirates",
+     "valeur": "0.702",
+     "rang": 91,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 91 | United Arab Emirates | 0.702 | -0.022 | -22 |",
+     "raison": null
+    },
+    {
+     "id": "chine",
+     "nom_dans_source": "China",
+     "valeur": "0.699",
+     "rang": 96,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 96 | China | 0.699 | 0.013 | +7 |",
+     "raison": null
+    },
+    {
+     "id": "maroc",
+     "nom_dans_source": "Morocco",
+     "valeur": "0.632",
+     "rang": 139,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 139 | Morocco | 0.632 | 0.004 | -2 |",
+     "raison": null
+    },
+    {
+     "id": "thailande",
+     "nom_dans_source": "Thailand",
+     "valeur": "0.735",
+     "rang": 55,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 55 | Thailand | 0.735 | 0.008 | +11 |",
+     "raison": null
+    },
+    {
+     "id": "vietnam",
+     "nom_dans_source": "Viet Nam",
+     "valeur": "0.707",
+     "rang": 84,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 84 | Viet Nam | 0.707 | -0.006 | -10 |",
+     "raison": null
+    },
+    {
+     "id": "inde",
+     "nom_dans_source": "India",
+     "valeur": "0.645",
+     "rang": 131,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 131 | India | 0.645 | 0.001 | - |",
+     "raison": null
+    },
+    {
+     "id": "cote-d-ivoire",
+     "nom_dans_source": "Côte d'Ivoire",
+     "valeur": "0.660",
+     "rang": 122,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 122 | Côte d'Ivoire | 0.660 | 0.013 | +5 |",
+     "raison": null
+    },
+    {
+     "id": "senegal",
+     "nom_dans_source": "Senegal",
+     "valeur": "0.670",
+     "rang": 118,
+     "annee_donnee": "2026",
+     "edition": "2026",
+     "url": "https://reports.weforum.org/docs/WEF_GGGR_Report_2026.pdf",
+     "preuve": "| 118 | Senegal | 0.670 | 0.001 | -2 |",
+     "raison": null
+    }
+   ]
+  }
+ ]
+}
