@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 import { quiz, trouverElement } from "./donnees";
 import { valeurValide } from "./elements";
 import { ETAT_VIDE, GROUPES, NIVEAUX, REGLAGES_DEFAUT, cleScene, rejouer, sceneDe, trouverDilemme, type Etat, type Reglages } from "./moteur";
-import { prochainAffiner } from "./parcours";
+import { prochainAffiner, questionnaireFini } from "./parcours";
 import { pays } from "./pays";
 
 // Les écrans hors questions. « quiz » : l'élément suivant du parcours (src/lib/parcours.ts).
@@ -13,13 +13,14 @@ import { pays } from "./pays";
 export type Etape =
   | { t: "quiz" }
   | { t: "transition"; chapitre: number }
+  | { t: "pas-demande" } // « Ce qu'on ne t'a pas demandé, et pourquoi » : l'écran final du questionnaire
   | { t: "intuition" }
   | { t: "portrait"; fin?: boolean } // fin : « Tu as répondu à tout. Ton portrait est à jour. »
   | { t: "revoir"; id: string; retour?: "intuition" } // retour : l'écran où revenir après (sinon le portrait)
   | { t: "affiner" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 8;
+export const VERSION_SESSION = 9;
 
 export type Session = {
   v: number;
@@ -67,7 +68,7 @@ function etapeValide(x: unknown): boolean {
   if (x.t === "revoir") return estTexte(x.id) && !!trouverElement(x.id) && (x.retour === undefined || x.retour === "intuition");
   if (x.t === "transition") return entier(x.chapitre, 1) && (x.chapitre as number) <= quiz.chapitres.length;
   if (x.t === "portrait") return x.fin === undefined || typeof x.fin === "boolean";
-  return x.t === "quiz" || x.t === "intuition" || x.t === "affiner";
+  return x.t === "quiz" || x.t === "intuition" || x.t === "affiner" || x.t === "pas-demande";
 }
 
 function reglagesValides(x: unknown): boolean {
@@ -124,7 +125,7 @@ export function ecrire(s: Session) {
 
 export const modifier = (f: (s: Session) => Session) => ecrire(f(lire()));
 // Pages d'erreur : revenir au portrait si le quiz est fini, sinon à l'écran en cours du quiz.
-export const revenirAuPortrait = () => modifier((s) => ({ ...s, etape: s.etat.reponses.limites !== undefined ? { t: "portrait" } : { t: "quiz" } }));
+export const revenirAuPortrait = () => modifier((s) => ({ ...s, etape: questionnaireFini(s.etat) ? { t: "portrait" } : { t: "quiz" } }));
 export const recommencer = () => {
   const e = lire().etat;
   ecrire(nouvelleSession([...new Set([...e.dejaVues, ...scenesVues(e)])]));

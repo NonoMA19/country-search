@@ -4,6 +4,7 @@ import { quiz, type Element, type Valeur } from "@/lib/donnees";
 import { AUCUNE_ZONE, PASSER, REPONSES_LIMITE, REPONSES_SWIPE, optionsDe, reponsesDe } from "@/lib/elements";
 import { ETAT_VIDE, envieDisponible, etatDepart, repondre, type Etat } from "@/lib/moteur";
 import { phrasesSwipe, prochainElement, situationsLimites } from "@/lib/parcours";
+import { paysBlind } from "@/lib/blind";
 
 export function hasard(graine: number) {
   let a = graine >>> 0;
@@ -24,11 +25,19 @@ export function reponseAuHasard(el: Element, etat: Etat, r: Alea): Valeur {
   switch (el.type) {
     case "dilemme": return choisir(r, reponsesDe(el));
     case "choix-cartes": {
-      const ids = optionsDe(el).map((o) => o.id).filter((id) => el.source !== "envies" || envieDisponible(id, etat.profil));
-      if (!el.multiple) return choisir(r, ids);
+      const ids = optionsDe(el, etat.reponses).map((o) => o.id).filter((id) => !el.source?.startsWith("envies") || envieDisponible(id, etat.profil));
+      if (!el.multiple) return ids.length ? choisir(r, ids) : PASSER;
       if (el.nombre) return melanger(r, ids).slice(0, el.nombre);
+      // Les critères : de 3 à 5, le plus souvent 5.
+      if (el.source === "envies") return melanger(r, ids).slice(0, r() < 0.7 ? 5 : 3 + Math.floor(r() * 2));
+      if (el.max) return melanger(r, ids).slice(0, Math.floor(r() * (el.max + 1)));
       return ids.filter(() => r() < 0.2);
     }
+    case "timeline": return { duree: choisir(r, el.options).id, apres: choisir(r, el.apres).id };
+    case "enveloppe": return Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas;
+    case "seuil": return r() < 0.5 ? { niveau: "ok" } : { niveau: r() < 0.6 ? "eviter" : "redhibitoire", seuil: String(Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas) };
+    case "tri-zones": return Object.fromEntries(el.cartes.filter(() => r() < 0.6).map((c) => [c.id, choisir(r, el.zones).id]));
+    case "blind-test": { const b = paysBlind(el, etat); return b.pays.length ? { choix: choisir(r, b.pays), faits: b.mesures.join(",") } : PASSER; }
     case "classement": return melanger(r, Array.isArray(etat.reponses.envies) ? (etat.reponses.envies as string[]) : []);
     case "curseur": return Math.round(r() * 100);
     case "thermometre": return 1 + Math.floor(r() * el.niveaux.length);
@@ -43,11 +52,11 @@ export function reponseAuHasard(el: Element, etat: Etat, r: Alea): Valeur {
 export type Repondeur = (el: Element, etat: Etat) => Valeur;
 export function parcoursAuHasard(r: Alea, { passer = 0.08, repondeur }: { passer?: number; repondeur?: Repondeur } = {}): Etat {
   let etat = etatDepart({ ...ETAT_VIDE, graine: Math.floor(r() * 2 ** 31) });
-  for (let n = 0; n < 60; n++) {
+  for (let n = 0; n < 80; n++) {
     const el = prochainElement(etat);
     if (!el) break;
     // Les envies et leur classement ne sont presque jamais passés (sinon le classement n'a plus rien à classer).
-    const peutPasser = !["envies", "classement"].includes(el.id);
+    const peutPasser = !["envies", "sacrifice", "second-plan"].includes(el.id);
     const v = peutPasser && r() < passer ? PASSER : repondeur ? repondeur(el, etat) : reponseAuHasard(el, etat, r);
     etat = repondre(etat, el.id, v);
   }

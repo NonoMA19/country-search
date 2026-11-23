@@ -147,7 +147,7 @@ export default function Classement({ element: el, etat, valeur, repondre, passer
 
   return (
     <>
-      <EnTete element={el} titreId={titreId} />
+      <EnTete element={el} etat={etat} titreId={titreId} />
       <p className="sr-only" aria-live="polite">{annonce}</p>
       <p className="mt-2 hidden text-sm text-gris pointeur-fin:block">Au clavier : Espace sur une poignée, puis les flèches, puis Espace.</p>
       <DndContext sensors={capteurs} collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis]} onDragStart={soulever} onDragOver={survol} onDragEnd={poser} onDragCancel={finir}

@@ -1,13 +1,13 @@
 // Le calcul du quiz : un simple calcul, sans IA.
 // La méthode complète est expliquée sur la page /methode.
-import { ECART_EX_AEQUO } from "@/config";
+import { ECART_EX_AEQUO, OBSTACLES, POIDS_ACCES, SEUIL_PAYS_CLASSEMENT } from "@/config";
 import { accord, pays, type Pays } from "./pays";
 import {
   avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, villes, preuveMesure, preuveNote, preuveSource, preuveVisa,
-  type CarteMonde, type CasDouble, type DetailVisa, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Valeur,
+  type CarteMonde, type CasDouble, type ChoixCartes, type DetailVisa, type Element, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Timeline, type TriZones, type Valeur,
 } from "./donnees";
 import {
-  LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesRedhibitoires, optionReponse, penalitesRetirees, profilDe, type Profil,
+  LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesDeclarees, objetReponse, optionReponse, penalitesRetirees, profilDe, relanceOuverte, type LimiteDeclaree, type Profil,
 } from "./elements";
 export { LIBELLE_ECHELLE, MILIEU_ECHELLE, REPONSES_ECHELLE, optionReponse, reponsesDe, type Profil } from "./elements";
 
@@ -48,14 +48,18 @@ const option = (question: string, id: unknown) =>
 export const ageMax = (p: Profil) => option("age", p.age)?.ageMax ?? null;
 // Ton budget : une tranche tirée du profil (« de 2 000 à 5 000 € »), ou une somme exacte (curseur « Et si… ? »).
 export type Budget = { min: number; max: number | null };
+// L'enveloppe du chapitre 1 donne une somme exacte (en euros) ; les anciennes tranches restent lues.
 export function budgetProfil(p: Profil): Budget | null {
+  if (typeof p.budget === "string" && /^\d+$/.test(p.budget)) return budgetExact(Number(p.budget));
   const o = option("budget", p.budget);
   return o?.min !== undefined ? { min: o.min, max: o.max ?? null } : null;
 }
 export const budgetExact = (n: number): Budget => ({ min: n, max: n });
 export const budgetDe = (etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Budget | null =>
   reglages.budget !== null ? budgetExact(reglages.budget) : budgetProfil(etat.profil);
-export const dureeMois = (p: Profil) => option("duree", p.duree)?.mois ?? null;
+export const dureeMois = (p: Profil) => (trouverElement("timeline") as Timeline | undefined)?.options.find((o) => o.id === p.duree)?.mois ?? option("duree", p.duree)?.mois ?? null;
+// Tu veux rester plus d'un an, ou plus longtemps si tu te plais.
+export const veutRester = (p: Profil) => conditionRemplie("veut-rester", p);
 
 export function languesParlees(p: Profil): string[] {
   const choix = Array.isArray(p.langues) ? p.langues : [];
@@ -65,26 +69,68 @@ export const parleLangueDe = (paysId: string, p: Profil) => {
   const parlees = languesParlees(p);
   return (avis[paysId]?.langues ?? []).some((l) => parlees.includes(l));
 };
+// La langue que tu veux pratiquer (relance de ta motivation) : les pays où elle est officielle ou très parlée.
+export function codesLangueCible(p: Profil): string[] {
+  const el = trouverElement("relance-langue") as ChoixCartes | undefined;
+  return el?.options.find((o) => o.id === p["langue-cible"])?.codes ?? [];
+}
+export const parleLangueCible = (paysId: string, p: Profil) => {
+  const codes = codesLangueCible(p);
+  return codes.length > 0 && (avis[paysId]?.langues ?? []).some((l) => codes.includes(l));
+};
 
 export function questionProfilVisible(id: string, p: Profil): boolean {
   return conditionRemplie(quiz.profil.find((x) => x.id === id)?.afficheSi, p);
 }
 
-// ---------- Tes envies, dans l'ordre ----------
-// Le classement de tes 5 envies (ou, s'il est passé, l'ordre où tu les as choisies).
-// Rang 1 : importance 2 ; rang 2 : 1,75 ; rang 3 : 1,5 ; rang 4 : 1,25 ; rang 5 : 1,1.
-export function enviesDe(etat: Pick<Etat, "reponses">): string[] {
-  const valides = (x: Valeur | undefined) => (Array.isArray(x) ? x.filter((id) => quiz.envies.some((e) => e.id === id)) : []);
-  const choisies = valides(etat.reponses.envies);
-  const rangees = valides(etat.reponses.classement).filter((id) => choisies.includes(id));
-  return rangees.length === choisies.length ? rangees : choisies;
+// ---------- Tes critères, en trois temps ----------
+// 1. Jusqu'à 5 critères. 2. Le plus dur à sacrifier : importance 2. 3. Celui qui passe au second plan : 1,1.
+// Les autres : 1,5. Un seul critère choisi : 2. L'ordre rendu : le plus dur à sacrifier, les autres, le second plan.
+const criteresValides = (x: Valeur | undefined) => (Array.isArray(x) ? x.filter((id) => quiz.envies.some((e) => e.id === id)) : []);
+function sacrificeEtSecond(etat: Pick<Etat, "reponses">) {
+  const choisies = criteresValides(etat.reponses.envies);
+  const s = etat.reponses.sacrifice, d = etat.reponses["second-plan"];
+  const premier = typeof s === "string" && choisies.length > 1 && choisies.includes(s) ? s : null;
+  const dernier = typeof d === "string" && choisies.length > 2 && choisies.includes(d) && d !== premier ? d : null;
+  return { choisies, premier, dernier };
 }
-export const poidsRang = (rang: number) => quiz.poidsRang[rang] ?? quiz.poidsRang.at(-1) ?? 1;
+export function enviesDe(etat: Pick<Etat, "reponses">): string[] {
+  const { choisies, premier, dernier } = sacrificeEtSecond(etat);
+  return [...(premier ? [premier] : []), ...choisies.filter((x) => x !== premier && x !== dernier), ...(dernier ? [dernier] : [])];
+}
+export function poidsEnvie(etat: Pick<Etat, "reponses">, id: string): number {
+  const { choisies, premier, dernier } = sacrificeEtSecond(etat);
+  const P = quiz.poidsCriteres;
+  if (!choisies.includes(id)) return 0;
+  if (choisies.length === 1) return P.seul;
+  return id === premier ? P.sacrifice : id === dernier ? P.second : P.milieu;
+}
+// « Quel avantage te ferait changer d'avis ? » : un critère non choisi, qui compte un peu (importance 1).
+export function critereChangerAvis(etat: Pick<Etat, "reponses">): string | null {
+  const v = etat.reponses["changer-avis"];
+  return typeof v === "string" && quiz.envies.some((e) => e.id === v) && !criteresValides(etat.reponses.envies).includes(v) ? v : null;
+}
 
-// Une envie n'est proposée que si au moins une de ses mesures est notée (« Évoluer dans mon secteur » : si ton secteur l'est).
+// Un critère est proposé s'il a au moins une mesure notée (« Évoluer dans mon secteur » : si ton secteur l'est),
+// ou s'il n'a aucune mesure (« Un logement abordable ») : il enrichit alors ton portrait sans changer ton classement.
 export function envieDisponible(id: string, p: Profil): boolean {
   const en = quiz.envies.find((x) => x.id === id);
-  return !!en && en.mesures.some((m) => { const r = mesureReelle(m, p); return !!r && mesureDisponible(r); });
+  if (!en) return false;
+  if (!en.mesures.length) return true;
+  return en.mesures.some((m) => { const r = mesureReelle(m, p); return !!r && mesureDisponible(r); });
+}
+// Un critère bouge-t-il le classement ? Oui si une de ses mesures est notée pour au moins 30 pays sur 38.
+export function envieClassante(id: string, p: Profil): boolean {
+  const en = quiz.envies.find((x) => x.id === id);
+  return !!en && en.mesures.some((m) => { const r = mesureReelle(m, p); return !!r && mesureClassante(r); });
+}
+// La phrase sous un critère qui ne bouge pas le classement.
+export function raisonEnviePortrait(id: string, p: Profil): string | null {
+  if (!envieDisponible(id, p) || envieClassante(id, p)) return null;
+  const en = quiz.envies.find((x) => x.id === id);
+  if (!en?.mesures.length) return "Pas encore de donnée pays : il enrichit ton portrait.";
+  const n = Math.max(0, ...en.mesures.map((m) => mesureReelle(m, p)).filter((m): m is string => !!m).map(paysCouverts));
+  return `Donnée pour ${n} pays sur ${pays.length} seulement : il enrichit ton portrait, sans changer ton classement.`;
 }
 // Pourquoi une envie est grisée (affiché sous la carte), ou null.
 export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
@@ -104,6 +150,7 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
     return dansRegion || (Array.isArray(p.paysCarte) && p.paysCarte.includes(paysId)) ? 5 : null;
   }
   if (mesureId === "langue-parlee") return parleLangueDe(paysId, p) ? 5 : null;
+  if (mesureId === "langue-cible") return parleLangueCible(paysId, p) ? 5 : null;
   if (mesureId === "en-europe") { const x = pays.find((y) => y.id === paysId); return x ? (x.zone === "europe" ? 5 : 1) : null; }
   // Dépaysement : l'inverse de la proximité (temps de vol et décalage horaire), sans nouvelle donnée.
   if (mesureId === "depaysement") {
@@ -121,6 +168,41 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
   return n.note;
 }
 
+// ---------- Les notes continues (prompt 6) ----------
+// Les seuils d'une mesure (« bornes ») ne sont plus des marches : entre deux seuils, la note glisse en ligne droite.
+// Chaque seuil vaut le milieu des deux notes qu'il sépare (1,5 ; 2,5 ; 3,5 ; 4,5) ; au-delà du dernier seuil, la pente
+// continue jusqu'à 1 ou 5. Exemple : 76 285 $ de salaire, entre 72 500 (3,5) et 79 500 (4,5), donne 4,04 au lieu de 4.
+// Les secteurs : même règle sur le rapport à la médiane (0,7 ; 0,9 ; 1,1 ; 1,3). Les notes sans valeur chiffrée
+// (avis, culture au travail, santé) restent entières. REGLES : pour la simulation (avant / après).
+export const REGLES = { continu: true, seuilPays: SEUIL_PAYS_CLASSEMENT, poidsAcces: POIDS_ACCES };
+export function noteContinue(paysId: string, mesureId: string): number | null {
+  const n = notes[paysId]?.[mesureId];
+  const d = mesures[mesureId];
+  if (!n || n.statut !== "verifie" || n.note === null || typeof n.valeur !== "number") return null;
+  let bornes = d?.bornes, ns = d?.notes, x = n.valeur;
+  if (mesureId.startsWith("secteur-") && typeof n.mediane === "number" && n.mediane > 0) { bornes = [0.7, 0.9, 1.1, 1.3]; ns = [1, 2, 3, 4, 5]; x = n.valeur / n.mediane; }
+  if (!bornes || !ns || bornes.length !== 4 || ns.length !== 5) return null;
+  const y = bornes.map((_, i) => (ns[i] + ns[i + 1]) / 2);
+  const pente = (i: number) => (y[i + 1] - y[i]) / (bornes[i + 1] - bornes[i]);
+  let v: number;
+  if (x <= bornes[0]) v = y[0] + (x - bornes[0]) * pente(0);
+  else if (x >= bornes[3]) v = y[3] + (x - bornes[3]) * pente(2);
+  else { const i = bornes.findIndex((b, k) => k < 3 && x >= b && x < bornes[k + 1]); v = y[i] + (x - bornes[i]) * pente(i); }
+  return Math.min(5, Math.max(1, v));
+}
+// La note qui entre dans le calcul : la note continue quand elle existe, sinon la note entière (noteEffective).
+export function noteCalcul(paysId: string, mesureId: string, p: Profil): number | null {
+  const n = noteEffective(paysId, mesureId, p);
+  if (n === null || !REGLES.continu) return n;
+  if (mesureId === "depaysement") {
+    const inv = ["vol", "decalage"].map((m) => noteCalcul(paysId, m, p)).filter((x): x is number => x !== null).map((x) => 6 - x);
+    return inv.length ? inv.reduce((a, b) => a + b, 0) / inv.length : n;
+  }
+  if (MESURES_CALCULEES.includes(mesureId)) return n;
+  if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, p)) return n;
+  return noteContinue(paysId, mesureId) ?? n;
+}
+
 const disponibilite: Record<string, number> = {};
 // Pour les tests : vider la mémoire des pays couverts après avoir modifié des notes.
 export const disponibiliteMemo = () => disponibilite;
@@ -131,6 +213,8 @@ export function paysCouverts(mesureId: string): number {
   return disponibilite[mesureId];
 }
 export const mesureDisponible = (mesureId: string) => paysCouverts(mesureId) > 0;
+// La règle des 30 pays : une mesure notée pour moins de 30 pays sur 38 ne bouge pas le classement (elle enrichit le portrait).
+export const mesureClassante = (mesureId: string) => paysCouverts(mesureId) >= REGLES.seuilPays;
 
 // ---------- Réponses qui comptent ----------
 // Un effet porte sur une seule mesure. « haut » : plus la note est haute, mieux c'est.
@@ -189,7 +273,7 @@ export const SEUIL_SECTEUR = 0.6;
 export function mesureSecteur(p: Profil): string | null {
   if (typeof p.secteur !== "string" || p.secteur === "autre") return null;
   const m = `secteur-${p.secteur}`;
-  return mesures[m] && paysCouverts(m) >= SEUIL_SECTEUR * pays.length ? m : null;
+  return mesures[m] && mesureClassante(m) ? m : null;
 }
 
 // Pour un stage ou un VIE, le revenu qui compte est l'indemnité VIE du pays, pas le salaire moyen.
@@ -206,19 +290,21 @@ export function effetsBruts(etat: Etat): EffetActif[] {
     for (const m of reelles) {
       res.push({
         mesure: m, sens: e.position !== undefined ? "position" : "haut", position: e.position,
-        poids: (poidsTotal ?? (e.position !== undefined ? 1 : (e.poids ?? 1))) / mesuresVisees.length, famille: familleDe(m), origine,
+        poids: (poidsTotal ?? e.poids ?? 1) / mesuresVisees.length, famille: familleDe(m), origine,
       });
     }
   };
-  enviesDe(etat).forEach((id, rang) => {
+  const ajouterCritere = (id: string, poids: number, origine: string) => {
     const en = quiz.envies.find((x) => x.id === id);
-    if (!en) return;
+    if (!en || !en.mesures.length || poids <= 0) return;
     // « Proche de la France » : 2/3 pour le temps de vol, 1/3 pour le décalage horaire (champ « parts »).
-    if (en.parts) {
-      const somme = en.parts.reduce((a, b) => a + b, 0);
-      en.mesures.forEach((m, k) => ajouter([m], {}, `envie:${id}`, (poidsRang(rang) * en.parts![k]) / somme));
-    } else ajouter(en.mesures, {}, `envie:${id}`, poidsRang(rang));
-  });
+    // « Un vrai hiver » : une position préférée (champ « positions »).
+    const somme = en.parts ? en.parts.reduce((a, b) => a + b, 0) : en.mesures.length;
+    en.mesures.forEach((m, k) => ajouter([m], { position: en.positions?.[k] }, origine, (poids * (en.parts?.[k] ?? 1)) / somme));
+  };
+  for (const id of enviesDe(etat)) ajouterCritere(id, poidsEnvie(etat, id), `envie:${id}`);
+  const autre = critereChangerAvis(etat);
+  if (autre) ajouterCritere(autre, quiz.poidsCriteres.changerAvis, "element:changer-avis");
   // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays de ta zone.
   if ((Array.isArray(etat.profil.regions) && etat.profil.regions.length) || (Array.isArray(etat.profil.paysCarte) && etat.profil.paysCarte.length)) {
     res.push({ mesure: "region-carte", sens: "haut", poids: POIDS_CARTE, famille: "vivre", origine: "carte" });
@@ -228,10 +314,14 @@ export function effetsBruts(etat: Etat): EffetActif[] {
   if (languesParlees(etat.profil).length) {
     res.push({ mesure: "langue-parlee", sens: "haut", poids: POIDS_LANGUE_PARLEE, famille: "vivre", origine: "langues" });
   }
+  // La langue que tu veux pratiquer : le même bonus, aux pays où on la parle.
+  if (codesLangueCible(etat.profil).length) {
+    res.push({ mesure: "langue-cible", sens: "haut", poids: POIDS_LANGUE_PARLEE, famille: "vivre", origine: "element:relance-langue" });
+  }
   const retirees = new Set<string>();
   for (const id of etat.ordre) {
     const el = trouverElement(id);
-    if (!el) continue;
+    if (!el || !relanceOuverte(el, etat.reponses)) continue;
     const v = etat.reponses[id];
     for (const { effet, origine } of effetsReponse(el, v)) ajouter(effet.mesures, effet, origine);
     for (const m of penalitesRetirees(el, v)) retirees.add(m);
@@ -609,11 +699,11 @@ export function visaSimple(p: Pays, profil: Profil): VisaSimple | null {
 // (Europe sans visa, PVT ouvert à ton âge, ta nationalité) ou si le visa de travail n'est pas lié ;
 // 3 s'il l'est en partie ; 1 s'il l'est, ou si ce lien n'est pas encore vérifié (un employeur reste exigé).
 // Les mesures calculées : toujours disponibles pour tous les pays (leur note se calcule, elle n'est pas lue dans scores.json).
-export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe", "langue-travail", "region-carte", "langue-parlee"];
+export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe", "langue-travail", "region-carte", "langue-parlee", "langue-cible"];
 // Les bonus : un pays hors de ta carte ou qui ne parle pas tes langues n'a pas de note, et n'en est pas pénalisé.
 // Ils ne comptent ni dans la couverture (règle des 60 %) ni dans le badge « données disponibles ».
-export const MESURES_BONUS = ["region-carte", "langue-parlee"];
-export const POIDS_CARTE = quiz.poidsRang[4] ?? 1.1;
+export const MESURES_BONUS = ["region-carte", "langue-parlee", "langue-cible"];
+export const POIDS_CARTE = quiz.poidsCriteres.second;
 export const POIDS_LANGUE_PARLEE = 1;
 export const zoneCarte = (paysId: string) => (trouverElement("carte") as CarteMonde | undefined)?.zones.find((z) => z.pays.includes(paysId))?.id ?? null;
 const cacheLibre = new Map<string, number>();
@@ -668,50 +758,109 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
 
 // Toutes les raisons qui font descendre un pays dans « Moins adaptés pour toi », dans l'ordre.
 // « age » : une règle légale (le PVT fermé à ton âge). Les autres sont tes préférences.
-export type CauseEcart = { cause: "francais" | "age" | "limite"; raison: string; limite?: string };
+// « age » : une règle légale (ton projet de PVT, fermé à ton âge dans ce pays). C'est la seule chose qui sorte un pays
+// du classement : tes limites et tes préférences pèsent sur « Il t'est accessible », jamais ne retirent un pays.
+export type CauseEcart = { cause: "age"; raison: string };
 
-// « Rédhibitoire » dans tes limites : les pays concernés passent dans « Moins adaptés pour toi ».
-// Une donnée manquante n'écarte jamais un pays (on ne sait pas).
-export function limiteTouche(situation: string, paysId: string, profil: Profil): boolean {
+// Une de tes limites touche-t-elle ce pays ? Une donnée manquante ne touche jamais un pays (on ne sait pas).
+// seuil : la valeur réglée pour un seuil (« plus de 12 h de vol »).
+export function limiteTouche(situation: string, paysId: string, profil: Profil, seuil?: number): boolean {
   const note = (m: string) => noteEffective(paysId, m, profil);
+  const valeur = (m: string) => { const n = notes[paysId]?.[m]; return n?.statut === "verifie" && typeof n.valeur === "number" ? n.valeur : null; };
   const p = pays.find((x) => x.id === paysId);
+  const sansVisa = () => { const t = p ? evaluerPorte(p, profil, null).type : null; return t === "ue" || t === "nationalite"; };
   switch (situation) {
     case "hors-europe": return p?.zone !== "europe";
     case "alphabet": return note("apprendre-langue") === 1;
     case "visa-employeur": return note("employeur-libre") === 1;
-    case "vol-10h": { const n = notes[paysId]?.vol; return n?.statut === "verifie" && typeof n.valeur === "number" && n.valeur > 10; }
+    case "vol-10h": { const v = valeur("vol"); return v !== null && v > 10; }
+    case "seuil-vol": { const v = valeur("vol"); return v !== null && seuil !== undefined && v > seuil; }
     case "hiver-froid": return note("hiver") === 1;
+    case "seuil-froid": { const v = valeur("hiver"); return v !== null && seuil !== undefined && v < seuil; }
+    case "chaleur": { const v = valeur("ete"); return v !== null && v >= 29; }
+    case "heures-longues": { const v = valeur("heures"); return v !== null && v > 44; }
+    case "un-an-max": case "partenaire-visa": return !!p && !sansVisa();
     case "vigilance": return note("securite") === 1;
     case "ni-fr-ni-en": { const n = note("langue-travail"); return n !== null && n <= 2; }
     case "assurance-privee": { const n = note("sante"); return n !== null && n <= 2; }
     default: return false;
   }
 }
-export const situationDe = (id: string) => {
-  const el = trouverElement("limites");
-  return el?.type === "tri-limites" ? el.situations.find((s) => s.id === id) : undefined;
-};
+// La situation (texte, mesure) d'une limite, dans n'importe quelle famille.
+export const situationDe = (id: string) =>
+  quiz.elements.flatMap((e) => (e.type === "tri-limites" ? e.situations : [])).find((s) => s.id === id);
+// Une limite est-elle posable à ce profil (« Que ton ou ta partenaire doive demander son propre visa » : seulement à deux) ?
+export const situationPosable = (id: string, profil: Profil) => conditionRemplie(situationDe(id)?.condition, profil);
 
-export function causesEcart(p: Pays, etat: Etat): CauseEcart[] {
-  const res: CauseEcart[] = [];
-  if (etat.profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) res.push({ cause: "francais", raison: "Tu veux travailler en français." });
-  for (const id of limitesRedhibitoires(etat.reponses)) {
-    const s = situationDe(id);
-    if (s && limiteTouche(id, p.id, etat.profil)) res.push({ cause: "limite", raison: s.raison, limite: id });
-  }
-  const porte = evaluerPorte(p, etat.profil, null);
-  if (porte.badge === "fermee") res.push({ cause: "age", raison: `Fermé à ton âge. ${porte.phrase}` });
-  return res;
+// Ton projet est un PVT, et le PVT de ce pays est fermé à ton âge : impossible par la loi pour ce projet.
+export function impossibiliteLegale(p: Pays, profil: Profil): string | null {
+  const porte = evaluerPorte(p, profil, null);
+  if (porte.badge !== "fermee" || profil.objectif !== "aventure") return null;
+  return `Fermé à ton âge pour un PVT. ${porte.phrase}`;
 }
-
+export function causesEcart(p: Pays, etat: Etat): CauseEcart[] {
+  const r = impossibiliteLegale(p, etat.profil);
+  return r ? [{ cause: "age", raison: r }] : [];
+}
 export function raisonsEcart(etat: Etat): Record<string, string> {
   const res: Record<string, string> = {};
   for (const p of pays) {
-    if (etat.remontes.includes(p.id)) continue;
     const c = causesEcart(p, etat)[0];
     if (c) res[p.id] = c.raison;
   }
   return res;
+}
+
+// ---------- « Il t'est accessible » ----------
+// De 0 à 100 : 100 moins chaque obstacle (la porte d'entrée, le budget, la durée, ta famille, la langue de travail,
+// tes limites, tes valeurs indispensables). Les montants sont dans src/config.ts (OBSTACLES) et sur /methode.
+// Un pays remonté à la main ne subit plus tes limites, ta langue de travail ni tes valeurs.
+export type TypeObstacle = "porte" | "budget" | "duree" | "famille" | "langue" | "limite" | "valeur";
+export type Obstacle = { type: TypeObstacle; texte: string; points: number; niveau?: "eviter" | "redhibitoire"; limite?: string; element?: string };
+export type Acces = { acces: number; obstacles: Obstacle[] };
+export const facteurAcces = (acces: number) => 1 - (REGLES.poidsAcces * (100 - acces)) / 100;
+export const LIBELLE_ACCES = (a: number) => (a >= 90 ? "Accès facile" : a >= 70 ? "Accès possible" : a >= 50 ? "Accès difficile" : "Accès très difficile");
+
+// Tes valeurs « Indispensable » (tri des valeurs) : leurs mesures.
+export function valeursIndispensables(etat: Pick<Etat, "reponses">): { id: string; label: string; mesures: string[] }[] {
+  const el = trouverElement("valeurs") as TriZones | undefined;
+  if (el?.type !== "tri-zones") return [];
+  const v = objetReponse(etat.reponses.valeurs);
+  return el.cartes.filter((c) => v[c.id] === "indispensable" && c.mesures.length);
+}
+
+export function accesPays(p: Pays, etat: Etat, porte: Porte, limites: LimiteDeclaree[] = limitesDeclarees(etat.reponses)): Acces {
+  const o: Obstacle[] = [];
+  const profil = etat.profil;
+  const remonte = etat.remontes.includes(p.id);
+  // La porte d'entrée.
+  if (porte.type === "pvt" && porte.badge === "difficile") o.push({ type: "porte", texte: porte.phrase, points: OBSTACLES.pvtDifficile });
+  else if (porte.type === "pvt" && porte.badge !== "fermee") o.push({ type: "porte", texte: "Un PVT à demander avant de partir.", points: OBSTACLES.pvt });
+  else if (porte.badge === "fermee") o.push({ type: "porte", texte: "Le PVT est fermé à ton âge : il faut un visa de travail.", points: OBSTACLES.pvtFerme });
+  else if (porte.type === "visa-travail") o.push({ type: "porte", texte: "Il faut un visa de travail, en général avec un employeur.", points: OBSTACLES.visa });
+  // Le budget, pour un PVT qui demande des ressources.
+  if (porte.manque) o.push({ type: "budget", texte: `Il te manquerait au moins ${euros(porte.manque)} pour les ressources demandées.`, points: OBSTACLES.manque });
+  else if (porte.manquePossible) o.push({ type: "budget", texte: `Il pourrait te manquer jusqu’à ${euros(porte.manquePossible)} pour les ressources demandées.`, points: OBSTACLES.manquePossible });
+  // Rester plus d'un an quand la seule porte est un PVT.
+  if (porte.type === "pvt" && porte.badge !== "fermee" && veutRester(profil)) o.push({ type: "duree", texte: "Le PVT dure un an : pour rester plus longtemps, il faudra un autre visa.", points: OBSTACLES.duree });
+  // À deux ou en famille, hors libre circulation : un visa par adulte (les droits de ta famille restent à vérifier).
+  if ((profil["couple-travail"] === "oui" || profil.compagnie === "famille") && porte.type !== "ue" && porte.type !== "nationalite") {
+    o.push({ type: "famille", texte: profil.compagnie === "famille" ? "Ta famille aura aussi besoin d’un droit au séjour : à vérifier pour chaque visa." : "Ton ou ta partenaire aura besoin de son propre droit au travail : à vérifier pour chaque visa.", points: OBSTACLES.famille });
+  }
+  if (!remonte) {
+    if (profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) o.push({ type: "langue", texte: "Tu veux travailler en français : ici, la plupart des postes demandent une autre langue.", points: OBSTACLES.francais });
+    for (const l of limites) {
+      if (!situationPosable(l.id, profil) && l.seuil === undefined) continue;
+      if (!limiteTouche(l.id, p.id, profil, l.seuil)) continue;
+      o.push({ type: "limite", texte: `${l.niveau === "redhibitoire" ? "Rédhibitoire pour toi" : "Tu préfères éviter"} : ${l.texte.charAt(0).toLowerCase()}${l.texte.slice(1)}.`, points: OBSTACLES[l.niveau], niveau: l.niveau, limite: l.id, element: l.element });
+    }
+    for (const v of valeursIndispensables(etat)) {
+      const bas = v.mesures.some((m) => { const n = noteEffective(p.id, m, profil); return n !== null && n <= 2; });
+      if (bas) o.push({ type: "valeur", texte: `Tu as dit « ${v.label} » indispensable : ce pays est mal noté sur ce point.`, points: OBSTACLES.valeur, element: "valeurs" });
+    }
+  }
+  const total = o.reduce((t, x) => t + x.points, 0);
+  return { acces: Math.max(0, 100 - total), obstacles: o };
 }
 
 // Les pénalités (pas des filtres) : un pays remonté à la main ne les subit plus.
@@ -724,7 +873,10 @@ export type Detail = {
 };
 export type Ligne = {
   pays: Pays;
-  score: number;
+  score: number; // le score du classement : « Il te ressemble » × le facteur de « Il t'est accessible »
+  ressemble: number; // « Il te ressemble » : tes goûts face aux données du pays (0 à 100)
+  acces: number; // « Il t'est accessible » : 100 moins chaque obstacle (0 à 100)
+  obstacles: Obstacle[];
   sansDonnees: boolean; // aucune donnée vérifiée sur tes critères : pas de pourcentage
   details: Detail[];
   manquantes: string[]; // données « à vérifier » sur tes critères (hors envies)
@@ -790,7 +942,7 @@ export const NB_ENVIES_PRINCIPALES = 3;
 // Les mesures de tes 3 premières envies (leur vraie mesure : l'indemnité VIE pour un VIE, la mesure de ton secteur…).
 export function mesuresPrincipales(etat: Etat): string[] {
   return [...new Set(enviesDe(etat).slice(0, NB_ENVIES_PRINCIPALES).flatMap((id) => quiz.envies.find((x) => x.id === id)?.mesures ?? [])
-    .map((m) => mesureReelle(m, etat.profil)).filter((m): m is string => !!m && mesureDisponible(m) && !MESURES_BONUS.includes(m)))];
+    .map((m) => mesureReelle(m, etat.profil)).filter((m): m is string => !!m && mesureClassante(m) && !MESURES_BONUS.includes(m)))];
 }
 // « Salaire brut moyen (pouvoir d'achat) » → « salaire brut moyen » : la mention reste courte.
 const libelleCourt = (m: string) => (mesures[m]?.court ?? mesures[m]?.nom ?? m).replace(/\s*\(pouvoir[^)]*\)/, "").toLowerCase();
@@ -805,11 +957,13 @@ export function calculer(etat: Etat, reglages: Reglages = REGLAGES_DEFAUT): Lign
   return res;
 }
 function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
-  const effets = effetsAjustes(etat, reglages);
+  // Seules les mesures notées pour au moins 30 pays sur 38 bougent le classement (règle des 30 pays).
+  const effets = effetsAjustes(etat, reglages).filter((e) => mesureClassante(e.mesure));
   const ecarts = raisonsEcart(etat);
   const budget = budgetDe(etat, reglages);
+  const limites = limitesDeclarees(etat.reponses);
   // Tes critères : chaque mesure qui compte pour toi, comptée une fois.
-  const tesCriteres = [...new Set(effets.map((e) => e.mesure).filter(mesureDisponible))].filter((m) => !MESURES_BONUS.includes(m));
+  const tesCriteres = [...new Set(effets.map((e) => e.mesure))].filter((m) => !MESURES_BONUS.includes(m));
   // Tes 3 premières envies : une donnée manquante sur l'une d'elles empêche d'entrer dans le top 3.
   const principales = mesuresPrincipales(etat);
   const lignes = pays.map((p) => {
@@ -819,9 +973,8 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
     const neutres = new Set<string>();
     const total = { points: 0, max: 0 };
     for (const e of effets) {
-      if (!mesureDisponible(e.mesure)) continue;
       if (remonte && PENALITES.includes(e.mesure)) continue;
-      const note = noteEffective(p.id, e.mesure, etat.profil);
+      const note = noteCalcul(p.id, e.mesure, etat.profil);
       // Un bonus qui ne s'applique pas à ce pays : rien (ni malus, ni donnée manquante).
       if (note === null && MESURES_BONUS.includes(e.mesure)) continue;
       const priorite = estPriorite(e);
@@ -841,14 +994,17 @@ function calculerSansMemoire(etat: Etat, reglages: Reglages): Ligne[] {
     const reelles = details.filter((d) => !d.neutre).length;
     const porte = evaluerPorte(p, etat.profil, budget);
     const manquePrincipal = principales.filter((m) => noteEffective(p.id, m, etat.profil) === null).map(libelleCourt);
+    const ressemble = pct(total) ?? 0;
+    const { acces, obstacles } = accesPays(p, etat, porte, limites);
     return {
+      ressemble, acces, obstacles,
       fiabilite: fiabiliteDe(p.id, tesCriteres, etat.profil),
       couverture,
       manquePrincipal,
       peuDeDonnees: couverture < COUVERTURE_MIN || reelles === 0 || manquePrincipal.length > 0,
       sansDonnees: reelles === 0,
       pays: p,
-      score: pct(total) ?? 0,
+      score: ressemble * facteurAcces(acces),
       details,
       manquantes: [...manquantes],
       neutres: [...neutres],
@@ -917,12 +1073,15 @@ export function paysSurprise(etat: Etat, lignes: Ligne[], top: Ligne[], reglages
   const seuil = top[Math.min(1, top.length - 1)].score; // le score de ton n° 2
   const dansTop = new Set(top.map((l) => l.pays.id));
   const candidats: Surprise[] = [];
+  // Une seule de tes limites fait reculer ce pays : son score sans elle (même « Il te ressemble », accès sans cet obstacle).
   for (const l of lignes) {
-    if (!l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id)) continue;
-    const causes = causesEcart(l.pays, etat);
-    if (causes.length !== 1 || causes[0].cause !== "limite") continue;
-    const s = situationDe(causes[0].limite ?? "");
-    candidats.push({ ligne: l, score: l.score, cause: "limite", phrase: `Seule ta limite «\u00a0${s?.texte ?? ""}\u00a0» écarte ce pays.`, argent: phraseArgent(l) });
+    if (l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id) || etat.remontes.includes(l.pays.id)) continue;
+    // Seulement une limite « Rédhibitoire » (seule limite qui touche ce pays) : un « Je préfère éviter » ne fait pas une surprise.
+    const lim = l.obstacles.filter((o) => o.type === "limite");
+    if (lim.length !== 1 || lim[0].niveau !== "redhibitoire") continue;
+    const score = l.ressemble * facteurAcces(Math.min(100, l.acces + lim[0].points));
+    const texte = situationDe(lim[0].limite ?? "")?.texte ?? lim[0].texte;
+    candidats.push({ ligne: l, score, cause: "limite", phrase: `Seule ta limite «\u00a0${texte}\u00a0» fait reculer ce pays.`, argent: phraseArgent(l) });
   }
   // Une pénalité : on recalcule sans cette seule réponse.
   for (const pen of PENALITES_SURPRISE) {
@@ -1315,7 +1474,7 @@ export type LigneComparaison = {
 };
 export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = REGLAGES_DEFAUT) {
   const lignes: LigneComparaison[] = effetsAjustes(etat, reglages)
-    .filter((e) => mesureDisponible(e.mesure))
+    .filter((e) => mesureClassante(e.mesure))
     .map((e) => {
       const da = la.details.find((d) => d.mesure === e.mesure && !d.neutre);
       const db = lb.details.find((d) => d.mesure === e.mesure && !d.neutre);
@@ -1341,4 +1500,32 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
   ].filter(Boolean);
   const synthese = phrases.length ? phrases.join(" ") : "Les deux pays font jeu égal sur ce qui compte pour toi.";
   return { lignes, synthese };
+}
+
+// ---------- « Pourquoi on te demande ça ? » : ce que la réponse peut changer ----------
+// Les mesures qu'un élément peut viser, et une carte de plus quand certaines ne bougent pas le classement
+// (notées pour moins de 30 pays sur 38) : la réponse enrichit alors le portrait, et l'aide le dit.
+export function mesuresElement(el: Element, p: Profil = {}): string[] {
+  const de = (e: EffetDilemme[] | undefined) => (e ?? []).flatMap((x) => x.mesures);
+  let ms: string[] = [];
+  switch (el.type) {
+    case "dilemme": ms = el.options.flatMap((o) => de(o.effets)); break;
+    case "choix-cartes": ms = el.source ? [] : el.options.flatMap((o) => de(o.effets)); break;
+    case "ambiances": ms = el.options.flatMap((o) => de(o.effets)); break;
+    case "swipe": ms = el.phrases.flatMap((x) => [...de(x.oui), ...de(x.non)]); break;
+    case "curseur": ms = [...de(el.gauche.effets), ...de(el.droite.effets)]; break;
+    case "tri-zones": ms = el.cartes.flatMap((c) => c.mesures); break;
+    case "blind-test": ms = el.mesures; break;
+  }
+  return [...new Set(ms.map((m) => mesureReelle(m, p)).filter((m): m is string => !!m))];
+}
+export function aideDe(el: Element, p: Profil = {}): Element["aide"] {
+  const ms = mesuresElement(el, p);
+  const faibles = ms.filter((m) => !mesureClassante(m));
+  if (!faibles.length) return el.aide;
+  const noms = faibles.map((m) => `${mesures[m]?.court ?? m} (${paysCouverts(m)} pays sur ${pays.length})`);
+  const texte = faibles.length === ms.length
+    ? "Pas assez de données pays pour que ta réponse change ton classement : elle enrichit ton portrait."
+    : `Données sur moins de 30 pays : ${listeFr(noms)}. Ce côté-là enrichit ton portrait, sans changer ton classement.`;
+  return { ...el.aide, cartes: [...el.aide.cartes, { pastille: "Données", texte }] };
 }

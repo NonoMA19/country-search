@@ -15,7 +15,7 @@ export default function TriLimites({ element: el, etat, valeur, repondre, passer
   const restantes = situations.filter((s) => !choix[s.id]).length;
   return (
     <>
-      <EnTete element={el} titreId={titreId} />
+      <EnTete element={el} etat={etat} titreId={titreId} />
       <ul className="mt-5 grid gap-3 xl:grid-cols-2">
         {situations.map((s) => (
           <li key={s.id} className="rounded-2xl border border-bord bg-carte p-3">
@@ -34,7 +34,7 @@ export default function TriLimites({ element: el, etat, valeur, repondre, passer
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-sm text-gris">« Rédhibitoire » met les pays concernés dans « Moins adaptés pour toi ». Tu pourras les remonter.</p>
+      <p className="mt-3 text-sm text-gris">Aucune limite ne retire un pays : elle le rend moins accessible pour toi. Tu pourras le remonter.</p>
       <Actions passer={passer} libellePasser={libellePasser}>
         <p className="sr-only" aria-live="polite">{restantes ? `Encore ${restantes} à classer.` : "Tout est classé."}</p>
         <button type="button" disabled={restantes > 0} onClick={() => repondre(Object.fromEntries(situations.map((s) => [s.id, choix[s.id]])))} data-valider className={BOUTON_PLEIN}>

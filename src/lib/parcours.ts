@@ -3,9 +3,9 @@
 // Chapitres 3 et 4 : adaptatifs, chacun de 4 à 7 écrans, choisis selon tes réponses (voir prochainAdaptatif).
 // Tout se déduit des réponses : « Retour » et le rechargement de la page donnent le même écran.
 import { dimensionDe, quiz, trouverElement, type EffetDilemme, type Element, type PhraseSwipe, type Situation, type Swipe, type TriLimites } from "./donnees";
-import { PASSER, conditionRemplie, profilDe } from "./elements";
+import { PASSER, conditionRemplie, profilDe, relanceOuverte } from "./elements";
 import { certitudeFaible, construireProfil } from "./profil";
-import { calculer, dilemmeActif, enviesDe, poidsRang, hacher, limiteTouche, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
+import { calculer, critereChangerAvis, dilemmeActif, enviesDe, poidsEnvie, hacher, limiteTouche, situationPosable, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
 
 export const chapitreDe = (id: string) => trouverElement(id)?.chapitre ?? 0;
 export const CHAPITRES = quiz.chapitres;
@@ -20,6 +20,15 @@ export const topCourant = (etat: Etat, n = 5): Ligne[] => calculer(etat).filter(
 // ---------- Un élément peut-il être posé ? ----------
 export function elementVisible(el: Element, etat: Etat): boolean {
   if (!conditionRemplie(el.condition, etat.profil)) return false;
+  if (!relanceOuverte(el, etat.reponses)) return false;
+  // Les critères en trois temps : le plus dur à sacrifier (2 critères ou plus), le second plan (3 ou plus).
+  const nbCriteres = Array.isArray(etat.reponses.envies) ? etat.reponses.envies.length : 0;
+  if (el.type === "choix-cartes" && el.source === "envies-choisies") return nbCriteres >= 2;
+  if (el.type === "choix-cartes" && el.source === "envies-second") return nbCriteres >= 3;
+  if (el.type === "choix-cartes" && el.source === "envies-restantes") return etat.reponses.envies !== undefined;
+  // Une famille de limites n'est posée que si une de ses situations touche un de tes 10 premiers pays :
+  // sinon, elle ne pourrait rien changer (elle est citée dans « Ce qu'on ne t'a pas demandé »).
+  if (el.type === "tri-limites") return situationsLimites(el, etat).length > 0;
   if (el.type === "dilemme") {
     if (!dilemmeActif(el)) return false;
     if (!conditionRemplie(el.afficheSi, etat.profil)) return false;
@@ -93,6 +102,8 @@ export function etatAvant(etat: Etat, id: string): Etat {
 // ---------- Tes limites : 6 situations parmi 8 ----------
 // D'abord celles qui touchent le plus de pays parmi tes 10 premiers (elles peuvent changer ton classement),
 // puis les autres. À égalité, la graine du parcours décide.
+// Une famille de limites : ses situations posables à ton profil qui touchent au moins un de tes 10 premiers pays
+// (les autres ne pourraient rien changer). Dans l'ordre de la banque.
 export function situationsLimites(el: TriLimites, etat: Etat): Situation[] {
   const deja = etat.reponses[el.id];
   if (deja && typeof deja === "object" && !Array.isArray(deja)) {
@@ -102,7 +113,9 @@ export function situationsLimites(el: TriLimites, etat: Etat): Situation[] {
   if (deja !== undefined) return situationsLimites(el, etatAvant(etat, el.id));
   const dix = topCourant(etat, 10);
   return el.situations
+    .filter((s) => situationPosable(s.id, etat.profil))
     .map((s) => ({ s, n: dix.filter((l) => limiteTouche(s.id, l.pays.id, etat.profil)).length, h: hacher(etat.graine, `limite:${s.id}`) }))
+    .filter((x) => x.n > 0)
     .sort((a, b) => b.n - a.n || a.h - b.h)
     .slice(0, el.nombre)
     .map((x) => x.s)
@@ -132,10 +145,12 @@ export type Candidat = { el: Element; score: number };
 // - Départage : l'écart que les réponses possibles creuseraient entre tes 5 premiers pays (0 à 4), plus 0,15.
 export function importance(d: string, etat: Etat): number {
   let imp = 1;
-  enviesDe(etat).forEach((id, rang) => {
+  for (const id of [...enviesDe(etat), critereChangerAvis(etat)]) {
+    if (!id) continue;
     const en = quiz.envies.find((e) => e.id === id);
-    if (en?.mesures.some((m) => (dimensionDe[m] ?? m) === d)) imp = Math.max(imp, 1 + poidsRang(rang));
-  });
+    const poids = poidsEnvie(etat, id) || quiz.poidsCriteres.changerAvis;
+    if (en?.mesures.some((m) => (dimensionDe[m] ?? m) === d)) imp = Math.max(imp, 1 + poids);
+  }
   const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
   if (obj?.effets.some((e) => e.mesures.some((m) => (dimensionDe[m] ?? m) === d))) imp += 0.5;
   if (d === "secteur" && conditionRemplie("secteur-choisi", etat.profil)) imp += 0.5;
@@ -245,8 +260,15 @@ export function chapitreFini(etat: Etat, c: number, restants: Element[]): boolea
 }
 
 export const PART_MEILLEUR = 0.6;
+// Les relances ne sont jamais tirées au hasard : elles viennent juste après l'élément qu'elles prolongent.
 export function candidatsAdaptatifs(etat: Etat, chapitres: number[]): Element[] {
-  return quiz.elements.filter((el) => chapitres.includes(el.chapitre) && etat.reponses[el.id] === undefined && elementVisible(el, etat));
+  return quiz.elements.filter((el) => chapitres.includes(el.chapitre) && !el.relanceDe && etat.reponses[el.id] === undefined && elementVisible(el, etat));
+}
+// La relance de la dernière réponse, si elle s'ouvre (« Et si… l'autre offre s'améliorait ? »).
+export function relanceEnAttente(etat: Etat): Element | null {
+  const dernier = etat.ordre.at(-1);
+  if (!dernier) return null;
+  return quiz.elements.find((el) => el.relanceDe?.element === dernier && etat.reponses[el.id] === undefined && elementVisible(el, etat)) ?? null;
 }
 
 // Tirage au hasard (graine stable) parmi les éléments à au moins 60 % du meilleur score.
@@ -258,6 +280,8 @@ export function tirer(etat: Etat, candidats: Candidat[], cle: string): Element |
 }
 
 function prochainAdaptatif(etat: Etat, c: number): Element | null {
+  const relance = relanceEnAttente(etat);
+  if (relance && relance.chapitre === c) return relance;
   const restants = candidatsAdaptatifs(etat, [c]);
   if (chapitreFini(etat, c, restants)) return null;
   return tirer(etat, selection(etat, c, restants), `chapitre:${c}:${vusDans(etat, c).length}`);
@@ -273,19 +297,27 @@ export function prochainElement(etat: Etat): Element | null {
       if (el) return el;
       continue;
     }
-    const el = quiz.elements.find((x) => x.chapitre === ch.numero && etat.reponses[x.id] === undefined && elementVisible(x, etat));
+    // Dans l'ordre de la banque, jamais en arrière : un élément sauté (non visible à son tour) n'est pas reposé plus tard.
+    const duChapitre = quiz.elements.filter((x) => x.chapitre === ch.numero);
+    const dernier = Math.max(-1, ...duChapitre.map((x, i) => (etat.reponses[x.id] !== undefined ? i : -1)));
+    const el = duChapitre.find((x, i) => i > dernier && etat.reponses[x.id] === undefined && elementVisible(x, etat));
     if (el) return el;
   }
   return null;
 }
 
-export const questionnaireFini = (etat: Etat) => etat.reponses.limites !== undefined && prochainElement(etat) === null;
+export const questionnaireFini = (etat: Etat) => etat.ordre.some((id) => chapitreDe(id) === NB_CHAPITRES) && prochainElement(etat) === null;
 
 // « Continuer pour affiner » : un élément de plus des chapitres 3 et 4, sans limite de nombre.
 // Le nombre de questions qui restent à affiner (chapitres 3 et 4).
-export const restantsAffiner = (etat: Etat) => candidatsAdaptatifs(etat, [3, 4]).length;
+export const restantsAffiner = (etat: Etat) => {
+  const relance = relanceEnAttente(etat);
+  return candidatsAdaptatifs(etat, [3, 4]).length + (relance && estAdaptatif(relance.chapitre) ? 1 : 0);
+};
 
 export function prochainAffiner(etat: Etat): Element | null {
+  const relance = relanceEnAttente(etat);
+  if (relance && estAdaptatif(relance.chapitre)) return relance;
   const restants = candidatsAdaptatifs(etat, [3, 4]);
   return tirer(etat, selection(etat, 0, restants), `affiner:${etat.ordre.length}`);
 }
@@ -299,3 +331,27 @@ export function resultatProvisoire(etat: Etat): boolean {
 
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).
 export const nombreEcrans = (etat: Etat) => etat.ordre.length;
+
+// ---------- « Ce qu'on ne t'a pas demandé, et pourquoi » ----------
+// Chaque élément de la banque qui n'a pas été posé, avec sa raison, regroupé par raison (écran final du questionnaire).
+export type NonDemande = { raison: string; titres: string[] };
+const titreCourt = (el: Element) => (el.type === "tri-limites" ? `Tes limites sur ${el.famille ?? el.theme}` : el.titre.replace(/\s*\?$/, ""));
+export function nonDemandes(etat: Etat): NonDemande[] {
+  const groupes = new Map<string, string[]>();
+  const noter = (raison: string, el: Element) => groupes.set(raison, [...(groupes.get(raison) ?? []), titreCourt(el)]);
+  for (const el of quiz.elements) {
+    if (etat.reponses[el.id] !== undefined) continue;
+    if (el.relanceDe && !relanceOuverte(el, etat.reponses)) { noter("Une question de suite, qui ne se pose qu’après certaines réponses : tes réponses ne l’ont pas ouverte.", el); continue; }
+    if (!conditionRemplie(el.condition, etat.profil) || (el.type === "dilemme" && !conditionRemplie(el.afficheSi, etat.profil))) { noter("Elle ne concerne pas ton profil (ton projet, ton secteur, tes langues).", el); continue; }
+    if (el.type === "dilemme" && !dilemmeActif(el)) { noter("Pas assez de données pays pour qu’elle compte.", el); continue; }
+    if (el.type === "tri-limites") { noter("Aucune de ces limites ne touchait tes 10 premiers pays : elles n’auraient rien changé.", el); continue; }
+    if (el.type === "choix-cartes" && el.source?.startsWith("envies")) { noter("Tu as choisi trop peu de critères pour qu’on te la pose.", el); continue; }
+    if (estAdaptatif(el.chapitre)) {
+      if (el.dejaCouvertPar?.some((id) => etat.reponses[id] !== undefined)) noter("Une autre de tes réponses disait déjà la même chose.", el);
+      else noter("Elle aurait peu départagé tes premiers pays : on a préféré des questions plus utiles pour toi.", el);
+      continue;
+    }
+    noter("Elle n’était pas utile à ce moment du parcours.", el);
+  }
+  return [...groupes].map(([raison, titres]) => ({ raison, titres: [...new Set(titres)] }));
+}

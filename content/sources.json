@@ -370,5 +370,61 @@
     "url": "https://www.gub.uy/ministerio-trabajo-seguridad-social/",
     "licence": "Lien seulement, aucun contenu copié",
     "type": "officiel"
+  },
+  "nasa-power": {
+    "nom": "NASA Langley Research Center, projet POWER (climatologie 2001-2020)",
+    "url": "https://power.larc.nasa.gov/",
+    "licence": "Aucune restriction indiquée ; citer NASA POWER",
+    "type": "donnee-ouverte",
+    "page": "https://power.larc.nasa.gov/docs/"
+  },
+  "oms-uhc": {
+    "nom": "Organisation mondiale de la santé, Global Health Observatory (indice de couverture des services de santé essentiels, ODD 3.8.1)",
+    "url": "https://www.who.int/data/gho",
+    "licence": "CC BY-NC-SA 3.0 IGO (usage non commercial)",
+    "type": "donnee-ouverte",
+    "page": "https://www.who.int/data/gho/data/indicators/indicator-details/GHO/uhc-index-of-service-coverage"
+  },
+  "bm-wgi-rl": {
+    "nom": "Banque mondiale, Indicateurs mondiaux de gouvernance (État de droit)",
+    "url": "https://www.worldbank.org/ext/en/legal/terms-conditions/datasets",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte",
+    "page": "https://www.worldbank.org/en/publication/worldwide-governance-indicators"
+  },
+  "vdem": {
+    "nom": "V-Dem (Varieties of Democracy) v16, republié par Our World in Data",
+    "url": "https://www.v-dem.net/",
+    "licence": "CC BY-SA 4.0",
+    "type": "donnee-ouverte",
+    "page": "https://ourworldindata.org/grapher/freedom-of-expression-index"
+  },
+  "wef-gggr": {
+    "nom": "Forum économique mondial, Global Gender Gap Report 2026",
+    "url": "https://www.weforum.org/publications/global-gender-gap-report-2026/",
+    "licence": "Reproduction autorisée en citant le WEF ; la transformation en note est signalée ici",
+    "type": "donnee-ouverte",
+    "page": "https://www.weforum.org/publications/global-gender-gap-report-2026/"
+  },
+  "oit-normlex": {
+    "nom": "Organisation internationale du travail, NORMLEX (ratifications)",
+    "url": "https://normlex.ilo.org/",
+    "licence": "CC BY 4.0",
+    "type": "donnee-ouverte",
+    "page": "https://normlex.ilo.org/dyn/nrmlx_fr/"
+  },
+  "yale-epi": {
+    "nom": "Yale Center for Environmental Law & Policy, Environmental Performance Index 2026",
+    "url": "https://epi.yale.edu/",
+    "licence": "CC BY-NC-SA 4.0 (usage non commercial)",
+    "type": "donnee-ouverte",
+    "page": "https://epi.yale.edu/"
+  },
+  "nd-gain": {
+    "nom": "Notre Dame Global Adaptation Initiative, ND-GAIN Country Index",
+    "url": "https://gain.nd.edu/our-work/country-index/",
+    "licence": "CC BY 3.0",
+    "type": "donnee-ouverte",
+    "page": "https://gain.nd.edu/our-work/country-index/"
   }
 }

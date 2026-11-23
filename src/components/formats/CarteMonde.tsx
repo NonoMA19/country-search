@@ -168,7 +168,7 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
 
   return (
     <>
-      <EnTete element={el} titreId={titreId} />
+      <EnTete element={el} etat={etat} titreId={titreId} />
       <div className="relative mt-5">
         <svg ref={svg} viewBox={`0 0 ${L} ${H}`} role="img" data-valeur={valeurFinale.join(" ")} aria-labelledby="carte-titre" aria-describedby="carte-resume"
           className={`block w-full touch-none rounded-2xl bg-creux select-none ${plein ? "cursor-default" : "cursor-crosshair"}`}
