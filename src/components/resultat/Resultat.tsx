@@ -21,7 +21,7 @@ import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
   CATEGORIES, GROUPES, complementMesure, groupesEgalite, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict, LIBELLE_ACCES,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { accord, trouverPays } from "@/lib/pays";
@@ -110,6 +110,29 @@ function Mesures({ ligne, etat }: { ligne: Ligne; etat: Etat }) {
   );
 }
 
+// Les deux mesures d'un pays : « Il te ressemble » (tes goûts) et « Il t'est accessible » (porte d'entrée, budget, durée,
+// famille, tes limites). Le classement les combine (voir /methode#deux-mesures). Les obstacles sont dits en mots.
+function DeuxMesures({ ligne }: { ligne: Ligne }) {
+  const barre = (v: number) => (
+    <span aria-hidden="true" className="mt-1 block h-2 overflow-hidden rounded-full bg-bord"><span className="jauge block h-full rounded-full bg-bleu" style={{ width: `${Math.round(v)}%` }} /></span>
+  );
+  return (
+    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="rounded-2xl border border-bord p-3">
+        <p className="flex items-baseline justify-between gap-2"><span className="font-semibold">Il te ressemble</span><span className="font-semibold tabular-nums">{Math.round(ligne.ressemble)}{"\u00a0"}%</span></p>
+        {barre(ligne.ressemble)}
+        <p className="mt-1 text-sm text-gris">Tes critères et tes réponses, face aux données du pays.</p>
+      </div>
+      <div className="rounded-2xl border border-bord p-3">
+        <p className="flex items-baseline justify-between gap-2"><span className="font-semibold">Il t’est accessible</span><span className="font-semibold tabular-nums">{Math.round(ligne.acces)}{"\u00a0"}%</span></p>
+        {barre(ligne.acces)}
+        <p className="mt-1 text-sm text-gris">{LIBELLE_ACCES(ligne.acces)}{ligne.obstacles.length ? "\u00a0:" : ", sans obstacle pour ton profil."}</p>
+        {ligne.obstacles.length > 0 && <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm">{ligne.obstacles.map((o) => <li key={o.texte}>{o.texte}</li>)}</ul>}
+      </div>
+    </div>
+  );
+}
+
 function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = false }: { ligne: Ligne; rang: number; egalite: string | null; etat: Etat; points: PointsPays; budget: Budget | null; provisoire?: boolean }) {
   const [enCours, setEnCours] = useState(false);
   const [erreur, setErreur] = useState(false);
@@ -147,6 +170,7 @@ function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = fa
           </p>
         </div>
       </div>
+      <DeuxMesures ligne={ligne} />
       <BadgeFiabilite f={ligne.fiabilite} paysId={ligne.pays.id} />
 
       <PointsParCategorie points={points} pays={p.nom} />
@@ -226,7 +250,7 @@ function Glissement({ cle, children }: { cle: string; children: ReactNode }) {
 
 // « Moins adaptés pour toi » : une seule phrase par raison, en tête de groupe.
 // « Fermé à ton âge » regroupe les pays, la porte de chacun reste écrite sous son nom.
-const FERME = "Fermé à ton âge.";
+const FERME = "Fermé à ton âge pour un PVT.";
 function groupesEcart(lignes: Ligne[]) {
   const groupes = new Map<string, { ligne: Ligne; detail: string | null }[]>();
   for (const l of lignes) {
@@ -255,7 +279,7 @@ function LignePays({ ligne, rang, egalite, action, raison }: { ligne: Ligne; ran
         {egalite && <span className="text-xs text-gris">{egalite}</span>}
       </div>
       {raison !== undefined ? raison && <p className="mt-2 pl-9 text-sm text-gris">{raison}</p> : ligne.ecart && <p className="mt-2 pl-9 text-sm text-gris">{ligne.ecart}</p>}
-      {ligne.manquePrincipal.length > 0 && <p className="mt-2 pl-9 text-sm text-gris">Donnée manquante{ligne.manquePrincipal.length > 1 ? "s" : ""}{"\u00a0"}: {ligne.manquePrincipal.join(", ")}. Elle porte sur une de tes 3 premières envies : ce pays ne peut pas entrer dans ton top 3 tant qu’elle n’est pas vérifiée.</p>}
+      {ligne.manquePrincipal.length > 0 && <p className="mt-2 pl-9 text-sm text-gris">Donnée manquante{ligne.manquePrincipal.length > 1 ? "s" : ""}{"\u00a0"}: {ligne.manquePrincipal.join(", ")}. Elle porte sur un de tes 3 premiers critères : ce pays ne peut pas entrer dans ton top 3 tant qu’elle n’est pas vérifiée.</p>}
       {ligne.peuDeDonnees && !ligne.manquePrincipal.length && <p className="mt-2 pl-9 text-sm text-gris">Trop peu de données vérifiées pour ce pays sur ce qui compte pour toi : on n’affiche pas de pourcentage.</p>}
       {action && <div className="mt-2 pl-9">{action}</div>}
     </li>
@@ -402,7 +426,7 @@ export default function Resultat() {
               <p className="font-medium">Tu as passé toutes les questions qui comptent pour le classement : on ne peut pas encore classer les pays pour toi.</p>
               <p className="mt-3 font-semibold">Réponds au moins à ces 3 questions, celles qui comptent le plus :</p>
               <div className="mt-2 grid gap-2 lg:flex lg:flex-wrap">
-                {[["envies", "Tes 5 envies"], ["objectif", "Ton projet"], ["limites", "Tes limites"]].map(([id, nom]) => (
+                {[["envies", "Tes critères"], ["objectif", "Ton projet"], ["valeurs", "Tes valeurs"]].map(([id, nom]) => (
                   <button key={id} type="button" onClick={() => revoirQuestion(id)} className="min-h-12 rounded-2xl border border-bord px-4 text-left font-semibold hover:border-bleu">{nom}</button>
                 ))}
               </div>
@@ -536,19 +560,13 @@ export default function Resultat() {
         </details>}
         {ecartes.length > 0 && (
           <div className="mt-6">
-            <h3 className="font-semibold">Moins adaptés pour toi</h3>
-            <p className="mt-1 text-sm text-gris">Ces pays restent visibles. Tu peux les remonter dans ton classement.</p>
+            <h3 className="font-semibold">Fermés par la loi pour ton projet</h3>
+            <p className="mt-1 text-sm text-gris">Ce n’est pas une préférence : la règle du visa ne permet pas ton projet ici, à ton âge. Ces pays restent visibles, avec l’autre porte possible.</p>
             {groupesEcart(ecartes).map((g) => (
               <div key={g.raison} className="mt-4">
                 <p className="font-medium">{g.raison}</p>
                 <ul className="mt-2 grid gap-2 lg:grid-cols-2 xl:grid-cols-3">
-                  {g.lignes.map(({ ligne: l, detail }) => (
-                    <LignePays key={l.pays.id} ligne={l} raison={detail} action={
-                      <button type="button" onClick={() => remonter(l.pays.id)} className="inline-flex min-h-11 items-center gap-1.5 rounded-xl border border-bord px-3 text-sm font-medium hover:border-bleu">
-                        <ArrowUp aria-hidden="true" className="h-4 w-4" /> Le remonter
-                      </button>
-                    } />
-                  ))}
+                  {g.lignes.map(({ ligne: l, detail }) => <LignePays key={l.pays.id} ligne={l} raison={detail} />)}
                 </ul>
               </div>
             ))}

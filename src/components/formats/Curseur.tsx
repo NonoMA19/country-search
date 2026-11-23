@@ -22,9 +22,6 @@ export default function Curseur({ element: el, valeur, repondre, passer, libelle
           <span className="min-w-0">{el.gauche.label}</span>
           <span className="min-w-0 text-right">{el.droite.label}</span>
         </div>
-        <p className="mt-4 text-sm text-gris">
-          {el.gauche.label} : importance {((100 - v) / 100).toLocaleString("fr-FR")} · {el.droite.label} : importance {(v / 100).toLocaleString("fr-FR")}
-        </p>
       </div>
       <Actions passer={passer} libellePasser={libellePasser}>
         <button type="button" onClick={() => repondre(v)} data-valider className={BOUTON_PLEIN}>Valider</button>

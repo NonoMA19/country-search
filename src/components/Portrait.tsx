@@ -4,7 +4,7 @@ import type { LignePortrait, Portrait as TPortrait } from "@/lib/portrait";
 // Ton portrait : un titre, des phrases courtes tirées de tes réponses, une contradiction s'il y en a une,
 // et « Ce qu'on va chercher pour toi ». « Ce n'est pas moi » rouvre la question concernée (si « revoir » est fourni).
 export default function Portrait({ portrait, revoir, compact = false }: { portrait: TPortrait; revoir?: (l: LignePortrait) => void; compact?: boolean }) {
-  const { titre, lignes, contradiction, cherche } = portrait;
+  const { titre, lignes, contradiction, cherche, portraitSeul } = portrait;
   if (lignes.length === 0) return <p className="text-gris">Tu n’as pas encore assez répondu pour qu’on te décrive.</p>;
   const pasMoi = (l: LignePortrait) => revoir && l.revoir && (
     <button type="button" onClick={() => revoir(l)} className="mt-1 ml-8 inline-flex min-h-11 items-center text-sm font-medium text-lien underline" aria-label={`Ce n’est pas moi : ${l.texte}`}>
@@ -42,6 +42,12 @@ export default function Portrait({ portrait, revoir, compact = false }: { portra
           </p>
           {!compact && pasMoi(contradiction)}
         </div>
+      )}
+      {portraitSeul.length > 0 && (
+        <p className={`mt-4 text-sm leading-snug text-gris ${compact ? "" : "rounded-2xl bg-creux px-4 py-3"}`}>
+          <span className="font-semibold text-encre">Enrichit ton portrait, sans changer ton classement{"\u00a0"}: </span>
+          {portraitSeul.join(", ")}. Pas encore de donnée pays pour au moins 30 pays sur 38, ou une source qui interdit de transformer sa note.
+        </p>
       )}
       {cherche.length > 0 && (
         <div className="mt-4">

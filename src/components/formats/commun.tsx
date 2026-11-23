@@ -4,7 +4,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import Icone from "@/components/Icone";
 import Pourquoi from "@/components/Pourquoi";
 import type { Element, Valeur } from "@/lib/donnees";
-import type { Etat } from "@/lib/moteur";
+import { aideDe, type Etat } from "@/lib/moteur";
 
 // Ce que reçoit chaque format : l'élément, l'état du parcours, la réponse déjà donnée (pour « revoir »),
 // et deux fonctions : répondre (avec une valeur au schéma commun) ou passer.
@@ -34,13 +34,13 @@ export function PourquoiEcran({ aide, id }: { aide: Element["aide"]; id: string 
 }
 
 // Le haut de chaque écran : le thème en pastille, la question (titre de l'écran, reçoit le focus), une phrase, « Pourquoi ».
-export function EnTete({ element, titreId = "titre-ecran", titre, texte }: { element: Element; titreId?: string; titre?: string; texte?: string }) {
+export function EnTete({ element, titreId = "titre-ecran", titre, texte, etat }: { element: Element; titreId?: string; titre?: string; texte?: string; etat?: Etat }) {
   return (
     <>
       <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">{element.theme}</p>
       <h1 id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{titre ?? element.titre}</h1>
       {(texte ?? element.texte) && <p className="mt-2 text-lg leading-snug">{texte ?? element.texte}</p>}
-      <PourquoiEcran id={element.id} aide={element.aide} />
+      <PourquoiEcran id={element.id} aide={aideDe(element, etat?.profil)} />
     </>
   );
 }

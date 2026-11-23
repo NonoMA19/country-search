@@ -3,6 +3,11 @@
 import type { ComponentType } from "react";
 import type { TypeElement } from "@/lib/donnees";
 import Ambiances from "./Ambiances";
+import BlindTest from "./BlindTest";
+import Enveloppe from "./Enveloppe";
+import Seuil from "./Seuil";
+import Timeline from "./Timeline";
+import TriZones from "./TriZones";
 import CarteMonde from "./CarteMonde";
 import ChoixCartes from "./ChoixCartes";
 import Classement from "./Classement";
@@ -24,4 +29,9 @@ export const FORMATS: Record<TypeElement, ComponentType<PropsFormat<any>>> = {
   "carte-monde": CarteMonde,
   "tri-limites": TriLimites,
   dilemme: Dilemme,
+  timeline: Timeline,
+  enveloppe: Enveloppe,
+  seuil: Seuil,
+  "tri-zones": TriZones,
+  "blind-test": BlindTest,
 };

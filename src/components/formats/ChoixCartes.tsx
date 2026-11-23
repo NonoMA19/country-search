@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Check } from "lucide-react";
 import Icone from "@/components/Icone";
 import type { ChoixCartes as TChoix } from "@/lib/donnees";
-import { optionsDe } from "@/lib/elements";
-import { envieDisponible, raisonEnvieIndisponible } from "@/lib/moteur";
+import { AUCUN, optionsDe } from "@/lib/elements";
+import { envieDisponible, raisonEnviePortrait, raisonEnvieIndisponible } from "@/lib/moteur";
 import { Actions, BOUTON_PLEIN, EnTete, FOCUS, PlusMoins, type PropsFormat } from "./commun";
 
 // Les options « ne sait pas » : sur téléphone, elles sortent de la grille et deviennent un bouton discret dessous.
@@ -39,10 +39,13 @@ function Tuile({ o, actif, desactive, onClick, idBase, classe = "" }: { o: Opt; 
 export default function ChoixCartes({ element: el, etat, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TChoix>) {
   const initial = Array.isArray(valeur) ? valeur : [];
   const [choisies, setChoisies] = useState<string[]>(initial);
-  const options: Opt[] = optionsDe(el).map((o) => ({ ...o, indispo: el.source === "envies" ? raisonEnvieIndisponible(o.id, etat.profil) : null }))
-    .filter((o) => el.source !== "envies" || envieDisponible(o.id, etat.profil) || o.indispo);
+  const critere = !!el.source?.startsWith("envies");
+  // Un critère sans donnée pays pour 30 pays reste choisissable : sa carte dit qu'il enrichit le portrait.
+  const options: Opt[] = optionsDe(el, etat.reponses).map((o) => ({ ...o, indispo: el.source === "envies" ? raisonEnvieIndisponible(o.id, etat.profil) : null, phrase: critere ? (raisonEnviePortrait(o.id, etat.profil) ?? undefined) : o.phrase }))
+    .filter((o) => !critere || envieDisponible(o.id, etat.profil) || o.indispo);
   const nombre = el.nombre;
-  const plein = nombre !== undefined && choisies.length >= nombre;
+  const plafond = nombre ?? el.max;
+  const plein = plafond !== undefined && choisies.length >= plafond;
   const basculer = (id: string) => setChoisies((c) => (c.includes(id) ? c.filter((x) => x !== id) : plein ? c : [...c, id]));
   const avecImage = !el.sansImage;
   const estActif = (id: string) => (el.multiple ? choisies.includes(id) : valeur === id);
@@ -51,7 +54,7 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
 
   return (
     <>
-      <EnTete element={el} titreId={titreId} />
+      <EnTete element={el} etat={etat} titreId={titreId} />
       {avecImage ? (
         <>
           <div className="mt-5 grid auto-rows-fr grid-cols-2 gap-2 sm:grid-cols-3" role="group" aria-labelledby={titreId ?? "titre-ecran"}>
@@ -107,7 +110,18 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
       )}
       {el.multiple ? (
         <Actions passer={passer} libellePasser={libellePasser}>
-          {nombre !== undefined ? (
+          {el.max !== undefined && nombre === undefined ? (
+            <>
+              <p className="pb-1 text-center text-sm text-gris" aria-live="polite">{choisies.length} sur {el.max} au plus</p>
+              {choisies.length > 0 ? (
+                <button type="button" onClick={() => repondre(choisies)} data-valider className={BOUTON_PLEIN}>Continuer ({choisies.length})</button>
+              ) : el.aucun ? (
+                <button type="button" data-valider onClick={() => repondre([])} className={`min-h-14 w-full rounded-2xl border-2 border-bord bg-carte px-5 text-lg font-semibold hover:border-bleu lg:w-auto lg:min-w-64 ${FOCUS}`}>{el.aucun}</button>
+              ) : (
+                <button type="button" disabled className={BOUTON_PLEIN}>Choisis au moins 1</button>
+              )}
+            </>
+          ) : nombre !== undefined ? (
             <>
               <p className="pb-1 text-center text-sm text-gris" aria-live="polite">{choisies.length === nombre ? `${nombre} choisies.` : `${choisies.length} sur ${nombre}`}</p>
               <button type="button" disabled={choisies.length !== nombre} onClick={() => repondre(choisies)} data-valider className={BOUTON_PLEIN}>
@@ -121,7 +135,9 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
           )}
         </Actions>
       ) : (
-        <Actions passer={passer} libellePasser={libellePasser} />
+        <Actions passer={passer} libellePasser={libellePasser}>
+          {el.aucun && <button type="button" data-valider onClick={() => repondre(AUCUN)} className={`min-h-12 w-full rounded-2xl border-2 border-bord bg-carte px-5 text-base font-semibold hover:border-bleu lg:w-auto ${FOCUS}`}>{el.aucun}</button>}
+        </Actions>
       )}
     </>
   );

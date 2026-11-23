@@ -100,7 +100,7 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
 
   return (
     <>
-      <EnTete element={el} titreId={titreId} />
+      <EnTete element={el} etat={etat} titreId={titreId} />
       <div className="mt-4 flex items-center justify-center gap-2" role="img" aria-label={`Phrase ${Math.min(i + 1, phrases.length)} sur ${phrases.length}`}>
         {phrases.map((p, k) => <span key={p.id} className={`h-2.5 w-2.5 rounded-full transition-colors ${k < i ? "bg-bleu" : k === i ? "bg-bleu/50 ring-2 ring-bleu ring-offset-2 ring-offset-fond" : "bg-bord"}`} />)}
       </div>

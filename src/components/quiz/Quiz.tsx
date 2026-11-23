@@ -16,8 +16,8 @@ import { quiz, trouverElement, type Aide, type Element, type Valeur } from "@/li
 import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
-import { annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
-import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
+import { aideDe, annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
+import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
 import { portraitComplet, type LignePortrait } from "@/lib/portrait";
 
 export { BOUTON_PLEIN };
@@ -216,6 +216,40 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
   );
 }
 
+// « Ce qu'on ne t'a pas demandé, et pourquoi » : l'écran final du questionnaire.
+// Les éléments de la banque non posés, regroupés par raison ; ce que le site ne sait pas encore mesurer ; ce qu'il ne demande jamais.
+const PAS_ENCORE = ["le loyer par ville", "les impôts (ce qui reste sur 100 € bruts, au-delà du salaire moyen)", "les transports", "les écoles en français", "ton expérience pro et ton diplôme, que certains visas exigent"];
+function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => void }) {
+  const liste = nonDemandes(etat);
+  const n = liste.reduce((t, g) => t + g.titres.length, 0);
+  return (
+    <>
+      <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Avant ton résultat</p>
+      <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">Ce qu’on ne t’a pas demandé, et pourquoi</h1>
+      <p className="mt-2 text-lg leading-snug">Tu as répondu à {etat.ordre.length} écrans. {n} autres questions existent : voici pourquoi on ne te les a pas posées.</p>
+      <div className="mt-4 space-y-3">
+        {liste.map((g) => (
+          <details key={g.raison} className="rounded-2xl border border-bord bg-carte p-3">
+            <summary className="min-h-11 cursor-pointer py-1 font-semibold leading-snug">{g.raison} <span className="font-normal text-gris">({g.titres.length})</span></summary>
+            <ul className="mt-2 list-disc space-y-0.5 pl-5 text-sm">{g.titres.map((t) => <li key={t}>{t}</li>)}</ul>
+          </details>
+        ))}
+        <div className="rounded-2xl border border-bord bg-carte p-3">
+          <p className="font-semibold">Ce qu’on ne sait pas encore mesurer pour les 38 pays</p>
+          <p className="mt-1 text-sm">{PAS_ENCORE.join(" ; ")}. Ces sujets viendront quand des données ouvertes et comparables existeront.</p>
+        </div>
+        <div className="rounded-2xl border border-bord bg-carte p-3">
+          <p className="font-semibold">Ce qu’on ne te demandera jamais</p>
+          <p className="mt-1 text-sm">Tes opinions politiques, ta religion, ta santé. Tes réponses restent dans ton navigateur : rien n’est envoyé.</p>
+        </div>
+      </div>
+      <div className={`${BARRE_BAS} pt-3 pb-4 lg:py-0`}>
+        <button type="button" data-valider onClick={suite} className={BOUTON_PLEIN}>Continuer</button>
+      </div>
+    </>
+  );
+}
+
 const phraseRestants = (n: number) => (n > 1 ? `Encore ${n} questions possibles` : n === 1 ? "Encore 1 question possible" : "Plus aucune question à affiner");
 
 // Un écran de secours : jamais de page vide, toujours un bouton pour continuer.
@@ -289,7 +323,7 @@ export default function Quiz() {
   const envies = Array.isArray(etat.reponses.envies) && (etat.reponses.envies as string[]).length > 0;
   const apercu: Panneau = envies
     ? { top: topCourant(etat, 5).map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 })) }
-    : { attente: "Ton top apparaîtra ici dès que tu auras choisi tes envies." };
+    : { attente: "Ton top apparaîtra ici dès que tu auras choisi tes critères." };
   const aller = (e: Etape, autres: Partial<Session> = {}) => {
     if (!clicLibre()) return;
     marquerChangement();
@@ -304,10 +338,18 @@ export default function Quiz() {
   };
   const retourQuiz = () => (etat.ordre.length > 0 ? aller({ t: "quiz" }, { etat: annulerDerniere(etat) }) : null);
 
+  // ----- Ce qu'on ne t'a pas demandé, et pourquoi -----
+  if (etape.t === "pas-demande") {
+    return (
+      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourQuiz} panneau={apercu}>
+        <EcranPasDemande etat={etat} suite={() => aller({ t: "intuition" })} />
+      </Cadre>
+    );
+  }
+
   // ----- Ton intuition et tes réponses -----
   if (etape.t === "intuition") {
-    // Retour : rouvre tes limites. Si tu as affiné depuis, on les rouvre telles quelles, sans rien annuler.
-    const retourIntuition = () => (etat.ordre.at(-1) === "limites" ? retourQuiz() : aller({ t: "revoir", id: "limites", retour: "intuition" }));
+    const retourIntuition = () => aller({ t: "pas-demande" });
     return (
       <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourIntuition}>
         <EcranIntuition etat={etat} suite={() => aller({ t: "portrait" })} />
@@ -346,7 +388,7 @@ export default function Quiz() {
     {
       const F = FORMATS[el.type];
       return (
-        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller(apres)} panneau={{ aide: el.aide, ...apercu }}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller(apres)} panneau={{ aide: aideDe(el, etat.profil), ...apercu }}>
           <F key={el.id} element={el} etat={etat} valeur={etat.reponses[el.id]} libellePasser="Garder ma réponse"
             repondre={(v: Valeur) => aller(apres, { etat: changerReponse(etat, el.id, v) })} passer={() => aller(apres)} />
         </Cadre>
@@ -365,7 +407,7 @@ export default function Quiz() {
         aller(prochainAffiner(nouvel) ? { t: "affiner" } : { t: "portrait", fin: true }, { etat: nouvel });
       };
       return (
-        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })} panneau={{ aide: el.aide, ...apercu }}>
+        <Cadre cle={ecran} chapitre={el.chapitre} part={1} retour={() => aller({ t: "portrait" })} panneau={{ aide: aideDe(el, etat.profil), ...apercu }}>
           <p className="mb-2 text-sm font-medium text-gris">{phraseRestants(restantsAffiner(etat))}</p>
           <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
           <button type="button" onClick={() => aller({ t: "portrait" })} className="mt-3 min-h-11 text-sm font-medium text-lien underline">J’ai fini, revoir mon portrait</button>
@@ -378,8 +420,8 @@ export default function Quiz() {
   // ----- Le parcours : l'élément suivant -----
   const el = prochainElement(etat);
   if (!el) {
-    // Tout est répondu : ton intuition face à tes réponses, puis le portrait.
-    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "intuition" } }));
+    // Tout est répondu : ce qu'on ne t'a pas demandé, ton intuition face à tes réponses, puis le portrait.
+    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "pas-demande" } }));
     return <Chargement />;
   }
   // Un nouveau chapitre commence : son écran d'ouverture (à partir du chapitre 2).
@@ -396,7 +438,7 @@ export default function Quiz() {
   const top = adaptatif ? topCourant(etat, 3) : [];
   const change = etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre;
   return (
-    <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null} panneau={{ aide: el.aide, ...apercu, change }}>
+    <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null} panneau={{ aide: aideDe(el, etat.profil), ...apercu, change }}>
       <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
       {/* Téléphone et tablette : le top 3 sous la question (chapitres 3 et 4). Sur ordinateur, il est dans le panneau. */}
       {adaptatif && top.length > 0 && (
