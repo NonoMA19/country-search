@@ -85,7 +85,7 @@ const MESURES = [
     echelle: ["moins de 35", "de 35 à 45", "de 45 à 55", "de 55 à 65", "65 ou plus"], mots: ["très faible", "faible", "moyenne", "bonne", "très bonne"],
     fait: "La performance environnementale y est {mot}", court: "Environnement protégé", affichage: "{v} sur 100", decimales: 0, theme: "l’environnement", sujet: "la protection de l’environnement",
     etiquettes: ["Très faible", "Faible", "Moyenne", "Bonne", "Très bonne"],
-  }, texte: (v, r) => `Environmental Performance Index : ${fr(v, 0)} sur 100 (édition 2026, Yale). Il combine la santé environnementale (air, eau), les écosystèmes et le climat.` },
+  }, texte: (v) => `Environmental Performance Index : ${fr(v, 0)} sur 100 (édition 2026, Yale). Il combine la santé environnementale (air, eau), les écosystèmes et le climat.` },
   { fichier: "risques-climat-ndgain.csv", source: "nd-gain", critere: "valeurs", m: {
     id: "climat-prepare", nom: "Préparation face au changement climatique (ND-GAIN, sur 100)", sens: "haut", unite: "sur 100", bornes: [45, 52, 59, 66], notes: [1, 2, 3, 4, 5],
     echelle: ["moins de 45", "de 45 à 52", "de 52 à 59", "de 59 à 66", "66 ou plus"], mots: ["très vulnérable", "vulnérable", "moyennement préparé", "bien préparé", "très bien préparé"],

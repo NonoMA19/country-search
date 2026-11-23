@@ -1177,6 +1177,44 @@
           "Pas tes langues",
           "Tu parles la langue"
         ]
+      },
+      {
+        "id": "langue-cible",
+        "nom": "La langue que tu veux pratiquer y est officielle ou très parlée",
+        "sens": "haut",
+        "interne": true,
+        "regle": "Bonus : 5 si la langue choisie à la question « Quelle langue veux-tu pratiquer ? » est officielle ou très parlée dans le pays (content/saisie/avis.json), sinon rien (jamais de malus).",
+        "echelle": [
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "(niveau non utilisé)",
+          "on y parle une de tes langues"
+        ],
+        "mots": [
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "pas une de tes langues",
+          "une de tes langues"
+        ],
+        "fait": [
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On n’y parle aucune des langues que tu as cochées",
+          "On y parle une langue que tu parles déjà"
+        ],
+        "court": "La langue que tu veux pratiquer",
+        "theme": "la langue",
+        "sujet": "les langues que tu parles",
+        "etiquettes": [
+          "Pas tes langues",
+          "Pas tes langues",
+          "Pas tes langues",
+          "Pas tes langues",
+          "Tu parles la langue"
+        ]
       }
     ]
   },
