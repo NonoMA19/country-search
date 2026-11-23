@@ -218,7 +218,7 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
 
 // « Ce qu'on ne t'a pas demandé, et pourquoi » : l'écran final du questionnaire.
 // Les éléments de la banque non posés, regroupés par raison ; ce que le site ne sait pas encore mesurer ; ce qu'il ne demande jamais.
-const PAS_ENCORE = ["le loyer par ville", "les impôts (ce qui reste sur 100 € bruts, au-delà du salaire moyen)", "les transports", "les écoles en français", "ton expérience pro et ton diplôme, que certains visas exigent"];
+const PAS_ENCORE = ["Le loyer par ville", "les impôts (ce qui reste sur 100 € bruts, au-delà du salaire moyen)", "les transports", "les écoles en français", "ton expérience pro et ton diplôme, que certains visas exigent"];
 function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => void }) {
   const liste = nonDemandes(etat);
   const n = liste.reduce((t, g) => t + g.titres.length, 0);

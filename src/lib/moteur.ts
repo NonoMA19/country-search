@@ -1076,8 +1076,9 @@ export function paysSurprise(etat: Etat, lignes: Ligne[], top: Ligne[], reglages
   // Une seule de tes limites fait reculer ce pays : son score sans elle (même « Il te ressemble », accès sans cet obstacle).
   for (const l of lignes) {
     if (l.ecart || l.peuDeDonnees || dansTop.has(l.pays.id) || etat.remontes.includes(l.pays.id)) continue;
+    // Seulement une limite « Rédhibitoire » (seule limite qui touche ce pays) : un « Je préfère éviter » ne fait pas une surprise.
     const lim = l.obstacles.filter((o) => o.type === "limite");
-    if (lim.length !== 1) continue;
+    if (lim.length !== 1 || lim[0].niveau !== "redhibitoire") continue;
     const score = l.ressemble * facteurAcces(Math.min(100, l.acces + lim[0].points));
     const texte = situationDe(lim[0].limite ?? "")?.texte ?? lim[0].texte;
     candidats.push({ ligne: l, score, cause: "limite", phrase: `Seule ta limite «\u00a0${texte}\u00a0» fait reculer ce pays.`, argent: phraseArgent(l) });

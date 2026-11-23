@@ -55,6 +55,7 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
   if (ligne) {
     titre("Ton résultat");
     ecrire(`${Math.round(ligne.score)} % - ${verdict(Math.round(ligne.score))}. C’est un indicateur, pas une vérité.`);
+    ecrire(`Il te ressemble : ${Math.round(ligne.ressemble)} %. Il t’est accessible : ${Math.round(ligne.acces)} %${ligne.obstacles.length ? ` (${ligne.obstacles.map((o) => o.texte.replace(/\.$/, "")).join(" ; ")})` : ""}.`);
   }
   const laPorte = porte ?? ligne?.porte ?? null;
   if (laPorte) {

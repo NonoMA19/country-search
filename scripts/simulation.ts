@@ -48,6 +48,7 @@ const debut3: Record<string, number> = {}, debut4: Record<string, number> = {};
 const VARIANTES: [string, Partial<typeof REGLES>][] = [
   ["seuils en marches (sans notes continues)", { continu: false }],
   ["sans la règle des 30 pays", { seuilPays: 0 }],
+  ["sans la règle des 30 pays, seuils en marches (le salaire compte, comme avant)", { seuilPays: 0, continu: false }],
   ["accès pesant moitié moins (0,15 au lieu de 0,3)", { poidsAcces: 0.15 }],
   ["sans « Il t'est accessible » dans le classement", { poidsAcces: 0 }],
 ];

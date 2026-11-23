@@ -50,7 +50,7 @@ for (const mode of Object.keys(MODES)) {
   await page.keyboard.press("2");
   await page.waitForTimeout(500);
   const s = await lireSession(page);
-  verifier(s.etat.reponses.objectif !== undefined, "touche 2 : aucune réponse enregistrée au projet");
+  verifier(s.etat.reponses.motivation !== undefined, "touche 2 : aucune réponse enregistrée à la motivation");
   verifier((await titre(page)) !== avant, "touche 2 : l'écran n'a pas changé");
   await page.keyboard.press("Backspace");
   await page.waitForTimeout(500);
@@ -71,19 +71,6 @@ for (const mode of Object.keys(MODES)) {
   verifier((await titre(page)) !== avant, "Entrée : l'écran n'a pas été validé");
   await ctx.close();
 }
-{
-  // Dans le classement, une touche chiffre ou Entrée sur une poignée ne valide rien par erreur.
-  const { ctx, page } = await ouvrir("ordinateur", S.classement);
-  const avant = await titre(page);
-  await page.locator("[data-poignee]").first().focus();
-  await page.keyboard.press("Enter");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Enter");
-  await page.waitForTimeout(400);
-  verifier((await titre(page)) === avant, "classement : Entrée sur une poignée a validé l'écran");
-  await ctx.close();
-}
-
 // Résultat : sur ordinateur, la liste à gauche et la fiche à droite ; un clic change la fiche.
 {
   const { ctx, page } = await ouvrir("ordinateur", S.resultat, "/resultat");
@@ -111,7 +98,7 @@ for (const mode of Object.keys(MODES)) {
 // Aucun défilement horizontal, sur toutes les pages et largeurs.
 for (const largeur of [320, 375, 768, 1024, 1440, 1920]) {
   const ctx = await browser.newContext({ viewport: { width: largeur, height: 900 } });
-  for (const [url, session] of [["/", null], ["/quiz", S.classement], ["/quiz", S["carte-monde"]], ["/resultat", S.resultat], ["/methode", null], ["/pays/japon", null]]) {
+  for (const [url, session] of [["/", null], ["/quiz", S["carte-monde"]], ["/quiz", S.timeline], ["/quiz", S.enveloppe], ["/quiz", S["blind-test"]], ["/quiz", S.seuil], ["/quiz", S["tri-zones"]], ["/resultat", S.resultat], ["/methode", null], ["/pays/japon", null]]) {
     const page = await ctx.newPage();
     await page.addInitScript((s) => { sessionStorage.clear(); if (s) sessionStorage.setItem("country-search:quiz", s); }, session ? JSON.stringify(session) : null);
     await page.goto(BASE + url, { waitUntil: "networkidle" });

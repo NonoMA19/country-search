@@ -1,6 +1,6 @@
 # Ce qui reste « à vérifier »
 
-Liste tirée des données le 2026-11-22 (`npm run donnees`). Chaque point apparaît « à vérifier » dans le site et dans /methode, jamais comme une valeur ferme.
+Liste tirée des données le 2026-11-23 (`npm run donnees`). Chaque point apparaît « à vérifier » dans le site et dans /methode, jamais comme une valeur ferme.
 
 ## Emploi par secteur (5)
 

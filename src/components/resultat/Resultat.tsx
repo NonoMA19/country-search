@@ -396,7 +396,7 @@ export default function Resultat() {
     <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-8 sm:px-5 lg:max-w-6xl lg:px-8 lg:py-10">
       <h1 id="titre-resultat" tabIndex={-1} className="text-3xl font-bold tracking-tight outline-none">Ton résultat</h1>
       <p className="mt-2 text-gris">
-        Le pourcentage dit à quel point un pays te ressemble, d’après tes réponses. C’est un indicateur, pas une vérité.{" "}
+        Le pourcentage combine « Il te ressemble » (tes goûts face aux données) et « Il t’est accessible » (visa, budget, tes limites). C’est un indicateur, pas une vérité.{" "}
         <Link href="/methode" className="text-lien underline">Comment on calcule</Link>
       </p>
 
