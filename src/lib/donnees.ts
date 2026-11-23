@@ -68,6 +68,7 @@ export type Note = {
   resteSur100?: number; // salaire : ce qui reste sur 100 € bruts après impôt sur le revenu et cotisations (OCDE), hors score
   ville?: string | null; // indemnité VIE : la ville retenue pour le score
   autres?: { ville: string; montant: number | null }[]; // indemnité VIE : les autres villes du barème
+  mediane?: number; // secteurs : la médiane des pays notés (la note dépend du rapport à cette médiane)
 };
 
 // « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
@@ -80,6 +81,7 @@ export type Aide = { enjeu: string; cartes: { pastille: string; texte: string }[
 export type EffetDilemme = { mesures: string[]; poids?: number; position?: number };
 export type OptionDilemme = {
   id: string;
+  sansPenalite?: string[]; // une pénalité que cette réponse retire (« entreprise locale » : apprendre la langue n'en est plus une)
   effets: EffetDilemme[];
   portrait: string; // la phrase du portrait si tu choisis cette option
   portraitPeu?: string; // la phrase du portrait pour « Un peu A » (dilemmes en échelle)
@@ -103,7 +105,8 @@ export type Scene = {
 // Tout ce que le quiz montre est un élément : une question du profil, une carte, un dilemme, un curseur…
 // Chaque élément a un format (« type »), un chapitre, un thème, les dimensions du profil qu'il touche,
 // et des conditions d'apparition. Un composant React par format (src/components/formats).
-export type TypeElement = "choix-cartes" | "classement" | "curseur" | "swipe" | "ambiances" | "thermometre" | "carte-monde" | "tri-limites" | "dilemme";
+export type TypeElement = "choix-cartes" | "classement" | "curseur" | "swipe" | "ambiances" | "thermometre" | "carte-monde" | "tri-limites" | "dilemme"
+  | "timeline" | "enveloppe" | "seuil" | "tri-zones" | "blind-test";
 type BaseElement = {
   id: string;
   chapitre: number;
@@ -116,6 +119,9 @@ type BaseElement = {
   regleAffichage?: string;
   dejaCouvertPar?: string[]; // si l'un de ces éléments a déjà mesuré la même chose, celui-ci n'est posé que si la certitude reste faible
   obligatoire?: boolean; // toujours posé dans son chapitre
+  // Une relance : posée juste après l'élément cité, seulement s'il a reçu une de ces réponses
+  // (« argent », ou « libertes:indispensable » pour une carte rangée dans une zone).
+  relanceDe?: { element: string; reponses: string[] };
 };
 // Une carte (choix unique ou multiple). « profil » : la réponse remplit ce champ de ton profil (âge, projet…).
 export type OptionCarte = {
@@ -123,8 +129,11 @@ export type OptionCarte = {
   effets?: EffetDilemme[]; portrait?: string; sansPenalite?: string[]; citi?: string;
   ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[];
 };
+// source : les critères (« envies »), ceux que tu as choisis (« envies-choisies »), ceux qui restent pour le second plan
+// (« envies-second » : choisis, sauf le plus dur à sacrifier), ou ceux que tu n'as pas choisis (« envies-restantes »).
+export type SourceCartes = "envies" | "envies-choisies" | "envies-second" | "envies-restantes";
 export type ChoixCartes = BaseElement & {
-  type: "choix-cartes"; profil?: string; source?: "envies"; multiple?: boolean; nombre?: number; aucun?: string;
+  type: "choix-cartes"; profil?: string; source?: SourceCartes; multiple?: boolean; nombre?: number; max?: number; aucun?: string;
   sansImage?: boolean; avecPlusMoins?: boolean; options: OptionCarte[];
 };
 export type Classement = BaseElement & { type: "classement"; source: "envies" };
@@ -138,8 +147,20 @@ export type Zone = { id: string; label: string; detail?: string; pays: string[] 
 // zones : les 9 anciennes régions (réponses des parcours d'avant le prompt 4, simulation, tests) ;
 // groupes : les 6 boutons, alternative à la carte au clavier et au lecteur d'écran.
 export type CarteMonde = BaseElement & { type: "carte-monde"; zones: Zone[]; groupes: Zone[] };
-export type Situation = { id: string; texte: string; mesure: string; raison: string; dimension: string };
-export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; situations: Situation[] };
+export type Situation = { id: string; texte: string; mesure: string; raison: string; dimension: string; condition?: string };
+export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; famille?: string; situations: Situation[] };
+// La durée sur une frise, puis « et après ? » (rentrer, rester si tu te plais, repartir ailleurs).
+export type Timeline = BaseElement & { type: "timeline"; profil?: string; options: OptionCarte[]; apres: { id: string; label: string; portrait?: string }[] };
+// Une enveloppe en euros, réglée au curseur.
+export type Enveloppe = BaseElement & { type: "enveloppe"; profil?: string; min: number; max: number; pas: number; defaut: number };
+// Un seuil sur une mesure (« au-delà de 12 h de vol ») et ce qu'il en coûte : « je préfère éviter » ou « rédhibitoire ».
+// sens : « max » (au-delà du seuil, c'est trop) ou « min » (en dessous, c'est trop).
+export type Seuil = BaseElement & { type: "seuil"; mesure: string; unite: string; min: number; max: number; pas: number; defaut: number; sens: "max" | "min" };
+// Des cartes à ranger dans des zones (« Indispensable », « Un vrai plus », « Peu importe ») ; une carte non rangée ne compte pas.
+export type CarteZone = { id: string; label: string; mesures: string[]; portrait: string; phrase?: string };
+export type TriZones = BaseElement & { type: "tri-zones"; zones: { id: string; label: string }[]; cartes: CarteZone[] };
+// Le test à l'aveugle : quelques pays sans leur nom, quatre faits chacun, parmi ces mesures.
+export type BlindTest = BaseElement & { type: "blind-test"; nombre: number; faits: number; mesures: string[] };
 export type Dilemme = BaseElement & {
   type: "dilemme";
   echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B
@@ -148,8 +169,8 @@ export type Dilemme = BaseElement & {
   options: OptionDilemme[];
   scenes: Scene[];
 };
-export type Element = ChoixCartes | Classement | Curseur | Swipe | Ambiances | Thermometre | CarteMonde | TriLimites | Dilemme;
-export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curseur", "swipe", "ambiances", "thermometre", "carte-monde", "tri-limites", "dilemme"];
+export type Element = ChoixCartes | Classement | Curseur | Swipe | Ambiances | Thermometre | CarteMonde | TriLimites | Dilemme | Timeline | Enveloppe | Seuil | TriZones | BlindTest;
+export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curseur", "swipe", "ambiances", "thermometre", "carte-monde", "tri-limites", "dilemme", "timeline", "enveloppe", "seuil", "tri-zones", "blind-test"];
 
 // Le schéma de réponse commun : une valeur par élément, ou « passer ».
 // choix-cartes : un identifiant (ou une liste) ; classement et ambiances : une liste ; curseur : 0 à 100 ;
@@ -157,7 +178,9 @@ export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curs
 export type Valeur = string | string[] | number | Record<string, string>;
 
 export type Chapitre = { numero: number; titre: string; phrase: string; adaptatif?: boolean; min?: number; max?: number };
-export type Envie = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; parts?: number[] }; // parts : la part de chaque mesure (sinon, à parts égales)
+// Un critère du chapitre 2. parts : la part de chaque mesure (sinon, à parts égales) ; positions : pour une mesure « position »
+// (« Un vrai hiver » : hiver, position 1). Sans mesure (« Un logement abordable ») : il enrichit le portrait seulement.
+export type Envie = { id: string; label: string; icone: string; famille: FamilleScore; mesures: string[]; parts?: number[]; positions?: number[] };
 export type Dimension = { nom: string; mesures: string[] };
 
 // Budget : une tranche (« de 2 000 à 5 000 € ») : min et max en euros (pas de max pour « plus de 10 000 € »).
@@ -238,7 +261,7 @@ const banque = quizData as unknown as {
   chapitres: Chapitre[];
   objectifs: Record<string, Objectif>;
   envies: Envie[];
-  poidsRang: number[];
+  poidsCriteres: { sacrifice: number; milieu: number; second: number; seul: number; changerAvis: number };
   dimensions: Record<string, Dimension>;
   elements: Element[];
 };

@@ -4,7 +4,8 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element } from "@/lib/donnees";
 import { PASSER } from "@/lib/elements";
-import { LIBELLE_FIABILITE, topSansRegle, calculer, repondre, cleTop3, paysSurprise, sceneDe, type Etat, type NiveauFiabilite } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
+import { mesures, notes } from "@/lib/donnees";
 import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
@@ -15,6 +16,13 @@ const NB = Number(process.argv[2] ?? 5000);
 const pct = (n: number, d = NB) => `${((100 * n) / Math.max(1, d)).toFixed(1).replace(".", ",")} %`;
 const nombre = (x: number, dec = 1) => x.toFixed(dec).replace(".", ",");
 const top3 = (e: Etat) => calculer(e).filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+const EUROPE = new Set(pays.filter((p) => p.zone === "europe").map((p) => p.id));
+// Le n° 1 avec une règle changée, mêmes réponses (une copie de l'état : les calculs mis en mémoire ne servent pas).
+function n1Avec(e: Etat, regles: Partial<typeof REGLES>): Ligne | undefined {
+  const avant = { ...REGLES };
+  Object.assign(REGLES, regles);
+  try { return calculer({ ...e }).find((l) => !l.ecart && !l.peuDeDonnees); } finally { Object.assign(REGLES, avant); }
+}
 
 // La clé d'un écran pour comparer deux parcours : l'élément, et la scène montrée pour un dilemme.
 const cleEcran = (id: string, e: Etat) => {
@@ -36,6 +44,17 @@ const parcoursListe: Etat[] = [];
 const formats: Record<string, number> = {};
 const debut3: Record<string, number> = {}, debut4: Record<string, number> = {};
 
+// Les variantes : chaque règle du prompt 6 retirée seule (mêmes réponses).
+const VARIANTES: [string, Partial<typeof REGLES>][] = [
+  ["seuils en marches (sans notes continues)", { continu: false }],
+  ["sans la règle des 30 pays", { seuilPays: 0 }],
+  ["accès pesant moitié moins (0,15 au lieu de 0,3)", { poidsAcces: 0.15 }],
+  ["sans « Il t'est accessible » dans le classement", { poidsAcces: 0 }],
+];
+const n1Variantes: Record<string, Record<string, number>> = {};
+const porteurs: Record<string, number> = {};
+let nbN1Europe = 0, parAcces = 0;
+const bloques = { europe: 0, ailleurs: 0 }, neutres = { europe: 0, ailleurs: 0 }, vus = { europe: 0, ailleurs: 0 };
 for (let i = 0; i < NB; i++) {
   const etat = parcoursAuHasard(r);
   parcoursListe.push(etat);
@@ -56,6 +75,30 @@ for (let i = 0; i < NB; i++) {
   const d3 = adapt(3), d4 = adapt(4);
   if (d3) debut3[d3] = (debut3[d3] ?? 0) + 1;
   if (d4) debut4[d4] = (debut4[d4] ?? 0) + 1;
+
+  // Les règles du prompt 6, une par une : mêmes réponses, une seule règle changée.
+  for (const [nom, regles] of VARIANTES) {
+    const n1 = n1Avec(etat, regles);
+    if (n1) { (n1Variantes[nom] ??= {})[n1.pays.id] = (n1Variantes[nom][n1.pays.id] ?? 0) + 1; }
+  }
+  // Ce qui porte le n° 1 européen : les mesures où il prend le plus d'avance sur le meilleur pays hors d'Europe.
+  const lignesTout = calculer(etat).filter((l) => !l.ecart && !l.peuDeDonnees);
+  const premier = lignesTout[0];
+  const horsEurope = lignesTout.find((l) => !EUROPE.has(l.pays.id));
+  if (premier && horsEurope && EUROPE.has(premier.pays.id)) {
+    const parMesure = (l: Ligne) => new Map(l.details.map((d) => [d.mesure, d.poids * d.accord]));
+    const a = parMesure(premier), b = parMesure(horsEurope);
+    const avance = [...a].map(([m, v]) => ({ m, e: v - (b.get(m) ?? 0) })).sort((x, y) => y.e - x.e);
+    if (avance[0]?.e > 0) porteurs[avance[0].m] = (porteurs[avance[0].m] ?? 0) + 1;
+    if (premier.acces > horsEurope.acces && premier.ressemble <= horsEurope.ressemble) parAcces++;
+    nbN1Europe++;
+  }
+  // Couverture : les pays du top 10 de « Il te ressemble » qui ne peuvent pas entrer dans le top 3 faute de données.
+  for (const l of calculer(etat).filter((x) => !x.ecart).sort((x, y) => y.ressemble - x.ressemble).slice(0, 10)) {
+    if (l.peuDeDonnees) bloques[EUROPE.has(l.pays.id) ? "europe" : "ailleurs"]++;
+    neutres[EUROPE.has(l.pays.id) ? "europe" : "ailleurs"] += l.neutres.length;
+    vus[EUROPE.has(l.pays.id) ? "europe" : "ailleurs"]++;
+  }
 
   // Le projet : mêmes réponses, seul l'objectif change.
   if (i < 1000) {
@@ -89,6 +132,19 @@ for (const p of [...pays].sort((a, b) => (enN1[b.id] ?? 0) - (enN1[a.id] ?? 0) |
 // Part des pays européens en n° 1, et les pays qui dépassent 20 % de n° 1.
 const europeN1 = pays.filter((p) => p.zone === "europe").reduce((t, p) => t + (enN1[p.id] ?? 0), 0);
 console.log(`\nPart des pays européens en n° 1 : ${pct(europeN1)} ; pays au-dessus de 20 % de n° 1 : ${pays.filter((p) => (enN1[p.id] ?? 0) > 0.2 * NB).map((p) => `${p.nom} ${pct(enN1[p.id])}`).join(", ") || "aucun"}.`);
+console.log("Rappel : ces parcours sont tirés au hasard (réponses uniformes) ; ils mesurent le moteur, pas de vrais utilisateurs.");
+console.log("\nUne règle retirée à la fois (mêmes réponses) : part européenne en n° 1 ; les 3 premiers pays en n° 1");
+for (const [nom] of VARIANTES) {
+  const m = n1Variantes[nom] ?? {};
+  const eu = Object.entries(m).filter(([id]) => EUROPE.has(id)).reduce((t, [, n]) => t + n, 0);
+  console.log(`  ${nom.padEnd(48)} ${pct(eu).padStart(7)} ; ${Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id, n]) => `${pays.find((p) => p.id === id)?.nom} ${pct(n)}`).join(", ")}`);
+}
+console.log("\nCe qui porte le n° 1 européen (la mesure où il prend le plus d'avance sur le meilleur pays hors d'Europe) :");
+for (const [m, n] of Object.entries(porteurs).sort((a, b) => b[1] - a[1]).slice(0, 8)) console.log(`  ${(mesures[m]?.court ?? m).padEnd(40)} ${pct(n, nbN1Europe)}`);
+console.log(`  N° 1 européen grâce à l'accès seulement (il ressemble moins, mais il est plus accessible) : ${pct(parAcces, nbN1Europe)} des n° 1 européens.`);
+console.log(`\nCouverture des données (top 10 de « Il te ressemble ») : ne peuvent pas entrer dans le top 3 faute de données : Europe ${pct(bloques.europe, vus.europe)}, ailleurs ${pct(bloques.ailleurs, vus.ailleurs)} ; critères sans donnée (comptés à 50 %) par pays : Europe ${nombre(neutres.europe / Math.max(1, vus.europe), 2)}, ailleurs ${nombre(neutres.ailleurs / Math.max(1, vus.ailleurs), 2)}.`);
+console.log("Mesures notées pour moins de 30 pays (hors du classement) : " + Object.keys(mesures).filter((m) => !mesures[m].interne && !mesureClassante(m) && paysCouverts(m) > 0).map((m) => `${mesures[m].court ?? m} ${paysCouverts(m)}`).join(", ") + ".");
+console.log("\nNotes continues, exemple du salaire (marche → continue) : " + ["luxembourg", "suisse", "etats-unis", "pays-bas", "danemark", "allemagne", "belgique", "autriche"].map((id) => `${pays.find((p) => p.id === id)?.nom} ${notes[id]?.salaire?.valeur ?? "—"} $ : ${notes[id]?.salaire?.note ?? "—"} → ${noteContinue(id, "salaire")?.toFixed(2).replace(".", ",") ?? "—"}`).join(" ; ") + ".");
 console.log(`\nTop 3 différent selon le projet (mêmes réponses, 1 000 parcours) : ${pct(changeAvecObjectif, Math.min(NB, 1000))}.`);
 const tri = [...ecrans].sort((a, b) => a - b);
 console.log(`\nDurée : ${nombre(ecrans.reduce((a, b) => a + b, 0) / NB)} écrans en moyenne (min ${tri[0]}, max ${tri.at(-1)}, médiane ${tri[Math.floor(NB / 2)]}) ; moins de 18 écrans : ${pct(ecrans.filter((x) => x < 18).length)}.`);
@@ -168,13 +224,13 @@ for (const p of PROFILS_TYPES) {
 }
 
 // ---------- Profils fixes (prompt 3h) : six personnes types, leur top 3 ----------
-console.log("\nProfils fixes (prompt 3h) : top 3, puis les pays écartés du top 3 pour une donnée manquante sur une des 3 premières envies");
+console.log("\nProfils fixes (prompt 3h) : écrans, top 3 (score, « ressemble » / « accessible »), puis les pays écartés du top 3 pour une donnée manquante sur un des 3 premiers critères");
 for (const p of PROFILS_FIXES) {
   const etat = parcoursAuHasard(hasard(p.graine * 1000 + 7), { passer: 0, repondeur: repondeurFixe(p) });
   const lignes = calculer(etat);
   const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
   const manquants = lignes.filter((l) => !l.ecart && l.manquePrincipal.length && l.score > (top[2]?.score ?? 0)).map((l) => `${l.pays.nom} ${Math.round(l.score)} (${l.manquePrincipal.join(", ")})`);
-  console.log(`  ${p.nom}\n    top 3 : ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)}`).join(", ")}${manquants.length ? `\n    au-dessus du n° 3 mais écartés (donnée manquante) : ${manquants.join(" ; ")}` : ""}`);
+  console.log(`  ${p.nom}\n    ${etat.ordre.length} écrans ; top 3 : ${top.map((l) => `${l.pays.nom} ${Math.round(l.score)} (${Math.round(l.ressemble)} / ${l.acces})`).join(", ")}${manquants.length ? `\n    au-dessus du n° 3 mais écartés (donnée manquante) : ${manquants.join(" ; ")}` : ""}`);
 }
 
 // ---------- Cas limites (prompt 3g) : affiner jusqu'au bout, et tout passer ----------

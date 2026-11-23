@@ -47,23 +47,24 @@ export function origineEnMots(origine: string, etat: Etat): string | null {
   const [id, sous] = reste.split("/");
   if (origine === "carte") return "ta carte du début";
   if (origine === "langues") return "les langues que tu parles";
-  if (type === "envie") return `ton envie « ${quiz.envies.find((e) => e.id === id)?.label ?? id} »`;
+  if (type === "envie") return `ton critère «\u00a0${quiz.envies.find((e) => e.id === id)?.label ?? id}\u00a0»`;
   if (type === "objectif") return `ton projet (${quiz.objectifs[id]?.nom ?? id})`;
-  if (type === "limite") {
-    const el = trouverElement("limites");
-    const s = el?.type === "tri-limites" ? el.situations.find((x) => x.id === id) : undefined;
-    return s ? `ta limite « ${s.texte} »` : null;
+  if (origine === "element:changer-avis") {
+    const c = quiz.envies.find((e) => e.id === etat.reponses["changer-avis"]);
+    return c ? `l’avantage qui te ferait changer d’avis («\u00a0${c.label}\u00a0»)` : null;
   }
   const el = trouverElement(id);
   if (!el) return null;
+  if (el.type === "tri-zones") return `ta valeur «\u00a0${el.cartes.find((c) => c.id === sous)?.label ?? sous}\u00a0»`;
+  if (el.type === "blind-test") return "ton choix au test à l’aveugle";
   if (type === "dilemme" && el.type === "dilemme") return `ta réponse à « ${sceneDe(el, etat).titre} »`;
   if (el.type === "curseur") return "ton équilibre entre temps libre et salaire";
   if (el.type === "ambiances") return `le décor « ${el.options.find((o) => o.id === sous)?.label ?? sous} »`;
   if (el.type === "swipe") return `« ${el.phrases.find((p) => p.id === sous)?.texte ?? sous} »`;
   if (el.type === "choix-cartes") {
     const v = etat.reponses[id];
-    const o = el.options.find((x) => x.id === v);
-    return o ? `ton choix « ${o.label} »` : null;
+    const o = el.options.find((x) => (Array.isArray(v) ? v.includes(x.id) : x.id === v));
+    return o ? `ton choix «\u00a0${o.label}\u00a0»` : null;
   }
   return null;
 }

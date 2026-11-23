@@ -3,9 +3,9 @@
 // la source des réponses (déclaré : envies, limites, thermomètres, secteur ; déduit : dilemmes, curseur,
 // phrases, ambiances), et une certitude (faible, moyenne, forte) selon le nombre de réponses et leur cohérence.
 // Le calcul des scores lit la partie « importance » (profilCalcul, dans moteur.ts). Aucune IA.
-import { dimensionDe, mesures, quiz, trouverElement, type CarteMonde, type EffetDilemme, type Element, type Valeur } from "./donnees";
-import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, optionReponse, type Certitude } from "./elements";
-import { enviesDe, listeFr, profilCalcul, type Etat } from "./moteur";
+import { dimensionDe, mesures, quiz, trouverElement, type CarteMonde, type EffetDilemme, type Element } from "./donnees";
+import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, limitesDeclarees, objetReponse, optionReponse, relanceOuverte, type Certitude } from "./elements";
+import { enviesDe, envieClassante, listeFr, mesureClassante, profilCalcul, type Etat } from "./moteur";
 import { pays } from "./pays";
 import { lireCarte } from "./zones";
 
@@ -142,33 +142,29 @@ export const certitudeFaible = (el: Element, etat: Etat) => {
 export type Contradiction = { id: string; texte: string; reponses: string[]; revoir: string };
 const rangEnvie = (etat: Etat, id: string) => { const i = enviesDe(etat).indexOf(id); return i < 0 ? 99 : i + 1; };
 const rep = (etat: Etat, id: string) => etat.reponses[id];
-const swipe = (etat: Etat, p: string) => ((rep(etat, "phrases") ?? {}) as Record<string, string>)[p];
-const limite = (etat: Etat, s: string) => ((rep(etat, "limites") ?? {}) as Record<string, string>)[s];
-const nombre = (v: Valeur | undefined) => (typeof v === "number" ? v : null);
+// Une situation de tes limites, dans n'importe quelle famille.
+const limite = (etat: Etat, sit: string) => {
+  for (const el of quiz.elements) if (el.type === "tri-limites" && el.situations.some((x) => x.id === sit)) return objetReponse(etat.reponses[el.id])[sit];
+  return undefined;
+};
 
 export function contradictions(etat: Etat): Contradiction[] {
   const res: Contradiction[] = [];
-  // 1. « Vie pas chère » classée n° 1 ou 2, mais au moins deux fois l'option chère et bien payée.
-  const cheres = [rep(etat, "deux-offres") === "a" ? "deux-offres" : "", swipe(etat, "S3") === "oui" ? "phrases" : "", rep(etat, "mission-vie") === "a" ? "mission-vie" : ""].filter(Boolean);
-  if (rangEnvie(etat, "prix") <= 2 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "classement", texte: "Tu as classé « Vie pas chère » tout en haut, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
-  // 2. « Proche de la France », mais 12 h de vol pour Noël, c'est le jeu.
-  const loin = [rep(etat, "noel") === "b" || rep(etat, "noel") === "c" ? "noel" : "", swipe(etat, "S6") === "non" ? "phrases" : ""].filter(Boolean);
-  if (rangEnvie(etat, "proche") <= 3 && loin.length >= 1) res.push({ id: "proche", reponses: ["envie:proche", ...loin], revoir: loin[0], texte: "Tu as choisi « Proche de la France » parmi tes envies, mais un long vol pour rentrer ne te gêne pas vraiment. On garde la distance dans ton calcul, avec son rang." });
-  // 3. « Sécurité », mais une ville où il faut rester vigilant te va.
-  const vigilant = [swipe(etat, "S11") === "oui" ? "phrases" : "", rep(etat, "nuit") === "b" ? "nuit" : ""].filter(Boolean);
-  if (rangEnvie(etat, "securite") <= 5 && vigilant.length >= 1) res.push({ id: "securite", reponses: ["envie:securite", ...vigilant], revoir: vigilant[0], texte: "Tu as choisi « Sécurité » parmi tes envies, mais tu dis aussi te sentir bien dans une ville où il faut rester vigilant." });
-  // 4. « Bon salaire » n° 1, mais le curseur tout près du temps libre.
-  const cur = nombre(rep(etat, "equilibre"));
-  if (rangEnvie(etat, "salaire") === 1 && cur !== null && cur <= 25) res.push({ id: "salaire", reponses: ["envie:salaire", "equilibre"], revoir: "equilibre", texte: "Ton envie n° 1 est un bon salaire, mais ton curseur penche nettement vers le temps libre." });
-  // 5. « Équilibre » n° 1 ou 2, mais le curseur tout près du salaire.
-  if (rangEnvie(etat, "equilibre") <= 2 && cur !== null && cur >= 75) res.push({ id: "equilibre", reponses: ["envie:equilibre", "equilibre"], revoir: "equilibre", texte: "Tu as classé l’équilibre vie pro et vie perso tout en haut, mais ton curseur penche nettement vers le salaire." });
-  // 6. « Vivre hors d'Europe » rédhibitoire, alors que ta zone sur la carte ne contenait aucun pays européen.
+  // 1. « Vie pas chère » est ton critère le plus dur à sacrifier, mais tu as choisi deux fois la vie chère et bien payée.
+  const cheres = (["offres", "offres-et-si", "mission-vie", "relance-argent"] as const).filter((id) => rep(etat, id) === "a");
+  if (rangEnvie(etat, "prix") === 1 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "sacrifice", texte: "« Vie pas chère » est le critère que tu sacrifierais en dernier, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
+  // 2. « Un vrai hiver » parmi tes critères, mais un seuil de froid au-dessus de 0 °C.
+  const froid = objetReponse(rep(etat, "seuil-froid"));
+  if (rangEnvie(etat, "hiver") <= 5 && froid.niveau && froid.niveau !== "ok" && Number(froid.seuil) >= 0) res.push({ id: "hiver", reponses: ["envie:hiver", "seuil-froid"], revoir: "seuil-froid", texte: `Tu veux un vrai hiver, mais tu trouves trop froid un mois de janvier sous ${froid.seuil} °C. Les deux comptent : vérifie ton seuil.` });
+  // 3. « Vivre hors d'Europe » rédhibitoire, alors que ta zone sur la carte ne contenait aucun pays européen.
   const carte = lireCarte(trouverElement("carte") as CarteMonde | undefined, rep(etat, "carte"), false);
   const aUneZone = carte.regions.length + carte.cercles.length + carte.groupes.length > 0;
   const zoneEuropeenne = carte.regions.includes("europe") || carte.dansZone.some((id) => pays.find((p) => p.id === id)?.zone === "europe");
-  if (limite(etat, "hors-europe") === "redhibitoire" && aUneZone && !zoneEuropeenne) res.push({ id: "europe", reponses: ["limites", "carte"], revoir: "limites", texte: "Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe sont dans « Moins adaptés pour toi » : tu peux les remonter." });
-  // 7. Un autre alphabet rédhibitoire, mais « Tu y vas » aux cours de langue.
-  if (limite(etat, "alphabet") === "redhibitoire" && rep(etat, "cours-offerts") === "a") res.push({ id: "alphabet", reponses: ["limites", "cours-offerts"], revoir: "limites", texte: "Tu as dit qu’apprendre un autre alphabet était rédhibitoire, mais tu irais aux cours de langue offerts." });
+  if (limite(etat, "hors-europe") === "redhibitoire" && aUneZone && !zoneEuropeenne) res.push({ id: "europe", reponses: ["limites-distance", "carte"], revoir: "limites-distance", texte: "Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe deviennent beaucoup moins accessibles pour toi : ils restent dans ta liste, et tu peux les remonter." });
+  // 4. Un autre alphabet rédhibitoire, mais « Tu y vas » aux cours de langue.
+  if (limite(etat, "alphabet") === "redhibitoire" && rep(etat, "cours-offerts") === "a") res.push({ id: "alphabet", reponses: ["limites-langue", "cours-offerts"], revoir: "limites-langue", texte: "Tu as dit qu’apprendre un autre alphabet était rédhibitoire, mais tu irais aux cours de langue offerts." });
+  // 5. Tu pars pour une langue qui s'écrit avec un autre alphabet, mais cet alphabet est rédhibitoire.
+  if (rep(etat, "motivation") === "langue" && limite(etat, "alphabet") === "redhibitoire" && ["ja", "ko", "zh", "ar"].includes(String(rep(etat, "relance-langue")))) res.push({ id: "langue-cible", reponses: ["relance-langue", "limites-langue"], revoir: "limites-langue", texte: "Tu pars pour pratiquer une langue qui s’écrit avec un autre alphabet, mais tu as dit qu’apprendre un autre alphabet était rédhibitoire." });
   return res;
 }
 
@@ -176,7 +172,7 @@ export function contradictions(etat: Etat): Contradiction[] {
 // Un titre, 4 à 6 phrases nuancées tirées du profil (« Tes réponses montrent… », « Tu acceptes plus facilement… »,
 // jamais « Tu es… »), une phrase sur une contradiction s'il y en a une, et « Ce qu'on va chercher pour toi » (3 critères).
 export type LignePortrait = { cle: string; texte: string; revoir: { t: "element"; id: string } | null };
-export type Portrait = { titre: string; lignes: LignePortrait[]; contradiction: LignePortrait | null; cherche: string[] };
+export type Portrait = { titre: string; lignes: LignePortrait[]; contradiction: LignePortrait | null; cherche: string[]; portraitSeul: string[] };
 export const MAX_PORTRAIT = 6;
 const minuscule = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
 
@@ -231,9 +227,23 @@ function phrasesReponse(etat: Etat, id: string): { texte: string; poids: number;
       return o?.portrait ? [{ texte: o.portrait, poids: 0.9, accepte: false, dims: el.dimensions }] : [];
     });
     case "choix-cartes": {
-      if (el.profil || el.source) return [];
-      const o = el.options.find((x) => x.id === v);
-      return o?.portrait ? [{ texte: o.portrait, poids: poids(o.effets ?? []), accepte: (o.effets ?? []).length === 0, dims: el.dimensions }] : [];
+      if (el.source || !relanceOuverte(el, etat.reponses)) return [];
+      return (Array.isArray(v) ? v : [v]).flatMap((x) => {
+        const o = el.options.find((y) => y.id === x);
+        return o?.portrait ? [{ texte: o.portrait, poids: Math.max(0.6, poids(o.effets ?? [])), accepte: (o.effets ?? []).length === 0 && !el.profil, dims: el.dimensions }] : [];
+      });
+    }
+    case "timeline": {
+      const a = el.apres.find((x) => x.id === objetReponse(v).apres);
+      return a?.portrait ? [{ texte: a.portrait, poids: 0.6, accepte: false, dims: el.dimensions }] : [];
+    }
+    case "tri-zones": return Object.entries(objetReponse(v)).filter(([, z]) => z === "indispensable").flatMap(([cid]) => {
+      const c = el.cartes.find((x) => x.id === cid);
+      return c ? [{ texte: c.portrait, poids: 1, accepte: false, dims: el.dimensions }] : [];
+    });
+    case "blind-test": {
+      const choisi = pays.find((x) => x.id === objetReponse(v).choix);
+      return choisi ? [{ texte: `Au test à l’aveugle, tu as choisi un pays sans savoir que c’était ${choisi.le}.`, poids: 0.55, accepte: false, dims: el.dimensions }] : [];
     }
     default: return [];
   }
@@ -255,7 +265,7 @@ export function portraitComplet(etat: Etat): Portrait {
   if (projet) lignes.push({ cle: "objectif", texte: `Tu pars pour ${projet.nom}.`, revoir: { t: "element", id: "objectif" } });
   // Ce qui compte beaucoup, avec une certitude forte ou moyenne.
   const fortes = dims.filter((d) => d.poids >= 1.25 && d.certitude !== "faible" && !CULTURE.includes(d.id)).slice(0, 3);
-  if (fortes.length) lignes.push({ cle: "fortes", texte: `Tes réponses montrent que ${listeFr(fortes.map((d) => minuscule(d.nom)))} ${fortes.length > 1 ? "comptent" : "compte"} beaucoup pour toi.`, revoir: { t: "element", id: "classement" } });
+  if (fortes.length) lignes.push({ cle: "fortes", texte: `Tes réponses montrent que ${listeFr(fortes.map((d) => minuscule(d.nom)))} ${fortes.length > 1 ? "comptent" : "compte"} beaucoup pour toi.`, revoir: { t: "element", id: "envies" } });
   // La culture au travail, en une phrase.
   const styles = etat.ordre.flatMap((id) => {
     const el = trouverElement(id);
@@ -285,13 +295,12 @@ export function portraitComplet(etat: Etat): Portrait {
     lignes.push({ cle: `accepte:${a.id}`, texte: t, revoir: { t: "element", id: a.id } });
   }
   // Tes limites, en une phrase.
-  const lim = (rep(etat, "limites") ?? {}) as Record<string, string>;
-  const situ = (s: string) => { const el = trouverElement("limites"); return el?.type === "tri-limites" ? el.situations.find((x) => x.id === s)?.texte ?? s : s; };
-  const eviter = Object.entries(lim).filter(([, r]) => r === "eviter").map(([s]) => minuscule(situ(s)));
-  const non = Object.entries(lim).filter(([, r]) => r === "redhibitoire").map(([s]) => minuscule(situ(s)));
+  const lim = limitesDeclarees(etat.reponses);
+  const eviter = lim.filter((l) => l.niveau === "eviter").map((l) => minuscule(l.texte));
+  const non = lim.filter((l) => l.niveau === "redhibitoire").map((l) => minuscule(l.texte));
   if ((eviter.length || non.length) && lignes.length < MAX_PORTRAIT) {
-    const morceaux = [eviter.length ? `Tu préfères éviter${" "}: ${listeFr(eviter)}.` : "", non.length ? `Hors de question pour toi${" "}: ${listeFr(non)}.` : ""].filter(Boolean);
-    lignes.push({ cle: "limites", texte: morceaux.join(" "), revoir: { t: "element", id: "limites" } });
+    const morceaux = [eviter.length ? `Tu préfères éviter\u00a0: ${listeFr(eviter)}.` : "", non.length ? `Hors de question pour toi\u00a0: ${listeFr(non)}.` : ""].filter(Boolean);
+    lignes.push({ cle: "limites", texte: morceaux.join(" "), revoir: { t: "element", id: lim[0].element } });
   }
   const c = contradictions(etat)[0];
   const contradiction = c ? { cle: `contradiction:${c.id}`, texte: c.texte, revoir: { t: "element" as const, id: c.revoir } } : null;
@@ -302,8 +311,42 @@ export function portraitComplet(etat: Etat): Portrait {
     .map((e) => mesures[e.mesure]?.court ?? mesures[e.mesure]?.nom ?? e.mesure)
     .filter((x, i, l) => l.indexOf(x) === i)
     .slice(0, 3);
-  return { titre, lignes: lignes.slice(0, MAX_PORTRAIT), contradiction, cherche };
+  return { titre, lignes: lignes.slice(0, MAX_PORTRAIT), contradiction, cherche, portraitSeul: portraitSeulement(etat) };
 }
+
+// Ce que tu as dit qui enrichit ton portrait sans changer ton classement : pas de donnée pays pour 30 pays au moins
+// (un logement abordable, une presse libre…), ou pas de donnée du tout (l'école de tes enfants).
+export function portraitSeulement(etat: Etat): string[] {
+  const res: string[] = [];
+  for (const id of enviesDe(etat)) if (!envieClassante(id, etat.profil)) res.push(`ton critère « ${quiz.envies.find((e) => e.id === id)?.label ?? id} »`);
+  for (const id of etat.ordre) {
+    const el = trouverElement(id);
+    const v = etat.reponses[id];
+    if (!el || v === undefined || v === PASSER || !relanceOuverte(el, etat.reponses)) continue;
+    if (el.type === "tri-zones") {
+      for (const [cid, z] of Object.entries(objetReponse(v))) {
+        const c = el.cartes.find((x) => x.id === cid);
+        if (c && z !== "egal" && (!c.mesures.length || !c.mesures.every(mesureClassante))) res.push(`« ${c.label} »`);
+      }
+    } else if (el.type === "choix-cartes" && el.multiple && !el.source && !el.profil) {
+      for (const x of Array.isArray(v) ? v : []) {
+        const o = el.options.find((y) => y.id === x);
+        if (o && !(o.effets ?? []).some((e) => e.mesures.every(mesureClassante))) res.push(`« ${o.label} »`);
+      }
+    } else if (el.type === "choix-cartes" && el.profil === "famille-ecole") res.push("l’école de tes enfants");
+    else if (el.type === "swipe") {
+      for (const [pid, r] of Object.entries(objetReponse(v))) {
+        const ph = el.phrases.find((x) => x.id === pid);
+        if (ph && r === "oui" && !ph.oui.length) res.push(`« ${ph.texte.replace(/\.$/, "")} »`);
+      }
+    } else if (el.type === "dilemme") {
+      const o = optionReponse(el, v);
+      if (o && o.effets.length && !o.effets.some((e) => e.mesures.every(mesureClassante))) res.push(`ta réponse à « ${el.titre} »`);
+    }
+  }
+  return [...new Set(res)];
+}
+
 
 // Les phrases du portrait, à plat (PDF, résumé).
 export function portrait(etat: Etat): LignePortrait[] {
