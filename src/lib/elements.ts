@@ -12,7 +12,8 @@ export type Profil = Record<string, string | string[] | undefined>;
 export type Certitude = "faible" | "moyenne" | "forte";
 export type ReponseSwipe = "oui" | "non" | "depend";
 export type ReponseLimite = "ok" | "eviter" | "redhibitoire";
-export type ReponseZone = "indispensable" | "plus" | "egal";
+// « compte » : une carte touchée (valeurs, prompt 7). « indispensable », « plus », « egal » : les anciennes zones, encore lues.
+export type ReponseZone = "compte" | "indispensable" | "plus" | "egal";
 export const REPONSES_SWIPE: ReponseSwipe[] = ["non", "depend", "oui"];
 export const REPONSES_LIMITE: ReponseLimite[] = ["ok", "eviter", "redhibitoire"];
 export const LIBELLE_SWIPE: Record<ReponseSwipe, string> = { oui: "Ça me correspond", non: "Pas vraiment", depend: "Ça dépend" };
@@ -76,6 +77,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
     case "carte-monde": return listeDe(v, () => true) && reponseCarteValide(el, v as string[]);
     case "swipe": return objetDe(v, new Set(el.phrases.map((p) => p.id)), REPONSES_SWIPE);
     case "tri-limites": return objetDe(v, new Set(el.situations.map((s) => s.id)), REPONSES_LIMITE);
+    case "recherche": return estTexte(v) && /^[A-Z]{2}$/.test(v) && !(el.exclus ?? []).includes(v);
   }
 }
 
@@ -144,12 +146,12 @@ export function effetsReponse(el: Element, v: Valeur | undefined): EffetReponse[
     });
     // Tes limites ne changent pas « Il te ressemble » : elles pèsent sur « Il t'est accessible » (voir accesPays, moteur.ts).
     case "tri-limites": return [];
-    // Tes valeurs : « Indispensable » compte comme une réponse franche (1), « Un vrai plus » à moitié (0,5) ; une carte
-    // non rangée ou « Peu importe » ne compte jamais. Une carte sans mesure (pas de donnée sur 30 pays) enrichit le portrait.
+    // Tes valeurs : une carte touchée (« Compte pour moi ») compte comme une réponse franche (1) ; une carte non touchée
+    // ne compte jamais. Une carte sans mesure (pas de donnée sur 30 pays) enrichit le portrait.
     case "tri-zones": return Object.entries(v as Record<string, ReponseZone>).flatMap(([id, r]) => {
       const c = el.cartes.find((x) => x.id === id);
       if (!c || !c.mesures.length || r === "egal") return [];
-      return [{ effet: { mesures: c.mesures, poids: r === "indispensable" ? 1 : 0.5 }, origine: `element:${el.id}/${id}` }];
+      return [{ effet: { mesures: c.mesures, poids: r === "plus" ? 0.5 : 1 }, origine: `element:${el.id}/${id}` }];
     });
     case "blind-test": return avec(effetsBlind(v), `element:${el.id}`);
     default: return [];
@@ -283,13 +285,16 @@ export function profilDe(reponses: Record<string, Valeur>): Profil {
       continue;
     }
     if (el.type === "enveloppe" && el.profil && typeof v === "number") { p[el.profil] = String(v); continue; }
+    // Le pays de ton autre nationalité : un cas décrit et sourcé (irlandaise, canadienne, américaine), sinon « autre ».
+    if (el.type === "recherche" && typeof v === "string") { p[el.profil] = el.correspondances[v] ?? el.defaut; p[`${el.profil}-code`] = v; continue; }
     if (el.type !== "choix-cartes" || !el.profil) continue;
     if (typeof v === "number" || (typeof v === "object" && !Array.isArray(v))) continue;
     if (!conditionRemplie(el.condition, p)) continue;
     p[el.profil] = v;
   }
-  // « As-tu une autre nationalité ? » : une seule question, qui dit aussi laquelle.
-  if (typeof p["nationalite-laquelle"] === "string") p.nationalite = p["nationalite-laquelle"] === "non" ? "non" : "oui";
+  // « As-tu une autre nationalité ? » : Oui ou Non, puis le pays (une relance). Sans pays, « Oui » reste un cas non couvert.
+  if (p.nationalite === "oui" && typeof p["nationalite-laquelle"] !== "string") p["nationalite-laquelle"] = "autre";
+  if (p.nationalite === "non") delete p["nationalite-laquelle"];
   // Ta zone sur la carte du début : un bonus léger aux pays dont la ville de référence est dedans (voir moteur.ts et zones.ts).
   // « paysCarte » : les pays qui reçoivent ce bonus (cercles et groupes, après la règle contre le double comptage
   // avec « Proche de la France »). « regions » : les anciennes régions, gardées pour les parcours d'avant.

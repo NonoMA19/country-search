@@ -13,10 +13,11 @@ import { BARRE_BAS, BOUTON_PLEIN, PanneauContexte } from "@/components/formats/c
 import { useFlip } from "@/lib/animation";
 import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
 import { quiz, trouverElement, type Aide, type Element, type Valeur } from "@/lib/donnees";
+import { optionsDe } from "@/lib/elements";
 import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
-import { aideDe, annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
+import { aideDe, annulerDerniere, changerReponse, repondre, type Etat } from "@/lib/moteur";
 import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
 import { portraitComplet, type LignePortrait } from "@/lib/portrait";
 
@@ -250,6 +251,32 @@ function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => 
   );
 }
 
+// Un écran en deux temps (prompt 7) : d'abord pourquoi tu pars, puis sous quelle forme. Le deuxième temps glisse
+// depuis la droite (un simple fondu en mouvement réduit). Les deux réponses sont enregistrées ensemble, à la fin.
+function DeuxTemps({ premier, second, etat, finir }: { premier: Element; second: Element; etat: Etat; finir: (e: Etat) => void }) {
+  const [temps1, setTemps1] = useState<{ v: Valeur } | null>(null);
+  const deuxieme = temps1 !== null;
+  const montre = useRef(false);
+  useEffect(() => {
+    if (!montre.current) { montre.current = true; return; }
+    document.getElementById("titre-ecran")?.focus();
+  }, [deuxieme]);
+  const F1 = FORMATS[premier.type], F2 = FORMATS[second.type];
+  if (!temps1) {
+    return <F1 key={premier.id} element={premier} etat={etat} valeur={etat.reponses[premier.id]} repondre={(v: Valeur) => setTemps1({ v })} passer={() => setTemps1({ v: PASSER })} />;
+  }
+  const etat1 = repondre(etat, premier.id, temps1.v);
+  const choix = premier.type === "choix-cartes" && typeof temps1.v === "string" ? optionsDe(premier).find((o) => o.id === temps1.v)?.label : undefined;
+  return (
+    <div key={second.id} className="temps-entree flex flex-1 flex-col">
+      <button type="button" onClick={() => setTemps1(null)} className="mb-3 inline-flex min-h-11 w-fit items-center gap-1 rounded-full text-sm font-medium text-lien underline">
+        <ChevronLeft aria-hidden="true" className="h-4 w-4" /> {choix ? `Ta raison : ${choix}` : "Revenir à ta raison"}
+      </button>
+      <F2 element={second} etat={etat1} repondre={(v: Valeur) => finir(repondre(etat1, second.id, v))} passer={() => finir(repondre(etat1, second.id, PASSER))} />
+    </div>
+  );
+}
+
 const phraseRestants = (n: number) => (n > 1 ? `Encore ${n} questions possibles` : n === 1 ? "Encore 1 question possible" : "Plus aucune question à affiner");
 
 // Un écran de secours : jamais de page vide, toujours un bouton pour continuer.
@@ -434,12 +461,16 @@ export default function Quiz() {
   }
   const F = FORMATS[el.type];
   const suivant = (v: Valeur) => aller({ t: "quiz" }, { etat: repondre(etat, el.id, v) });
+  // Un élément qui se montre dans le même écran que celui-ci, en deuxième temps (le projet après la motivation).
+  const second = quiz.elements.find((x) => x.memeEcranQue === el.id && etat.reponses[x.id] === undefined);
   const adaptatif = estAdaptatif(el.chapitre);
   const top = adaptatif ? topCourant(etat, 3) : [];
   const change = etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre;
   return (
     <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null} panneau={{ aide: aideDe(el, etat.profil), ...apercu, change }}>
-      <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
+      {second
+        ? <DeuxTemps key={`${el.id}:${etat.ordre.length}`} premier={el} second={second} etat={etat} finir={(e) => aller({ t: "quiz" }, { etat: e })} />
+        : <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />}
       {/* Téléphone et tablette : le top 3 sous la question (chapitres 3 et 4). Sur ordinateur, il est dans le panneau. */}
       {adaptatif && top.length > 0 && (
         <div className="lg:hidden"><TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={change} /></div>

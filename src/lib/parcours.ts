@@ -5,7 +5,7 @@
 import { dimensionDe, quiz, trouverElement, type EffetDilemme, type Element, type PhraseSwipe, type Situation, type Swipe, type TriLimites } from "./donnees";
 import { PASSER, conditionRemplie, profilDe, relanceOuverte } from "./elements";
 import { certitudeFaible, construireProfil } from "./profil";
-import { calculer, critereChangerAvis, dilemmeActif, enviesDe, poidsEnvie, hacher, limiteTouche, situationPosable, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
+import { calculer, dilemmeActif, enviesDe, poidsEnvie, hacher, limiteTouche, situationPosable, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
 
 export const chapitreDe = (id: string) => trouverElement(id)?.chapitre ?? 0;
 export const CHAPITRES = quiz.chapitres;
@@ -145,10 +145,9 @@ export type Candidat = { el: Element; score: number };
 // - Départage : l'écart que les réponses possibles creuseraient entre tes 5 premiers pays (0 à 4), plus 0,15.
 export function importance(d: string, etat: Etat): number {
   let imp = 1;
-  for (const id of [...enviesDe(etat), critereChangerAvis(etat)]) {
-    if (!id) continue;
+  for (const id of enviesDe(etat)) {
     const en = quiz.envies.find((e) => e.id === id);
-    const poids = poidsEnvie(etat, id) || quiz.poidsCriteres.changerAvis;
+    const poids = poidsEnvie(etat, id);
     if (en?.mesures.some((m) => (dimensionDe[m] ?? m) === d)) imp = Math.max(imp, 1 + poids);
   }
   const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
@@ -330,7 +329,8 @@ export function resultatProvisoire(etat: Etat): boolean {
 }
 
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).
-export const nombreEcrans = (etat: Etat) => etat.ordre.length;
+// Un élément montré dans le même écran qu'un autre (le projet, avec la motivation) ne compte pas en plus.
+export const nombreEcrans = (etat: Etat) => etat.ordre.filter((id) => { const m = trouverElement(id)?.memeEcranQue; return !m || !etat.ordre.includes(m); }).length;
 
 // ---------- « Ce qu'on ne t'a pas demandé, et pourquoi » ----------
 // Chaque élément de la banque qui n'a pas été posé, avec sa raison, regroupé par raison (écran final du questionnaire).

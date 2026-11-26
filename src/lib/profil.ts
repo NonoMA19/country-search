@@ -151,7 +151,7 @@ const limite = (etat: Etat, sit: string) => {
 export function contradictions(etat: Etat): Contradiction[] {
   const res: Contradiction[] = [];
   // 1. « Vie pas chère » est ton critère le plus dur à sacrifier, mais tu as choisi deux fois la vie chère et bien payée.
-  const cheres = (["offres", "offres-et-si", "mission-vie", "relance-argent"] as const).filter((id) => rep(etat, id) === "a");
+  const cheres = (["offres", "mission-vie", "relance-argent"] as const).filter((id) => rep(etat, id) === "a");
   if (rangEnvie(etat, "prix") === 1 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "sacrifice", texte: "« Vie pas chère » est le critère que tu sacrifierais en dernier, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
   // 2. « Un vrai hiver » parmi tes critères, mais un seuil de froid au-dessus de 0 °C.
   const froid = objetReponse(rep(etat, "seuil-froid"));
@@ -237,7 +237,7 @@ function phrasesReponse(etat: Etat, id: string): { texte: string; poids: number;
       const a = el.apres.find((x) => x.id === objetReponse(v).apres);
       return a?.portrait ? [{ texte: a.portrait, poids: 0.6, accepte: false, dims: el.dimensions }] : [];
     }
-    case "tri-zones": return Object.entries(objetReponse(v)).filter(([, z]) => z === "indispensable").flatMap(([cid]) => {
+    case "tri-zones": return Object.entries(objetReponse(v)).filter(([, z]) => z === "indispensable" || z === "compte").flatMap(([cid]) => {
       const c = el.cartes.find((x) => x.id === cid);
       return c ? [{ texte: c.portrait, poids: 1, accepte: false, dims: el.dimensions }] : [];
     });

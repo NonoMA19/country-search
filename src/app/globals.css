@@ -166,3 +166,23 @@ input[type="range"] {
     outline-offset: 2px;
   }
 }
+
+/* Prompt 7 : le deuxième temps d'un écran (la forme du départ, après la motivation) glisse depuis la droite. */
+.temps-entree {
+  animation: temps-entree 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes temps-entree {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .temps-entree {
+    animation-name: fondu;
+  }
+}

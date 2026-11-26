@@ -4,10 +4,10 @@ import { ECART_EX_AEQUO, MESURES_ESSENTIELLES, OBSTACLES, POIDS_ACCES, SEUIL_PAY
 import { accord, pays, type Pays } from "./pays";
 import {
   avis, dateFr, dimensionDe, doubleNationalite, europe, mesures, notes, notesFrance, portes, quiz, sources, trouverElement, vie, villes, preuveMesure, preuveNote, preuveSource, preuveVisa,
-  type CarteMonde, type CasDouble, type ChoixCartes, type DetailVisa, type Element, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Timeline, type TriZones, type Valeur,
+  type CarteMonde, type CasDouble, type ChoixCartes, type DetailVisa, type Element, type Dilemme, type EffetDilemme, type FamilleScore, type LieEmployeur, type OptionDilemme, type PorteBrute, type Preuve, type Scene, type Timeline, type Valeur,
 } from "./donnees";
 import {
-  LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesDeclarees, objetReponse, optionReponse, penalitesRetirees, profilDe, relanceOuverte, type LimiteDeclaree, type Profil,
+  LIBELLE_ECHELLE, conditionRemplie, effetsReponse, limitesDeclarees, optionReponse, penalitesRetirees, profilDe, relanceOuverte, type LimiteDeclaree, type Profil,
 } from "./elements";
 export { LIBELLE_ECHELLE, MILIEU_ECHELLE, REPONSES_ECHELLE, optionReponse, reponsesDe, type Profil } from "./elements";
 
@@ -104,11 +104,6 @@ export function poidsEnvie(etat: Pick<Etat, "reponses">, id: string): number {
   if (!choisies.includes(id)) return 0;
   if (choisies.length === 1) return P.seul;
   return id === premier ? P.sacrifice : id === dernier ? P.second : P.milieu;
-}
-// « Quel avantage te ferait changer d'avis ? » : un critère non choisi, qui compte un peu (importance 1).
-export function critereChangerAvis(etat: Pick<Etat, "reponses">): string | null {
-  const v = etat.reponses["changer-avis"];
-  return typeof v === "string" && quiz.envies.some((e) => e.id === v) && !criteresValides(etat.reponses.envies).includes(v) ? v : null;
 }
 
 // Un critère est proposé s'il a au moins une mesure notée (« Évoluer dans mon secteur » : si ton secteur l'est),
@@ -304,8 +299,6 @@ export function effetsBruts(etat: Etat): EffetActif[] {
     en.mesures.forEach((m, k) => ajouter([m], { position: en.positions?.[k] }, origine, (poids * (en.parts?.[k] ?? 1)) / somme));
   };
   for (const id of enviesDe(etat)) ajouterCritere(id, poidsEnvie(etat, id), `envie:${id}`);
-  const autre = critereChangerAvis(etat);
-  if (autre) ajouterCritere(autre, quiz.poidsCriteres.changerAvis, "element:changer-avis");
   // Ta carte du début compte un peu : comme une envie de rang 5 (1,1), en bonus aux pays de ta zone.
   if ((Array.isArray(etat.profil.regions) && etat.profil.regions.length) || (Array.isArray(etat.profil.paysCarte) && etat.profil.paysCarte.length)) {
     res.push({ mesure: "region-carte", sens: "haut", poids: POIDS_CARTE, famille: "vivre", origine: "carte" });
@@ -816,22 +809,14 @@ export function raisonsEcart(etat: Etat): Record<string, string> {
 
 // ---------- « Il t'est accessible » ----------
 // De 0 à 100 : 100 moins chaque obstacle (la porte d'entrée, le budget, la durée, ta famille, la langue de travail,
-// tes limites, tes valeurs indispensables). Les montants sont dans src/config.ts (OBSTACLES) et sur /methode.
-// Un pays remonté à la main ne subit plus tes limites, ta langue de travail ni tes valeurs.
+// tes limites). Les montants sont dans src/config.ts (OBSTACLES) et sur /methode. Tes valeurs comptent dans « Il te ressemble ».
+// Un pays remonté à la main ne subit plus tes limites ni ta langue de travail.
 export type TypeObstacle = "porte" | "budget" | "duree" | "famille" | "langue" | "limite" | "valeur";
 export type Obstacle = { type: TypeObstacle; texte: string; points: number; niveau?: "eviter" | "redhibitoire"; limite?: string; element?: string };
 // « aVerifier » : ce qui reste à vérifier pour toi, sans effet sur le score (les droits de ta famille selon le visa).
 export type Acces = { acces: number; obstacles: Obstacle[]; aVerifier: string[] };
 export const facteurAcces = (acces: number) => 1 - (REGLES.poidsAcces * (100 - acces)) / 100;
 export const LIBELLE_ACCES = (a: number) => (a >= 90 ? "Accès facile" : a >= 70 ? "Accès possible" : a >= 50 ? "Accès difficile" : "Accès très difficile");
-
-// Tes valeurs « Indispensable » (tri des valeurs) : leurs mesures.
-export function valeursIndispensables(etat: Pick<Etat, "reponses">): { id: string; label: string; mesures: string[] }[] {
-  const el = trouverElement("valeurs") as TriZones | undefined;
-  if (el?.type !== "tri-zones") return [];
-  const v = objetReponse(etat.reponses.valeurs);
-  return el.cartes.filter((c) => v[c.id] === "indispensable" && c.mesures.length);
-}
 
 export function accesPays(p: Pays, etat: Etat, porte: Porte, limites: LimiteDeclaree[] = limitesDeclarees(etat.reponses)): Acces {
   const o: Obstacle[] = [];
@@ -859,10 +844,6 @@ export function accesPays(p: Pays, etat: Etat, porte: Porte, limites: LimiteDecl
       if (!situationPosable(l.id, profil) && l.seuil === undefined) continue;
       if (!limiteTouche(l.id, p.id, profil, l.seuil)) continue;
       o.push({ type: "limite", texte: `${l.niveau === "redhibitoire" ? "Rédhibitoire pour toi" : "Tu préfères éviter"} : ${l.texte.charAt(0).toLowerCase()}${l.texte.slice(1)}.`, points: OBSTACLES[l.niveau], niveau: l.niveau, limite: l.id, element: l.element });
-    }
-    for (const v of valeursIndispensables(etat)) {
-      const bas = v.mesures.some((m) => { const n = noteEffective(p.id, m, profil); return n !== null && n <= 2; });
-      if (bas) o.push({ type: "valeur", texte: `Tu as dit « ${v.label} » indispensable : ce pays est mal noté sur ce point.`, points: OBSTACLES.valeur, element: "valeurs" });
     }
   }
   const total = o.reduce((t, x) => t + x.points, 0);

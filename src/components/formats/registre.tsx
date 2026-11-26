@@ -8,6 +8,7 @@ import Enveloppe from "./Enveloppe";
 import Seuil from "./Seuil";
 import Timeline from "./Timeline";
 import TriZones from "./TriZones";
+import Recherche from "./Recherche";
 import CarteMonde from "./CarteMonde";
 import ChoixCartes from "./ChoixCartes";
 import Classement from "./Classement";
@@ -34,4 +35,5 @@ export const FORMATS: Record<TypeElement, ComponentType<PropsFormat<any>>> = {
   seuil: Seuil,
   "tri-zones": TriZones,
   "blind-test": BlindTest,
+  recherche: Recherche,
 };

@@ -542,7 +542,7 @@ export default function Resultat() {
                 </p>
               </>
             ) : (
-              <p>{doubleNationalite.autre}</p>
+              <p>{typeof etat.profil["nationalite-laquelle-code"] === "string" && `Ta nationalité : ${new Intl.DisplayNames(["fr"], { type: "region" }).of(etat.profil["nationalite-laquelle-code"])}. `}{doubleNationalite.autre}</p>
             )}
           </div>
         </section>

@@ -26,7 +26,6 @@ export const OBSTACLES = {
   francais: 30, // tu veux travailler en français, ce n'est pas possible ici
   eviter: 10, // une de tes limites « Je préfère éviter »
   redhibitoire: 15, // une de tes limites « Rédhibitoire »
-  valeur: 15, // une valeur « Indispensable » mal notée ici
 };
 // Une mesure ne bouge le classement que si au moins ce nombre de pays (sur 38) ont une donnée.
 export const SEUIL_PAYS_CLASSEMENT = 30;

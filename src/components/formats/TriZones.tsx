@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Check } from "lucide-react";
+import Emoji from "@/components/Emoji";
 import type { TriZones as TTri } from "@/lib/donnees";
 import { objetReponse } from "@/lib/elements";
 import { mesureClassante } from "@/lib/moteur";
@@ -8,7 +10,46 @@ import { Actions, BOUTON_PLEIN, EnTete, FOCUS, type PropsFormat } from "./commun
 
 // Des cartes à ranger dans des zones (des boutons, sans glisser). Une carte laissée de côté ne compte pas :
 // on peut valider à tout moment. Une carte sans donnée pays pour 30 pays le dit.
-export default function TriZones({ element: el, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TTri>) {
+export default function TriZones(props: PropsFormat<TTri>) {
+  return props.element.zones.length === 1 ? <CartesATouchers {...props} /> : <Zones {...props} />;
+}
+
+// Une seule zone (« Compte pour moi », prompt 7) : des cartes avec emoji. On touche seulement celles qui comptent.
+function CartesATouchers({ element: el, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TTri>) {
+  const zone = el.zones[0].id;
+  const [choix, setChoix] = useState<string[]>(Object.keys(objetReponse(valeur)));
+  const n = choix.length;
+  const basculer = (id: string) => setChoix((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
+  return (
+    <>
+      <EnTete element={el} titreId={titreId} />
+      <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3" role="group" aria-labelledby={titreId ?? "titre-ecran"}>
+        {el.cartes.map((c) => {
+          const actif = choix.includes(c.id);
+          return (
+            <button key={c.id} type="button" data-option aria-pressed={actif} onClick={() => basculer(c.id)}
+              className={`carte-touche relative flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border-2 px-2 py-3 text-center ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
+              {c.emoji && <Emoji nom={c.emoji} className="h-10 w-10" />}
+              <span lang="fr" className="text-sm leading-tight font-semibold hyphens-auto">{c.label}</span>
+              {actif && (
+                <span aria-hidden="true" className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-bleu">
+                  <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      <Actions passer={passer} libellePasser={libellePasser}>
+        <p className="sr-only" aria-live="polite">{n} carte{n > 1 ? "s" : ""} choisie{n > 1 ? "s" : ""}.</p>
+        <button type="button" data-valider onClick={() => repondre(Object.fromEntries(choix.map((id) => [id, zone])))} className={BOUTON_PLEIN}>{n ? `Continuer (${n})` : "Aucune ne compte pour moi"}</button>
+      </Actions>
+    </>
+  );
+}
+
+// Plusieurs zones : chaque carte se range dans une zone (des boutons, sans glisser).
+function Zones({ element: el, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TTri>) {
   const [choix, setChoix] = useState<Record<string, string>>(objetReponse(valeur));
   const n = Object.keys(choix).length;
   return (

@@ -6,7 +6,7 @@ import { quiz, trouverElement, type Element } from "@/lib/donnees";
 import { PASSER } from "@/lib/elements";
 import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
 import { mesures, notes } from "@/lib/donnees";
-import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
+import { chapitreDe, estAdaptatif, etatAvant, nombreEcrans, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
 import { PROFILS_FIXES, PROFILS_TYPES, repondeurFixe } from "./profils";
@@ -60,7 +60,7 @@ const bloques = { europe: 0, ailleurs: 0 }, neutres = { europe: 0, ailleurs: 0 }
 for (let i = 0; i < NB; i++) {
   const etat = parcoursAuHasard(r);
   parcoursListe.push(etat);
-  ecrans.push(etat.ordre.length);
+  ecrans.push(nombreEcrans(etat));
   const top = top3(etat);
   for (const l of top) fiab[l.fiabilite.niveau]++;
   // La règle des 3 premières envies : le top 3 change-t-il, et quels pays écarte-t-elle ?

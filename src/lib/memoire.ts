@@ -20,7 +20,7 @@ export type Etape =
   | { t: "affiner" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 9;
+export const VERSION_SESSION = 10;
 
 export type Session = {
   v: number;
