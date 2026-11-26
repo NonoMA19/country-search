@@ -6,19 +6,21 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, ChevronLeft } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
-import Portrait from "@/components/Portrait";
-import { ContenuAide } from "@/components/Pourquoi";
+import SyntheseProfil from "@/components/SyntheseProfil";
+import Emoji from "@/components/Emoji";
 import { FORMATS } from "@/components/formats/registre";
 import { BARRE_BAS, BOUTON_PLEIN, PanneauContexte } from "@/components/formats/commun";
 import { useFlip } from "@/lib/animation";
 import { clicLibre, marquerChangement, marquerLibre } from "@/lib/clic";
 import { quiz, trouverElement, type Aide, type Element, type Valeur } from "@/lib/donnees";
+import { optionsDe } from "@/lib/elements";
 import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
-import { aideDe, annulerDerniere, changerReponse, repondre } from "@/lib/moteur";
-import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
-import { portraitComplet, type LignePortrait } from "@/lib/portrait";
+import { aideDe, annulerDerniere, changerReponse, repondre, type Etat } from "@/lib/moteur";
+import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, nombreEcrans, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
+import { portraitComplet } from "@/lib/portrait";
+import { syntheseProfil } from "@/lib/profil";
 
 export { BOUTON_PLEIN };
 
@@ -67,30 +69,14 @@ function ProgressionDetaillee({ chapitre, part }: { chapitre: number; part: numb
   );
 }
 
-// Les raccourcis clavier, rappelés dans le panneau (seulement avec une souris ou un pavé tactile).
-function T({ children }: { children: ReactNode }) {
-  return <kbd className="inline-flex min-w-6 items-center justify-center rounded-md border border-bord bg-carte px-1.5 font-sans text-xs font-semibold text-encre">{children}</kbd>;
-}
-function Raccourcis() {
-  return (
-    <section aria-labelledby="titre-raccourcis" className="hidden border-t border-bord pt-4 pointeur-fin:block">
-      <h2 id="titre-raccourcis" className="text-xs font-medium tracking-wide text-gris uppercase">Raccourcis clavier</h2>
-      <ul className="mt-2 space-y-1.5 text-sm text-gris">
-        <li><T>1</T> à <T>9</T> : choisir une option</li>
-        <li><T>Entrée</T> : valider</li>
-        <li><T>⌫</T> : revenir en arrière</li>
-        <li><T>Tab</T> : passer d’un bouton à l’autre</li>
-      </ul>
-    </section>
-  );
-}
-
+// Le panneau de droite (ordinateur) ne montre que les étapes et le chapitre en cours (prompt 7) : ces champs ne servent plus
+// qu'à l'aperçu du top sous la question.
 type Panneau = { aide?: Aide; top?: { id: string; nom: string; iso2: string }[]; change?: boolean; attente?: string };
 
 // « cle » change à chaque écran : l'écran entre en fondu avec un léger glissement (un simple fondu en mouvement réduit).
 // Téléphone et tablette : une seule colonne, l'avancement en haut, compact. Ordinateur (1024 px et plus) : deux colonnes,
-// la question à gauche, un panneau à droite (avancement, « Pourquoi on te demande ça ? », aperçu du top, raccourcis).
-function Cadre({ chapitre, part, retour, children, cle = "", panneau = {} }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode; cle?: string; panneau?: Panneau }) {
+// la question à gauche, un panneau à droite avec seulement les étapes et le chapitre en cours.
+function Cadre({ chapitre, part, retour, children, cle = "" }: { chapitre: number; part: number; retour: (() => void) | null; children: ReactNode; cle?: string; panneau?: Panneau }) {
   return (
     <main className="mx-auto flex w-full max-w-xl flex-1 flex-col overflow-x-clip px-5 pt-4 pb-6 md:max-w-2xl lg:max-w-6xl lg:px-8 lg:pt-8">
       <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-12 xl:grid-cols-[minmax(0,44rem)_22rem] xl:justify-center">
@@ -112,23 +98,9 @@ function Cadre({ chapitre, part, retour, children, cle = "", panneau = {} }: { c
             <div key={cle} className="ecran-entree flex flex-1 flex-col pt-5 lg:pt-8">{children}</div>
           </PanneauContexte.Provider>
         </div>
-        <aside className="hidden space-y-6 rounded-3xl border border-bord bg-carte p-6 lg:sticky lg:top-8 lg:block" aria-label="Ton avancement et l’aide">
-          <section aria-labelledby="titre-avancement">
-            <h2 id="titre-avancement" className="text-xs font-medium tracking-wide text-gris uppercase">Ton avancement</h2>
-            <div className="mt-3"><ProgressionDetaillee chapitre={chapitre} part={part} /></div>
-          </section>
-          {panneau.aide && (
-            <section aria-labelledby="titre-aide-panneau" className="border-t border-bord pt-4">
-              <h2 id="titre-aide-panneau" className="text-xs font-medium tracking-wide text-gris uppercase">Pourquoi on te demande ça{"\u00a0"}?</h2>
-              <div className="mt-2"><ContenuAide aide={panneau.aide} /></div>
-            </section>
-          )}
-          {panneau.top && panneau.top.length > 0 ? (
-            <TopEnCours top={panneau.top} change={!!panneau.change} panneau />
-          ) : panneau.attente ? (
-            <p className="border-t border-bord pt-4 text-sm text-gris">{panneau.attente}</p>
-          ) : null}
-          <Raccourcis />
+        <aside className="hidden rounded-3xl border border-bord bg-carte p-6 lg:sticky lg:top-8 lg:block" aria-label="Ton avancement">
+          <h2 className="text-xs font-medium tracking-wide text-gris uppercase">Ton avancement</h2>
+          <div className="mt-3"><ProgressionDetaillee chapitre={chapitre} part={part} /></div>
         </aside>
       </div>
       <p className="mt-6 text-xs text-gris lg:mt-10">
@@ -176,9 +148,15 @@ function Transition({ chapitre, continuer }: { chapitre: number; continuer: () =
   return (
     <div className="flex flex-1 flex-col">
       <div className="my-auto py-8 text-center">
-        <p className="text-sm font-semibold tracking-wide text-lien uppercase">Chapitre {chapitre} sur {NB_CHAPITRES}</p>
-        <h1 id="titre-ecran" tabIndex={-1} className="mt-2 text-3xl font-bold break-words outline-none">{ch.titre}</h1>
-        <p className="mx-auto mt-3 max-w-sm text-lg leading-snug text-gris">{ch.phrase}</p>
+        {ch.emoji && <div className="emoji-chapitre mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-bleu-doux"><Emoji nom={ch.emoji} className="h-14 w-14" /></div>}
+        <ol className="mx-auto mt-5 flex w-fit gap-2" aria-label={`Chapitre ${chapitre} sur ${NB_CHAPITRES}`}>
+          {CHAPITRES.map((c) => <li key={c.numero} aria-hidden="true" className={`h-2 rounded-full transition-all duration-500 ${c.numero < chapitre ? "w-6 bg-bleu" : c.numero === chapitre ? "w-10 bg-bleu" : "w-6 bg-bord"}`} />)}
+        </ol>
+        <p className="mt-3 text-sm font-semibold tracking-wide text-lien uppercase">Chapitre {chapitre} sur {NB_CHAPITRES}</p>
+        <h1 id="titre-ecran" tabIndex={-1} className="ligne-une-par-une mt-1 text-3xl font-bold break-words outline-none">{ch.titre}</h1>
+        <ul className="mx-auto mt-3 max-w-sm space-y-1 text-lg leading-snug text-gris">
+          {(ch.lignes ?? [ch.phrase]).map((l, i) => <li key={l} className="ligne-une-par-une" style={{ animationDelay: `${200 + i * 250}ms` }}>{l}</li>)}
+        </ul>
       </div>
       <div className={`${BARRE_BAS} pt-3 pb-4 lg:justify-center lg:py-0`}>
         <button type="button" data-valider onClick={continuer} className={BOUTON_PLEIN}>Commencer le chapitre</button>
@@ -205,7 +183,7 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
       {i.raisons.length > 0 && (
         <>
           <p className="mt-5 font-semibold">Ce qui a compté{"\u00a0"}:</p>
-          <ul className="mt-2 list-disc space-y-1 pl-5">{i.raisons.map((r) => <li key={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</li>)}</ul>
+          <ul className="mt-2 list-disc space-y-1 pl-5">{i.raisons.map((r, k) => <li key={r} className="ligne-une-par-une" style={{ animationDelay: `${(k + 1) * 150}ms` }}>{r.charAt(0).toUpperCase() + r.slice(1)}</li>)}</ul>
         </>
       )}
       <p className="mt-5 text-sm text-gris">Ta carte du début compte un peu : un petit bonus aux pays de ta zone, rien de retiré aux autres. Ton résultat complet vient juste après ton portrait.</p>
@@ -226,10 +204,10 @@ function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => 
     <>
       <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Avant ton résultat</p>
       <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">Ce qu’on ne t’a pas demandé, et pourquoi</h1>
-      <p className="mt-2 text-lg leading-snug">Tu as répondu à {etat.ordre.length} écrans. {n} autres questions existent : voici pourquoi on ne te les a pas posées.</p>
+      <p className="mt-2 text-lg leading-snug">Tu as répondu à {nombreEcrans(etat)} écrans. {n} autres questions existent : voici pourquoi on ne te les a pas posées.</p>
       <div className="mt-4 space-y-3">
-        {liste.map((g) => (
-          <details key={g.raison} className="rounded-2xl border border-bord bg-carte p-3">
+        {liste.map((g, k) => (
+          <details key={g.raison} className="ligne-une-par-une rounded-2xl border border-bord bg-carte p-3" style={{ animationDelay: `${k * 120}ms` }}>
             <summary className="min-h-11 cursor-pointer py-1 font-semibold leading-snug">{g.raison} <span className="font-normal text-gris">({g.titres.length})</span></summary>
             <ul className="mt-2 list-disc space-y-0.5 pl-5 text-sm">{g.titres.map((t) => <li key={t}>{t}</li>)}</ul>
           </details>
@@ -247,6 +225,32 @@ function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => 
         <button type="button" data-valider onClick={suite} className={BOUTON_PLEIN}>Continuer</button>
       </div>
     </>
+  );
+}
+
+// Un écran en deux temps (prompt 7) : d'abord pourquoi tu pars, puis sous quelle forme. Le deuxième temps glisse
+// depuis la droite (un simple fondu en mouvement réduit). Les deux réponses sont enregistrées ensemble, à la fin.
+function DeuxTemps({ premier, second, etat, finir }: { premier: Element; second: Element; etat: Etat; finir: (e: Etat) => void }) {
+  const [temps1, setTemps1] = useState<{ v: Valeur } | null>(null);
+  const deuxieme = temps1 !== null;
+  const montre = useRef(false);
+  useEffect(() => {
+    if (!montre.current) { montre.current = true; return; }
+    document.getElementById("titre-ecran")?.focus();
+  }, [deuxieme]);
+  const F1 = FORMATS[premier.type], F2 = FORMATS[second.type];
+  if (!temps1) {
+    return <F1 key={premier.id} element={premier} etat={etat} valeur={etat.reponses[premier.id]} repondre={(v: Valeur) => setTemps1({ v })} passer={() => setTemps1({ v: PASSER })} />;
+  }
+  const etat1 = repondre(etat, premier.id, temps1.v);
+  const choix = premier.type === "choix-cartes" && typeof temps1.v === "string" ? optionsDe(premier).find((o) => o.id === temps1.v)?.label : undefined;
+  return (
+    <div key={second.id} className="temps-entree flex flex-1 flex-col">
+      <button type="button" onClick={() => setTemps1(null)} className="mb-3 inline-flex min-h-11 w-fit items-center gap-1 rounded-full text-sm font-medium text-lien underline">
+        <ChevronLeft aria-hidden="true" className="h-4 w-4" /> {choix ? `Ta raison : ${choix}` : "Revenir à ta raison"}
+      </button>
+      <F2 element={second} etat={etat1} repondre={(v: Valeur) => finir(repondre(etat1, second.id, v))} passer={() => finir(repondre(etat1, second.id, PASSER))} />
+    </div>
   );
 }
 
@@ -336,7 +340,14 @@ export default function Quiz() {
     marquerChangement();
     router.push("/resultat");
   };
-  const retourQuiz = () => (etat.ordre.length > 0 ? aller({ t: "quiz" }, { etat: annulerDerniere(etat) }) : null);
+  // Retour : la dernière réponse est annulée ; si elle était le deuxième temps d'un écran (le projet après la motivation),
+  // les deux réponses le sont, pour revenir à l'écran entier.
+  const retourQuiz = () => {
+    if (!etat.ordre.length) return null;
+    const derniere = trouverElement(etat.ordre.at(-1)!);
+    const avant = annulerDerniere(etat);
+    return aller({ t: "quiz" }, { etat: derniere?.memeEcranQue && avant.ordre.at(-1) === derniere.memeEcranQue ? annulerDerniere(avant) : avant });
+  };
 
   // ----- Ce qu'on ne t'a pas demandé, et pourquoi -----
   if (etape.t === "pas-demande") {
@@ -359,14 +370,14 @@ export default function Quiz() {
 
   // ----- Ton portrait -----
   if (etape.t === "portrait") {
-    const revoir = (l: LignePortrait) => { if (l.revoir) aller({ t: "revoir", id: l.revoir.id }); };
+    const modifier = (id: string) => aller({ t: "revoir", id });
     const restants = restantsAffiner(etat);
     return (
       <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={() => aller({ t: "intuition" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
         {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
-        <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
-        <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
+        <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Un bloc ne te ressemble pas ? Modifie-le.</p>
+        <div className="mt-5 min-w-0"><SyntheseProfil blocs={syntheseProfil(etat)} portrait={portraitComplet(etat)} modifier={modifier} /></div>
         <div className={`${BARRE_BAS} space-y-2 pt-3 pb-4 lg:space-y-0 lg:py-0`}>
           {horsLigne && <p role="alert" className="rounded-2xl bg-creux px-4 py-3 text-sm font-medium lg:basis-full">Tu sembles hors ligne : ton résultat ne peut pas s’ouvrir pour l’instant. Tes réponses sont gardées. Réessaie quand la connexion revient.</p>}
           <button type="button" data-valider onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>
@@ -434,15 +445,19 @@ export default function Quiz() {
   }
   const F = FORMATS[el.type];
   const suivant = (v: Valeur) => aller({ t: "quiz" }, { etat: repondre(etat, el.id, v) });
+  // Un élément qui se montre dans le même écran que celui-ci, en deuxième temps (le projet après la motivation).
+  const second = quiz.elements.find((x) => x.memeEcranQue === el.id && etat.reponses[x.id] === undefined);
   const adaptatif = estAdaptatif(el.chapitre);
   const top = adaptatif ? topCourant(etat, 3) : [];
   const change = etat.historique.length > 1 && etat.historique.at(-1) !== etat.historique.at(-2) && chapitreDe(etat.ordre.at(-1) ?? "") === el.chapitre;
   return (
     <Cadre cle={ecran} chapitre={el.chapitre} part={partDuChapitre(etat, el)} retour={etat.ordre.length > 0 ? retourQuiz : null} panneau={{ aide: aideDe(el, etat.profil), ...apercu, change }}>
-      <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />
-      {/* Téléphone et tablette : le top 3 sous la question (chapitres 3 et 4). Sur ordinateur, il est dans le panneau. */}
+      {second
+        ? <DeuxTemps key={`${el.id}:${etat.ordre.length}`} premier={el} second={second} etat={etat} finir={(e) => aller({ t: "quiz" }, { etat: e })} />
+        : <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />}
+      {/* Le top 3 sous la question (chapitres 3 et 4), sur toutes les tailles. */}
       {adaptatif && top.length > 0 && (
-        <div className="lg:hidden"><TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={change} /></div>
+        <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={change} />
       )}
     </Cadre>
   );

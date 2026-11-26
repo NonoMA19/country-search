@@ -45,6 +45,7 @@ export function reponseAuHasard(el: Element, etat: Etat, r: Alea): Valeur {
     case "carte-monde": return r() < 0.2 ? [AUCUNE_ZONE] : el.zones.filter(() => r() < 0.25).map((z) => z.id).concat(r() < 0.5 ? [] : [choisir(r, el.zones).id]).filter((x, i, l) => l.indexOf(x) === i);
     case "swipe": return Object.fromEntries(phrasesSwipe(el, etat).map((p) => [p.id, choisir(r, REPONSES_SWIPE)]));
     case "tri-limites": return Object.fromEntries(situationsLimites(el, etat).map((s) => [s.id, r() < 0.55 ? "ok" : r() < 0.75 ? "eviter" : choisir(r, REPONSES_LIMITE)]));
+    case "recherche": return choisir(r, [...Object.keys(el.correspondances), "BE", "MA", "DZ", "ES", "SN"].filter((x) => !(el.exclus ?? []).includes(x)));
   }
 }
 

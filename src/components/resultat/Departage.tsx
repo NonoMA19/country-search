@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import { CarteDilemme } from "@/components/formats/Dilemme";
-import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
+import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, reflexionDuo, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.
 export type EtatDepartage =
@@ -79,6 +79,8 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
   const lb = lignes.find((l) => l.pays.id === b);
   if (!a || !b || !la || !lb) return null;
   const nomA = la.pays.nom, nomB = lb.pays.nom;
+  // « Trancher entre les deux » seulement s'il reste au moins une question qui les sépare vraiment.
+  const peutTrancher = !etatDep && prochainDepartage(etat, a, b, reglages) !== null;
 
   const lancer = () => {
     const d = prochainDepartage(etat, a, b, reglages);
@@ -94,7 +96,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
       // Plus rien à demander (le classement a changé entre-temps) : on propose le bilan.
       return (
         <section className="mt-6 rounded-3xl border border-bord bg-creux p-4 sm:p-6">
-          <p className="font-medium">Plus aucune question ne sépare {nomA} et {nomB}.</p>
+          <p className="font-medium">{reflexionDuo(etat, a, b, reglages)}</p>
           <button type="button" onClick={() => finir(etatDep.avant, etat)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Voir ce qui a changé</button>
         </section>
       );
@@ -141,13 +143,19 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
           <Comparaison la={la} lb={lb} etat={etat} reglages={reglages} />
           <button type="button" onClick={() => setEtatDep(null)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Fermer</button>
         </>
-      ) : (
+      ) : peutTrancher ? (
         <>
-          <p className="mt-1 text-gris">Ils sont à égalité. Jusqu’à 5 questions pour trancher, choisies parce que ces deux pays y diffèrent vraiment.</p>
+          <p className="mt-1 text-gris">Ils sont très proches. Quelques questions peuvent t’aider à trancher : elles portent sur ce qui les sépare vraiment.</p>
           <div className="lg:mt-3 lg:flex lg:flex-wrap lg:gap-3">
             <button type="button" onClick={lancer} className={`${BOUTON} mt-3 bg-bleu text-white hover:bg-blue-700 lg:mt-0`}>Trancher entre les deux</button>
             <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-2 border border-bord bg-carte hover:border-bleu lg:mt-0`}>Les comparer côte à côte</button>
           </div>
+        </>
+      ) : (
+        <>
+          {/* Plus aucune question ne les sépare : pas de bouton qui mène à rien, mais de quoi réfléchir. */}
+          <p className="mt-2">{reflexionDuo(etat, a, b, reglages)}</p>
+          <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Les comparer côte à côte</button>
         </>
       )}
     </section>

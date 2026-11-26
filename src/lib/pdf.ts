@@ -1,7 +1,8 @@
 // Fabrique le dossier PDF dans le navigateur (bibliothèque libre jsPDF, licence MIT).
 // Aucun serveur, aucun compte : le fichier est créé sur l'appareil de la personne.
 import { LIBELLE_TYPE, dateFr, preuveVisa, type Preuve } from "./donnees";
-import { chargerDossier, liensVerifies } from "./dossiers";
+import { chargerDossier } from "./dossiers";
+import { liensParEtape } from "./liens";
 import { LIBELLE_BADGE, LIBELLE_LIE, verdict, type Alerte, type Ligne, type LigneResultat, type Porte } from "./moteur";
 import type { Pays } from "./pays";
 
@@ -56,6 +57,7 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     titre("Ton résultat");
     ecrire(`${Math.round(ligne.score)} % - ${verdict(Math.round(ligne.score))}. C’est un indicateur, pas une vérité.`);
     ecrire(`Il te ressemble : ${Math.round(ligne.ressemble)} %. Il t’est accessible : ${Math.round(ligne.acces)} %${ligne.obstacles.length ? ` (${ligne.obstacles.map((o) => o.texte.replace(/\.$/, "")).join(" ; ")})` : ""}.`);
+    for (const t of ligne.accesAVerifier) ecrire(t);
   }
   const laPorte = porte ?? ligne?.porte ?? null;
   if (laPorte) {
@@ -91,21 +93,20 @@ export async function telechargerDossier({ pays, ligne, porte, pour, savoir, ale
     for (const a of alertes) { ecrire(`- ${a.texte}`, { apres: 2 }); preuve(a.preuve); }
   }
 
-  // Seuls les liens réellement vérifiés sont imprimés.
-  const liens = dossier ? liensVerifies(dossier.liens) : [];
-  const associations = dossier ? liensVerifies(dossier.associations) : [];
-  if (liens.length) {
-    titre("Liens officiels");
-    for (const l of liens) {
-      ecrire(`${l.titre}${l.nom ? ` : ${l.nom}` : ""}`, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
-    }
-  }
-  if (associations.length) {
-    titre("Associations et réseaux");
-    for (const l of associations) {
-      ecrire(l.nom ?? l.titre, { gras: true, apres: 1 });
-      ecrire(`${l.url} (vérifié le ${dateFr(l.verifieLe ?? dossier?.verifieLe)})`, { taille: 10 });
+  // Les liens qui pourraient t'intéresser, rangés par étape : le nom du site, à quoi il sert, la date (prompt 7).
+  // Seuls les liens réellement vérifiés sont imprimés ; l'adresse reste cliquable sous le nom du site.
+  const groupes = liensParEtape(dossier, pays.id);
+  if (groupes.length) {
+    titre("Les liens qui pourraient t’intéresser");
+    for (const { etape, liens } of groupes) {
+      ecrire(etape.titre, { gras: true, apres: 2 });
+      for (const l of liens) {
+        ecrire(`${l.site} : ${l.role}`, { retrait: 12, apres: 0 });
+        if (y > BAS) { doc.addPage(); y = 60; }
+        doc.setFontSize(9); doc.setTextColor(37, 99, 235);
+        doc.textWithLink(propre(`Ouvrir le site (vérifié le ${dateFr(l.verifieLe)})`), MARGE + 12, y, { url: l.url });
+        y += 18;
+      }
     }
   }
 

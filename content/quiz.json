@@ -3,12 +3,22 @@
     {
       "numero": 1,
       "titre": "Ton point de départ",
-      "phrase": "Pourquoi tu pars, avec qui, pour combien de temps : de quoi poser le décor."
+      "phrase": "Pourquoi tu pars, avec qui, pour combien de temps : de quoi poser le décor.",
+      "emoji": "world-map",
+      "lignes": [
+        "Pourquoi tu pars.",
+        "Avec qui, et pour combien de temps."
+      ]
     },
     {
       "numero": 2,
       "titre": "Tes critères",
-      "phrase": "Cinq critères au plus, puis ce que tu ne sacrifierais jamais : c’est le cœur de ton classement."
+      "phrase": "Cinq critères au plus, puis ce que tu ne sacrifierais jamais : c’est le cœur de ton classement.",
+      "emoji": "bullseye",
+      "lignes": [
+        "Cinq critères au plus.",
+        "Puis celui que tu ne sacrifierais jamais."
+      ]
     },
     {
       "numero": 3,
@@ -16,7 +26,12 @@
       "phrase": "Quelques scènes de la vie au bureau. Il n’y a pas de bonne réponse.",
       "adaptatif": true,
       "min": 4,
-      "max": 6
+      "max": 6,
+      "emoji": "briefcase",
+      "lignes": [
+        "Quelques scènes de bureau.",
+        "Pas de bonne réponse."
+      ]
     },
     {
       "numero": 4,
@@ -24,12 +39,22 @@
       "phrase": "Ton décor, tes week-ends, ce qui fait qu’on se sent bien quelque part.",
       "adaptatif": true,
       "min": 4,
-      "max": 6
+      "max": 6,
+      "emoji": "house-with-garden",
+      "lignes": [
+        "Ton décor, tes week-ends.",
+        "Ce qui te fait te sentir bien."
+      ]
     },
     {
       "numero": 5,
       "titre": "Tes limites et tes valeurs",
-      "phrase": "Ce que tu préfères éviter, ce qui est hors de question, et ce qui compte pour toi."
+      "phrase": "Ce que tu préfères éviter, ce qui est hors de question, et ce qui compte pour toi.",
+      "emoji": "balance-scale",
+      "lignes": [
+        "Ce que tu préfères éviter.",
+        "Ce qui compte pour toi."
+      ]
     }
   ],
   "objectifs": {
@@ -119,6 +144,7 @@
       "id": "salaire",
       "label": "Bon salaire",
       "icone": "banknote",
+      "emoji": "money-bag",
       "famille": "travailler",
       "mesures": [
         "salaire"
@@ -126,8 +152,9 @@
     },
     {
       "id": "travail",
-      "label": "Travail facile à trouver",
+      "label": "Trouver du travail facilement",
       "icone": "briefcase",
+      "emoji": "briefcase",
       "famille": "travailler",
       "mesures": [
         "emploi"
@@ -137,15 +164,63 @@
       "id": "prix",
       "label": "Vie pas chère",
       "icone": "piggy-bank",
+      "emoji": "pig-face",
       "famille": "vivre",
       "mesures": [
         "prix"
       ]
     },
     {
+      "id": "equilibre",
+      "label": "Du temps pour soi",
+      "icone": "clock",
+      "emoji": "person-in-lotus-position",
+      "famille": "travailler",
+      "mesures": [
+        "heures"
+      ]
+    },
+    {
+      "id": "secteur",
+      "label": "Évoluer dans mon secteur",
+      "icone": "trending-up",
+      "emoji": "chart-increasing",
+      "famille": "travailler",
+      "mesures": [
+        "secteur"
+      ]
+    },
+    {
+      "id": "hierarchie",
+      "label": "Une culture de travail simple et directe",
+      "icone": "network",
+      "emoji": "handshake",
+      "famille": "travailler",
+      "mesures": [
+        "hierarchie",
+        "communication"
+      ],
+      "positions": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "langue",
+      "label": "Vivre et travailler sans nouvelle langue",
+      "icone": "message-circle",
+      "emoji": "speech-balloon",
+      "famille": "vivre",
+      "mesures": [
+        "langue-travail",
+        "langue"
+      ]
+    },
+    {
       "id": "climat",
-      "label": "Climat doux",
+      "label": "Climat doux toute l’année",
       "icone": "sun-medium",
+      "emoji": "sun-behind-small-cloud",
       "famille": "vivre",
       "mesures": [
         "doux"
@@ -153,17 +228,23 @@
     },
     {
       "id": "soleil",
-      "label": "Beaucoup de soleil",
+      "label": "Soleil et chaleur",
       "icone": "sun",
+      "emoji": "sun",
       "famille": "vivre",
       "mesures": [
+        "ete",
         "soleil"
+      ],
+      "positions": [
+        5
       ]
     },
     {
       "id": "hiver",
       "label": "Un vrai hiver",
       "icone": "snowflake",
+      "emoji": "snowflake",
       "famille": "vivre",
       "mesures": [
         "hiver"
@@ -173,30 +254,32 @@
       ]
     },
     {
-      "id": "chaleur",
-      "label": "La chaleur en été",
-      "icone": "thermometer-sun",
-      "famille": "vivre",
-      "mesures": [
-        "ete"
-      ],
-      "positions": [
-        5
-      ]
-    },
-    {
       "id": "securite",
       "label": "Sécurité",
       "icone": "shield",
+      "emoji": "shield",
       "famille": "vivre",
       "mesures": [
         "securite"
       ]
     },
     {
+      "id": "sante",
+      "label": "Une vie saine et bien soignée",
+      "icone": "heart-pulse",
+      "emoji": "stethoscope",
+      "famille": "vivre",
+      "mesures": [
+        "sante",
+        "air",
+        "manger-sain"
+      ]
+    },
+    {
       "id": "proche",
       "label": "Proche de la France",
       "icone": "plane",
+      "emoji": "airplane",
       "famille": "vivre",
       "mesures": [
         "vol",
@@ -208,63 +291,30 @@
       ]
     },
     {
-      "id": "francais",
-      "label": "Français sur place",
-      "icone": "users",
-      "famille": "travailler",
-      "mesures": [
-        "francais"
-      ]
-    },
-    {
-      "id": "equilibre",
-      "label": "Semaines de travail courtes",
-      "icone": "clock",
-      "famille": "travailler",
-      "mesures": [
-        "heures"
-      ]
-    },
-    {
-      "id": "secteur",
-      "label": "Évoluer dans mon secteur",
-      "icone": "trending-up",
-      "famille": "travailler",
-      "mesures": [
-        "secteur"
-      ]
-    },
-    {
       "id": "depaysement",
       "label": "Vivre un vrai dépaysement",
       "icone": "globe",
+      "emoji": "compass",
       "famille": "vivre",
       "mesures": [
         "depaysement"
       ]
     },
     {
-      "id": "air",
-      "label": "Un air pur",
-      "icone": "wind",
-      "famille": "vivre",
+      "id": "francais",
+      "label": "Français sur place",
+      "icone": "users",
+      "emoji": "baguette-bread",
+      "famille": "travailler",
       "mesures": [
-        "air"
-      ]
-    },
-    {
-      "id": "sante",
-      "label": "Être bien couvert pour ma santé",
-      "icone": "heart-pulse",
-      "famille": "vivre",
-      "mesures": [
-        "sante"
+        "francais"
       ]
     },
     {
       "id": "nature",
       "label": "La nature à côté",
       "icone": "trees",
+      "emoji": "evergreen-tree",
       "famille": "vivre",
       "mesures": [
         "nature"
@@ -274,6 +324,7 @@
       "id": "grande-ville",
       "label": "Une grande ville animée",
       "icone": "building-2",
+      "emoji": "cityscape",
       "famille": "vivre",
       "mesures": [
         "grande-ville"
@@ -283,77 +334,11 @@
       "id": "ville-moyenne",
       "label": "Une ville à taille humaine",
       "icone": "house",
+      "emoji": "house-with-garden",
       "famille": "vivre",
       "mesures": [
         "ville-moyenne"
       ]
-    },
-    {
-      "id": "anglais",
-      "label": "Travailler en anglais",
-      "icone": "languages",
-      "famille": "travailler",
-      "mesures": [
-        "anglais"
-      ]
-    },
-    {
-      "id": "langue",
-      "label": "Une langue facile au quotidien",
-      "icone": "message-circle",
-      "famille": "vivre",
-      "mesures": [
-        "langue"
-      ]
-    },
-    {
-      "id": "manger-sain",
-      "label": "Manger sainement facilement",
-      "icone": "salad",
-      "famille": "vivre",
-      "mesures": [
-        "manger-sain"
-      ]
-    },
-    {
-      "id": "hierarchie",
-      "label": "Une hiérarchie légère",
-      "icone": "network",
-      "famille": "travailler",
-      "mesures": [
-        "hierarchie"
-      ],
-      "positions": [
-        1
-      ]
-    },
-    {
-      "id": "direct",
-      "label": "Des collègues qui parlent franchement",
-      "icone": "message-square",
-      "famille": "travailler",
-      "mesures": [
-        "communication"
-      ],
-      "positions": [
-        1
-      ]
-    },
-    {
-      "id": "employeur",
-      "label": "Changer d’employeur librement",
-      "icone": "door-open",
-      "famille": "travailler",
-      "mesures": [
-        "employeur-libre"
-      ]
-    },
-    {
-      "id": "logement",
-      "label": "Un logement abordable",
-      "icone": "key-round",
-      "famille": "vivre",
-      "mesures": []
     }
   ],
   "dimensions": {
@@ -757,8 +742,8 @@
       "chapitre": 1,
       "theme": "Ta motivation",
       "profil": "motivation",
-      "titre": "Qu’est-ce qui te pousse à partir, d’abord ?",
-      "texte": "Une seule réponse : la première qui te vient.",
+      "titre": "Qu’est-ce qui te pousse à partir ?",
+      "texte": "La première raison qui te vient.",
       "dimensions": [
         "motivation"
       ],
@@ -798,11 +783,12 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour ta carrière."
+          "portrait": "Tu pars d’abord pour ta carrière.",
+          "emoji": "rocket"
         },
         {
           "id": "argent",
-          "label": "Gagner ou mettre de l’argent de côté",
+          "label": "Gagner ou mettre de côté",
           "icone": "wallet",
           "effets": [
             {
@@ -818,17 +804,19 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour l’argent : gagner plus, ou dépenser moins."
+          "portrait": "Tu pars d’abord pour l’argent : gagner plus, ou dépenser moins.",
+          "emoji": "money-bag"
         },
         {
           "id": "langue",
-          "label": "Apprendre ou pratiquer une langue",
+          "label": "Pratiquer une langue",
           "icone": "languages",
           "effets": [],
           "sansPenalite": [
             "apprendre-langue"
           ],
-          "portrait": "Tu pars d’abord pour une langue."
+          "portrait": "Tu pars d’abord pour une langue.",
+          "emoji": "speech-balloon"
         },
         {
           "id": "aventure",
@@ -842,11 +830,12 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour l’aventure."
+          "portrait": "Tu pars d’abord pour l’aventure.",
+          "emoji": "compass"
         },
         {
           "id": "qualite-vie",
-          "label": "Une meilleure qualité de vie",
+          "label": "Mieux vivre",
           "icone": "sunrise",
           "effets": [
             {
@@ -862,16 +851,93 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour une meilleure qualité de vie."
+          "portrait": "Tu pars d’abord pour une meilleure qualité de vie.",
+          "emoji": "sunrise"
         },
         {
           "id": "rejoindre",
           "label": "Rejoindre quelqu’un",
           "icone": "heart-handshake",
           "effets": [],
-          "portrait": "Tu pars pour rejoindre quelqu’un."
+          "portrait": "Tu pars pour rejoindre quelqu’un.",
+          "emoji": "red-heart"
         }
       ]
+    },
+    {
+      "id": "objectif",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Ton projet",
+      "profil": "objectif",
+      "titre": "Et sous quelle forme ?",
+      "dimensions": [
+        "projet"
+      ],
+      "aide": {
+        "enjeu": "Ton projet donne tes premiers critères, plus légers que ceux que tu choisiras.",
+        "cartes": [
+          {
+            "pastille": "VIE ou stage",
+            "texte": "Emploi des jeunes, Français sur place ; l’indemnité VIE remplace le salaire."
+          },
+          {
+            "pastille": "Premier poste",
+            "texte": "Emploi des jeunes, salaire, travail en anglais."
+          },
+          {
+            "pastille": "Aventure (PVT)",
+            "texte": "Vie pas chère, nature, climat doux."
+          },
+          {
+            "pastille": "Carrière longue",
+            "texte": "Salaire, stabilité, couverture santé."
+          },
+          {
+            "pastille": "Je ne sais pas encore",
+            "texte": "Rien ne change."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "stage-vie",
+          "label": "Un VIE ou un stage",
+          "phrase": "VIE : 6 à 24 mois en entreprise, avant 28 ans, avec une indemnité.",
+          "icone": "graduation-cap",
+          "emoji": "office-building"
+        },
+        {
+          "id": "premier-poste",
+          "label": "Un premier poste",
+          "phrase": "Un vrai contrat, sur place.",
+          "icone": "briefcase",
+          "emoji": "briefcase"
+        },
+        {
+          "id": "aventure",
+          "label": "Une année d’aventure (PVT)",
+          "phrase": "Travailler et voyager, un an au plus.",
+          "icone": "backpack",
+          "emoji": "backpack"
+        },
+        {
+          "id": "carriere",
+          "label": "T’installer plusieurs années",
+          "phrase": "Une carrière sur place.",
+          "icone": "trending-up",
+          "emoji": "house"
+        },
+        {
+          "id": "inconnu",
+          "label": "Je ne sais pas encore",
+          "phrase": "On reste ouvert.",
+          "icone": "circle-help",
+          "emoji": "thinking-face"
+        }
+      ],
+      "memeEcranQue": "motivation",
+      "texte": "Ton projet de départ."
     },
     {
       "id": "relance-argent",
@@ -1131,80 +1197,12 @@
       ]
     },
     {
-      "id": "objectif",
-      "type": "choix-cartes",
-      "chapitre": 1,
-      "theme": "Ton projet",
-      "profil": "objectif",
-      "titre": "Quel est ton projet de départ ?",
-      "dimensions": [
-        "projet"
-      ],
-      "aide": {
-        "enjeu": "Ton projet donne tes premiers critères, plus légers que ceux que tu choisiras.",
-        "cartes": [
-          {
-            "pastille": "Stage ou VIE",
-            "texte": "Emploi des jeunes, Français sur place ; l’indemnité VIE remplace le salaire."
-          },
-          {
-            "pastille": "Premier poste",
-            "texte": "Emploi des jeunes, salaire, travail en anglais."
-          },
-          {
-            "pastille": "Aventure (PVT)",
-            "texte": "Vie pas chère, nature, climat doux."
-          },
-          {
-            "pastille": "Carrière longue",
-            "texte": "Salaire, stabilité, couverture santé."
-          },
-          {
-            "pastille": "Je ne sais pas encore",
-            "texte": "Rien ne change."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "stage-vie",
-          "label": "Un stage ou un VIE",
-          "phrase": "Volontariat international en entreprise, ou stage.",
-          "icone": "graduation-cap"
-        },
-        {
-          "id": "premier-poste",
-          "label": "Un premier poste",
-          "phrase": "Un vrai contrat pour lancer ta vie pro.",
-          "icone": "briefcase"
-        },
-        {
-          "id": "aventure",
-          "label": "Une année d’aventure (PVT)",
-          "phrase": "Travailler et voyager, un an au plus.",
-          "icone": "backpack"
-        },
-        {
-          "id": "carriere",
-          "label": "Une carrière longue",
-          "phrase": "T’installer pour plusieurs années.",
-          "icone": "trending-up"
-        },
-        {
-          "id": "inconnu",
-          "label": "Je ne sais pas encore",
-          "phrase": "Aucun poids de départ.",
-          "icone": "circle-help"
-        }
-      ]
-    },
-    {
       "id": "scenario",
       "type": "choix-cartes",
       "chapitre": 1,
       "theme": "Ton scénario idéal",
-      "titre": "Ton scénario idéal, dans un an ?",
-      "texte": "Choisis celui qui te fait le plus envie.",
+      "titre": "Ta vie idéale, dans un an ?",
+      "texte": "Celle qui te fait le plus envie.",
       "dimensions": [
         "ville",
         "cout",
@@ -1229,9 +1227,9 @@
       "options": [
         {
           "id": "metropole",
-          "label": "Un poste prenant dans une grande métropole",
+          "label": "Un job prenant en grande ville",
           "plus": "Ta carrière avance vite.",
-          "moins": "La ville coûte cher et va vite.",
+          "moins": "Peu de temps libre.",
           "effets": [
             {
               "mesures": [
@@ -1246,13 +1244,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : un poste prenant dans une grande métropole."
+          "portrait": "Ton scénario idéal : un poste prenant dans une grande métropole.",
+          "emoji": "cityscape"
         },
         {
           "id": "sac-a-dos",
-          "label": "Des petits boulots et beaucoup de voyages",
-          "plus": "Tu découvres un maximum.",
-          "moins": "Peu de stabilité.",
+          "label": "Petits boulots et voyages",
+          "plus": "Tu vois du pays.",
+          "moins": "Peu d’argent de côté.",
           "effets": [
             {
               "mesures": [
@@ -1267,13 +1266,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : des petits boulots et beaucoup de voyages."
+          "portrait": "Ton scénario idéal : des petits boulots et beaucoup de voyages.",
+          "emoji": "backpack"
         },
         {
           "id": "equilibre",
-          "label": "Un bon job et du temps pour vivre",
-          "plus": "Des soirées et des week-ends à toi.",
-          "moins": "Le salaire n’est pas toujours le plus haut.",
+          "label": "Un bon job et du temps libre",
+          "plus": "Tes soirées sont à toi.",
+          "moins": "La carrière avance moins vite.",
           "effets": [
             {
               "mesures": [
@@ -1288,13 +1288,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : un bon job et du temps pour vivre."
+          "portrait": "Ton scénario idéal : un bon job et du temps pour vivre.",
+          "emoji": "person-in-lotus-position"
         },
         {
           "id": "soleil",
-          "label": "Le soleil et la mer après le travail",
-          "plus": "Une vie dehors.",
-          "moins": "Les métiers proposés sont parfois plus limités.",
+          "label": "Soleil et mer après le travail",
+          "plus": "La vie dehors toute l’année.",
+          "moins": "Moins de choix de pays.",
           "effets": [
             {
               "mesures": [
@@ -1309,7 +1310,8 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : le soleil et la mer après le travail."
+          "portrait": "Ton scénario idéal : le soleil et la mer après le travail.",
+          "emoji": "beach-with-umbrella"
         },
         {
           "id": "inconnu",
@@ -1626,7 +1628,7 @@
       "theme": "Ton projet",
       "profil": "secteur",
       "titre": "Ton secteur ?",
-      "texte": "Celui où tu veux travailler, ou celui de tes études. Seize familles.",
+      "texte": "Celui où tu veux travailler, ou celui de tes études.",
       "dimensions": [
         "secteur"
       ],
@@ -1645,105 +1647,122 @@
       },
       "options": [
         {
-          "id": "finance",
-          "label": "Finance et banque",
+          "id": "public",
+          "label": "Administration et service public",
           "icone": "landmark",
-          "citi": "K"
-        },
-        {
-          "id": "conseil",
-          "label": "Conseil et audit",
-          "icone": "clipboard-list",
-          "citi": "M"
-        },
-        {
-          "id": "ingenierie",
-          "label": "Ingénierie et industrie",
-          "icone": "factory",
-          "citi": "C"
-        },
-        {
-          "id": "tech",
-          "label": "Tech et data",
-          "icone": "cpu",
-          "citi": "J"
-        },
-        {
-          "id": "commerce",
-          "label": "Marketing et commerce",
-          "icone": "shopping-bag",
-          "citi": "G"
-        },
-        {
-          "id": "sante",
-          "label": "Santé",
-          "icone": "stethoscope",
-          "citi": "Q"
-        },
-        {
-          "id": "hotellerie",
-          "label": "Hôtellerie et tourisme",
-          "icone": "bed",
-          "citi": "I"
-        },
-        {
-          "id": "enseignement",
-          "label": "Enseignement et recherche",
-          "icone": "book-open",
-          "citi": "P"
+          "citi": "O",
+          "emoji": "classical-building"
         },
         {
           "id": "agriculture",
           "label": "Agriculture et agroalimentaire",
           "icone": "wheat",
-          "citi": "A"
-        },
-        {
-          "id": "energie",
-          "label": "Énergie, eau et environnement",
-          "icone": "zap",
-          "citi": "D+E"
+          "citi": "A",
+          "emoji": "sheaf-of-rice"
         },
         {
           "id": "btp",
           "label": "Bâtiment et architecture",
           "icone": "hard-hat",
-          "citi": "F"
+          "citi": "F",
+          "emoji": "building-construction"
         },
         {
-          "id": "transport",
-          "label": "Transport et logistique",
-          "icone": "truck",
-          "citi": "H"
-        },
-        {
-          "id": "immobilier",
-          "label": "Immobilier",
-          "icone": "building",
-          "citi": "L"
-        },
-        {
-          "id": "public",
-          "label": "Administration et service public",
-          "icone": "landmark",
-          "citi": "O"
+          "id": "conseil",
+          "label": "Conseil et audit",
+          "icone": "clipboard-list",
+          "citi": "M",
+          "emoji": "bar-chart"
         },
         {
           "id": "culture",
           "label": "Culture, arts et sport",
           "icone": "palette",
-          "citi": "R"
+          "citi": "R",
+          "emoji": "performing-arts"
+        },
+        {
+          "id": "energie",
+          "label": "Énergie, eau et environnement",
+          "icone": "zap",
+          "citi": "D+E",
+          "emoji": "high-voltage"
+        },
+        {
+          "id": "enseignement",
+          "label": "Enseignement et recherche",
+          "icone": "book-open",
+          "citi": "P",
+          "emoji": "books"
+        },
+        {
+          "id": "finance",
+          "label": "Finance et banque",
+          "icone": "landmark",
+          "citi": "K",
+          "emoji": "bank"
+        },
+        {
+          "id": "hotellerie",
+          "label": "Hôtellerie et tourisme",
+          "icone": "bed",
+          "citi": "I",
+          "emoji": "bellhop-bell"
+        },
+        {
+          "id": "immobilier",
+          "label": "Immobilier",
+          "icone": "building",
+          "citi": "L",
+          "emoji": "house"
+        },
+        {
+          "id": "ingenierie",
+          "label": "Ingénierie et industrie",
+          "icone": "factory",
+          "citi": "C",
+          "emoji": "gear"
+        },
+        {
+          "id": "commerce",
+          "label": "Marketing et commerce",
+          "icone": "shopping-bag",
+          "citi": "G",
+          "emoji": "shopping-cart"
         },
         {
           "id": "services",
           "label": "RH et services aux entreprises",
           "icone": "users-round",
-          "citi": "N"
+          "citi": "N",
+          "emoji": "busts-in-silhouette"
+        },
+        {
+          "id": "sante",
+          "label": "Santé",
+          "icone": "stethoscope",
+          "citi": "Q",
+          "emoji": "stethoscope"
+        },
+        {
+          "id": "tech",
+          "label": "Tech et data",
+          "icone": "cpu",
+          "citi": "J",
+          "emoji": "laptop"
+        },
+        {
+          "id": "transport",
+          "label": "Transport et logistique",
+          "icone": "truck",
+          "citi": "H",
+          "emoji": "delivery-truck"
         },
         {
           "id": "autre",
           "label": "Autre ou je ne sais pas",
-          "icone": "circle-help"
+          "icone": "circle-help",
+          "emoji": "thinking-face"
         }
       ]
     },
@@ -1952,7 +1971,7 @@
       "type": "choix-cartes",
       "chapitre": 1,
       "theme": "Ton profil",
-      "profil": "nationalite-laquelle",
+      "profil": "nationalite",
       "titre": "As-tu une autre nationalité ?",
       "dimensions": [],
       "aide": {
@@ -1963,16 +1982,8 @@
             "texte": "Rien ne change."
           },
           {
-            "pastille": "Irlandaise",
-            "texte": "Le Royaume-Uni t’est ouvert sans visa."
-          },
-          {
-            "pastille": "Canadienne ou américaine",
-            "texte": "Tu entres dans ce pays en citoyen. On te signale aussi un piège à connaître."
-          },
-          {
-            "pastille": "Une autre",
-            "texte": "Ce cas n’est pas encore couvert : ton résultat le dit."
+            "pastille": "Oui",
+            "texte": "On te demande laquelle."
           }
         ]
       },
@@ -1983,22 +1994,53 @@
           "label": "Non"
         },
         {
-          "id": "irlandaise",
-          "label": "Oui, irlandaise"
-        },
-        {
-          "id": "canadienne",
-          "label": "Oui, canadienne"
-        },
-        {
-          "id": "americaine",
-          "label": "Oui, américaine"
-        },
-        {
-          "id": "autre",
-          "label": "Oui, une autre"
+          "id": "oui",
+          "label": "Oui"
         }
       ]
+    },
+    {
+      "id": "nationalite-pays",
+      "type": "recherche",
+      "chapitre": 1,
+      "theme": "Ton profil",
+      "profil": "nationalite-laquelle",
+      "relanceDe": {
+        "element": "nationalite",
+        "reponses": [
+          "oui"
+        ]
+      },
+      "titre": "Laquelle ?",
+      "texte": "Tape le nom du pays.",
+      "dimensions": [],
+      "regleAffichage": "Seulement si tu as une autre nationalité.",
+      "correspondances": {
+        "IE": "irlandaise",
+        "CA": "canadienne",
+        "US": "americaine"
+      },
+      "defaut": "autre",
+      "exclus": [
+        "FR"
+      ],
+      "aide": {
+        "enjeu": "Une autre nationalité peut ouvrir un pays sans visa, ou créer des obligations.",
+        "cartes": [
+          {
+            "pastille": "Irlandaise",
+            "texte": "Le Royaume-Uni t’est ouvert sans visa."
+          },
+          {
+            "pastille": "Canadienne ou américaine",
+            "texte": "Tu entres dans ce pays en citoyen. On te signale aussi un piège à connaître."
+          },
+          {
+            "pastille": "Une autre",
+            "texte": "Ce cas n’est pas encore couvert : ton résultat le dit."
+          }
+        ]
+      }
     },
     {
       "id": "envies",
@@ -2009,7 +2051,7 @@
       "multiple": true,
       "max": 5,
       "titre": "Choisis jusqu’à 5 critères",
-      "texte": "Ceux qui comptent le plus pour ton départ, parmi 25.",
+      "texte": "Ceux qui comptent le plus pour ton départ.",
       "dimensions": [],
       "aide": {
         "enjeu": "Tes critères sont le cœur de ton classement.",
@@ -2024,7 +2066,7 @@
           },
           {
             "pastille": "Sans données pays",
-            "texte": "Moins de 30 pays sur 38 : il enrichit ton portrait sans changer ton classement."
+            "texte": "Pas encore assez de données pays : il enrichit ton portrait, sans changer ton classement."
           }
         ]
       }
@@ -2074,28 +2116,396 @@
       }
     },
     {
-      "id": "changer-avis",
-      "type": "choix-cartes",
-      "chapitre": 2,
-      "theme": "Tes critères",
-      "source": "envies-restantes",
-      "titre": "Quel avantage te ferait changer d’avis ?",
-      "texte": "Parmi les critères que tu n’as pas choisis : celui qui pourrait te faire aimer un pays.",
-      "dimensions": [],
-      "aucun": "Aucun",
+      "id": "semaine",
+      "type": "swipe",
+      "chapitre": 3,
+      "theme": "Ta semaine",
+      "obligatoire": true,
+      "nombre": 5,
+      "titre": "Ta semaine idéale, là-bas ?",
+      "texte": "Glisse à droite si ça te ressemble, à gauche sinon.",
+      "dimensions": [
+        "equilibre",
+        "salaire",
+        "hierarchie",
+        "communication",
+        "ponctualite",
+        "emploi",
+        "cout",
+        "reseau",
+        "visa",
+        "decision",
+        "pro-perso"
+      ],
       "aide": {
-        "enjeu": "Un critère non choisi peut quand même te faire basculer.",
+        "enjeu": "Ta semaine de travail dit quelle culture d’entreprise te va.",
         "cartes": [
           {
-            "pastille": "Ton choix",
-            "texte": "Il compte un peu, moins que tes critères choisis."
+            "pastille": "Ça me correspond",
+            "texte": "Les pays qui s’y prêtent passent un peu devant, quand la donnée existe."
           },
           {
-            "pastille": "Aucun",
+            "pastille": "Pas vraiment",
+            "texte": "Rien ne recule : ça veut dire que ce n’est pas ce que tu cherches."
+          },
+          {
+            "pastille": "Ça dépend",
             "texte": "Rien ne change."
           }
         ]
-      }
+      },
+      "phrases": [
+        {
+          "id": "W1",
+          "texte": "Finir à 17 h et avoir toute ta soirée.",
+          "emoji": "mantelpiece-clock",
+          "oui": [
+            {
+              "mesures": [
+                "heures"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux finir tôt le soir.",
+          "portraitNon": "Finir tard ne te dérange pas.",
+          "dimensions": [
+            "equilibre"
+          ]
+        },
+        {
+          "id": "W2",
+          "texte": "Une grosse paie, quitte à faire des heures en plus.",
+          "emoji": "money-bag",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu acceptes des heures en plus pour mieux gagner.",
+          "portraitNon": "Faire des heures pour gagner plus, très peu pour toi.",
+          "dimensions": [
+            "salaire"
+          ]
+        },
+        {
+          "id": "W3",
+          "texte": "Appeler ta directrice par son prénom.",
+          "emoji": "waving-hand",
+          "oui": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les rapports simples avec la direction.",
+          "portraitNon": "Tu préfères des rôles bien marqués.",
+          "dimensions": [
+            "hierarchie"
+          ]
+        },
+        {
+          "id": "W4",
+          "texte": "Un retour franc sur ton travail, sans détour.",
+          "emoji": "speech-balloon",
+          "oui": [
+            {
+              "mesures": [
+                "communication"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes qu’on te parle franchement.",
+          "portraitNon": "Tu préfères qu’on y mette les formes.",
+          "dimensions": [
+            "communication"
+          ]
+        },
+        {
+          "id": "W5",
+          "texte": "Des réunions qui commencent à l’heure pile.",
+          "emoji": "alarm-clock",
+          "oui": [
+            {
+              "mesures": [
+                "ponctualite"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "L’heure, c’est l’heure.",
+          "portraitNon": "Quelques minutes de retard ne te gênent pas.",
+          "dimensions": [
+            "ponctualite"
+          ]
+        },
+        {
+          "id": "W6",
+          "texte": "Un afterwork avec tes collègues chaque jeudi.",
+          "emoji": "clinking-beer-mugs",
+          "oui": [
+            {
+              "mesures": [
+                "pro-perso"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tes collègues peuvent devenir tes amis.",
+          "portraitNon": "Tu gardes ta vie perso à part.",
+          "dimensions": [
+            "pro-perso"
+          ]
+        },
+        {
+          "id": "W7",
+          "texte": "Trouver un job en quelques semaines.",
+          "emoji": "magnifying-glass-tilted-left",
+          "oui": [
+            {
+              "mesures": [
+                "emploi"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux trouver du travail vite.",
+          "portraitNon": "Prendre le temps de chercher te va.",
+          "dimensions": [
+            "emploi"
+          ]
+        },
+        {
+          "id": "W8",
+          "texte": "Un loyer qui te laisse de la marge chaque mois.",
+          "emoji": "key",
+          "oui": [
+            {
+              "mesures": [
+                "prix"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux garder de la marge chaque mois.",
+          "portraitNon": "Le coût de la vie ne t’inquiète pas.",
+          "dimensions": [
+            "cout"
+          ]
+        },
+        {
+          "id": "W9",
+          "texte": "Croiser d’autres Français au travail.",
+          "emoji": "baguette-bread",
+          "oui": [
+            {
+              "mesures": [
+                "francais"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Des Français autour de toi, ça te rassure.",
+          "portraitNon": "Tu évites la bulle française.",
+          "dimensions": [
+            "reseau"
+          ]
+        },
+        {
+          "id": "W10",
+          "texte": "Pouvoir changer de poste dès qu’une offre te plaît.",
+          "emoji": "door",
+          "oui": [
+            {
+              "mesures": [
+                "employeur-libre"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir changer d’employeur librement.",
+          "portraitNon": "Rester lié à un employeur ne te gêne pas.",
+          "dimensions": [
+            "visa"
+          ]
+        },
+        {
+          "id": "W11",
+          "texte": "Des décisions prises ensemble, en équipe.",
+          "emoji": "people-hugging",
+          "oui": [
+            {
+              "mesures": [
+                "decision"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes décider en équipe.",
+          "portraitNon": "Tu préfères qu’une personne tranche vite.",
+          "dimensions": [
+            "decision"
+          ]
+        },
+        {
+          "id": "W12",
+          "texte": "Une semaine de quatre jours, payée un peu moins.",
+          "emoji": "calendar",
+          "oui": [
+            {
+              "mesures": [
+                "heures"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Une semaine courte vaut plus qu’une grosse paie.",
+          "portraitNon": "Ta paie passe avant une semaine courte.",
+          "dimensions": [
+            "equilibre"
+          ]
+        },
+        {
+          "id": "W13",
+          "texte": "Prendre le train pour le bureau à 8 h pile, tous les jours.",
+          "emoji": "station",
+          "oui": [
+            {
+              "mesures": [
+                "ponctualite"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les journées réglées comme une horloge.",
+          "portraitNon": "Les horaires stricts, ce n’est pas pour toi.",
+          "dimensions": [
+            "ponctualite"
+          ]
+        },
+        {
+          "id": "W14",
+          "texte": "Dire franchement à ton chef que son idée ne marchera pas.",
+          "emoji": "speaking-head",
+          "oui": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir contredire ton chef.",
+          "portraitNon": "Contredire ton chef, très peu pour toi.",
+          "dimensions": [
+            "hierarchie"
+          ]
+        },
+        {
+          "id": "W15",
+          "texte": "Une semaine de 45 h, avec une belle prime à la fin de l’année.",
+          "emoji": "money-with-wings",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Une belle prime vaut bien quelques heures de plus.",
+          "portraitNon": "Les longues semaines ne valent pas une prime.",
+          "dimensions": [
+            "salaire"
+          ]
+        },
+        {
+          "id": "W16",
+          "texte": "Plusieurs offres d’emploi dès ta première semaine de recherche.",
+          "emoji": "envelope-with-arrow",
+          "oui": [
+            {
+              "mesures": [
+                "emploi"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux avoir le choix entre plusieurs offres.",
+          "portraitNon": "Trouver vite n’est pas ta priorité.",
+          "dimensions": [
+            "emploi"
+          ]
+        },
+        {
+          "id": "W17",
+          "texte": "Un salaire qui progresse vite chaque année.",
+          "emoji": "chart-increasing",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux un salaire qui grimpe vite.",
+          "portraitNon": "La progression du salaire n’est pas ta priorité.",
+          "dimensions": [
+            "salaire"
+          ]
+        },
+        {
+          "id": "W18",
+          "texte": "Un chef qui te laisse organiser ton planning seul.",
+          "emoji": "spiral-calendar",
+          "oui": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux de l’autonomie.",
+          "portraitNon": "Un cadre fixé par ton chef te rassure.",
+          "dimensions": [
+            "hierarchie"
+          ]
+        }
+      ]
     },
     {
       "id": "promotion",
@@ -2210,6 +2620,41 @@
           "variantes": {
             "stage-vie": "Pendant ta mission de VIE, un gros client demande un rendu dans deux semaines."
           }
+        },
+        {
+          "id": "job-ete",
+          "titre": "L’été chargé",
+          "texte": "Ton employeur propose des heures en plus tout l’été.",
+          "options": [
+            {
+              "texte": "Tu dis oui : 600 € de plus par mois",
+              "plus": "De quoi voyager à la rentrée.",
+              "moins": "Peu de soirées libres cet été."
+            },
+            {
+              "texte": "Tu gardes tes horaires",
+              "plus": "Tu profites de chaque soir d’été.",
+              "moins": "Ton compte en banque ne bouge pas."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "deux-equipes",
+          "titre": "Deux équipes",
+          "texte": "Deux équipes veulent te recruter.",
+          "options": [
+            {
+              "texte": "Celle qui paie le mieux, mais finit tard",
+              "plus": "Une meilleure paie dès le départ.",
+              "moins": "Tu rentres souvent après 19 h."
+            },
+            {
+              "texte": "Celle qui finit à 17 h, un peu moins payée",
+              "plus": "Tes soirées sont libres.",
+              "moins": "Une paie plus basse chaque mois."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2345,6 +2790,41 @@
             "premier-poste": "La fin de la période d’essai",
             "carriere": "La fin du premier contrat"
           }
+        },
+        {
+          "id": "interim",
+          "titre": "Deux missions",
+          "texte": "Une agence te propose deux missions.",
+          "options": [
+            {
+              "texte": "Elle commence lundi, payée au minimum",
+              "plus": "Tu travailles tout de suite.",
+              "moins": "La paie est juste."
+            },
+            {
+              "texte": "Elle commence dans un mois, payée 30 % de plus",
+              "plus": "Une bien meilleure paie.",
+              "moins": "Un mois sans revenu en attendant."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "salon",
+          "titre": "Le salon de l’emploi",
+          "texte": "Au salon de l’emploi, deux stands t’intéressent.",
+          "options": [
+            {
+              "texte": "Une entreprise qui recrute vingt jeunes cette année",
+              "plus": "Tes chances sont bonnes.",
+              "moins": "Le salaire de départ est moyen."
+            },
+            {
+              "texte": "Une entreprise qui recrute deux personnes, très bien payées",
+              "plus": "Le poste paie nettement mieux.",
+              "moins": "Beaucoup de candidats pour peu de places."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2401,12 +2881,12 @@
           "options": [
             {
               "texte": "Tout le monde parle anglais",
-              "plus": "Tu es à l’aise dès le premier jour.",
+              "plus": "Tu suis tout dès le premier jour.",
               "moins": "Tu progresses peu dans la langue du pays."
             },
             {
               "texte": "Tout se passe dans la langue du pays",
-              "plus": "Tu apprends vite et tu t’intègres.",
+              "plus": "Tu apprends vite la langue.",
               "moins": "Les premiers mois, tu comprends la moitié."
             }
           ],
@@ -2450,6 +2930,40 @@
               "texte": "On parle la langue du pays, tu suis comme tu peux",
               "plus": "Tu entres dans la culture du pays.",
               "moins": "Les blagues t’échappent pendant des mois."
+            }
+          ]
+        },
+        {
+          "id": "appel",
+          "titre": "Le premier appel",
+          "texte": "Ton futur chef t’appelle.",
+          "options": [
+            {
+              "texte": "Il parle anglais avec toute l’équipe",
+              "plus": "Tu comprends tout dès le premier jour.",
+              "moins": "La langue du pays, tu l’apprendras ailleurs."
+            },
+            {
+              "texte": "Il parle la langue du pays, et un peu d’anglais",
+              "plus": "Tu apprends la langue au travail, chaque jour.",
+              "moins": "Les premières semaines sont fatigantes."
+            }
+          ]
+        },
+        {
+          "id": "mails",
+          "titre": "Les mails du matin",
+          "texte": "Tu ouvres ta boîte mail le premier matin.",
+          "options": [
+            {
+              "texte": "Tous les mails sont en anglais",
+              "plus": "Tu réponds vite et sans erreur.",
+              "moins": "Au bureau, tu restes surtout entre étrangers."
+            },
+            {
+              "texte": "Tous les mails sont dans la langue du pays",
+              "plus": "Tu progresses vite dans la langue.",
+              "moins": "Chaque mail te prend du temps au début."
             }
           ]
         }
@@ -2556,6 +3070,40 @@
               "moins": "Moins de pays possibles."
             }
           ]
+        },
+        {
+          "id": "parrainage",
+          "titre": "Le visa parrainé",
+          "texte": "Une entreprise accepte de parrainer ton visa.",
+          "options": [
+            {
+              "texte": "Tu signes : ton visa dépend d’elle deux ans",
+              "plus": "Un visa et un poste d’un coup.",
+              "moins": "Changer d’entreprise sera difficile."
+            },
+            {
+              "texte": "Tu préfères un pays où ton séjour ne dépend pas d’un employeur",
+              "plus": "Tu changes de poste quand tu veux.",
+              "moins": "Moins de pays sont ouverts pour toi."
+            }
+          ]
+        },
+        {
+          "id": "deux-ans",
+          "titre": "Le contrat de deux ans",
+          "texte": "Ton contrat dure deux ans, avec un visa lié à l’entreprise.",
+          "options": [
+            {
+              "texte": "Tu acceptes : c’est un bon début",
+              "plus": "Un cadre stable pour lancer ta carrière.",
+              "moins": "Si l’ambiance se dégrade, partir est compliqué."
+            },
+            {
+              "texte": "Tu veux pouvoir partir avant la fin",
+              "plus": "Tu gardes ta liberté.",
+              "moins": "Les pays qui exigent un employeur reculent."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2619,14 +3167,14 @@
           "texte": "Tu rends ton premier dossier. Ta manager te répond.",
           "options": [
             {
-              "texte": "« Trois erreurs page 2, corrige avant midi. »",
-              "plus": "Tu sais tout de suite quoi corriger.",
-              "moins": "Le ton est sec, il faut encaisser."
+              "texte": "« Trois points à corriger page 2. Le reste va. »",
+              "plus": "Tu sais exactement quoi faire.",
+              "moins": "Pas un mot sur ce qui est réussi."
             },
             {
-              "texte": "« Très bon travail ! Peut-être revoir un ou deux points. »",
-              "plus": "L’ambiance reste douce et encourageante.",
-              "moins": "Il faut lire entre les lignes pour savoir ce qui ne va pas."
+              "texte": "« Bon début ! On en parle ensemble demain ? »",
+              "plus": "L’échange reste chaleureux.",
+              "moins": "Tu attends un jour pour savoir ce qui ne va pas."
             }
           ],
           "variantes": {
@@ -2657,20 +3205,54 @@
           "texte": "C’est ton premier entretien annuel.",
           "options": [
             {
-              "texte": "Ta manager liste tes trois points faibles, sans détour",
+              "texte": "Ta manager te donne trois points à améliorer, sans détour",
               "plus": "Tu sais exactement sur quoi progresser.",
-              "moins": "Ça pique, même quand c’est juste."
+              "moins": "Tes réussites passent au second plan."
             },
             {
-              "texte": "Ta manager commence par tes réussites, puis glisse une piste",
+              "texte": "Ta manager parle d’abord de tes réussites, puis glisse une piste",
               "plus": "Tu en sors avec le moral.",
-              "moins": "Les vrais reproches restent flous."
+              "moins": "Ce qui coince vraiment reste flou."
             }
           ],
           "variantes": {
             "stage-vie": "C’est le bilan de mi-mission de ton VIE.",
             "aventure": "Ton job de PVT se termine : ta responsable fait le point avec toi."
           }
+        },
+        {
+          "id": "client",
+          "titre": "Le client pas content",
+          "texte": "Un client n’est pas content de ton travail.",
+          "options": [
+            {
+              "texte": "Il te le dit en une phrase, sans détour",
+              "plus": "Tu sais quoi changer tout de suite.",
+              "moins": "Le ton est froid."
+            },
+            {
+              "texte": "Il te remercie, puis suggère « une petite piste »",
+              "plus": "La relation reste bonne.",
+              "moins": "Tu dois deviner l’ampleur du problème."
+            }
+          ]
+        },
+        {
+          "id": "presentation",
+          "titre": "La présentation",
+          "texte": "Tu présentes ton projet à l’équipe.",
+          "options": [
+            {
+              "texte": "On t’arrête pour pointer une erreur de chiffre",
+              "plus": "L’erreur est corrigée avant de coûter cher.",
+              "moins": "Être repris devant tout le monde, ça surprend."
+            },
+            {
+              "texte": "On t’applaudit, les remarques arrivent plus tard par écrit",
+              "plus": "Personne n’est mis en difficulté.",
+              "moins": "Les vraies critiques arrivent tard."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2734,14 +3316,14 @@
           "texte": "Le directeur propose une idée que tu trouves fragile.",
           "options": [
             {
-              "texte": "Ici, tout le monde peut le contredire, même les stagiaires",
-              "plus": "Ta voix compte dès le premier jour.",
-              "moins": "Il faut oser parler et défendre ton avis."
+              "texte": "Tu le contredis en réunion, comme tout le monde ici",
+              "plus": "Le débat est ouvert à tous.",
+              "moins": "Il faut oser parler devant le directeur."
             },
             {
-              "texte": "Personne ne le contredit en réunion : on lui en parle après, en privé",
-              "plus": "Les rôles sont clairs, chacun sait qui décide.",
-              "moins": "Tes idées passent par les bons canaux, et ça prend du temps."
+              "texte": "Ici, on ne le contredit pas en réunion : tu lui écris ensuite",
+              "plus": "Les rôles sont clairs, la réunion reste calme.",
+              "moins": "Ton idée met plus de temps à remonter."
             }
           ],
           "variantes": {
@@ -2784,6 +3366,40 @@
               "texte": "Tu passes par ton chef, qui relit et envoie",
               "plus": "Ta hiérarchie te couvre.",
               "moins": "Chaque réponse prend un jour de plus."
+            }
+          ]
+        },
+        {
+          "id": "conges",
+          "titre": "Tes congés",
+          "texte": "Tu veux poser une semaine de congés.",
+          "options": [
+            {
+              "texte": "Tu l’inscris sur le calendrier de l’équipe",
+              "plus": "Simple et rapide.",
+              "moins": "À toi de t’arranger avec les autres."
+            },
+            {
+              "texte": "Tu demandes à ton chef, qui valide",
+              "plus": "Ton chef garde une vue d’ensemble.",
+              "moins": "Il faut attendre son accord."
+            }
+          ]
+        },
+        {
+          "id": "bureau",
+          "titre": "Le bureau du directeur",
+          "texte": "Tu découvres les locaux.",
+          "options": [
+            {
+              "texte": "Le directeur travaille au milieu de l’équipe",
+              "plus": "Tu peux lui parler à tout moment.",
+              "moins": "Difficile de savoir qui décide quoi."
+            },
+            {
+              "texte": "Le directeur a son bureau, on prend rendez-vous",
+              "plus": "Chacun sait à qui s’adresser.",
+              "moins": "Le directeur reste loin du quotidien."
             }
           ]
         }
@@ -2900,6 +3516,40 @@
           "variantes": {
             "stage-vie": "Pendant ton VIE, tu as rendez-vous chez un client."
           }
+        },
+        {
+          "id": "train",
+          "titre": "Le train de 8 h 02",
+          "texte": "Ton train a trois minutes de retard.",
+          "options": [
+            {
+              "texte": "Tout le monde s’agace : ici, trois minutes, c’est un retard",
+              "plus": "Les horaires sont fiables, tu prévois tout.",
+              "moins": "Le moindre retard crée du stress."
+            },
+            {
+              "texte": "Personne ne le remarque : les horaires sont indicatifs",
+              "plus": "Personne ne s’énerve pour si peu.",
+              "moins": "Impossible de prévoir ta journée à la minute."
+            }
+          ]
+        },
+        {
+          "id": "fin-journee",
+          "titre": "La fin de la réunion",
+          "texte": "La réunion devait finir à 18 h.",
+          "options": [
+            {
+              "texte": "À 18 h pile, tout le monde se lève",
+              "plus": "Ta soirée commence à l’heure prévue.",
+              "moins": "On coupe parfois un débat en plein milieu."
+            },
+            {
+              "texte": "Elle continue tant que le sujet n’est pas réglé",
+              "plus": "On va au bout des choses.",
+              "moins": "Tu ne sais jamais quand tu sortiras."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3012,6 +3662,40 @@
               "texte": "On cherche un lieu qui convient à tout le monde",
               "plus": "Personne ne se sent mis de côté.",
               "moins": "Les échanges durent des semaines."
+            }
+          ]
+        },
+        {
+          "id": "budget",
+          "titre": "Le budget de l’équipe",
+          "texte": "Ton équipe doit choisir comment dépenser un budget.",
+          "options": [
+            {
+              "texte": "La cheffe décide en une réunion",
+              "plus": "Le projet démarre tout de suite.",
+              "moins": "Ton avis compte peu."
+            },
+            {
+              "texte": "Chacun donne son avis, on cherche un accord",
+              "plus": "La décision convient à toute l’équipe.",
+              "moins": "Il faut plusieurs semaines."
+            }
+          ]
+        },
+        {
+          "id": "recrutement",
+          "titre": "Le nouveau collègue",
+          "texte": "L’équipe recrute quelqu’un.",
+          "options": [
+            {
+              "texte": "Le manager choisit seul, après un entretien",
+              "plus": "La personne arrive vite.",
+              "moins": "L’équipe la découvre le premier jour."
+            },
+            {
+              "texte": "Toute l’équipe la rencontre et donne son avis",
+              "plus": "Tout le monde a validé le choix.",
+              "moins": "Le recrutement prend un mois de plus."
             }
           ]
         }
@@ -3128,6 +3812,40 @@
           "variantes": {
             "aventure": "Tes collègues de PVT organisent un tournoi de foot le samedi."
           }
+        },
+        {
+          "id": "dejeuner",
+          "titre": "Le déjeuner",
+          "texte": "C’est l’heure du déjeuner.",
+          "options": [
+            {
+              "texte": "Chacun mange de son côté, en vingt minutes",
+              "plus": "Tu repars plus tôt le soir.",
+              "moins": "Tu connais peu tes collègues."
+            },
+            {
+              "texte": "Toute l’équipe déjeune ensemble, une heure",
+              "plus": "Tu tisses de vrais liens.",
+              "moins": "Ta pause appartient un peu au travail."
+            }
+          ]
+        },
+        {
+          "id": "groupe",
+          "titre": "Le groupe de discussion",
+          "texte": "L’équipe a un groupe de discussion sur ton téléphone.",
+          "options": [
+            {
+              "texte": "Il ne sert qu’au travail, et se tait le week-end",
+              "plus": "Ton week-end reste calme.",
+              "moins": "Peu de liens en dehors du bureau."
+            },
+            {
+              "texte": "On y partage photos, sorties et plans du week-end",
+              "plus": "Tu as vite une vie sociale.",
+              "moins": "Le travail n’est jamais très loin."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3200,7 +3918,7 @@
       "chapitre": 3,
       "theme": "Ton projet",
       "condition": "projet:stage-vie",
-      "titre": "Ta mission idéale : une grande ville internationale où la vie coûte cher, ou une ville plus calme où ton indemnité va plus loin ?",
+      "titre": "Ta mission de VIE idéale ?",
       "dimensions": [
         "cout",
         "ville"
@@ -3210,9 +3928,9 @@
       "options": [
         {
           "id": "a",
-          "label": "Une grande ville internationale",
+          "label": "Une grande ville internationale où la vie coûte cher",
           "plus": "Un réseau, des sorties, une vie animée.",
-          "moins": "Le loyer mange une bonne part de ton indemnité.",
+          "moins": "Le loyer prend une bonne part de ton indemnité.",
           "effets": [
             {
               "mesures": [
@@ -3225,8 +3943,8 @@
         },
         {
           "id": "b",
-          "label": "Une ville plus calme",
-          "plus": "Ton indemnité va plus loin.",
+          "label": "Une ville plus calme où la vie coûte moins cher",
+          "plus": "Ton indemnité te laisse plus de marge chaque mois.",
           "moins": "Moins de sorties et de contacts.",
           "effets": [
             {
@@ -3251,7 +3969,8 @@
             "texte": "Les pays où la vie coûte moins cher passent devant."
           }
         ]
-      }
+      },
+      "texte": "Ton indemnité ne pèse pas pareil partout."
     },
     {
       "id": "offres",
@@ -3326,24 +4045,6 @@
           }
         },
         {
-          "id": "colocataire",
-          "titre": "Le colocataire",
-          "texte": "Ton colocataire gagne 1 000 € de plus que toi, mais son loyer est le double du tien.",
-          "options": [
-            {
-              "texte": "Tu préfères sa situation",
-              "plus": "Un salaire plus haut, qui compte pour la suite.",
-              "moins": "Une grosse part de sa paie part dans le loyer."
-            },
-            {
-              "texte": "Tu préfères la tienne",
-              "plus": "Ton loyer léger te laisse respirer.",
-              "moins": "Ton salaire progresse moins vite."
-            }
-          ],
-          "exemple": true
-        },
-        {
           "id": "restaurant",
           "titre": "La sortie du vendredi",
           "texte": "Ce soir, ton équipe dîne au restaurant.",
@@ -3364,6 +4065,24 @@
             "stage-vie": "Ce soir, l’équipe de ta mission de VIE dîne au restaurant.",
             "aventure": "Ce soir, tes collègues de PVT dînent au restaurant."
           }
+        },
+        {
+          "id": "deux-villes",
+          "titre": "Deux villes",
+          "texte": "Pour le même poste, ton entreprise te propose deux villes.",
+          "options": [
+            {
+              "texte": "La capitale : 3 200 € par mois, tout y coûte cher",
+              "plus": "Ta paie est plus haute, et elle compte pour la suite.",
+              "moins": "Loyer, courses, sorties : tout coûte plus."
+            },
+            {
+              "texte": "Une ville moins chère : 2 400 € par mois",
+              "plus": "Le loyer et les courses coûtent bien moins.",
+              "moins": "Ta paie est plus basse, et un billet pour la France pèse plus lourd."
+            }
+          ],
+          "exemple": true
         }
       ],
       "type": "dilemme",
@@ -3374,96 +4093,14 @@
       ]
     },
     {
-      "id": "offres-et-si",
-      "type": "dilemme",
-      "chapitre": 3,
-      "theme": "Ton poste",
-      "relanceDe": {
-        "element": "offres",
-        "reponses": [
-          "a",
-          "peu-a",
-          "b",
-          "peu-b"
-        ]
-      },
-      "titre": "Et si… l’écart changeait ?",
-      "dimensions": [
-        "salaire",
-        "cout"
-      ],
-      "regleAffichage": "Juste après « Deux offres d’emploi ».",
-      "aide": {
-        "enjeu": "On vérifie si ton choix tient quand l’autre option devient plus tentante.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "Le salaire compte pleinement, même si tu avais répondu « Un peu » avant."
-          },
-          {
-            "pastille": "B",
-            "texte": "La vie pas chère compte pleinement. Si tu as changé d’avis, les deux comptent."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [
-            {
-              "mesures": [
-                "salaire"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Même quand l’autre offre s’améliore, le salaire reste ton choix.",
-          "preference": "le meilleur salaire"
-        },
-        {
-          "id": "b",
-          "effets": [
-            {
-              "mesures": [
-                "prix"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Même quand l’autre offre s’améliore, une vie moins chère reste ton choix.",
-          "preference": "une vie moins chère"
-        }
-      ],
-      "scenes": [
-        {
-          "id": "et-si",
-          "titre": "Et si…",
-          "texte": "Reprends la question d’avant : l’option que tu n’as pas choisie devient 20 % plus avantageuse.",
-          "exemple": true,
-          "options": [
-            {
-              "texte": "Je garde le salaire le plus haut",
-              "plus": "Ta paie reste la plus grosse.",
-              "moins": "La vie autour coûte toujours plus cher."
-            },
-            {
-              "texte": "Je garde la vie la moins chère",
-              "plus": "Il te reste toujours plus à la fin du mois.",
-              "moins": "Ta fiche de paie reste plus modeste."
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "ambiances",
       "type": "ambiances",
       "chapitre": 4,
       "theme": "Ton décor",
       "obligatoire": true,
       "max": 2,
-      "titre": "Dans quel décor imagines-tu ton quotidien ?",
-      "texte": "Choisis-en deux au plus.",
+      "titre": "Ton décor au quotidien ?",
+      "texte": "Deux au plus.",
       "dimensions": [
         "climat",
         "ville"
@@ -3472,7 +4109,7 @@
         {
           "id": "metropole",
           "label": "Une grande métropole",
-          "phrase": "Du monde, des sorties, tout à pied ou en métro.",
+          "phrase": "Sorties, métro, du monde.",
           "icone": "building-2",
           "effets": [
             {
@@ -3482,12 +4119,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu t’imagines dans une grande métropole."
+          "portrait": "Tu t’imagines dans une grande métropole.",
+          "emoji": "cityscape"
         },
         {
           "id": "ville-humaine",
           "label": "Une ville à taille humaine",
-          "phrase": "Assez grande pour bouger, assez calme pour souffler.",
+          "phrase": "Calme, mais vivante.",
           "icone": "house",
           "effets": [
             {
@@ -3497,12 +4135,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu t’imagines dans une ville à taille humaine."
+          "portrait": "Tu t’imagines dans une ville à taille humaine.",
+          "emoji": "house-with-garden"
         },
         {
           "id": "nature",
           "label": "La nature à portée de main",
-          "phrase": "Forêts, lacs ou montagnes, pas loin de chez toi.",
+          "phrase": "Forêts, lacs, montagnes.",
           "icone": "trees",
           "effets": [
             {
@@ -3512,12 +4151,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu veux la nature à portée de main."
+          "portrait": "Tu veux la nature à portée de main.",
+          "emoji": "national-park"
         },
         {
           "id": "soleil",
           "label": "Du soleil toute l’année",
-          "phrase": "Des hivers doux et des étés chauds.",
+          "phrase": "Hivers doux, étés chauds.",
           "icone": "sun",
           "effets": [
             {
@@ -3533,7 +4173,8 @@
               "position": 4
             }
           ],
-          "portrait": "Tu rêves de soleil toute l’année."
+          "portrait": "Tu rêves de soleil toute l’année.",
+          "emoji": "sun"
         }
       ],
       "aide": {
@@ -3580,7 +4221,7 @@
             "texte": "Si une donnée pays existe (soleil, hiver, nature, grande ville), les pays qui s’y prêtent passent un peu devant."
           },
           {
-            "pastille": "Musées, sport en salle…",
+            "pastille": "Musées, expos…",
             "texte": "Pas de donnée pays : ça enrichit ton portrait sans changer ton classement."
           },
           {
@@ -3614,7 +4255,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
+          ],
+          "emoji": "beach-with-umbrella"
         },
         {
           "id": "A2",
@@ -3634,7 +4276,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
+          ],
+          "emoji": "skier"
         },
         {
           "id": "A3",
@@ -3653,7 +4296,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "hiking-boot"
         },
         {
           "id": "A4",
@@ -3672,7 +4316,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "guitar"
         },
         {
           "id": "A5",
@@ -3682,6 +4327,335 @@
           "portraitOui": "Le week-end, tu vas au musée ou au théâtre.",
           "portraitNon": "Les musées ne sont pas ton premier choix.",
           "dimensions": [
+            "activites"
+          ],
+          "emoji": "framed-picture"
+        },
+        {
+          "id": "A6",
+          "texte": "Un match ou un concert dans un grand stade.",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu vas aux grands matchs et concerts.",
+          "portraitNon": "Les grands stades, très peu pour toi.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ],
+          "emoji": "stadium"
+        },
+        {
+          "id": "A7",
+          "texte": "Vélo tranquille au bord d’un lac.",
+          "oui": [
+            {
+              "mesures": [
+                "nature"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu pédales au bord de l’eau.",
+          "portraitNon": "Le vélo au bord d’un lac, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ],
+          "emoji": "bicycle"
+        },
+        {
+          "id": "A8",
+          "texte": "Un aller-retour en France pour voir tes proches.",
+          "oui": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir rentrer voir tes proches un week-end.",
+          "portraitNon": "Rentrer en France le week-end ne compte pas pour toi.",
+          "dimensions": [
+            "distance",
+            "activites"
+          ],
+          "emoji": "airplane"
+        },
+        {
+          "id": "S16",
+          "texte": "Un week-end dans un endroit qui ne ressemble à rien de connu.",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu cherches le vrai dépaysement.",
+          "portraitNon": "Le grand dépaysement n’est pas ce que tu cherches.",
+          "dimensions": [
+            "depaysement",
+            "activites"
+          ],
+          "emoji": "desert-island"
+        },
+        {
+          "id": "A9",
+          "texte": "Le marché du samedi, puis cuisiner des produits frais.",
+          "oui": [
+            {
+              "mesures": [
+                "manger-sain"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le samedi, tu cuisines des produits frais.",
+          "portraitNon": "Le marché du samedi, ce n’est pas ton rythme.",
+          "dimensions": [
+            "sante",
+            "activites"
+          ],
+          "emoji": "green-salad"
+        },
+        {
+          "id": "A10",
+          "texte": "Un café en terrasse au soleil, même en hiver.",
+          "oui": [
+            {
+              "mesures": [
+                "doux"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux des terrasses au soleil toute l’année.",
+          "portraitNon": "La terrasse en hiver ne te manque pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ],
+          "emoji": "hot-beverage"
+        },
+        {
+          "id": "A12",
+          "texte": "Surf ou plongée.",
+          "oui": [
+            {
+              "mesures": [
+                "ete"
+              ],
+              "position": 5,
+              "poids": 0.5
+            },
+            {
+              "mesures": [
+                "soleil"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu es dans l’eau.",
+          "portraitNon": "Surf et plongée ne t’attirent pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ],
+          "emoji": "water-wave"
+        },
+        {
+          "id": "A13",
+          "texte": "Flâner à pied dans une petite ville calme.",
+          "oui": [
+            {
+              "mesures": [
+                "ville-moyenne"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les petites villes calmes.",
+          "portraitNon": "Les petites villes calmes t’ennuient.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ],
+          "emoji": "person-walking"
+        },
+        {
+          "id": "A14",
+          "texte": "Respirer l’air pur, loin de la pollution.",
+          "oui": [
+            {
+              "mesures": [
+                "air"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Un air pur compte pour toi.",
+          "portraitNon": "La qualité de l’air ne te préoccupe pas.",
+          "dimensions": [
+            "sante",
+            "activites"
+          ],
+          "emoji": "leaf-fluttering-in-wind"
+        },
+        {
+          "id": "A15",
+          "texte": "Un week-end au soleil, en t-shirt, en plein mois de février.",
+          "emoji": "t-shirt",
+          "oui": [
+            {
+              "mesures": [
+                "hiver"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux un hiver presque doux.",
+          "portraitNon": "Un hiver sans hiver ne t’attire pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ]
+        },
+        {
+          "id": "A16",
+          "texte": "Une grande fête de quartier qui dure toute la nuit.",
+          "emoji": "party-popper",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes quand la ville fait la fête.",
+          "portraitNon": "Les grandes fêtes de rue, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A17",
+          "texte": "Un week-end dans un pays voisin, à deux heures de train.",
+          "emoji": "train",
+          "oui": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes pouvoir bouger facilement le week-end.",
+          "portraitNon": "Les escapades rapides ne comptent pas pour toi.",
+          "dimensions": [
+            "distance",
+            "activites"
+          ]
+        },
+        {
+          "id": "A18",
+          "texte": "Une soirée dans un quartier qui ne dort jamais.",
+          "emoji": "night-with-stars",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les quartiers qui vivent la nuit.",
+          "portraitNon": "Les quartiers qui ne dorment jamais, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A19",
+          "texte": "Un pique-nique au bord d’un lac, à vingt minutes de chez toi.",
+          "emoji": "canoe",
+          "oui": [
+            {
+              "mesures": [
+                "nature"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux la nature à deux pas.",
+          "portraitNon": "La nature toute proche n’est pas indispensable.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A20",
+          "texte": "Appeler ta famille le soir sans calculer le décalage horaire.",
+          "emoji": "mobile-phone",
+          "oui": [
+            {
+              "mesures": [
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux vivre à peu près à la même heure que la France.",
+          "portraitNon": "Le décalage horaire ne te gêne pas.",
+          "dimensions": [
+            "distance",
+            "activites"
+          ]
+        },
+        {
+          "id": "A21",
+          "texte": "Un marché où tu ne reconnais aucun fruit.",
+          "emoji": "mango",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes ne rien reconnaître.",
+          "portraitNon": "Tu préfères des repères familiers.",
+          "dimensions": [
+            "depaysement",
             "activites"
           ]
         }
@@ -3790,6 +4764,41 @@
             }
           ],
           "exemple": true
+        },
+        {
+          "id": "matin",
+          "titre": "Un matin de janvier",
+          "texte": "Tu pars travailler, un matin de janvier.",
+          "options": [
+            {
+              "texte": "−8 °C, ciel bleu et neige qui crisse",
+              "plus": "Un froid sec et lumineux.",
+              "moins": "Il faut t’équiper de la tête aux pieds."
+            },
+            {
+              "texte": "10 °C et de la bruine",
+              "plus": "Pas besoin de gros manteau.",
+              "moins": "Le ciel reste gris des semaines."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "dimanche-hiver",
+          "titre": "Un dimanche d’hiver",
+          "texte": "C’est dimanche, en plein hiver.",
+          "options": [
+            {
+              "texte": "Patinoire et chocolat chaud",
+              "plus": "Un vrai hiver, avec ses plaisirs.",
+              "moins": "Il fait nuit tôt, et froid longtemps."
+            },
+            {
+              "texte": "Balade en ville sans gros manteau",
+              "plus": "Tu restes dehors toute l’année.",
+              "moins": "L’hiver ne ressemble pas à l’hiver."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3901,6 +4910,42 @@
               "moins": "La baignade est fraîche, et le soleil n’est pas garanti."
             }
           ]
+        },
+        {
+          "id": "nuit",
+          "titre": "Une nuit d’août",
+          "texte": "Il est minuit, en plein mois d’août.",
+          "options": [
+            {
+              "texte": "Il fait encore 28 °C",
+              "plus": "Les soirées dehors durent jusqu’au bout de la nuit.",
+              "moins": "Dormir est difficile sans clim."
+            },
+            {
+              "texte": "Il fait 16 °C",
+              "plus": "Tu dors bien, fenêtre ouverte.",
+              "moins": "Il faut une veste pour sortir le soir."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "week-end-aout",
+          "titre": "Un week-end d’août",
+          "texte": "Un samedi d’août, tu sors de la ville.",
+          "options": [
+            {
+              "texte": "Plage à 32 °C toute la journée",
+              "plus": "Mer chaude et soleil garanti.",
+              "moins": "Bouger entre midi et 16 h est pénible."
+            },
+            {
+              "texte": "Lac et forêt à 23 °C",
+              "plus": "Tout est agréable, même à midi.",
+              "moins": "L’eau est fraîche."
+            }
+          ],
+          "exemple": true
         }
       ],
       "type": "dilemme",
@@ -4012,7 +5057,41 @@
             {
               "texte": "Tu pars découvrir la ville par toi-même",
               "plus": "Tout est nouveau, tu apprends vite.",
-              "moins": "Les premiers week-ends peuvent sembler longs."
+              "moins": "Ton dimanche peut sembler long, sans personne à qui parler."
+            }
+          ]
+        },
+        {
+          "id": "caution",
+          "titre": "La caution",
+          "texte": "Ton propriétaire ne rend pas ta caution.",
+          "options": [
+            {
+              "texte": "Un groupe de Français sur place te dit quoi faire",
+              "plus": "Tu as la solution en une soirée.",
+              "moins": "Tu comptes sur une communauté française."
+            },
+            {
+              "texte": "Tu te débrouilles avec les services du pays",
+              "plus": "Tu apprends comment marche le pays.",
+              "moins": "C’est plus long et plus stressant."
+            }
+          ]
+        },
+        {
+          "id": "apero",
+          "titre": "L’apéro de bienvenue",
+          "texte": "Deux soirées sont organisées pour les nouveaux arrivants.",
+          "options": [
+            {
+              "texte": "Celle des Français de la ville",
+              "plus": "Tu rencontres vite du monde, dans ta langue.",
+              "moins": "Tu restes dans un cercle français."
+            },
+            {
+              "texte": "Celle des jeunes du pays",
+              "plus": "Des amis du pays dès le premier mois.",
+              "moins": "Toute la soirée dans une autre langue."
             }
           ]
         }
@@ -4101,16 +5180,33 @@
         {
           "id": "defi",
           "titre": "Le défi de l’année",
-          "texte": "Une amie te lance un défi : apprendre une nouvelle langue pendant ton année.",
+          "texte": "Une amie te lance un défi : apprendre une nouvelle langue pendant ton année.",
           "options": [
             {
               "texte": "Tu relèves le défi",
-              "plus": "Tu reviens avec une langue de plus sur ton CV.",
-              "moins": "Ça demande du temps et de la patience."
+              "plus": "Une langue de plus sur ton CV.",
+              "moins": "Une heure par jour, pendant un an."
             },
             {
-              "texte": "Tu gardes cette énergie pour ton travail",
-              "plus": "Toute ton énergie va à ta carrière.",
+              "texte": "Tu gardes cette énergie pour ton travail et tes sorties",
+              "plus": "Ton temps libre reste à toi.",
+              "moins": "Tu vises surtout des pays où l’anglais ou le français suffisent."
+            }
+          ]
+        },
+        {
+          "id": "panneaux",
+          "titre": "Les panneaux de la gare",
+          "texte": "À la gare, tous les panneaux sont dans un autre alphabet.",
+          "options": [
+            {
+              "texte": "Tu apprends les signes, petit à petit",
+              "plus": "Au bout de quelques mois, tu lis tout.",
+              "moins": "Les premières semaines, tu te perds souvent."
+            },
+            {
+              "texte": "Tu préfères un pays où tu lis déjà les panneaux",
+              "plus": "Tu te repères dès le premier jour.",
               "moins": "Moins de pays possibles."
             }
           ]
@@ -4127,8 +5223,8 @@
       "type": "blind-test",
       "chapitre": 4,
       "theme": "Le test à l’aveugle",
-      "titre": "Trois pays sans leur nom : lequel choisis-tu ?",
-      "texte": "Quatre faits pour chacun. Le nom s’affiche après ton choix.",
+      "titre": "Trois pays sans leur nom : lequel te tente ?",
+      "texte": "Le nom s’affiche après ton choix.",
       "dimensions": [
         "blind"
       ],
@@ -4348,10 +5444,10 @@
       "id": "limites-travail",
       "type": "tri-limites",
       "chapitre": 5,
-      "theme": "Tes limites : le travail et le visa",
-      "famille": "le travail et le visa",
+      "theme": "Tes limites : le travail",
+      "famille": "le travail",
       "nombre": 9,
-      "titre": "Le travail et le visa : qu’en penses-tu ?",
+      "titre": "Le travail : qu’en penses-tu ?",
       "dimensions": [
         "equilibre",
         "visa"
@@ -4375,26 +5471,11 @@
       },
       "situations": [
         {
-          "id": "visa-employeur",
-          "texte": "Un visa qui dépend de ton employeur",
-          "mesure": "employeur-libre",
-          "raison": "Tu as dit : « Un visa qui dépend de ton employeur ».",
-          "dimension": "visa"
-        },
-        {
           "id": "heures-longues",
           "texte": "Des semaines de plus de 44 h en moyenne",
           "mesure": "heures",
           "raison": "Tu as dit : « Des semaines de plus de 44 h en moyenne ».",
           "dimension": "equilibre"
-        },
-        {
-          "id": "un-an-max",
-          "texte": "Ne pas pouvoir rester plus d’un an sans employeur",
-          "mesure": "employeur-libre",
-          "raison": "Tu as dit : « Ne pas pouvoir rester plus d’un an sans employeur ».",
-          "dimension": "visa",
-          "condition": "veut-rester"
         },
         {
           "id": "partenaire-visa",
@@ -4458,62 +5539,51 @@
       "chapitre": 5,
       "theme": "Tes valeurs",
       "titre": "Ce qui compte pour toi dans un pays",
-      "texte": "Range chaque carte. Laisse de côté celles où tu ne sais pas : elles ne comptent pas.",
+      "texte": "Touche celles qui comptent. Les autres ne comptent pas.",
       "dimensions": [
         "valeurs"
       ],
       "zones": [
         {
-          "id": "indispensable",
-          "label": "Indispensable"
-        },
-        {
-          "id": "plus",
-          "label": "Un vrai plus"
-        },
-        {
-          "id": "egal",
-          "label": "Peu importe"
+          "id": "compte",
+          "label": "Compte pour moi"
         }
       ],
       "aide": {
         "enjeu": "Ces sujets parlent moins du travail que de la vie sur place.",
         "cartes": [
           {
-            "pastille": "Indispensable",
-            "texte": "Les pays bien notés passent devant ; un pays mal noté devient moins accessible pour toi."
+            "pastille": "Touchée",
+            "texte": "Les pays bien notés sur ce point passent devant."
           },
           {
-            "pastille": "Un vrai plus",
-            "texte": "Les pays bien notés passent un peu devant."
+            "pastille": "Pas touchée",
+            "texte": "Rien ne change : elle ne compte pas."
           },
           {
-            "pastille": "Peu importe, ou rien",
-            "texte": "Rien ne change : une valeur non rangée ne crée jamais de préférence."
-          },
-          {
-            "pastille": "Sans données pays",
-            "texte": "Certaines cartes n’ont pas de donnée sur 30 pays : elles enrichissent ton portrait."
+            "pastille": "Sans donnée pays",
+            "texte": "Certaines cartes enrichissent seulement ton portrait."
           }
         ]
       },
       "cartes": [
         {
           "id": "libertes",
-          "label": "Les libertés (expression, presse, justice)",
+          "label": "Les libertés",
           "mesures": [
             "expression"
           ],
           "portrait": "Les libertés comptent pour toi.",
-          "phrase": "On te demandera lesquelles d’abord."
+          "emoji": "speaking-head"
         },
         {
           "id": "stabilite",
-          "label": "Un pays politiquement stable",
+          "label": "Un pays stable",
           "mesures": [
             "stabilite"
           ],
-          "portrait": "La stabilité politique compte pour toi."
+          "portrait": "La stabilité politique compte pour toi.",
+          "emoji": "classical-building"
         },
         {
           "id": "egalite-genre",
@@ -4521,63 +5591,72 @@
           "mesures": [
             "egalite-genre"
           ],
-          "portrait": "L’égalité femmes-hommes compte pour toi."
+          "portrait": "L’égalité femmes-hommes compte pour toi.",
+          "emoji": "balance-scale"
         },
         {
           "id": "droits-travail",
-          "label": "Des droits au travail protégés",
+          "label": "Des droits au travail",
           "mesures": [
             "droits-travail"
           ],
-          "portrait": "Les droits des travailleurs comptent pour toi."
+          "portrait": "Les droits des travailleurs comptent pour toi.",
+          "emoji": "construction-worker"
         },
         {
           "id": "environnement",
-          "label": "Un pays qui protège l’environnement",
+          "label": "La nature protégée",
           "mesures": [
             "environnement"
           ],
-          "portrait": "La protection de l’environnement compte pour toi."
+          "portrait": "La protection de l’environnement compte pour toi.",
+          "emoji": "seedling"
         },
         {
           "id": "climat-prepare",
-          "label": "Un pays préparé au changement climatique",
+          "label": "Prêt face au climat",
           "mesures": [
             "climat-prepare"
           ],
-          "portrait": "La préparation au changement climatique compte pour toi."
+          "portrait": "La préparation au changement climatique compte pour toi.",
+          "emoji": "umbrella"
         },
         {
           "id": "soins-pour-tous",
-          "label": "Des soins accessibles à tous",
+          "label": "Des soins pour tous",
           "mesures": [
             "sante-systeme"
           ],
-          "portrait": "Des soins accessibles à toute la population comptent pour toi."
+          "portrait": "Des soins accessibles à toute la population comptent pour toi.",
+          "emoji": "hospital"
         },
         {
           "id": "ouverture",
-          "label": "Un pays accueillant pour les étrangers",
+          "label": "Un pays accueillant",
           "mesures": [],
-          "portrait": "Un pays accueillant pour les étrangers compte pour toi."
+          "portrait": "Un pays accueillant pour les étrangers compte pour toi.",
+          "emoji": "waving-hand"
         },
         {
           "id": "protection-sociale",
           "label": "Une protection sociale forte",
           "mesures": [],
-          "portrait": "Une protection sociale forte compte pour toi."
+          "portrait": "Une protection sociale forte compte pour toi.",
+          "emoji": "people-hugging"
         },
         {
           "id": "egalite-chances",
-          "label": "Peu d’inégalités entre riches et pauvres",
+          "label": "Peu d’inégalités",
           "mesures": [],
-          "portrait": "Peu d’inégalités compte pour toi."
+          "portrait": "Peu d’inégalités compte pour toi.",
+          "emoji": "handshake"
         },
         {
           "id": "calme",
-          "label": "Un rythme de vie calme",
+          "label": "Un rythme calme",
           "mesures": [],
-          "portrait": "Un rythme de vie calme compte pour toi."
+          "portrait": "Un rythme de vie calme compte pour toi.",
+          "emoji": "leaf-fluttering-in-wind"
         }
       ]
     },
@@ -4592,8 +5671,7 @@
       "relanceDe": {
         "element": "valeurs",
         "reponses": [
-          "libertes:indispensable",
-          "libertes:plus"
+          "libertes:compte"
         ]
       },
       "titre": "Tes 3 libertés les plus importantes",
@@ -4602,7 +5680,7 @@
         "valeurs"
       ],
       "aucun": "Aucune en particulier",
-      "regleAffichage": "Seulement si tu as rangé « Les libertés » en indispensable ou en vrai plus.",
+      "regleAffichage": "Seulement si tu as touché « Les libertés ».",
       "aide": {
         "enjeu": "« Les libertés » recouvrent des choses différentes, mesurées par des sources différentes.",
         "cartes": [
@@ -4671,10 +5749,8 @@
       "relanceDe": {
         "element": "valeurs",
         "reponses": [
-          "libertes:indispensable",
-          "libertes:plus",
-          "stabilite:indispensable",
-          "stabilite:plus"
+          "libertes:compte",
+          "stabilite:compte"
         ]
       },
       "titre": "Tes valeurs ou ton porte-monnaie",
@@ -4750,7 +5826,6 @@
     "sacrifice": 2,
     "milieu": 1.5,
     "second": 1.1,
-    "seul": 2,
-    "changerAvis": 1
+    "seul": 2
   }
 }

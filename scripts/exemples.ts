@@ -27,6 +27,7 @@ function enMots(id: string, v: Valeur, etat: Etat): string {
     case "dilemme": return libelleReponse(el, v, av);
     case "timeline": { const r = objetReponse(v); return [el.options.find((o) => o.id === r.duree)?.label, el.apres.find((o) => o.id === r.apres)?.label].filter(Boolean).join(", puis : "); }
     case "enveloppe": return `${(v as number).toLocaleString("fr-FR")} €`;
+    case "recherche": return String(v);
     case "seuil": { const r = objetReponse(v); return r.niveau === "ok" ? "Aucune limite" : `${r.seuil} ${el.unite} : ${LIBELLE_LIMITE[r.niveau as "ok"]}`; }
     case "tri-zones": return Object.entries(objetReponse(v)).map(([c, z]) => `${el.cartes.find((x) => x.id === c)?.label} → ${el.zones.find((x) => x.id === z)?.label}`).join(" ; ") || "rien rangé";
     case "blind-test": return `le pays choisi était ${pays.find((p) => p.id === objetReponse(v).choix)?.nom ?? "?"}`;

@@ -5,7 +5,7 @@
 import { dimensionDe, quiz, trouverElement, type EffetDilemme, type Element, type PhraseSwipe, type Situation, type Swipe, type TriLimites } from "./donnees";
 import { PASSER, conditionRemplie, profilDe, relanceOuverte } from "./elements";
 import { certitudeFaible, construireProfil } from "./profil";
-import { calculer, critereChangerAvis, dilemmeActif, enviesDe, poidsEnvie, hacher, limiteTouche, situationPosable, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
+import { calculer, dilemmeActif, enviesDe, poidsEnvie, hacher, limiteTouche, situationPosable, utiliteEffets, reponsesStables, type Etat, type Ligne } from "./moteur";
 
 export const chapitreDe = (id: string) => trouverElement(id)?.chapitre ?? 0;
 export const CHAPITRES = quiz.chapitres;
@@ -59,6 +59,7 @@ export function reponsesPossibles(el: Element, etat: Etat): EffetDilemme[][] {
 const scorePhrase = (p: PhraseSwipe, etat: Etat, top: Ligne[]) =>
   Math.max(0, ...p.dimensions.map((d) => importance(d, etat) * incertitude(d, etat) * repetition(d, etat))) * (0.15 + utiliteEffets([p.oui, p.non], etat, top));
 
+export const PART_PHRASES = 0.2;
 export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const deja = etat.reponses[el.id];
   if (deja && typeof deja === "object" && !Array.isArray(deja)) {
@@ -73,10 +74,15 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const imposee = horsEurope ? el.phrases.find((p) => p.id === "S16") : undefined;
   const precedent = dimensionsPrecedentes(etat, el.id);
   const top = topCourant(etat);
-  const notes = el.phrases
-    .filter((p) => !p.dimensions.some((d) => precedent.includes(d)))
-    .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.75 + 0.5 * ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
-    .sort((a, b) => b.s - a.s);
+  // Prompt 7 (diversité) : les phrases utiles (au moins 20 % du meilleur score) sont tirées au hasard (graine du parcours),
+  // pas dans l'ordre du score : deux personnes au profil proche ne lisent plus les mêmes cinq phrases.
+  const scores = el.phrases.filter((p) => !p.dimensions.some((d) => precedent.includes(d))).map((p) => ({ p, s: scorePhrase(p, etat, top) }));
+  const max = Math.max(0, ...scores.map((x) => x.s));
+  const tirage = (p: PhraseSwipe) => hacher(etat.graine, `phrase:${p.id}`);
+  const notes = [
+    ...scores.filter((x) => x.s >= PART_PHRASES * max).sort((a, b) => tirage(a.p) - tirage(b.p)),
+    ...scores.filter((x) => x.s < PART_PHRASES * max).sort((a, b) => b.s - a.s),
+  ];
   // Pas deux phrases sur exactement les mêmes dimensions quand on peut l'éviter.
   const res: PhraseSwipe[] = imposee ? [imposee] : [];
   const vues = new Set<string>(imposee ? [imposee.dimensions.join("+")] : []);
@@ -145,10 +151,9 @@ export type Candidat = { el: Element; score: number };
 // - Départage : l'écart que les réponses possibles creuseraient entre tes 5 premiers pays (0 à 4), plus 0,15.
 export function importance(d: string, etat: Etat): number {
   let imp = 1;
-  for (const id of [...enviesDe(etat), critereChangerAvis(etat)]) {
-    if (!id) continue;
+  for (const id of enviesDe(etat)) {
     const en = quiz.envies.find((e) => e.id === id);
-    const poids = poidsEnvie(etat, id) || quiz.poidsCriteres.changerAvis;
+    const poids = poidsEnvie(etat, id);
     if (en?.mesures.some((m) => (dimensionDe[m] ?? m) === d)) imp = Math.max(imp, 1 + poids);
   }
   const obj = typeof etat.profil.objectif === "string" ? quiz.objectifs[etat.profil.objectif] : undefined;
@@ -330,7 +335,8 @@ export function resultatProvisoire(etat: Etat): boolean {
 }
 
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).
-export const nombreEcrans = (etat: Etat) => etat.ordre.length;
+// Un élément montré dans le même écran qu'un autre (le projet, avec la motivation) ne compte pas en plus.
+export const nombreEcrans = (etat: Etat) => etat.ordre.filter((id) => { const m = trouverElement(id)?.memeEcranQue; return !m || !etat.ordre.includes(m); }).length;
 
 // ---------- « Ce qu'on ne t'a pas demandé, et pourquoi » ----------
 // Chaque élément de la banque qui n'a pas été posé, avec sa raison, regroupé par raison (écran final du questionnaire).

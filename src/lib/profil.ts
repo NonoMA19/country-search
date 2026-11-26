@@ -151,7 +151,7 @@ const limite = (etat: Etat, sit: string) => {
 export function contradictions(etat: Etat): Contradiction[] {
   const res: Contradiction[] = [];
   // 1. « Vie pas chère » est ton critère le plus dur à sacrifier, mais tu as choisi deux fois la vie chère et bien payée.
-  const cheres = (["offres", "offres-et-si", "mission-vie", "relance-argent"] as const).filter((id) => rep(etat, id) === "a");
+  const cheres = (["offres", "mission-vie", "relance-argent"] as const).filter((id) => rep(etat, id) === "a");
   if (rangEnvie(etat, "prix") === 1 && cheres.length >= 2) res.push({ id: "prix", reponses: ["envie:prix", ...cheres], revoir: "sacrifice", texte: "« Vie pas chère » est le critère que tu sacrifierais en dernier, mais tu as choisi deux fois la vie chère et bien payée. Les deux comptent dans ton calcul : à toi de voir ce qui pèse le plus." });
   // 2. « Un vrai hiver » parmi tes critères, mais un seuil de froid au-dessus de 0 °C.
   const froid = objetReponse(rep(etat, "seuil-froid"));
@@ -237,7 +237,7 @@ function phrasesReponse(etat: Etat, id: string): { texte: string; poids: number;
       const a = el.apres.find((x) => x.id === objetReponse(v).apres);
       return a?.portrait ? [{ texte: a.portrait, poids: 0.6, accepte: false, dims: el.dimensions }] : [];
     }
-    case "tri-zones": return Object.entries(objetReponse(v)).filter(([, z]) => z === "indispensable").flatMap(([cid]) => {
+    case "tri-zones": return Object.entries(objetReponse(v)).filter(([, z]) => z === "indispensable" || z === "compte").flatMap(([cid]) => {
       const c = el.cartes.find((x) => x.id === cid);
       return c ? [{ texte: c.portrait, poids: 1, accepte: false, dims: el.dimensions }] : [];
     });
@@ -352,4 +352,64 @@ export function portraitSeulement(etat: Etat): string[] {
 export function portrait(etat: Etat): LignePortrait[] {
   const p = portraitComplet(etat);
   return [...p.lignes, ...(p.contradiction ? [p.contradiction] : [])];
+}
+
+// ---------- La fiche de synthèse (prompt 7) ----------
+// Ton portrait en quelques blocs : ton projet, tes 3 priorités, ce que tu refuses, ton style. Chaque bloc a un seul
+// bouton « Modifier », qui rouvre la question la plus utile pour ce bloc. Tout vient de tes réponses, rien n'est inventé.
+export type BlocSynthese = { id: "projet" | "priorites" | "refus" | "style"; emoji: string; titre: string; lignes: { texte: string; emoji?: string }[]; vide: string; revoir: string | null };
+const labelOption = (elId: string, v: unknown) => {
+  const el = trouverElement(elId);
+  return el?.type === "choix-cartes" && typeof v === "string" ? el.options.find((o) => o.id === v) : undefined;
+};
+const STYLE_SEMAINE = ["W3", "W4", "W5", "W6", "W11", "W13", "W14"];
+export function syntheseProfil(etat: Etat): BlocSynthese[] {
+  const r = etat.reponses;
+  // Ton projet : la forme, la raison, la durée, avec qui.
+  const objectif = labelOption("objectif", r.objectif);
+  const motivation = labelOption("motivation", r.motivation);
+  const timeline = trouverElement("timeline");
+  const duree = timeline?.type === "timeline" ? timeline.options.find((o) => o.id === etat.profil.duree)?.label : undefined;
+  const avec = labelOption("compagnie", r.compagnie);
+  const projet: BlocSynthese = {
+    id: "projet", emoji: objectif?.emoji ?? "backpack", titre: "Ton projet", vide: "Pas encore choisi.", revoir: "objectif",
+    lignes: [
+      objectif && objectif.id !== "inconnu" ? { texte: objectif.label } : null,
+      motivation ? { texte: `Pour : ${minuscule(motivation.label)}`, emoji: motivation.emoji } : null,
+      duree ? { texte: `Durée : ${minuscule(duree)}` } : null,
+      avec && avec.id !== "inconnu" ? { texte: avec.label } : null,
+    ].filter((x): x is { texte: string; emoji?: string } => !!x),
+  };
+  // Tes 3 priorités : tes critères, le plus dur à sacrifier en premier.
+  const priorites: BlocSynthese = {
+    id: "priorites", emoji: "bullseye", titre: "Tes 3 priorités", vide: "Pas encore de critère choisi.", revoir: "envies",
+    lignes: enviesDe(etat).slice(0, 3).map((id) => { const e = quiz.envies.find((x) => x.id === id); return { texte: e?.label ?? id, emoji: e?.emoji }; }),
+  };
+  // Ce que tu refuses : tes limites « non négociables » d'abord, puis celles que tu préfères éviter.
+  const lim = limitesDeclarees(r);
+  const refus: BlocSynthese = {
+    id: "refus", emoji: "no-entry", titre: "Ce que tu refuses", vide: "Rien de rédhibitoire pour toi.",
+    revoir: lim[0]?.element ?? etat.ordre.find((id) => /^(limites-|seuil-)/.test(id)) ?? null,
+    lignes: [
+      ...lim.filter((l) => l.niveau === "redhibitoire").map((l) => ({ texte: `Non : ${minuscule(l.texte)}` })),
+      ...lim.filter((l) => l.niveau === "eviter").map((l) => ({ texte: `Plutôt pas : ${minuscule(l.texte)}` })),
+    ].slice(0, 4),
+  };
+  // Ton style au travail : tes dilemmes de culture au travail, puis tes phrases de « Ta semaine idéale ».
+  const styles: { texte: string; id: string }[] = [];
+  for (const id of etat.ordre) {
+    const el = trouverElement(id);
+    if (el?.type === "dilemme" && el.axe) { const o = optionReponse(el, r[id]); if (o?.portrait) styles.push({ texte: o.portrait.replace(/\.$/, ""), id }); }
+    if (el?.type === "swipe") {
+      for (const [pid, rep] of Object.entries(objetReponse(r[id]))) {
+        const p = el.phrases.find((x) => x.id === pid);
+        if (p && STYLE_SEMAINE.includes(pid) && rep !== "depend") styles.push({ texte: (rep === "oui" ? p.portraitOui : p.portraitNon).replace(/\.$/, ""), id });
+      }
+    }
+  }
+  const style: BlocSynthese = {
+    id: "style", emoji: "handshake", titre: "Ton style au travail", vide: "Pas encore assez de réponses.", revoir: styles[0]?.id ?? null,
+    lignes: [...new Map(styles.map((s) => [s.texte, s])).values()].slice(0, 3).map((s) => ({ texte: s.texte })),
+  };
+  return [projet, priorites, refus, style];
 }

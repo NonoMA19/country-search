@@ -11,7 +11,7 @@ import { ErreurPdf } from "@/components/BoutonDossier";
 import Chargement from "@/components/Chargement";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
-import Portrait from "@/components/Portrait";
+import SyntheseProfil from "@/components/SyntheseProfil";
 import Departage, { type EtatDepartage } from "@/components/resultat/Departage";
 import BlocVie from "@/components/resultat/BlocVie";
 import { BadgeFiabilite, FicheFaisabilite, VisaCourt } from "@/components/resultat/Faisabilite";
@@ -21,13 +21,14 @@ import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
   CATEGORIES, GROUPES, complementMesure, groupesEgalite, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, visaSimple, valeurFrance, valeurLisible, verdict, LIBELLE_ACCES,
+  faisabilite, lignesTop, niveauDeduit, paysSurprise, surprisePriorites, visaSimple, valeurFrance, valeurLisible, verdict, LIBELLE_ACCES,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { accord, trouverPays } from "@/lib/pays";
 import { telechargerDossier } from "@/lib/pdf";
 import { prochainAffiner, questionnaireFini, resultatProvisoire } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
+import { syntheseProfil } from "@/lib/profil";
 
 const STYLE_BADGE: Record<Badge, string> = {
   nationalite: "bg-bleu text-white",
@@ -128,6 +129,7 @@ function DeuxMesures({ ligne }: { ligne: Ligne }) {
         {barre(ligne.acces)}
         <p className="mt-1 text-sm text-gris">{LIBELLE_ACCES(ligne.acces)}{ligne.obstacles.length ? "\u00a0:" : ", sans obstacle pour ton profil."}</p>
         {ligne.obstacles.length > 0 && <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm">{ligne.obstacles.map((o) => <li key={o.texte}>{o.texte}</li>)}</ul>}
+        {ligne.accesAVerifier.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t} Rien n’est retiré pour ça.</p>)}
       </div>
     </div>
   );
@@ -219,7 +221,7 @@ function CartePays({ ligne, rang, egalite, etat, points, budget, provisoire = fa
 }
 
 // Le pays surprise : un seul de tes choix l'écarte. Un bouton le remonte dans ton classement.
-function CarteSurprise({ s, remonter }: { s: Surprise; remonter: () => void }) {
+function CarteSurprise({ s, remonter, voir }: { s: Surprise; remonter: () => void; voir: () => void }) {
   const p = s.ligne.pays;
   const Le = p.le.charAt(0).toUpperCase() + p.le.slice(1);
   return (
@@ -228,14 +230,22 @@ function CarteSurprise({ s, remonter }: { s: Surprise; remonter: () => void }) {
         <Drapeau iso2={p.iso2} className="h-8 w-12" />
         <h3 className="min-w-0 text-xl font-bold break-words">{p.nom}</h3>
       </div>
-      <p className="mt-3 text-lg leading-snug">
-        {Le} te {accord(p, "correspond", "correspondent")} à {Math.round(s.score)}{" "}%. {s.phrase}
-      </p>
+      <p className="mt-3 text-lg leading-snug font-medium">{s.phrase}</p>
+      {s.priorites && (
+        <ul className="mt-2 flex flex-wrap gap-2" aria-label="Les priorités où il va dans ton sens">
+          {s.priorites.map((x) => <li key={x} className="rounded-full bg-bleu-doux px-3 py-1 text-sm font-medium">✓ {x}</li>)}
+        </ul>
+      )}
+      <p className="mt-2 text-gris">{Le} te {accord(p, "correspond", "correspondent")} à {Math.round(s.score)}{"\u00a0"}%.</p>
       {s.argent && <p className="mt-2 flex items-start gap-2 text-sm font-medium"><CircleAlert aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-gris" /><span>{s.argent}</span></p>}
       <div className="mt-4 flex flex-wrap gap-3">
-        <button type="button" onClick={remonter} className="inline-flex min-h-12 items-center gap-1.5 rounded-2xl bg-bleu px-4 font-semibold text-white hover:bg-blue-700">
-          <ArrowUp aria-hidden="true" className="h-5 w-5" /> Le remonter
-        </button>
+        {s.cause === "priorites" ? (
+          <button type="button" onClick={voir} className="inline-flex min-h-12 items-center gap-1.5 rounded-2xl bg-bleu px-4 font-semibold text-white hover:bg-blue-700">Voir sa fiche</button>
+        ) : (
+          <button type="button" onClick={remonter} className="inline-flex min-h-12 items-center gap-1.5 rounded-2xl bg-bleu px-4 font-semibold text-white hover:bg-blue-700">
+            <ArrowUp aria-hidden="true" className="h-5 w-5" /> Le remonter
+          </button>
+        )}
         <Link href={`/pays/${p.id}`} className="inline-flex min-h-12 items-center rounded-2xl border border-bord px-4 font-semibold hover:border-bleu">Ouvrir le dossier</Link>
       </div>
     </article>
@@ -353,7 +363,8 @@ export default function Resultat() {
   const ecartes = lignes.filter((l) => l.ecart);
   const top = principaux.filter((l) => !l.peuDeDonnees).slice(0, 3);
   const suite = principaux.filter((l) => !top.includes(l));
-  const brute = paysSurprise(etat, lignes, top, reglages);
+  // Le pays surprise : d'abord celui qui colle à tes priorités hors de ta carte, sinon celui qu'un seul choix fait reculer.
+  const brute = surprisePriorites(etat, principaux, top) ?? paysSurprise(etat, lignes, top, reglages);
   const surprise = brute && (!seulementOuvertes || brute.ligne.porte.badge === "ouverte") ? brute : null;
   // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
   const phrases = lignesTop(top, etat);
@@ -363,7 +374,6 @@ export default function Resultat() {
   const budget = reglages.budget ?? tranche?.max ?? tranche?.min ?? 2000;
   const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const encoreDesDilemmes = prochainAffiner(etat) !== null;
-  const revoirPortrait = () => { ecrire({ ...session, etape: { t: "portrait" } }); router.push("/quiz"); };
   const affiner = () => { ecrire({ ...session, etape: { t: "affiner" } }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
@@ -409,8 +419,7 @@ export default function Resultat() {
           <ChevronDown aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-180" />
         </summary>
         <div className="px-4 pb-4">
-          <Portrait portrait={portraitComplet(etat)} compact />
-          <button type="button" onClick={revoirPortrait} className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Ce n’est pas toi ? Revoir ton portrait</button>
+          <SyntheseProfil blocs={syntheseProfil(etat)} portrait={portraitComplet(etat)} modifier={revoirQuestion} compact />
         </div>
       </details>
 
@@ -468,6 +477,14 @@ export default function Resultat() {
         </div>
       </section>
 
+      {surprise && !toutAZero && (
+        <section aria-labelledby="titre-surprise" className="mt-8 rounded-3xl border-2 border-dashed border-bleu bg-bleu-doux/40 p-4 sm:p-6">
+          <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
+          <p className="mt-1 text-sm text-gris">{surprise.cause === "priorites" ? "Un pays auquel tu n’avais peut-être pas pensé." : "Un pays qu’un seul de tes choix fait reculer, alors que sans ce choix il serait ton n° 1 ou ton n° 2."}</p>
+          <div className="mt-4"><CarteSurprise s={surprise} remonter={() => remonter(surprise.ligne.pays.id)} voir={() => choisir(surprise.ligne.pays.id)} /></div>
+        </section>
+      )}
+
       <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
       <section aria-labelledby="titre-etsi" className="mt-10">
         <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
@@ -513,13 +530,6 @@ export default function Resultat() {
         </div>
       </section>
 
-      {surprise && !toutAZero && (
-        <section aria-labelledby="titre-surprise" className="mt-10">
-          <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
-          <p className="mt-1 text-sm text-gris">Un pays qu’un seul de tes choix met de côté ou fait reculer, alors que sans ce choix il serait ton n° 1 ou ton n° 2.</p>
-          <div className="mt-4"><CarteSurprise s={surprise} remonter={() => remonter(surprise.ligne.pays.id)} /></div>
-        </section>
-      )}
 
       {etat.profil.objectif === "stage-vie" && !toutAZero && <BlocVie etat={etat} top={top} />}
 
@@ -541,7 +551,7 @@ export default function Resultat() {
                 </p>
               </>
             ) : (
-              <p>{doubleNationalite.autre}</p>
+              <p>{typeof etat.profil["nationalite-laquelle-code"] === "string" && `Ta nationalité : ${new Intl.DisplayNames(["fr"], { type: "region" }).of(etat.profil["nationalite-laquelle-code"])}. `}{doubleNationalite.autre}</p>
             )}
           </div>
         </section>

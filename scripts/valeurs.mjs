@@ -44,10 +44,10 @@ const MESURES = [
   { fichier: "ensoleillement-nasa.csv", source: "nasa-power", critere: "climat", m: {
     id: "soleil", nom: "Ensoleillement (rayonnement solaire reçu au sol)", sens: "haut", unite: "kWh/m² par jour", bornes: [3, 3.75, 4.5, 5.25], notes: [1, 2, 3, 4, 5],
     echelle: ["moins de 3", "de 3 à 3,75", "de 3,75 à 4,5", "de 4,5 à 5,25", "plus de 5,25"], mots: ["très peu de soleil", "peu de soleil", "un soleil moyen", "beaucoup de soleil", "énormément de soleil"],
-    fait: "Il y a {mot} sur l’année", court: "Soleil", affichage: "{v} kWh/m² par jour", decimales: 1, theme: "le soleil", sujet: "l’ensoleillement",
+    fait: "Il y a {mot} sur l’année", court: "Soleil", decimales: 1, theme: "le soleil", sujet: "l’ensoleillement",
     etiquettes: etiq(["Très peu ensoleillé", "Peu ensoleillé", "Moyennement ensoleillé", "Ensoleillé", "Très ensoleillé"]),
-    avertissement: "Moyenne annuelle 2001-2020 à la ville de référence du pays : l’énergie du soleil reçue au sol, nuages compris. Ce n’est pas un nombre d’heures de soleil.",
-  }, texte: (v, r) => `Énergie du soleil reçue au sol à ${r.ville} : ${fr(v, 2)} kWh par m² et par jour en moyenne (2001-2020, NASA POWER). Plus c’est haut, plus il y a de soleil.` },
+    avertissement: "Moyenne annuelle 2001-2020 à la ville de référence du pays : l’énergie du soleil reçue au sol, nuages compris. Ce n’est pas un nombre d’heures de soleil : on donne donc un rang entre les pays.",
+  }, texte: (v, r) => `Soleil à ${r.ville} : ${r.rang} pays le plus ensoleillé sur ${r.total} (énergie du soleil reçue au sol, nuages compris, moyenne 2001-2020, NASA POWER).` },
   { fichier: "sante-couverture-oms.csv", source: "oms-uhc", critere: "sante", m: {
     id: "sante-systeme", nom: "Couverture des soins essentiels pour toute la population (indice de l’OMS, sur 100)", sens: "haut", unite: "sur 100", bornes: [60, 70, 80, 85], notes: [1, 2, 3, 4, 5],
     echelle: ["moins de 60", "de 60 à 70", "de 70 à 80", "de 80 à 85", "85 ou plus"], mots: ["très incomplète", "incomplète", "moyenne", "bonne", "très bonne"],
@@ -101,13 +101,17 @@ for (const { fichier, source, critere, m, texte } of MESURES) {
   c.mesures = c.mesures.filter((x) => x.id !== m.id).concat([m]);
   if (!c.sources.includes(source)) c.sources.push(source);
   let n = 0;
-  for (const r of lireCsv(fichier)) {
+  // Le rang de chaque pays (du plus haut au plus bas), pour une phrase lisible sans unité technique (le soleil).
+  const lignes = lireCsv(fichier);
+  const valeurs = lignes.filter((r) => r.valeur !== "" && scores.pays[r.pays_id]).map((r) => Number(r.valeur)).sort((a, b) => b - a);
+  const rangDe = (v) => { const k = valeurs.indexOf(v) + 1; return k === 1 ? "1er" : `${k}e`; };
+  for (const r of lignes) {
     const p = scores.pays[r.pays_id];
     if (!p) continue;
     if (r.valeur === "") { p[m.id] = { statut: "a-verifier", note: null, texte: r.remarque || "Pas de valeur dans cette source." }; continue; }
     const v = Number(r.valeur);
     p[m.id] = {
-      statut: "verifie", note: noter(m, v), valeur: v, texte: texte(v, { ...r, ville: villes[r.pays_id]?.nom ?? "la ville de référence" }),
+      statut: "verifie", note: noter(m, v), valeur: v, texte: texte(v, { ...r, ville: villes[r.pays_id]?.nom ?? "la ville de référence", rang: rangDe(v), total: valeurs.length }),
       annee: /^\d{4}/.test(r.annee_donnee) ? r.annee_donnee : null, source, lien: r.url, verifieLe: r.lu_le,
     };
     n++;

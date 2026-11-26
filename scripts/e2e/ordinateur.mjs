@@ -28,13 +28,13 @@ const lireSession = (page) => page.evaluate(() => JSON.parse(sessionStorage.getI
 const titre = (page) => page.locator("#titre-ecran").innerText();
 const visible = (page, sel) => page.locator(sel).first().isVisible();
 
-// Panneau : visible seulement sur ordinateur ; le bouton « Pourquoi » de la question, seulement sans panneau.
+// Panneau : visible seulement sur ordinateur. Le bouton « Pourquoi » de la question : partout (prompt 7, le panneau ne garde que les étapes).
 for (const mode of Object.keys(MODES)) {
   const { ctx, page } = await ouvrir(mode, S.dilemme);
   const panneau = await visible(page, "aside");
   const pourquoi = await page.getByRole("button", { name: /Pourquoi on te demande/ }).isVisible();
   verifier(panneau === (mode === "ordinateur"), `${mode} : panneau ${panneau ? "visible" : "caché"}`);
-  verifier(pourquoi === (mode !== "ordinateur"), `${mode} : bouton « Pourquoi » ${pourquoi ? "visible" : "caché"}`);
+  verifier(pourquoi, `${mode} : bouton « Pourquoi » caché`);
   // Zones tactiles : chaque bouton visible fait au moins 44 px de haut (téléphone et tablette).
   if (mode !== "ordinateur") {
     const petits = await page.$$eval("main button, main a", (l) => l.filter((b) => b.offsetParent && b.getBoundingClientRect().height < 44 && !b.closest("p, li")).map((b) => b.textContent.trim().slice(0, 30)));
@@ -47,10 +47,15 @@ for (const mode of Object.keys(MODES)) {
 {
   const { ctx, page } = await ouvrir("ordinateur", S["choix-cartes"]);
   const avant = await titre(page);
+  // Prompt 7 : la motivation et le projet sont un seul écran en deux temps. La touche 2 ouvre le deuxième temps,
+  // la touche 1 y répond : les deux réponses sont alors enregistrées ensemble.
   await page.keyboard.press("2");
   await page.waitForTimeout(500);
+  verifier((await titre(page)).startsWith("Et sous quelle forme"), "touche 2 : le deuxième temps (la forme du départ) ne s'ouvre pas");
+  await page.keyboard.press("1");
+  await page.waitForTimeout(500);
   const s = await lireSession(page);
-  verifier(s.etat.reponses.motivation !== undefined, "touche 2 : aucune réponse enregistrée à la motivation");
+  verifier(s.etat.reponses.motivation !== undefined && s.etat.reponses.objectif !== undefined, "touches 2 puis 1 : la motivation et le projet ne sont pas enregistrés ensemble");
   verifier((await titre(page)) !== avant, "touche 2 : l'écran n'a pas changé");
   await page.keyboard.press("Backspace");
   await page.waitForTimeout(500);

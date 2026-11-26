@@ -18,20 +18,21 @@ export default function Pourquoi({ aide }: { aide: Aide }) {
         <span>Pourquoi on te demande ça{"\u00a0"}?</span>
       </button>
       <div id={id} hidden={!ouvert} className="mt-1 rounded-2xl bg-creux p-3">
-        <ContenuAide aide={aide} />
+        {ouvert && <ContenuAide aide={aide} />}
       </div>
     </div>
   );
 }
 
-// Le contenu de l'aide : l'enjeu en gras, puis une mini-carte par option. Aussi affiché déplié dans le panneau du quiz sur ordinateur.
+// Le contenu de l'aide : l'enjeu en gras, puis une ligne courte par option, qui apparaissent une par une
+// (une simple apparition en mouvement réduit : voir .ligne-une-par-une dans globals.css).
 export function ContenuAide({ aide }: { aide: Aide }) {
   return (
     <>
-        <p className="font-semibold leading-snug"><AvecDefinitions texte={aide.enjeu} /></p>
+        <p className="ligne-une-par-une font-semibold leading-snug"><AvecDefinitions texte={aide.enjeu} /></p>
         <ul className="mt-2 space-y-2">
-          {aide.cartes.map((c) => (
-            <li key={c.pastille} className="flex items-start gap-2.5 rounded-xl border border-bord bg-carte px-3 py-2 text-sm leading-snug">
+          {aide.cartes.map((c, i) => (
+            <li key={c.pastille} style={{ animationDelay: `${(i + 1) * 120}ms` }} className="ligne-une-par-une flex items-start gap-2.5 rounded-xl border border-bord bg-carte px-3 py-2 text-sm leading-snug">
               <span aria-hidden="true" className="mt-px inline-flex min-h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-bleu-doux px-2 text-xs font-semibold text-encre">{c.pastille}</span>
               <span className="min-w-0">
                 <span className="sr-only">{c.pastille.length === 1 ? `Option ${c.pastille}` : c.pastille}{" "}: </span>

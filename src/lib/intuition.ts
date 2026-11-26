@@ -49,10 +49,6 @@ export function origineEnMots(origine: string, etat: Etat): string | null {
   if (origine === "langues") return "les langues que tu parles";
   if (type === "envie") return `ton critère «\u00a0${quiz.envies.find((e) => e.id === id)?.label ?? id}\u00a0»`;
   if (type === "objectif") return `ton projet (${quiz.objectifs[id]?.nom ?? id})`;
-  if (origine === "element:changer-avis") {
-    const c = quiz.envies.find((e) => e.id === etat.reponses["changer-avis"]);
-    return c ? `l’avantage qui te ferait changer d’avis («\u00a0${c.label}\u00a0»)` : null;
-  }
   const el = trouverElement(id);
   if (!el) return null;
   if (el.type === "tri-zones") return `ta valeur «\u00a0${el.cartes.find((c) => c.id === sous)?.label ?? sous}\u00a0»`;

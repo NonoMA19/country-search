@@ -4,9 +4,9 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element } from "@/lib/donnees";
 import { PASSER } from "@/lib/elements";
-import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, surprisePriorites, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
 import { mesures, notes } from "@/lib/donnees";
-import { chapitreDe, estAdaptatif, etatAvant, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
+import { chapitreDe, estAdaptatif, etatAvant, nombreEcrans, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
 import { pays } from "@/lib/pays";
 import { PROFILS_FIXES, PROFILS_TYPES, repondeurFixe } from "./profils";
@@ -44,12 +44,13 @@ const parcoursListe: Etat[] = [];
 const formats: Record<string, number> = {};
 const debut3: Record<string, number> = {}, debut4: Record<string, number> = {};
 
-// Les variantes : chaque règle du prompt 6 retirée seule (mêmes réponses).
+// Les variantes : chaque règle retirée seule (mêmes réponses).
 const VARIANTES: [string, Partial<typeof REGLES>][] = [
   ["seuils en marches (sans notes continues)", { continu: false }],
   ["sans la règle des 30 pays", { seuilPays: 0 }],
   ["sans la règle des 30 pays, seuils en marches (le salaire compte, comme avant)", { seuilPays: 0, continu: false }],
-  ["accès pesant moitié moins (0,15 au lieu de 0,3)", { poidsAcces: 0.15 }],
+  ["accès pesant 0,3 (avant le prompt 7)", { poidsAcces: 0.3 }],
+  ["sans l'exception des critères essentiels (le salaire ne compte plus)", { essentiels: false }],
   ["sans « Il t'est accessible » dans le classement", { poidsAcces: 0 }],
 ];
 const n1Variantes: Record<string, Record<string, number>> = {};
@@ -59,7 +60,7 @@ const bloques = { europe: 0, ailleurs: 0 }, neutres = { europe: 0, ailleurs: 0 }
 for (let i = 0; i < NB; i++) {
   const etat = parcoursAuHasard(r);
   parcoursListe.push(etat);
-  ecrans.push(etat.ordre.length);
+  ecrans.push(nombreEcrans(etat));
   const top = top3(etat);
   for (const l of top) fiab[l.fiabilite.niveau]++;
   // La règle des 3 premières envies : le top 3 change-t-il, et quels pays écarte-t-elle ?
@@ -68,7 +69,8 @@ for (let i = 0; i < NB; i++) {
   for (const l of sans) if (!top.some((t) => t.pays.id === l.pays.id) && l.manquePrincipal.length) ecartesRegle[l.pays.nom] = (ecartesRegle[l.pays.nom] ?? 0) + 1;
   if (top[0]) enN1[top[0].pays.id] = (enN1[top[0].pays.id] ?? 0) + 1;
   for (const l of top) enTop3[l.pays.id] = (enTop3[l.pays.id] ?? 0) + 1;
-  const s = paysSurprise(etat, calculer(etat), top);
+  // Comme sur la page résultat : d'abord le pays surprise par tes priorités, sinon celui qu'un seul choix fait reculer.
+  const s = surprisePriorites(etat, calculer(etat).filter((l) => !l.ecart), top) ?? paysSurprise(etat, calculer(etat), top);
   if (s) surprises[s.cause] = (surprises[s.cause] ?? 0) + 1;
   const vusFormats = new Set(etat.ordre.map((id) => trouverElement(id)!.type));
   for (const f of vusFormats) formats[f] = (formats[f] ?? 0) + 1;

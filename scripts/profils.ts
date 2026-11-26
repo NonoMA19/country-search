@@ -61,7 +61,6 @@ export const repondeurFixe = (p: Persona): Repondeur => {
     if (el.id === "budget") return 3500;
     if (el.id === "secteur") return "autre";
     if (el.id === "objectif") return "inconnu";
-    if (el.id === "changer-avis") return "aucun";
     if (el.type === "tri-zones") return {};
     return PASSER;
   };

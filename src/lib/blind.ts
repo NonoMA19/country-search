@@ -5,7 +5,22 @@ import { objetReponse } from "./elements";
 import { hacher, mesureClassante, valeurLisible, type Etat } from "./moteur";
 import { etatAvant, topCourant } from "./parcours";
 
-export type FaitBlind = { mesure: string; valeur: string };
+// Un fait : un emoji et quelques mots simples (« Hiver frais, 4 °C »), jamais d'unité technique.
+export type FaitBlind = { mesure: string; valeur: string; emoji: string };
+const EMOJI_FAIT: Record<string, string> = {
+  prix: "pig-face", emploi: "briefcase", hiver: "snowflake", ete: "thermometer", securite: "shield", vol: "airplane",
+  heures: "mantelpiece-clock", "grande-ville": "cityscape", nature: "evergreen-tree", langue: "speech-balloon", soleil: "sun",
+};
+const arrondi = (n: number) => Math.round(n).toLocaleString("fr-FR");
+function faitSimple(paysId: string, m: string, etat: Etat): string {
+  const v = valeurLisible(paysId, m, etat.profil);
+  if (!v) return "À vérifier";
+  const x = notes[paysId]?.[m]?.valeur;
+  if (m === "vol" && typeof x === "number") return `${v.mot}, ${arrondi(x)}\u00a0h de vol`;
+  if ((m === "hiver" || m === "ete") && typeof x === "number") return `${v.mot}, ${arrondi(x)}\u00a0°C`;
+  if (m === "prix") return v.mot.replace("que la France", "qu’en France").replace("ceux de la France", "ceux de France");
+  return v.mot;
+}
 export type CarteBlind = { pays: string; faits: FaitBlind[] };
 
 const noteDe = (pays: string, m: string) => { const n = notes[pays]?.[m]; return n?.statut === "verifie" && typeof n.note === "number" ? n.note : null; };
@@ -34,6 +49,6 @@ export function cartesBlind(el: BlindTest, etat: Etat): CarteBlind[] {
   const { pays, mesures } = paysBlind(el, etat);
   return pays.map((p) => ({
     pays: p,
-    faits: mesures.map((m) => { const v = valeurLisible(p, m, etat.profil); return { mesure: m, valeur: v ? (v.valeur ? `${v.valeur} (${v.mot.toLowerCase()})` : v.mot) : "à vérifier" }; }),
+    faits: mesures.map((m) => ({ mesure: m, valeur: faitSimple(p, m, etat), emoji: EMOJI_FAIT[m] ?? "light-bulb" })),
   }));
 }
