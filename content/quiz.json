@@ -2465,6 +2465,45 @@
           "dimensions": [
             "emploi"
           ]
+        },
+        {
+          "id": "W17",
+          "texte": "Un salaire qui progresse vite chaque année.",
+          "emoji": "chart-increasing",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux un salaire qui grimpe vite.",
+          "portraitNon": "La progression du salaire n’est pas ta priorité.",
+          "dimensions": [
+            "salaire"
+          ]
+        },
+        {
+          "id": "W18",
+          "texte": "Un chef qui te laisse organiser ton planning seul.",
+          "emoji": "spiral-calendar",
+          "oui": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux de l’autonomie.",
+          "portraitNon": "Un cadre fixé par ton chef te rassure.",
+          "dimensions": [
+            "hierarchie"
+          ]
         }
       ]
     },
@@ -4537,6 +4576,86 @@
           "portraitNon": "Les escapades rapides ne comptent pas pour toi.",
           "dimensions": [
             "distance",
+            "activites"
+          ]
+        },
+        {
+          "id": "A18",
+          "texte": "Une soirée dans un quartier qui ne dort jamais.",
+          "emoji": "night-with-stars",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les quartiers qui vivent la nuit.",
+          "portraitNon": "Les quartiers qui ne dorment jamais, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A19",
+          "texte": "Un pique-nique au bord d’un lac, à vingt minutes de chez toi.",
+          "emoji": "canoe",
+          "oui": [
+            {
+              "mesures": [
+                "nature"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux la nature à deux pas.",
+          "portraitNon": "La nature toute proche n’est pas indispensable.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A20",
+          "texte": "Appeler ta famille le soir sans calculer le décalage horaire.",
+          "emoji": "mobile-phone",
+          "oui": [
+            {
+              "mesures": [
+                "decalage"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux vivre à peu près à la même heure que la France.",
+          "portraitNon": "Le décalage horaire ne te gêne pas.",
+          "dimensions": [
+            "distance",
+            "activites"
+          ]
+        },
+        {
+          "id": "A21",
+          "texte": "Un marché où tu ne reconnais aucun fruit.",
+          "emoji": "mango",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes ne rien reconnaître.",
+          "portraitNon": "Tu préfères des repères familiers.",
+          "dimensions": [
+            "depaysement",
             "activites"
           ]
         }

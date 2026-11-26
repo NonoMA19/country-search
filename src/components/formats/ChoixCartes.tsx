@@ -19,7 +19,7 @@ const ELEMENTS_LANGUES = new Set(["langues", "relance-langue"]);
 function Drapeaux({ langue }: { langue: string }) {
   const liste = DRAPEAUX_LANGUE[langue];
   if (!liste) return null;
-  return <span aria-hidden="true" className="flex shrink-0 -space-x-1.5">{liste.map((c) => <Drapeau key={c} iso2={c} className="h-4 w-6" />)}</span>;
+  return <span aria-hidden="true" className="flex shrink-0 gap-1">{liste.map((c) => <Drapeau key={c} iso2={c} className="h-4 w-6" />)}</span>;
 }
 
 // Les options « ne sait pas » : sur téléphone, elles sortent de la grille et deviennent un bouton discret dessous.
@@ -31,9 +31,9 @@ type Opt = ReturnType<typeof optionsDe>[number] & { indispo: string | null; phra
 function Tuile({ o, actif, desactive, onClick, idBase, classe = "" }: { o: Opt; actif: boolean; desactive: boolean; onClick: () => void; idBase: string; classe?: string }) {
   return (
     <button type="button" data-option aria-pressed={actif} disabled={desactive} aria-labelledby={idBase} aria-describedby={o.phrase || o.indispo ? `${idBase}-d` : undefined} onClick={onClick}
-      className={`relative flex h-full min-h-16 w-full min-w-0 items-center gap-2.5 rounded-2xl border-2 py-2 pr-5 pl-2.5 text-left transition-colors disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS} ${classe}`}>
-      <span aria-hidden="true" className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors ${actif ? "bg-white" : "bg-bleu-doux"}`}>
-        {o.emoji ? <Emoji nom={o.emoji} className="h-7 w-7" /> : <Icone nom={o.icone ?? "circle-help"} className="h-5 w-5 text-lien" />}
+      className={`relative flex h-full min-h-16 w-full min-w-0 items-center gap-2 rounded-2xl border-2 py-2 pr-4 pl-2 min-[400px]:gap-2.5 min-[400px]:pr-5 min-[400px]:pl-2.5 text-left transition-colors disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS} ${classe}`}>
+      <span aria-hidden="true" className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors min-[400px]:h-11 min-[400px]:w-11 ${actif ? "bg-white" : "bg-bleu-doux"}`}>
+        {o.emoji ? <Emoji nom={o.emoji} className="h-6 w-6 min-[400px]:h-7 min-[400px]:w-7" /> : <Icone nom={o.icone ?? "circle-help"} className="h-5 w-5 text-lien" />}
       </span>
       <span className="min-w-0 flex-1">
         <span id={idBase} lang="fr" className="block text-sm leading-tight font-semibold hyphens-auto [overflow-wrap:normal]">{o.label}</span>

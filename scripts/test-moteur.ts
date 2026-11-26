@@ -1015,7 +1015,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     if (s) {
       surprises++;
       verifier(!top.some((t) => t.pays.id === s.ligne.pays.id) && !s.ligne.peuDeDonnees && !s.ligne.ecart, `surprise ${k} : pays du top 3, ou sans données, ou fermé`);
-      verifier((s.priorites?.length ?? 0) >= 2 && /priorités/.test(s.phrase), `surprise ${k} : moins de 2 priorités, ou raison absente (${s.phrase})`);
+      verifier((s.priorites?.length ?? 0) === Math.min(3, enviesDe(etat).length) && /priorités/.test(s.phrase), `surprise ${k} : pas tes 3 priorités, ou raison absente (${s.phrase})`);
       verifier(!(Array.isArray(etat.profil.paysCarte) && etat.profil.paysCarte.includes(s.ligne.pays.id)), `surprise ${k} : le pays était dans ta carte`);
     }
     if (top.length >= 2) {

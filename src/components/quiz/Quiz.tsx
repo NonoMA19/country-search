@@ -340,7 +340,14 @@ export default function Quiz() {
     marquerChangement();
     router.push("/resultat");
   };
-  const retourQuiz = () => (etat.ordre.length > 0 ? aller({ t: "quiz" }, { etat: annulerDerniere(etat) }) : null);
+  // Retour : la dernière réponse est annulée ; si elle était le deuxième temps d'un écran (le projet après la motivation),
+  // les deux réponses le sont, pour revenir à l'écran entier.
+  const retourQuiz = () => {
+    if (!etat.ordre.length) return null;
+    const derniere = trouverElement(etat.ordre.at(-1)!);
+    const avant = annulerDerniere(etat);
+    return aller({ t: "quiz" }, { etat: derniere?.memeEcranQue && avant.ordre.at(-1) === derniere.memeEcranQue ? annulerDerniere(avant) : avant });
+  };
 
   // ----- Ce qu'on ne t'a pas demandé, et pourquoi -----
   if (etape.t === "pas-demande") {

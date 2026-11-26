@@ -1046,7 +1046,7 @@ export function avecQui(lignes: Ligne[], i: number, dansLaVue: (k: number) => bo
 export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "langue" | "priorites"; phrase: string; argent: string | null; priorites?: string[] };
 
 // Le pays surprise « par tes priorités » (prompt 7) : un pays hors de ta carte du début (ou que tu n'avais pas en tête),
-// hors de ton top 3 mais dans tes 8 premiers, qui va dans ton sens (4 ou 5 sur 5) sur au moins 2 de tes 3 premiers critères.
+// hors de ton top 3 mais dans tes 8 premiers, qui va dans ton sens (4 ou 5 sur 5) sur tes 3 premiers critères (environ 1 parcours sur 5).
 // « Tu ne l'avais pas coché, mais il colle à 3 de tes priorités : … ». Jamais un pays fermé par la loi ou sans assez de données.
 export const RANG_MAX_SURPRISE = 8;
 export function surprisePriorites(etat: Etat, lignes: Ligne[], top: Ligne[]): Surprise | null {
@@ -1063,7 +1063,7 @@ export function surprisePriorites(etat: Etat, lignes: Ligne[], top: Ligne[]): Su
       return d.length > 0 && d.reduce((t, x) => t + x.accord, 0) / d.length >= ACCORD_ARGUMENT;
     });
     return { l, colle };
-  }).filter((x) => x.colle.length >= 2).sort((a, b) => b.colle.length - a.colle.length || b.l.score - a.l.score);
+  }).filter((x) => x.colle.length >= Math.min(3, envies.length)).sort((a, b) => b.colle.length - a.colle.length || b.l.score - a.l.score);
   const m = candidats[0];
   if (!m) return null;
   const noms = m.colle.map((id) => quiz.envies.find((e) => e.id === id)?.label ?? id);
