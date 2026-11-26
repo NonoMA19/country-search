@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { Check, Undo2, X } from "lucide-react";
+import Emoji from "@/components/Emoji";
 import type { Swipe as TSwipe } from "@/lib/donnees";
 import { LIBELLE_SWIPE, type ReponseSwipe } from "@/lib/elements";
 import { phrasesSwipe } from "@/lib/parcours";
@@ -131,7 +132,10 @@ export default function Swipe({ element: el, etat, valeur, repondre, passer, lib
                 {LIBELLE_SWIPE[tendance]}
               </span>
             )}
-            <p className="text-xl leading-snug font-semibold">«{" "}{phrase.texte}{" "}»</p>
+            <div className="flex flex-col items-center gap-3">
+              {phrase.emoji && <Emoji key={phrase.id} nom={phrase.emoji} className="emoji-chapitre h-14 w-14" />}
+              <p className="text-xl leading-snug font-semibold">«{" "}{phrase.texte}{" "}»</p>
+            </div>
           </div>
         </div>
       )}

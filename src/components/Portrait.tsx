@@ -46,7 +46,7 @@ export default function Portrait({ portrait, revoir, compact = false }: { portra
       {portraitSeul.length > 0 && (
         <p className={`mt-4 text-sm leading-snug text-gris ${compact ? "" : "rounded-2xl bg-creux px-4 py-3"}`}>
           <span className="font-semibold text-encre">Enrichit ton portrait, sans changer ton classement{"\u00a0"}: </span>
-          {portraitSeul.join(", ")}. Pas encore de donnée pays pour au moins 30 pays sur 38, ou une source qui interdit de transformer sa note.
+          {portraitSeul.join(", ")}. Pas encore assez de données pays pour les comparer.
         </p>
       )}
       {cherche.length > 0 && (

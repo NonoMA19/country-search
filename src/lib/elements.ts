@@ -90,7 +90,7 @@ const mesureStockee = (m: string) => Object.values(notes).some((n) => n[m] !== u
 const mesureNotee = (m: string) => Object.values(notes).some((n) => n[m]?.statut === "verifie");
 const listeTexte = (x: Valeur | undefined) => (Array.isArray(x) ? x : []);
 export function optionsDe(el: ChoixCartes, reponses: Record<string, Valeur> = {}): OptionCarte[] {
-  const criteres = quiz.envies.map((e) => ({ id: e.id, label: e.label, icone: e.icone }));
+  const criteres = quiz.envies.map((e) => ({ id: e.id, label: e.label, icone: e.icone, emoji: e.emoji }));
   const choisis = listeTexte(reponses.envies);
   if (el.source === "envies") return criteres;
   if (el.source === "envies-choisies") return criteres.filter((c) => choisis.includes(c.id));

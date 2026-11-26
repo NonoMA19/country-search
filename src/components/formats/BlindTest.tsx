@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
+import Emoji from "@/components/Emoji";
 import type { BlindTest as TBlind } from "@/lib/donnees";
-import { mesures } from "@/lib/donnees";
 import { cartesBlind, paysBlind } from "@/lib/blind";
 import { pays } from "@/lib/pays";
 import { Actions, BOUTON_PLEIN, EnTete, FOCUS, type PropsFormat } from "./commun";
@@ -39,16 +39,16 @@ export default function BlindTest({ element: el, etat, repondre, passer, libelle
                 {choix ? <><Drapeau iso2={p.iso2} className="h-4 w-6" /> {p.nom}</> : `Pays ${LETTRES[i]}`}
                 {actif && <Check aria-hidden="true" className="ml-auto h-5 w-5 text-lien" />}
               </span>
-              <ul className="mt-2 space-y-1 text-sm">
-                {c.faits.map((f) => (
-                  <li key={f.mesure}><span className="text-gris">{mesures[f.mesure]?.court ?? f.mesure}{" "}: </span>{f.valeur}</li>
+              <ul className="mt-2 space-y-1.5 text-sm">
+                {c.faits.slice(0, 4).map((f) => (
+                  <li key={f.mesure} className="flex items-center gap-2 leading-snug"><Emoji nom={f.emoji} className="h-5 w-5" />{f.valeur}</li>
                 ))}
               </ul>
             </button>
           );
         })}
       </div>
-      {choix && <p role="status" className="mt-4 rounded-2xl bg-creux px-4 py-3">Tu as choisi {pays.find((x) => x.id === choix)?.le}, sans connaître son nom. Les pays qui lui ressemblent sur ces quatre faits passent un peu devant.</p>}
+      {choix && <p role="status" className="mt-4 rounded-2xl bg-creux px-4 py-3">C’était {pays.find((x) => x.id === choix)?.le}. Les pays qui lui ressemblent passent un peu devant.</p>}
       <Actions passer={passer} libellePasser={libellePasser}>
         <button type="button" disabled={!choix} data-valider onClick={() => choix && repondre({ choix, faits: faits.join(",") })} className={BOUTON_PLEIN}>
           {choix ? "Continuer" : "Choisis un pays"}

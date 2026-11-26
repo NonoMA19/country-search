@@ -124,8 +124,7 @@ export function raisonEnviePortrait(id: string, p: Profil): string | null {
   if (!envieDisponible(id, p) || envieClassante(id, p)) return null;
   const en = quiz.envies.find((x) => x.id === id);
   if (!en?.mesures.length) return "Pas encore de donnée pays : il enrichit ton portrait.";
-  const n = Math.max(0, ...en.mesures.map((m) => mesureReelle(m, p)).filter((m): m is string => !!m).map(paysCouverts));
-  return `Donnée pour ${n} pays sur ${pays.length} seulement : il enrichit ton portrait, sans changer ton classement.`;
+  return "Pas encore assez de données pays : il enrichit ton portrait, sans changer ton classement.";
 }
 // Pourquoi une envie est grisée (affiché sous la carte), ou null.
 export function raisonEnvieIndisponible(id: string, p: Profil): string | null {
@@ -1421,6 +1420,12 @@ export function valeurLisible(paysId: string, mesureId: string, profil: Profil):
   if (!m || note === null) return null;
   if ((mesureId === "langue" || mesureId === "apprendre-langue") && parleLangueDe(paysId, profil)) return { valeur: null, mot: "Tu parles la langue" };
   const v = notes[paysId]?.[mesureId]?.valeur;
+  // Le soleil : un rang entre les pays (l'unité de la source, des kWh par m², ne parle à personne).
+  if (mesureId === "soleil" && typeof v === "number") {
+    const toutes = pays.map((p) => notes[p.id]?.soleil).filter((n) => n?.statut === "verifie" && typeof n.valeur === "number").map((n) => n!.valeur as number);
+    const k = toutes.filter((x) => x > v).length + 1;
+    return { valeur: `${k === 1 ? "1er" : `${k}e`} pays le plus ensoleillé sur ${toutes.length}`, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
+  }
   const modele = typeof v === "number" && v < 2 && m.affichageSingulier ? m.affichageSingulier : m.affichage;
   const valeur = modele && typeof v === "number" ? modele.replace("{v} ", "{v}\u00a0").replace("{v}", nombreFr(v, m.decimales ?? 0)) : null;
   return { valeur, mot: m.etiquettes?.[note - 1] ?? m.mots[note - 1] };
@@ -1511,9 +1516,9 @@ export function aideDe(el: Element, p: Profil = {}): Element["aide"] {
   const ms = mesuresElement(el, p);
   const faibles = ms.filter((m) => !mesureClassante(m));
   if (!faibles.length) return el.aide;
-  const noms = faibles.map((m) => `${mesures[m]?.court ?? m} (${paysCouverts(m)} pays sur ${pays.length})`);
+  const noms = faibles.map((m) => (mesures[m]?.court ?? m).toLowerCase());
   const texte = faibles.length === ms.length
     ? "Pas assez de données pays pour que ta réponse change ton classement : elle enrichit ton portrait."
-    : `Données sur moins de 30 pays : ${listeFr(noms)}. Ce côté-là enrichit ton portrait, sans changer ton classement.`;
+    : `Pas encore assez de données pays sur ${listeFr(noms)} : ce côté-là enrichit ton portrait, sans changer ton classement.`;
   return { ...el.aide, cartes: [...el.aide.cartes, { pastille: "Données", texte }] };
 }

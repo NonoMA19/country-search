@@ -183,7 +183,7 @@ export const TYPES_ELEMENT: TypeElement[] = ["choix-cartes", "classement", "curs
 // thermomètre : 1 à 5 ; carte : une liste de zones (cercles « c:lat,lon,km », groupes « g-… », anciennes régions), ou ["aucune"] ; swipe et tri des limites : une réponse par phrase ou situation.
 export type Valeur = string | string[] | number | Record<string, string>;
 
-export type Chapitre = { numero: number; titre: string; phrase: string; adaptatif?: boolean; min?: number; max?: number };
+export type Chapitre = { numero: number; titre: string; phrase: string; emoji?: string; lignes?: string[]; adaptatif?: boolean; min?: number; max?: number };
 // Un critère du chapitre 2. parts : la part de chaque mesure (sinon, à parts égales) ; positions : pour une mesure « position »
 // (« Un vrai hiver » : hiver, position 1). Sans mesure (« Un logement abordable ») : il enrichit le portrait seulement.
 export type Envie = { id: string; label: string; icone: string; emoji?: string; famille: FamilleScore; mesures: string[]; parts?: number[]; positions?: number[] };

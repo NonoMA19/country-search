@@ -25,12 +25,12 @@ export const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 foc
 // sur ordinateur, à la suite de la question, boutons alignés à gauche.
 export const BARRE_BAS = "sticky bottom-0 -mx-5 mt-auto border-t border-bord bg-fond/95 px-5 backdrop-blur lg:static lg:mx-0 lg:mt-8 lg:flex lg:flex-wrap lg:items-center lg:gap-x-4 lg:gap-y-2 lg:border-t-0 lg:bg-transparent lg:px-0 lg:backdrop-blur-none";
 
-// Sur ordinateur, le quiz a un panneau à droite qui montre déjà « Pourquoi on te demande ça ? ».
-// Les écrans du quiz le disent avec ce contexte : leur bouton « Pourquoi » se cache alors à partir de 1024 px.
+// « Pourquoi on te demande ça ? » : sous la question, sur tous les écrans et toutes les tailles (prompt 7 : le panneau de
+// droite, sur ordinateur, ne montre plus que les étapes). PanneauContexte reste pour savoir si l'écran est dans le quiz.
 export const PanneauContexte = createContext(false);
 export function PourquoiEcran({ aide, id }: { aide: Element["aide"]; id: string }) {
-  const panneau = useContext(PanneauContexte);
-  return <div className={panneau ? "lg:hidden" : undefined}><Pourquoi key={id} aide={aide} /></div>;
+  useContext(PanneauContexte);
+  return <Pourquoi key={id} aide={aide} />;
 }
 
 // Le haut de chaque écran : le thème en pastille, la question (titre de l'écran, reçoit le focus), une phrase, « Pourquoi ».

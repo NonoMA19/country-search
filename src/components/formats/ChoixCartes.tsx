@@ -2,11 +2,25 @@
 
 import { useState } from "react";
 import { Check } from "lucide-react";
+import Drapeau from "@/components/Drapeau";
+import Emoji from "@/components/Emoji";
 import Icone from "@/components/Icone";
 import type { ChoixCartes as TChoix } from "@/lib/donnees";
 import { AUCUN, optionsDe } from "@/lib/elements";
 import { envieDisponible, raisonEnviePortrait, raisonEnvieIndisponible } from "@/lib/moteur";
 import { Actions, BOUTON_PLEIN, EnTete, FOCUS, PlusMoins, type PropsFormat } from "./commun";
+
+// Les drapeaux d'une langue (des images, pas des emojis) : deux drapeaux quand la langue est parlée dans plusieurs pays du site.
+const DRAPEAUX_LANGUE: Record<string, string[]> = {
+  en: ["GB", "US"], es: ["ES", "MX"], de: ["DE", "AT"], it: ["IT", "CH"], pt: ["PT", "BR"], nl: ["NL", "BE"],
+  scandinave: ["SE", "NO"], ja: ["JP"], ko: ["KR"], zh: ["CN", "TW"], ar: ["MA", "AE"],
+};
+const ELEMENTS_LANGUES = new Set(["langues", "relance-langue"]);
+function Drapeaux({ langue }: { langue: string }) {
+  const liste = DRAPEAUX_LANGUE[langue];
+  if (!liste) return null;
+  return <span aria-hidden="true" className="flex shrink-0 -space-x-1.5">{liste.map((c) => <Drapeau key={c} iso2={c} className="h-4 w-6" />)}</span>;
+}
 
 // Les options « ne sait pas » : sur téléphone, elles sortent de la grille et deviennent un bouton discret dessous.
 const DISCRETES = new Set(["autre", "inconnu"]);
@@ -18,8 +32,8 @@ function Tuile({ o, actif, desactive, onClick, idBase, classe = "" }: { o: Opt; 
   return (
     <button type="button" data-option aria-pressed={actif} disabled={desactive} aria-labelledby={idBase} aria-describedby={o.phrase || o.indispo ? `${idBase}-d` : undefined} onClick={onClick}
       className={`relative flex h-full min-h-16 w-full min-w-0 items-center gap-2.5 rounded-2xl border-2 py-2 pr-5 pl-2.5 text-left transition-colors disabled:opacity-50 ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS} ${classe}`}>
-      <span role="img" aria-label={`Image provisoire : ${o.label}`} className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors ${actif ? "bg-bleu" : "bg-bleu-doux"}`}>
-        <Icone nom={o.icone ?? "circle-help"} className={`h-5 w-5 ${actif ? "text-white" : "text-lien"}`} />
+      <span aria-hidden="true" className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors ${actif ? "bg-white" : "bg-bleu-doux"}`}>
+        {o.emoji ? <Emoji nom={o.emoji} className="h-7 w-7" /> : <Icone nom={o.icone ?? "circle-help"} className="h-5 w-5 text-lien" />}
       </span>
       <span className="min-w-0 flex-1">
         <span id={idBase} lang="fr" className="block text-sm leading-tight font-semibold hyphens-auto [overflow-wrap:normal]">{o.label}</span>
@@ -82,6 +96,7 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
                   <span aria-hidden="true" className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 ${actif ? "border-bleu bg-bleu" : "border-gris bg-carte"}`}>
                     {actif && <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />}
                   </span>
+                  {ELEMENTS_LANGUES.has(el.id) && <Drapeaux langue={o.id} />}
                   {o.label}
                 </button>
               );
@@ -97,6 +112,8 @@ export default function ChoixCartes({ element: el, etat, valeur, repondre, passe
               <button key={o.id} type="button" data-option aria-pressed={actif} aria-labelledby={idBase} aria-describedby={[o.phrase ? `${idBase}-d` : "", el.avecPlusMoins && o.plus ? `${idBase}-pm` : ""].filter(Boolean).join(" ") || undefined}
                 onClick={() => repondre(o.id)}
                 className={`relative flex min-h-14 w-full min-w-0 items-start gap-3 rounded-2xl border-2 px-4 py-3 text-left transition-colors ${actif ? "border-bleu bg-bleu-doux" : "border-bord bg-carte hover:border-bleu"} ${FOCUS}`}>
+                {ELEMENTS_LANGUES.has(el.id) && <span className="mt-1"><Drapeaux langue={o.id} /></span>}
+                {o.emoji && <Emoji nom={o.emoji} className="mt-0.5 h-7 w-7" />}
                 <span className="min-w-0 flex-1">
                   <span id={idBase} className="block text-base leading-snug font-semibold break-words">{o.label}</span>
                   {o.phrase && <span id={`${idBase}-d`} className="mt-0.5 block text-sm leading-snug text-gris">{o.phrase}</span>}

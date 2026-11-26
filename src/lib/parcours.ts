@@ -59,6 +59,7 @@ export function reponsesPossibles(el: Element, etat: Etat): EffetDilemme[][] {
 const scorePhrase = (p: PhraseSwipe, etat: Etat, top: Ligne[]) =>
   Math.max(0, ...p.dimensions.map((d) => importance(d, etat) * incertitude(d, etat) * repetition(d, etat))) * (0.15 + utiliteEffets([p.oui, p.non], etat, top));
 
+export const PART_PHRASES = 0.2;
 export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const deja = etat.reponses[el.id];
   if (deja && typeof deja === "object" && !Array.isArray(deja)) {
@@ -73,10 +74,15 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const imposee = horsEurope ? el.phrases.find((p) => p.id === "S16") : undefined;
   const precedent = dimensionsPrecedentes(etat, el.id);
   const top = topCourant(etat);
-  const notes = el.phrases
-    .filter((p) => !p.dimensions.some((d) => precedent.includes(d)))
-    .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.5 + ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
-    .sort((a, b) => b.s - a.s);
+  // Prompt 7 (diversité) : les phrases utiles (au moins 20 % du meilleur score) sont tirées au hasard (graine du parcours),
+  // pas dans l'ordre du score : deux personnes au profil proche ne lisent plus les mêmes cinq phrases.
+  const scores = el.phrases.filter((p) => !p.dimensions.some((d) => precedent.includes(d))).map((p) => ({ p, s: scorePhrase(p, etat, top) }));
+  const max = Math.max(0, ...scores.map((x) => x.s));
+  const tirage = (p: PhraseSwipe) => hacher(etat.graine, `phrase:${p.id}`);
+  const notes = [
+    ...scores.filter((x) => x.s >= PART_PHRASES * max).sort((a, b) => tirage(a.p) - tirage(b.p)),
+    ...scores.filter((x) => x.s < PART_PHRASES * max).sort((a, b) => b.s - a.s),
+  ];
   // Pas deux phrases sur exactement les mêmes dimensions quand on peut l'éviter.
   const res: PhraseSwipe[] = imposee ? [imposee] : [];
   const vues = new Set<string>(imposee ? [imposee.dimensions.join("+")] : []);

@@ -3,12 +3,22 @@
     {
       "numero": 1,
       "titre": "Ton point de départ",
-      "phrase": "Pourquoi tu pars, avec qui, pour combien de temps : de quoi poser le décor."
+      "phrase": "Pourquoi tu pars, avec qui, pour combien de temps : de quoi poser le décor.",
+      "emoji": "world-map",
+      "lignes": [
+        "Pourquoi tu pars.",
+        "Avec qui, et pour combien de temps."
+      ]
     },
     {
       "numero": 2,
       "titre": "Tes critères",
-      "phrase": "Cinq critères au plus, puis ce que tu ne sacrifierais jamais : c’est le cœur de ton classement."
+      "phrase": "Cinq critères au plus, puis ce que tu ne sacrifierais jamais : c’est le cœur de ton classement.",
+      "emoji": "bullseye",
+      "lignes": [
+        "Cinq critères au plus.",
+        "Puis celui que tu ne sacrifierais jamais."
+      ]
     },
     {
       "numero": 3,
@@ -16,7 +26,12 @@
       "phrase": "Quelques scènes de la vie au bureau. Il n’y a pas de bonne réponse.",
       "adaptatif": true,
       "min": 4,
-      "max": 6
+      "max": 6,
+      "emoji": "briefcase",
+      "lignes": [
+        "Quelques scènes de bureau.",
+        "Pas de bonne réponse."
+      ]
     },
     {
       "numero": 4,
@@ -24,12 +39,22 @@
       "phrase": "Ton décor, tes week-ends, ce qui fait qu’on se sent bien quelque part.",
       "adaptatif": true,
       "min": 4,
-      "max": 6
+      "max": 6,
+      "emoji": "house-with-garden",
+      "lignes": [
+        "Ton décor, tes week-ends.",
+        "Ce qui te fait te sentir bien."
+      ]
     },
     {
       "numero": 5,
       "titre": "Tes limites et tes valeurs",
-      "phrase": "Ce que tu préfères éviter, ce qui est hors de question, et ce qui compte pour toi."
+      "phrase": "Ce que tu préfères éviter, ce qui est hors de question, et ce qui compte pour toi.",
+      "emoji": "balance-scale",
+      "lignes": [
+        "Ce que tu préfères éviter.",
+        "Ce qui compte pour toi."
+      ]
     }
   ],
   "objectifs": {
@@ -758,11 +783,12 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour ta carrière."
+          "portrait": "Tu pars d’abord pour ta carrière.",
+          "emoji": "rocket"
         },
         {
           "id": "argent",
-          "label": "Gagner ou mettre de l’argent de côté",
+          "label": "Gagner ou mettre de côté",
           "icone": "wallet",
           "effets": [
             {
@@ -778,17 +804,19 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour l’argent : gagner plus, ou dépenser moins."
+          "portrait": "Tu pars d’abord pour l’argent : gagner plus, ou dépenser moins.",
+          "emoji": "money-bag"
         },
         {
           "id": "langue",
-          "label": "Apprendre ou pratiquer une langue",
+          "label": "Pratiquer une langue",
           "icone": "languages",
           "effets": [],
           "sansPenalite": [
             "apprendre-langue"
           ],
-          "portrait": "Tu pars d’abord pour une langue."
+          "portrait": "Tu pars d’abord pour une langue.",
+          "emoji": "speech-balloon"
         },
         {
           "id": "aventure",
@@ -802,11 +830,12 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour l’aventure."
+          "portrait": "Tu pars d’abord pour l’aventure.",
+          "emoji": "compass"
         },
         {
           "id": "qualite-vie",
-          "label": "Une meilleure qualité de vie",
+          "label": "Mieux vivre",
           "icone": "sunrise",
           "effets": [
             {
@@ -822,14 +851,16 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Tu pars d’abord pour une meilleure qualité de vie."
+          "portrait": "Tu pars d’abord pour une meilleure qualité de vie.",
+          "emoji": "sunrise"
         },
         {
           "id": "rejoindre",
           "label": "Rejoindre quelqu’un",
           "icone": "heart-handshake",
           "effets": [],
-          "portrait": "Tu pars pour rejoindre quelqu’un."
+          "portrait": "Tu pars pour rejoindre quelqu’un.",
+          "emoji": "red-heart"
         }
       ]
     },
@@ -872,32 +903,37 @@
         {
           "id": "stage-vie",
           "label": "Un VIE ou un stage",
-          "phrase": "VIE : une mission de 6 à 24 mois dans une entreprise française, avant 28 ans, avec une indemnité.",
-          "icone": "graduation-cap"
+          "phrase": "VIE : 6 à 24 mois en entreprise, avant 28 ans, avec une indemnité.",
+          "icone": "graduation-cap",
+          "emoji": "office-building"
         },
         {
           "id": "premier-poste",
           "label": "Un premier poste",
           "phrase": "Un vrai contrat, sur place.",
-          "icone": "briefcase"
+          "icone": "briefcase",
+          "emoji": "briefcase"
         },
         {
           "id": "aventure",
           "label": "Une année d’aventure (PVT)",
           "phrase": "Travailler et voyager, un an au plus.",
-          "icone": "backpack"
+          "icone": "backpack",
+          "emoji": "backpack"
         },
         {
           "id": "carriere",
           "label": "T’installer plusieurs années",
           "phrase": "Une carrière sur place.",
-          "icone": "trending-up"
+          "icone": "trending-up",
+          "emoji": "house"
         },
         {
           "id": "inconnu",
           "label": "Je ne sais pas encore",
-          "phrase": "Aucun poids de départ.",
-          "icone": "circle-help"
+          "phrase": "On reste ouvert.",
+          "icone": "circle-help",
+          "emoji": "thinking-face"
         }
       ],
       "memeEcranQue": "motivation",
@@ -1165,8 +1201,8 @@
       "type": "choix-cartes",
       "chapitre": 1,
       "theme": "Ton scénario idéal",
-      "titre": "Ton scénario idéal, dans un an ?",
-      "texte": "Choisis celui qui te fait le plus envie.",
+      "titre": "Ta vie idéale, dans un an ?",
+      "texte": "Celle qui te fait le plus envie.",
       "dimensions": [
         "ville",
         "cout",
@@ -1191,9 +1227,9 @@
       "options": [
         {
           "id": "metropole",
-          "label": "Un poste prenant dans une grande métropole",
+          "label": "Un job prenant en grande ville",
           "plus": "Ta carrière avance vite.",
-          "moins": "La ville coûte cher et va vite.",
+          "moins": "Peu de temps libre.",
           "effets": [
             {
               "mesures": [
@@ -1208,13 +1244,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : un poste prenant dans une grande métropole."
+          "portrait": "Ton scénario idéal : un poste prenant dans une grande métropole.",
+          "emoji": "cityscape"
         },
         {
           "id": "sac-a-dos",
-          "label": "Des petits boulots et beaucoup de voyages",
-          "plus": "Tu découvres un maximum.",
-          "moins": "Peu de stabilité.",
+          "label": "Petits boulots et voyages",
+          "plus": "Tu vois du pays.",
+          "moins": "Peu d’argent de côté.",
           "effets": [
             {
               "mesures": [
@@ -1229,13 +1266,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : des petits boulots et beaucoup de voyages."
+          "portrait": "Ton scénario idéal : des petits boulots et beaucoup de voyages.",
+          "emoji": "backpack"
         },
         {
           "id": "equilibre",
-          "label": "Un bon job et du temps pour vivre",
-          "plus": "Des soirées et des week-ends à toi.",
-          "moins": "Le salaire n’est pas toujours le plus haut.",
+          "label": "Un bon job et du temps libre",
+          "plus": "Tes soirées sont à toi.",
+          "moins": "La carrière avance moins vite.",
           "effets": [
             {
               "mesures": [
@@ -1250,13 +1288,14 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : un bon job et du temps pour vivre."
+          "portrait": "Ton scénario idéal : un bon job et du temps pour vivre.",
+          "emoji": "person-in-lotus-position"
         },
         {
           "id": "soleil",
-          "label": "Le soleil et la mer après le travail",
-          "plus": "Une vie dehors.",
-          "moins": "Les métiers proposés sont parfois plus limités.",
+          "label": "Soleil et mer après le travail",
+          "plus": "La vie dehors toute l’année.",
+          "moins": "Moins de choix de pays.",
           "effets": [
             {
               "mesures": [
@@ -1271,7 +1310,8 @@
               "poids": 0.5
             }
           ],
-          "portrait": "Ton scénario idéal : le soleil et la mer après le travail."
+          "portrait": "Ton scénario idéal : le soleil et la mer après le travail.",
+          "emoji": "beach-with-umbrella"
         },
         {
           "id": "inconnu",
@@ -1588,7 +1628,7 @@
       "theme": "Ton projet",
       "profil": "secteur",
       "titre": "Ton secteur ?",
-      "texte": "Celui où tu veux travailler, ou celui de tes études. Seize familles.",
+      "texte": "Celui où tu veux travailler, ou celui de tes études.",
       "dimensions": [
         "secteur"
       ],
@@ -1607,105 +1647,122 @@
       },
       "options": [
         {
-          "id": "finance",
-          "label": "Finance et banque",
+          "id": "public",
+          "label": "Administration et service public",
           "icone": "landmark",
-          "citi": "K"
-        },
-        {
-          "id": "conseil",
-          "label": "Conseil et audit",
-          "icone": "clipboard-list",
-          "citi": "M"
-        },
-        {
-          "id": "ingenierie",
-          "label": "Ingénierie et industrie",
-          "icone": "factory",
-          "citi": "C"
-        },
-        {
-          "id": "tech",
-          "label": "Tech et data",
-          "icone": "cpu",
-          "citi": "J"
-        },
-        {
-          "id": "commerce",
-          "label": "Marketing et commerce",
-          "icone": "shopping-bag",
-          "citi": "G"
-        },
-        {
-          "id": "sante",
-          "label": "Santé",
-          "icone": "stethoscope",
-          "citi": "Q"
-        },
-        {
-          "id": "hotellerie",
-          "label": "Hôtellerie et tourisme",
-          "icone": "bed",
-          "citi": "I"
-        },
-        {
-          "id": "enseignement",
-          "label": "Enseignement et recherche",
-          "icone": "book-open",
-          "citi": "P"
+          "citi": "O",
+          "emoji": "classical-building"
         },
         {
           "id": "agriculture",
           "label": "Agriculture et agroalimentaire",
           "icone": "wheat",
-          "citi": "A"
-        },
-        {
-          "id": "energie",
-          "label": "Énergie, eau et environnement",
-          "icone": "zap",
-          "citi": "D+E"
+          "citi": "A",
+          "emoji": "sheaf-of-rice"
         },
         {
           "id": "btp",
           "label": "Bâtiment et architecture",
           "icone": "hard-hat",
-          "citi": "F"
+          "citi": "F",
+          "emoji": "building-construction"
         },
         {
-          "id": "transport",
-          "label": "Transport et logistique",
-          "icone": "truck",
-          "citi": "H"
-        },
-        {
-          "id": "immobilier",
-          "label": "Immobilier",
-          "icone": "building",
-          "citi": "L"
-        },
-        {
-          "id": "public",
-          "label": "Administration et service public",
-          "icone": "landmark",
-          "citi": "O"
+          "id": "conseil",
+          "label": "Conseil et audit",
+          "icone": "clipboard-list",
+          "citi": "M",
+          "emoji": "bar-chart"
         },
         {
           "id": "culture",
           "label": "Culture, arts et sport",
           "icone": "palette",
-          "citi": "R"
+          "citi": "R",
+          "emoji": "performing-arts"
+        },
+        {
+          "id": "energie",
+          "label": "Énergie, eau et environnement",
+          "icone": "zap",
+          "citi": "D+E",
+          "emoji": "high-voltage"
+        },
+        {
+          "id": "enseignement",
+          "label": "Enseignement et recherche",
+          "icone": "book-open",
+          "citi": "P",
+          "emoji": "books"
+        },
+        {
+          "id": "finance",
+          "label": "Finance et banque",
+          "icone": "landmark",
+          "citi": "K",
+          "emoji": "bank"
+        },
+        {
+          "id": "hotellerie",
+          "label": "Hôtellerie et tourisme",
+          "icone": "bed",
+          "citi": "I",
+          "emoji": "bellhop-bell"
+        },
+        {
+          "id": "immobilier",
+          "label": "Immobilier",
+          "icone": "building",
+          "citi": "L",
+          "emoji": "house"
+        },
+        {
+          "id": "ingenierie",
+          "label": "Ingénierie et industrie",
+          "icone": "factory",
+          "citi": "C",
+          "emoji": "gear"
+        },
+        {
+          "id": "commerce",
+          "label": "Marketing et commerce",
+          "icone": "shopping-bag",
+          "citi": "G",
+          "emoji": "shopping-cart"
         },
         {
           "id": "services",
           "label": "RH et services aux entreprises",
           "icone": "users-round",
-          "citi": "N"
+          "citi": "N",
+          "emoji": "busts-in-silhouette"
+        },
+        {
+          "id": "sante",
+          "label": "Santé",
+          "icone": "stethoscope",
+          "citi": "Q",
+          "emoji": "stethoscope"
+        },
+        {
+          "id": "tech",
+          "label": "Tech et data",
+          "icone": "cpu",
+          "citi": "J",
+          "emoji": "laptop"
+        },
+        {
+          "id": "transport",
+          "label": "Transport et logistique",
+          "icone": "truck",
+          "citi": "H",
+          "emoji": "delivery-truck"
         },
         {
           "id": "autre",
           "label": "Autre ou je ne sais pas",
-          "icone": "circle-help"
+          "icone": "circle-help",
+          "emoji": "thinking-face"
         }
       ]
     },
@@ -2009,7 +2066,7 @@
           },
           {
             "pastille": "Sans données pays",
-            "texte": "Moins de 30 pays sur 38 : il enrichit ton portrait sans changer ton classement."
+            "texte": "Pas encore assez de données pays : il enrichit ton portrait, sans changer ton classement."
           }
         ]
       }
@@ -2329,6 +2386,84 @@
           "portraitNon": "Ta paie passe avant une semaine courte.",
           "dimensions": [
             "equilibre"
+          ]
+        },
+        {
+          "id": "W13",
+          "texte": "Prendre le train pour le bureau à 8 h pile, tous les jours.",
+          "emoji": "station",
+          "oui": [
+            {
+              "mesures": [
+                "ponctualite"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les journées réglées comme une horloge.",
+          "portraitNon": "Les horaires stricts, ce n’est pas pour toi.",
+          "dimensions": [
+            "ponctualite"
+          ]
+        },
+        {
+          "id": "W14",
+          "texte": "Dire franchement à ton chef que son idée ne marchera pas.",
+          "emoji": "speaking-head",
+          "oui": [
+            {
+              "mesures": [
+                "hierarchie"
+              ],
+              "position": 1,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir contredire ton chef.",
+          "portraitNon": "Contredire ton chef, très peu pour toi.",
+          "dimensions": [
+            "hierarchie"
+          ]
+        },
+        {
+          "id": "W15",
+          "texte": "Une semaine de 45 h, avec une belle prime à la fin de l’année.",
+          "emoji": "money-with-wings",
+          "oui": [
+            {
+              "mesures": [
+                "salaire"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Une belle prime vaut bien quelques heures de plus.",
+          "portraitNon": "Les longues semaines ne valent pas une prime.",
+          "dimensions": [
+            "salaire"
+          ]
+        },
+        {
+          "id": "W16",
+          "texte": "Plusieurs offres d’emploi dès ta première semaine de recherche.",
+          "emoji": "envelope-with-arrow",
+          "oui": [
+            {
+              "mesures": [
+                "emploi"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux avoir le choix entre plusieurs offres.",
+          "portraitNon": "Trouver vite n’est pas ta priorité.",
+          "dimensions": [
+            "emploi"
           ]
         }
       ]
@@ -3925,8 +4060,8 @@
       "theme": "Ton décor",
       "obligatoire": true,
       "max": 2,
-      "titre": "Dans quel décor imagines-tu ton quotidien ?",
-      "texte": "Choisis-en deux au plus.",
+      "titre": "Ton décor au quotidien ?",
+      "texte": "Deux au plus.",
       "dimensions": [
         "climat",
         "ville"
@@ -3935,7 +4070,7 @@
         {
           "id": "metropole",
           "label": "Une grande métropole",
-          "phrase": "Du monde, des sorties, tout à pied ou en métro.",
+          "phrase": "Sorties, métro, du monde.",
           "icone": "building-2",
           "effets": [
             {
@@ -3945,12 +4080,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu t’imagines dans une grande métropole."
+          "portrait": "Tu t’imagines dans une grande métropole.",
+          "emoji": "cityscape"
         },
         {
           "id": "ville-humaine",
           "label": "Une ville à taille humaine",
-          "phrase": "Assez grande pour bouger, assez calme pour souffler.",
+          "phrase": "Calme, mais vivante.",
           "icone": "house",
           "effets": [
             {
@@ -3960,12 +4096,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu t’imagines dans une ville à taille humaine."
+          "portrait": "Tu t’imagines dans une ville à taille humaine.",
+          "emoji": "house-with-garden"
         },
         {
           "id": "nature",
           "label": "La nature à portée de main",
-          "phrase": "Forêts, lacs ou montagnes, pas loin de chez toi.",
+          "phrase": "Forêts, lacs, montagnes.",
           "icone": "trees",
           "effets": [
             {
@@ -3975,12 +4112,13 @@
               "poids": 1
             }
           ],
-          "portrait": "Tu veux la nature à portée de main."
+          "portrait": "Tu veux la nature à portée de main.",
+          "emoji": "national-park"
         },
         {
           "id": "soleil",
           "label": "Du soleil toute l’année",
-          "phrase": "Des hivers doux et des étés chauds.",
+          "phrase": "Hivers doux, étés chauds.",
           "icone": "sun",
           "effets": [
             {
@@ -3996,7 +4134,8 @@
               "position": 4
             }
           ],
-          "portrait": "Tu rêves de soleil toute l’année."
+          "portrait": "Tu rêves de soleil toute l’année.",
+          "emoji": "sun"
         }
       ],
       "aide": {
@@ -4077,7 +4216,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
+          ],
+          "emoji": "beach-with-umbrella"
         },
         {
           "id": "A2",
@@ -4097,7 +4237,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
+          ],
+          "emoji": "skier"
         },
         {
           "id": "A3",
@@ -4116,7 +4257,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "hiking-boot"
         },
         {
           "id": "A4",
@@ -4135,7 +4277,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "guitar"
         },
         {
           "id": "A5",
@@ -4146,7 +4289,8 @@
           "portraitNon": "Les musées ne sont pas ton premier choix.",
           "dimensions": [
             "activites"
-          ]
+          ],
+          "emoji": "framed-picture"
         },
         {
           "id": "A6",
@@ -4165,7 +4309,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "stadium"
         },
         {
           "id": "A7",
@@ -4184,7 +4329,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "bicycle"
         },
         {
           "id": "A8",
@@ -4203,7 +4349,8 @@
           "dimensions": [
             "distance",
             "activites"
-          ]
+          ],
+          "emoji": "airplane"
         },
         {
           "id": "S16",
@@ -4222,7 +4369,8 @@
           "dimensions": [
             "depaysement",
             "activites"
-          ]
+          ],
+          "emoji": "desert-island"
         },
         {
           "id": "A9",
@@ -4241,7 +4389,8 @@
           "dimensions": [
             "sante",
             "activites"
-          ]
+          ],
+          "emoji": "green-salad"
         },
         {
           "id": "A10",
@@ -4260,26 +4409,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
-        },
-        {
-          "id": "A11",
-          "texte": "Un brunch avec d’autres Français.",
-          "oui": [
-            {
-              "mesures": [
-                "francais"
-              ],
-              "poids": 0.5
-            }
           ],
-          "non": [],
-          "portraitOui": "Le week-end, tu retrouves d’autres Français.",
-          "portraitNon": "Le week-end, tu évites la bulle française.",
-          "dimensions": [
-            "reseau",
-            "activites"
-          ]
+          "emoji": "hot-beverage"
         },
         {
           "id": "A12",
@@ -4305,7 +4436,8 @@
           "dimensions": [
             "climat",
             "activites"
-          ]
+          ],
+          "emoji": "water-wave"
         },
         {
           "id": "A13",
@@ -4324,7 +4456,8 @@
           "dimensions": [
             "ville",
             "activites"
-          ]
+          ],
+          "emoji": "person-walking"
         },
         {
           "id": "A14",
@@ -4342,6 +4475,68 @@
           "portraitNon": "La qualité de l’air ne te préoccupe pas.",
           "dimensions": [
             "sante",
+            "activites"
+          ],
+          "emoji": "leaf-fluttering-in-wind"
+        },
+        {
+          "id": "A15",
+          "texte": "Un week-end au soleil, en t-shirt, en plein mois de février.",
+          "emoji": "t-shirt",
+          "oui": [
+            {
+              "mesures": [
+                "hiver"
+              ],
+              "position": 5,
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux un hiver presque doux.",
+          "portraitNon": "Un hiver sans hiver ne t’attire pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ]
+        },
+        {
+          "id": "A16",
+          "texte": "Une grande fête de quartier qui dure toute la nuit.",
+          "emoji": "party-popper",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes quand la ville fait la fête.",
+          "portraitNon": "Les grandes fêtes de rue, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A17",
+          "texte": "Un week-end dans un pays voisin, à deux heures de train.",
+          "emoji": "train",
+          "oui": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes pouvoir bouger facilement le week-end.",
+          "portraitNon": "Les escapades rapides ne comptent pas pour toi.",
+          "dimensions": [
+            "distance",
             "activites"
           ]
         }
@@ -4909,8 +5104,8 @@
       "type": "blind-test",
       "chapitre": 4,
       "theme": "Le test à l’aveugle",
-      "titre": "Trois pays sans leur nom : lequel choisis-tu ?",
-      "texte": "Quatre faits pour chacun. Le nom s’affiche après ton choix.",
+      "titre": "Trois pays sans leur nom : lequel te tente ?",
+      "texte": "Le nom s’affiche après ton choix.",
       "dimensions": [
         "blind"
       ],

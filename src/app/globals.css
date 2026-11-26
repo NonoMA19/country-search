@@ -186,3 +186,95 @@ input[type="range"] {
     animation-name: fondu;
   }
 }
+
+/* Prompt 7 : des lignes courtes qui apparaissent une par une (aide, ouverture de chapitre, écrans de texte). */
+.ligne-une-par-une {
+  animation: ligne-une-par-une 320ms ease-out both;
+}
+@keyframes ligne-une-par-une {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ligne-une-par-une {
+    animation: none;
+  }
+}
+/* L'emoji d'un chapitre arrive en douceur, avec un petit rebond. */
+.emoji-chapitre {
+  animation: emoji-chapitre 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes emoji-chapitre {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emoji-chapitre {
+    animation: fondu 0.3s ease-out both;
+  }
+}
+
+/* Prompt 7 : le décor du seuil de température (janvier). Teintes douces, en clair comme en sombre ; le texte garde l'encre du thème. */
+.fond-neige {
+  background: linear-gradient(180deg, #dbeafe 0%, #f1f5f9 100%);
+  color: var(--encre);
+}
+.fond-gris {
+  background: linear-gradient(180deg, #cbd5e1 0%, #e2e8f0 100%);
+  color: var(--encre);
+}
+.fond-doux {
+  background: linear-gradient(180deg, #dcfce7 0%, #f0f9ff 100%);
+  color: var(--encre);
+}
+.fond-soleil {
+  background: linear-gradient(180deg, #fef3c7 0%, #fff7ed 100%);
+  color: var(--encre);
+}
+@media (prefers-color-scheme: dark) {
+  .fond-neige {
+    background: linear-gradient(180deg, #1e3a5f 0%, #1e293b 100%);
+  }
+  .fond-gris {
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  }
+  .fond-doux {
+    background: linear-gradient(180deg, #14532d 0%, #1e293b 100%);
+  }
+  .fond-soleil {
+    background: linear-gradient(180deg, #78350f 0%, #1e293b 100%);
+  }
+}
+.flocon {
+  position: absolute;
+  top: -8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 2px rgba(15, 23, 42, 0.25);
+  animation: flocon linear infinite;
+}
+@keyframes flocon {
+  to {
+    transform: translateY(260px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flocon {
+    animation: none;
+    top: 30%;
+  }
+}

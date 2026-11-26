@@ -61,7 +61,7 @@ function Zones({ element: el, valeur, repondre, passer, libellePasser, titreId }
           return (
             <li key={c.id} className="rounded-2xl border border-bord bg-carte p-3">
               <p id={`${el.id}-${c.id}`} className="font-semibold leading-snug">{c.label}</p>
-              {(c.phrase || portrait) && <p className="mt-0.5 text-xs text-gris">{portrait ? "Pas de donnée pays sur 30 pays : enrichit ton portrait." : c.phrase}</p>}
+              {(c.phrase || portrait) && <p className="mt-0.5 text-xs text-gris">{portrait ? "Pas encore assez de données pays : enrichit ton portrait." : c.phrase}</p>}
               <div className="mt-2 grid grid-cols-3 gap-1.5" role="group" aria-labelledby={`${el.id}-${c.id}`}>
                 {el.zones.map((z) => {
                   const actif = choix[c.id] === z.id;

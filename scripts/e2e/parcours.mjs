@@ -1,6 +1,7 @@
 // Un parcours complet, du premier écran au résultat, au doigt (375 px) et à la souris (1440 px) :
 // compte les écrans, vérifie qu'aucun ne déborde en largeur, que l'écran final et les deux mesures s'affichent.
-// Usage : site lancé, puis npm run e2e:parcours (BASE=…, CAPTURES=dossier pour garder une image de chaque nouveau format).
+// Usage : site lancé, puis npm run e2e:parcours (BASE=…, CAPTURES=dossier pour garder une image de chaque nouveau format ;
+// TOUS=1 en plus pour une image de chaque écran).
 import fs from "node:fs";
 import { chromium } from "./playwright.mjs";
 
@@ -27,9 +28,9 @@ for (const [mode, options] of [["telephone", { viewport: { width: 375, height: 8
     const theme = (await page.locator("main p.rounded-full").first().innerText().catch(() => "")).trim();
     const deborde = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     verifier(deborde <= 0, `${mode} : « ${titre} » déborde de ${deborde} px`);
-    if (CAPTURES && NOUVEAUX.some((t) => theme.startsWith(t)) && !vus.includes(theme)) {
+    if (CAPTURES && (process.env.TOUS || (NOUVEAUX.some((t) => theme.startsWith(t)) && !vus.includes(theme)))) {
       fs.mkdirSync(CAPTURES, { recursive: true });
-      await page.screenshot({ path: `${CAPTURES}/${mode}-${vus.length}.png`, fullPage: true });
+      await page.screenshot({ path: `${CAPTURES}/${mode}-${String(vus.length).padStart(2, "0")}.png`, fullPage: true });
     }
     vus.push(theme);
     const bouton = (nom) => page.getByRole("button", { name: nom }).first();
