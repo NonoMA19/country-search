@@ -128,6 +128,7 @@ function DeuxMesures({ ligne }: { ligne: Ligne }) {
         {barre(ligne.acces)}
         <p className="mt-1 text-sm text-gris">{LIBELLE_ACCES(ligne.acces)}{ligne.obstacles.length ? "\u00a0:" : ", sans obstacle pour ton profil."}</p>
         {ligne.obstacles.length > 0 && <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm">{ligne.obstacles.map((o) => <li key={o.texte}>{o.texte}</li>)}</ul>}
+        {ligne.accesAVerifier.map((t) => <p key={t} className="mt-1 text-sm text-gris">{t} Rien n’est retiré pour ça.</p>)}
       </div>
     </div>
   );

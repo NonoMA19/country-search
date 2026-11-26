@@ -9529,7 +9529,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série de l’OCDE, et l’OIT n’a pas de donnée en parité de pouvoir d’achat pour ce pays. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -9957,7 +9957,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série de l’OCDE, et la dernière donnée de l’OIT en parité de pouvoir d’achat date de 2016 (règle du site : 2019 ou après). À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -10352,9 +10352,15 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 18271,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 523 $ par mois en 2025, soit environ 18 271 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=ARG&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "heures": {
     "statut": "verifie",
@@ -12528,9 +12534,15 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 15773,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 314 $ par mois en 2025, soit environ 15 773 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=BRA&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "heures": {
     "statut": "verifie",
@@ -14182,9 +14194,15 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 2,
+    "valeur": 53036,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 4 420 $ par mois en 2021, soit environ 53 036 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2021",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SGP&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "heures": {
     "statut": "a-verifier",
@@ -14721,7 +14739,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série de l’OCDE, et la dernière donnée de l’OIT en parité de pouvoir d’achat date de 2009 (règle du site : 2019 ou après). À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "verifie",
@@ -15255,9 +15273,15 @@
     "verifieLe": "2026-11-14"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 17217,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 435 $ par mois en 2022, soit environ 17 217 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2022",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CHN&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "heures": {
     "statut": "a-verifier",
@@ -15714,7 +15738,7 @@
    "salaire": {
     "statut": "a-verifier",
     "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "texte": "Salaire brut moyen : ce pays n’est pas dans la série de l’OCDE, et l’OIT n’a pas de donnée en parité de pouvoir d’achat pour ce pays. À vérifier, pas de chiffre approximatif."
    },
    "heures": {
     "statut": "a-verifier",
@@ -16653,9 +16677,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 12504,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 042 $ par mois en 2025, soit environ 12 504 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=PER&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -17148,9 +17178,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 19635,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 636 $ par mois en 2024, soit environ 19 635 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2024",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=URY&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -17643,9 +17679,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 18893,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 574 $ par mois en 2025, soit environ 18 893 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=THA&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -18137,9 +18179,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 14378,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 198 $ par mois en 2024, soit environ 14 378 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2024",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=VNM&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -18631,9 +18679,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 13440,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 1 120 $ par mois en 2025, soit environ 13 440 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=IND&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -19130,9 +19184,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 6658,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 555 $ par mois en 2022, soit environ 6 658 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2022",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=CIV&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",
@@ -19624,9 +19684,15 @@
     "verifieLe": "2026-11-17"
    },
    "salaire": {
-    "statut": "a-verifier",
-    "note": null,
-    "texte": "Salaire brut moyen : ce pays n’est pas dans la série « Average annual wages » de l’OCDE, et aucune source officielle avec le même concept (salaire brut annuel moyen d’un salarié à temps plein, en dollars à parité de pouvoir d’achat) n’a été trouvée. À vérifier, pas de chiffre approximatif."
+    "statut": "verifie",
+    "note": 1,
+    "valeur": 8578,
+    "texte": "Salaire mensuel moyen de l’ensemble des salariés (temps partiel compris), avant impôts : 715 $ par mois en 2025, soit environ 8 578 $ par an, en dollars à parité de pouvoir d’achat (OIT, ILOSTAT). Source différente de l’OCDE (qui compte les salariés à temps plein) : comparaison approximative.",
+    "annee": "2025",
+    "source": "oit-salaire",
+    "lien": "https://rplumber.ilo.org/data/indicator/?id=EAR_EMTA_SEX_CUR_NB_A&ref_area=SEN&format=.csv",
+    "verifieLe": "2026-11-26",
+    "approximatif": true
    },
    "indemnite-vie": {
     "statut": "verifie",

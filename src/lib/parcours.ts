@@ -75,7 +75,7 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
   const top = topCourant(etat);
   const notes = el.phrases
     .filter((p) => !p.dimensions.some((d) => precedent.includes(d)))
-    .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.75 + 0.5 * ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
+    .map((p) => ({ p, s: scorePhrase(p, etat, top) * (0.5 + ((hacher(etat.graine, `phrase:${p.id}`) % 1000) / 1000)) }))
     .sort((a, b) => b.s - a.s);
   // Pas deux phrases sur exactement les mêmes dimensions quand on peut l'éviter.
   const res: PhraseSwipe[] = imposee ? [imposee] : [];

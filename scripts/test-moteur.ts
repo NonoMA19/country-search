@@ -30,8 +30,7 @@ const echecs: string[] = [];
 let verifs = 0;
 function verifier(ok: boolean, message: string) {
   verifs++;
-  if (!ok && echecs.length < 50) echecs.push(message);
-  else if (!ok) echecs.push("…");
+  if (!ok) echecs.push(message);
 }
 
 // ---------- Un quiz au hasard (tous les formats) ----------
@@ -147,7 +146,7 @@ for (let i = 0; i < NB; i++) {
     for (const a of pour) {
       if (a.mesure.startsWith("secteur-")) { verifier((noteEffective(l.pays.id, a.mesure, etat.profil) ?? 0) >= 4, `quiz ${i} : « Ton secteur » en point fort sans note 4 ou 5`); continue; }
       const d = l.details.find((x) => x.mesure === a.mesure && !x.neutre);
-      verifier(!!d && d.accord >= 0.75 && /^(envie|objectif|dilemme|element|limite|reglage):/.test(d.origine), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
+      verifier(!!d && d.accord >= 0.75 && (/^(envie|objectif|dilemme|element|limite|reglage):/.test(d.origine) || d.origine === "langues"), `quiz ${i} : ${l.pays.nom} a un argument moyen, défavorable ou sans lien avec toi (${a.texte})`);
     }
     for (const s of savoir) {
       if (s.mesure.startsWith("secteur-")) continue;
@@ -636,11 +635,20 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   // Salaire (prompt 3k) : OCDE « Average annual wages », USD PPA à prix constants 2025, 23 pays de l'OCDE notés, les autres « à vérifier ».
   for (const p of pays) {
     const n = notesPays[p.id].salaire;
-    if (n.statut === "verifie") verifier(["2023", "2024", "2025"].includes(n.annee ?? "") && n.source === "ocde-salaire" && /USD PPA/.test(n.texte) && /prix constants de 2025/.test(n.texte), `salaire : ${p.nom} sans la série OCDE Average annual wages`);
+    // Prompt 7 : hors OCDE, le chiffre de l'OIT en parité de pouvoir d'achat (2019 ou après), marqué « comparaison approximative ».
+    if (n.statut === "verifie" && n.source === "ocde-salaire") verifier(["2023", "2024", "2025"].includes(n.annee ?? "") && /USD PPA/.test(n.texte) && /prix constants de 2025/.test(n.texte), `salaire : ${p.nom} sans la série OCDE Average annual wages`);
+    else if (n.statut === "verifie") verifier(n.source === "oit-salaire" && !!n.approximatif && Number(n.annee) >= 2019 && /comparaison approximative/.test(n.texte) && !!preuveMesure(p.id, "salaire").avertissement?.startsWith("Source différente, comparaison approximative"), `salaire : ${p.nom} ni OCDE, ni OIT marqué approximatif`);
   }
-  for (const id of ["taiwan", "hong-kong", "singapour", "emirats-arabes-unis", "maroc", "chine", "bresil", "argentine", "senegal", "cote-d-ivoire"]) verifier(notesPays[id].salaire.statut === "a-verifier", `salaire : ${id} devrait rester à vérifier`);
+  for (const id of ["taiwan", "hong-kong", "emirats-arabes-unis", "maroc"]) verifier(notesPays[id].salaire.statut === "a-verifier", `salaire : ${id} devrait rester à vérifier`);
   verifier(notesPays["etats-unis"].salaire.valeur === 86977 && notesPays.suisse.salaire.valeur === 92285 && notesFrance.salaire.valeur === 60483, "salaire : valeurs de l'OCDE changées");
-  verifier(paysCouverts("salaire") === 23, `salaire : ${paysCouverts("salaire")} pays notés au lieu de 23`);
+  verifier(paysCouverts("salaire") === 34 && pays.filter((p) => notesPays[p.id].salaire.source === "ocde-salaire").length === 23, `salaire : ${paysCouverts("salaire")} pays notés au lieu de 34 (23 OCDE et 11 OIT)`);
+  // Les critères essentiels comptent toujours, même sous 30 pays (prompt 7).
+  {
+    const avant = paysCouverts("salaire"), memo = disponibiliteMemo();
+    memo.salaire = 20;
+    verifier(mesureClassante("salaire") && !mesureClassante("decision"), "critères essentiels : le salaire ne compte plus sous 30 pays, ou une autre mesure compte");
+    memo.salaire = avant;
+  }
   // Les seuils suivent la répartition : chaque note de 1 à 5 est donnée à au moins 3 pays.
   for (let k = 1; k <= 5; k++) verifier(pays.filter((p) => notesPays[p.id].salaire.note === k).length >= 3, `salaire : la note ${k} est presque vide`);
   verifier(!!preuveMesure("belgique", "salaire").avertissement?.includes("avant impôts"), "salaire : la preuve ne dit pas « avant impôts »");
@@ -747,7 +755,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 {
   // 3 scènes par dilemme, identifiants uniques ; nouvelles mesures notées pour au moins 60 % des pays.
   for (const d of quiz.dilemmes) {
-    verifier(d.scenes.length === 3 || (!!d.relanceDe && d.scenes.length >= 1), `${d.id} : ${d.scenes.length} scènes au lieu de 3`);
+    verifier(d.scenes.length >= 3 || (!!d.relanceDe && d.scenes.length >= 1), `${d.id} : ${d.scenes.length} scènes, moins de 3`);
     verifier(new Set(d.scenes.map((x) => x.id)).size === d.scenes.length, `${d.id} : deux scènes avec le même identifiant`);
     verifier(dilemmeActif(d), `${d.id} : dilemme inactif`);
   }
@@ -835,8 +843,8 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
   const avis = construire({ envies: ["prix", "securite", "travail"], reponses: { "changer-avis": "soleil" } });
   verifier(poidsDe(avis, "soleil") === 1, "changer d'avis : le critère ne compte pas 1");
   verifier(!effetsActifs(construire({ envies: ["prix", "securite", "travail"], reponses: { "changer-avis": "aucun" } })).some((e) => e.origine === "element:changer-avis"), "changer d'avis : « Aucun » compte");
-  // Un critère sans donnée sur 30 pays (« Un logement abordable », le salaire hors VIE) ne bouge pas le classement.
-  verifier(!envieClassante("logement", {}) && !envieClassante("salaire", {}) && envieClassante("salaire", { objectif: "stage-vie" }), "critères : règle des 30 pays mal appliquée");
+  // Un critère sans donnée sur 30 pays (« Un logement abordable ») ne bouge pas le classement ; le salaire, critère essentiel, toujours.
+  verifier(!envieClassante("logement", {}) && envieClassante("salaire", {}) && envieClassante("salaire", { objectif: "stage-vie" }), "critères : règle des 30 pays mal appliquée");
   verifier(memesScores(scores(construire({ envies: ["prix", "securite"] })), scores(construire({ envies: ["prix", "securite", "logement"] }))) || true, "");
   // La carte du monde : un bonus de 1,1 aux pays des régions cochées, rien pour les autres.
   const avecCarte = repondre(e5, "carte", ["asie-est", "oceanie"]);
@@ -852,15 +860,17 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
     verifier(avant.couverture === apres.couverture && avant.manquantes.length === apres.manquantes.length, "carte : le bonus change la couverture");
     verifier(effetsActifs(repondre(e5, "carte", ["aucune"])).every((e) => e.mesure !== "region-carte"), "carte : « Aucune idée » donne un bonus");
   }
-  // Une langue parlée compte toujours (bonus de 1, sans malus) ; la langue que tu veux pratiquer, pareil.
+  // Une langue parlée compte toujours (prompt 7) : « Langue du quotidien » entre dans le calcul pour tous les pays (importance 1),
+  // notée 5 là où tu parles la langue. Les pays de ta langue gagnent ; un pays d'une autre écriture perd. La langue à pratiquer : un bonus.
   {
     const sans = construire({ envies: ["salaire", "travail", "securite", "climat", "prix"] });
     const avec = construire({ profil: { langues: ["es"] }, envies: ["salaire", "travail", "securite", "climat", "prix"] });
-    verifier(effetsActifs(avec).find((e) => e.mesure === "langue-parlee")?.poids === 1, "langues : le bonus ne vaut pas 1");
+    verifier(effetsActifs(avec).find((e) => e.mesure === "langue")?.poids === 1 && effetsActifs(sans).every((e) => e.mesure !== "langue"), "langues : la langue du quotidien ne vaut pas 1, ou compte sans langue déclarée");
     const a = scores(sans), b = scores(avec);
     for (const p of pays) {
       const parle = ["espagne", "argentine", "chili", "colombie", "mexique", "perou", "uruguay"].includes(p.id);
-      verifier(parle ? b[p.id] > a[p.id] || a[p.id] >= 100 - 1e-9 : Math.abs(b[p.id] - a[p.id]) < 1e-9, `langues : ${p.nom} ${parle ? "ne gagne rien" : "change de score"}`);
+      if (parle) verifier(b[p.id] > a[p.id] || a[p.id] >= 100 - 1e-9, `langues : ${p.nom} ne gagne rien`);
+      if (noteEffective(p.id, "langue", {}) === 1) verifier(b[p.id] < a[p.id], `langues : ${p.nom} (autre écriture) ne perd rien`);
     }
     const cible = construire({ envies: ["salaire", "travail", "securite", "climat", "prix"], reponses: { motivation: "langue", "relance-langue": "ja" } });
     const c = scores(cible);
@@ -880,7 +890,7 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
     const lr = calculer(redhib);
     for (const l of lr) {
       verifier(!l.ecart, `limites : ${l.pays.nom} retiré par une limite`);
-      if (l.pays.zone !== "europe") verifier(l.obstacles.some((o) => o.limite === "hors-europe" && o.points === 35), `limites : ${l.pays.nom} sans l'obstacle « Rédhibitoire » hors d'Europe`);
+      if (l.pays.zone !== "europe") verifier(l.obstacles.some((o) => o.limite === "hors-europe" && o.points === 15), `limites : ${l.pays.nom} sans l'obstacle « Rédhibitoire » hors d'Europe`);
       else verifier(!l.obstacles.some((o) => o.limite === "hors-europe"), `limites : ${l.pays.nom} touché à tort`);
     }
     const remonte = calculer({ ...redhib, remontes: ["japon"] }).find((l) => l.pays.id === "japon")!;
@@ -1175,9 +1185,9 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   REGLES.continu = true;
   // Une note sans valeur chiffrée (avis, santé) reste entière.
   verifier(noteCalcul("allemagne", "sante", {}) === noteEffective("allemagne", "sante", {}), "notes continues : une note d'avis est devenue continue");
-  // La banque : de 100 à 120 éléments, chacun avec sa fiche complète ; Classement seulement avec une donnée sur 30 pays.
+  // La banque : de 100 à 160 éléments (prompt 7 : plus de phrases à glisser pour la diversité), chacun avec sa fiche complète ; Classement seulement avec une donnée sur 30 pays.
   const items = itemsBanque();
-  verifier(items.length >= 100 && items.length <= 120, `banque : ${items.length} éléments (100 à 120)`);
+  verifier(items.length >= 100 && items.length <= 160, `banque : ${items.length} éléments (100 à 160)`);
   verifier(new Set(items.map((x) => x.id)).size === items.length, "banque : deux éléments ont le même identifiant");
   for (const x of items) {
     verifier(!!x.id && x.chapitre >= 1 && !!x.format && !!x.donnee && !!x.effet && !!x.condition && !!x.pourquoi, `banque : fiche incomplète (${x.id})`);
@@ -1206,7 +1216,10 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
 // ---------- Bilan ----------
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
-  for (const e of echecs) console.error("  - " + e);
+  // Les échecs semblables (même message aux nombres près) sont regroupés.
+  const groupes = new Map<string, { exemple: string; n: number }>();
+  for (const e of echecs) { const cle = e.replace(/\d+/g, "#").replace(/\(.*\)/, ""); const g = groupes.get(cle) ?? { exemple: e, n: 0 }; g.n++; groupes.set(cle, g); }
+  for (const g of groupes.values()) console.error(`  - ${g.exemple}${g.n > 1 ? ` (×${g.n})` : ""}`);
   process.exit(1);
 }
 console.log(`\n✓ Moteur : ${verifs} vérifications réussies sur ${NB} quiz tirés au hasard et des cas précis.`);

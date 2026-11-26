@@ -2210,6 +2210,41 @@
           "variantes": {
             "stage-vie": "Pendant ta mission de VIE, un gros client demande un rendu dans deux semaines."
           }
+        },
+        {
+          "id": "job-ete",
+          "titre": "L’été chargé",
+          "texte": "Ton employeur propose des heures en plus tout l’été.",
+          "options": [
+            {
+              "texte": "Tu dis oui : 600 € de plus par mois",
+              "plus": "De quoi voyager à la rentrée.",
+              "moins": "Peu de soirées libres cet été."
+            },
+            {
+              "texte": "Tu gardes tes horaires",
+              "plus": "Tu profites de chaque soir d’été.",
+              "moins": "Ton compte en banque ne bouge pas."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "deux-equipes",
+          "titre": "Deux équipes",
+          "texte": "Deux équipes veulent te recruter.",
+          "options": [
+            {
+              "texte": "Celle qui paie le mieux, mais finit tard",
+              "plus": "Une meilleure paie dès le départ.",
+              "moins": "Tu rentres souvent après 19 h."
+            },
+            {
+              "texte": "Celle qui finit à 17 h, un peu moins payée",
+              "plus": "Tes soirées sont libres.",
+              "moins": "Une paie plus basse chaque mois."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2345,6 +2380,41 @@
             "premier-poste": "La fin de la période d’essai",
             "carriere": "La fin du premier contrat"
           }
+        },
+        {
+          "id": "interim",
+          "titre": "Deux missions",
+          "texte": "Une agence te propose deux missions.",
+          "options": [
+            {
+              "texte": "Elle commence lundi, payée au minimum",
+              "plus": "Tu travailles tout de suite.",
+              "moins": "La paie est juste."
+            },
+            {
+              "texte": "Elle commence dans un mois, payée 30 % de plus",
+              "plus": "Une bien meilleure paie.",
+              "moins": "Un mois sans revenu en attendant."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "salon",
+          "titre": "Le salon de l’emploi",
+          "texte": "Au salon de l’emploi, deux stands t’intéressent.",
+          "options": [
+            {
+              "texte": "Une entreprise qui recrute vingt jeunes cette année",
+              "plus": "Tes chances sont bonnes.",
+              "moins": "Le salaire de départ est moyen."
+            },
+            {
+              "texte": "Une entreprise qui recrute deux personnes, très bien payées",
+              "plus": "Le poste paie nettement mieux.",
+              "moins": "Beaucoup de candidats pour peu de places."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2452,6 +2522,40 @@
               "moins": "Les blagues t’échappent pendant des mois."
             }
           ]
+        },
+        {
+          "id": "appel",
+          "titre": "Le premier appel",
+          "texte": "Ton futur chef t’appelle.",
+          "options": [
+            {
+              "texte": "Il parle anglais avec toute l’équipe",
+              "plus": "Tu comprends tout dès le premier jour.",
+              "moins": "La langue du pays, tu l’apprendras ailleurs."
+            },
+            {
+              "texte": "Il parle la langue du pays, et un peu d’anglais",
+              "plus": "Tu apprends la langue au travail, chaque jour.",
+              "moins": "Les premières semaines sont fatigantes."
+            }
+          ]
+        },
+        {
+          "id": "mails",
+          "titre": "Les mails du matin",
+          "texte": "Tu ouvres ta boîte mail le premier matin.",
+          "options": [
+            {
+              "texte": "Tous les mails sont en anglais",
+              "plus": "Tu réponds vite et sans erreur.",
+              "moins": "Au bureau, tu restes surtout entre étrangers."
+            },
+            {
+              "texte": "Tous les mails sont dans la langue du pays",
+              "plus": "Tu progresses vite dans la langue.",
+              "moins": "Chaque mail te prend du temps au début."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2554,6 +2658,40 @@
               "texte": "Tu veux pouvoir dire oui tout de suite",
               "plus": "Tu saisis les occasions.",
               "moins": "Moins de pays possibles."
+            }
+          ]
+        },
+        {
+          "id": "parrainage",
+          "titre": "Le visa parrainé",
+          "texte": "Une entreprise accepte de parrainer ton visa.",
+          "options": [
+            {
+              "texte": "Tu signes : ton visa dépend d’elle deux ans",
+              "plus": "Un visa et un poste d’un coup.",
+              "moins": "Changer d’entreprise sera difficile."
+            },
+            {
+              "texte": "Tu préfères un pays où ton séjour ne dépend pas d’un employeur",
+              "plus": "Tu changes de poste quand tu veux.",
+              "moins": "Moins de pays sont ouverts pour toi."
+            }
+          ]
+        },
+        {
+          "id": "deux-ans",
+          "titre": "Le contrat de deux ans",
+          "texte": "Ton contrat dure deux ans, avec un visa lié à l’entreprise.",
+          "options": [
+            {
+              "texte": "Tu acceptes : c’est un bon début",
+              "plus": "Un cadre stable pour lancer ta carrière.",
+              "moins": "Si l’ambiance se dégrade, partir est compliqué."
+            },
+            {
+              "texte": "Tu veux pouvoir partir avant la fin",
+              "plus": "Tu gardes ta liberté.",
+              "moins": "Les pays qui exigent un employeur reculent."
             }
           ]
         }
@@ -2671,6 +2809,40 @@
             "stage-vie": "C’est le bilan de mi-mission de ton VIE.",
             "aventure": "Ton job de PVT se termine : ta responsable fait le point avec toi."
           }
+        },
+        {
+          "id": "client",
+          "titre": "Le client pas content",
+          "texte": "Un client n’est pas content de ton travail.",
+          "options": [
+            {
+              "texte": "Il te le dit en une phrase, sans détour",
+              "plus": "Tu sais quoi changer tout de suite.",
+              "moins": "Le ton est froid."
+            },
+            {
+              "texte": "Il te remercie, puis suggère « une petite piste »",
+              "plus": "La relation reste bonne.",
+              "moins": "Tu dois deviner l’ampleur du problème."
+            }
+          ]
+        },
+        {
+          "id": "presentation",
+          "titre": "La présentation",
+          "texte": "Tu présentes ton projet à l’équipe.",
+          "options": [
+            {
+              "texte": "On t’arrête pour pointer une erreur de chiffre",
+              "plus": "L’erreur est corrigée avant de coûter cher.",
+              "moins": "Être repris devant tout le monde, ça surprend."
+            },
+            {
+              "texte": "On t’applaudit, les remarques arrivent plus tard par écrit",
+              "plus": "Personne n’est mis en difficulté.",
+              "moins": "Les vraies critiques arrivent tard."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -2784,6 +2956,40 @@
               "texte": "Tu passes par ton chef, qui relit et envoie",
               "plus": "Ta hiérarchie te couvre.",
               "moins": "Chaque réponse prend un jour de plus."
+            }
+          ]
+        },
+        {
+          "id": "conges",
+          "titre": "Tes congés",
+          "texte": "Tu veux poser une semaine de congés.",
+          "options": [
+            {
+              "texte": "Tu l’inscris sur le calendrier de l’équipe",
+              "plus": "Simple et rapide.",
+              "moins": "À toi de t’arranger avec les autres."
+            },
+            {
+              "texte": "Tu demandes à ton chef, qui valide",
+              "plus": "Ton chef garde une vue d’ensemble.",
+              "moins": "Il faut attendre son accord."
+            }
+          ]
+        },
+        {
+          "id": "bureau",
+          "titre": "Le bureau du directeur",
+          "texte": "Tu découvres les locaux.",
+          "options": [
+            {
+              "texte": "Le directeur travaille au milieu de l’équipe",
+              "plus": "Tu peux lui parler à tout moment.",
+              "moins": "Difficile de savoir qui décide quoi."
+            },
+            {
+              "texte": "Le directeur a son bureau, on prend rendez-vous",
+              "plus": "Chacun sait à qui s’adresser.",
+              "moins": "Le directeur reste loin du quotidien."
             }
           ]
         }
@@ -2900,6 +3106,40 @@
           "variantes": {
             "stage-vie": "Pendant ton VIE, tu as rendez-vous chez un client."
           }
+        },
+        {
+          "id": "train",
+          "titre": "Le train de 8 h 02",
+          "texte": "Ton train a trois minutes de retard.",
+          "options": [
+            {
+              "texte": "Tout le monde s’agace : ici, trois minutes, c’est un retard",
+              "plus": "Les horaires sont fiables, tu prévois tout.",
+              "moins": "Le moindre retard crée du stress."
+            },
+            {
+              "texte": "Personne ne le remarque : les horaires sont indicatifs",
+              "plus": "Personne ne s’énerve pour si peu.",
+              "moins": "Impossible de prévoir ta journée à la minute."
+            }
+          ]
+        },
+        {
+          "id": "fin-journee",
+          "titre": "La fin de la réunion",
+          "texte": "La réunion devait finir à 18 h.",
+          "options": [
+            {
+              "texte": "À 18 h pile, tout le monde se lève",
+              "plus": "Ta soirée commence à l’heure prévue.",
+              "moins": "On coupe parfois un débat en plein milieu."
+            },
+            {
+              "texte": "Elle continue tant que le sujet n’est pas réglé",
+              "plus": "On va au bout des choses.",
+              "moins": "Tu ne sais jamais quand tu sortiras."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3012,6 +3252,40 @@
               "texte": "On cherche un lieu qui convient à tout le monde",
               "plus": "Personne ne se sent mis de côté.",
               "moins": "Les échanges durent des semaines."
+            }
+          ]
+        },
+        {
+          "id": "budget",
+          "titre": "Le budget de l’équipe",
+          "texte": "Ton équipe doit choisir comment dépenser un budget.",
+          "options": [
+            {
+              "texte": "La cheffe décide en une réunion",
+              "plus": "Le projet démarre tout de suite.",
+              "moins": "Ton avis compte peu."
+            },
+            {
+              "texte": "Chacun donne son avis, on cherche un accord",
+              "plus": "La décision convient à toute l’équipe.",
+              "moins": "Il faut plusieurs semaines."
+            }
+          ]
+        },
+        {
+          "id": "recrutement",
+          "titre": "Le nouveau collègue",
+          "texte": "L’équipe recrute quelqu’un.",
+          "options": [
+            {
+              "texte": "Le manager choisit seul, après un entretien",
+              "plus": "La personne arrive vite.",
+              "moins": "L’équipe la découvre le premier jour."
+            },
+            {
+              "texte": "Toute l’équipe la rencontre et donne son avis",
+              "plus": "Tout le monde a validé le choix.",
+              "moins": "Le recrutement prend un mois de plus."
             }
           ]
         }
@@ -3128,6 +3402,40 @@
           "variantes": {
             "aventure": "Tes collègues de PVT organisent un tournoi de foot le samedi."
           }
+        },
+        {
+          "id": "dejeuner",
+          "titre": "Le déjeuner",
+          "texte": "C’est l’heure du déjeuner.",
+          "options": [
+            {
+              "texte": "Chacun mange de son côté, en vingt minutes",
+              "plus": "Tu repars plus tôt le soir.",
+              "moins": "Tu connais peu tes collègues."
+            },
+            {
+              "texte": "Toute l’équipe déjeune ensemble, une heure",
+              "plus": "Tu tisses de vrais liens.",
+              "moins": "Ta pause appartient un peu au travail."
+            }
+          ]
+        },
+        {
+          "id": "groupe",
+          "titre": "Le groupe de discussion",
+          "texte": "L’équipe a un groupe de discussion sur ton téléphone.",
+          "options": [
+            {
+              "texte": "Il ne sert qu’au travail, et se tait le week-end",
+              "plus": "Ton week-end reste calme.",
+              "moins": "Peu de liens en dehors du bureau."
+            },
+            {
+              "texte": "On y partage photos, sorties et plans du week-end",
+              "plus": "Tu as vite une vie sociale.",
+              "moins": "Le travail n’est jamais très loin."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3580,7 +3888,7 @@
             "texte": "Si une donnée pays existe (soleil, hiver, nature, grande ville), les pays qui s’y prêtent passent un peu devant."
           },
           {
-            "pastille": "Musées, sport en salle…",
+            "pastille": "Musées, expos…",
             "texte": "Pas de donnée pays : ça enrichit ton portrait sans changer ton classement."
           },
           {
@@ -3682,6 +3990,203 @@
           "portraitOui": "Le week-end, tu vas au musée ou au théâtre.",
           "portraitNon": "Les musées ne sont pas ton premier choix.",
           "dimensions": [
+            "activites"
+          ]
+        },
+        {
+          "id": "A6",
+          "texte": "Un match ou un concert dans un grand stade.",
+          "oui": [
+            {
+              "mesures": [
+                "grande-ville"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu vas aux grands matchs et concerts.",
+          "portraitNon": "Les grands stades, très peu pour toi.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A7",
+          "texte": "Vélo tranquille au bord d’un lac.",
+          "oui": [
+            {
+              "mesures": [
+                "nature"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu pédales au bord de l’eau.",
+          "portraitNon": "Le vélo au bord d’un lac, sans façon.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A8",
+          "texte": "Un aller-retour en France pour voir tes proches.",
+          "oui": [
+            {
+              "mesures": [
+                "vol"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux pouvoir rentrer voir tes proches un week-end.",
+          "portraitNon": "Rentrer en France le week-end ne compte pas pour toi.",
+          "dimensions": [
+            "distance",
+            "activites"
+          ]
+        },
+        {
+          "id": "S16",
+          "texte": "Un week-end dans un endroit qui ne ressemble à rien de connu.",
+          "oui": [
+            {
+              "mesures": [
+                "depaysement"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu cherches le vrai dépaysement.",
+          "portraitNon": "Le grand dépaysement n’est pas ce que tu cherches.",
+          "dimensions": [
+            "depaysement",
+            "activites"
+          ]
+        },
+        {
+          "id": "A9",
+          "texte": "Le marché du samedi, puis cuisiner des produits frais.",
+          "oui": [
+            {
+              "mesures": [
+                "manger-sain"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le samedi, tu cuisines des produits frais.",
+          "portraitNon": "Le marché du samedi, ce n’est pas ton rythme.",
+          "dimensions": [
+            "sante",
+            "activites"
+          ]
+        },
+        {
+          "id": "A10",
+          "texte": "Un café en terrasse au soleil, même en hiver.",
+          "oui": [
+            {
+              "mesures": [
+                "doux"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu veux des terrasses au soleil toute l’année.",
+          "portraitNon": "La terrasse en hiver ne te manque pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ]
+        },
+        {
+          "id": "A11",
+          "texte": "Un brunch avec d’autres Français.",
+          "oui": [
+            {
+              "mesures": [
+                "francais"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu retrouves d’autres Français.",
+          "portraitNon": "Le week-end, tu évites la bulle française.",
+          "dimensions": [
+            "reseau",
+            "activites"
+          ]
+        },
+        {
+          "id": "A12",
+          "texte": "Surf ou plongée.",
+          "oui": [
+            {
+              "mesures": [
+                "ete"
+              ],
+              "position": 5,
+              "poids": 0.5
+            },
+            {
+              "mesures": [
+                "soleil"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Le week-end, tu es dans l’eau.",
+          "portraitNon": "Surf et plongée ne t’attirent pas.",
+          "dimensions": [
+            "climat",
+            "activites"
+          ]
+        },
+        {
+          "id": "A13",
+          "texte": "Flâner à pied dans une petite ville calme.",
+          "oui": [
+            {
+              "mesures": [
+                "ville-moyenne"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Tu aimes les petites villes calmes.",
+          "portraitNon": "Les petites villes calmes t’ennuient.",
+          "dimensions": [
+            "ville",
+            "activites"
+          ]
+        },
+        {
+          "id": "A14",
+          "texte": "Respirer l’air pur, loin de la pollution.",
+          "oui": [
+            {
+              "mesures": [
+                "air"
+              ],
+              "poids": 0.5
+            }
+          ],
+          "non": [],
+          "portraitOui": "Un air pur compte pour toi.",
+          "portraitNon": "La qualité de l’air ne te préoccupe pas.",
+          "dimensions": [
+            "sante",
             "activites"
           ]
         }
@@ -3790,6 +4295,41 @@
             }
           ],
           "exemple": true
+        },
+        {
+          "id": "matin",
+          "titre": "Un matin de janvier",
+          "texte": "Tu pars travailler, un matin de janvier.",
+          "options": [
+            {
+              "texte": "−8 °C, ciel bleu et neige qui crisse",
+              "plus": "Un froid sec et lumineux.",
+              "moins": "Il faut t’équiper de la tête aux pieds."
+            },
+            {
+              "texte": "10 °C et de la bruine",
+              "plus": "Pas besoin de gros manteau.",
+              "moins": "Le ciel reste gris des semaines."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "dimanche-hiver",
+          "titre": "Un dimanche d’hiver",
+          "texte": "C’est dimanche, en plein hiver.",
+          "options": [
+            {
+              "texte": "Patinoire et chocolat chaud",
+              "plus": "Un vrai hiver, avec ses plaisirs.",
+              "moins": "Il fait nuit tôt, et froid longtemps."
+            },
+            {
+              "texte": "Balade en ville sans gros manteau",
+              "plus": "Tu restes dehors toute l’année.",
+              "moins": "L’hiver ne ressemble pas à l’hiver."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -3901,6 +4441,42 @@
               "moins": "La baignade est fraîche, et le soleil n’est pas garanti."
             }
           ]
+        },
+        {
+          "id": "nuit",
+          "titre": "Une nuit d’août",
+          "texte": "Il est minuit, en plein mois d’août.",
+          "options": [
+            {
+              "texte": "Il fait encore 28 °C",
+              "plus": "Les soirées dehors durent jusqu’au bout de la nuit.",
+              "moins": "Dormir est difficile sans clim."
+            },
+            {
+              "texte": "Il fait 16 °C",
+              "plus": "Tu dors bien, fenêtre ouverte.",
+              "moins": "Il faut une veste pour sortir le soir."
+            }
+          ],
+          "exemple": true
+        },
+        {
+          "id": "week-end-aout",
+          "titre": "Un week-end d’août",
+          "texte": "Un samedi d’août, tu sors de la ville.",
+          "options": [
+            {
+              "texte": "Plage à 32 °C toute la journée",
+              "plus": "Mer chaude et soleil garanti.",
+              "moins": "Bouger entre midi et 16 h est pénible."
+            },
+            {
+              "texte": "Lac et forêt à 23 °C",
+              "plus": "Tout est agréable, même à midi.",
+              "moins": "L’eau est fraîche."
+            }
+          ],
+          "exemple": true
         }
       ],
       "type": "dilemme",
@@ -4015,6 +4591,40 @@
               "moins": "Les premiers week-ends peuvent sembler longs."
             }
           ]
+        },
+        {
+          "id": "caution",
+          "titre": "La caution",
+          "texte": "Ton propriétaire ne rend pas ta caution.",
+          "options": [
+            {
+              "texte": "Un groupe de Français sur place te dit quoi faire",
+              "plus": "Tu as la solution en une soirée.",
+              "moins": "Tu comptes sur une communauté française."
+            },
+            {
+              "texte": "Tu te débrouilles avec les services du pays",
+              "plus": "Tu apprends comment marche le pays.",
+              "moins": "C’est plus long et plus stressant."
+            }
+          ]
+        },
+        {
+          "id": "apero",
+          "titre": "L’apéro de bienvenue",
+          "texte": "Deux soirées sont organisées pour les nouveaux arrivants.",
+          "options": [
+            {
+              "texte": "Celle des Français de la ville",
+              "plus": "Tu rencontres vite du monde, dans ta langue.",
+              "moins": "Tu restes dans un cercle français."
+            },
+            {
+              "texte": "Celle des jeunes du pays",
+              "plus": "Des amis du pays dès le premier mois.",
+              "moins": "Toute la soirée dans une autre langue."
+            }
+          ]
         }
       ],
       "type": "dilemme",
@@ -4111,6 +4721,23 @@
             {
               "texte": "Tu gardes cette énergie pour ton travail",
               "plus": "Toute ton énergie va à ta carrière.",
+              "moins": "Moins de pays possibles."
+            }
+          ]
+        },
+        {
+          "id": "panneaux",
+          "titre": "Les panneaux de la gare",
+          "texte": "À la gare, tous les panneaux sont dans un autre alphabet.",
+          "options": [
+            {
+              "texte": "Tu apprends les signes, petit à petit",
+              "plus": "Au bout de quelques mois, tu lis tout.",
+              "moins": "Les premières semaines, tu te perds souvent."
+            },
+            {
+              "texte": "Tu préfères un pays où tu lis déjà les panneaux",
+              "plus": "Tu te repères dès le premier jour.",
               "moins": "Moins de pays possibles."
             }
           ]

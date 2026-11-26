@@ -56,7 +56,7 @@ const ACCES: Record<string, string> = {
   age: "Il t’est accessible : PVT fermé à ton âge = −20 (visa de travail à la place) ; pour un projet de PVT, impossibilité légale traitée à part (le pays reste visible, jamais dans le top 3). VIE fermé après 28 ans (dit, pas de points).",
   budget: "Il t’est accessible : −15 s’il te manque à coup sûr de l’argent pour les ressources demandées par un PVT. Ne change jamais « Il te ressemble ».",
   timeline: "Il t’est accessible : −10 aux pays dont la seule porte est un PVT (un an), si tu veux rester plus d’un an ou « plus longtemps si je me plais ». « Et après » : portrait.",
-  compagnie: "Il t’est accessible : en famille, −10 aux pays hors libre circulation (un droit au séjour par personne, à vérifier pour chaque visa).",
+  compagnie: "Portrait et résultat : en famille, hors libre circulation, « droits de la famille selon le visa : à vérifier » (aucun point retiré, faute de source visa par visa).",
   "couple-travail": "Il t’est accessible : « Oui », −10 aux pays hors libre circulation (un droit au travail pour ton ou ta partenaire). Ouvre la limite « partenaire-visa ».",
   nationalite: "Il t’est accessible : une nationalité canadienne, irlandaise ou américaine ouvre ce pays (porte « nationalité », 0 obstacle). Cas vérifiés seulement (content/double-nationalite.json).",
   "pret-anglais": "Il t’est accessible : « Non », −30 aux pays où l’on ne peut pas travailler en français (content/saisie/avis.json).",
@@ -94,7 +94,7 @@ export function itemsBanque(): Item[] {
     }
     if (el.type === "tri-limites") {
       for (const s of el.situations) ajouter({ ...base, id: `limite/${s.id}`, texte: s.texte, type: "Accès", donnee: donnees([s.mesure].filter((m) => mesures[m])),
-        effet: "Il t’est accessible : « Je préfère éviter » −10, « Rédhibitoire » −35 aux pays touchés. Jamais retiré du classement ; « Le remonter » annule.",
+        effet: "Il t’est accessible : « Je préfère éviter » −10, « Rédhibitoire » −15 aux pays touchés. Jamais retiré du classement ; « Le remonter » annule.",
         condition: [base.condition, s.condition ? `Condition : ${s.condition === "veut-rester" ? "tu veux rester plus d’un an" : "ton ou ta partenaire veut travailler"}` : "", "Posée si elle touche un de tes 10 premiers pays"].filter(Boolean).join(" ; "), pourquoi: pourquoi(el) });
       continue;
     }
@@ -110,11 +110,11 @@ export function itemsBanque(): Item[] {
       case "ambiances": ms = el.options.flatMap((o) => mesuresDe(o.effets)); effet = `Il te ressemble : ${el.options.map((o) => `« ${o.label} » : ${effetTexte(o.effets)}`).join(" ; ")}`; break;
       case "carte-monde": ms = ["region-carte"]; effet = "Il te ressemble : bonus d’importance 1,1 aux pays de ta zone, jamais de malus ; pas de bonus pour une zone autour de la France si « Proche de la France » est choisi."; break;
       case "blind-test": ms = el.mesures; effet = "Il te ressemble : les 4 faits montrés deviennent des positions préférées (la note du pays choisi), importance 0,5."; break;
-      case "seuil": ms = [el.mesure]; type = "Accès"; effet = "Il t’est accessible : au-delà de ton seuil, « Je préfère éviter » −10, « Rédhibitoire » −35. « Aucune limite » : rien."; break;
+      case "seuil": ms = [el.mesure]; type = "Accès"; effet = "Il t’est accessible : au-delà de ton seuil, « Je préfère éviter » −10, « Rédhibitoire » −15. « Aucune limite » : rien."; break;
       case "thermometre": effet = "Ton niveau d’anglais (moyenne des deux thermomètres) : décide si on te demande « Travailler en anglais, ça te va ? » et si le travail en anglais entre dans ton projet."; break;
       case "timeline": case "enveloppe": type = "Accès"; break;
     }
-    if (el.id === "langues") { ms = ["langue-parlee"]; effet = "Il te ressemble : bonus d’importance 1 aux pays où une langue que tu parles est officielle ou très parlée ; « Langue du quotidien » : ils comptent comme francophones."; }
+    if (el.id === "langues") { ms = ["langue"]; effet = "Il te ressemble : « Langue du quotidien » compte pour tous les pays (importance 1) ; un pays où tu parles la langue est noté 5, comme un pays francophone."; }
     if (el.id === "relance-langue") { ms = ["langue-cible"]; effet = "Il te ressemble : bonus d’importance 1 aux pays où cette langue est officielle ou très parlée ; apprendre la langue n’est plus une pénalité."; }
     if (el.id === "objectif") { ms = Object.values(quiz.objectifs).flatMap((o) => o.effets.flatMap((e) => e.mesures)); effet = `Il te ressemble : poids de départ 0,5 par projet (${Object.entries(quiz.objectifs).map(([k, o]) => `${k} : ${o.effets.flatMap((e) => e.mesures).map((m) => mesures[m]?.court ?? m).join(", ")}`).join(" ; ")}), retirés si un dilemme va dans un autre sens. Un projet de PVT fermé à ton âge : impossibilité légale.`; }
     if (ACCES[el.id]) { type = "Accès"; effet = ACCES[el.id]; }

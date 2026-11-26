@@ -69,6 +69,7 @@ export type Note = {
   ville?: string | null; // indemnité VIE : la ville retenue pour le score
   autres?: { ville: string; montant: number | null }[]; // indemnité VIE : les autres villes du barème
   mediane?: number; // secteurs : la médiane des pays notés (la note dépend du rapport à cette médiane)
+  approximatif?: boolean; // source différente des autres pays (salaire de l'OIT hors OCDE) : comparaison approximative
 };
 
 // « Pourquoi on te demande ça » : une phrase d'enjeu, puis une mini-carte par option (ou groupe d'options).
@@ -379,7 +380,9 @@ export function preuveMesure(paysId: string, mesureId: string): Preuve {
     verifieLe: n.verifieLe ?? null,
     licence: s.licence,
     annee: n.annee ?? null,
-    avertissement: (mesureId === "emploi" ? mentionInformelle(paysId) : null) ?? m.avertissement ?? null,
+    avertissement: (mesureId === "emploi" ? mentionInformelle(paysId) : null)
+      ?? (n.approximatif ? `Source différente, comparaison approximative : ce chiffre vient de l’OIT (tous les salariés, temps partiel compris), pas de l’OCDE comme pour les pays européens et nord-américains. ${m.avertissement ?? ""}`.trim() : null)
+      ?? m.avertissement ?? null,
     ...(s.type === "temoignages" ? { liens: n.liens ?? [], confiance: n.confiance } : {}),
   };
 }

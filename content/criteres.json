@@ -140,9 +140,9 @@
     "mesures": [
       {
         "id": "salaire",
-        "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE, dollars PPA à prix constants 2025)",
+        "nom": "Salaire brut moyen, tous métiers, avant impôts, en pouvoir d’achat (OCDE ; OIT hors OCDE, comparaison approximative)",
         "sens": "haut",
-        "regle": "Salaire annuel moyen d’un salarié à temps plein (OCDE, série « Average annual wages », toute l’économie), en dollars à parité de pouvoir d’achat (USD PPA), à prix constants de 2025, dernière année disponible (2025 ; 2024 pour la Colombie ; 2023 pour le Chili). Les notes suivent la répartition des 23 pays de l’OCDE du site : les seuils sont les quintiles, arrondis à 500 $ : 51 500, 61 500, 72 500 et 79 500 $ par an. Pays hors OCDE : « à vérifier », faute de source officielle avec le même concept.",
+        "regle": "Salaire annuel moyen d’un salarié à temps plein (OCDE, série « Average annual wages », toute l’économie), en dollars à parité de pouvoir d’achat (USD PPA), à prix constants de 2025, dernière année disponible (2025 ; 2024 pour la Colombie ; 2023 pour le Chili). Les notes suivent la répartition des 23 pays de l’OCDE du site : les seuils sont les quintiles, arrondis à 500 $ : 51 500, 61 500, 72 500 et 79 500 $ par an. Pays hors OCDE : le salaire mensuel moyen de l’OIT (ILOSTAT, tous les salariés), seulement s’il est en dollars à parité de pouvoir d’achat et daté de 2019 ou après, multiplié par 12 et noté avec les mêmes seuils ; il est marqué « source différente, comparaison approximative ». Sinon « à vérifier » (Taïwan, Hong Kong, Émirats arabes unis, Maroc). Le salaire compte toujours dans le classement, même s’il est noté pour moins de 30 pays : c’est un critère essentiel.",
         "avertissement": "C’est une moyenne de tous les métiers, avant impôts et cotisations, pour un salarié à temps plein. Ton salaire net dépendra de ton métier et des impôts du pays.",
         "unite": "$ PPA par an (prix constants 2025)",
         "bornes": [
