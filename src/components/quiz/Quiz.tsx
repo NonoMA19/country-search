@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Check, ChevronLeft } from "lucide-react";
 import Chargement from "@/components/Chargement";
 import Drapeau from "@/components/Drapeau";
-import Portrait from "@/components/Portrait";
+import SyntheseProfil from "@/components/SyntheseProfil";
 import Emoji from "@/components/Emoji";
 import { FORMATS } from "@/components/formats/registre";
 import { BARRE_BAS, BOUTON_PLEIN, PanneauContexte } from "@/components/formats/commun";
@@ -19,7 +19,8 @@ import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import { aideDe, annulerDerniere, changerReponse, repondre, type Etat } from "@/lib/moteur";
 import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, nombreEcrans, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
-import { portraitComplet, type LignePortrait } from "@/lib/portrait";
+import { portraitComplet } from "@/lib/portrait";
+import { syntheseProfil } from "@/lib/profil";
 
 export { BOUTON_PLEIN };
 
@@ -362,14 +363,14 @@ export default function Quiz() {
 
   // ----- Ton portrait -----
   if (etape.t === "portrait") {
-    const revoir = (l: LignePortrait) => { if (l.revoir) aller({ t: "revoir", id: l.revoir.id }); };
+    const modifier = (id: string) => aller({ t: "revoir", id });
     const restants = restantsAffiner(etat);
     return (
       <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={() => aller({ t: "intuition" })}>
         <h1 id="titre-ecran" tabIndex={-1} className="text-2xl font-semibold break-words outline-none">Ton portrait</h1>
         {etape.fin && <p role="status" className="mt-3 rounded-2xl bg-bleu-doux px-4 py-3 font-medium">Tu as répondu à tout. Ton portrait est à jour.</p>}
-        <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Si une phrase ne te ressemble pas, change ta réponse.</p>
-        <div className="mt-5"><Portrait portrait={portraitComplet(etat)} revoir={revoir} /></div>
+        <p className="mt-2 text-gris">Voilà ce qu’on a compris de toi. Un bloc ne te ressemble pas ? Modifie-le.</p>
+        <div className="mt-5 min-w-0"><SyntheseProfil blocs={syntheseProfil(etat)} portrait={portraitComplet(etat)} modifier={modifier} /></div>
         <div className={`${BARRE_BAS} space-y-2 pt-3 pb-4 lg:space-y-0 lg:py-0`}>
           {horsLigne && <p role="alert" className="rounded-2xl bg-creux px-4 py-3 text-sm font-medium lg:basis-full">Tu sembles hors ligne : ton résultat ne peut pas s’ouvrir pour l’instant. Tes réponses sont gardées. Réessaie quand la connexion revient.</p>}
           <button type="button" data-valider onClick={allerAuResultat} className={BOUTON_PLEIN}>C’est moi, voir mon résultat</button>

@@ -6,14 +6,15 @@ import BoutonDossier from "@/components/BoutonDossier";
 import CarteVisa from "@/components/CarteVisa";
 import { AvecDefinitions } from "@/components/Definition";
 import Drapeau from "@/components/Drapeau";
+import Emoji from "@/components/Emoji";
 import Icone from "@/components/Icone";
-import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
 import PiedDePage from "@/components/PiedDePage";
 import { FaisabilitePourToi } from "@/components/resultat/Faisabilite";
 import { paysCouverts, valeurFrance } from "@/lib/moteur";
-import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, mentionInformelle, portes, preuveMesure, preuveNote, preuveSource, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
-import { chargerDossier, liensVerifies, type LienDossier } from "@/lib/dossiers";
+import { RAPPEL_VIE, criteres, dateFr, europe, notes, phraseIndemniteVie, mentionInformelle, portes, preuveMesure, preuveNote, preuveSource, trouverElement, vie, type Critere, type NoteSourcee } from "@/lib/donnees";
+import { liensParEtape, type LienUtile } from "@/lib/liens";
+import { chargerDossier } from "@/lib/dossiers";
 import { NOM_FAMILLE, pays, trouverPays } from "@/lib/pays";
 
 export function generateStaticParams() {
@@ -59,23 +60,50 @@ const FAMILLES = [
   { id: "valeurs", nom: "Valeurs" },
 ];
 
-function Lien({ lien, date, officiel = false }: { lien: LienDossier; date: string; officiel?: boolean }) {
-  if (officiel) {
-    return (
-      <li>
-        <p className="text-sm font-medium text-gris">{lien.titre}</p>
-        <LienOfficiel url={lien.url as string} nom={lien.nom ?? lien.titre} className="mt-1" />
-        <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
-      </li>
-    );
-  }
+// Un lien utile, en carte courte : le nom du site, à quoi il sert, la date de vérification (prompt 7).
+function CarteLien({ l }: { l: LienUtile }) {
   return (
-    <li className="rounded-2xl border border-bord bg-carte p-4">
-      <p className="text-sm font-medium text-gris">{lien.titre}</p>
-      <a href={lien.url as string} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-medium break-words text-lien underline">
-        {lien.nom ?? lien.url} <ExternalLink aria-hidden="true" className="h-4 w-4 shrink-0" />
+    <li className="break-inside-avoid">
+      <a href={l.url} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-start gap-3 rounded-2xl border border-bord bg-carte p-4 hover:border-bleu focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bleu">
+        <span className="min-w-0 flex-1">
+          <span className="block break-words"><span className="font-semibold text-lien underline">{l.site}</span>{l.titre !== l.site && <span className="text-sm text-gris"> · {l.titre}</span>}</span>
+          <span className="mt-0.5 block text-sm leading-snug">{l.role}</span>
+          <span className="mt-1 block text-xs text-gris">Vérifié le {dateFr(l.verifieLe)}</span>
+        </span>
+        <ExternalLink aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-gris" />
+        <span className="sr-only"> (s’ouvre dans un nouvel onglet)</span>
       </a>
-      <p className="mt-1 text-xs text-gris">Lien vérifié le {dateFr(lien.verifieLe ?? date)}</p>
+    </li>
+  );
+}
+
+// Les secteurs (prompt 7) : un emoji par secteur (le même que dans le quiz) et un mot simple, au lieu de 16 paragraphes chiffrés.
+function CarteSecteurs({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
+  const el = trouverElement("secteur");
+  const options = el?.type === "choix-cartes" ? el.options : [];
+  const lignes = options.filter((o) => o.id !== "autre").map((o) => {
+    const m = c.mesures.find((x) => x.id === `secteur-${o.id}`);
+    const n = m ? notes[paysId]?.[m.id] : undefined;
+    const ok = !!m && n?.statut === "verifie" && n.note !== null;
+    return { o, m, mot: ok ? (m!.etiquettes?.[(n!.note as number) - 1] ?? m!.mots[(n!.note as number) - 1]) : "À vérifier", ok };
+  }).filter((x) => x.m && paysCouverts(x.m.id) > 0);
+  if (!lignes.length) return null;
+  return (
+    <li className="break-inside-avoid rounded-2xl border border-bord bg-carte p-4 lg:[column-span:all]">
+      <p className="text-sm font-medium text-gris">{c.nom}</p>
+      <p className="mt-1 text-sm">La part des emplois de chaque secteur, comparée aux autres pays du site. Ce n’est pas le nombre d’offres ouvertes.</p>
+      <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+        {lignes.map(({ o, m, mot, ok }) => (
+          <li key={o.id} className="flex items-center gap-3 rounded-xl bg-creux px-3 py-2">
+            {o.emoji && <Emoji nom={o.emoji} className="h-7 w-7" />}
+            <span className="min-w-0 flex-1 leading-snug">
+              <span lang="fr" className="block text-sm font-semibold hyphens-auto">{o.label}</span>
+              <span className={`text-sm ${ok ? "" : "text-gris"}`}>{mot}</span>
+              <Pastille preuve={preuveMesure(paysId, m!.id)} pays={nomPays} contexte={o.label} />
+            </span>
+          </li>
+        ))}
+      </ul>
     </li>
   );
 }
@@ -94,6 +122,7 @@ function NoteEurope({ note, titre, pays }: { note: NoteSourcee; titre: string; p
 // Une carte par critère. Si plusieurs mesures partagent le même texte (taille de ville),
 // le texte n'apparaît qu'une fois : jamais deux fois le même paragraphe sur une page.
 function CarteCritere({ c, paysId, nomPays }: { c: Critere; paysId: string; nomPays: string }) {
+  if (c.id === "secteur") return <CarteSecteurs c={c} paysId={paysId} nomPays={nomPays} />;
   // Une mesure sans aucune donnée pour aucun pays n'est pas affichée (elle ne compte pas).
   const lignes = c.mesures.filter((m) => paysCouverts(m.id) > 0 && !m.interne).map((m) => {
     const n = notes[paysId]?.[m.id];
@@ -181,8 +210,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
   if (!p) notFound();
   const dossier = await chargerDossier(p.id);
   const lesPortes = portes(p.id);
-  const liens = dossier ? liensVerifies(dossier.liens) : [];
-  const associations = dossier ? liensVerifies(dossier.associations) : [];
+  const groupesLiens = liensParEtape(dossier, p.id);
 
   return (
     <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-8 lg:max-w-6xl lg:px-8 lg:py-10">
@@ -207,7 +235,7 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Les portes d’entrée</h2>
-        <ul className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
+        <ul className="mt-3 space-y-3 lg:columns-2 lg:gap-3 lg:space-y-0 [&>li]:break-inside-avoid lg:[&>li]:mb-3">
           {lesPortes.map((b) => (
             <li key={b.type} className="rounded-2xl border border-bord bg-carte p-4">
               <p className="font-semibold">{b.nom}</p>
@@ -257,26 +285,23 @@ export default async function PagePays({ params }: { params: Promise<{ id: strin
       {FAMILLES.map((f) => (
         <section key={f.id} className="mt-8">
           <h2 className="flex items-center gap-2 text-xl font-semibold"><Icone nom={f.id} className="h-5 w-5 text-gris" /> {f.nom}</h2>
-          <ul className="mt-3 grid gap-3 lg:grid-cols-2 lg:items-start">
+          <ul className="mt-3 space-y-3 lg:columns-2 lg:gap-3 lg:space-y-0 [&>li]:break-inside-avoid lg:[&>li]:mb-3">
             {criteres.filter((c) => c.famille === f.id).map((c) => <CarteCritere key={c.id} c={c} paysId={p.id} nomPays={p.nom} />)}
           </ul>
         </section>
       ))}
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold">Liens officiels</h2>
-        <ul className="mt-3 grid gap-3 lg:grid-cols-2">
-          {liens.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} officiel />)}
-        </ul>
-        {associations.length > 0 && (
-          <>
-            <h3 className="mt-6 font-semibold">Associations et réseaux</h3>
-            <p className="mt-1 text-sm text-gris">Seulement des organismes publics ou des associations à but non lucratif.</p>
-            <ul className="mt-3 grid gap-3 lg:grid-cols-2">
-              {associations.map((l) => <Lien key={l.id} lien={l} date={dossier?.verifieLe ?? ""} />)}
+        <h2 className="text-xl font-semibold">Les liens qui pourraient t’intéresser</h2>
+        <p className="mt-1 text-sm text-gris">Des sites publics ou des associations à but non lucratif, vérifiés un par un. Aucune affiliation.</p>
+        {groupesLiens.map(({ etape, liens }) => (
+          <div key={etape.id} className="mt-5">
+            <h3 className="flex items-center gap-2 font-semibold"><Emoji nom={etape.emoji} className="h-6 w-6" /> {etape.titre}</h3>
+            <ul className="mt-2 grid gap-3 sm:grid-cols-2">
+              {liens.map((l) => <CarteLien key={l.id} l={l} />)}
             </ul>
-          </>
-        )}
+          </div>
+        ))}
         <div className="mt-6">
           <BoutonDossier paysId={p.id} />
           <p className="mt-2 text-sm text-gris">Le fichier est créé sur ton appareil : rien n’est envoyé.</p>

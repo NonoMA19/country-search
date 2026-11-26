@@ -1043,7 +1043,34 @@ export function avecQui(lignes: Ligne[], i: number, dansLaVue: (k: number) => bo
 // ou une pénalité (« Je préfère pouvoir changer d'employeur librement », « Je garde ces soirées pour moi »).
 // Il n'apparaît que si, sans cette préférence, son score l'aurait placé n° 1 ou n° 2 de ton classement.
 // Jamais pour une règle légale (âge) ni pour le budget. S'il te manquerait de l'argent pour ce pays, la carte le dit.
-export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "langue"; phrase: string; argent: string | null };
+export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "langue" | "priorites"; phrase: string; argent: string | null; priorites?: string[] };
+
+// Le pays surprise « par tes priorités » (prompt 7) : un pays hors de ta carte du début (ou que tu n'avais pas en tête),
+// hors de ton top 3 mais dans tes 8 premiers, qui va dans ton sens (4 ou 5 sur 5) sur au moins 2 de tes 3 premiers critères.
+// « Tu ne l'avais pas coché, mais il colle à 3 de tes priorités : … ». Jamais un pays fermé par la loi ou sans assez de données.
+export const RANG_MAX_SURPRISE = 8;
+export function surprisePriorites(etat: Etat, lignes: Ligne[], top: Ligne[]): Surprise | null {
+  const envies = enviesDe(etat).slice(0, NB_ENVIES_PRINCIPALES);
+  if (envies.length < 2) return null;
+  const dansTop = new Set(top.map((l) => l.pays.id));
+  const carte = Array.isArray(etat.profil.paysCarte) ? etat.profil.paysCarte : [];
+  const regions = Array.isArray(etat.profil.regions) ? etat.profil.regions : [];
+  const coche = (id: string) => carte.includes(id) || regions.includes(zoneCarte(id) ?? "");
+  const classes = lignes.filter((l) => !l.ecart && !l.peuDeDonnees);
+  const candidats = classes.slice(0, RANG_MAX_SURPRISE).filter((l) => !dansTop.has(l.pays.id) && !coche(l.pays.id)).map((l) => {
+    const colle = envies.filter((id) => {
+      const d = l.details.filter((x) => x.origine === `envie:${id}` && !x.neutre);
+      return d.length > 0 && d.reduce((t, x) => t + x.accord, 0) / d.length >= ACCORD_ARGUMENT;
+    });
+    return { l, colle };
+  }).filter((x) => x.colle.length >= 2).sort((a, b) => b.colle.length - a.colle.length || b.l.score - a.l.score);
+  const m = candidats[0];
+  if (!m) return null;
+  const noms = m.colle.map((id) => quiz.envies.find((e) => e.id === id)?.label ?? id);
+  const debut = carte.length || regions.length ? "Tu ne l’avais pas coché sur ta carte" : "Tu ne l’avais peut-être pas en tête";
+  const phrase = `${debut}, mais il colle à ${m.colle.length === envies.length ? `tes ${m.colle.length}` : `${m.colle.length} de tes`} priorités\u00a0: ${listeFr(noms.map((n) => `« ${n} »`))}.`;
+  return { ligne: m.l, score: m.l.score, cause: "priorites", phrase, argent: phraseArgent(m.l), priorites: noms };
+}
 const PHRASE_SURPRISE = {
   employeur: "Seul ton choix de pouvoir changer d’employeur librement fait reculer ce pays.",
   langue: "Seul ton choix de ne pas apprendre de nouvelle langue fait reculer ce pays.",
@@ -1266,8 +1293,9 @@ export function bilanDepartage(avant: Etat, apres: Etat, a: string, b: string, r
   const issue = egalite
     ? majuscule(egaux)
     : `${majuscule(lePays(devant))} ${Math.sign(fin) === Math.sign(debut) && debut !== 0 ? (pluriel(devant) ? "restent" : "reste") : (pluriel(devant) ? "passent" : "passe")} devant ${lePays(derriere)}, avec ${points}.`;
-  if (ids.length === 0) return `Tu as passé les questions\u00a0: rien n’a changé. ${issue}`;
-  if (egalite) return `Tes réponses n’ont pas suffi à les départager\u00a0: ${egaux}`;
+  if (ids.length === 0) return `Tu as passé les questions\u00a0: rien n’a changé. ${egalite ? reflexionDuo(apres, a, b, reglages) : issue}`;
+  // Toujours à égalité : jamais « tes réponses n'ont pas suffi » ; on dit ce qui les rapproche et sur quoi réfléchir.
+  if (egalite) return reflexionDuo(apres, a, b, reglages);
   let etat = avant;
   let plusFort = { id: ids[0], effet: -1 };
   for (const id of ids) {
@@ -1386,11 +1414,10 @@ export function pointsPays(l: Ligne, etat: Etat, interdites: Set<string> = new S
   const travail = res.travailler;
   if (ms && !travail.pour.some((x) => x.mesure === ms) && travail.savoir?.mesure !== ms) {
     const note = noteEffective(l.pays.id, ms, etat.profil);
-    const v = valeurLisible(l.pays.id, ms, etat.profil);
-    const fr = valeurFrance(ms);
     const ligne: LigneResultat = {
       mesure: ms, preuve: preuveDe(l.pays.id, ms, etat.profil),
-      texte: note === null ? `Ton secteur\u00a0: pas encore de donnée pour ${l.pays.le}.` : `${faitMesure(l.pays.id, ms, etat.profil)}${v?.valeur ? `\u00a0: ${v.valeur} ${l.pays.en}` : ""}${fr ? ` (${fr})` : ""}.`,
+      // Une phrase simple, sans chiffre brut (prompt 7) : le chiffre reste dans la preuve.
+      texte: note === null ? `Ton secteur\u00a0: pas encore de donnée pour ${l.pays.le}.` : `${majuscule(l.pays.en)}, ${(faitMesure(l.pays.id, ms, etat.profil) ?? "").replace(/^Ton secteur y /, "ton secteur ")}.`,
     };
     if (note !== null && note >= 4) travail.pour = [ligne, ...travail.pour].slice(0, MAX_POUR_CATEGORIE);
     else travail.savoir = ligne;
@@ -1493,6 +1520,25 @@ export function comparer(la: Ligne, lb: Ligne, etat: Etat, reglages: Reglages = 
   ].filter(Boolean);
   const synthese = phrases.length ? phrases.join(" ") : "Les deux pays font jeu égal sur ce qui compte pour toi.";
   return { lignes, synthese };
+}
+
+// Deux pays très proches pour toi : sur quoi ils se ressemblent, ce qui les distingue, et sur quoi réfléchir (prompt 7).
+// « La Suisse et la Belgique se ressemblent pour toi sur le salaire et la langue. Ce qui les distingue : le coût de la vie
+// et le climat. Demande-toi lequel compte le plus. » Tiré de la comparaison côte à côte, sans nouveau calcul.
+export function reflexionDuo(etat: Etat, a: string, b: string, reglages: Reglages = REGLAGES_DEFAUT): string {
+  const lignes = calculer(etat, reglages);
+  const la = lignes.find((l) => l.pays.id === a), lb = lignes.find((l) => l.pays.id === b);
+  if (!la || !lb) return "";
+  const { lignes: comp } = comparer(la, lb, etat, reglages);
+  const theme = (x: LigneComparaison) => x.theme || x.libelle.toLowerCase();
+  const sans = (l: string[]) => [...new Set(l)].filter(Boolean);
+  const comparables = comp.filter((x) => x.ecart !== null);
+  const proches = sans(comparables.filter((x) => Math.abs(x.ecart!) < 0.15).sort((x, y) => y.poids - x.poids).map(theme)).slice(0, 2);
+  const distincts = sans([...comparables].filter((x) => Math.abs(x.ecart!) >= 0.25).sort((x, y) => y.poids * Math.abs(y.ecart!) - x.poids * Math.abs(x.ecart!)).map(theme)).filter((t) => !proches.includes(t)).slice(0, 2);
+  const deux = `${majuscule(lePays(a))} et ${lePays(b)}`;
+  const debut = proches.length ? `${deux} se ressemblent pour toi sur ${listeFr(proches)}.` : `${deux} sont très proches pour toi.`;
+  const fin = distincts.length ? ` Ce qui les distingue\u00a0: ${listeFr(distincts)}. Demande-toi ${distincts.length > 1 ? "lequel compte le plus pour toi" : "à quel point ça compte pour toi"}.` : " Regarde leurs fiches : la ville, le visa et le quotidien peuvent faire la différence.";
+  return debut + fin;
 }
 
 // ---------- « Pourquoi on te demande ça ? » : ce que la réponse peut changer ----------

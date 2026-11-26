@@ -7,13 +7,13 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, t
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
-  GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsEnvie, limiteTouche, accesPays, facteurAcces, noteContinue, noteCalcul, mesureClassante, REGLES, impossibiliteLegale, envieClassante, aideDe,
+  surprisePriorites, reflexionDuo, GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsEnvie, limiteTouche, accesPays, facteurAcces, noteContinue, noteCalcul, mesureClassante, REGLES, impossibiliteLegale, envieClassante, aideDe,
   type Etat, type Profil,
 } from "@/lib/moteur";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
 import { candidatsAdaptatifs, etatAvant, prochainAffiner, restantsAffiner, resultatProvisoire, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
 import { portrait, portraitComplet } from "@/lib/portrait";
-import { construireProfil, contradictions, niveauCertitude } from "@/lib/profil";
+import { construireProfil, contradictions, niveauCertitude, syntheseProfil } from "@/lib/profil";
 import { intuition, zoneDuPays } from "@/lib/intuition";
 import { ECART_EX_AEQUO } from "@/config";
 import { DUREE_DEPLACEMENT, DUREE_REVELATION, dureeAnimation, mouvementReduit } from "@/lib/animation";
@@ -438,7 +438,8 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     verifier(bilan.length > 0, "départage : bilan vide");
     if (encoreEgalite(etat, a, b)) {
       egalitesFinales++;
-      verifier(!bilan.includes("Ce qui a fait la différence") && bilan.includes("égalité"), `départage : bilan incohérent avec l'égalité (${bilan})`);
+      // Prompt 7 : jamais « tes réponses n'ont pas suffi » ; on dit ce qui rapproche les deux pays (« se ressemblent » ou « très proches »).
+      verifier(!bilan.includes("Ce qui a fait la différence") && !bilan.includes("pas suffi") && /se ressemblent|très proches/.test(bilan), `départage : bilan incohérent avec l'égalité (${bilan})`);
     } else verifier(!bilan.includes("restent à égalité"), `départage : « à égalité » alors que l'écart dépasse 5 points (${bilan})`);
   }
   verifier(essais > 0, "départage : aucun dilemme proposé, le test ne prouve rien");
@@ -993,6 +994,36 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   verifier(p.titre.startsWith("Tu cherches") && p.cherche.length === 3 && !!p.contradiction, "portrait : titre, critères ou contradiction absents");
   const seul = portraitComplet(construire({ envies: ["prix", "securite"], reponses: { valeurs: { ouverture: "compte" } } }));
   verifier(seul.portraitSeul.some((x) => x.includes("accueillant")) && !seul.portraitSeul.some((x) => x.includes("stable")), `portrait : « enrichit ton portrait » incomplet (${seul.portraitSeul.join(" | ")})`);
+}
+
+// 2.21b Prompt 7, lot 4 : la fiche de synthèse, le pays surprise par tes priorités, le départage sans blocage.
+{
+  const r7 = hasard(77);
+  let surprises = 0;
+  for (let k = 0; k < 60; k++) {
+    const etat = quizAuHasard(r7);
+    const blocs = syntheseProfil(etat);
+    verifier(blocs.map((b) => b.id).join(",") === "projet,priorites,refus,style", `synthèse ${k} : blocs absents ou dans le désordre`);
+    for (const b of blocs) {
+      verifier(b.lignes.length <= 4 && (b.lignes.length > 0 || !!b.vide), `synthèse ${k} : bloc ${b.id} vide sans phrase`);
+      if (b.revoir) verifier(!!trouverElement(b.revoir), `synthèse ${k} : « Modifier » mène à une question inconnue (${b.revoir})`);
+    }
+    verifier(blocs[1].lignes.length === Math.min(3, enviesDe(etat).length), `synthèse ${k} : pas tes 3 premières priorités`);
+    const lignes = calculer(etat);
+    const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
+    const s = surprisePriorites(etat, lignes.filter((l) => !l.ecart), top);
+    if (s) {
+      surprises++;
+      verifier(!top.some((t) => t.pays.id === s.ligne.pays.id) && !s.ligne.peuDeDonnees && !s.ligne.ecart, `surprise ${k} : pays du top 3, ou sans données, ou fermé`);
+      verifier((s.priorites?.length ?? 0) >= 2 && /priorités/.test(s.phrase), `surprise ${k} : moins de 2 priorités, ou raison absente (${s.phrase})`);
+      verifier(!(Array.isArray(etat.profil.paysCarte) && etat.profil.paysCarte.includes(s.ligne.pays.id)), `surprise ${k} : le pays était dans ta carte`);
+    }
+    if (top.length >= 2) {
+      const t = reflexionDuo(etat, top[0].pays.id, top[1].pays.id);
+      verifier(/se ressemblent|très proches/.test(t) && !t.includes("pas suffi"), `départage ${k} : réflexion absente (${t})`);
+    }
+  }
+  verifier(surprises > 0, "surprise : jamais de pays surprise par tes priorités, le test ne prouve rien");
 }
 
 // 2.22 Un questionnaire adapté à chacun (prompt 3f, lot 4).
