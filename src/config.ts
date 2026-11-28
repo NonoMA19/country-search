@@ -26,6 +26,10 @@ export const OBSTACLES = {
   francais: 30, // tu veux travailler en français, ce n'est pas possible ici
   eviter: 10, // une de tes limites « Je préfère éviter »
   redhibitoire: 15, // une de tes limites « Rédhibitoire »
+  // « Es-tu prêt à apprendre une nouvelle langue ? » (prompt 8) : au moins autant que l'ancienne limite
+  // « Un travail où ni le français ni l'anglais ne suffisent » (Rédhibitoire 15, Je préfère éviter 10).
+  langueNon: 15,
+  languePlutotNon: 10,
 };
 // Une mesure ne bouge le classement que si au moins ce nombre de pays (sur 38) ont une donnée.
 export const SEUIL_PAYS_CLASSEMENT = 30;

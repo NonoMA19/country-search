@@ -13,14 +13,13 @@ import { pays } from "./pays";
 export type Etape =
   | { t: "quiz" }
   | { t: "transition"; chapitre: number }
-  | { t: "pas-demande" } // « Ce qu'on ne t'a pas demandé, et pourquoi » : l'écran final du questionnaire
   | { t: "intuition" }
   | { t: "portrait"; fin?: boolean } // fin : « Tu as répondu à tout. Ton portrait est à jour. »
   | { t: "revoir"; id: string; retour?: "intuition" } // retour : l'écran où revenir après (sinon le portrait)
   | { t: "affiner" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 10;
+export const VERSION_SESSION = 11; // prompt 8 : critères classés, « second plan » et « Tes 3 libertés » retirés
 
 export type Session = {
   v: number;
@@ -68,7 +67,7 @@ function etapeValide(x: unknown): boolean {
   if (x.t === "revoir") return estTexte(x.id) && !!trouverElement(x.id) && (x.retour === undefined || x.retour === "intuition");
   if (x.t === "transition") return entier(x.chapitre, 1) && (x.chapitre as number) <= quiz.chapitres.length;
   if (x.t === "portrait") return x.fin === undefined || typeof x.fin === "boolean";
-  return x.t === "quiz" || x.t === "intuition" || x.t === "affiner" || x.t === "pas-demande";
+  return x.t === "quiz" || x.t === "intuition" || x.t === "affiner";
 }
 
 function reglagesValides(x: unknown): boolean {

@@ -7,6 +7,7 @@ import LienOfficiel from "@/components/LienOfficiel";
 import Pastille from "@/components/Pastille";
 import { RAPPEL_VIE, phraseIndemniteVie, preuveMesure, preuveSource, vie } from "@/lib/donnees";
 import { ageMax, type Etat, type Ligne } from "@/lib/moteur";
+import { codeVie, lienOffresVie, secteurFiltreVie } from "@/lib/vie-offres";
 
 // « Le VIE pour toi » : seulement si ton projet est « Stage ou VIE ».
 // Uniquement les conditions officielles déjà sourcées (âge, durée, destinations de Business France, barème officiel).
@@ -37,7 +38,13 @@ export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
             {ageOk === null ? "Ton âge n’est pas connu : vérifie la condition d’âge." : ageOk ? "Condition d’âge remplie : tu peux candidater." : "Condition d’âge non remplie : le VIE se demande avant 28 ans."}
           </span>
         </p>
-        <LienOfficiel url={vie.offres.url} nom={vie.offres.nom} className="mt-4" />
+        {/* Prompt 8 : le lien ouvre la recherche déjà filtrée sur ton top 3 (destinations VIE) et ton secteur, quand le site a un équivalent. */}
+        <LienOfficiel url={lienOffresVie(top.map((l) => l.pays.id), etat.profil.secteur)} nom={vie.offres.nom} className="mt-4" />
+        {top.some((l) => codeVie(l.pays.id)) && (
+          <p className="mt-1 text-xs text-gris">
+            Recherche filtrée sur {top.filter((l) => codeVie(l.pays.id)).map((l) => l.pays.nom).join(", ")}{secteurFiltreVie(etat.profil.secteur) ? " et ton secteur" : ""}. Les filtres se changent sur le site.
+          </p>
+        )}
         {top.length > 0 && (
           <>
             <p className="mt-5 text-sm font-semibold">Ton top 3 en VIE</p>
@@ -54,6 +61,11 @@ export default function BlocVie({ etat, top }: { etat: Etat; top: Ligne[] }) {
                     <span className="font-medium">{l.pays.nom}</span>
                     <span className="text-gris">: {presence ? presence.texte : "VIE : pas dans les destinations de Business France."}</span>
                     {indemnite(l.pays.id) && <span className="basis-full pl-8 font-medium">{indemnite(l.pays.id)}</span>}
+                    {codeVie(l.pays.id) && (
+                      <a href={lienOffresVie([l.pays.id], etat.profil.secteur)} target="_blank" rel="noopener noreferrer" className="basis-full pl-8 text-lien underline">
+                        Voir les offres de VIE {l.pays.en}{secteurFiltreVie(etat.profil.secteur) ? " dans ton secteur" : ""}<span className="sr-only"> (nouvel onglet)</span>
+                      </a>
+                    )}
                     <Pastille preuve={presence ? preuveSource("Missions VIE", presence.texte, presence.source, presence.lien, presence.verifieLe) : preuveSource("Missions VIE", "La présence de missions VIE dans ce pays n’est pas encore vérifiée.", null, null, null)} pays={l.pays.nom} contexte="les missions VIE" />
                   </li>
                 );

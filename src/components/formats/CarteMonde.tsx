@@ -8,7 +8,7 @@ import { villes, type CarteMonde as TCarte } from "@/lib/donnees";
 import { nomCercle } from "@/lib/intuition";
 import { pays } from "@/lib/pays";
 import {
-  AUCUNE_ZONE, MAX_CERCLES, RAYONS, RAYON_DEPART, RAYON_TERRE, bornerRayon, contientParis, distanceKm, ecrireCercle, lireCercle,
+  AUCUNE_ZONE, MAX_CERCLES, RAYON_DEPART, RAYON_TERRE, bornerRayon, contientParis, distanceKm, ecrireCercle, lireCercle,
   paysDansCercle, pointA, type Cercle, type Point,
 } from "@/lib/zones";
 import { Actions, BOUTON_PLEIN, EnTete, FOCUS, type PropsFormat } from "./commun";
@@ -25,7 +25,6 @@ const TERRES = Object.values(DESSIN.zones).join("");
 const VILLES = pays.filter((p) => villes[p.id]).map((p) => ({ id: p.id, nom: p.nom, ville: villes[p.id].nom, point: { lat: villes[p.id].lat, lon: villes[p.id].lon } }));
 const nomPays = (id: string) => pays.find((p) => p.id === id)?.nom ?? id;
 const km = (n: number) => `${Math.round(n).toLocaleString("fr-FR")} km`;
-const cranDe = (k: number) => RAYONS.reduce((m, r, i) => (Math.abs(r - k) < Math.abs(RAYONS[m] - k) ? i : m), 0);
 // Les anciennes régions (parcours d'avant) se montrent comme le groupe le plus proche.
 const GROUPE_DE_REGION: Record<string, string[]> = {
   europe: ["g-europe"], "amerique-nord": ["g-ameriques"], "amerique-latine": ["g-ameriques"], "asie-est": ["g-asie"], "asie-sud-est": ["g-asie"],
@@ -52,13 +51,14 @@ function liste(ids: string[]): string {
 // « Où te vois-tu vivre ? » : un planisphère où l'on place jusqu'à 3 zones (un centre et un rayon réel en km).
 // Souris : un cercle fantôme suit le curseur, les pays dedans s'éclairent ; un clic le pose.
 // Doigt : on touche, l'aperçu suit le doigt, le cercle se pose au relâchement. Le bord (ou sa poignée) se glisse pour changer le rayon.
-// Clavier et lecteur d'écran : le curseur gradué, la liste des villes et les 6 groupes de pays font la même chose.
+// Clavier et lecteur d'écran : les 6 groupes de pays font la même chose.
 export default function CarteMonde({ element: el, etat, valeur, repondre, passer, libellePasser, titreId }: PropsFormat<TCarte>) {
   const depart = Array.isArray(valeur) ? (valeur as string[]) : [];
   const [cercles, setCercles] = useState<Cercle[]>(() => depart.map(lireCercle).filter((c): c is Cercle => !!c));
   const [groupes, setGroupes] = useState<string[]>(() => [...new Set(depart.flatMap((x) => (el.groupes.some((g) => g.id === x) ? [x] : GROUPE_DE_REGION[x] ?? [])))]);
   const [actif, setActif] = useState<number | null>(() => (cercles.length ? cercles.length - 1 : null));
-  const [rayon, setRayon] = useState(RAYON_DEPART); // le rayon du prochain cercle
+  // Le rayon d'une nouvelle zone : celui de départ ; on le change en glissant le bord de la zone.
+  const rayon = RAYON_DEPART;
   const [fantome, setFantome] = useState<Point | null>(null);
   const [message, setMessage] = useState("");
   const [echelle, setEchelle] = useState(1); // pixels par unité de la carte
@@ -75,7 +75,6 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
     return () => ro.disconnect();
   }, []);
 
-  const rayonCourant = actif !== null && cercles[actif] ? cercles[actif].km : rayon;
   const plein = cercles.length >= MAX_CERCLES;
   const procheChoisi = Array.isArray(etat.reponses.envies) && (etat.reponses.envies as string[]).includes("proche");
   const dansCercles = useMemo(() => cercles.map(paysDansCercle), [cercles]);
@@ -139,10 +138,6 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
   const annuler = () => { geste.current = null; setFantome(null); };
 
   // ---------- Commandes ----------
-  const changerRayon = (k: number) => {
-    if (actif !== null && cercles[actif]) setCercles((l) => l.map((x, i) => (i === actif ? { ...x, km: k } : x)));
-    else setRayon(k);
-  };
   const effacerZone = (i: number) => {
     setCercles((l) => l.filter((_, k) => k !== i));
     setActif((a) => (a === null || cercles.length <= 1 ? null : a === i ? Math.max(0, i - 1) : a > i ? a - 1 : a));
@@ -150,7 +145,6 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
   };
   const toutEffacer = () => { setCercles([]); setGroupes([]); setActif(null); setMessage(""); };
   const basculerGroupe = (id: string) => setGroupes((l) => (l.includes(id) ? l.filter((x) => x !== id) : [...l, id]));
-  const surVille = (id: string) => { const v = VILLES.find((x) => x.id === id); if (v) placer(v.point); };
 
   // ---------- Le texte vivant ----------
   let resume: string;
@@ -230,25 +224,6 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
         </ul>
       )}
 
-      <label className="mt-4 block">
-        <span className="flex flex-wrap items-baseline justify-between gap-x-2">
-          <span className="font-medium">{actif !== null && cercles[actif] ? `Rayon de la zone ${actif + 1}` : "Rayon de ta prochaine zone"}</span>
-          <span className="font-semibold text-lien tabular-nums">{km(rayonCourant)}</span>
-        </span>
-        <input type="range" min={0} max={RAYONS.length - 1} step={1} value={cranDe(rayonCourant)} onChange={(e) => changerRayon(RAYONS[Number(e.target.value)])}
-          aria-valuetext={km(rayonCourant)} className="mt-2 h-10 w-full accent-bleu" />
-        <span className="flex justify-between text-xs text-gris tabular-nums" aria-hidden="true">{RAYONS.map((r) => <span key={r}>{r.toLocaleString("fr-FR")}</span>)}</span>
-      </label>
-
-      <label className="mt-4 block">
-        <span className="font-medium">Ou place une zone autour d’une ville</span>
-        <select value="" onChange={(e) => surVille(e.target.value)} disabled={plein}
-          className={`mt-2 block min-h-12 w-full rounded-2xl border-2 border-bord bg-carte px-3 text-base disabled:opacity-50 lg:max-w-md ${FOCUS}`}>
-          <option value="">{plein ? `${MAX_CERCLES} zones placées` : "Choisir une ville…"}</option>
-          {[...VILLES].sort((a, b) => a.ville.localeCompare(b.ville, "fr")).map((v) => <option key={v.id} value={v.id}>{v.ville} ({v.nom})</option>)}
-        </select>
-      </label>
-
       <fieldset className="mt-4">
         <legend className="font-medium">Ou choisis une ou plusieurs régions</legend>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -268,7 +243,6 @@ export default function CarteMonde({ element: el, etat, valeur, repondre, passer
         {aUneZone && <button type="button" onClick={toutEffacer} className={`inline-flex min-h-11 items-center rounded-full border border-bord px-4 text-sm font-medium hover:border-bleu ${FOCUS}`}>Effacer</button>}
         <button type="button" onClick={() => repondre([AUCUNE_ZONE])} className={`inline-flex min-h-11 items-center rounded-full border border-dashed border-gris px-4 text-sm font-medium hover:border-bleu ${FOCUS}`}>Je n’ai pas de zone précise</button>
       </div>
-      <p className="mt-3 text-xs text-gris">Limite : une seule ville de référence par pays (souvent la capitale ou la plus grande ville). Un cercle peut toucher un pays sans contenir sa ville : il ne compte alors pas ce pays.</p>
 
       <Actions passer={passer} libellePasser={libellePasser}>
         <button type="button" data-valider disabled={!aUneZone} onClick={() => repondre(valeurFinale)} className={BOUTON_PLEIN}>Continuer</button>

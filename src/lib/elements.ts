@@ -68,7 +68,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
       const n = Number(r.seuil);
       return Object.keys(r).length === 2 && (r.niveau === "eviter" || r.niveau === "redhibitoire") && Number.isFinite(n) && n >= el.min && n <= el.max;
     }
-    case "tri-zones": return objetDe(v, new Set(el.cartes.map((c) => c.id)), el.zones.map((z) => z.id));
+    case "tri-zones": return objetDe(v, new Set(el.cartes.map((c) => c.id)), el.zones.map((z) => z.id)) && (el.max === undefined || Object.keys(v as object).length <= el.max);
     case "blind-test": return typeof v === "object" && v !== null && !Array.isArray(v) && estTexte((v as Record<string, string>).choix) && estTexte((v as Record<string, string>).faits);
     case "classement": return listeDe(v, (y) => quiz.envies.some((e) => e.id === y)) && new Set(v as string[]).size === (v as string[]).length;
     case "curseur": return typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 100;
@@ -81,8 +81,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
   }
 }
 
-// Les options d'une carte. Les critères viennent de quiz.envies : tous (« envies »), ceux que tu as choisis
-// (« envies-choisies »), ceux qui restent pour le second plan (« envies-second »), ceux que tu n'as pas choisis (« envies-restantes »).
+// Les options d'une carte. Les critères viennent de quiz.envies : tous (« envies »), ou ceux que tu n'as pas choisis (« envies-restantes »).
 // Une option dont une mesure n'a aucune donnée vérifiée (l'égalité femmes-hommes, par exemple) n'est pas proposée.
 // (Les mesures calculées, comme le dépaysement, et « secteur » ne sont pas stockées : elles restent proposées.)
 export const AUCUN = "aucun";
@@ -93,8 +92,6 @@ export function optionsDe(el: ChoixCartes, reponses: Record<string, Valeur> = {}
   const criteres = quiz.envies.map((e) => ({ id: e.id, label: e.label, icone: e.icone, emoji: e.emoji }));
   const choisis = listeTexte(reponses.envies);
   if (el.source === "envies") return criteres;
-  if (el.source === "envies-choisies") return criteres.filter((c) => choisis.includes(c.id));
-  if (el.source === "envies-second") return criteres.filter((c) => choisis.includes(c.id) && c.id !== reponses.sacrifice);
   if (el.source === "envies-restantes") return criteres.filter((c) => !choisis.includes(c.id));
   return el.options.filter((o) => !o.effets || o.effets.every((e) => e.mesures.every((m) => !mesureStockee(m) || mesureNotee(m))));
 }
@@ -105,12 +102,25 @@ export const objetReponse = (v: Valeur | undefined): Record<string, string> => (
 // Le test à l'aveugle : le pays choisi et les mesures montrées deviennent des positions préférées, légères (importance 0,5) :
 // « tu as choisi le pays où l'hiver est doux et la vie pas chère ».
 export const POIDS_BLIND = 0.5;
+// Les thèmes où « plus c'est haut, mieux c'est » pour tout le monde (prompt 8) : coût de la vie bas, chômage bas, sécurité,
+// semaines courtes, langue simple. Sur la jauge, le vert y veut toujours dire « bon pour toi ». Les autres (hiver, été,
+// distance, soleil, grandes villes, nature) dépendent de tes goûts : jauge neutre.
+export const BLIND_UNIVERSELS = ["prix", "emploi", "securite", "heures", "langue"];
+const noteBlind = (paysId: string, m: string) => { const n = notes[paysId]?.[m]; return n?.statut === "verifie" && typeof n.note === "number" ? n.note : null; };
+// Le pays choisi devient une préférence :
+// - thème de goût : sa note devient la position préférée (un hiver froid choisi fait monter les hivers froids) ;
+// - thème universel : un petit bonus « plus c'est haut, mieux c'est », seulement si le pays choisi est le mieux noté des
+//   pays montrés sur ce thème. Avant (jusqu'au prompt 7), choisir un pays moyennement sûr faisait reculer les pays plus sûrs.
 export function effetsBlind(v: Valeur | undefined): EffetDilemme[] {
   const r = objetReponse(v);
   if (!r.choix || !r.faits) return [];
-  return r.faits.split(",").flatMap((m) => {
-    const n = notes[r.choix]?.[m];
-    return n?.statut === "verifie" && typeof n.note === "number" ? [{ mesures: [m], position: n.note, poids: POIDS_BLIND }] : [];
+  const montres = r.pays ? r.pays.split(",") : [r.choix];
+  return r.faits.split(",").flatMap((m): EffetDilemme[] => {
+    const n = noteBlind(r.choix, m);
+    if (n === null) return [];
+    if (!BLIND_UNIVERSELS.includes(m)) return [{ mesures: [m], position: n, poids: POIDS_BLIND }];
+    const meilleure = Math.max(...montres.map((p) => noteBlind(p, m) ?? 0));
+    return r.pays && n >= meilleure ? [{ mesures: [m], poids: POIDS_BLIND }] : [];
   });
 }
 
@@ -263,6 +273,8 @@ export function conditionRemplie(condition: string | undefined, p: Profil): bool
   // Tu veux rester plus d'un an, ou plus longtemps si tu te plais.
   if (condition === "veut-rester") return ["1-2", "plus-2", "toujours"].includes(String(p.duree)) || p.apres === "rester";
   if (condition === "partenaire-travaille") return p["couple-travail"] === "oui";
+  // La limite « Apprendre une langue avec un autre alphabet » : pas reposée si tu as déjà dit non à une nouvelle langue.
+  if (condition === "pret-langue-ouvert") return p["pret-langue"] !== "non" && p["pret-langue"] !== "plutot-non";
   if (condition.startsWith("projet:")) return p.objectif === condition.slice(7);
   return true;
 }

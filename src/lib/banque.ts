@@ -60,6 +60,7 @@ const ACCES: Record<string, string> = {
   "couple-travail": "Il t’est accessible : « Oui », −10 aux pays hors libre circulation (un droit au travail pour ton ou ta partenaire). Ouvre la limite « partenaire-visa ».",
   nationalite: "Il t’est accessible : une nationalité canadienne, irlandaise ou américaine ouvre ce pays (porte « nationalité », 0 obstacle). Cas vérifiés seulement (content/double-nationalite.json).",
   "pret-anglais": "Il t’est accessible : « Non », −30 aux pays où l’on ne peut pas travailler en français (content/saisie/avis.json).",
+  "pret-langue": "Il t’est accessible : « Non » −15, « Plutôt non » −10 aux pays où ni le français, ni l’anglais, ni une langue que tu parles ne suffisent au travail. Il te ressemble : « Langue de travail » et « Langue à apprendre », importance 1 (« Non ») ou 0,5 (« Plutôt non »).",
 };
 
 export function itemsBanque(): Item[] {
@@ -72,12 +73,12 @@ export function itemsBanque(): Item[] {
         const ms = c.mesures;
         const parts = c.parts ? ` (parts ${c.parts.join(" et ")})` : "";
         ajouter({ ...base, id: `critere/${c.id}`, texte: c.label, type: typeDe(ms), donnee: donnees(ms),
-          effet: ms.length ? `Il te ressemble : ${ms.map((m, k) => `${mesures[m]?.court ?? m}${c.positions?.[k] !== undefined ? ` (position ${c.positions[k]})` : ""}`).join(" et ")}${parts}, importance 2 (le plus dur à sacrifier), 1,5, ou 1,1 (second plan)${classante(ms) ? "" : " — sous 30 pays : portrait seulement"}${c.id === "salaire" ? " ; pour un VIE, l’indemnité VIE (36 pays) compte à la place" : ""}` : "Portrait seulement : aucune donnée pays",
+          effet: ms.length ? `Il te ressemble : ${ms.map((m, k) => `${mesures[m]?.court ?? m}${c.positions?.[k] !== undefined ? ` (position ${c.positions[k]})` : ""}`).join(" et ")}${parts}, importance selon son rang dans ton classement (2 ; 1,75 ; 1,5 ; 1,25 ; 1,1)${classante(ms) ? "" : " — sous 30 pays : portrait seulement"}${c.id === "salaire" ? " ; pour un VIE, l’indemnité VIE (36 pays) compte à la place" : ""}` : "Portrait seulement : aucune donnée pays",
           pourquoi: pourquoi(el) });
       }
       continue;
     }
-    if (el.type === "choix-cartes" && (el.id === "motivation" || el.id === "secteur" || el.id === "libertes-top")) {
+    if (el.type === "choix-cartes" && (el.id === "motivation" || el.id === "secteur")) {
       for (const o of el.options.filter((x) => x.id !== "autre" && x.id !== "inconnu")) {
         const ms = el.id === "secteur" ? [`secteur-${o.id}`] : mesuresDe(o.effets);
         const effet = el.id === "secteur" ? `Il te ressemble : part de l’emploi dans ce secteur, si tu choisis le critère « Évoluer dans mon secteur » (importance du critère) ou la motivation carrière (0,5). Section CITI ${o.citi}.`
@@ -88,7 +89,7 @@ export function itemsBanque(): Item[] {
     }
     if (el.type === "tri-zones") {
       for (const c of el.cartes) ajouter({ ...base, id: `valeur/${c.id}`, texte: c.label, type: typeDe(c.mesures), donnee: donnees(c.mesures),
-        effet: c.mesures.length ? `Il te ressemble : ${c.mesures.map((m) => mesures[m]?.court ?? m).join(", ")} : « Indispensable » 1, « Un vrai plus » 0,5, « Peu importe » ou non rangée : rien. Il t’est accessible : « Indispensable » et pays noté 1 ou 2 : −15.${c.id === "libertes" ? " Ouvre la relance « Tes 3 libertés »." : ""}` : "Portrait seulement : pas de donnée pays pour 30 pays (ou licence qui interdit de transformer la note).",
+        effet: c.mesures.length ? `Il te ressemble : ${c.mesures.map((m) => mesures[m]?.court ?? m).join(", ")}${c.mesures.length > 1 ? ` (${c.mesures.length} mesures, l’importance 1 partagée entre elles)` : ""} : carte touchée 1, non touchée : rien. 3 cartes au plus.` : "Portrait seulement : pas de donnée pays pour 30 pays (ou licence qui interdit de transformer la note).",
         pourquoi: pourquoi(el) });
       continue;
     }
@@ -120,8 +121,9 @@ export function itemsBanque(): Item[] {
     if (ACCES[el.id]) { type = "Accès"; effet = ACCES[el.id]; }
     if (type !== "Accès") type = ms.length ? typeDe(ms) : "Portrait";
     if (el.id === "famille-ecole") effet = "Portrait seulement : pas de donnée sur les écoles en français ; rappelé dans ta checklist.";
-    if (el.type === "choix-cartes" && el.source && el.source !== "envies") { type = "Classement"; effet = el.id === "sacrifice" ? "Il te ressemble : ce critère compte 2 (les autres 1,5)." : el.id === "second-plan" ? "Il te ressemble : ce critère compte 1,1." : "Il te ressemble : ce critère non choisi compte 1 ; « Aucun » : rien."; }
-    const critere = el.type === "choix-cartes" && !!el.source;
+    if (el.type === "choix-cartes" && el.source && el.source !== "envies") { type = "Classement"; effet = "Il te ressemble : ce critère non choisi compte 1 ; « Aucun » : rien."; }
+    if (el.type === "classement") { type = "Classement"; effet = `Il te ressemble : l’importance de chaque critère selon son rang (${quiz.poidsCriteres.rangs.map((x) => x.toLocaleString("fr-FR")).join(" ; ")}) ; un seul critère : 2 ; classement passé : 1,5 chacun.`; }
+    const critere = (el.type === "choix-cartes" && !!el.source) || el.type === "classement";
     ajouter({ ...base, id: el.id, texte: el.titre, type, donnee: critere ? "Les données des critères choisis (fiches critere/…)" : type === "Accès" && !ms.length ? (el.id === "budget" ? "Ressources demandées par les PVT : content/portes.json (officiel)" : "Portes d’entrée : content/portes.json, content/double-nationalite.json") : donnees([...new Set(ms)].filter((m) => mesures[m] || m === "secteur")), effet: effet || "Portrait seulement", pourquoi: pourquoi(el) });
   }
   return items;

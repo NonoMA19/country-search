@@ -1,6 +1,6 @@
 // Test de bout en bout de la carte « Où te vois-tu vivre ? ». Usage : site lancé, puis npm run e2e:carte (BASE=…).
 // Souris (fantôme, clic, glisser le bord, 3 zones au plus), doigt (aperçu, pose au relâchement, la page ne défile pas),
-// clavier (curseur gradué, liste des villes, groupes), antiméridien, zone sans pays, « Je n'ai pas de zone précise ».
+// clavier (groupes), antiméridien, zone sans pays, « Je n'ai pas de zone précise ».
 import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import { chromium } from "./playwright.mjs";
@@ -75,17 +75,12 @@ async function ouvrir(opts) {
 // ---------- Antiméridien et zone sans pays ----------
 {
   const { ctx, page, ecran, valeur, resume } = await ouvrir({ viewport: { width: 1440, height: 900 } });
-  await page.locator("input[type=range]").focus();
-  await page.keyboard.press("ArrowRight"); // 1 500 → 3 000 km, au clavier
-  verifier((await page.locator("input[type=range]").getAttribute("aria-valuetext")).replace(/\s/g, "") === "3000km", "clavier : le curseur ne passe pas à 3 000 km");
   const fidji = await ecran(178.4, -18.1);
   await page.mouse.click(fidji.x, fidji.y);
   await page.waitForTimeout(150);
-  verifier((await resume()).includes("Nouvelle-Zélande"), `antiméridien : « ${await resume()} »`);
   const d = await page.locator("svg[data-valeur] g path").first().getAttribute("d");
   verifier((d.match(/M/g) ?? []).length >= 2, "antiméridien : le cercle n'est pas coupé en deux morceaux");
   await page.getByRole("button", { name: "Effacer", exact: true }).click();
-  await page.locator("input[type=range]").fill("0");
   const ocean = await ecran(-140, -30);
   await page.mouse.click(ocean.x, ocean.y);
   await page.waitForTimeout(150);
@@ -117,14 +112,15 @@ async function ouvrir(opts) {
   // Zones tactiles : 44 px au moins pour les boutons sous la carte.
   const petits = await page.$$eval("main button, main select", (l) => l.filter((b) => b.offsetParent && b.getBoundingClientRect().height < 44).map((b) => b.textContent.trim().slice(0, 30)));
   verifier(petits.length === 0, `doigt : boutons de moins de 44 px : ${petits.join(" | ")}`);
+  // Prompt 8 : plus de curseur de rayon, plus de liste de villes, plus de texte « Limite… ».
+  verifier(await page.locator("main input[type=range], main select").count() === 0, "carte : curseur de rayon ou liste de villes encore là");
+  verifier(!(await page.locator("main").innerText()).includes("Limite : une seule ville"), "carte : texte « Limite… » encore là");
   await ctx.close();
 }
 
-// ---------- Clavier et lecteur d'écran : ville, groupes, réponse enregistrée ----------
+// ---------- Clavier et lecteur d'écran : groupes, réponse enregistrée ----------
 {
   const { ctx, page, valeur } = await ouvrir({ viewport: { width: 1024, height: 768 } });
-  await page.locator("select").selectOption({ label: "Dakar (Sénégal)" });
-  verifier((await valeur())[0]?.startsWith("c:14.7,-17.4"), `ville : ${(await valeur()).join(" ")}`);
   await page.getByRole("button", { name: "Océanie" }).click();
   verifier(await page.getByRole("button", { name: "Océanie" }).getAttribute("aria-pressed") === "true", "groupe : Océanie pas coché");
   verifier((await page.locator("#carte-resume").getAttribute("aria-live")) === "polite", "texte vivant : pas d'aria-live");

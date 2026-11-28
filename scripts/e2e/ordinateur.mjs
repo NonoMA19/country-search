@@ -81,13 +81,13 @@ for (const mode of Object.keys(MODES)) {
   const { ctx, page } = await ouvrir("ordinateur", S.resultat, "/resultat");
   const liste = page.getByRole("navigation", { name: "Ton classement" });
   verifier(await liste.isVisible(), "résultat : la liste de gauche n'est pas visible");
-  const fiches = await page.locator("article h3:visible").allInnerTexts();
+  const fiches = await page.locator("#fiche-choisie article h3:visible").allInnerTexts();
   verifier(fiches.length === 1, `résultat : ${fiches.length} fiches visibles au lieu d'une`);
   const cinquieme = liste.locator("li button").nth(4);
   const nom = (await cinquieme.innerText()).split("\n").find((t) => t.length > 2 && !/^\d+$/.test(t) && !t.includes("%"));
   await cinquieme.click();
   await page.waitForTimeout(300);
-  const apres = await page.locator("article h3:visible").allInnerTexts();
+  const apres = await page.locator("#fiche-choisie article h3:visible").allInnerTexts();
   verifier(apres.length === 1 && apres[0] === nom, `résultat : la fiche affichée est ${apres.join(",")} au lieu de ${nom}`);
   const boxListe = await liste.boundingBox(), boxFiche = await page.locator("article:visible").first().boundingBox();
   verifier(boxListe.x + boxListe.width <= boxFiche.x, "résultat : la liste et la fiche ne sont pas côte à côte");
@@ -96,7 +96,7 @@ for (const mode of Object.keys(MODES)) {
 {
   const { ctx, page } = await ouvrir("telephone", S.resultat, "/resultat");
   verifier(!(await page.getByRole("navigation", { name: "Ton classement" }).isVisible()), "téléphone : la liste de gauche est visible");
-  verifier((await page.locator("article h3:visible").count()) >= 3, "téléphone : le top 3 n'est pas affiché en entier");
+  verifier((await page.locator("#fiche-choisie article h3:visible").count()) >= 3, "téléphone : le top 3 n'est pas affiché en entier");
   await ctx.close();
 }
 

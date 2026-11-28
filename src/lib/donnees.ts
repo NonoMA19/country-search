@@ -114,6 +114,7 @@ type BaseElement = {
   theme: string;
   titre: string;
   texte?: string;
+  encart?: string; // une phrase mise en avant juste sous le titre (le budget : à quoi sert le montant)
   aide: Aide;
   dimensions: string[]; // les dimensions du profil touchées (salaire, climat, langue…)
   condition?: string; // condition d'apparition (projet, secteur, langues, anglais…)
@@ -132,9 +133,8 @@ export type OptionCarte = {
   effets?: EffetDilemme[]; portrait?: string; sansPenalite?: string[]; citi?: string;
   ageMax?: number; min?: number; max?: number; mois?: number; codes?: string[];
 };
-// source : les critères (« envies »), ceux que tu as choisis (« envies-choisies »), ceux qui restent pour le second plan
-// (« envies-second » : choisis, sauf le plus dur à sacrifier), ou ceux que tu n'as pas choisis (« envies-restantes »).
-export type SourceCartes = "envies" | "envies-choisies" | "envies-second" | "envies-restantes";
+// source : les critères (« envies »), ou ceux que tu n'as pas choisis (« envies-restantes »).
+export type SourceCartes = "envies" | "envies-restantes";
 export type ChoixCartes = BaseElement & {
   type: "choix-cartes"; profil?: string; source?: SourceCartes; multiple?: boolean; nombre?: number; max?: number; aucun?: string;
   sansImage?: boolean; avecPlusMoins?: boolean; options: OptionCarte[];
@@ -151,7 +151,10 @@ export type Zone = { id: string; label: string; detail?: string; pays: string[] 
 // groupes : les 6 boutons, alternative à la carte au clavier et au lecteur d'écran.
 export type CarteMonde = BaseElement & { type: "carte-monde"; zones: Zone[]; groupes: Zone[] };
 export type Situation = { id: string; texte: string; mesure: string; raison: string; dimension: string; condition?: string };
-export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; famille?: string; situations: Situation[] };
+// cartes : une famille à une seule situation peut se présenter en 3 grandes cartes illustrées (la distance, prompt 8) ;
+// chaque carte enregistre une des trois réponses habituelles (Aucun problème, Je préfère éviter, Rédhibitoire).
+export type CarteLimite = { reponse: "ok" | "eviter" | "redhibitoire"; titre: string; texte: string; dessin: "europe" | "europe-plus" | "monde" };
+export type TriLimites = BaseElement & { type: "tri-limites"; nombre: number; famille?: string; situations: Situation[]; cartes?: CarteLimite[] };
 // La durée sur une frise, puis « et après ? » (rentrer, rester si tu te plais, repartir ailleurs).
 export type Timeline = BaseElement & { type: "timeline"; profil?: string; options: OptionCarte[]; apres: { id: string; label: string; portrait?: string }[] };
 // Une enveloppe en euros, réglée au curseur.
@@ -161,9 +164,10 @@ export type Enveloppe = BaseElement & { type: "enveloppe"; profil?: string; min:
 export type Seuil = BaseElement & { type: "seuil"; mesure: string; unite: string; min: number; max: number; pas: number; defaut: number; sens: "max" | "min" };
 // Des cartes à ranger dans des zones (« Indispensable », « Un vrai plus », « Peu importe ») ; une carte non rangée ne compte pas.
 export type CarteZone = { id: string; label: string; mesures: string[]; portrait: string; phrase?: string; emoji?: string };
-export type TriZones = BaseElement & { type: "tri-zones"; zones: { id: string; label: string }[]; cartes: CarteZone[] };
+export type TriZones = BaseElement & { type: "tri-zones"; zones: { id: string; label: string }[]; cartes: CarteZone[]; max?: number };
 // Le test à l'aveugle : quelques pays sans leur nom, quatre faits chacun, parmi ces mesures.
-export type BlindTest = BaseElement & { type: "blind-test"; nombre: number; faits: number; mesures: string[] };
+// exclure : un second test à l'aveugle (prompt 8) montre d'autres pays et d'autres thèmes que le test cité, et n'est posé qu'après lui.
+export type BlindTest = BaseElement & { type: "blind-test"; nombre: number; faits: number; mesures: string[]; exclure?: string };
 export type Dilemme = BaseElement & {
   type: "dilemme";
   echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B
@@ -267,7 +271,7 @@ const banque = quizData as unknown as {
   chapitres: Chapitre[];
   objectifs: Record<string, Objectif>;
   envies: Envie[];
-  poidsCriteres: { sacrifice: number; milieu: number; second: number; seul: number };
+  poidsCriteres: { rangs: number[] };
   dimensions: Record<string, Dimension>;
   elements: Element[];
 };

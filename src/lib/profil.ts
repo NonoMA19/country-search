@@ -161,8 +161,6 @@ export function contradictions(etat: Etat): Contradiction[] {
   const aUneZone = carte.regions.length + carte.cercles.length + carte.groupes.length > 0;
   const zoneEuropeenne = carte.regions.includes("europe") || carte.dansZone.some((id) => pays.find((p) => p.id === id)?.zone === "europe");
   if (limite(etat, "hors-europe") === "redhibitoire" && aUneZone && !zoneEuropeenne) res.push({ id: "europe", reponses: ["limites-distance", "carte"], revoir: "limites-distance", texte: "Tu pensais partir hors d’Europe, mais tu as dit que vivre hors d’Europe était rédhibitoire. Les pays hors d’Europe deviennent beaucoup moins accessibles pour toi : ils restent dans ta liste, et tu peux les remonter." });
-  // 4. Un autre alphabet rédhibitoire, mais « Tu y vas » aux cours de langue.
-  if (limite(etat, "alphabet") === "redhibitoire" && rep(etat, "cours-offerts") === "a") res.push({ id: "alphabet", reponses: ["limites-langue", "cours-offerts"], revoir: "limites-langue", texte: "Tu as dit qu’apprendre un autre alphabet était rédhibitoire, mais tu irais aux cours de langue offerts." });
   // 5. Tu pars pour une langue qui s'écrit avec un autre alphabet, mais cet alphabet est rédhibitoire.
   if (rep(etat, "motivation") === "langue" && limite(etat, "alphabet") === "redhibitoire" && ["ja", "ko", "zh", "ar"].includes(String(rep(etat, "relance-langue")))) res.push({ id: "langue-cible", reponses: ["relance-langue", "limites-langue"], revoir: "limites-langue", texte: "Tu pars pour pratiquer une langue qui s’écrit avec un autre alphabet, mais tu as dit qu’apprendre un autre alphabet était rédhibitoire." });
   return res;

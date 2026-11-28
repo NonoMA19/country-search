@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Scale } from "lucide-react";
 import Drapeau from "@/components/Drapeau";
 import { CarteDilemme } from "@/components/formats/Dilemme";
-import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, reflexionDuo, repondre, sceneDe, type Etat, type Ligne, type Reglages } from "@/lib/moteur";
+import { bilanDepartage, comparer, encoreEgalite, MAX_DEPARTAGE, prochainDepartage, raisonDepartage, reflexionDuo, repondre, sceneDe, type Etat, type Ligne } from "@/lib/moteur";
 
 // L'état du départage, gardé par la page résultat le temps de la visite.
 export type EtatDepartage =
@@ -16,8 +16,8 @@ const BOUTON = "inline-flex min-h-13 w-full items-center justify-center gap-2 ro
 
 // Les deux pays côte à côte, sans nouveau calcul : une ligne par critère qui compte pour toi,
 // la vraie valeur de chaque pays, et au centre une barre qui part du milieu vers le pays qui gagne.
-function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: Etat; reglages: Reglages }) {
-  const { lignes, synthese } = comparer(la, lb, etat, reglages);
+function Comparaison({ la, lb, etat }: { la: Ligne; lb: Ligne; etat: Etat }) {
+  const { lignes, synthese } = comparer(la, lb, etat);
   const valeur = (v: { valeur: string | null; mot: string } | null) => (v ? (v.valeur ? `${v.valeur} · ${v.mot}` : v.mot) : "Pas de donnée");
   const qui = (ecart: number | null) => (ecart === null ? "Non comparable : une donnée manque d’un côté" : Math.abs(ecart) < 1e-9 ? "Égalité" : `${ecart > 0 ? la.pays.nom : lb.pays.nom} gagne`);
   return (
@@ -62,8 +62,8 @@ function Comparaison({ la, lb, etat, reglages }: { la: Ligne; lb: Ligne; etat: E
   );
 }
 
-export default function Departage({ etat, reglages, top, lignes, etatDep, setEtatDep, ecrireEtat }: {
-  etat: Etat; reglages: Reglages; top: Ligne[]; lignes: Ligne[]; etatDep: EtatDepartage | null;
+export default function Departage({ etat, top, lignes, etatDep, setEtatDep, ecrireEtat }: {
+  etat: Etat; top: Ligne[]; lignes: Ligne[]; etatDep: EtatDepartage | null;
   setEtatDep: (e: EtatDepartage | null) => void; ecrireEtat: (e: Etat) => void;
 }) {
   const cle = etatDep ? `${etatDep.t}:${etatDep.t === "quiz" ? etatDep.poses.length : ""}` : "";
@@ -80,23 +80,23 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
   if (!a || !b || !la || !lb) return null;
   const nomA = la.pays.nom, nomB = lb.pays.nom;
   // « Trancher entre les deux » seulement s'il reste au moins une question qui les sépare vraiment.
-  const peutTrancher = !etatDep && prochainDepartage(etat, a, b, reglages) !== null;
+  const peutTrancher = !etatDep && prochainDepartage(etat, a, b) !== null;
 
   const lancer = () => {
-    const d = prochainDepartage(etat, a, b, reglages);
+    const d = prochainDepartage(etat, a, b);
     setEtatDep(d ? { t: "quiz", a, b, avant: etat, poses: [] } : { t: "comparaison", a, b });
   };
 
   // La fin : le bilan, et la comparaison côte à côte si les deux pays restent à égalité.
-  const finir = (avant: Etat, apres: Etat) => setEtatDep({ t: "fin", a, b, message: bilanDepartage(avant, apres, a, b, reglages), egalite: encoreEgalite(apres, a, b, reglages) });
+  const finir = (avant: Etat, apres: Etat) => setEtatDep({ t: "fin", a, b, message: bilanDepartage(avant, apres, a, b), egalite: encoreEgalite(apres, a, b) });
 
   if (etatDep?.t === "quiz") {
-    const d = etatDep.poses.length < MAX_DEPARTAGE ? prochainDepartage(etat, a, b, reglages) : null;
+    const d = etatDep.poses.length < MAX_DEPARTAGE ? prochainDepartage(etat, a, b) : null;
     if (!d) {
       // Plus rien à demander (le classement a changé entre-temps) : on propose le bilan.
       return (
         <section className="mt-6 rounded-3xl border border-bord bg-creux p-4 sm:p-6">
-          <p className="font-medium">{reflexionDuo(etat, a, b, reglages)}</p>
+          <p className="font-medium">{reflexionDuo(etat, a, b)}</p>
           <button type="button" onClick={() => finir(etatDep.avant, etat)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Voir ce qui a changé</button>
         </section>
       );
@@ -106,7 +106,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
       const suivant = repondre(etat, d.id, r);
       ecrireEtat(suivant);
       const poses = [...etatDep.poses, d.id];
-      const encore = poses.length < MAX_DEPARTAGE && encoreEgalite(suivant, a, b, reglages) && prochainDepartage(suivant, a, b, reglages);
+      const encore = poses.length < MAX_DEPARTAGE && encoreEgalite(suivant, a, b) && prochainDepartage(suivant, a, b);
       if (encore) setEtatDep({ ...etatDep, poses });
       else finir(etatDep.avant, suivant);
     };
@@ -132,7 +132,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
           {etatDep.egalite && (
             <>
               <p className="mt-4">Pour t’aider à choisir, les deux pays côte à côte.</p>
-              <Comparaison la={la} lb={lb} etat={etat} reglages={reglages} />
+              <Comparaison la={la} lb={lb} etat={etat} />
             </>
           )}
           <button type="button" onClick={() => setEtatDep(null)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Fermer</button>
@@ -140,7 +140,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
       ) : etatDep?.t === "comparaison" ? (
         <>
           <p className="mt-2">Les deux pays côte à côte, sur ce qui compte pour toi.</p>
-          <Comparaison la={la} lb={lb} etat={etat} reglages={reglages} />
+          <Comparaison la={la} lb={lb} etat={etat} />
           <button type="button" onClick={() => setEtatDep(null)} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Fermer</button>
         </>
       ) : peutTrancher ? (
@@ -154,7 +154,7 @@ export default function Departage({ etat, reglages, top, lignes, etatDep, setEta
       ) : (
         <>
           {/* Plus aucune question ne les sépare : pas de bouton qui mène à rien, mais de quoi réfléchir. */}
-          <p className="mt-2">{reflexionDuo(etat, a, b, reglages)}</p>
+          <p className="mt-2">{reflexionDuo(etat, a, b)}</p>
           <button type="button" onClick={() => setEtatDep({ t: "comparaison", a, b })} className={`${BOUTON} mt-3 border border-bord bg-carte hover:border-bleu`}>Les comparer côte à côte</button>
         </>
       )}

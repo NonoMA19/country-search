@@ -4,7 +4,7 @@
 // Usage : npm run simulation   (ou : npm run simulation -- 1000 pour moins de parcours)
 import { quiz, trouverElement, type Element } from "@/lib/donnees";
 import { PASSER } from "@/lib/elements";
-import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, surprisePriorites, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
+import { LIBELLE_FIABILITE, REGLES, topSansRegle, calculer, repondre, cleTop3, mesureClassante, noteContinue, paysCouverts, paysSurprise, surprisePriorites, surpriseRepli, sceneDe, type Etat, type Ligne, type NiveauFiabilite } from "@/lib/moteur";
 import { mesures, notes } from "@/lib/donnees";
 import { chapitreDe, estAdaptatif, etatAvant, nombreEcrans, phrasesSwipe, prochainAffiner, questionnaireFini, restantsAffiner } from "@/lib/parcours";
 import { SESSION_VIDE, validerSession } from "@/lib/memoire";
@@ -69,8 +69,8 @@ for (let i = 0; i < NB; i++) {
   for (const l of sans) if (!top.some((t) => t.pays.id === l.pays.id) && l.manquePrincipal.length) ecartesRegle[l.pays.nom] = (ecartesRegle[l.pays.nom] ?? 0) + 1;
   if (top[0]) enN1[top[0].pays.id] = (enN1[top[0].pays.id] ?? 0) + 1;
   for (const l of top) enTop3[l.pays.id] = (enTop3[l.pays.id] ?? 0) + 1;
-  // Comme sur la page résultat : d'abord le pays surprise par tes priorités, sinon celui qu'un seul choix fait reculer.
-  const s = surprisePriorites(etat, calculer(etat).filter((l) => !l.ecart), top) ?? paysSurprise(etat, calculer(etat), top);
+  // Comme sur la page résultat : par tes priorités, sinon celui qu'un seul choix fait reculer, sinon le repli (prompt 8).
+  const s = surprisePriorites(etat, calculer(etat).filter((l) => !l.ecart), top) ?? paysSurprise(etat, calculer(etat), top) ?? surpriseRepli(etat, calculer(etat).filter((l) => !l.ecart), top);
   if (s) surprises[s.cause] = (surprises[s.cause] ?? 0) + 1;
   const vusFormats = new Set(etat.ordre.map((id) => trouverElement(id)!.type));
   for (const f of vusFormats) formats[f] = (formats[f] ?? 0) + 1;

@@ -17,7 +17,7 @@ const FAMILLE_LIMITE: Record<string, string> = { "hors-europe": "limites-distanc
 export function versV2(r: Record<string, Valeur>): Record<string, Valeur> {
   const res: Record<string, Valeur> = {};
   for (const [k, v] of Object.entries(r)) {
-    if (k === "classement" && Array.isArray(v)) { res.sacrifice = v[0]; if (v.length >= 3) res["second-plan"] = v[v.length - 1]; continue; }
+    if (k === "classement" && Array.isArray(v)) { res.sacrifice = v; continue; }
     if (k === "duree") { res.timeline = { duree: String(v), ...(String(v) === "plus-2" ? { apres: "rester" } : {}) }; continue; }
     if (k === "budget") { if (BUDGETS[String(v)]) res.budget = BUDGETS[String(v)]; continue; }
     if (k === "limites" && typeof v === "object" && !Array.isArray(v)) {
