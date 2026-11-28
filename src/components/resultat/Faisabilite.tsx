@@ -109,9 +109,9 @@ export function FaisabilitePourToi({ paysId }: { paysId: string }) {
       </p>
     );
   }
-  const { etat, reglages } = session;
-  const budget = budgetDe(etat, reglages);
-  const ligne = calculer(etat, reglages).find((l) => l.pays.id === paysId);
+  const { etat } = session;
+  const budget = budgetDe(etat);
+  const ligne = calculer(etat).find((l) => l.pays.id === paysId);
   return (
     <div className="mt-3 rounded-2xl border border-bord bg-carte p-4">
       <p className="font-semibold">D’après tes réponses au quiz</p>

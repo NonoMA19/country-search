@@ -18,7 +18,7 @@ import { intuition } from "@/lib/intuition";
 import { PASSER } from "@/lib/elements";
 import { ecrire, useSession, type Etape, type Session } from "@/lib/memoire";
 import { aideDe, annulerDerniere, changerReponse, repondre, type Etat } from "@/lib/moteur";
-import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, nombreEcrans, elementVisible, estAdaptatif, nonDemandes, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
+import { CHAPITRES, MAX_ADAPTATIF, NB_CHAPITRES, chapitreDe, elementVisible, estAdaptatif, prochainAffiner, prochainElement, restantsAffiner, topCourant, vusDans } from "@/lib/parcours";
 import { portraitComplet } from "@/lib/portrait";
 import { syntheseProfil } from "@/lib/profil";
 
@@ -194,40 +194,6 @@ function EcranIntuition({ etat, suite }: { etat: Session["etat"]; suite: () => v
   );
 }
 
-// « Ce qu'on ne t'a pas demandé, et pourquoi » : l'écran final du questionnaire.
-// Les éléments de la banque non posés, regroupés par raison ; ce que le site ne sait pas encore mesurer ; ce qu'il ne demande jamais.
-const PAS_ENCORE = ["Le loyer par ville", "les impôts (ce qui reste sur 100 € bruts, au-delà du salaire moyen)", "les transports", "les écoles en français", "ton expérience pro et ton diplôme, que certains visas exigent"];
-function EcranPasDemande({ etat, suite }: { etat: Session["etat"]; suite: () => void }) {
-  const liste = nonDemandes(etat);
-  const n = liste.reduce((t, g) => t + g.titres.length, 0);
-  return (
-    <>
-      <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">Avant ton résultat</p>
-      <h1 id="titre-ecran" tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">Ce qu’on ne t’a pas demandé, et pourquoi</h1>
-      <p className="mt-2 text-lg leading-snug">Tu as répondu à {nombreEcrans(etat)} écrans. {n} autres questions existent : voici pourquoi on ne te les a pas posées.</p>
-      <div className="mt-4 space-y-3">
-        {liste.map((g, k) => (
-          <details key={g.raison} className="ligne-une-par-une rounded-2xl border border-bord bg-carte p-3" style={{ animationDelay: `${k * 120}ms` }}>
-            <summary className="min-h-11 cursor-pointer py-1 font-semibold leading-snug">{g.raison} <span className="font-normal text-gris">({g.titres.length})</span></summary>
-            <ul className="mt-2 list-disc space-y-0.5 pl-5 text-sm">{g.titres.map((t) => <li key={t}>{t}</li>)}</ul>
-          </details>
-        ))}
-        <div className="rounded-2xl border border-bord bg-carte p-3">
-          <p className="font-semibold">Ce qu’on ne sait pas encore mesurer pour les 38 pays</p>
-          <p className="mt-1 text-sm">{PAS_ENCORE.join(" ; ")}. Ces sujets viendront quand des données ouvertes et comparables existeront.</p>
-        </div>
-        <div className="rounded-2xl border border-bord bg-carte p-3">
-          <p className="font-semibold">Ce qu’on ne te demandera jamais</p>
-          <p className="mt-1 text-sm">Tes opinions politiques, ta religion, ta santé. Tes réponses restent dans ton navigateur : rien n’est envoyé.</p>
-        </div>
-      </div>
-      <div className={`${BARRE_BAS} pt-3 pb-4 lg:py-0`}>
-        <button type="button" data-valider onClick={suite} className={BOUTON_PLEIN}>Continuer</button>
-      </div>
-    </>
-  );
-}
-
 // Un écran en deux temps (prompt 7) : d'abord pourquoi tu pars, puis sous quelle forme. Le deuxième temps glisse
 // depuis la droite (un simple fondu en mouvement réduit). Les deux réponses sont enregistrées ensemble, à la fin.
 function DeuxTemps({ premier, second, etat, finir }: { premier: Element; second: Element; etat: Etat; finir: (e: Etat) => void }) {
@@ -349,20 +315,10 @@ export default function Quiz() {
     return aller({ t: "quiz" }, { etat: derniere?.memeEcranQue && avant.ordre.at(-1) === derniere.memeEcranQue ? annulerDerniere(avant) : avant });
   };
 
-  // ----- Ce qu'on ne t'a pas demandé, et pourquoi -----
-  if (etape.t === "pas-demande") {
-    return (
-      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourQuiz} panneau={apercu}>
-        <EcranPasDemande etat={etat} suite={() => aller({ t: "intuition" })} />
-      </Cadre>
-    );
-  }
-
   // ----- Ton intuition et tes réponses -----
   if (etape.t === "intuition") {
-    const retourIntuition = () => aller({ t: "pas-demande" });
     return (
-      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourIntuition}>
+      <Cadre cle={ecran} chapitre={NB_CHAPITRES} part={1} retour={retourQuiz}>
         <EcranIntuition etat={etat} suite={() => aller({ t: "portrait" })} />
       </Cadre>
     );
@@ -431,8 +387,8 @@ export default function Quiz() {
   // ----- Le parcours : l'élément suivant -----
   const el = prochainElement(etat);
   if (!el) {
-    // Tout est répondu : ce qu'on ne t'a pas demandé, ton intuition face à tes réponses, puis le portrait.
-    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "pas-demande" } }));
+    // Tout est répondu : ton intuition face à tes réponses, puis le portrait.
+    if (typeof window !== "undefined") queueMicrotask(() => ecrire({ ...session, etape: { t: "intuition" } }));
     return <Chargement />;
   }
   // Un nouveau chapitre commence : son écran d'ouverture (à partir du chapitre 2).
@@ -455,6 +411,8 @@ export default function Quiz() {
       {second
         ? <DeuxTemps key={`${el.id}:${etat.ordre.length}`} premier={el} second={second} etat={etat} finir={(e) => aller({ t: "quiz" }, { etat: e })} />
         : <F key={`${el.id}:${etat.ordre.length}`} element={el} etat={etat} repondre={suivant} passer={() => suivant(PASSER)} />}
+      {/* Le premier écran du quiz : la confidentialité, en petit (avant, sur l'écran « Ce qu'on ne t'a pas demandé »). */}
+      {etat.ordre.length === 0 && <p className="mt-4 text-xs text-gris">Tes réponses restent dans ton navigateur : rien n’est envoyé.</p>}
       {/* Le top 3 sous la question (chapitres 3 et 4), sur toutes les tailles. */}
       {adaptatif && top.length > 0 && (
         <TopEnCours top={top.map((l) => ({ id: l.pays.id, nom: l.pays.nom, iso2: l.pays.iso2 }))} change={change} />

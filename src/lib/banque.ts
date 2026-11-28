@@ -77,7 +77,7 @@ export function itemsBanque(): Item[] {
       }
       continue;
     }
-    if (el.type === "choix-cartes" && (el.id === "motivation" || el.id === "secteur" || el.id === "libertes-top")) {
+    if (el.type === "choix-cartes" && (el.id === "motivation" || el.id === "secteur")) {
       for (const o of el.options.filter((x) => x.id !== "autre" && x.id !== "inconnu")) {
         const ms = el.id === "secteur" ? [`secteur-${o.id}`] : mesuresDe(o.effets);
         const effet = el.id === "secteur" ? `Il te ressemble : part de l’emploi dans ce secteur, si tu choisis le critère « Évoluer dans mon secteur » (importance du critère) ou la motivation carrière (0,5). Section CITI ${o.citi}.`
@@ -88,7 +88,7 @@ export function itemsBanque(): Item[] {
     }
     if (el.type === "tri-zones") {
       for (const c of el.cartes) ajouter({ ...base, id: `valeur/${c.id}`, texte: c.label, type: typeDe(c.mesures), donnee: donnees(c.mesures),
-        effet: c.mesures.length ? `Il te ressemble : ${c.mesures.map((m) => mesures[m]?.court ?? m).join(", ")} : « Indispensable » 1, « Un vrai plus » 0,5, « Peu importe » ou non rangée : rien. Il t’est accessible : « Indispensable » et pays noté 1 ou 2 : −15.${c.id === "libertes" ? " Ouvre la relance « Tes 3 libertés »." : ""}` : "Portrait seulement : pas de donnée pays pour 30 pays (ou licence qui interdit de transformer la note).",
+        effet: c.mesures.length ? `Il te ressemble : ${c.mesures.map((m) => mesures[m]?.court ?? m).join(", ")}${c.mesures.length > 1 ? ` (${c.mesures.length} mesures, l’importance 1 partagée entre elles)` : ""} : carte touchée 1, non touchée : rien. 3 cartes au plus.` : "Portrait seulement : pas de donnée pays pour 30 pays (ou licence qui interdit de transformer la note).",
         pourquoi: pourquoi(el) });
       continue;
     }

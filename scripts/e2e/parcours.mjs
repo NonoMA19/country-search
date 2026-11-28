@@ -37,7 +37,6 @@ for (const [mode, options] of [["telephone", { viewport: { width: 375, height: 8
     if (await bouton(/^Commencer le chapitre/).isVisible().catch(() => false)) { await bouton(/^Commencer le chapitre/).click(); continue; }
     if (await bouton(/C’est moi, voir mon résultat/).isVisible().catch(() => false)) { await bouton(/C’est moi, voir mon résultat/).click(); await page.waitForURL(/resultat/); break; }
     if (await bouton(/Voir mon portrait/).isVisible().catch(() => false)) { await bouton(/Voir mon portrait/).click(); continue; }
-    if (titre.startsWith("Ce qu’on ne t’a pas demandé")) { verifier((await page.locator("details").count()) > 0, `${mode} : écran final sans raison`); await bouton(/^Continuer$/).click(); continue; }
     ecrans++;
     // Répondre : les situations à classer d'abord (un bouton par groupe), puis les options, puis valider ; sinon « Passer ».
     const groupes = page.locator("main [role='group']");

@@ -5571,9 +5571,10 @@
           "id": "libertes",
           "label": "Les libertés",
           "mesures": [
-            "expression"
+            "expression",
+            "justice"
           ],
-          "portrait": "Les libertés comptent pour toi.",
+          "portrait": "Les libertés comptent pour toi : dire ce que tu penses sans risque, et une justice indépendante.",
           "emoji": "speaking-head"
         },
         {
@@ -5657,87 +5658,6 @@
           "mesures": [],
           "portrait": "Un rythme de vie calme compte pour toi.",
           "emoji": "leaf-fluttering-in-wind"
-        }
-      ]
-    },
-    {
-      "id": "libertes-top",
-      "type": "choix-cartes",
-      "chapitre": 5,
-      "theme": "Tes valeurs",
-      "multiple": true,
-      "max": 3,
-      "sansImage": true,
-      "relanceDe": {
-        "element": "valeurs",
-        "reponses": [
-          "libertes:compte"
-        ]
-      },
-      "titre": "Tes 3 libertés les plus importantes",
-      "texte": "Choisis-en jusqu’à trois.",
-      "dimensions": [
-        "valeurs"
-      ],
-      "aucun": "Aucune en particulier",
-      "regleAffichage": "Seulement si tu as touché « Les libertés ».",
-      "aide": {
-        "enjeu": "« Les libertés » recouvrent des choses différentes, mesurées par des sources différentes.",
-        "cartes": [
-          {
-            "pastille": "Choisie, avec une donnée",
-            "texte": "Les pays bien notés sur cette liberté passent devant (V-Dem, Banque mondiale)."
-          },
-          {
-            "pastille": "Presse libre, peu de corruption",
-            "texte": "Leurs sources (RSF, Transparency International) interdisent de transformer leur note : elles enrichissent ton portrait, sans changer ton classement."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "expression",
-          "label": "Dire ce que je pense sans risque",
-          "effets": [
-            {
-              "mesures": [
-                "expression"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "La liberté d’expression compte pour toi."
-        },
-        {
-          "id": "justice",
-          "label": "Une justice indépendante, des règles respectées",
-          "effets": [
-            {
-              "mesures": [
-                "justice"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Une justice indépendante compte pour toi."
-        },
-        {
-          "id": "presse",
-          "label": "Une presse libre",
-          "effets": [],
-          "portrait": "Une presse libre compte pour toi."
-        },
-        {
-          "id": "integrite",
-          "label": "Peu de corruption",
-          "effets": [],
-          "portrait": "Un pays peu corrompu compte pour toi."
-        },
-        {
-          "id": "vie-privee",
-          "label": "Le respect de ma vie privée",
-          "effets": [],
-          "portrait": "Le respect de ta vie privée compte pour toi."
         }
       ]
     },

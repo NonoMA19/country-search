@@ -6,7 +6,7 @@ import path from "node:path";
 import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, trouverElement, vie, type Valeur } from "@/lib/donnees";
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
-  ACCORD_NEUTRE, COUVERTURE_MIN, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
+  ACCORD_NEUTRE, COUVERTURE_MIN, MESURES_CALCULEES, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
   surprisePriorites, reflexionDuo, GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsEnvie, limiteTouche, accesPays, facteurAcces, noteContinue, noteCalcul, mesureClassante, REGLES, impossibiliteLegale, envieClassante, aideDe,
   type Etat, type Profil,
 } from "@/lib/moteur";
@@ -22,7 +22,6 @@ import { listeAVerifier } from "@/lib/averifier";
 import { complementMesure, disponibiliteMemo, mesureSecteur, raisonEnvieIndisponible } from "@/lib/moteur";
 import { mesures } from "@/lib/donnees";
 import { itemsBanque } from "@/lib/banque";
-import { nonDemandes } from "@/lib/parcours";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
 
 // ---------- Compteur d'échecs ----------
@@ -1163,7 +1162,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   const reste = calculer(construire({ profil: { age: "18-25" }, envies: ["prix", "securite"], reponses: { timeline: { duree: "6-12", apres: "rester" } } })).find((l) => l.pays.id === "australie")!;
   verifier(reste.obstacles.some((o) => o.type === "duree"), "durée : « rester si je me plais » ne rend pas le PVT moins accessible");
   const val = trouverElement("valeurs");
-  verifier(val?.chapitre === 5 && val.type === "tri-zones" && val.cartes.length + (trouverElement("libertes-top") as { options: unknown[] }).options.length === 16, "valeurs : pas 16 valeurs en tout");
+  verifier(val?.chapitre === 5 && val.type === "tri-zones" && val.cartes.length === 11 && !trouverElement("libertes-top"), "valeurs : pas 11 valeurs, ou la relance des libertés existe encore");
   if (val?.type === "tri-zones") {
     const e = repondre(construire({ envies: ["salaire", "travail", "prix", "climat", "proche"] }), "valeurs", { stabilite: "indispensable", environnement: "plus", "egalite-genre": "egal" });
     verifier(effetsActifs(e).find((x) => x.mesure === "stabilite")?.poids === 1 && effetsActifs(e).find((x) => x.mesure === "environnement")?.poids === 0.5 && !effetsActifs(e).some((x) => x.mesure === "egalite-genre"), "valeurs : indispensable 1, vrai plus 0,5, peu importe rien");
@@ -1173,8 +1172,9 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     // Une valeur touchée compte (importance 1) dans « Il te ressemble », jamais dans « Il t'est accessible » (prompt 7).
     const ind = repondre(construire({ envies: ["prix"] }), "valeurs", { stabilite: "compte" });
     verifier(effetsActifs(ind).find((x) => x.mesure === "stabilite")?.poids === 1 && calculer(ind).every((l) => !l.obstacles.some((o) => o.type === "valeur")), "valeurs : une carte touchée ne compte pas 1, ou retire de l'accès");
-    // Les libertés : relance seulement si « Les libertés » comptent ; presse et corruption n'ont pas de note (licence).
-    verifier(!elementVisible(trouverElement("libertes-top")!, repondre(construire({ envies: ["prix"] }), "valeurs", { stabilite: "compte" })) && elementVisible(trouverElement("libertes-top")!, repondre(construire({ envies: ["prix"] }), "valeurs", { libertes: "compte" })), "libertés : relance mal ouverte");
+    // Les libertés (prompt 8) : plus de sous-question ; la carte compte la liberté d'expression et l'État de droit, à moitié chacun.
+    const lib = effetsActifs(repondre(construire({ envies: ["prix"] }), "valeurs", { libertes: "compte" })).filter((x) => x.origine === "element:valeurs/libertes");
+    verifier(lib.length === 2 && lib.every((x) => x.poids === 0.5) && lib.some((x) => x.mesure === "expression") && lib.some((x) => x.mesure === "justice"), `libertés : ${lib.map((x) => `${x.mesure} ${x.poids}`).join(", ")}`);
   }
 }
 
@@ -1224,7 +1224,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     verifier(!!x.id && x.chapitre >= 1 && !!x.format && !!x.donnee && !!x.effet && !!x.condition && !!x.pourquoi, `banque : fiche incomplète (${x.id})`);
     if (x.type === "Classement") verifier(!x.donnee.startsWith("Portrait"), `banque : ${x.id} classe sans donnée pays`);
   }
-  verifier(items.filter((x) => x.id.startsWith("critere/")).length === quiz.envies.length && items.filter((x) => x.id.startsWith("valeur/") || x.id.startsWith("libertes-top/")).length === 16 && items.filter((x) => x.id.startsWith("secteur/")).length === 16, "banque : critères, 16 valeurs et 16 secteurs");
+  verifier(items.filter((x) => x.id.startsWith("critere/")).length === quiz.envies.length && items.filter((x) => x.id.startsWith("valeur/")).length === 11 && items.filter((x) => x.id.startsWith("secteur/")).length === 16, "banque : critères, 11 valeurs et 16 secteurs");
   // « Pourquoi on te demande ça ? » dit quand une réponse ne peut pas bouger le classement.
   const idee = trouverElement("idee-reunion")!;
   verifier(aideDe(idee).cartes.some((c) => c.pastille === "Données"), "aide : la décision (28 pays) ne dit pas qu'elle enrichit seulement le portrait");
@@ -1233,18 +1233,48 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   for (const el of quiz.elements) for (const t of [el.titre, el.texte ?? "", el.aide.enjeu, ...el.aide.cartes.map((c) => c.texte)]) verifier(!/importance\s*\d|\b\d,\d+\b(?! ?(€|°C|h|%|sur))/.test(t) || /€|°C/.test(t), `texte affiché avec une importance chiffrée (${el.id} : ${t})`);
   const sourcesUi = ["src/components/formats/Curseur.tsx", "src/components/resultat/Resultat.tsx", "src/components/formats/TriZones.tsx", "src/components/formats/Seuil.tsx"].map((f) => fs.readFileSync(path.join(process.cwd(), f), "utf8"));
   verifier(!sourcesUi.some((x) => />[^<]*importance \{/.test(x)), "une importance chiffrée est affichée à l'écran");
-  // L'écran final : chaque élément de la banque est soit posé, soit dans « Ce qu'on ne t'a pas demandé », avec une raison.
-  const fini = quizAuHasard(hasard(606));
-  const pas = nonDemandes(fini);
-  const cites = pas.reduce((t, g) => t + g.titres.length, 0);
-  verifier(pas.every((g) => g.raison.length > 10 && g.titres.length > 0), "écran final : une raison vide");
-  verifier(fini.ordre.length + cites >= quiz.elements.length - 2, `écran final : ${quiz.elements.length - fini.ordre.length - cites} éléments ni posés ni expliqués`);
   // « Il t'est accessible » : la porte d'entrée seule ne retire jamais plus de 20 points.
   for (const p of pays) { const l = calculer(construire({ envies: ["prix"] })).find((x) => x.pays.id === p.id)!; verifier(l.acces >= 80, `accès : ${p.nom} à ${l.acces} sans aucune limite ni budget`); }
   void accesPays;
 }
 
 // ---------- Bilan ----------
+// 2.29 Prompt 8 : aucun poids orphelin, aucun critère compté deux fois.
+{
+  // Chaque mesure visée par une réponse existe (dans criteres.json, ou calculée par le moteur).
+  const connues = new Set([...Object.keys(mesures), ...MESURES_CALCULEES, "secteur"]);
+  const visees: string[] = [];
+  const lire = (x: unknown): void => {
+    if (Array.isArray(x)) { x.forEach(lire); return; }
+    if (x && typeof x === "object") for (const [k, v] of Object.entries(x)) { if (k === "mesures" && Array.isArray(v)) visees.push(...(v as string[])); else lire(v); }
+  };
+  lire(quiz.elements); lire(quiz.envies); lire(quiz.objectifs);
+  const inconnues = [...new Set(visees.filter((m) => !connues.has(m)))];
+  verifier(inconnues.length === 0, `mesures orphelines (visées par une réponse, sans donnée ni calcul) : ${inconnues.join(", ")}`);
+  // Chaque écran que le code cite par son nom existe encore dans la banque.
+  const cites = new Set<string>();
+  const MOTIF = /(?:trouverElement\(|optionChoisie\([^,]+, |dilemme: |reponses\[)"([a-z0-9-]+)"|reponses\.([a-z][a-zA-Z]*)\b/g;
+  const METHODES = ["includes", "join", "length", "map", "some", "every", "filter"];
+  const lireDossier = (d: string): void => {
+    for (const f of fs.readdirSync(d, { withFileTypes: true })) {
+      const c = path.join(d, f.name);
+      if (f.isDirectory()) lireDossier(c);
+      else if (/\.tsx?$/.test(f.name)) for (const m of fs.readFileSync(c, "utf8").matchAll(MOTIF)) { const id = m[1] ?? m[2]; if (!METHODES.includes(id)) cites.add(id); }
+    }
+  };
+  lireDossier(path.join(process.cwd(), "src"));
+  verifier(cites.size >= 8, `test des écrans cités : seulement ${cites.size} trouvés (la recherche est cassée)`);
+  const absents = [...cites].filter((id) => !trouverElement(id));
+  verifier(absents.length === 0, `écrans cités dans le code mais absents de la banque : ${absents.join(", ")}`);
+  // Une même réponse ne compte jamais deux fois la même mesure : dans un parcours, chaque mesure garde une seule importance (le maximum).
+  for (let k = 0; k < 40; k++) {
+    const e = quizAuHasard(hasard(8000 + k));
+    const actifs = effetsActifs(e);
+    const vus = new Set<string>();
+    verifier(actifs.every((x) => { const cle = `${x.mesure}|${x.sens}`; const deja = vus.has(cle); vus.add(cle); return !deja; }), `parcours ${k} : une mesure comptée deux fois dans le calcul`);
+  }
+}
+
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
   // Les échecs semblables (même message aux nombres près) sont regroupés.

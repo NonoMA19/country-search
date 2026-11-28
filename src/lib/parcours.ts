@@ -27,7 +27,7 @@ export function elementVisible(el: Element, etat: Etat): boolean {
   if (el.type === "choix-cartes" && el.source === "envies-second") return nbCriteres >= 3;
   if (el.type === "choix-cartes" && el.source === "envies-restantes") return etat.reponses.envies !== undefined;
   // Une famille de limites n'est posée que si une de ses situations touche un de tes 10 premiers pays :
-  // sinon, elle ne pourrait rien changer (elle est citée dans « Ce qu'on ne t'a pas demandé »).
+  // sinon, elle ne pourrait rien changer.
   if (el.type === "tri-limites") return situationsLimites(el, etat).length > 0;
   if (el.type === "dilemme") {
     if (!dilemmeActif(el)) return false;
@@ -337,27 +337,3 @@ export function resultatProvisoire(etat: Etat): boolean {
 // Le nombre d'écrans d'un parcours (les écrans de transition et le portrait ne comptent pas).
 // Un élément montré dans le même écran qu'un autre (le projet, avec la motivation) ne compte pas en plus.
 export const nombreEcrans = (etat: Etat) => etat.ordre.filter((id) => { const m = trouverElement(id)?.memeEcranQue; return !m || !etat.ordre.includes(m); }).length;
-
-// ---------- « Ce qu'on ne t'a pas demandé, et pourquoi » ----------
-// Chaque élément de la banque qui n'a pas été posé, avec sa raison, regroupé par raison (écran final du questionnaire).
-export type NonDemande = { raison: string; titres: string[] };
-const titreCourt = (el: Element) => (el.type === "tri-limites" ? `Tes limites sur ${el.famille ?? el.theme}` : el.titre.replace(/\s*\?$/, ""));
-export function nonDemandes(etat: Etat): NonDemande[] {
-  const groupes = new Map<string, string[]>();
-  const noter = (raison: string, el: Element) => groupes.set(raison, [...(groupes.get(raison) ?? []), titreCourt(el)]);
-  for (const el of quiz.elements) {
-    if (etat.reponses[el.id] !== undefined) continue;
-    if (el.relanceDe && !relanceOuverte(el, etat.reponses)) { noter("Une question de suite, qui ne se pose qu’après certaines réponses : tes réponses ne l’ont pas ouverte.", el); continue; }
-    if (!conditionRemplie(el.condition, etat.profil) || (el.type === "dilemme" && !conditionRemplie(el.afficheSi, etat.profil))) { noter("Elle ne concerne pas ton profil (ton projet, ton secteur, tes langues).", el); continue; }
-    if (el.type === "dilemme" && !dilemmeActif(el)) { noter("Pas assez de données pays pour qu’elle compte.", el); continue; }
-    if (el.type === "tri-limites") { noter("Aucune de ces limites ne touchait tes 10 premiers pays : elles n’auraient rien changé.", el); continue; }
-    if (el.type === "choix-cartes" && el.source?.startsWith("envies")) { noter("Tu as choisi trop peu de critères pour qu’on te la pose.", el); continue; }
-    if (estAdaptatif(el.chapitre)) {
-      if (el.dejaCouvertPar?.some((id) => etat.reponses[id] !== undefined)) noter("Une autre de tes réponses disait déjà la même chose.", el);
-      else noter("Elle aurait peu départagé tes premiers pays : on a préféré des questions plus utiles pour toi.", el);
-      continue;
-    }
-    noter("Elle n’était pas utile à ce moment du parcours.", el);
-  }
-  return [...groupes].map(([raison, titres]) => ({ raison, titres: [...new Set(titres)] }));
-}

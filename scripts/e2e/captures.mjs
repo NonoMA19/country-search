@@ -33,7 +33,6 @@ for (let n = 0; n < 120; n++) {
   if (await visible(bouton(/^Commencer le chapitre/))) { await bouton(/^Commencer le chapitre/).click(); continue; }
   if (titre === "Ton portrait") { await capture("3-portrait"); await bouton(/C’est moi, voir mon résultat/).click(); await page.waitForURL(/resultat/); break; }
   if (await visible(bouton(/Voir mon portrait/))) { await bouton(/Voir mon portrait/).click(); continue; }
-  if (titre.startsWith("Ce qu’on ne t’a pas demandé")) { await bouton(/^Continuer$/).click(); continue; }
   if (titre.startsWith("Ton secteur")) { await capture("1-secteurs"); await page.getByRole("button", { name: /Tech et data/ }).click(); continue; }
   if (titre.startsWith("Tu parles d’autres langues")) {
     await page.getByRole("checkbox", { name: /Espagnol/ }).click();

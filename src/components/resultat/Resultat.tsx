@@ -20,8 +20,8 @@ import { doubleNationalite, mesures, notes, preuveMesure, type Preuve } from "@/
 import { uneFois } from "@/lib/clic";
 import { ecrire, recommencer, useSession } from "@/lib/memoire";
 import {
-  CATEGORIES, GROUPES, complementMesure, groupesEgalite, LIBELLE_BADGE, MOTS_NIVEAUX, NIVEAUX, aplatir, avecQui, budgetDe, budgetProfil, calculer, cranDe, effetsActifs, effetsAjustes, groupeReglable,
-  faisabilite, lignesTop, niveauDeduit, paysSurprise, surprisePriorites, visaSimple, valeurFrance, valeurLisible, verdict, LIBELLE_ACCES,
+  CATEGORIES, complementMesure, groupesEgalite, LIBELLE_BADGE, aplatir, avecQui, budgetDe, calculer, effetsActifs,
+  faisabilite, lignesTop, paysSurprise, surprisePriorites, visaSimple, valeurFrance, valeurLisible, verdict, LIBELLE_ACCES,
   type Badge, type Budget, type Etat, type Ligne, type PointsPays, type Surprise,
 } from "@/lib/moteur";
 import { accord, trouverPays } from "@/lib/pays";
@@ -340,7 +340,7 @@ export default function Resultat() {
   }, [charge]);
   if (!session) return <Chargement />;
 
-  const { etat, reglages } = session;
+  const { etat } = session;
   if (!questionnaireFini(etat)) {
     return (
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-10">
@@ -357,32 +357,24 @@ export default function Resultat() {
   // Un double clic sur « Le remonter » ne remonte qu’un seul pays (garde de 400 ms, comme dans le quiz).
   const remonter = (id: string) => uneFois(() => { if (!etat.remontes.includes(id)) maj({ etat: { ...etat, remontes: [...etat.remontes, id] } }); });
 
-  const lignes = calculer(etat, reglages);
+  const lignes = calculer(etat);
   const tous = lignes.filter((l) => !l.ecart);
   const principaux = seulementOuvertes ? tous.filter((l) => l.porte.badge === "ouverte") : tous;
   const ecartes = lignes.filter((l) => l.ecart);
   const top = principaux.filter((l) => !l.peuDeDonnees).slice(0, 3);
   const suite = principaux.filter((l) => !top.includes(l));
   // Le pays surprise : d'abord celui qui colle à tes priorités hors de ta carte, sinon celui qu'un seul choix fait reculer.
-  const brute = surprisePriorites(etat, principaux, top) ?? paysSurprise(etat, lignes, top, reglages);
+  const brute = surprisePriorites(etat, principaux, top) ?? paysSurprise(etat, lignes, top);
   const surprise = brute && (!seulementOuvertes || brute.ligne.porte.badge === "ouverte") ? brute : null;
   // « Pour toi » et « À savoir » : jamais deux pays avec exactement la même phrase.
   const phrases = lignesTop(top, etat);
-  // Le curseur part de la même somme que la liste « Il te manquerait… » : le haut de ta tranche
-  // (ce qui manque « au moins »), ou son bas s'il n'y a pas de haut, ou 2 000 € si tu ne sais pas encore.
-  const tranche = budgetProfil(etat.profil);
-  const budget = reglages.budget ?? tranche?.max ?? tranche?.min ?? 2000;
-  const sansArgent = tous.filter((l) => l.porte.manque !== null);
   const encoreDesDilemmes = prochainAffiner(etat) !== null;
   const affiner = () => { ecrire({ ...session, etape: { t: "affiner" } }); router.push("/quiz"); };
   const cas = doubleNationalite.cas.find((c) => c.id === etat.profil["nationalite-laquelle"]);
   const paysCas = cas ? trouverPays(cas.pays) : undefined;
-  // Deux cas différents : tu n'as répondu à rien qui compte (rienRepondu), ou tes curseurs ont tout mis à zéro (toutAZero).
+  // Tu n'as répondu à rien qui compte pour le classement.
   const rienRepondu = effetsActifs(etat).length === 0;
-  const toutAZero = rienRepondu || effetsAjustes(etat, reglages).length === 0;
   const revoirQuestion = (id: string) => { ecrire({ ...session, etape: { t: "revoir", id } }); router.push("/quiz"); };
-  const reponses = effetsActifs(etat);
-  const reglagesModifies = Object.keys(reglages.niveaux).length > 0;
   const rangDe = (l: Ligne) => principaux.indexOf(l);
   // Peu de réponses : on le dit, au lieu d'afficher « Très bonne piste » (et parfois 100 %) sur trop peu d'éléments.
   const provisoire = resultatProvisoire(etat);
@@ -426,7 +418,7 @@ export default function Resultat() {
       <section aria-labelledby="titre-top" className="mt-6 lg:mt-8">
         <h2 id="titre-top" className="text-xl font-semibold lg:sr-only">Ton top 3</h2>
         <div className="lg:mt-0 lg:grid lg:grid-cols-[20rem_minmax(0,1fr)] lg:items-start lg:gap-8">
-        {!toutAZero && <ListeClassement lignes={principaux} top={top} choisi={idChoisi} choisir={choisir} />}
+        {!rienRepondu && <ListeClassement lignes={principaux} top={top} choisi={idChoisi} choisir={choisir} />}
         <div id="fiche-choisie" className="min-w-0 scroll-mt-4">
         <p className="sr-only" aria-live="polite">{choisi && ligneChoisie ? `Fiche affichée : ${ligneChoisie.pays.nom}.` : ""}</p>
         <Glissement cle={top.map((l) => l.pays.id).join(",")}>
@@ -440,28 +432,26 @@ export default function Resultat() {
                 ))}
               </div>
             </div>
-          ) : toutAZero ? (
-            <p className="rounded-2xl border border-bord bg-carte p-4 font-medium">Avec tes curseurs « Et si… ? », plus rien ne compte pour classer les pays. Remonte au moins un curseur.</p>
           ) : (
             top.map((l, i) => (
               // Téléphone et tablette : les 3 cartes l'une sous l'autre. Ordinateur : seulement celle du pays choisi à gauche.
               <div key={l.pays.id} data-flip={l.pays.id} className={`${i === 0 && arrivee ? "revelation" : ""} ${l.pays.id === idChoisi ? "" : "lg:hidden"}`}>
-                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat, reglages)} provisoire={provisoire} />
+                <CartePays ligne={l} rang={i + 1} egalite={avecQui(principaux, rangDe(l))} etat={etat} points={phrases.get(l.pays.id)!} budget={budgetDe(etat)} provisoire={provisoire} />
               </div>
             ))
           )}
-          {!toutAZero && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
+          {!rienRepondu && top.length === 0 && <p className="text-gris">Aucun pays ne correspond avec ce filtre. Décoche-le pour tout revoir.</p>}
         </Glissement>
-        {choisieHorsTop && !toutAZero && (
+        {choisieHorsTop && !rienRepondu && (
           <div className="hidden lg:block">
-            <CartePays ligne={choisieHorsTop} rang={rangDe(choisieHorsTop) + 1} egalite={avecQui(principaux, rangDe(choisieHorsTop))} etat={etat} points={lignesTop([choisieHorsTop], etat).get(choisieHorsTop.pays.id)!} budget={budgetDe(etat, reglages)} provisoire={provisoire} />
+            <CartePays ligne={choisieHorsTop} rang={rangDe(choisieHorsTop) + 1} egalite={avecQui(principaux, rangDe(choisieHorsTop))} etat={etat} points={lignesTop([choisieHorsTop], etat).get(choisieHorsTop.pays.id)!} budget={budgetDe(etat)} provisoire={provisoire} />
           </div>
         )}
-        {!toutAZero && top.some((l) => avecQui(principaux, rangDe(l))) && (
+        {!rienRepondu && top.some((l) => avecQui(principaux, rangDe(l))) && (
           <p className="mt-3 text-sm text-gris">Deux pays voisins à 5 points d’écart ou moins sont considérés à égalité. C’est un indicateur, pas une vérité.</p>
         )}
-        {!toutAZero && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
-          <Departage etat={etat} reglages={reglages} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
+        {!rienRepondu && top.length >= 2 && (departage !== null || top[0].score - top[1].score <= ECART_EX_AEQUO) && (
+          <Departage etat={etat} top={top} lignes={lignes} etatDep={departage} setEtatDep={setDepartage} ecrireEtat={(e) => maj({ etat: e })} />
         )}
         {/* Sous le top 3, au-dessus de la liste complète : le filtre agit sur les deux, et le dit. */}
         {!rienRepondu && (
@@ -477,7 +467,7 @@ export default function Resultat() {
         </div>
       </section>
 
-      {surprise && !toutAZero && (
+      {surprise && !rienRepondu && (
         <section aria-labelledby="titre-surprise" className="mt-8 rounded-3xl border-2 border-dashed border-bleu bg-bleu-doux/40 p-4 sm:p-6">
           <h2 id="titre-surprise" className="flex items-center gap-2 text-xl font-semibold"><Sparkles aria-hidden="true" className="h-5 w-5 text-lien" /> Le pays surprise</h2>
           <p className="mt-1 text-sm text-gris">{surprise.cause === "priorites" ? "Un pays auquel tu n’avais peut-être pas pensé." : "Un pays qu’un seul de tes choix fait reculer, alors que sans ce choix il serait ton n° 1 ou ton n° 2."}</p>
@@ -486,52 +476,9 @@ export default function Resultat() {
       )}
 
       <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
-      <section aria-labelledby="titre-etsi" className="mt-10">
-        <h2 id="titre-etsi" className="text-xl font-semibold">Et si… ?</h2>
-        <p className="mt-1 text-sm text-gris">Chaque curseur part de ce que tu as répondu. Bouge-le : ton top 3 se met à jour juste au-dessus.</p>
-        <p className="sr-only" aria-live="polite">
-          {toutAZero ? "Plus aucun classement : remonte au moins un curseur." : `Ton top 3 : ${top.map((l, i) => `${i + 1}, ${l.pays.nom}, ${Math.round(l.score)} %`).join(" ; ")}.`}
-        </p>
-        <div className="mt-4 space-y-5 rounded-3xl border border-bord bg-carte p-5">
-          {GROUPES.map((g) => {
-            const reglable = groupeReglable(reponses, g.id);
-            const cran = cranDe(reglages.niveaux[g.id] ?? niveauDeduit(reponses, g.id));
-            const mot = MOTS_NIVEAUX[cran];
-            return (
-              <label key={g.id} className="block">
-                <span className="flex flex-wrap items-center justify-between gap-x-2">
-                  <span className="font-medium">{g.nom}</span>
-                  <span className="text-sm text-gris">{reglable ? mot : "Pas réglable"}</span>
-                </span>
-                <input type="range" min={0} max={NIVEAUX.length - 1} step={1} value={cran} disabled={!reglable} aria-label={g.nom} aria-valuetext={`${g.nom} : ${mot.toLowerCase()}`}
-                  onChange={(e) => maj({ reglages: { ...reglages, niveaux: { ...reglages.niveaux, [g.id]: NIVEAUX[Number(e.target.value)] } } })} className="mt-2 h-8 w-full disabled:opacity-40" />
-                <span className="flex justify-between text-xs text-gris" aria-hidden="true"><span>{MOTS_NIVEAUX[0]}</span><span>{MOTS_NIVEAUX.at(-1)}</span></span>
-                {!reglable && <span className="mt-1 block text-sm text-gris">Réponds à un dilemme sur la culture au travail pour régler ce curseur.</span>}
-              </label>
-            );
-          })}
-          {reglagesModifies && (
-            <button type="button" onClick={() => maj({ reglages: { ...reglages, niveaux: {} } })} className="inline-flex min-h-11 items-center text-sm font-medium text-lien underline">Revenir à tes réponses</button>
-          )}
-          <label className="block border-t border-bord pt-4">
-            <span className="flex flex-wrap items-center justify-between gap-x-2">
-              <span className="font-medium">Et si mon budget était de…</span>
-              <span className="font-semibold tabular-nums">{budget.toLocaleString("fr-FR")} €</span>
-            </span>
-            <input type="range" min={0} max={15000} step={250} value={budget} aria-label="Budget" aria-valuetext={`${budget.toLocaleString("fr-FR")} euros`} onChange={(e) => maj({ reglages: { ...reglages, budget: Number(e.target.value) } })} className="mt-2 h-8 w-full" />
-            <span className="mt-1 block text-sm text-gris">
-              {sansArgent.length === 0
-                ? "Avec ce budget, aucun visa de ta liste ne te demande plus que ce que tu as."
-                : sansArgent.length === 1
-                  ? `Il te manquerait de l’argent pour 1 pays : ${sansArgent[0].pays.nom}. Il reste classé.`
-                  : `Il te manquerait de l’argent pour ${sansArgent.length} pays : ${sansArgent.map((l) => l.pays.nom).join(", ")}. Ils restent classés.`}
-            </span>
-          </label>
-        </div>
-      </section>
 
 
-      {etat.profil.objectif === "stage-vie" && !toutAZero && <BlocVie etat={etat} top={top} />}
+      {etat.profil.objectif === "stage-vie" && !rienRepondu && <BlocVie etat={etat} top={top} />}
 
       {etat.profil.nationalite === "oui" && (
         <section aria-labelledby="titre-double" className="mt-10">
@@ -559,9 +506,9 @@ export default function Resultat() {
 
       </div>
 
-      {(!toutAZero && suite.length > 0) || ecartes.length > 0 ? <section aria-labelledby="titre-tous" className="mt-10">
+      {(!rienRepondu && suite.length > 0) || ecartes.length > 0 ? <section aria-labelledby="titre-tous" className="mt-10">
         <h2 id="titre-tous" className="text-xl font-semibold">Tous les pays</h2>
-        {!toutAZero && suite.length > 0 && <details className="mt-3 lg:hidden">
+        {!rienRepondu && suite.length > 0 && <details className="mt-3 lg:hidden">
           <summary className="flex min-h-12 cursor-pointer items-center rounded-2xl border border-bord bg-carte px-4 font-medium">Voir la suite du classement ({suite.length} pays)</summary>
           {suite.some((l) => grandGroupe(rangDe(l))) && <p className="mt-3 text-sm text-gris">Beaucoup de ces pays sont à 5 points ou moins les uns des autres : leur ordre compte peu. Réponds à plus de questions pour les départager.</p>}
           <ol className="mt-3 space-y-2">
