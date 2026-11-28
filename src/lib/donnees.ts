@@ -166,7 +166,8 @@ export type Seuil = BaseElement & { type: "seuil"; mesure: string; unite: string
 export type CarteZone = { id: string; label: string; mesures: string[]; portrait: string; phrase?: string; emoji?: string };
 export type TriZones = BaseElement & { type: "tri-zones"; zones: { id: string; label: string }[]; cartes: CarteZone[]; max?: number };
 // Le test à l'aveugle : quelques pays sans leur nom, quatre faits chacun, parmi ces mesures.
-export type BlindTest = BaseElement & { type: "blind-test"; nombre: number; faits: number; mesures: string[] };
+// exclure : un second test à l'aveugle (prompt 8) montre d'autres pays et d'autres thèmes que le test cité, et n'est posé qu'après lui.
+export type BlindTest = BaseElement & { type: "blind-test"; nombre: number; faits: number; mesures: string[]; exclure?: string };
 export type Dilemme = BaseElement & {
   type: "dilemme";
   echelle?: boolean; // 4 réponses : Plutôt A, Un peu A, Un peu B, Plutôt B

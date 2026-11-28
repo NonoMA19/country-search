@@ -1281,6 +1281,36 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
   }
 }
 
+// 2.30 Prompt 8 : le test à l'aveugle (jauges, sens des thèmes, second test).
+{
+  const bt = trouverElement("blind-test"), bt2 = trouverElement("blind-test-2");
+  verifier(bt?.type === "blind-test" && bt2?.type === "blind-test" && bt2.exclure === "blind-test", "aveugle : second test absent");
+  // Un thème universel (sécurité) : choisir un pays moins sûr que les autres ne crée aucune préférence (avant : une position qui faisait reculer les pays sûrs).
+  const sur = pays.map((p) => p.id).filter((id) => notesPays[id]?.securite?.statut === "verifie" && notesPays[id].securite.note === 5);
+  const moyen = pays.map((p) => p.id).filter((id) => notesPays[id]?.securite?.statut === "verifie" && notesPays[id].securite.note === 3);
+  const base = construire({ envies: ["prix", "climat"] });
+  const moins = repondre(base, "blind-test", { choix: moyen[0], faits: "securite", pays: [moyen[0], sur[0], sur[1]].join(",") });
+  verifier(!effetsActifs(moins).some((x) => x.origine === "element:blind-test"), "aveugle : un pays moins sûr choisi crée une préférence de sécurité");
+  const mieux = repondre(base, "blind-test", { choix: sur[0], faits: "securite", pays: [moyen[0], sur[0], moyen[1]].join(",") });
+  const e = effetsActifs(mieux).find((x) => x.origine === "element:blind-test" && x.mesure === "securite");
+  verifier(e?.sens === "haut" && e.poids === 0.5, "aveugle : le pays le plus sûr choisi ne donne pas un bonus « plus c'est haut » de 0,5");
+  // Un thème de goût (hiver) : la note du pays choisi devient la position préférée.
+  const hivers = pays.map((p) => p.id).filter((id) => notesPays[id]?.hiver?.statut === "verifie" && typeof notesPays[id].hiver.note === "number");
+  const froid = hivers.sort((a, b) => notesPays[a].hiver.note! - notesPays[b].hiver.note!)[0];
+  const h = effetsActifs(repondre(base, "blind-test", { choix: froid, faits: "hiver", pays: froid })).find((x) => x.origine === "element:blind-test");
+  verifier(h?.sens === "position" && h.position === notesPays[froid].hiver.note, "aveugle : l'hiver du pays choisi ne devient pas une position");
+  // Le second test : jamais avant le premier, et ni les mêmes pays ni les mêmes thèmes.
+  for (let k = 0; k < 30; k++) {
+    const etat = quizAuHasard(hasard(9100 + k));
+    const v1 = etat.reponses["blind-test"], v2 = etat.reponses["blind-test-2"];
+    if (v2 !== undefined) verifier(etat.ordre.indexOf("blind-test") >= 0 && etat.ordre.indexOf("blind-test") < etat.ordre.indexOf("blind-test-2") && v1 !== PASSER, "aveugle : second test posé avant ou sans le premier");
+    if (v1 && v2 && typeof v1 === "object" && typeof v2 === "object" && !Array.isArray(v1) && !Array.isArray(v2) && v2 !== null && v1 !== null) {
+      const a = v1 as Record<string, string>, b = v2 as Record<string, string>;
+      verifier(!b.pays.split(",").some((p) => a.pays.split(",").includes(p)), "aveugle : le second test remontre un pays du premier");
+    }
+  }
+}
+
 if (echecs.length) {
   console.error(`\n✗ ${echecs.length} échec(s) sur ${verifs} vérifications :`);
   // Les échecs semblables (même message aux nombres près) sont regroupés.

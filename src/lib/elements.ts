@@ -102,12 +102,25 @@ export const objetReponse = (v: Valeur | undefined): Record<string, string> => (
 // Le test à l'aveugle : le pays choisi et les mesures montrées deviennent des positions préférées, légères (importance 0,5) :
 // « tu as choisi le pays où l'hiver est doux et la vie pas chère ».
 export const POIDS_BLIND = 0.5;
+// Les thèmes où « plus c'est haut, mieux c'est » pour tout le monde (prompt 8) : coût de la vie bas, chômage bas, sécurité,
+// semaines courtes, langue simple. Sur la jauge, le vert y veut toujours dire « bon pour toi ». Les autres (hiver, été,
+// distance, soleil, grandes villes, nature) dépendent de tes goûts : jauge neutre.
+export const BLIND_UNIVERSELS = ["prix", "emploi", "securite", "heures", "langue"];
+const noteBlind = (paysId: string, m: string) => { const n = notes[paysId]?.[m]; return n?.statut === "verifie" && typeof n.note === "number" ? n.note : null; };
+// Le pays choisi devient une préférence :
+// - thème de goût : sa note devient la position préférée (un hiver froid choisi fait monter les hivers froids) ;
+// - thème universel : un petit bonus « plus c'est haut, mieux c'est », seulement si le pays choisi est le mieux noté des
+//   pays montrés sur ce thème. Avant (jusqu'au prompt 7), choisir un pays moyennement sûr faisait reculer les pays plus sûrs.
 export function effetsBlind(v: Valeur | undefined): EffetDilemme[] {
   const r = objetReponse(v);
   if (!r.choix || !r.faits) return [];
-  return r.faits.split(",").flatMap((m) => {
-    const n = notes[r.choix]?.[m];
-    return n?.statut === "verifie" && typeof n.note === "number" ? [{ mesures: [m], position: n.note, poids: POIDS_BLIND }] : [];
+  const montres = r.pays ? r.pays.split(",") : [r.choix];
+  return r.faits.split(",").flatMap((m): EffetDilemme[] => {
+    const n = noteBlind(r.choix, m);
+    if (n === null) return [];
+    if (!BLIND_UNIVERSELS.includes(m)) return [{ mesures: [m], position: n, poids: POIDS_BLIND }];
+    const meilleure = Math.max(...montres.map((p) => noteBlind(p, m) ?? 0));
+    return r.pays && n >= meilleure ? [{ mesures: [m], poids: POIDS_BLIND }] : [];
   });
 }
 

@@ -25,6 +25,8 @@ export function elementVisible(el: Element, etat: Etat): boolean {
   // Une famille de limites n'est posée que si une de ses situations touche un de tes 10 premiers pays :
   // sinon, elle ne pourrait rien changer.
   if (el.type === "tri-limites") return situationsLimites(el, etat).length > 0;
+  // Le second test à l'aveugle : seulement après le premier (répondu, pas passé).
+  if (el.type === "blind-test" && el.exclure) { const v = etat.reponses[el.exclure]; if (v === undefined || v === PASSER) return false; }
   if (el.type === "dilemme") {
     if (!dilemmeActif(el)) return false;
     if (!conditionRemplie(el.afficheSi, etat.profil)) return false;
@@ -89,6 +91,9 @@ export function phrasesSwipe(el: Swipe, etat: Etat): PhraseSwipe[] {
     if (res.length === el.nombre) return res;
   }
   for (const { p } of notes) if (!res.includes(p) && res.length < el.nombre) res.push(p);
+  // Une petite série (« Ta semaine » : 5 phrases pour 5 places, prompt 8) : les phrases écartées parce qu'elles touchent la
+  // dimension de l'écran précédent reviennent plutôt que de laisser des places vides.
+  for (const p of el.phrases) if (!res.includes(p) && res.length < el.nombre) res.push(p);
   return res;
 }
 

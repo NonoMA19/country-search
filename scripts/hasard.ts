@@ -37,7 +37,7 @@ export function reponseAuHasard(el: Element, etat: Etat, r: Alea): Valeur {
     case "enveloppe": return Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas;
     case "seuil": return r() < 0.5 ? { niveau: "ok" } : { niveau: r() < 0.6 ? "eviter" : "redhibitoire", seuil: String(Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas) };
     case "tri-zones": return Object.fromEntries(el.cartes.filter(() => r() < 0.6).slice(0, el.max ?? el.cartes.length).map((c) => [c.id, choisir(r, el.zones).id]));
-    case "blind-test": { const b = paysBlind(el, etat); return b.pays.length ? { choix: choisir(r, b.pays), faits: b.mesures.join(",") } : PASSER; }
+    case "blind-test": { const b = paysBlind(el, etat); return b.pays.length ? { choix: choisir(r, b.pays), faits: b.mesures.join(","), pays: b.pays.join(",") } : PASSER; }
     case "classement": return melanger(r, Array.isArray(etat.reponses.envies) ? (etat.reponses.envies as string[]) : []);
     case "curseur": return Math.round(r() * 100);
     case "thermometre": return 1 + Math.floor(r() * el.niveaux.length);
