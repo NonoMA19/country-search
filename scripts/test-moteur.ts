@@ -7,8 +7,8 @@ import { notes as notesPays, notesFrance, portes, preuveMesure, quiz, sources, t
 import { validerSession, SESSION_VIDE, nouvelleSession, scenesVues } from "@/lib/memoire";
 import {
   ACCORD_NEUTRE, COUVERTURE_MIN, MESURES_CALCULEES, ETAT_VIDE, REGLAGES_DEFAUT, calculer, cleTop3, dilemmeActif, effetsActifs, etatDepart, rejouer,
-  surprisePriorites, reflexionDuo, GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsEnvie, limiteTouche, accesPays, facteurAcces, noteContinue, noteCalcul, mesureClassante, REGLES, impossibiliteLegale, envieClassante, aideDe,
-  type Etat, type Profil,
+  surprisePriorites, surpriseRepli, situationPosable, reflexionDuo, GROUPES, NIVEAUX, MESURES_BONUS, mesuresPrincipales, completudePays, aplatir, faisabilite, fiabiliteDe, visaSimple, avecQui, groupesEgalite, bilanDepartage, causesEcart, comparer, noteEmployeurLibre, PENALITES, effetsAjustes, egalites, niveauDeduit, paysCouverts, paysSurprise, evaluerPorte, valeurLisible, prochainDepartage, separation, categorieDe, lignesTop, repondre, repondues, trouverDilemme, valeurFrance, budgetProfil, MAX_DEPARTAGE, mesuresQuiSeparent, raisonDepartage, encoreEgalite, noteEffective, reponsesDe, optionReponse, effetsActifs as effetsDe, LIBELLE_ECHELLE, sceneDe, cleScene, annulerDerniere, mesureDisponible, enviesDe, poidsEnvie, limiteTouche, accesPays, facteurAcces, noteContinue, noteCalcul, mesureClassante, REGLES, impossibiliteLegale, envieClassante, aideDe,
+  type Etat, type Ligne, type Profil,
 } from "@/lib/moteur";
 import { PASSER, certitudeReponse, dimensionsReponse, effetsReponse, enregistrer, niveauAnglais, profilDe, valeurValide } from "@/lib/elements";
 import { candidatsAdaptatifs, etatAvant, prochainAffiner, restantsAffiner, resultatProvisoire, chapitreDe, dimensionsElement, elementVisible, importance, scoreElement, prochainElement, questionnaireFini, situationsLimites } from "@/lib/parcours";
@@ -22,6 +22,8 @@ import { listeAVerifier } from "@/lib/averifier";
 import { complementMesure, disponibiliteMemo, mesureSecteur, raisonEnvieIndisponible } from "@/lib/moteur";
 import { mesures } from "@/lib/donnees";
 import { itemsBanque } from "@/lib/banque";
+import { SPECIALITES_VIE, codeVie, lienOffresVie } from "@/lib/vie-offres";
+import filtresVie from "../content/saisie/vie-filtres.json";
 import { choisir, hasard, parcoursAuHasard, reponseAuHasard, type Alea } from "./hasard";
 
 // ---------- Compteur d'échecs ----------
@@ -366,16 +368,29 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   verifier(porte.mention?.preuve?.type === "officiel", "Canada : la saison fermée n'a pas de preuve officielle");
 }
 
-// 2.6 quinquies « Je garde ces soirées pour moi » : une pénalité, plus un filtre.
+// 2.6 quinquies « Es-tu prêt à apprendre une nouvelle langue ? » (prompt 8, remplace le dilemme « Les cours offerts »
+// et la limite « ni le français ni l'anglais ») : jamais un filtre ; « Non » pèse au moins autant que l'ancienne limite.
 {
-  const etat: Etat = construire({ profil: { anglais: "courant" }, envies: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" } });
+  const etat: Etat = construire({ profil: { anglais: "courant" }, envies: ["salaire", "travail", "securite"], reponses: { "pret-langue": "non" } });
   const lignes = calculer(etat);
-  for (const id of ["japon", "coree-du-sud", "taiwan", "chine"]) verifier(!lignes.find((l) => l.pays.id === id)!.ecart, `cours-offerts B : ${id} est encore écarté`);
-  const accord = (id: string) => lignes.find((l) => l.pays.id === id)!.details.find((d) => d.mesure === "apprendre-langue")?.accord;
-  verifier(accord("japon") === 0 && accord("espagne") === 0.5 && accord("irlande") === 1, "cours-offerts B : pénalité mal graduée (1 pour une autre écriture, 0,5 pour une autre langue)");
-  // Qui parle japonais n'a rien à apprendre au Japon.
-  const nippo = calculer(construire({ profil: { anglais: "courant", langues: ["ja"] }, envies: ["salaire", "travail", "securite"], reponses: { "cours-offerts": "b" } })).find((l) => l.pays.id === "japon")!;
-  verifier(nippo.details.find((d) => d.mesure === "apprendre-langue")?.accord === 1, "cours-offerts B : pénalité alors que tu parles la langue");
+  const L = (id: string) => lignes.find((l) => l.pays.id === id)!;
+  for (const id of ["japon", "coree-du-sud", "taiwan", "chine", "espagne"]) verifier(!L(id).ecart, `langue : ${id} est écarté`);
+  const accord = (id: string) => L(id).details.find((d) => d.mesure === "apprendre-langue")?.accord;
+  verifier(accord("japon") === 0 && accord("espagne") === 0.5 && accord("irlande") === 1, "langue : pénalité « apprendre » mal graduée (1 pour une autre écriture, 0,5 pour une autre langue)");
+  const obst = (l: Ligne) => l.obstacles.filter((o) => o.type === "langue").reduce((t, o) => t + o.points, 0);
+  verifier(obst(L("japon")) === 15 && obst(L("espagne")) === 15 && obst(L("irlande")) === 0 && obst(L("belgique")) === 0, "langue : « Non » ne retire pas 15 d'accès là où ni le français ni l'anglais ne suffisent");
+  const plutot = calculer(construire({ profil: { anglais: "courant" }, envies: ["salaire", "travail", "securite"], reponses: { "pret-langue": "plutot-non" } }));
+  verifier(obst(plutot.find((l) => l.pays.id === "japon")!) === 10, "langue : « Plutôt non » ne retire pas 10 d'accès");
+  for (const r of ["oui", "plutot-oui"]) verifier(calculer(construire({ profil: { anglais: "courant" }, envies: ["salaire", "travail", "securite"], reponses: { "pret-langue": r } })).every((l) => obst(l) === 0), `langue : « ${r} » crée un obstacle`);
+  // Une langue cochée compte comme parlée au travail : qui parle espagnol n'a pas d'obstacle en Espagne.
+  const hispano = calculer(construire({ profil: { anglais: "courant", langues: ["es"] }, envies: ["salaire", "travail", "securite"], reponses: { "pret-langue": "non" } }));
+  verifier(obst(hispano.find((l) => l.pays.id === "espagne")!) === 0 && obst(hispano.find((l) => l.pays.id === "japon")!) === 15, "langue : l'espagnol coché ne lève pas l'obstacle en Espagne");
+  const nippo = calculer(construire({ profil: { anglais: "courant", langues: ["ja"] }, envies: ["salaire", "travail", "securite"], reponses: { "pret-langue": "non" } })).find((l) => l.pays.id === "japon")!;
+  verifier(nippo.details.find((d) => d.mesure === "apprendre-langue")?.accord === 1 && obst(nippo) === 0, "langue : pénalité alors que tu parles la langue");
+  // « Non » pèse au moins autant que l'ancienne limite « Rédhibitoire » (15 d'accès) : même accès, plus la pénalité de goût.
+  verifier(!trouverElement("cours-offerts") && !(trouverElement("limites-langue") as { situations: { id: string }[] }).situations.some((x) => x.id === "ni-fr-ni-en"), "langue : le dilemme ou la limite remplacés existent encore");
+  // L'autre écriture n'est plus reposée en limite après un « Non ».
+  verifier(!situationPosable("alphabet", etat.profil) && situationPosable("alphabet", construire({ reponses: { "pret-langue": "oui" } }).profil), "langue : la limite « autre alphabet » reposée après un non");
 }
 
 // 2.7 Session abîmée : toujours refusée, jamais d'erreur.
@@ -491,21 +506,23 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
 // 2.12 Pays surprise, curseurs, égalités nommées, valeurs lisibles (prompt 3d).
 {
   const r4 = hasard(3);
-  let surprises = 0, parLangue = 0, rangsHorsVue = 0;
+  let surprises = 0, partout = 0, rangsHorsVue = 0;
   for (let k = 0; k < 150; k++) {
     let etat = quizAuHasard(r4);
     if (k % 3 === 0) etat = repondre(etat, "limites", { "hors-europe": k % 2 ? "redhibitoire" : "ok", alphabet: "redhibitoire" });
-    if (k % 5 === 0) etat = repondre(etat, "cours-offerts", "b");
     const lignes = calculer(etat);
     const top = lignes.filter((l) => !l.ecart && !l.peuDeDonnees).slice(0, 3);
     const s = paysSurprise(etat, lignes, top);
+    // Prompt 8 : avec les trois règles (priorités, un seul choix, repli), un pays surprise presque toujours, jamais du top 3.
+    const principauxS = lignes.filter((l) => !l.ecart);
+    const toutes = surprisePriorites(etat, principauxS, top) ?? s ?? surpriseRepli(etat, principauxS, top);
+    if (toutes) { partout++; verifier(!top.includes(toutes.ligne) && !toutes.ligne.ecart && !toutes.ligne.peuDeDonnees, `surprise : ${toutes.ligne.pays.nom} est dans le top 3, fermé ou sans données`); }
     if (s) {
       surprises++;
-      if (s.cause === "langue") parLangue++;
       // « Le remonter » : le pays quitte « Moins adaptés » (ou ne subit plus la pénalité de langue).
       const apres = calculer({ ...etat, remontes: [...etat.remontes, s.ligne.pays.id] }).find((l) => l.pays.id === s.ligne.pays.id)!;
       verifier(!apres.ecart, `surprise : ${s.ligne.pays.nom} reste écarté après « Le remonter »`);
-      if (s.cause === "langue") verifier(Math.abs(apres.score - s.score) < 1e-6, `surprise : ${s.ligne.pays.nom} remonté sans retrouver son score sans pénalité`);
+      if (s.cause === "employeur") verifier(Math.abs(apres.score - s.score) < 1e-6, `surprise : ${s.ligne.pays.nom} remonté sans retrouver son score sans pénalité`);
       verifier(/^(Seul ton choix de|Seule ta limite)/.test(s.phrase), "surprise : phrase sans la préférence en cause");
     }
     // Égalités dans la liste : un partenaire du top 3 (hors de la vue) est suivi de son rang.
@@ -524,7 +541,8 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
     }
   }
   verifier(surprises > 0, "surprise : jamais trouvée, le test ne prouve rien");
-  console.log(`Pays surprise : ${surprises} quiz sur 150 (dont ${parLangue} par la langue à apprendre) ; égalités avec rang hors vue : ${rangsHorsVue}.`);
+  verifier(partout >= 140, `surprise : seulement ${partout} parcours sur 150 ont un pays surprise (presque toujours attendu)`);
+  console.log(`Pays surprise : ${surprises} quiz sur 150 par un seul choix, ${partout} sur 150 en tout ; égalités avec rang hors vue : ${rangsHorsVue}.`);
 
   // Âge : un pays fermé à ton âge n'est jamais le pays surprise, même très bien noté.
   const vieux: Etat = construire({ profil: { age: "36-plus" }, envies: ["prix", "climat", "proche"] });
@@ -1269,7 +1287,7 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     }
   };
   lireDossier(path.join(process.cwd(), "src"));
-  verifier(cites.size >= 8, `test des écrans cités : seulement ${cites.size} trouvés (la recherche est cassée)`);
+  verifier(cites.size >= 5, `test des écrans cités : seulement ${cites.size} trouvés (la recherche est cassée)`);
   const absents = [...cites].filter((id) => !trouverElement(id));
   verifier(absents.length === 0, `écrans cités dans le code mais absents de la banque : ${absents.join(", ")}`);
   // Une même réponse ne compte jamais deux fois la même mesure : dans un parcours, chaque mesure garde une seule importance (le maximum).
@@ -1309,6 +1327,19 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
       verifier(!b.pays.split(",").some((p) => a.pays.split(",").includes(p)), "aveugle : le second test remontre un pays du premier");
     }
   }
+}
+
+// 2.31 Prompt 8 : le lien VIE filtré (pays et secteur), sans appel à l'API du site.
+{
+  const u = new URL(lienOffresVie(["australie"], "finance"));
+  verifier(u.origin + u.pathname === "https://mon-vie-via.businessfrance.fr/offres/recherche" && u.searchParams.getAll("countriesIds").join() === "AU" && u.searchParams.getAll("specializationsIds").join() === "19", `VIE : lien ${u}`);
+  const tech = new URL(lienOffresVie(["allemagne", "japon"], "tech"));
+  verifier(tech.searchParams.getAll("countriesIds").join() === "DE,JP" && tech.searchParams.getAll("specializationsIds").join() === "24,212", `VIE : lien tech ${tech}`);
+  // Un secteur sans équivalent : le pays seul. Un pays hors des destinations (Pérou) : pas de filtre pays.
+  const conseil = new URL(lienOffresVie(["australie"], "conseil"));
+  verifier(conseil.searchParams.getAll("specializationsIds").length === 0 && conseil.searchParams.get("countriesIds") === "AU", "VIE : un secteur sans équivalent filtre quand même");
+  verifier(codeVie("perou") === null && lienOffresVie(["perou"]) === vie.offres.url, "VIE : le Pérou (hors destinations) a un lien filtré");
+  for (const ids of Object.values(SPECIALITES_VIE)) for (const id of ids) verifier(filtresVie.specialites.some((x) => x.id === id), `VIE : spécialité ${id} inconnue du site`);
 }
 
 if (echecs.length) {

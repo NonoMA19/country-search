@@ -1931,6 +1931,86 @@
       "aucun": "Je ne parle que français et anglais"
     },
     {
+      "id": "pret-langue",
+      "type": "choix-cartes",
+      "chapitre": 1,
+      "theme": "Tes langues",
+      "profil": "pret-langue",
+      "titre": "Es-tu prêt à apprendre une nouvelle langue ?",
+      "texte": "Une langue que tu ne parles pas encore, pour travailler et vivre là-bas.",
+      "dimensions": [
+        "langue"
+      ],
+      "sansImage": true,
+      "aide": {
+        "enjeu": "Dans certains pays, ni le français ni l’anglais ne suffisent au travail.",
+        "cartes": [
+          {
+            "pastille": "Oui, plutôt oui",
+            "texte": "Rien ne change."
+          },
+          {
+            "pastille": "Plutôt non",
+            "texte": "Les pays où il faudrait une nouvelle langue pour travailler reculent un peu."
+          },
+          {
+            "pastille": "Non",
+            "texte": "Ces pays reculent nettement, sans quitter ta liste. Tes langues cochées comptent comme parlées."
+          }
+        ]
+      },
+      "options": [
+        {
+          "id": "oui",
+          "label": "Oui",
+          "portrait": "Apprendre une nouvelle langue, ça te va."
+        },
+        {
+          "id": "plutot-oui",
+          "label": "Plutôt oui",
+          "portrait": "Apprendre une nouvelle langue, ça te va plutôt."
+        },
+        {
+          "id": "plutot-non",
+          "label": "Plutôt non",
+          "portrait": "Tu préfères ne pas avoir à apprendre une nouvelle langue.",
+          "effets": [
+            {
+              "mesures": [
+                "langue-travail"
+              ],
+              "poids": 0.5
+            },
+            {
+              "mesures": [
+                "apprendre-langue"
+              ],
+              "poids": 0.5
+            }
+          ]
+        },
+        {
+          "id": "non",
+          "label": "Non",
+          "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
+          "effets": [
+            {
+              "mesures": [
+                "langue-travail"
+              ],
+              "poids": 1
+            },
+            {
+              "mesures": [
+                "apprendre-langue"
+              ],
+              "poids": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "pret-anglais",
       "type": "choix-cartes",
       "chapitre": 1,
@@ -4831,122 +4911,6 @@
       ]
     },
     {
-      "id": "cours-offerts",
-      "theme": "Ton quotidien",
-      "titre": "Apprendre une nouvelle langue",
-      "afficheSi": "peut-travailler-en-anglais",
-      "regleAffichage": "Pas posé si tu as dit ne pas vouloir travailler en anglais.",
-      "aide": {
-        "enjeu": "Apprendre la langue ouvre des portes, mais demande du temps.",
-        "cartes": [
-          {
-            "pastille": "A",
-            "texte": "Tous les pays restent dans la course, même avec un autre alphabet."
-          },
-          {
-            "pastille": "B",
-            "texte": "Les pays où il faut apprendre une nouvelle langue reculent, surtout avec un autre alphabet."
-          }
-        ]
-      },
-      "options": [
-        {
-          "id": "a",
-          "effets": [],
-          "portrait": "Apprendre une langue, même avec un autre alphabet, ça te va."
-        },
-        {
-          "id": "b",
-          "effets": [
-            {
-              "mesures": [
-                "apprendre-langue"
-              ],
-              "poids": 1
-            }
-          ],
-          "portrait": "Tu ne veux pas apprendre une nouvelle langue.",
-          "preference": "ne pas avoir de langue à apprendre"
-        }
-      ],
-      "scenes": [
-        {
-          "id": "cours",
-          "titre": "Les cours offerts",
-          "texte": "Ton entreprise te paie 3 h de cours par semaine pendant un an, dans une langue avec un autre alphabet.",
-          "options": [
-            {
-              "texte": "Tu y vas",
-              "plus": "Un vrai atout, au travail comme dans la vie.",
-              "moins": "Trois soirées par semaine y passent."
-            },
-            {
-              "texte": "Tu gardes ces soirées pour toi : l’anglais te suffit",
-              "plus": "Ton temps libre reste à toi.",
-              "moins": "Tu fermes quelques portes."
-            }
-          ],
-          "exemple": true
-        },
-        {
-          "id": "menu",
-          "titre": "Le menu",
-          "texte": "Au restaurant, le menu n’est écrit que dans la langue du pays, avec un autre alphabet.",
-          "options": [
-            {
-              "texte": "Tu apprends à lire les plats, un mot après l’autre",
-              "plus": "Au bout de quelques mois, tu lis partout.",
-              "moins": "Il faut des mois d’efforts."
-            },
-            {
-              "texte": "Tu préfères un pays où tu lis déjà tout",
-              "plus": "Tout est lisible dès le premier jour.",
-              "moins": "Moins de choix de pays."
-            }
-          ]
-        },
-        {
-          "id": "defi",
-          "titre": "Le défi de l’année",
-          "texte": "Une amie te lance un défi : apprendre une nouvelle langue pendant ton année.",
-          "options": [
-            {
-              "texte": "Tu relèves le défi",
-              "plus": "Une langue de plus sur ton CV.",
-              "moins": "Une heure par jour, pendant un an."
-            },
-            {
-              "texte": "Tu gardes cette énergie pour ton travail et tes sorties",
-              "plus": "Ton temps libre reste à toi.",
-              "moins": "Tu vises surtout des pays où l’anglais ou le français suffisent."
-            }
-          ]
-        },
-        {
-          "id": "panneaux",
-          "titre": "Les panneaux de la gare",
-          "texte": "À la gare, tous les panneaux sont dans un autre alphabet.",
-          "options": [
-            {
-              "texte": "Tu apprends les signes, petit à petit",
-              "plus": "Au bout de quelques mois, tu lis tout.",
-              "moins": "Les premières semaines, tu te perds souvent."
-            },
-            {
-              "texte": "Tu préfères un pays où tu lis déjà les panneaux",
-              "plus": "Tu te repères dès le premier jour.",
-              "moins": "Moins de pays possibles."
-            }
-          ]
-        }
-      ],
-      "type": "dilemme",
-      "chapitre": 4,
-      "dimensions": [
-        "langue"
-      ]
-    },
-    {
       "id": "blind-test",
       "type": "blind-test",
       "chapitre": 4,
@@ -5219,14 +5183,8 @@
           "texte": "Apprendre une langue avec un autre alphabet",
           "mesure": "apprendre-langue",
           "raison": "Tu as dit : « Apprendre une langue avec un autre alphabet ».",
-          "dimension": "langue"
-        },
-        {
-          "id": "ni-fr-ni-en",
-          "texte": "Un travail où ni le français ni l’anglais ne suffisent",
-          "mesure": "langue-travail",
-          "raison": "Tu as dit : « Un travail où ni le français ni l’anglais ne suffisent ».",
-          "dimension": "langue"
+          "dimension": "langue",
+          "condition": "pret-langue-ouvert"
         }
       ]
     },

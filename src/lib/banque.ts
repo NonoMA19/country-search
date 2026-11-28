@@ -60,6 +60,7 @@ const ACCES: Record<string, string> = {
   "couple-travail": "Il t’est accessible : « Oui », −10 aux pays hors libre circulation (un droit au travail pour ton ou ta partenaire). Ouvre la limite « partenaire-visa ».",
   nationalite: "Il t’est accessible : une nationalité canadienne, irlandaise ou américaine ouvre ce pays (porte « nationalité », 0 obstacle). Cas vérifiés seulement (content/double-nationalite.json).",
   "pret-anglais": "Il t’est accessible : « Non », −30 aux pays où l’on ne peut pas travailler en français (content/saisie/avis.json).",
+  "pret-langue": "Il t’est accessible : « Non » −15, « Plutôt non » −10 aux pays où ni le français, ni l’anglais, ni une langue que tu parles ne suffisent au travail. Il te ressemble : « Langue de travail » et « Langue à apprendre », importance 1 (« Non ») ou 0,5 (« Plutôt non »).",
 };
 
 export function itemsBanque(): Item[] {

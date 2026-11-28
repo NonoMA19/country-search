@@ -2,6 +2,7 @@
 // trouver un emploi, te loger, t'installer), chacun avec le nom du site, à quoi il sert et sa date de vérification.
 // Utilisé par la fiche pays et le dossier PDF. Seuls les liens réellement ouverts et vérifiés sont montrés.
 import { vie } from "./donnees";
+import { lienOffresVie } from "./vie-offres";
 import { liensVerifies, type Dossier } from "./dossiers";
 
 export type EtapeLien = "visa" | "emploi" | "logement" | "installer";
@@ -37,7 +38,7 @@ export function liensParEtape(dossier: Dossier | null, paysId: string): { etape:
   }
   // Les offres de VIE de Business France, si le pays fait partie de ses destinations.
   if (vie.presence?.[paysId] && vie.offres?.url) {
-    tous.push({ id: "vie", etape: "emploi", site: "Business France", titre: "Offres de VIE", role: "Les missions de VIE ouvertes, pays par pays.", url: vie.offres.url, verifieLe: vie.offres.verifieLe });
+    tous.push({ id: "vie", etape: "emploi", site: "Business France", titre: "Offres de VIE", role: "Les missions de VIE ouvertes dans ce pays.", url: lienOffresVie([paysId]), verifieLe: vie.offres.verifieLe });
   }
   return ETAPES_LIENS.map((etape) => ({ etape, liens: tous.filter((l) => l.etape === etape.id) })).filter((g) => g.liens.length > 0);
 }

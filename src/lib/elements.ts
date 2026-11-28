@@ -273,6 +273,8 @@ export function conditionRemplie(condition: string | undefined, p: Profil): bool
   // Tu veux rester plus d'un an, ou plus longtemps si tu te plais.
   if (condition === "veut-rester") return ["1-2", "plus-2", "toujours"].includes(String(p.duree)) || p.apres === "rester";
   if (condition === "partenaire-travaille") return p["couple-travail"] === "oui";
+  // La limite « Apprendre une langue avec un autre alphabet » : pas reposée si tu as déjà dit non à une nouvelle langue.
+  if (condition === "pret-langue-ouvert") return p["pret-langue"] !== "non" && p["pret-langue"] !== "plutot-non";
   if (condition.startsWith("projet:")) return p.objectif === condition.slice(7);
   return true;
 }

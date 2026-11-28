@@ -154,7 +154,8 @@ export function noteEffective(paysId: string, mesureId: string, p: Profil): numb
     return inv.length ? Math.round(inv.reduce((a, b) => a + b, 0) / inv.length) : null;
   }
   if (mesureId === "langue-travail") {
-    if (avis[paysId]?.francaisAuTravail) return 5;
+    // Prompt 8 : une langue que tu as cochée compte comme le français (tu peux travailler dans cette langue).
+    if (avis[paysId]?.francaisAuTravail || parleLangueDe(paysId, p)) return 5;
     return noteEffective(paysId, "anglais", p);
   }
   const n = notes[paysId]?.[mesureId];
@@ -325,7 +326,8 @@ export function effetsBruts(etat: Etat): EffetActif[] {
   }
   res.push(...effetsObjectif(etat));
   // « Installé là-bas pour de bon » : apprendre la langue n'est plus une pénalité (sauf si tu l'as dit toi-même dans tes limites).
-  return res.filter((e) => !retirees.has(e.mesure) || e.origine.startsWith("limite:") || e.origine.startsWith("envie:"));
+  // Ta réponse à « Es-tu prêt à apprendre une nouvelle langue ? » reste, elle aussi : c'est toi qui l'as dit.
+  return res.filter((e) => !retirees.has(e.mesure) || e.origine.startsWith("limite:") || e.origine.startsWith("envie:") || e.origine === "element:pret-langue");
 }
 
 // ---------- Ton projet ----------
@@ -745,6 +747,7 @@ export function preuveDe(paysId: string, mesureId: string, profil: Profil): Preu
   }
   if (mesureId === "langue-travail") {
     if (avis[paysId]?.francaisAuTravail) return { ...preuveMesure(paysId, "langue"), titre: mesures[mesureId]?.nom ?? mesureId };
+    if (parleLangueDe(paysId, profil)) { const a = preuveMesure(paysId, "langue"); return { ...a, titre: mesures[mesureId]?.nom ?? mesureId, texte: `Tu as dit parler une langue officielle ou très parlée dans ce pays. ${a.texte}`.trim() }; }
     return { ...preuveMesure(paysId, "anglais"), titre: mesures[mesureId]?.nom ?? mesureId };
   }
   if (mesureId !== "employeur-libre") return preuveMesure(paysId, mesureId);
@@ -779,7 +782,6 @@ export function limiteTouche(situation: string, paysId: string, profil: Profil, 
     case "heures-longues": { const v = valeur("heures"); return v !== null && v > 44; }
     case "un-an-max": case "partenaire-visa": return !!p && !sansVisa();
     case "vigilance": return note("securite") === 1;
-    case "ni-fr-ni-en": { const n = note("langue-travail"); return n !== null && n <= 2; }
     case "assurance-privee": { const n = note("sante"); return n !== null && n <= 2; }
     default: return false;
   }
@@ -842,6 +844,13 @@ export function accesPays(p: Pays, etat: Etat, porte: Porte, limites: LimiteDecl
   }
   if (!remonte) {
     if (profil["pret-anglais"] === "non" && !avis[p.id]?.francaisAuTravail) o.push({ type: "langue", texte: "Tu veux travailler en français : ici, la plupart des postes demandent une autre langue.", points: OBSTACLES.francais });
+    // « Es-tu prêt à apprendre une nouvelle langue ? » : non ou plutôt non, et ni le français, ni l'anglais, ni une langue
+    // que tu parles ne suffisent au travail ici (langue de travail notée 2 ou moins). Une donnée manquante ne touche jamais.
+    const pret = profil["pret-langue"];
+    if (pret === "non" || pret === "plutot-non") {
+      const n = noteEffective(p.id, "langue-travail", profil);
+      if (n !== null && n <= 2) o.push({ type: "langue", texte: `${pret === "non" ? "Tu ne veux pas" : "Tu préfères ne pas"} apprendre une nouvelle langue : ici, ni le français ni l’anglais ne suffisent au travail.`, points: pret === "non" ? OBSTACLES.langueNon : OBSTACLES.languePlutotNon });
+    }
     for (const l of limites) {
       if (!situationPosable(l.id, profil) && l.seuil === undefined) continue;
       if (!limiteTouche(l.id, p.id, profil, l.seuil)) continue;
@@ -1046,7 +1055,7 @@ export function avecQui(lignes: Ligne[], i: number, dansLaVue: (k: number) => bo
 // ou une pénalité (« Je préfère pouvoir changer d'employeur librement », « Je garde ces soirées pour moi »).
 // Il n'apparaît que si, sans cette préférence, son score l'aurait placé n° 1 ou n° 2 de ton classement.
 // Jamais pour une règle légale (âge) ni pour le budget. S'il te manquerait de l'argent pour ce pays, la carte le dit.
-export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "langue" | "priorites"; phrase: string; argent: string | null; priorites?: string[] };
+export type Surprise = { ligne: Ligne; score: number; cause: "limite" | "employeur" | "priorites" | "repli"; phrase: string; argent: string | null; priorites?: string[] };
 
 // Le pays surprise « par tes priorités » (prompt 7) : un pays hors de ta carte du début (ou que tu n'avais pas en tête),
 // hors de ton top 3 mais dans tes 8 premiers, qui va dans ton sens (4 ou 5 sur 5) sur tes 3 premiers critères (environ 1 parcours sur 5).
@@ -1074,14 +1083,41 @@ export function surprisePriorites(etat: Etat, lignes: Ligne[], top: Ligne[]): Su
   const phrase = `${debut}, mais il colle à ${m.colle.length === envies.length ? `tes ${m.colle.length}` : `${m.colle.length} de tes`} priorités\u00a0: ${listeFr(noms.map((n) => `« ${n} »`))}.`;
   return { ligne: m.l, score: m.l.score, cause: "priorites", phrase, argent: phraseArgent(m.l), priorites: noms };
 }
+// Le pays surprise « presque toujours » (prompt 8) : quand ni tes priorités ni un seul de tes choix ne désignent un pays,
+// on reprend l'idée de la première version (prompt 2) : un pays bien classé pour toi (n° 4 à n° 8), hors de ta carte du
+// début, de préférence là où vivent peu de Français (« Réseau français » noté 1 ou 2). Sinon, le mieux classé hors de ta
+// carte ; sinon, ton n° 4. Jamais un pays fermé par la loi, sans assez de données ou déjà dans ton top 3.
+export function surpriseRepli(etat: Etat, lignes: Ligne[], top: Ligne[]): Surprise | null {
+  const dansTop = new Set(top.map((l) => l.pays.id));
+  const carte = Array.isArray(etat.profil.paysCarte) ? etat.profil.paysCarte : [];
+  const regions = Array.isArray(etat.profil.regions) ? etat.profil.regions : [];
+  const coche = (id: string) => carte.includes(id) || regions.includes(zoneCarte(id) ?? "");
+  const classes = lignes.filter((l) => !l.ecart && !l.peuDeDonnees);
+  const candidats = classes.slice(0, RANG_MAX_SURPRISE).filter((l) => !dansTop.has(l.pays.id));
+  const peuDeFrancais = (l: Ligne) => { const n = noteEffective(l.pays.id, "francais", etat.profil); return n !== null && n <= 2; };
+  const hors = candidats.filter((l) => !coche(l.pays.id));
+  const choisi = hors.find(peuDeFrancais) ?? hors[0] ?? candidats[0];
+  if (!choisi) return null;
+  const rang = classes.indexOf(choisi) + 1;
+  const envies = enviesDe(etat).slice(0, NB_ENVIES_PRINCIPALES);
+  const colle = envies.filter((id) => {
+    const d = choisi.details.filter((x) => x.origine === `envie:${id}` && !x.neutre);
+    return d.length > 0 && d.reduce((t, x) => t + x.accord, 0) / d.length >= ACCORD_ARGUMENT;
+  }).map((id) => quiz.envies.find((e) => e.id === id)?.label ?? id);
+  const n = `n°\u00a0${rang}`;
+  const horsCarte = !coche(choisi.pays.id) && (carte.length > 0 || regions.length > 0);
+  const phrase = peuDeFrancais(choisi)
+    ? (horsCarte ? `Peu de Français y vivent, tu ne l’avais pas coché sur ta carte, et pourtant il est ton ${n}.` : `Peu de Français y vivent, et il est ton ${n}\u00a0: un pays à regarder de plus près.`)
+    : (horsCarte ? `Tu ne l’avais pas coché sur ta carte, et pourtant il est ton ${n}.` : `Il est ton ${n}, juste derrière ton top 3\u00a0: un pays à regarder de plus près.`);
+  return { ligne: choisi, score: choisi.score, cause: "repli", phrase, argent: phraseArgent(choisi), ...(colle.length ? { priorites: colle } : {}) };
+}
+
 const PHRASE_SURPRISE = {
   employeur: "Seul ton choix de pouvoir changer d’employeur librement fait reculer ce pays.",
-  langue: "Seul ton choix de ne pas apprendre de nouvelle langue fait reculer ce pays.",
 };
 // Les préférences qui sont des pénalités : le dilemme, la mesure, la cause.
 const PENALITES_SURPRISE = [
   { dilemme: "job-de-reve", mesure: "employeur-libre", cause: "employeur" as const },
-  { dilemme: "cours-offerts", mesure: "apprendre-langue", cause: "langue" as const },
 ];
 const phraseArgent = (l: Ligne) => l.porte.alertes.find((a) => /^(Il te manquerait|Selon ta somme exacte)/.test(a.texte))?.texte ?? null;
 
