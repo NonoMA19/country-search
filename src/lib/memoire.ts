@@ -19,7 +19,7 @@ export type Etape =
   | { t: "affiner" };
 
 // À changer si la forme de la session change : une ancienne session est alors oubliée.
-export const VERSION_SESSION = 10;
+export const VERSION_SESSION = 11; // prompt 8 : critères classés, « second plan » et « Tes 3 libertés » retirés
 
 export type Session = {
   v: number;

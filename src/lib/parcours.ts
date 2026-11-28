@@ -21,10 +21,6 @@ export const topCourant = (etat: Etat, n = 5): Ligne[] => calculer(etat).filter(
 export function elementVisible(el: Element, etat: Etat): boolean {
   if (!conditionRemplie(el.condition, etat.profil)) return false;
   if (!relanceOuverte(el, etat.reponses)) return false;
-  // Les critères en trois temps : le plus dur à sacrifier (2 critères ou plus), le second plan (3 ou plus).
-  const nbCriteres = Array.isArray(etat.reponses.envies) ? etat.reponses.envies.length : 0;
-  if (el.type === "choix-cartes" && el.source === "envies-choisies") return nbCriteres >= 2;
-  if (el.type === "choix-cartes" && el.source === "envies-second") return nbCriteres >= 3;
   if (el.type === "choix-cartes" && el.source === "envies-restantes") return etat.reponses.envies !== undefined;
   // Une famille de limites n'est posée que si une de ses situations touche un de tes 10 premiers pays :
   // sinon, elle ne pourrait rien changer.

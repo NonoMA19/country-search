@@ -36,7 +36,7 @@ export function reponseAuHasard(el: Element, etat: Etat, r: Alea): Valeur {
     case "timeline": return { duree: choisir(r, el.options).id, apres: choisir(r, el.apres).id };
     case "enveloppe": return Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas;
     case "seuil": return r() < 0.5 ? { niveau: "ok" } : { niveau: r() < 0.6 ? "eviter" : "redhibitoire", seuil: String(Math.round((el.min + r() * (el.max - el.min)) / el.pas) * el.pas) };
-    case "tri-zones": return Object.fromEntries(el.cartes.filter(() => r() < 0.6).map((c) => [c.id, choisir(r, el.zones).id]));
+    case "tri-zones": return Object.fromEntries(el.cartes.filter(() => r() < 0.6).slice(0, el.max ?? el.cartes.length).map((c) => [c.id, choisir(r, el.zones).id]));
     case "blind-test": { const b = paysBlind(el, etat); return b.pays.length ? { choix: choisir(r, b.pays), faits: b.mesures.join(",") } : PASSER; }
     case "classement": return melanger(r, Array.isArray(etat.reponses.envies) ? (etat.reponses.envies as string[]) : []);
     case "curseur": return Math.round(r() * 100);
@@ -57,7 +57,7 @@ export function parcoursAuHasard(r: Alea, { passer = 0.08, repondeur }: { passer
     const el = prochainElement(etat);
     if (!el) break;
     // Les envies et leur classement ne sont presque jamais passés (sinon le classement n'a plus rien à classer).
-    const peutPasser = !["envies", "sacrifice", "second-plan"].includes(el.id);
+    const peutPasser = !["envies", "sacrifice"].includes(el.id);
     const v = peutPasser && r() < passer ? PASSER : repondeur ? repondeur(el, etat) : reponseAuHasard(el, etat, r);
     etat = repondre(etat, el.id, v);
   }

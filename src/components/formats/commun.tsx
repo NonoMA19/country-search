@@ -39,6 +39,7 @@ export function EnTete({ element, titreId = "titre-ecran", titre, texte, etat }:
     <>
       <p className="inline-flex min-h-7 w-fit items-center self-start rounded-full bg-bleu-doux px-3 text-sm font-semibold text-encre">{element.theme}</p>
       <h1 id={titreId} tabIndex={-1} className="mt-1 text-2xl leading-snug font-semibold break-words outline-none">{titre ?? element.titre}</h1>
+      {element.encart && <p className="mt-3 rounded-2xl border-2 border-bleu bg-bleu-doux px-4 py-3 text-lg leading-snug font-semibold">{element.encart}</p>}
       {(texte ?? element.texte) && <p className="mt-2 text-lg leading-snug">{texte ?? element.texte}</p>}
       <PourquoiEcran id={element.id} aide={aideDe(element, etat?.profil)} />
     </>

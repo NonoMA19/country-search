@@ -83,27 +83,29 @@ export function questionProfilVisible(id: string, p: Profil): boolean {
   return conditionRemplie(quiz.profil.find((x) => x.id === id)?.afficheSi, p);
 }
 
-// ---------- Tes critères, en trois temps ----------
-// 1. Jusqu'à 5 critères. 2. Le plus dur à sacrifier : importance 2. 3. Celui qui passe au second plan : 1,1.
-// Les autres : 1,5. Un seul critère choisi : 2. L'ordre rendu : le plus dur à sacrifier, les autres, le second plan.
+// ---------- Tes critères : choisis, puis classés ----------
+// 1. Jusqu'à 5 critères. 2. « Lequel serait le plus dur à sacrifier ? » : tu les classes (prompt 8, au lieu d'un seul choix
+// suivi de « Et lequel passerait au second plan ? »). Chaque rang a son importance : 2 ; 1,75 ; 1,5 ; 1,25 ; 1,1 (quiz.json,
+// poidsCriteres.rangs). Un seul critère : 2. Classement passé : l'ordre où tu les as choisis.
 const criteresValides = (x: Valeur | undefined) => (Array.isArray(x) ? x.filter((id) => quiz.envies.some((e) => e.id === id)) : []);
-function sacrificeEtSecond(etat: Pick<Etat, "reponses">) {
+// Le classement fait foi s'il range exactement tes critères ; sinon (passé, ou critères changés depuis), null.
+function classementDe(etat: Pick<Etat, "reponses">): string[] | null {
   const choisies = criteresValides(etat.reponses.envies);
-  const s = etat.reponses.sacrifice, d = etat.reponses["second-plan"];
-  const premier = typeof s === "string" && choisies.length > 1 && choisies.includes(s) ? s : null;
-  const dernier = typeof d === "string" && choisies.length > 2 && choisies.includes(d) && d !== premier ? d : null;
-  return { choisies, premier, dernier };
+  const rang = criteresValides(etat.reponses.sacrifice).filter((id) => choisies.includes(id));
+  return rang.length === choisies.length && new Set(rang).size === rang.length ? rang : null;
 }
-export function enviesDe(etat: Pick<Etat, "reponses">): string[] {
-  const { choisies, premier, dernier } = sacrificeEtSecond(etat);
-  return [...(premier ? [premier] : []), ...choisies.filter((x) => x !== premier && x !== dernier), ...(dernier ? [dernier] : [])];
-}
+// Tes critères dans l'ordre : celui du classement, ou à défaut l'ordre où tu les as choisis.
+export const enviesDe = (etat: Pick<Etat, "reponses">): string[] => classementDe(etat) ?? criteresValides(etat.reponses.envies);
+export const POIDS_RANGS = quiz.poidsCriteres.rangs;
+// Sans classement (passé), aucun rang n'est inventé : chaque critère compte comme le rang du milieu (1,5).
+export const POIDS_SANS_RANG = POIDS_RANGS[2];
 export function poidsEnvie(etat: Pick<Etat, "reponses">, id: string): number {
-  const { choisies, premier, dernier } = sacrificeEtSecond(etat);
-  const P = quiz.poidsCriteres;
-  if (!choisies.includes(id)) return 0;
-  if (choisies.length === 1) return P.seul;
-  return id === premier ? P.sacrifice : id === dernier ? P.second : P.milieu;
+  const ordre = enviesDe(etat);
+  const k = ordre.indexOf(id);
+  if (k < 0) return 0;
+  if (ordre.length === 1) return POIDS_RANGS[0];
+  if (!classementDe(etat)) return POIDS_SANS_RANG;
+  return POIDS_RANGS[Math.min(k, POIDS_RANGS.length - 1)];
 }
 
 // Un critère est proposé s'il a au moins une mesure notée (« Évoluer dans mon secteur » : si ton secteur l'est),
@@ -698,7 +700,8 @@ export const MESURES_CALCULEES = ["employeur-libre", "depaysement", "en-europe",
 // Les bonus : un pays hors de ta carte ou qui ne parle pas tes langues n'a pas de note, et n'en est pas pénalisé.
 // Ils ne comptent ni dans la couverture (règle des 60 %) ni dans le badge « données disponibles ».
 export const MESURES_BONUS = ["region-carte", "langue-parlee", "langue-cible"];
-export const POIDS_CARTE = quiz.poidsCriteres.second;
+// La carte du début : comme un critère classé en dernier (1,1).
+export const POIDS_CARTE = quiz.poidsCriteres.rangs.at(-1)!;
 export const POIDS_LANGUE_PARLEE = 1;
 export const zoneCarte = (paysId: string) => (trouverElement("carte") as CarteMonde | undefined)?.zones.find((z) => z.pays.includes(paysId))?.id ?? null;
 const cacheLibre = new Map<string, number>();

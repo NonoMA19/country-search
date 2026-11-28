@@ -68,7 +68,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
       const n = Number(r.seuil);
       return Object.keys(r).length === 2 && (r.niveau === "eviter" || r.niveau === "redhibitoire") && Number.isFinite(n) && n >= el.min && n <= el.max;
     }
-    case "tri-zones": return objetDe(v, new Set(el.cartes.map((c) => c.id)), el.zones.map((z) => z.id));
+    case "tri-zones": return objetDe(v, new Set(el.cartes.map((c) => c.id)), el.zones.map((z) => z.id)) && (el.max === undefined || Object.keys(v as object).length <= el.max);
     case "blind-test": return typeof v === "object" && v !== null && !Array.isArray(v) && estTexte((v as Record<string, string>).choix) && estTexte((v as Record<string, string>).faits);
     case "classement": return listeDe(v, (y) => quiz.envies.some((e) => e.id === y)) && new Set(v as string[]).size === (v as string[]).length;
     case "curseur": return typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 100;
@@ -81,8 +81,7 @@ export function valeurValide(el: Element, v: unknown): boolean {
   }
 }
 
-// Les options d'une carte. Les critères viennent de quiz.envies : tous (« envies »), ceux que tu as choisis
-// (« envies-choisies »), ceux qui restent pour le second plan (« envies-second »), ceux que tu n'as pas choisis (« envies-restantes »).
+// Les options d'une carte. Les critères viennent de quiz.envies : tous (« envies »), ou ceux que tu n'as pas choisis (« envies-restantes »).
 // Une option dont une mesure n'a aucune donnée vérifiée (l'égalité femmes-hommes, par exemple) n'est pas proposée.
 // (Les mesures calculées, comme le dépaysement, et « secteur » ne sont pas stockées : elles restent proposées.)
 export const AUCUN = "aucun";
@@ -93,8 +92,6 @@ export function optionsDe(el: ChoixCartes, reponses: Record<string, Valeur> = {}
   const criteres = quiz.envies.map((e) => ({ id: e.id, label: e.label, icone: e.icone, emoji: e.emoji }));
   const choisis = listeTexte(reponses.envies);
   if (el.source === "envies") return criteres;
-  if (el.source === "envies-choisies") return criteres.filter((c) => choisis.includes(c.id));
-  if (el.source === "envies-second") return criteres.filter((c) => choisis.includes(c.id) && c.id !== reponses.sacrifice);
   if (el.source === "envies-restantes") return criteres.filter((c) => !choisis.includes(c.id));
   return el.options.filter((o) => !o.effets || o.effets.every((e) => e.mesures.every((m) => !mesureStockee(m) || mesureNotee(m))));
 }

@@ -72,7 +72,7 @@ export function itemsBanque(): Item[] {
         const ms = c.mesures;
         const parts = c.parts ? ` (parts ${c.parts.join(" et ")})` : "";
         ajouter({ ...base, id: `critere/${c.id}`, texte: c.label, type: typeDe(ms), donnee: donnees(ms),
-          effet: ms.length ? `Il te ressemble : ${ms.map((m, k) => `${mesures[m]?.court ?? m}${c.positions?.[k] !== undefined ? ` (position ${c.positions[k]})` : ""}`).join(" et ")}${parts}, importance 2 (le plus dur à sacrifier), 1,5, ou 1,1 (second plan)${classante(ms) ? "" : " — sous 30 pays : portrait seulement"}${c.id === "salaire" ? " ; pour un VIE, l’indemnité VIE (36 pays) compte à la place" : ""}` : "Portrait seulement : aucune donnée pays",
+          effet: ms.length ? `Il te ressemble : ${ms.map((m, k) => `${mesures[m]?.court ?? m}${c.positions?.[k] !== undefined ? ` (position ${c.positions[k]})` : ""}`).join(" et ")}${parts}, importance selon son rang dans ton classement (2 ; 1,75 ; 1,5 ; 1,25 ; 1,1)${classante(ms) ? "" : " — sous 30 pays : portrait seulement"}${c.id === "salaire" ? " ; pour un VIE, l’indemnité VIE (36 pays) compte à la place" : ""}` : "Portrait seulement : aucune donnée pays",
           pourquoi: pourquoi(el) });
       }
       continue;
@@ -120,8 +120,9 @@ export function itemsBanque(): Item[] {
     if (ACCES[el.id]) { type = "Accès"; effet = ACCES[el.id]; }
     if (type !== "Accès") type = ms.length ? typeDe(ms) : "Portrait";
     if (el.id === "famille-ecole") effet = "Portrait seulement : pas de donnée sur les écoles en français ; rappelé dans ta checklist.";
-    if (el.type === "choix-cartes" && el.source && el.source !== "envies") { type = "Classement"; effet = el.id === "sacrifice" ? "Il te ressemble : ce critère compte 2 (les autres 1,5)." : el.id === "second-plan" ? "Il te ressemble : ce critère compte 1,1." : "Il te ressemble : ce critère non choisi compte 1 ; « Aucun » : rien."; }
-    const critere = el.type === "choix-cartes" && !!el.source;
+    if (el.type === "choix-cartes" && el.source && el.source !== "envies") { type = "Classement"; effet = "Il te ressemble : ce critère non choisi compte 1 ; « Aucun » : rien."; }
+    if (el.type === "classement") { type = "Classement"; effet = `Il te ressemble : l’importance de chaque critère selon son rang (${quiz.poidsCriteres.rangs.map((x) => x.toLocaleString("fr-FR")).join(" ; ")}) ; un seul critère : 2 ; classement passé : 1,5 chacun.`; }
+    const critere = (el.type === "choix-cartes" && !!el.source) || el.type === "classement";
     ajouter({ ...base, id: el.id, texte: el.titre, type, donnee: critere ? "Les données des critères choisis (fiches critere/…)" : type === "Accès" && !ms.length ? (el.id === "budget" ? "Ressources demandées par les PVT : content/portes.json (officiel)" : "Portes d’entrée : content/portes.json, content/double-nationalite.json") : donnees([...new Set(ms)].filter((m) => mesures[m] || m === "secteur")), effet: effet || "Portrait seulement", pourquoi: pourquoi(el) });
   }
   return items;

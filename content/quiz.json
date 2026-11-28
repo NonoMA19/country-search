@@ -547,7 +547,7 @@
         "cartes": [
           {
             "pastille": "Un pays dans ta zone",
-            "texte": "Petit bonus, comme un critère qui passe au second plan. Les autres ne perdent rien."
+            "texte": "Petit bonus, comme un critère classé en dernier. Les autres ne perdent rien."
           },
           {
             "pastille": "Zone autour de la France",
@@ -1601,7 +1601,7 @@
       "theme": "Ton budget",
       "profil": "budget",
       "titre": "Tu pars avec combien d’argent de côté ?",
-      "texte": "Ce que tu auras sur ton compte en arrivant, pour toi.",
+      "texte": "Compte ce que tu auras sur ton compte en arrivant, pour toi.",
       "dimensions": [],
       "min": 0,
       "max": 15000,
@@ -1619,7 +1619,8 @@
             "texte": "On t’affiche la somme demandée par chaque visa, sans calcul."
           }
         ]
-      }
+      },
+      "encart": "Ce montant sert à vérifier les visas qui exigent une somme minimale sur ton compte, comme le PVT."
     },
     {
       "id": "secteur",
@@ -1978,24 +1979,24 @@
         "enjeu": "Une autre nationalité peut ouvrir un pays sans visa, ou créer des obligations.",
         "cartes": [
           {
-            "pastille": "Non",
-            "texte": "Rien ne change."
-          },
-          {
             "pastille": "Oui",
             "texte": "On te demande laquelle."
+          },
+          {
+            "pastille": "Non",
+            "texte": "Rien ne change."
           }
         ]
       },
       "sansImage": true,
       "options": [
         {
-          "id": "non",
-          "label": "Non"
-        },
-        {
           "id": "oui",
           "label": "Oui"
+        },
+        {
+          "id": "non",
+          "label": "Non"
         }
       ]
     },
@@ -2073,44 +2074,28 @@
     },
     {
       "id": "sacrifice",
-      "type": "choix-cartes",
+      "type": "classement",
       "chapitre": 2,
       "theme": "Tes critères",
-      "source": "envies-choisies",
-      "titre": "Lequel serait le plus dur à sacrifier ?",
-      "texte": "Si tu ne pouvais en garder qu’un.",
+      "source": "envies",
+      "titre": "Lequel serait le plus dur à sacrifier ?",
+      "texte": "Classe tes critères : en haut, celui que tu sacrifierais en dernier ; en bas, celui que tu lâcherais en premier.",
       "dimensions": [],
       "regleAffichage": "Seulement si tu as choisi au moins 2 critères.",
       "aide": {
-        "enjeu": "Tous tes critères ne pèsent pas autant.",
+        "enjeu": "Tous tes critères ne pèsent pas autant : leur rang décide de leur importance.",
         "cartes": [
           {
-            "pastille": "Ton choix",
+            "pastille": "En haut",
             "texte": "Il compte le plus dans ton classement."
           },
           {
-            "pastille": "Les autres",
-            "texte": "Ils comptent un peu moins."
-          }
-        ]
-      }
-    },
-    {
-      "id": "second-plan",
-      "type": "choix-cartes",
-      "chapitre": 2,
-      "theme": "Tes critères",
-      "source": "envies-second",
-      "titre": "Et lequel passerait au second plan ?",
-      "texte": "Celui que tu lâcherais en premier si tout ne tenait pas.",
-      "dimensions": [],
-      "regleAffichage": "Seulement si tu as choisi au moins 3 critères.",
-      "aide": {
-        "enjeu": "Savoir ce qui passe après aide à départager les pays proches.",
-        "cartes": [
+            "pastille": "Au milieu",
+            "texte": "Chaque rang compte un peu moins que celui du dessus."
+          },
           {
-            "pastille": "Ton choix",
-            "texte": "Il compte encore, mais moins que tes autres critères."
+            "pastille": "En bas",
+            "texte": "Il compte encore, mais le moins."
           }
         ]
       }
@@ -5264,7 +5249,7 @@
       "theme": "Tes limites : la distance",
       "famille": "la distance",
       "nombre": 9,
-      "titre": "La distance : qu’en penses-tu ?",
+      "titre": "Et vivre hors d’Europe ?",
       "dimensions": [
         "zone"
       ],
@@ -5292,6 +5277,27 @@
           "mesure": "en-europe",
           "raison": "Tu as dit : « Vivre hors d’Europe ».",
           "dimension": "zone"
+        }
+      ],
+      "texte": "Choisis la phrase qui te ressemble.",
+      "cartes": [
+        {
+          "reponse": "redhibitoire",
+          "titre": "L’Europe me suffit",
+          "texte": "Je veux rester à quelques heures de chez moi.",
+          "dessin": "europe"
+        },
+        {
+          "reponse": "eviter",
+          "titre": "Plus loin, si ça vaut le coup",
+          "texte": "L’Europe d’abord, mais je ne ferme rien.",
+          "dessin": "europe-plus"
+        },
+        {
+          "reponse": "ok",
+          "titre": "Le monde entier",
+          "texte": "La distance ne me fait pas peur.",
+          "dessin": "monde"
         }
       ]
     },
@@ -5539,7 +5545,7 @@
       "chapitre": 5,
       "theme": "Tes valeurs",
       "titre": "Ce qui compte pour toi dans un pays",
-      "texte": "Touche celles qui comptent. Les autres ne comptent pas.",
+      "texte": "Choisis-en 3 au plus : celles qui comptent le plus pour toi.",
       "dimensions": [
         "valeurs"
       ],
@@ -5659,7 +5665,8 @@
           "portrait": "Un rythme de vie calme compte pour toi.",
           "emoji": "leaf-fluttering-in-wind"
         }
-      ]
+      ],
+      "max": 3
     },
     {
       "id": "compromis",
@@ -5743,9 +5750,12 @@
     }
   ],
   "poidsCriteres": {
-    "sacrifice": 2,
-    "milieu": 1.5,
-    "second": 1.1,
-    "seul": 2
+    "rangs": [
+      2,
+      1.75,
+      1.5,
+      1.25,
+      1.1
+    ]
   }
 }

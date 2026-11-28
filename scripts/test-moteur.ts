@@ -48,7 +48,7 @@ function construire({ profil = {}, envies = [], reponses = {} }: { profil?: Reco
     if (trouverElement(k)) r[k] = v;
   }
   // Les critères en trois temps : le premier est le plus dur à sacrifier, le dernier (s'il y en a 3 ou plus) passe au second plan.
-  if (envies.length) { r.envies = envies; if (envies.length >= 2) r.sacrifice = envies[0]; if (envies.length >= 3) r["second-plan"] = envies.at(-1)!; }
+  if (envies.length) { r.envies = envies; if (envies.length >= 2) r.sacrifice = envies; }
   Object.assign(r, reponses);
   return rejouer({ ...ETAT_VIDE, reponses: r, ordre: Object.keys(r) });
 }
@@ -244,7 +244,7 @@ console.log(`Le projet change le top 3 dans ${changeAvecObjectif} profils sur ${
   const r2 = hasard(42);
   for (let i = 0; i < 10; i++) {
     const etat = quizAuHasard(r2, true);
-    verifier(repondues(etat) <= 3, `passer : ${repondues(etat)} réponses comptées alors que tout est passé (critères, sacrifice, second plan exceptés)`);
+    verifier(repondues(etat) <= 3, `passer : ${repondues(etat)} réponses comptées alors que tout est passé (critères et leur classement exceptés)`);
     verifier(questionnaireFini(etat), "passer : le questionnaire ne finit pas");
     verifier(etat.ordre.length >= 18, `passer : ${etat.ordre.length} écrans seulement`);
   }
@@ -825,16 +825,20 @@ for (const p of pays) verifier(!!p.pluriel === p.le.startsWith("les "), `accord 
     }
   }
   for (const t of ["choix-cartes", "swipe", "ambiances", "thermometre", "carte-monde", "tri-limites", "dilemme", "timeline", "enveloppe", "seuil", "tri-zones", "blind-test"]) verifier(vus.has(t), `format ${t} : jamais proposé`);
-  // Les critères en trois temps (prompt 6) : le plus dur à sacrifier = 2 ; le second plan = 1,1 ; les autres = 1,5 ; un seul = 2.
+  // Les critères classés (prompt 8) : rang 1 = 2 ; 1,75 ; 1,5 ; 1,25 ; rang 5 = 1,1 ; un seul = 2.
   const cinq = ["securite", "salaire", "prix", "travail", "climat"];
   const e5 = construire({ envies: cinq });
-  verifier(enviesDe(e5).join() === cinq.join(), "critères : l'ordre (sacrifice, milieu, second plan) n'est pas lu");
+  verifier(enviesDe(e5).join() === cinq.join(), "critères : l'ordre du classement n'est pas lu");
   const poidsDe = (e: Etat, m: string) => effetsActifs(e).find((x) => x.mesure === m)?.poids;
-  verifier(poidsDe(e5, "securite") === 2 && poidsDe(e5, "salaire") === 1.5 && poidsDe(e5, "prix") === 1.5 && poidsDe(e5, "emploi") === 1.5 && poidsDe(e5, "doux") === 1.1, "critères : importances des trois temps mal appliquées");
+  verifier(poidsDe(e5, "securite") === 2 && poidsDe(e5, "salaire") === 1.75 && poidsDe(e5, "prix") === 1.5 && poidsDe(e5, "emploi") === 1.25 && poidsDe(e5, "doux") === 1.1, "critères : importances par rang mal appliquées");
+  // Tout le rang compte : inverser le classement inverse les importances.
+  const inverse = construire({ envies: cinq, reponses: { sacrifice: [...cinq].reverse() } });
+  verifier(poidsDe(inverse, "doux") === 2 && poidsDe(inverse, "emploi") === 1.75 && poidsDe(inverse, "securite") === 1.1, "critères : le classement inversé ne change pas les importances");
+  verifier(!trouverElement("second-plan") && trouverElement("sacrifice")?.type === "classement", "critères : « second plan » existe encore, ou « le plus dur à sacrifier » n'est pas un classement");
   verifier(poidsEnvie(construire({ envies: ["prix"] }), "prix") === 2, "critères : un seul critère ne compte pas 2");
   const proche = construire({ envies: ["proche", "salaire", "prix", "travail", "climat"] });
   verifier(Math.abs(poidsDe(proche, "vol")! - 4 / 3) < 1e-9 && Math.abs(poidsDe(proche, "decalage")! - 2 / 3) < 1e-9, "critères : « Proche de la France » n° 1 ne donne pas 2/3 au vol et 1/3 au décalage");
-  // « Le plus dur à sacrifier » passé : tous à 1,5 (sauf le second plan).
+  // Le classement passé : aucun rang inventé, tous à 1,5.
   const sansSacrifice = rejouer({ ...ETAT_VIDE, reponses: { envies: cinq, sacrifice: PASSER }, ordre: ["envies", "sacrifice"] });
   verifier(poidsEnvie(sansSacrifice, "securite") === 1.5 && poidsEnvie(sansSacrifice, "climat") === 1.5, "critères : sacrifice passé mal lu");
   // « Un vrai hiver » : une position (1), pas « plus c'est haut, mieux c'est ».
@@ -1169,6 +1173,8 @@ for (const d of quiz.dilemmes) for (const sc of d.scenes) {
     // Une valeur non rangée ne crée jamais de préférence.
     verifier(!effetsActifs(repondre(construire({ envies: ["prix"] }), "valeurs", {})).some((x) => x.origine.startsWith("element:valeurs")), "valeurs : rien rangé crée une préférence");
     verifier(valeurValide(val, {}) && valeurValide(val, "passer") && !valeurValide(val, { stabilite: "peut-etre" }), "valeurs : validation incorrecte");
+    // 3 valeurs au plus (prompt 8).
+    verifier(val.max === 3 && valeurValide(val, { stabilite: "compte", libertes: "compte", environnement: "compte" }) && !valeurValide(val, { stabilite: "compte", libertes: "compte", environnement: "compte", "climat-prepare": "compte" }), "valeurs : plus de 3 cartes acceptées");
     // Une valeur touchée compte (importance 1) dans « Il te ressemble », jamais dans « Il t'est accessible » (prompt 7).
     const ind = repondre(construire({ envies: ["prix"] }), "valeurs", { stabilite: "compte" });
     verifier(effetsActifs(ind).find((x) => x.mesure === "stabilite")?.poids === 1 && calculer(ind).every((l) => !l.obstacles.some((o) => o.type === "valeur")), "valeurs : une carte touchée ne compte pas 1, ou retire de l'accès");
